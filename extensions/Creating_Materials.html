@@ -1,0 +1,38 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials.html">Tutorials</a></div><div id="overview" class="item"><a href="/overviews.html">Overviews</a></div><div id="exporters" class="item"><a href="/exporters.html">Exporters</a></div><div id="extensions" class="item active"><a href="/extensions.html">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>extensions</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Creating Materials</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#modifying-materials">Modifying Materials</a></li>
+<li><a href="#selecting-an-existing-material">Selecting An Existing Material</a></li>
+<li><a href="#creating-a-new-material">Creating A New Material</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="creating-materials" class="anchor" href="#creating-materials"></a>Creating Materials</h1><h2><a name="modifying-materials" class="anchor" href="#modifying-materials"></a>Modifying Materials</h2><p>The editor allows you to set up and configure materials, including materials of the Babylon.js Materials Library.
+To configure or add a material, just select a mesh in the scene and access the &quot;Material&quot; tab:</p>
+<p><img src="/img/extensions/Editor/MaterialsLibrary/CreateMaterial.png" alt="CreateMaterial"></p>
+<h2><a name="selecting-an-existing-material" class="anchor" href="#selecting-an-existing-material"></a>Selecting An Existing Material</h2><p>You can now select an existing material, or create a new material.</p>
+<p>To select an existing material, just select the material in the combo box.
+To remove the material, just click on the button &quot;Remove Material&quot;.</p>
+<p><img src="/img/extensions/Editor/MaterialsLibrary/SelectExistingMaterial.png" alt="SelectExistingMaterial"></p>
+<p>Once you selected the desired material, the material is automatically applied and the edition tools are updated:</p>
+<p><img src="/img/extensions/Editor/MaterialsLibrary/SelectedMaterial.png" alt="SelectedMaterial"></p>
+<h2><a name="creating-a-new-material" class="anchor" href="#creating-a-new-material"></a>Creating A New Material</h2><p>If you want to create a new material, such as PBR, Water, Lava and more, just select a material type in the section &quot;Materials Library&quot;.
+Once selected, just click on the &quot;Apply Material&quot; button.</p>
+<p>Once clicked, the new material is created and the edition tools are updated automatically. Example with the PBR material:</p>
+<p><img src="/img/extensions/Editor/MaterialsLibrary/SelectPBR.png" alt="SelectPBR"></p>
+<p><strong>Note: the new materials are created with a name and a GUID. Don&#39;t hesitate the change the material name</strong></p>
+<p>Once it is applied:</p>
+<p><img src="/img/extensions/Editor/MaterialsLibrary/PBRApplied.png" alt="PBRApplied"></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
