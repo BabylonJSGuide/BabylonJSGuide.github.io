@@ -5,7 +5,7 @@ PG_TITLE: Using the Playground
 
 ## Overview ##
 ![](http://urbanproductions.com/wingy/babylon/playground/monaco/playground01.jpg)
-A Saved 'Custom' Playground Scene: http://babylonjs-playground.azurewebsites.net/#QKQHS
+A Saved 'Custom' Playground Scene: http://babylonjs-playground.com/#QKQHS
 
 ## The Top Menu ##
 ![](http://urbanproductions.com/wingy/babylon/playground/monaco/playground_tm01b.jpg)
@@ -58,33 +58,33 @@ This is a picture of the playground's pop-up compilation error detector panel.  
 ## Playground URL formats
 When you first arrive at the BabylonJS playground web site, the URL in your browser's address field... will look like this:
 
-http://babylonjs-playground.azurewebsites.net/
+http://babylonjs-playground.com/
 
 If you choose one of the demo scenes from the drop-down Scene Selector button, the playground URL will change to this:
 
-http://babylonjs-playground.azurewebsites.net/#
+http://babylonjs-playground.com/#
 
 (Feel free to edit the code of the demo scenes and click Run and/or Save. You can't damage the pre-installed demos)
 
 When you save a scene to the playground's database in order to share the URL with others or remember the scene for later, the URL will look something like this:
 
-http://babylonjs-playground.azurewebsites.net/#QKQHS
+http://babylonjs-playground.com/#QKQHS
 
 (Be sure to bookmark it, using your browser's bookmark system)
 
 If you save that scene again... (maybe after doing more work on the scene), the URL will increment, and look like this:
 
-http://babylonjs-playground.azurewebsites.net/#QKQHS#1
+http://babylonjs-playground.com/#QKQHS#1
 
 If you save that scene again... the URL will increment, and look like this:
 
-http://babylonjs-playground.azurewebsites.net/#QKQHS#2
+http://babylonjs-playground.com/#QKQHS#2
 
 (Again, be sure to bookmark this URL so you can easily return to it later)
 
 And lastly, if you want to load a specific pre-installed demo scene, such as the #12 Particles demo, you can use a URL that looks like this:
 
-http://babylonjs-playground.azurewebsites.net/?12
+http://babylonjs-playground.com/?12
 
 ## Notes and Goodies
 
@@ -95,6 +95,6 @@ Sometimes, you will run a scene and use your cursor keys and mouse in the render
 **And... That's A Wrap**  
 Hey, thanks for reading this tutorial and for discovering the BabylonJS playground.  We are very proud of it, and we think you will enjoy using it.  This tutorial is still quite new, and will likely be changing often.  Be sure to check back for updates and future features.
 
-**The BabylonJS Playground is located at... http://babylonjs-playground.azurewebsites.net**
+**The BabylonJS Playground is located at... http://babylonjs-playground.com**
 
 **Feel free to discuss the BabylonJS Playground, or any other BabylonJS framework topic... on our forum... located at:    http://www.html5gamedevs.com/forum/16-babylonjs/**

@@ -28,25 +28,6 @@ var __publicRootPath = '../../../public';
  *                                ROUTES                                *
  ************************************************************************/
 
-/**************
- * WHAT'S NEW *
- **************/
-router.get('/whats-new', function (req, res) {
-    fs.exists('public/html/whats-new.html', function (exists) {
-        if (exists) {
-            var options = {
-                root: path.join(__dirname, __publicRootPath)
-            };
-            res.status(200);
-            res.set({'Content-type': 'text/html'});
-            res.sendFile('./html/whats-new.html', options);
-        } else {
-            // render 404 - Page not found
-            logger.error('404 error - Page not found: public/html/whats-new.html');
-            res.render('errorpages/404.jade', {});
-        }
-    });
-});
 
 // PAGE EXTENSIONS
 router.get('/extensions', function (req, res) {

@@ -15,7 +15,6 @@ $x-small-screen: new-breakpoint(max-width 610px 6);
 @import "classes/classes";
 @import "classes/class";
 @import "index/index";
-@import "whats-new/whats-new";
 @import "statics/statics";
 @import "statics/static";
 @import "search/search";
@@ -26,7 +25,6 @@ $x-small-screen: new-breakpoint(max-width 610px 6);
 
 /** MOBILE **/
 @import "index/mobile_index";
-@import "whats-new/mobile_whats-new";
 @import "classes/mobile_class";
 @import "classes/mobile_classes";
 @import "statics/mobile_statics";

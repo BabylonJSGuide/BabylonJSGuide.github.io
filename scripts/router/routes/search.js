@@ -114,8 +114,7 @@ router.get('/', function (req, res) {
                 var validFilters = [];
 
                 basicFilters.forEach(function(filter){
-                    // exception for what's new (again)
-                    filter = (filter.trim() === 'whats-new') ? '- ' : filter;
+
 
                     var i = _.findIndex(resultByCat, function(cat){
                         return cat.category === filter;
@@ -172,11 +171,7 @@ module.exports = router;
 var processSearchResult = function(r){
     var version = r.src.substr(0, r.src.lastIndexOf('/'));
 
-    if(r.name == 'whats-new' ) {
-        version = '- ';
-        r.src = 'whats-new'
-    } //Remove the classes/ but keep the 1.14 and exporters !
-    else if (version.indexOf('/') != -1) version = version.substr(version.indexOf('/') + 1);
+    if (version.indexOf('/') != -1) version = version.substr(version.indexOf('/') + 1);
 
     r.version = version;
 

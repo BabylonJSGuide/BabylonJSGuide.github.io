@@ -20,10 +20,6 @@
                     html: '<i class="fa fa-home"></i>Home'
                 }),
                 $('<a>', {
-                    href: '/whats-new',
-                    html: '<i class="fa fa-file-text-o"></i>What\'s new?'
-                }),
-                $('<a>', {
                     href: '/begins',
                     html: '<i class="fa fa-book"></i>Begin Here'
                 }),
@@ -42,10 +38,6 @@
                 $('<a>', {
                     href: '/extensions',
                     html: '<i class="fa fa-wrench"></i>Extensions'
-                }),
-                $('<a>', {
-                    href: '/classes',
-                    html: '<i class="fa fa-files-o"></i>Classes'
                 }),
                 $('<a>', {
                     href: '/playground',

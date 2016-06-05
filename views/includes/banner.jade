@@ -11,9 +11,6 @@ nav.nav-main
             .do-not-hover#home(class={homeClassMobile: currentUrl === '/classes/class'})
                 a(href='/')
                     | Babylon.js | GUIDE
-            #whatsnew.item(class={active: currentUrl === '/whats-new'})
-                a(href='/whats-new')
-                    | What's new
             #begin.item(class={active: currentUrl === '/begins'})
                 a(href='/begins')
                     | Begin Here
@@ -29,9 +26,6 @@ nav.nav-main
             #extensions.item(class={active: currentUrl === '/extensions'})
                 a(href='/extensions')
                     | Extensions
-            #classes.item(class={active: (currentUrl === '/classes') || (currentUrl === '/classes/class')})
-                a(href='/classes')
-                    | Classes
             #playground.item(class={active: currentUrl === '/playground'})
                 a(href='/playground')
                     | Playground
