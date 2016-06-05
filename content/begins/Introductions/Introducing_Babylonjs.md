@@ -19,7 +19,7 @@ Simply put, you will need to use a browser that supports WebGL and has Javascrip
 | [**BabylonJS Main Website**](http://www.babylonjs.com/) |  Many great demos and useful links near the bottom |
 | [**BabylonJS Forum**](http://www.html5gamedevs.com/forum/16-babylonjs) | Ask questions, help others, meet great friends |
 | [**BabylonJS Documentation**](http://doc.babylonjs.com) | Our fantastic docs site |
-| [**BabylonJS Playground**](http://babylonjs-playground.azurewebsites.net) |  On-line white-boarding and scene-testing app |
+| [**BabylonJS Playground**](http://babylonjs-playground.com) |  On-line white-boarding and scene-testing app |
 
 ## The Big Picture ##
 
@@ -263,7 +263,7 @@ Let's take a look at some ways of transforming a mesh:
 
 **POSITION** - Every mesh is POSITIONED in a scene using X, Y, and Z settings.  You can think of the .position property... as the mesh's LOCATION.  The link below... is a saved playground scene that illustrates using a mesh's .position property.  Try to open it in a new window or new tab, so you can jump back and forth between this tutorial... and the playground scene:
 
-http://babylonjs-playground.azurewebsites.net/#35CPC
+http://babylonjs-playground.com/#35CPC
 
 In the yellow text at the top of the scene, you will see the Babylon.js one-line way to set mybox.position (using our friend... the Vector3 value object).
 
@@ -275,13 +275,13 @@ Watch this positioning demo scene for some time, if you please.  It will not tak
 
 Let's take a look at a playground scene that I once created and saved.  In this demo, I made those invisible rods... be visible:
 
-http://babylonjs-playground.azurewebsites.net/#YIT1S
+http://babylonjs-playground.com/#YIT1S
 
 Take some time to carefully watch that scene.  Like the last demo scene, the yellow text shows a Vector3 being used to set the .rotation property with some computer-generated values.  The box is shown doing positive and negative rotations around each of the 3 axes.  Under the yellow text... you again see the green text...  showing the 3 'discrete' ways to set the box's .rotation property with values.  I bet you understand this completely, don't you?  Easy.
 
 **SCALING** - Scaling... is stretching or shrinking... along any of the 3 scene axes.  Let's jump right into a saved playground scene that demonstrates scaling:
 
-http://babylonjs-playground.azurewebsites.net/#1VMQNH
+http://babylonjs-playground.com/#1VMQNH
 
 Again, take some time to watch the scene.  And once more, the yellow text shows the one-line Vector3 way of setting a mesh's .scaling, or you can use one or more of the discrete ways of setting scaling... shown in the green text. You may have noticed that scaling values are never negative.  It would be illogical to use a negative scaling value, and if you decide to use some negative values, unexpected results may occur.
 

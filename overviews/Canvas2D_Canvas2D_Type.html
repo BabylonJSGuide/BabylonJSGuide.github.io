@@ -1,0 +1,52 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item active"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>overviews</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Canvas 2D Type</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#two-types-of-canvas">Two types of Canvas</a></li>
+<li><a href="#the-caching-strategy">The Caching Strategy</a><ul>
+<li><a href="#available-strategies">Available Strategies</a></li>
+</ul>
+</li>
+<li><a href="#the-canvas-object-graph">The Canvas&#39; Object Graph</a></li>
+<li><a href="#a-canvas-is-also-a-group">A Canvas is also a Group</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="canvas2d-type-overview" class="anchor" href="#canvas2d-type-overview"></a>Canvas2D type overview</h1><p>The Canvas2D class is the main class of the feature, it&#39;s your starting point.</p>
+<p>This class is extending the Group2D one, so it&#39;s also a Primitive in itself and can be considered as such. Although you can&#39;t have an instance of Canvas2D which is a child of another Primitive, instances of this class are always meant to be the first object of the Graph.</p>
+<p>Inheriting the properties of Group2D, a Canvas is a 2D rectangle with a position and a size, the size can be specified by the user or it is automatically computed to fit its content. To follow Open/WebGL standard, the origin of the canvas is at the <strong>bottom/left</strong> corner and not at the top/left as one would expect.</p>
+<h2><a name="two-types-of-canvas" class="anchor" href="#two-types-of-canvas"></a>Two types of Canvas</h2><p>The Canvas can be rendered in two different spaces:</p>
+<ul>
+<li><strong>ScreenSpace</strong>: it lies above the rendered 3D Scene and is coplanar to the rendering viewport. Its position/rotation/scale is expressed in screen coordinate, with the origin being the top/left corner of the rendering viewport. <a href="http://babylonjs-playground.com/#2AVSFH#9">Example</a> - <i class="fa fa-eye" onclick="createIframe('2AVSFH#9', this)"></i><br/><div class="iframeContainer"></div><br/>.</li>
+<li><strong>WorldSpace</strong>: the canvas has a position/rotation/scale that is expressed in World Coordinates, your canvas is like a 2D Rectangle lying in World Space, like any other 3D objects you can find in a 3D Scene. <a href="http://babylonjs-playground.com/#1BKDEO#7">Example</a> - <i class="fa fa-eye" onclick="createIframe('1BKDEO#7', this)"></i><br/><div class="iframeContainer"></div><br/>.</li>
+</ul>
+<p>As you can guess, these two types serve different purposes, ScreenSpace being more adapted to render GUI in your Viewport, WorldSpace being more about taking advantage of the 2D Engine to render content in a 3D Scene, <strong>as a part</strong> of the 3D Scene.</p>
+<h2><a name="the-caching-strategy" class="anchor" href="#the-caching-strategy"></a>The Caching Strategy</h2><p>In order to preserve a good balance between rendering time and memory consumption the user has the possibility to cache in a bitmap the content of a Group (or the Canvas itself). Many caching strategies are predefined, hopefully for the user to always find what fits him/her the best.</p>
+<p><strong>Default behavior</strong>: </p>
+<ul>
+<li>ScreenSpace Canvas uses the <code>CACHESTRATEGY_DONTCACHE</code> by default, nothing is cached, the Canvas is rendered at every Scene Render.</li>
+<li>WorldSpace Canvas uses the only strategy available so far: <code>CACHESTRATEGY_CANVAS</code>, the whole content of the Canvas is cached into a bitmap.</li>
+</ul>
+<h4><a name="available-strategies" class="anchor" href="#available-strategies"></a>Available Strategies</h4><p><strong>Beware</strong> Understanding the different Caching Strategies is important when complex Canvas are built and performances start being a real consideration. The default behavior will keep things simple, however if you wish to harness the power of the Canvas2D feature, you need to understand the different caching strategies.</p>
+<p>The different strategies are:</p>
+<ul>
+<li><code>CACHESTRATEGY_DONTCACHE</code> Nothing is cached, every primitives are rendered every frame in the Viewport. Note this mode can only be chosen for ScreenSpace Canvas, WorldSpace ones has to be cached at some level.</li>
+<li><code>CACHESTRATEGY_CANVAS</code> Only the Canvas and its whole content will be cached. Simple and efficient if its size is ok for you and its content doesn&#39;t change every frame.</li>
+<li><code>CACHESTRATEGY_TOPLEVELGROUPS</code> The Canvas itself won&#39;t be cached, but each of its direct children group will be cached (so their content, also including sub groups). If you have a Canvas spanning the whole rendering viewport (say 1920*1080 pixels) and the content of the Canvas is only one small Group at the Top Left and another at the Bottom Right of the viewport, then you don&#39;t want to cache the whole screen for that less. This mode will only create a cache bitmap for the space taken by the two groups.</li>
+<li><code>CACHESTRATEGY_ALLGROUPS</code> The Canvas and each group will have their own cache, unless you change this behavior using the Group2D.cacheBehavior). This is by far the most memory consuming, but efficient if the content change frequently but at different pace. You can reduce greatly the amount of cache with Group2D.cacheBehavior though.</li>
+</ul>
+<h2><a name="the-canvas39-object-graph" class="anchor" href="#the-canvas-object-graph"></a>The Canvas&#39; Object Graph</h2><p>The content of a Canvas is defined by a graph of primitives, there are many kind of primitives, they are summarized in the <a href="http://doc.babylonjs.com/overviews/Canvas2D_Home">Home page</a>.</p>
+<p>The <a href="http://doc.babylonjs.com/overviews/Canvas2D_PosTransHierarchy">Position, Transformation and Hierarchy page</a> will help you to learn more about how this object&#39;s graph works.</p>
+<h2><a name="a-canvas-is-also-a-group" class="anchor" href="#a-canvas-is-also-a-group"></a>A Canvas is also a Group</h2><p>So it&#39;s useful to know about the different features that a <a href="http://doc.babylonjs.com/overviews/Canvas2D_Group2D">Group</a> offers and also the <a href="http://doc.babylonjs.com/overviews/Canvas2D_Prim2DBase">Primitive Base</a> type.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

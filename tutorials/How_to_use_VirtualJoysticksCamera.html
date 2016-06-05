@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item active"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>tutorials</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>How to use VirtualJoysticksCamera</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#using-the-babylonvirtualjoystickscamera-camera">Using the BABYLON.VirtualJoysticksCamera camera</a></li>
+<li><a href="#video">Video</a></li>
+<li><a href="#complete-sample">Complete sample</a></li>
+<li><a href="#if-youre-switching-back-dont-forget-to-dispose">If you’re switching back, don’t forget to dispose!</a></li>
+</ul>
+</div></div><div id="staticContent"><p>The VirtualJoysticksCamera will create a Babylon.js camera that can move within your games, thanks to 2 touch-enabled joysticks drawn on the left &amp; right sides of the screen. It’s designed to be controlled via your 2 thumbs.</p>
+<p>It derives from the <a href="https://github.com/BabylonJS/Babylon.js/blob/master/Babylon/Cameras/babylon.freeCamera.js">FreeCamera</a> to provide a FPS-like experience and instantiates 2 <a href="http://doc.babylonjs.com/page.php?p=25064">VirtualJoystick</a> for you, automatically.</p>
+<p><strong>Note:</strong> We’re using the <a href="http://www.w3.org/TR/pointerevents/">W3C Pointer Events</a> model. To enable touch on all devices &amp; platforms, we’re using our <a href="http://handjs.codeplex.com/">Hand.js polyfill</a> library. Don’t forget to include it in your project, otherwise the virtual joysticks will only work in IE.</p>
+<h3><a name="using-the-babylonvirtualjoystickscamera-camera" class="anchor" href="#using-the-babylonvirtualjoystickscamera-camera"></a>Using the BABYLON.VirtualJoysticksCamera camera</h3><p>It’s the same concept as all our cameras, 1 line of code to activate all the magic. For instance, here is how to create a virtual joysticks camera at the center of the world:</p>
+<pre><code class="lang-javascript">var VJC = new BABYLON.VirtualJoysticksCamera(&quot;VJC&quot;, BABYLON.Vector3.Zero(), scene);
+</code></pre>
+<p>The camera constructor takes the following parameters:</p>
+<ul>
+<li>Name</li>
+<li>Position</li>
+<li>Scene</li>
+</ul>
+<h3><a name="video" class="anchor" href="#video"></a>Video</h3><p>Here is a 1 minute video demonstrating how it works:</p>
+<p><a href="https://www.youtube.com/watch?v=53Piiy71lB0">Virtual Joysticks Camera demo in video</a></p>
+<p><img src="http://david.blob.core.windows.net/babylonjs/VJCBabylon.jpg" alt="Screenshot of the Virtual Joysticks Camera in action on Espilit"></p>
+<h3><a name="complete-sample" class="anchor" href="#complete-sample"></a>Complete sample</h3><p>Here is a complete sample that loads the Espilit demo and switches the default camera to a virtual joysticks camera:</p>
+<pre><code class="lang-javascript">document.addEventListener(&quot;DOMContentLoaded&quot;, startGame, false);
+function startGame() {
+  if (BABYLON.Engine.isSupported()) {
+    var canvas = document.getElementById(&quot;renderCanvas&quot;);
+    var engine = new BABYLON.Engine(canvas, true);
+
+    BABYLON.SceneLoader.Load(&quot;Espilit/&quot;, &quot;Espilit.babylon&quot;, engine, function (newScene) {
+
+      var VJC = new BABYLON.VirtualJoysticksCamera(&quot;VJC&quot;, newScene.activeCamera.position, newScene);
+      VJC.rotation = newScene.activeCamera.rotation;
+      VJC.checkCollisions = newScene.activeCamera.checkCollisions;
+      VJC.applyGravity = newScene.activeCamera.applyGravity;
+
+      // Wait for textures and shaders to be ready
+      newScene.executeWhenReady(function () {
+        newScene.activeCamera = VJC;
+        // Attach camera to canvas inputs
+        newScene.activeCamera.attachControl(canvas);
+        // Once the scene is loaded, just register a render loop to render it
+        engine.runRenderLoop(function () {
+          newScene.render();
+        }),
+      }),
+    }, function (progress) {
+    // To do: give progress feedback to user
+    }),
+  }
+}
+</code></pre>
+<h3><a name="if-youre-switching-back-dont-forget-to-dispose" class="anchor" href="#if-youre-switching-back-dont-forget-to-dispose"></a>If you’re switching back, don’t forget to dispose!</h3><p>If you switch back to another camera, don’t forget to call the dispose() function first. Indeed, the VirtualJoysticks are creating a 2D canvas on top of the 3D WebGL canvas to draw the joysticks with cyan and yellow circles. If you forget to call the dispose() function, the 2D canvas will remain, and will continue to use touch events input.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

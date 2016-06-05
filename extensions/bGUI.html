@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item active"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>extensions</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>bGUI</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#what">What?</a></li>
+<li><a href="#why-i-can-use-htmlcss-to-do-that">Why? I can use HTML/CSS to do that!</a></li>
+<li><a href="#how-does-it-work">How does it work?</a></li>
+<li><a href="#is-it-easy-to-use">Is it easy to use?</a></li>
+<li><a href="#any-dependencies">Any dependencies?</a></li>
+<li><a href="#is-a-demo-available-somewhere">Is a demo available somewhere?</a></li>
+<li><a href="#copyright">Copyright?</a></li>
+</ul>
+</div></div><div id="staticContent"><p><img src="https://raw.githubusercontent.com/Temechon/bGUI/master/logo_sd.png" alt=""> v1.0</p>
+<p><strong>A Babylon.js extension to create a beautiful GUI</strong></p>
+<h1><a name="what" class="anchor" href="#what"></a>What?</h1><p>bGUI is an extension for the 3D engine <a href="www.babylonjs.com">Babylon.js</a> providing a set of tools and class to display a game GUI directly into your Babylon 3D game, without any HTML/CSS.</p>
+<h1><a name="why-i-can-use-htmlcss-to-do-that" class="anchor" href="#why-i-can-use-htmlcss-to-do-that"></a>Why? I can use HTML/CSS to do that!</h1><p>The only solution (for now) to deploy a babylon.js game on mobile platforms (Android/iOS - Windows Phone supports Webgl application natively) 
+is to use <a href="https://www.ludei.com/cocoonjs/">Cocoon.js</a> provided by Ludei, with the technology Canvas+ (Webview+ is not so great in term of performance for 3D scenes).
+However, Canvas+ does not support DOM elements, such as div, img, ... The only solution is to create the GUI directly in the HTML canvas.
+That&#39;s what bGUI do!</p>
+<p>This library can also fit to some people who want to control the game GUI in javascript without the need of jQuery or manipulating DOM objects.</p>
+<h1><a name="how-does-it-work" class="anchor" href="#how-does-it-work"></a>How does it work?</h1><p>bGUI adds automatically to your game an orthographic camera correctly configured (according to the canvas size and the device pixel ratio), 
+and gives you several classes to create your game GUI.
+A <strong>GUIObject</strong> is the root class of bGUI, and represents a 3D object (sphere, plane, cube, custom object, ...) translated into the GUI world, and removed from your game world.</p>
+<p>bGUI gives you 2 specific classes in order to create HUD easily : </p>
+<ul>
+<li>GUIPanel : extends <strong>GUIObject</strong> =&gt; it&#39;s a plane composed of an image texture.</li>
+<li>GUIText : extends <strong>GUIPanel</strong> =&gt; its image texture is actually a dynamic texture where the specified text is written.</li>
+</ul>
+<h1><a name="is-it-easy-to-use" class="anchor" href="#is-it-easy-to-use"></a>Is it easy to use?</h1><p>Of course ! First, you have to create a <strong>GUISystem</strong>, which represents your GUI world.
+It takes 3 parameters: the Babylon scene where the GUI will be created, and the width and the height of your GUI (in pixels).</p>
+<pre><code class="lang-javascript">var gui = new bGUI.GUISystem(scene, 1200, 780);
+</code></pre>
+<p>Now your GUI is created, you can create a new panel like this: </p>
+<pre><code class="lang-javascript">var headTexture = new BABYLON.Texture(&quot;assets/head.png&quot;, scene);
+var head = new bGUI.GUIPanel(&quot;head&quot;, headTexture, null, gui);
+</code></pre>
+<p>A GUIPanel takes 4 parameters : </p>
+<ul>
+<li>The name of this panel</li>
+<li>The texture</li>
+<li>The texture displayed when the user click/touch on this panel (to create a button for example)</li>
+<li>The gui system where this panel should be displayed</li>
+</ul>
+<p>bGUI provides a set of methods to update the position of the panel, 3 actually : </p>
+<ul>
+<li><strong>guiposition(BABYLON.Vector3)</strong> : to update the mesh in the GUI world (takes a position in pixels)</li>
+<li><strong>relativePosition(BABYLON.Vector3)</strong> : to update the mesh relatively to the origin of the GUI system (takes a position in percentages)</li>
+<li><strong>position(BABYLON.Vector3)</strong> :to update the mesh in the BABYLON world (takes a position in babylon units)</li>
+</ul>
+<p>You can also use a direct reference to the BABYLON mesh used for any GUIObject. This way, you can use 
+Babylon animations to update your panel for example. </p>
+<h1><a name="any-dependencies" class="anchor" href="#any-dependencies"></a>Any dependencies?</h1><p>bGUI depends on <a href="http://www.babylonjs.com">babylon.js (from v2.1-beta)</a>, and <a href="https://handjs.codeplex.com/">hand.js</a> for touch events.</p>
+<h1><a name="is-a-demo-available-somewhere" class="anchor" href="#is-a-demo-available-somewhere"></a>Is a demo available somewhere?</h1><p>Yes : <a href="http://temechon.github.io/bGUI/">http://temechon.github.io/bGUI/</a>
+Try to click on the images :)</p>
+<h1><a name="copyright" class="anchor" href="#copyright"></a>Copyright?</h1><p><a href="http://www.wtfpl.net/about/">WTFPL</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

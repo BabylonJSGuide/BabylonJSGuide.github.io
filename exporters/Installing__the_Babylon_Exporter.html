@@ -1,0 +1,44 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item active"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>exporters</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Installing the Babylon Exporter</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#loading-babylon-exporter-addon-into-blender">Loading Babylon Exporter addon into Blender</a></li>
+</ul>
+</div></div><div id="staticContent"><h3><a name="loading-babylon-exporter-addon-into-blender" class="anchor" href="#loading-babylon-exporter-addon-into-blender"></a>Loading Babylon Exporter addon into Blender</h3><p><strong>A. Getting the files</strong></p>
+<ol>
+<li>Download and unzip the Babylon.js files from <a href="https://github.com/BabylonJS/Babylon.js">https://github.com/BabylonJS/Babylon.js</a>. You can unzip the files to any suitable drive or directory.</li>
+<li>Browse through the unzipped files and directories to find the Blender exporter and the latest version of Babylon.js. In the case of the exporter you are looking for a file named : <em>io_export_babylon.py</em></li>
+<li>Note where the two files are and as a precaution make backup copies somewhere else on your hard drive. </li>
+</ol>
+<p><strong>B. Installing the exporter into Blender</strong></p>
+<ol>
+<li>Open Blender and go to <em>File-&gt;User Preferences-&gt;Addons Tab</em></li>
+<li>At the bottom of the little panel that opens you will see an <em>Install Button</em> (1 in image below).</li>
+<li>Click this button, then navigate to the hard drive and directory where you have stored the file <em>io_export_babylon.py</em> (either where you unzipped Babylon.js or where you made a backup copy. </li>
+<li>Once the installation is complete, click on the <em>Import/Export</em> button (2 in image below) and browse through the list of addons until you find the now installed Babylon exporter. Click on the check box (3 in image below) for the Babylon Exporter to activate the addon, then click on the <em>Save Settings</em>  button (4 in image below) in order not to have to repeat the activation process next time you open Blender.</li>
+</ol>
+<p><img src="https://dl.dropboxusercontent.com/u/70260871/blender/install1.png" alt=""></p>
+<p><strong>C. Some things you should know</strong></p>
+<ol>
+<li>If all you needed from the gitHub download was the latest versions of the exporter and Babylon.js, if you have made a backup copy, then you can delete the zip file and all the unzipped files.</li>
+<li>Blender has made a copy of <em>io_export_babylon.py</em> in a directory on your C drive:</li>
+</ol>
+<blockquote>
+<p><em>C:\Documents and Settings\UserName\Application Data\Blender Foundation\Blender\2.7x\scripts\addons</em>. </p>
+</blockquote>
+<p>Unfortunately this directory is usually hidden from view unless you set Windows Explorer so show hidden directories.</p>
+<p>Using the above procedure is simpler and faster than trying to install the addon by dropping the right file in the right directory in Blender  - and less prone to mistakes.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

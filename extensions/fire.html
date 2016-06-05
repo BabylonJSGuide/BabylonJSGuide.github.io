@@ -1,0 +1,39 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item active"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>extensions</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Fire</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#using-the-fire-material">Using the fire material</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="fire-material" class="anchor" href="#fire-material"></a>Fire material</h1><p><img src="/img/extensions/materials/fire.png" alt="Fire material"></p>
+<h2><a name="using-the-fire-material" class="anchor" href="#using-the-fire-material"></a>Using the fire material</h2><p>Fire material can be found here: <a href="https://github.com/BabylonJS/Babylon.js/blob/master/materialsLibrary/dist/babylon.fireMaterial.js">https://github.com/BabylonJS/Babylon.js/blob/master/materialsLibrary/dist/babylon.fireMaterial.js</a></p>
+<p>A demo can be found here: <a href="http://www.babylonjs-playground.com/#21IIM9#1">http://www.babylonjs-playground.com/#21IIM9#1</a> - <i class="fa fa-eye" onclick="createIframe('21IIM9#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>The fire material works with 3 textures:</p>
+<ul>
+<li>The diffuse texture (fire texture)</li>
+<li>The distortion texture (to create perturbations on diffuse texture)</li>
+<li>The opacity texture (black and white)</li>
+</ul>
+<p><strong>Note:</strong> <em>The fire material doesn&#39;t work with lighting. So, shadow maps are also disabled.</em></p>
+<pre><code>var fireMaterial = new BABYLON.FireMaterial(&quot;fireMaterial&quot;, scene);
+fireMaterial.diffuseTexture = new BABYLON.Texture(&quot;diffuse.png&quot;, scene);
+fireMaterial.distortionTexture = new BABYLON.Texture(&quot;distortion.png&quot;, scene);
+fireMaterial.opacityTexture = new BABYLON.Texture(&quot;opacity.png&quot;, scene);
+
+var plane = BABYLON.Mesh.CreatePlane(&quot;fireplane&quot;, 1.0, scene);
+plane.material = fire;
+</code></pre><p>The speed of fire flames can be customized like:</p>
+<pre><code>fireMaterial.speed = 5.0; // Default is 1.0
+</code></pre></div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item active"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>overviews</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Using the Origin of a Primitive</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-does-it-work">How does it work</a></li>
+<li><a href="#a-concrete-example">A concrete example</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="using-the-origin-of-a-primitive" class="anchor" href="#using-the-origin-of-a-primitive"></a>Using the Origin of a Primitive</h1><p>Each primitive have a position/rotation/scale properties that define their transformation into the canvas, relative to its parent.</p>
+<p>Another property comes into play to add more flexibility: the <code>origin</code> property.</p>
+<h2><a name="how-does-it-work" class="anchor" href="#how-does-it-work"></a>How does it work</h2><p>The <code>origin</code> property defines where is located the [0,0] coordinate (the origin) in the Primitive. This is expressed in a uniform way (the value for both X and Y axes are ranged between 0 and 1) relative to the bottom/left corner of the primitive bounding box.</p>
+<p>Position and Rotation will be made relative to this origin, so it&#39;s important to understand how it works.</p>
+<p>The default value is [0.5;0.5] which means the origin is at the center of the Primitive. Rotation will be made around this center and position will be relative from this center.</p>
+<p>The actual position of the origin point is computed using the <code>actualSize</code> property of the Primitive, simply by multiplying the <code>origin</code> by <code>actualSize</code> then we subtract every coordinate for the Primitive by the resulting value. </p>
+<h2><a name="a-concrete-example" class="anchor" href="#a-concrete-example"></a>A concrete example</h2><p>A example worth a thousand words: take a look at <a href="http://babylonjs-playground.com/#DIF54">this one</a> - <i class="fa fa-eye" onclick="createIframe('DIF54', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>In this example we create the following Canvas and Rectangle:</p>
+<pre><code class="lang-javascript">var canvas2 = Canvas2D.CreateScreenSpace(scene, { cachingStrategy: Canvas2D.CACHESTRATEGY_DONTCACHE });
+canvas2.backgroundFill = Canvas2D.GetSolidColorBrushFromHex(&quot;#C0808080&quot;);
+canvas2.backgroundRoundRadius = 50;
+
+var rect = Rectangle2D.Create(canvas2, { x: 200, y: 200, width: 100, height: 100, fill: Canvas2D.GetSolidColorBrushFromHex(&quot;#808080FF&quot;), border: Canvas2D.GetSolidColorBrushFromHex(&quot;#FFFFFFFF&quot;), borderThickness: 4, roundRadius: 5 });
+</code></pre>
+<p>The rectangle is positioned 200 pixel from the bottom/left corner of the Canvas in both width and height. As previously mentioned the origin by default is [0.5;0.5].</p>
+<h5><a name="center-origin" class="anchor" href="#center-origin"></a>Center Origin</h5><p><img src="http://i.imgur.com/iMMiAIF.png" alt="Centered"></p>
+<p>The origin is symbolized by the red dot, which  is at the center of the Rectangle and positioned at [200;200] from the bottom/left of the canvas.</p>
+<p>Why is it relative from the bottom/left of the Canvas? Because by default the <code>origin</code> property of a Canvas is [0;0] and not [0.5;0.5].</p>
+<h5><a name="bottomleft-origin-00" class="anchor" href="#bottomleft-origin-00"></a>Bottom/Left Origin [0;0]</h5><p><img src="http://i.imgur.com/B3zw2XX.png" alt="Bottom/Left"></p>
+<h5><a name="topleft-origin-01" class="anchor" href="#topleft-origin-01"></a>Top/Left Origin [0;1]</h5><p><img src="http://i.imgur.com/9NP6hqG.png" alt="Top/Left"></p>
+<h5><a name="topright-origin-11" class="anchor" href="#topright-origin-11"></a>Top/Right Origin [1;1]</h5><p><img src="http://i.imgur.com/Irj6js9.png" alt="Top/Right"></p>
+<h5><a name="bottomright-origin-01" class="anchor" href="#bottomright-origin-01"></a>Bottom/Right Origin [0;1]</h5><p><img src="http://i.imgur.com/bRo9wXq.png" alt="Bottom/Right"></p>
+<h2><a name="conclusion" class="anchor" href="#conclusion"></a>Conclusion</h2><p>The previous examples are showing the commonly used values, but nothing prevent you to set any kind of values for the [X;Y] origin point. Even bigger or lesser than 1, if it makes sense...</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

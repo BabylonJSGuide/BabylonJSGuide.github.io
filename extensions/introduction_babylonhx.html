@@ -1,0 +1,46 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item active"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>extensions</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Introduction</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#cross-platform-3d-engine">Cross-Platform 3D Engine</a><ul>
+<li><a href="#what">WHAT ?</a></li>
+<li><a href="#why">WHY ?</a></li>
+<li><a href="#how">HOW ?</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><p>#BabylonHx</p>
+<p>##Cross-Platform 3D Engine</p>
+<p><img src="/img/extensions/BabylonHx/babylonhx.png" alt="logo"></p>
+<p><img src="/img/extensions/BabylonHx/platforms.png" alt="logo"></p>
+<h3><a name="what" class="anchor" href="#what"></a>WHAT ?</h3><p>BabylonHx is an ultra-portable lightweight 3D engine.
+It is a port of the excellent BabylonJs 3D engine to the Haxe programming language.</p>
+<p>It brings Babylon3D to all mainstream platforms in form of native app.</p>
+<p>Being compatible with three Haxe libraries/frameworks for cross-platform development: Lime/OpenFl, NME and Snow,
+it allows you to easily create 3D games and applications for almost every platform - all from a single code base.
+Some of the platforms you can build games and applications for are: Windows, Mac, Linux, iOS, Android, BlackBerry, FirefoxOS, Tizen, HTML5...</p>
+<p>BabylonHx is especially flexible when it comes to building for the web.There are three ways to build for web:
+Use it in Lime/OpenFl or Snow project and build for JS/HTML5 just like for any other target supported by this libraries.
+When targeting the web only, BabylonHx can work with no dependency on external libraries at all.
+Simply create Haxe JS project and build it by passing &quot;purejs&quot; parameter to Haxe compiler.
+Finally, you can compile BabylonHx engine to JS file and then use it from JavaScript in exactly the same way you would use the original BabylonJS engine. In fact, you can simply replace the original babylon.js file in existing BabylonJS javascript project with the babylon.js file compiled from BabylonHx and everything will work the same.</p>
+<h3><a name="why" class="anchor" href="#why"></a>WHY ?</h3><p>Primary reason for doing this port was a practical need for a cross-platform 3D engine. A true &#39;code once run everywhere&#39; solution - which I finaly got with this port.</p>
+<p>Another reason was was curiosity. Not to see if it can be done but too see how far I can go with Haxe. It turns out that I can go as far as I wish.
+With Haxe, there are no limits!</p>
+<p>BabylonHx is WIP, its not &#39;feature complete&#39; (compared to the original JS version) but its very close to that. It covers my current needs but some stuff is still missing (or needs to be fixed), especialy on C++ targets.</p>
+<p>This project is also a sort of my &#39;give back&#39; to Haxe from which I have benefited a lot in the last few years. Hopefully, it will help in bringing more attention to this amazing programming language and to the technologies built on top of it.</p>
+<h3><a name="how" class="anchor" href="#how"></a>HOW ?</h3><p>See the <a href="http://babylonhx.gamestudiohx.com/">official website</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

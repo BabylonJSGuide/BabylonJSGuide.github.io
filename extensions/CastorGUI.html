@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item active"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>extensions</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>CastorGUI</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#features">Features:</a></li>
+<li><a href="#quick-overview-of-use">Quick overview of use</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="castorgui-v15" class="anchor" href="#castorgui-v15"></a>CastorGUI V1.5</h1><p>Library to display a GUI game as a layer on top of the canvas HTML/CSS.</p>
+<ul>
+<li><a href="http://www.babylon.actifgames.com/demoCastorGUI/">Demo online of this extension</a></li>
+<li><a href="https://github.com/dad72/CastorGUI/wiki">Tutorial</a></li>
+<li><a href="https://github.com/dad72/CastorGUI/tree/master/doc">Documentation</a></li>
+</ul>
+<h2><a name="features" class="anchor" href="#features"></a>Features:</h2><p>Select or create themes.</p>
+<p>Create GUI (element html5 and css3):</p>
+<ul>
+<li>texture</li>
+<li>text</li>
+<li>label</li>
+<li>window draggable (with title &amp; button close)</li>
+<li>dialog (with button close)</li>
+<li>panel (simple dialog without button close)</li>
+<li>button</li>
+<li>slider</li>
+<li>progress</li>
+<li>meter (jauge de measure)</li>
+<li>select color (with compatitility IE and Edge)</li>
+<li>spinner</li>
+<li>radio button</li>
+<li>checkbox</li>
+<li>textfield</li>
+<li>textarea</li>
+<li>fieldset</li>
+<li>select with options</li>
+</ul>
+<h2><a name="quick-overview-of-use" class="anchor" href="#quick-overview-of-use"></a>Quick overview of use</h2><p>We must create a GUIManager that allows to recover the origin of the canvas and provides other basic thing.
+A GUIManager can have a CSS that Formatted anything you want to customize your GUI.
+You can also options to add a theme in the third parameter.</p>
+<pre><code class="lang-javascript">var canvas = document.getElementById(&quot;game&quot;);
+var css = &quot;button {cursor:pointer;}&quot;;
+var options = {themeRoot: &quot;../style/&quot;, themeGUI: &quot;default&quot;};
+var guisystem = new CASTORGUI.GUIManager(canvas, css, options);
+</code></pre>
+<p>Then we create interfaces items. eg textures and dialog with text:</p>
+<pre><code class="lang-javascript">var myFunction = function() { alert(&quot;Yes, this work!&quot;); };
+var guiTexture = new CASTORGUI.GUITexture(&quot;life&quot;, &quot;data/image.png&quot;, {w:50,h:50,x:10,y:0}, guisystem, myFunction);
+
+var optionsDialog = {w: (guisystem.getCanvasWidth().width - 20), h: 100, x: 8, y: (guisystem.getCanvasWidth().height - 110)};
+var dialog = new CASTORGUI.GUIDialog(&quot;dialog&quot;, optionsDialog, guisystem);
+dialog.setVisible(true);
+
+var text = new CASTORGUI.GUIText(&quot;textDialog&quot;, {size:15, text:&quot;Display text here&quot;}, guisystem, false);
+dialog.add(text);
+</code></pre>
+<p>That&#39;s it. Everything works the same way with the same simplicity.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

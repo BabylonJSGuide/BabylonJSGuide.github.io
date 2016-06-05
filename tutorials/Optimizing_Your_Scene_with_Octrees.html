@@ -1,0 +1,66 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item active"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>tutorials</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Optimizing Your Scene with Octrees</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#optimizing-meshes-selection-for-rendering">Optimizing meshes selection for rendering</a></li>
+<li><a href="#managing-dynamic-meshes">Managing dynamic meshes</a></li>
+<li><a href="#optimizing-collisions-and-picking">Optimizing collisions and picking</a></li>
+<li><a href="#groundmesh">GroundMesh</a></li>
+<li><a href="#using-octrees-manually">Using octrees manually</a></li>
+<li><a href="#demos">Demos</a></li>
+</ul>
+</div></div><div id="staticContent"><p>Octrees are a really powerful data structure that can quickly select entities based on space coordinates.
+More on wikipedia: <a href="http://en.wikipedia.org/wiki/Octree">http://en.wikipedia.org/wiki/Octree</a></p>
+<p>Babylon.js supports octrees through a class named <code>BABYLON.Octree</code>. Dedicated functions are available to help you create these octrees when required:</p>
+<h1><a name="optimizing-meshes-selection-for-rendering" class="anchor" href="#optimizing-meshes-selection-for-rendering"></a>Optimizing meshes selection for rendering</h1><p>If your scene has a lot of meshes, it can be useful to create an octree to speed visible meshes selection (e.g. finding meshes the camera can see). To do so, just call this function:</p>
+<pre><code class="lang-javascript">var octree = scene.createOrUpdateSelectionOctree(capacity, maxDepth)
+</code></pre>
+<p>You can call the function each time you want to update your octree. This function accepts two parameters:</p>
+<ul>
+<li>capacity: defines the maximum number of meshes you want on your octree&#39;s leaves. The default value is 64.</li>
+<li>maxDepth: defines the maximum depth (sub-levels) for your octree. Default value is 2, which means 8 <em> 8 </em> 8 = 512 blocks :) (This parameter takes precedence over capacity.)</li>
+</ul>
+<p><strong>Warning: Octrees can be counterproductive if there are not enough meshes in your scene</strong></p>
+<h1><a name="managing-dynamic-meshes" class="anchor" href="#managing-dynamic-meshes"></a>Managing dynamic meshes</h1><p>The main problem with octrees is that your meshes must be static. Indeed, an octree is not dynamic which means that it cannot take into account a mesh&#39;s movement.
+If you want to have dynamic meshes while keeping your octree, you can just register a mesh as dynamic like this:</p>
+<pre><code class="lang-javascript">octree.dynamicContent.push(mesh)
+</code></pre>
+<p>In this case, the octree will always select the dynamic mesh.</p>
+<h1><a name="optimizing-collisions-and-picking" class="anchor" href="#optimizing-collisions-and-picking"></a>Optimizing collisions and picking</h1><p>Computing collisions or clicking-on complex meshes (more than 10k vertices for instance) can be really slow. You can speed things up by subdividing your mesh into submeshes using <code>mesh.subdivide(x)</code> where x is the number of submeshes you want.</p>
+<p>Then you can optimize the selection of submeshes for collisions or picking by creating an octree on the mesh for its submeshes:</p>
+<pre><code class="lang-javascript">mesh.createOrUpdateSubmeshesOctree(capacity, maxDepth)
+</code></pre>
+<p>You can even specify the usage of your octree independently:</p>
+<ul>
+<li><code>mesh.useOctreeForCollisions</code></li>
+<li><code>mesh.useOctreeForPicking</code></li>
+<li><code>mesh.useOctreeForRenderingSelection</code> : Octree for submeshes can even be used during mesh selection based on camera field of view. Once a mesh is selected by the camera, if the mesh has submeshes, the camera has to select which one is visible. In this case, having an octree can be really helpful.</li>
+</ul>
+<h1><a name="groundmesh" class="anchor" href="#groundmesh"></a>GroundMesh</h1><p>For the specific case of ground meshes, Babylon.js provides a class called <code>BABYLON.GroundMesh</code> that you can create using <code>BABYLON.Mesh.CreateGround</code> and <code>BABYLON.Mesh.CreateGroundFromHeightMap</code>.</p>
+<p>By calling <code>groundMesh.optimize(chunkSize)</code> where chunkSize defines the number of submeshes you want, the mesh will be optimized for rendering, picking and collisions by creating an internal octree (Be sure to select a correct chunkSize).</p>
+<h1><a name="using-octrees-manually" class="anchor" href="#using-octrees-manually"></a>Using octrees manually</h1><p>You can also use octrees from your code to get a list of meshes or submeshes.</p>
+<p>Here are the helpful functions you can find on an octree:</p>
+<ul>
+<li><code>select(frustumPlanes: Plane[], allowDuplicate: boolean)</code></li>
+<li><code>intersects(sphereCenter: Vector3, sphereRadius: number, allowDuplicate: boolean)</code></li>
+<li><code>intersectsRay(ray: Ray)</code></li>
+</ul>
+<p>These functions return a <a href="https://github.com/BabylonJS/Babylon.js/blob/master/Babylon/Tools/babylon.smartArray.ts">SmartArray</a> where duplicates are present or not according to <code>allowDuplicate</code> parameter/</p>
+<h1><a name="demos" class="anchor" href="#demos"></a>Demos</h1><ul>
+<li><a href="http://www.babylonjs.com/?OCTREE">http://www.babylonjs.com/?OCTREE</a></li>
+<li><a href="http://www.babylonjs.com/?INSTANCES">http://www.babylonjs.com/?INSTANCES</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

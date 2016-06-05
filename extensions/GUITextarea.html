@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item active"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>extensions</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>GUITextarea</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><pre><code>* [Parameters](#parameters)
+</code></pre><ul>
+<li><a href="#options">Options</a></li>
+<li><a href="#methods">Methods</a><ul>
+<li><a href="#getvalue-void">getValue() → void</a></li>
+<li><a href="#setvalue-void">setValue() → void</a></li>
+<li><a href="#setvisiblebool-fade-void">setVisible(bool, fade) → void</a></li>
+<li><a href="#isvisible-void">isVisible() → void</a></li>
+<li><a href="#dispose-void">dispose() → void</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><p>##new <a href="#">GUITextarea</a>(id, options, guimanager, append)
+Creates a new GUITextarea</p>
+<p>####Parameters
+Name | Type | Description
+---|---|---
+<strong>id</strong> | string | The id and name element
+<strong>options</strong> | json | Options of element
+<strong>guimanager</strong> | GUIManager | The gui manager</p>
+<h2><a name="strongappendstrong-bool-is-added-to-the-ltbodygt-gt-true-by-default-optional" class="anchor" href="#append-bool-is-added-to-the-ltbodygt-gt-true-by-default-optional"></a><strong>append</strong> | bool | is added to the &lt;body&gt;. =&gt; True by default (optional)</h2><p>##Options</p>
+<ul>
+<li><strong>w</strong>: width of textarea (in pixel)</li>
+<li><strong>h</strong>: height of textarea (in pixel)</li>
+<li><strong>x</strong>: position left of textarea (in pixel)</li>
+<li><strong>y</strong>: position top of textarea (in pixel)</li>
+<li><strong>value</strong>: value of textarea (string)</li>
+<li><strong>placeholder</strong>: value by default of textfield (string)</li>
+<li><strong>background</strong>: background of textarea (int) =&gt; &quot;white&quot; by default (optional)</li>
+<li><strong>color</strong>: color the textarea (string) =&gt; &quot;black&quot; by default (optional)</li>
+<li><strong>zIndex</strong>: depth of the element (int) =&gt; 1 by default</li>
+<li><strong>tabindex</strong>: Tab order of the field.</li>
+</ul>
+<p>##Methods</p>
+<p>###getValue() → void
+Get the value element</p>
+<p>###setValue() → void
+Set the value element</p>
+<p>###setVisible(bool, fade) → void
+Set this GUI element to visible or invisible</p>
+<p>###isVisible() → void
+Returns element if is visible or no</p>
+<p>###dispose() → void
+Dispose the GUITextarea, and delete element.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

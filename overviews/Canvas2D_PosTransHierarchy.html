@@ -1,0 +1,68 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item active"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>overviews</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>About positioning, transformation and hierarchy</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#its-all-relative">It&#39;s all relative!</a></li>
+<li><a href="#positioning">Positioning</a></li>
+<li><a href="#transforming">Transforming</a><ul>
+<li><a href="#transformation-matrices">Transformation matrices</a></li>
+</ul>
+</li>
+<li><a href="#hierarchy">Hierarchy</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="about-positioning-transformation-and-hierarchy" class="anchor" href="#about-positioning-transformation-and-hierarchy"></a>About positioning, transformation and hierarchy</h1><h2><a name="it39s-all-relative" class="anchor" href="#its-all-relative"></a>It&#39;s all relative!</h2><p>Coordinates are always relative to something, in our case the starting point of reference is the <strong>bottom/left</strong> corner of the rendering viewport.</p>
+<p>It will never be said enough: <em>bottom</em>, not <em>top</em>: <strong>bottom</strong>.</p>
+<p>Why? Because the Canvas2D feature is 100% WebGL based, in WebGL the <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/viewport">Viewport</a> origin it at the bottom/left corner. So in order to make things coherent and working smoothly, we follow the same rule: origin is at the <strong>bottom/left</strong> corner of the viewport! (I think now you&#39;ve got it!)</p>
+<p>When you create a Canvas2D object, its <code>x</code> and <code>y</code> properties will define the position of the Canvas&#39; <code>origin</code> from the bottom/left corner of the Viewport.</p>
+<p>One small, but important detail to notice is the <code>origin</code> concept. Each Primitive (also the Canvas2D, because it&#39;s a Primitive) has an <code>origin</code> property which defines where in placed the [0;0] coordinate in the primitive.</p>
+<p>To learn more about the <code>origin</code> property, head to this <a href="http://doc.babylonjs.com/overviews/Canvas2D_Origin">page</a>.</p>
+<h2><a name="positioning" class="anchor" href="#positioning"></a>Positioning</h2><p>Consider the following code:</p>
+<pre><code class="lang-javascript">var canvas2 = Canvas2D.CreateScreenSpace(scene, { id: &quot;ScreenCanvas&quot;, pos: new Vector2(20, 30), size: new Size(300, 300), cachingStrategy: Canvas2D.CACHESTRATEGY_DONTCACHE });
+canvas2.backgroundFill = Canvas2D.GetSolidColorBrushFromHex(&quot;#C0808080&quot;);
+canvas2.backgroundRoundRadius = 50;
+var rect = Rectangle2D.Create(canvas2, { x: 200, y: 200, width: 100, height: 100, fill: Canvas2D.GetSolidColorBrushFromHex(&quot;#808080FF&quot;), border: Canvas2D.GetSolidColorBrushFromHex(&quot;#FFFFFFFF&quot;), borderThickness: 4, roundRadius: 5 });
+var center = Ellipse2D.Create(canvas2, { width: 16, height: 16, fill: Canvas2D.GetSolidColorBrushFromHex(&quot;#C04040FF&quot;) });
+</code></pre>
+<p><img src="http://i.imgur.com/pWSUkKd.png" alt="Canvas"></p>
+<p>The blue portion is the viewport boundaries, we created the Canvas with a position of [20;30], as the Canvas&#39; origin is [0;0] (bottom/left corner) by default these coordinates are relative from the bottom/left corner of the Canvas.</p>
+<p>The green lines/text on the bottom/left of the picture show the Canvas&#39; <code>position</code> property. The cut  Red dot is the Canvas origin, it&#39;s cut because only the part inside the Canvas is shown, the rest is clipped. The yellow lines are showing the Canvas&#39; boundaries. </p>
+<p>The <code>rect</code> object was created with a position of [200;200], the parent of <code>rect</code> is the canvas, so the position is relative to the canvas&#39; <code>origin</code> (the cut red dot at the bottom/left). The position of the rect is also relative to the rect&#39;s origin, which is the red dot at its center, because by default Primitive have an origin of [0.5;0.5] which correspond to their center. You can see the green lines that show the 200 distances in both X and Y toward the Canvas&#39; origin.</p>
+<p>If you were to create another Primitive having for parent the <code>rect</code> Primitive, the coordinates of this new Primitive will be relative to the <code>rect</code>&#39;s origin, which is the red dot at its center.</p>
+<p>The position of a primitive is always defined from the primitive&#39;s origin to the origin of its parent.</p>
+<h2><a name="transforming" class="anchor" href="#transforming"></a>Transforming</h2><p>The transformation of a Primitive is defined by three properties:</p>
+<ul>
+<li><code>position</code>, a <code>Vector2</code> what we talked just above.</li>
+<li><code>rotation</code>, a <code>rotation</code> in radian along the Z-axis.</li>
+<li><code>scale</code>, a <code>number</code> which represent an uniform Scale along the X and Y axes.</li>
+</ul>
+<p>These three properties are relative to the Primitive&#39;s parent&#39;s ones, which means if a Primitive B as its parent A with a <code>scale</code> of 2, then B will be scaled at 2 if it has its <code>scale</code> property set to 1. If B has a <code>scale</code> of 3, then its actual scale would be 6!</p>
+<h3><a name="transformation-matrices" class="anchor" href="#transformation-matrices"></a>Transformation matrices</h3><p>There are three matrices accessible, which are computed from the transformation properties:+1:</p>
+<ul>
+<li><code>localTransform</code>, is the matrix storing the local transformation of the given Primitive, relative to its parent.</li>
+<li><code>globalTransform</code>, is the matrix storing the transformation relative to the Canvas itself, that why it&#39;s called <em>global</em>, because whatever the hierarchy a primitive is defined in, this matrix will makes always sense compared to the one of another primitive.</li>
+<li><code>invGlobalTransform</code>, is the computed invert of <code>globalTransform</code>, because that&#39;s useful to have!</li>
+</ul>
+<h2><a name="hierarchy" class="anchor" href="#hierarchy"></a>Hierarchy</h2><p>Every Primitive type have the ability to define themselves as part of an object-graph (or hierarchy of object).</p>
+<p>Two properties define it:</p>
+<ul>
+<li><code>parent</code>, given the Primitive which is the direct parent.</li>
+<li><code>children</code> is an array of primitives which are the direct children.</li>
+</ul>
+<p>When you create a primitive &quot;B&quot;, you have to specify its parent (say &quot;A&quot;), whether it&#39;s a primitive or the Canvas itself. &quot;B&quot; will have its <code>parent</code> property set to &quot;A&quot;. &quot;A&quot;<code>.children</code> will contain somewhere &quot;B&quot;.</p>
+<p>As said above the <code>localTransform</code> is relative to the parent&#39;s origin and position/rotation/scale properties.</p>
+<h2><a name="conclusion" class="anchor" href="#conclusion"></a>Conclusion</h2><p>A little <a href="http://babylonjs-playground.com/#DEFP2#1">example</a> - <i class="fa fa-eye" onclick="createIframe('DEFP2#1', this)"></i><br/><div class="iframeContainer"></div><br/> to play with!</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

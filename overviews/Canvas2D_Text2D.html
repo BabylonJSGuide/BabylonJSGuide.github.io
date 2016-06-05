@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item active"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>overviews</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Text2D Primitive overview</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#properties">Properties</a></li>
+<li><a href="#remarks">Remarks</a></li>
+<li><a href="#example">Example</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="text2d-primitive-overview" class="anchor" href="#text2d-primitive-overview"></a>Text2D Primitive overview</h1><p>As its name would suggest, this primitive is used to render text in the Canvas2D (little fact, the Canvas2D feature was born because this requirement and the ambition to extend it to many more things).</p>
+<p>Text2D rendering is <strong>efficient</strong>/<strong>fast</strong>, it&#39;s not based on a render to texture approach (well, a little bit, but not as one would expect). It was designed to be flexible and fast to render. Each letter is rendered using two triangles mapping a FontTexture that contains the font&#39;s characters with the coordinates of the character to display.</p>
+<h2><a name="features" class="anchor" href="#features"></a>Features</h2><ul>
+<li>Is Unicode based, so any kind of characters can be rendered.</li>
+<li>Support line return, tabulation.</li>
+<li>Text measure.</li>
+</ul>
+<p>Soon to be supported:</p>
+<ul>
+<li>Character based color.</li>
+<li>Alignment of text.</li>
+</ul>
+<h2><a name="properties" class="anchor" href="#properties"></a>Properties</h2><ul>
+<li><code>fontName</code>: A <a href="https://www.w3.org/wiki/CSS/Properties/font">W3C CSS</a> font property used to create the FontTexture used to render the text.</li>
+<li><code>text</code>: a string property containing the text to render.</li>
+<li><code>areaSize</code>: a <code>Size</code> optional property that represent the area where the text will be rendered. If null the area is computed based on the text content. Default value is null.</li>
+<li><code>vAlign</code>: a number, one of the Text2D.TEXT2D_VALIGN_XXX value to specify vertical alignment. <em>not supported right now</em></li>
+<li><code>hAlign</code>: a number, one of the Text2D.TEXT2D_HALIGN_XXX value to specify horizontal alignment. <em>not supported right now</em></li>
+</ul>
+<h2><a name="remarks" class="anchor" href="#remarks"></a>Remarks</h2><p>Right now the intersection API is very rough, the whole text area is tested and return true if the intersection point is inside.</p>
+<p>The rendering quality of the text depends on the Web Browser implementation, right now FireFox seems to be below the other that could have been tested. We will focus soon on quality of rendering as it&#39;s a very important part of Canvas2D.</p>
+<h2><a name="example" class="anchor" href="#example"></a>Example</h2><p><a href="http://babylonjs-playground.com/#1ONKPJ#1">Primitive with Action Manager</a> - <i class="fa fa-eye" onclick="createIframe('1ONKPJ#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item active"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>extensions</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Introduction</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#available-features">Available features</a><ul>
+<li><a href="#from-v08">From v0.8</a></li>
+<li><a href="#from-v09-current">From v0.9 (current)</a></li>
+<li><a href="#coming-in-v10">Coming in v1.0</a></li>
+<li><a href="#coming-in-v11">Coming in v1.1</a></li>
+</ul>
+</li>
+<li><a href="#now-what-is-clearly-exported">Now, what is clearly exported?</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p><img src="/img/extensions/Editor/editor.png" alt="Introduction"></p>
+<p>For a quick and complete introduction with videos, you can read this post : <a href="https://medium.com/babylon-js/welcome-to-the-babylon-js-editor-c08dccdcec07#.e1lm87d4g">https://medium.com/babylon-js/welcome-to-the-babylon-js-editor-c08dccdcec07#.e1lm87d4g</a></p>
+<p>The Babylon.js Editor is the final stage for artists and developers in scene designs.
+It provides several tools not provided (or supported by the exporters) by 3D modelers such as 3ds Max, Blender, etc.</p>
+<p>As an example, the Babylon.js Materials Library, which is not supported by 3D modelers, can be managed in the Babylon.js Editor.</p>
+<p>In other words, this editor is a Web Application providing several tools to help artists (and developers) to debug, animate,
+configure and export Babylon.js scenes. In other words, this editor provides the optional final stage (in addition to the Babylon.js
+exporters of 3ds Max, Blender, Unity3D, etc.) to designers before they release their final scenes.</p>
+<p>The Babylon.js Editor can be found here: <a href="http://editor.babylonjs.com/">http://editor.babylonjs.com/</a></p>
+<p>The Github Repository can be found here: <a href="https://github.com/BabylonJS/Editor">https://github.com/BabylonJS/Editor</a></p>
+<h1><a name="available-features" class="anchor" href="#available-features"></a>Available features</h1><h2><a name="from-v08" class="anchor" href="#from-v08"></a>From v0.8</h2><ul>
+<li>Create and edit particle systems</li>
+<li>Create and edit animations</li>
+<li>Create and edit lens flares systems</li>
+<li>Save projects on OneDrive (Drop Box will come in future versions)</li>
+<li>Deploy project template on OneDrive (Drop Box will come in future versions)</li>
+<li>Cinematic Editor</li>
+<li>Scene graph view</li>
+<li>Create and edit post-process (soon exported in final .babylon scenes)</li>
+<li>Create and edit render targets (soon exported in final .babylon scenes)</li>
+</ul>
+<h2><a name="from-v09-current" class="anchor" href="#from-v09-current"></a>From v0.9 (current)</h2><ul>
+<li>Create and edit materials (complete Babylon.js Materials Library)</li>
+<li>Import and setup textures to use with materials</li>
+<li>Live preview of render targets (including shadow maps)</li>
+</ul>
+<h2><a name="coming-in-v10" class="anchor" href="#coming-in-v10"></a>Coming in v1.0</h2><ul>
+<li>Actions Builder support</li>
+</ul>
+<h2><a name="coming-in-v11" class="anchor" href="#coming-in-v11"></a>Coming in v1.1</h2><ul>
+<li>Setup and test physics simulations inlucing new updates of RaananW</li>
+</ul>
+<h1><a name="now-what-is-clearly-exported" class="anchor" href="#now-what-is-clearly-exported"></a>Now, what is clearly exported?</h1><ul>
+<li>Project configuration (FPS, animated at launch)</li>
+<li>Particle systems</li>
+<li>Lens flares</li>
+<li>Post-processes (not yet serialized in .babylon files)</li>
+<li>Animations</li>
+<li>Skies</li>
+<li>Render target textures</li>
+<li>Reflection probes (not yet serialized in .babylon files)</li>
+<li>Materials from Materials Library</li>
+<li>Actions using Actions Builder (soon in version 1.0)</li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

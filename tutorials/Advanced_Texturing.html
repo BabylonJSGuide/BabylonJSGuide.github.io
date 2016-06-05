@@ -1,0 +1,112 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item active"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>tutorials</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Advanced Texturing</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-can-i-do-this">How can I do this ?</a></li>
+</ul>
+</div></div><div id="staticContent"><p>You have already seen how you can apply textures on meshes, but here you are going one step further, with more complex textures like mirrors, videos, bump mapping, and multi-texture.</p>
+<p><img src="http://www.babylonjs.com/tutorials/Advanced%20Texturing/0.png" alt="AdvancedTexturing"></p>
+<p>A picture from our <a href="http://babylonjs-playground.azurewebsites.net/#EKFLA#13">Advanced Texturing playground demo</a>.</p>
+<h2><a name="how-can-i-do-this" class="anchor" href="#how-can-i-do-this"></a>How can I do this ?</h2><p>These new types of textures are considered advanced because we are not used to dealing with them, but you’ll see that it is very easy to create them with JavaScript and Babylon.js!</p>
+<ul>
+<li><strong>Mirror</strong></li>
+</ul>
+<p>Mirror textures are used to simulate “mirrors” (!) which means that babylon.js will compute the reflection and fill the texture with the results. A mirror texture must be set in the <em>reflectionTexture</em> channel of a <em>StandardMaterial</em> :</p>
+<pre><code class="lang-javascript">var mirrorMaterial = new BABYLON.StandardMaterial(&quot;texture4&quot;, scene);
+mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture(&quot;mirror&quot;, 512, scene, true);
+mirrorMaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, -10.0);
+mirrorMaterial.reflectionTexture.renderList = [sphere1, sphere2];
+</code></pre>
+<p>A <em>mirrorTexture</em> is created with a parameter that specifies the size of the rendering buffer (512x512 here, better reflection quality if increased).
+Then you have to define the reflection plane and a render list (the list of meshes to render inside the mirror).</p>
+<p>You can also use a <a href="http://doc.babylonjs.com/classes/CubeTexture">CubeTexture</a> as a reflectionTexture on a StandardMaterial.</p>
+<pre><code class="lang-javascript">material.reflectionTexture = new BABYLON.CubeTexture(&quot;textures/TropicalSunnyDay&quot;, scene);
+</code></pre>
+<p>Like the CubeTextures used in skyboxes, the textures/TropicalSunnyDay directory must contain 6 textures, covering all 6 directions of the cube. Each image must be named according to the corresponding CubeTexture face: “TropicalSunnyDay_nx.jpg”, “TropicalSunnyDay_ny.jpg”, “TropicalSunnyDay_nz.jpg”, “TropicalSunnyDay_px.jpg”, “TropicalSunnyDay_py.jpg”, “TropicalSunnyDay_pz.jpg”.</p>
+<p>You can see this nice advanced texturing technique... in <a href="http://babylonjs-playground.azurewebsites.net/#IRZYH">this playground scene</a>, and in this <a href="http://doc.babylonjs.com/classes/FresnelParameters">Fresnel</a>-enhanced <a href="http://babylonjs-playground.azurewebsites.net/#SBTYP">playground scene</a>, as well.</p>
+<ul>
+<li><strong>Bump Mapping</strong></li>
+</ul>
+<p>Bump mapping is a technique in computer graphics to make a rendered surface look more realistic without modifying surface geometry. This is only a texture modification, so computation is the same but rendering is much better, have a look:</p>
+<p><img src="http://www.babylonjs.com/tutorials/Advanced%20Texturing/1.png" alt="bumpMap"></p>
+<p>The bump texture simulates bumps and dents using a map called a normal map.</p>
+<p><img src="http://www.babylonjs.com/tutorials/Advanced%20Texturing/normalMap.jpg" alt="normalMap"></p>
+<p><em>A normal map</em></p>
+<p>And now, let’s code this amazing texture within two lines of JavaScript: first we create a new standard material, and then, simply declare a new bump texture:</p>
+<pre><code class="lang-javascript">var bumpMaterial = new BABYLON.StandardMaterial(&quot;texture1&quot;, scene);
+bumpMaterial.bumpTexture = new BABYLON.Texture(&quot;normalMap.jpg&quot;, scene);
+</code></pre>
+<p>That’s it! The bump texture disturbs/perturbs the normal to produce a result like this, where you should recognize our normal map:</p>
+<p><img src="http://www.babylonjs.com/tutorials/Advanced%20Texturing/2.png" alt="finalResult"></p>
+<p><em>Resulting gorgeous bumpy sphere</em></p>
+<p>Please note that by default, normal maps are considered to be following DirectX format. If you want to provide a different convention normal maps, you can just set <code>material.invertNormalMapX = true</code> or <code>material.invertNormalMapY = true</code>.</p>
+<ul>
+<li><strong>Video</strong></li>
+</ul>
+<p>If you want to display a video in your scene, the Babylon engine has a special texture for that. This special texture works similar to other textures, with the exception of a few parameters. These parameters include video urls (an url array), the size of the video texture (here is 256), the scene, and a final optional boolean that indicates if you want to use <a href="http://en.wikipedia.org/wiki/Mipmap">mipmap</a> or not.</p>
+<p>Here is an example from our <a href="http://www.babylonjs.com/?9">Flat2009 demo</a>. This plays a video on the demo&#39;s ZTV screen (ecran = screen). </p>
+<pre><code class="lang-javascript">ecran.material.diffuseTexture = new BABYLON.VideoTexture(&quot;video&quot;,
+[&quot;Scenes/Flat2009/babylonjs.mp4&quot;, &quot;Scenes/Flat2009/babylonjs.webm&quot;], scene, true);
+</code></pre>
+<p>The <a href="http://doc.babylonjs.com/classes/VideoTexture"><em>VideoTexture</em> object</a> accepts an array of videos (to take into account various codecs). The first video in the array that can be loaded... is the one used as content source. Currently, HTML5 supports .mp4, .webm, and .ogv video formats.</p>
+<p>The internal <a href="http://www.w3.org/wiki/HTML/Elements/video">video DOM object</a> is accessible via the VideoTexture.video property... which allows you to control some characteristics and monitor the status of the video (things such as play, pause, loop, autoplay, etc). See the link above for the full story.</p>
+<p><img src="http://www.babylonjs.com/tutorials/Advanced%20Texturing/3.png" alt="video"></p>
+<p>Even though we are working with advanced texturing techniques, <em>VideoTexture</em> works in conjunction with a StandardMaterial. Simply put, it needs to have some light. As a handy alternative or video illumination assistant, you may want to set an <em>emissiveColor</em> on the base material of the mesh.</p>
+<pre><code class="lang-javascript">ecran.material.emissiveColor = new BABYLON.Color3(1,1,1);
+</code></pre>
+<p>Mobile devices do not auto-play videos. A user interaction (such as a tap) is required to start the video. Until the user taps, the video texture will be black. A simple way of starting the video is this:</p>
+<pre><code class="lang-javascript">scene.onPointerDown = function () { 
+  videoTexture.video.play();
+}
+</code></pre>
+<p>This will start the video on the first tap in the scene. A demo can be found at <a href="http://www.babylonjs-playground.com/#CHQ4T#1">http://www.babylonjs-playground.com/#CHQ4T#1</a> - <i class="fa fa-eye" onclick="createIframe('CHQ4T#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<ul>
+<li><strong>Refraction</strong></li>
+</ul>
+<p>Starting with Babylon.js 2.4, a new channel was added to the StandardMaterial: the refraction channel.</p>
+<pre><code class="lang-javascript">ecran.material.refraction = myCubeTexture;
+</code></pre>
+<p>The refraction engine uses a cube texture as source and you can generate it with a reflection probe for instance:</p>
+<pre><code class="lang-javascript">var probe = new BABYLON.ReflectionProbe(&quot;main&quot;, 512, scene);
+probe.renderList.push(yellowSphere);
+probe.renderList.push(greenSphere);
+probe.renderList.push(blueSphere);
+probe.renderList.push(mirror);
+mainMaterial.refractionTexture = probe.cubeTexture;
+</code></pre>
+<p>See a demo here: <a href="http://www.babylonjs-playground.com/#22KZUW#3">http://www.babylonjs-playground.com/#22KZUW#3</a> - <i class="fa fa-eye" onclick="createIframe('22KZUW#3', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>But you can also use a RefractionTexture as source of refraction when you deal with a flat object. RefractionTexture works like mirror texture where you need to define a clip plane:</p>
+<pre><code class="lang-javascript">var refractionTexture = new BABYLON.RefractionTexture(&quot;th&quot;, 1024, scene);
+refractionTexture.renderList.push(yellowSphere);
+refractionTexture.renderList.push(greenSphere);
+refractionTexture.renderList.push(ground);
+refractionTexture.refractionPlane = new BABYLON.Plane(0, 0, -1, 0);
+refractionTexture.depth = 2.0;
+</code></pre>
+<p>Depth parameter defines the depth value used to offset the refraction.
+See a demo here: <a href="http://www.babylonjs-playground.com/#22KZUW#15">http://www.babylonjs-playground.com/#22KZUW#15</a> - <i class="fa fa-eye" onclick="createIframe('22KZUW#15', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>Index of refraction cab be controlled with <code>material.indexOfRefraction</code> (which is 1.05 by default).</p>
+<p>You can see a live demo here: <a href="http://www.babylonjs.com/Demos/refraction">http://www.babylonjs.com/Demos/refraction</a> </p>
+<ul>
+<li><strong>Multi Materials</strong></li>
+</ul>
+<p>Using a dedicated texture, multi materials can be assigned to one single mesh. It can be useful if you want your mesh to look different at different locations along its width, height, or depth. (such as a cutaway cross-section of the Earth&#39;s mantle).</p>
+<p><img src="http://www.babylonjs.com/tutorials/Advanced%20Texturing/4.png" alt="multimap"></p>
+<p>Sometimes it is a bit difficult to determine which indices of a mesh should be textured by which of the multiple textures. David Catuhe has provided a comprehensive post about multi materials... on his blog:
+<a href="http://blogs.msdn.com/b/eternalcoding/archive/2013/07/10/babylon-js-using-multi-materials.aspx">http://blogs.msdn.com/b/eternalcoding/archive/2013/07/10/babylon-js-using-multi-materials.aspx</a></p>
+<p>You can view and play-with the demo used in this tutorial... <a href="http://babylonjs-playground.azurewebsites.net/#EKFLA#13">right here</a>.</p>
+<p>You might also be interested in our <a href="http://blogs.msdn.com/b/eternalcoding/archive/2013/07/01/babylon-js-unleash-the-standardmaterial-for-your-babylon-js-game.aspx">Unleash the Standard Material</a> tutorial, and our <a href="http://doc.babylonjs.com/tutorials/Materials">basic materials</a> tutorial.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

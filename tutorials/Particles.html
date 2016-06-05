@@ -1,0 +1,208 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item active"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>tutorials</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Particles</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#how-can-i-do-this">How can I do this ?</a><ul>
+<li><a href="#customeffect-the-fourth-parameter-in-the-constructor">customEffect (the fourth parameter in the constructor)</a></li>
+</ul>
+</li>
+<li><a href="#custom-functions">Custom functions</a></li>
+<li><a href="#next-step">Next step</a></li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>This tutorial is going to talk about the particle system in BabylonJS. Particles are often small sprites used to simulate hard-to-reproduce phenomena like fire, smoke, water, or abstract visual effects like magic glitter and faery dust.</p>
+<p><img src="http://www.babylonjs.com/tutorials/12%20-%20Particles/12.png" alt="Particles"></p>
+<p>A picture of <a href="http://babylonjs-playground.azurewebsites.net/?12">the playground&#39;s ParticleSystem demo</a></p>
+<h2><a name="how-can-i-do-this" class="anchor" href="#how-can-i-do-this"></a>How can I do this ?</h2><p>To perform this magic trick, the first thing to do is to create a new object, which will be the particle emitter. In our case, a box will be our emitting object, representing a particle fountain.</p>
+<pre><code class="lang-javascript">var fountain = BABYLON.Mesh.CreateBox(&quot;fountain&quot;, 1.0, scene);
+</code></pre>
+<p>The emitter acts as the source of the particles, and its location in 3D space determines where they are generated and how they move. So pay attention to the location/rotation of this object.
+In our case, the emitter is our fountain, but if you wish, you can use only a vector (BABYLON.Vector3) as an emitter.</p>
+<p>Now, we must create a new (not-rendered) ParticleSystem object:</p>
+<pre><code class="lang-javascript">var particleSystem = new BABYLON.ParticleSystem(&quot;particles&quot;, 2000, scene, customEffect);
+</code></pre>
+<p>Simple. The first parameter is the name, he second parameter is the maximum number of particles, the third parameter is the scene, and the optional fourth parameter is a reference to a shader effect for the particles, overriding the default shader. I will talk about the fourth parameter further below.</p>
+<p>An important part is to define the texture of each particle. Each one will have the same pattern, so choose carefully which one you want. But keep in mind that a single scene can contain multiple particleSystems, and each one can emit particles with unique texture patterns. Also keep in mind that multiple particle systems can use the same emitter object. 
+Our particle texture is going to be this one:</p>
+<p><img src="http://www.babylonjs.com/tutorials/12%20-%20Particles/Flare.png" alt="Flare"></p>
+<p>To define the particle’s texture, add a line like this:</p>
+<pre><code class="lang-javascript">particleSystem.particleTexture = new BABYLON.Texture(&quot;Flare.png&quot;, scene);
+</code></pre>
+<p>(in the playground demo, we used /textures/flare.png)</p>
+<p>For this texture, you can use an optional mask to filter some colors, or filter a part of the alpha channel.</p>
+<pre><code class="lang-javascript">particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
+</code></pre>
+<p>This is the output of this configuration:</p>
+<p><img src="http://www.babylonjs.com/tutorials/12%20-%20Particles/12-1.png" alt="TextureMask"></p>
+<p>The last main thing to do is to define our emitter that we talked about earlier:</p>
+<pre><code class="lang-javascript">// Where the particles comes from
+particleSystem.emitter = fountain; // the starting object, the emitter, a box in this case.
+</code></pre>
+<p>Now you should see your particle system working. But it might not be our final result. We can refine some parameters:</p>
+<ul>
+<li>Box around our emitter. Our emitter is the center of particles source, but if you want your particles to emit from more than one point, then you can tell it to do so:<pre><code class="lang-javascript">particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all From
+  particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+</code></pre>
+</li>
+</ul>
+<p>As you can see, particles are emitted from different positions along the X-axis:</p>
+<p><img src="http://www.babylonjs.com/tutorials/12%20-%20Particles/12-2.png" alt="EmitBox"></p>
+<ul>
+<li><p>Now you can give some colors to your particles. Color one and two are combined, and “colorDead” is the color that the particle takes-on just before it disappears.</p>
+<pre><code class="lang-javascript">// Colors of all particles (splited in 2 + specific color before dispose)
+particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
+particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+</code></pre>
+</li>
+<li><p>Size of particles:</p>
+<pre><code class="lang-javascript">// Size of each particle (random between...)
+particleSystem.minSize = 0.1;
+particleSystem.maxSize = 0.5;
+</code></pre>
+</li>
+<li><p>LifeTime of particles:</p>
+<pre><code class="lang-javascript">// Life time of each particle (random between...)
+particleSystem.minLifeTime = 0.3;
+particleSystem.maxLifeTime = 1.5;
+</code></pre>
+</li>
+<li><p>Emit rate. This is the density of particles, the rate of particle flow:</p>
+<pre><code class="lang-javascript">particleSystem.emitRate = 1000;
+</code></pre>
+</li>
+</ul>
+<p><img src="http://www.babylonjs.com/tutorials/12%20-%20Particles/12-3.png" alt="emitRate"></p>
+<p>If you want to launch only a few particles at once, that can be done, as well. For example, if you want to emit only 300 particles:</p>
+<pre><code class="lang-javascript">particleSystem.manualEmitCount = 300;
+</code></pre>
+<p>Be aware that the stream is no longer continuous. This is a one-shot particle emission, so this function overrides the previous “emitRate” parameter.</p>
+<ul>
+<li><p>The selected mode for particles. You can choose between “BLENDMODE_ONEONE” (default choice: source color is added to the destination color without alpha affecting the result), and “BLENDMODE_STANDARD” (to blend current color and particle color using particle’s alpha).</p>
+<pre><code class="lang-javascript">particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+</code></pre>
+</li>
+<li><p>Gravity. You can use gravity if you want to give an orientation to your particles (e.g.: fire particles travel upward on the Y-axis)</p>
+<pre><code class="lang-javascript">//Set the gravity of all particles (not necessarily down)
+particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+</code></pre>
+</li>
+<li><p>Direction. Random direction of each particle after it has been emitted, between direction1 and direction2 vectors.</p>
+<pre><code class="lang-javascript">particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+</code></pre>
+</li>
+</ul>
+<p><img src="http://www.babylonjs.com/tutorials/12%20-%20Particles/12-4.png" alt="emitRate"></p>
+<ul>
+<li><p>AngularSpeed. You can define a Z-axis rotation for each particle (in radian):</p>
+<pre><code class="lang-javascript">particleSystem.minAngularSpeed = 0;
+particleSystem.maxAngularSpeed = Math.PI;
+</code></pre>
+</li>
+<li><p>Speed/Strength. You can define the power of emitting particles, and the overall motion speed (0.01 is default update speed, faster updates = faster animation).
+```javascript
+particleSystem.minEmitPower = 1;
+particleSystem.maxEmitPower = 3;</p>
+</li>
+</ul>
+<p>particleSystem.updateSpeed = 0.005;</p>
+<pre><code>
+* Duration. You can set the amount of time the particle system is running (depends of the overall speed above).
+```javascript
+particleSystem.targetStopDuration = 5;
+</code></pre><ul>
+<li>Dispose. Disposes (or not) the particle system on stop (very useful if you want to create a one shot particle system with a specific targetStopDuration):<pre><code class="lang-javascript">particleSystem.disposeOnStop = true;
+</code></pre>
+</li>
+</ul>
+<p>Finally, you can start this particle system whenever you want in your code with:</p>
+<pre><code class="lang-javascript">particleSystem.start();
+</code></pre>
+<p>And naturally stop it:</p>
+<pre><code class="lang-javascript">particleSystem.stop();
+</code></pre>
+<p>Feel free to play with this scene... <a href="http://babylonjs-playground.azurewebsites.net/?12"><strong>at our online playground</strong></a>.</p>
+<h3><a name="customeffect-the-fourth-parameter-in-the-constructor" class="anchor" href="#customeffect-the-fourth-parameter-in-the-constructor"></a>customEffect (the fourth parameter in the constructor)</h3><p>var ps = new BABYLON.ParticleSystem(&quot;particles&quot;, 2000, scene, <strong>customEffect</strong>);</p>
+<p>The customEffect is a type of BABYLON.Effect used to target a valid shader program.</p>
+<p>The primary author of Babylon.js was kind enough to make us <a href="http://babylonjs-playground.azurewebsites.net/#1ASENS">a fantastic playground demo of a particle system using a fragment shader effect</a>. Visit that link, and you can see a fragment shader program that has been stored in a shader store. Notice the line:</p>
+<pre><code class="lang-javascript">BABYLON.Effect.ShadersStore[&quot;myParticleFragmentShader&quot;] = [...]
+</code></pre>
+<p>A bit below that, you will see:</p>
+<pre><code class="lang-javascript">var effect = engine.createEffectForParticles(&quot;myParticle&quot;, [&quot;time&quot;]);
+</code></pre>
+<p><em>.createEffectForParticles</em> accepts the following parameters:</p>
+<ul>
+<li>fragment name (can be in the shaders store or the id of a DOM element)</li>
+<li>array of additional parameters (uniforms)</li>
+<li>array of additional samplers (for additional textures!)</li>
+</ul>
+<p>The particle Effect Object is a slightly-modified <a href="http://doc.babylonjs.com/classes/Effect">Babylon Effect Object</a>. Also notice that the ShadersStore is a namespace upon this special <a href="http://doc.babylonjs.com/classes/Effect">Effect Object</a>. </p>
+<p>The Effect Object has many &#39;setter&#39; methods on it, one of which is <em>.setFloat</em>. Notice how it is used in the registerBeforeRender function. This causes the speed of the effect to cycle across about a 20 second time span. We are (the demo author is) varying the time parameter of the fragment shader program... from within the scene&#39;s render loop! WE LOVE IT!</p>
+<p>Here is a short comment from Deltakosh... regarding that playground demo linked above:</p>
+<blockquote>
+<p>By default Babylon.js will give you a vUV and a vColor varying parameter. It will also transmit you the particle texture. But you can feel free to add any new parameter, like I did, with &#39;time&#39;.</p>
+</blockquote>
+<p>This section of the tutorial is under construction. We will have much more to say, soon.</p>
+<h2><a name="custom-functions" class="anchor" href="#custom-functions"></a>Custom functions</h2><p>You can get even more control over particles by using custom functions:
+<code>startDirectionFunction: (emitPower: number, worldMatrix: Matrix, directionToUpdate: Vector3)</code>: This function can be defined to specify initial direction for every new particle. By default, this function is defined with the following code:</p>
+<pre><code>startDirectionFunction = (emitPower: number, worldMatrix: Matrix, directionToUpdate: Vector3): void =&gt; {
+    var randX = randomNumber(this.direction1.x, this.direction2.x);
+    var randY = randomNumber(this.direction1.y, this.direction2.y);
+    var randZ = randomNumber(this.direction1.z, this.direction2.z);
+
+    Vector3.TransformNormalFromFloatsToRef(randX * emitPower, randY * emitPower, randZ * emitPower, worldMatrix, directionToUpdate);
+}
+</code></pre><p><code>startPositionFunction = (worldMatrix: Matrix, positionToUpdate: Vector3)</code>: This function can be defined to specify initial position for every new particle. By default, this function is defined with the following code:</p>
+<pre><code>startPositionFunction = (worldMatrix: Matrix, positionToUpdate: Vector3): void =&gt; {
+    var randX = randomNumber(this.minEmitBox.x, this.maxEmitBox.x);
+    var randY = randomNumber(this.minEmitBox.y, this.maxEmitBox.y);
+    var randZ = randomNumber(this.minEmitBox.z, this.maxEmitBox.z);
+
+    Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
+}
+</code></pre><p><code>updateFunction: (particles: Particle[])</code>: This function can be defined to provide custom update for active particles. This function will be called instead of regular update (age, position, color, etc.). Do not forget that this function will be called on every frame so try to keep it simple and fast :). By default the following code is used:</p>
+<pre><code>updateFunction = function(particles) {
+     for (var index = 0; index &lt; particles.length; index++) {
+           var particle = particles[index];
+           particle.age += this._scaledUpdateSpeed;
+
+           if (particle.age &gt;= particle.lifeTime) { // Recycle
+                particles.splice(index, 1);
+                this._stockParticles.push(particle);
+                index--;
+                continue;
+           }
+           else {
+                particle.colorStep.scaleToRef(this._scaledUpdateSpeed, this._scaledColorStep);
+                particle.color.addInPlace(this._scaledColorStep);
+
+                if (particle.color.a &lt; 0)
+                             particle.color.a = 0;
+
+                particle.angle += particle.angularSpeed * this._scaledUpdateSpeed;
+
+                particle.direction.scaleToRef(this._scaledUpdateSpeed, this._scaledDirection);
+                particle.position.addInPlace(this._scaledDirection);
+
+                this.gravity.scaleToRef(this._scaledUpdateSpeed, this._scaledGravity);
+                particle.direction.addInPlace(this._scaledGravity);
+           }
+     } 
+}
+</code></pre><h2><a name="next-step" class="anchor" href="#next-step"></a>Next step</h2><p>ParticleSystems are very powerful and versatile tools that can help bring realness and movement to your scenes. Don’t hesitate to use them as they are not resource-intensive.</p>
+<p>Stay with us, because we are going to learn a new, very interesting thing: <a href="http://doc.babylonjs.com/tutorials/Environment">Configuring your environment</a>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

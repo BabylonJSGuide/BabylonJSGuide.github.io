@@ -1,0 +1,90 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item active"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>tutorials</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Customizing camera inputs</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#configure-your-inputs">Configure your inputs</a></li>
+<li><a href="#adding-an-existing-input">Adding an existing input</a></li>
+<li><a href="#enable-or-disable-inputs">Enable or disable inputs</a></li>
+<li><a href="#removing-inputs">Removing inputs</a></li>
+<li><a href="#implementing-your-own-input">Implementing your own input</a></li>
+</ul>
+</div></div><div id="staticContent"><p>Some of Babylon.js&#39;s cameras respond to user inputs. This is especially true for ArcRotateCamera and FreeCamera. Babylon.js v2.4 introduced a different way to manage camera inputs to provide an approach oriented toward composability of inputs. These cameras now use an input manager and each input can be seen as a plugin that is specific to this camera family, and to a given input type (mouse, keyboard, gamepad, device orientation, ...).</p>
+<p>Using input manager, you can add, remove, enable, or disable any input available for the camera. You can also implement your own input mechanism or override the existing one, very easily.</p>
+<p>The input manager is available on these cameras through a property called &quot;inputs&quot;.</p>
+<pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
+var inputManager = camera.inputs;
+</code></pre>
+<h2><a name="configure-your-inputs" class="anchor" href="#configure-your-inputs"></a>Configure your inputs</h2><p>Most inputs provide settings to customize the sensibility and adapt it to your own scene.</p>
+<p>Each input provides a short name available on the manager. The goal is to provide a friendly syntax when playing with your inputs.</p>
+<pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
+camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
+camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
+</code></pre>
+<h2><a name="adding-an-existing-input" class="anchor" href="#adding-an-existing-input"></a>Adding an existing input</h2><p>Input manager of both ArcRotateCamera and FreeCamera expose short-hand functions for adding built-in inputs.  </p>
+<pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
+camera.inputs.addGamepad();
+</code></pre>
+<p>If you wish, you can also add an instance of your own input (we will cover how to implement your own input at the end of this article).</p>
+<pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
+camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
+</code></pre>
+<h2><a name="enable-or-disable-inputs" class="anchor" href="#enable-or-disable-inputs"></a>Enable or disable inputs</h2><p>When you call &quot;attachControl&quot; on the camera, you are activating all inputs attached to the input manager. In the same way, you could turn off all inputs by calling &quot;detachControl&quot; on the camera.</p>
+<p>If you want to disable an input temporarily, you can call &quot;detachControl&quot; directly on the input... like this:</p>
+<pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
+camera.inputs.attached.mouse.detachControl();
+camera.inputs.addGamepad();
+</code></pre>
+<p>You can then call &quot;attachInput&quot; when you want to turn it on again.</p>
+<pre><code class="lang-javascript">camera.inputs.attachInput(camera.inputs.attached.mouse);
+</code></pre>
+<h2><a name="removing-inputs" class="anchor" href="#removing-inputs"></a>Removing inputs</h2><p>Sometimes you want a very specific input mechanism. The best approach in such case is probably to clear all inputs and add only those you may want in your scene.</p>
+<pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
+camera.inputs.clear();
+camera.inputs.addMouse();
+</code></pre>
+<p>You can also remove a single input from your input manager. You can remove them by instance, or by Type name</p>
+<pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
+//remove by instance
+camera.inputs.remove(camera.inputs.attached.mouse);
+//remove by type
+camera.inputs.removeByType(&quot;FreeCameraKeyboardMoveInput&quot;);
+</code></pre>
+<h2><a name="implementing-your-own-input" class="anchor" href="#implementing-your-own-input"></a>Implementing your own input</h2><p>The input must be provided to the input manager as an object instance with a few required functions. If you use TypeScript, you could implement the interface ICameraInput.</p>
+<p>Even if you don&#39;t use TypeScript for your project, you will probably understand the signature of the input from the interface</p>
+<pre><code class="lang-javascript">interface ICameraInput&lt;TCamera extends BABYLON.Camera&gt; {       
+    // the input manager will fill the parent camera
+    camera: TCamera;        
+
+    //this function must return the type name of the camera, it could be used for serializing your scene
+    getTypeName(): string;
+
+    //this function must return the simple name that will be injected in the input manager as short hand
+    //for example &quot;mouse&quot; will turn into camera.inputs.attached.mouse
+    getSimpleName(): string;
+
+    //this function must activate your input, event if your input does not need a DOM element
+    attachControl: (element: HTMLElement, noPreventDefault?: boolean) =&gt; void;
+
+    //detach control must deactivate your input and release all pointers, closures or event listeners
+    detachControl: (element: HTMLElement) =&gt; void;        
+
+    //this optional function will get called for each rendered frame, if you want to synchronize your input to rendering,
+    //no need to use requestAnimationFrame. It&#39;s a good place for applying calculations if you have to
+    checkInputs?: () =&gt; void;
+}
+</code></pre>
+<p>Composable inputs is new, powerful, flexible, and extensible.  Familiarize yourself with its simple interface, and you will enjoy more and better camera control than ever before.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

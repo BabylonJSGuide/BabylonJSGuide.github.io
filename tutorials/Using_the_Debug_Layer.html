@@ -1,0 +1,87 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item active"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>tutorials</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Using the Debug Layer</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#using-the-ui">Using the UI</a><ul>
+<li><a href="#options">Options</a></li>
+<li><a href="#meshes-tree">Meshes tree</a></li>
+<li><a href="#statistics">Statistics</a></li>
+<li><a href="#logs">Logs</a></li>
+</ul>
+</li>
+<li><a href="#controlling-the-debug-layer-by-code">Controlling the debug layer by code</a></li>
+</ul>
+</div></div><div id="staticContent"><p>The main goal of the debug layer is to provide a fully functional UI to help you debug a scene and find potential culprits.</p>
+<h2><a name="using-the-ui" class="anchor" href="#using-the-ui"></a>Using the UI</h2><p>You can display the debug layer by calling:</p>
+<pre><code class="lang-javascript">scene.debugLayer.show();
+</code></pre>
+<p>You can also display the debug layer by choosing a camera if you use multiple cameras:</p>
+<pre><code class="lang-javascript">scene.debugLayer.show(true, camera);
+</code></pre>
+<p><img src="http://www.babylonjs.com/forumpics/debuglayer.jpg" alt="Debug layer"></p>
+<h3><a name="options" class="anchor" href="#options"></a>Options</h3><p>This panel is designed to control display of all options.</p>
+<ul>
+<li>Statistics, Logs, Meshes tree check-boxes allow you to enable/disable others panels</li>
+<li>Bounding boxes check-box can be used to force the display of all bounding boxes</li>
+<li>Clickable labels check-box can display a label for every node (Meshes, cameras and lights). These labels can be clicked to:<ul>
+<li>Display an overlay on meshes</li>
+<li>Enable/disable lights</li>
+<li>Switch to camera</li>
+</ul>
+</li>
+<li>Generate user marks (F12) check-box can be used with F12 tools to emit performance counters to UI Responsiveness profiler</li>
+<li>Rendering mode can be used to switch between solid/wireframe/point modes</li>
+<li>Texture channels can be used to turn specific textures off</li>
+<li>Options can be used to turn specific engine options off</li>
+</ul>
+<h3><a name="meshes-tree" class="anchor" href="#meshes-tree"></a>Meshes tree</h3><p>The meshes tree allows you to enable/disable meshes by name and could be used to determine how many vertices are contained in a specific mesh.</p>
+<h3><a name="statistics" class="anchor" href="#statistics"></a>Statistics</h3><p>The statistics panel gives you a global view of how specific engine parts are performing alongside WebGL info and capabilities.</p>
+<p><strong>Note about active vertices</strong>: Active vertices are the number of vertices processed by the GPU. For instance if you have a quad with 4 vertices and 2 faces, the total vertices will be 6 because 2 faces of 3 vertices each are sent to the GPU even if two vertices are shared.</p>
+<h3><a name="logs" class="anchor" href="#logs"></a>Logs</h3><p>You can use the Logs panel to get log/warn/error message from the engine.</p>
+<h2><a name="controlling-the-debug-layer-by-code" class="anchor" href="#controlling-the-debug-layer-by-code"></a>Controlling the debug layer by code</h2><p>The debug layer can be used without the UI as well. To do so, you just have to call it like this:</p>
+<pre><code class="lang-javascript">scene.debugLayer.show(false);
+</code></pre>
+<p>And for multiple cameras:</p>
+<pre><code class="lang-javascript">scene.debugLayer.show(false, camera);
+</code></pre>
+<p>You can hide the interface with:</p>
+<pre><code class="lang-javascript">scene.debugLayer.hide();
+</code></pre>
+<p>You can then control when labels and axis should be displayed with the following code:</p>
+<pre><code class="lang-javascript">scene.debugLayer.shouldDisplayLabel = function (node) {
+    return false;
+}
+
+scene.debugLayer.shouldDisplayAxis = function (mesh) {
+    return mesh.name === &quot;sphere1&quot;;
+}
+</code></pre>
+<p>You can even control the ratio used to determine axis size:</p>
+<pre><code class="lang-javascript">scene.debugLayer.axisRatio = 0.04; // 4% of canvas width
+</code></pre>
+<p>You can also control the UI by using CSS and target following IDs:</p>
+<ul>
+<li>DebugLayerStats</li>
+<li>DebugLayerTree</li>
+<li>DebugLayerLogs</li>
+<li>DebugLayerOptions</li>
+</ul>
+<p>For instance:</p>
+<pre><code class="lang-javascript">document.getElementById(&quot;DebugLayerStats&quot;).style.background = &quot;#484848&quot;;
+document.getElementById(&quot;DebugLayerStats&quot;).style.zindex = &quot;999999&quot;;
+</code></pre>
+<p>Feel free to test it on the <a href="http://www.babylonjs-playground.com/#1IG874">playground</a> - <i class="fa fa-eye" onclick="createIframe('1IG874', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="tutorials" class="item active"><a href="/tutorials">Tutorials</a></div><div id="overview" class="item"><a href="/overviews">Overviews</a></div><div id="exporters" class="item"><a href="/exporters">Exporters</a></div><div id="extensions" class="item"><a href="/extensions">Extensions</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="q" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>tutorials</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>How to create a material for the materials library</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#setting-up-environment">Setting up environment</a></li>
+<li><a href="#update-the-shaders">Update the shaders</a></li>
+<li><a href="#update-the-material">Update the material</a></li>
+<li><a href="#update-the-test-page">Update the test page</a></li>
+<li><a href="#launch-the-test-server">Launch the test server</a></li>
+</ul>
+</div></div><div id="staticContent"><p>This tutorial will guide you through the process of creating a material for the <a href="https://github.com/BabylonJS/Babylon.js/tree/master/materialsLibrary">materials library</a></p>
+<h2><a name="setting-up-environment" class="anchor" href="#setting-up-environment"></a>Setting up environment</h2><p>First of all, you need to create a folder for your shader in the /materials folder. Let&#39;s call it diffuseEmissive.
+Then you need to create your files:</p>
+<ul>
+<li>babylon.diffuseEmissiveMaterial.ts (just copy/paste from babylon.simpleMaterial.ts)</li>
+<li>diffuseEmissive.vertex.fx (just copy/paste from simple.vertex.fx)</li>
+<li>diffuseEmissive.fragment.fx (just copy/paste from simple.fragment.fx)</li>
+</ul>
+<p>Then update the config.json to add your files:</p>
+<pre><code>{
+  &quot;materials&quot;: [
+    {
+      &quot;file&quot;: &quot;materials/simple/babylon.simpleMaterial.ts&quot;,
+      &quot;shaderFiles&quot;: [
+        &quot;materials/simple/simple.vertex.fx&quot;,
+        &quot;materials/simple/simple.fragment.fx&quot;
+      ],
+      &quot;output&quot;: &quot;babylon.simpleMaterial.js&quot;
+    },
+    {
+      &quot;file&quot;: &quot;materials/diffuseEmissive/babylon.diffuseEmissiveMaterial.ts&quot;,
+      &quot;shaderFiles&quot;: [
+        &quot;materials/diffuseEmissive/diffuseEmissive.vertex.fx&quot;,
+        &quot;materials/diffuseEmissive/diffuseEmissive.fragment.fx&quot;
+      ],
+      &quot;output&quot;: &quot;babylon.diffuseEmissiveMaterial.js&quot;
+    }
+  ],
+  &quot;build&quot;: {
+    &quot;distOutputDirectory&quot;: &quot;dist/&quot;
+  }
+}
+</code></pre><p>To compile your files, just run <code>gulp()</code>.</p>
+<h2><a name="update-the-shaders" class="anchor" href="#update-the-shaders"></a>Update the shaders</h2><p>Because we used the simple material as source, we already have everything required for a complete babylon.js material.
+The simple material already supports diffuse texture.</p>
+<p>To add support for an emissive texture, let&#39;s add this code to the header of diffuseEmissive.vertex.fx file:</p>
+<pre><code>#ifdef EMISSIVE 
+varying vec2 vEmissiveUV; 
+uniform mat4 emissiveMatrix; 
+uniform vec2 vEmissiveInfos; 
+#endif
+</code></pre><p>Then add this code in the main function:</p>
+<pre><code>#ifdef EMISSIVE
+    if (vEmissiveInfos.x == 0.)
+    {
+        vEmissiveUV = vec2(emissiveMatrix * vec4(uv, 1.0, 0.0));
+    }
+    else
+    {
+        vEmissiveUV = vec2(emissiveMatrix * vec4(uv2, 1.0, 0.0));
+    }
+#endif
+</code></pre><p>This code will generate the correct UV to read from emissive texture. Please note that we use #ifdef to take profit of the babylon.js smart shaders.</p>
+<p>Then you have to update the fragment shader. First add this code to the header:</p>
+<pre><code>#ifdef EMISSIVE
+varying vec2 vEmissiveUV;
+uniform sampler2D emissiveSampler;
+uniform vec2 vEmissiveInfos;
+#endif
+</code></pre><p>Then add this code at the end of the main function (just before the last line (gl_FragColor = ...):</p>
+<pre><code>#ifdef EMISSIVE
+    color.rgb += texture2D(emissiveSampler, vEmissiveUV) * vEmissiveInfos.y;
+#endif
+</code></pre><h2><a name="update-the-material" class="anchor" href="#update-the-material"></a>Update the material</h2><p>First of all, rename all occurences of <em>SimpleMaterialDefines</em> to <em>DiffuseEmissiveMaterialDefines</em> and <em>SimpleMaterial</em> to <em>DiffuseEmissiveMaterial</em>.</p>
+<p>Then add this property to <em>SimpleMaterialDefines</em> class:</p>
+<pre><code>public EMISSIVE = false;
+</code></pre><p>Add this property to the <em>DiffuseEmissiveMaterial</em> class:</p>
+<pre><code>public emissiveTexture: BaseTexture;
+</code></pre><p>Then go to <em>isReady</em> function and add this code in the <code>if (scene.textureEnabled)</code> block:</p>
+<pre><code>if (this.emissiveTexture &amp;&amp; StandardMaterial.EmissiveTextureEnabled) {
+    if (!this.emissiveTexture.isReady()) {
+        return false;
+    } else {
+        needUVs = true;
+        this._defines.EMISSIVE = true;
+    }
+}
+</code></pre><p>The next function to update is <em>bind</em>. Add this code after the <code>//Textures</code> comment:</p>
+<pre><code>if (this.emissiveTexture &amp;&amp; StandardMaterial.EmissiveTextureEnabled) {
+    this._effect.setTexture(&quot;emissiveSampler&quot;, this.emissiveTexture);
+
+    this._effect.setFloat2(&quot;vEmissiveInfos&quot;, this.emissiveTexture.coordinatesIndex, this.emissiveTexture.level);
+    this._effect.setMatrix(&quot;emissiveMatrix&quot;, this.emissiveTexture.getTextureMatrix());
+}
+</code></pre><p>You may also need to add this code to the <em>clone</em> function:</p>
+<pre><code>if (this.emissiveTexture &amp;&amp; this.emissiveTexture.clone) {
+    newMaterial.emissiveTexture = this.emissiveTexture.clone();
+}
+</code></pre><p>For completeness, you will also have to complete the <em>serialize</em> and <em>Parse</em> functions (This is only required if you want to save/load your material to a .babylon file).
+Please note that <em>serialize</em> function needs to output the complete material name to the serializationObject like here:</p>
+<pre><code>serializationObject.customType = &quot;BABYLON.SimplelMaterial&quot;;
+</code></pre><p>And you&#39;re done for the material! Now it is time to test it.</p>
+<h2><a name="update-the-test-page" class="anchor" href="#update-the-test-page"></a>Update the test page</h2><p>Open <em>test/index.html</em> and add this reference:</p>
+<pre><code>&lt;script src=&quot;../dist/babylon.diffuseEmissiveMaterial.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>Then add the material at line 120:</p>
+<pre><code>var diffuseEmissive = new BABYLON.DiffuseEmissiveMaterial(&quot;diffuseEmissive&quot;, scene); 
+diffuseEmissive.diffuseTexture = new BABYLON.Texture(&quot;textures/amiga.jpg&quot;, scene); 
+diffuseEmissive.diffuseTexture.uScale = 5; 
+diffuseEmissive.diffuseTexture.vScale = 5; 
+
+diffuseEmissive.emissiveTexture = new BABYLON.Texture(&quot;textures/amiga.jpg&quot;, scene); 
+diffuseEmissive.emissiveTexture.uScale = 10; 
+diffuseEmissive.emissiveTexture.vScale = 10;
+</code></pre><p>Finally update the UI control:</p>
+<pre><code>gui.add(options, &#39;material&#39;, [&#39;standard&#39;, &#39;simple&#39;, &#39;diffuseEmissive&#39;]).onFinishChange(function () {
+    switch (options.material) {
+        case &quot;diffuseEmissive&quot;:
+            currentMaterial = diffuseEmissive;
+            break;
+        case &quot;simple&quot;:
+            currentMaterial = simple;
+            break;
+        default:
+            currentMaterial = std;
+            break;
+        }
+
+        currentMesh.material = currentMaterial;
+    });
+</code></pre><h2><a name="launch-the-test-server" class="anchor" href="#launch-the-test-server"></a>Launch the test server</h2><p>To test your result, just execute:</p>
+<pre><code>gulp webserver
+</code></pre></div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-code-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
