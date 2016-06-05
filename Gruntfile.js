@@ -140,12 +140,12 @@ module.exports = function (grunt) {
                 call: function (grunt, options, async) {
                     require('./scripts/create-forward')(async());
                 }
-            } /*,
+            } ,
             indexer           : {
                 call: function (grunt, options, async) {
                     require('./scripts/helpers/indexer/main')(async());
                 }
-            } */
+            } 
         }
     });
 
@@ -164,8 +164,8 @@ module.exports = function (grunt) {
 //        'execute:compileHtmlClasses',
         'execute:compileHtmlStatics',
         'execute:forwarder',
-  //      'clean:indexes',
-  //      'execute:indexer',
+        'clean:indexes',
+        'execute:indexer',
         'clean:tmp'
     ]);
 };
