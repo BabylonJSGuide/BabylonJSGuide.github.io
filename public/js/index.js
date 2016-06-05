@@ -24,8 +24,8 @@
                     html: '<i class="fa fa-file-text-o"></i>What\'s new?'
                 }),
                 $('<a>', {
-                    href: '/generals',
-                    html: '<i class="fa fa-book"></i>Generals'
+                    href: '/begins',
+                    html: '<i class="fa fa-book"></i>Begin Here'
                 }),
                 $('<a>', {
                     href: '/tutorials',

@@ -12,7 +12,7 @@ var express = require('express'),
 
 
 /**
- * Show the generals list
+ * Show the begins list
  */
 router.get('/', function(req, res) {
     var options = {
@@ -24,24 +24,24 @@ router.get('/', function(req, res) {
         'Cache-Control': 'no-cache',
         'Content-type':'text/html'
     });
-    res.sendFile('./generals.html', options);
+    res.sendFile('./begins.html', options);
 });
 
-router.get('/:general', function(req, res){
+router.get('/:overview', function(req, res){
     var options = {
         root: path.join(appRoot, 'public/html')
     };
 
-    var general = req.params.general;
+    var overview = req.params.overview;
 
-    fs.exists(path.join('public/html/generals/', general +'.html'), function (exists) {
+    fs.exists(path.join('public/html/begins/', overview +'.html'), function (exists) {
         if (exists) {
             res.status(200);
             res.set({
                 'Cache-Control': 'no-cache',
                 'Content-type':'text/html'
             });
-            res.sendFile('./generals/'+ general +'.html', options);
+            res.sendFile('./begins/'+ overview +'.html', options);
         } else {
             res.status(404).render('errorpages/404');
         }

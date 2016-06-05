@@ -8,11 +8,11 @@ var util = require('util');
  */
 module.exports = function (app) {
     app.use('/classes', require('./routes/classes'));
+    app.use('/begins', require('./routes/begins'));
     app.use('/tutorials', require('./routes/tutorials'));
     app.use('/extensions', require('./routes/extensions'));
     app.use('/exporters', require('./routes/exporters'));
     app.use('/overviews', require('./routes/overviews'));
-    app.use('/generals', require('./routes/generals'));
     app.use('/page.php', require('./routes/forward'));
     app.use('/search', require('./routes/search'));
     app.use('/playground', require('./routes/playground'));

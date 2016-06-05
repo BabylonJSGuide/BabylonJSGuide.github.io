@@ -1,21 +1,13 @@
 ---
 ID_PAGE: 22631
-PG_TITLE: The Playground Tutorial
+PG_TITLE: Using the Playground
 ---
-Introducing...
 
-# The BabylonJS Playground!
-
+## Overview ##
 ![](http://urbanproductions.com/wingy/babylon/playground/monaco/playground01.jpg)
 A Saved 'Custom' Playground Scene: http://babylonjs-playground.azurewebsites.net/#QKQHS
 
-## What is it?
-
-The BabylonJS Playground is an on-line white-boarding and experimenting application to assist in creating scenes for the Javascript-based BabylonJS webGL framework.  Your browser must be WebGL-ready and have Javascript active... in order to use the playground.  Most modern browsers have these capabilities.
-
-Briefly said, you can enter or modify Javascript-based BabylonJS scene code on the left-side 'editor' portion of the playground, press the Run button, and the playground will attempt to render the webGL scene on the right side, using the latest version of the BabylonJS framework.
-
-## The Top Menu
+## The Top Menu ##
 ![](http://urbanproductions.com/wingy/babylon/playground/monaco/playground_tm01b.jpg)
 
 The playground's top menu currently contains 11 buttons:

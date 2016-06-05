@@ -1,4 +1,25 @@
 {
+ "begins": [
+   {
+   "title":"Introductions",
+   "name":"Introductions",
+   "desc":"Introducing BabylonJS",
+   "files": [
+     {
+     "title": "Introducing BabylonJS",
+     "filename":"Introducing_Babylonjs"
+     },
+     {
+     "title": "Introducing the Playground",
+     "filename":"Introducing_the_Playground"
+     },
+     {
+     "title": "Using the Playground",
+     "filename":"Using_the_Playground"
+     }
+   ]
+   }
+ ],
   "tutorials": [
     {
       "title": "All",
@@ -915,60 +936,6 @@
         }
       ]
     }
-  ],
-  "generals": [
-     {
-      "title": "Essentials",
-      "name": "Essentials",
-      "img": "img/tutorials/All.png",
-      "desc": "Beginner? start here!",
-      "files": [
-        {
-          "title": "A Babylon.js Primer",
-          "filename": "A_Babylon.js_Primer"
-        },
-        {
-          "title": "The Playground Tutorial",
-          "filename": "The_Playground_Tutorial"
-        }
-      ]
-    },
-    {
-      "title": "General",
-      "name": "General",
-      "img": "img/tutorials/General.png",
-      "desc": "General good things to know",
-      "files": [
-        {
-          "title": "Interesting Playgrounds",
-          "filename": "playgrounds"
-        },
-        {
-          "title": "Approved Naming Conventions",
-          "filename": "Approved_Naming_Conventions"
-        },
-        {
-          "title": "Creating the Mini-fied Version",
-          "filename": "Creating_the_Mini-fied_Version"
-        },        
-        {
-          "title": "Framework versions",
-          "filename": "Framework_versions"
-        },
-        {
-          "title": "FileFormat Map (.babylon)",
-          "filename": "File_Format_Map_(.babylon)"
-        },
-        {
-          "title": "Setup Visual Studio to contribute to Babylon.js",
-          "filename": "setup_visualStudio"
-        },
-        {
-          "title": "Roadmap",
-          "filename": "Roadmap"
-        }
-      ]
-    }   
   ]
 
 }

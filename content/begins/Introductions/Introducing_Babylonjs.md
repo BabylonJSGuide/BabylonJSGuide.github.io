@@ -1,8 +1,7 @@
 ---
 ID_PAGE: 22621
-PG_TITLE: A Babylon.js Primer
+PG_TITLE: Introducing Babylon.js
 ---
-Welcome to the...
 
 ## Babylon.js WebGL Game Creation System!##
 
@@ -22,13 +21,11 @@ Simply put, you will need to use a browser that supports WebGL and has Javascrip
 | [**BabylonJS Documentation**](http://doc.babylonjs.com) | Our fantastic docs site |
 | [**BabylonJS Playground**](http://babylonjs-playground.azurewebsites.net) |  On-line white-boarding and scene-testing app |
 
-## Scene File Layout ##
-
-Although we have another tutorial that covers basic scenes, I would like you to now EXAMINE a basic Babylon.js scene file.  So here we go:
+## The Big Picture ##
 
 ![](http://urbanproductions.com/wingy/babylon/misc/codepic04.jpg)
 
-That is a BIG picture, isn't it?  This is a complete Babylon.js scene, using the 'single HTML file' method.  This is not the only (or best) method of setting up a scene, but it is fast and easy.  I have colored important sections of 'the big picture' and we will now examine each section individually.
+That is a BIG picture, isn't it?  This is a complete Babylon.js project, using the 'single HTML file' method.  This is not the only (or best) method of setting up a proect, but it is fast and easy.  I have colored important sections of 'the big picture' and we will now examine each section individually.
 
 ### The External Includes - Red Section ###
 
@@ -38,11 +35,11 @@ The first external include is hand.minified-1.2.js (often simply called hand.js)
 
 The next is cannon.js - an optional physics 'engine' that allows WebGL shapes (meshes) to act like real life objects.
 
-After that comes oimo.js - a different physics 'engine' that performs a similar function to cannon.js, but is generally faster although it lacks some of the more advanced features present in cannon.js.
+After that comes oimo.js - a different optional physics 'engine' that performs a similar function to cannon.js, but is generally faster although it lacks some of the more advanced features present in cannon.js.
 
 Most important, though, is the Babylon.js framework, our pride and joy.
 
-Each of these includes are JavaSCRIPT files, and so they are included-in by using HTML `<SCRIPT>` elements/tags.  The shown 'src' (source location) of these files is at the Babylon.js web site folders, but later I will tell you how to put these files on your home hard drive if you wish, and include them from there.  They load-in faster when they are 'local', but you will need to change the 'src' URL once you have saved them locally.  I will show you how to do that soon.
+Each of these includes are JavaScript files, and so they are included-in by using HTML `<SCRIPT>` elements/tags.  The shown 'src' (source location) of these files is at the Babylon.js web site folders, but later I will tell you how to put these files on your home hard drive if you wish, and include them from there.  They load-in faster when they are 'local', but you will need to change the 'src' URL once you have saved them locally.  I will show you how to do that soon.
 
 ### The CSS Styles - Blue Section ###
  Notice the blue section of the big picture.  That is the CSS (Cascading Style Sheets) styles used to present the scene's web page,  and adjust its WebGL canvas to be centered and filled-out nicely in your browser.
@@ -62,65 +59,19 @@ You need not concern yourself with that, at this point.  Externalizing your Java
 The JS code you see inside the green section... will be talked about soon.  Mainly, I would like you to study the big picture, and see how the single HTML file method of creating Babylon.js scenes... is structured.  I want you to try to visualize and somewhat memorize... this scene file's 'layout'.
 
 ### The createScene() Function - Purple Section ###
-The purple section of the big picture... is the createScene() 'function'... a Javascript 'function'.  It is the most important section of a 'single HTML file' Babylon.js scene.  You are not required to use a createScene() function in your Javascript code, but please do... in these early days of your webGL learning.  I have some magic to show you... which is available if you keep most of your scene code... inside a function called createScene().  (Like the one shown in the big picture.)
+The purple section of the big picture... is the createScene() 'function'... a Javascript 'function'.  It is the most important section of a 'single HTML file' Babylon.js scene.  
 
-Inside the createScene() function (the purple section)... we will be doing the actual Babylon.js commands and directives that cause beautiful webGL to happen.  The rest of the big picture sections... are simply helpers and preparations... for the fantastic purple section... the createScene() function.  Remember its name, because I will be mentioning it often in many Playpen Series tutorials.  It will become your best friend.  This I can promise.
+Inside the createScene() function ... we will be doing the actual Babylon.js commands and directives that cause beautiful webGL to happen.  The rest of the big picture sections... are simply helpers and preparations... for the fantastic purple section... the createScene() function. 
 
-## A Visit to The Playground ##
-We have worked hard and learned much, so we deserve some playground time, at the Babylon.js Playground web site.  Here is a scene that I once created and then saved... at the playground:
+Every createScene() (every scene)... in Babylon.js... generally REQUIRES three things.
 
-## BabylonJS Playground ##
-
-You might want to open that playground scene in a new window or new tab, so you can switch back and forth between here and there.
-
-See the 'createScene' function in the left-side code editing window?  Does it look familiar?  It is the very same code from the purple section of the big picture (but with a couple of word-wrapped lines).  Now you can see why the createScene function is an important section.  It is somewhat portable.  You can copy createScene functions to/from the playground editor, and to/from your home scene files.
-
-Let's pretend that you have been working on a scene file at home, and after many tries, you just cannot get it to work properly.  You could copy your home createScene function, then visit the playground, press its **CLEAR** button to empty its editor window, and then paste YOUR createScene function into the editor. Press the playground's **RUN** button and see if it works.  If it does not work, you can do some changes in the editor window, and hit **RUN** again... and again, and again.  Experiment with it there, and if you still cannot get it to work, you can press the **SAVE** button.  When you do that, the playground will give your scene a unique URL.  It will look something like this:
-
-http://babylonjs-playground.azurewebsites.net/#QKQHS
-
-Now you can bookmark that unique URL, and then visit the Babylon.js forum at:
-
-http://www.html5gamedevs.com/forum/16-babylonjs/
-
-There, you can start a new topic, tell everyone the URL to your broken playground createScene function, and ask others if they will please visit your playground scene and help you get it working correctly.  
-
-This is called white-boarding.  It is an easy way to allow many people to work on your createScene function and help you figure out what is wrong.  See how the createScene function is 'portable'?  You took it from your home, to the playground, then played with it there for awhile.  Then, if needed, you clicked the playground's **SAVE** button, which gave it a URL.   Then you went to the forum and showed that URL to others, and asked for their help.  Handy, huh?  We think so.
-
-## More About The Playground ##
-Once again let's visit the saved playground scene that I sent you to, above.
-
-http://babylonjs-playground.azurewebsites.net/#QKQHS
-
-This time, I would like you to press the **Get .zip** button.  The playground will open a small panel allowing you to download this scene.  Save the zip file in some new empty folder on your home computer.  Now use an UNZIP utility program to unzip it.  Notice that there is one file in the folder, called index.html.  Please load that file into a text editor or programming editor.  Does it look like the big picture above?  Sure it does.  ANY scene from the Babylon.js playground, including its pre-installed demo scenes, can be brought to your home with the **Get .zip** button.  Most of them will look very similar to the big picture, above.
-
-There is a tutorial for the Babylon.js playground.  Just [**click here**](http://doc.babylonjs.com/page.php?p=22631).
-
-Wow, this is a lot of information, isn't it?  You have learned what a scene file (the big picture) looks like, you have learned about its important createScene() function and how copy'n'paste portable it is.  You have seen a createScene() function in the Babylon.js playground, and you have been introduced to the playground's RUN, SAVE, and Get .zip buttons.
-
-You are becoming a Babylon.js TOOLS expert.  When I say 'tools', I mean... you have learned the things that SUPPORT the createScene() function.  Are you ready to engage in learning some things about the code that is used in a createScene() function?  I knew you were.
-
-## Diving into createScene() ##
- 
-I would like you to visit the Babylon.js Playground once again (open in a new window or new tab, if possible), but this time we will visit its base URL at:
-
-http://babylonjs-playground.azurewebsites.net
-
-Notice the button that is currently labeled **Basic Scene**.  (It is actually called the Scene Selector button, but it is currently LABELED 'Basic Scene')
-
-Click on it, please.  Notice that there is a wide variety of pre-installed scenes (createScene functions).  Feel free to select any of them.  Tour them, drag your pointer around on them, and even change the code in the editor and hit **RUN** again.  You cannot damage the pre-installed scenes, even if you hit **SAVE**.  You are safe in a playground of Babylon.js scenes, and you can see MANY createScene functions in action.  You can play with their settings and hit Run again - fun.  And again, you can use the **Get .zip** button on any of these playground demos, and take copies of them for your home collection.  Handy, yes?
-
-Now for the good stuff.  Every createScene() (every scene)... in Babylon.js... generally REQUIRES three things.
-
-**1. A Camera.**  The three most commonly used TYPES of cameras... are ArcRotateCamera, FreeCamera, and TouchCamera.  There are many types of camera available in Babylon.js, but these three are the most common.  ANY number of cameras can be coded into a scene, but only one of those cameras... is the 'active camera'.  We have a tutorial in our Playpen Series... dedicated to talking about cameras.
+**1. A Camera.**  The three most commonly used TYPES of cameras... are ArcRotateCamera, FreeCamera, and TouchCamera.  There are many types of camera available in Babylon.js, but these three are the most common.  ANY number of cameras can be coded into a scene, but only one of those cameras... is the 'active camera'.  
 
 **2. A Light.**   There are 4 basic types of lights available in Babylon.js.  They are PointLight, SpotLight, DirectionalLight, and HemisphericLight.  ANY number of lights can be coded into a scene,  but only the first 4 lights in the scene's lights list... will be used by the scene.
 
 To be honest, a light is not an absolute requirement.  If the mesh in a scene... all have a material.emissiveColor or material.emissiveTexture properly set, then they will each produce their own light.  They will be 'self-illuminated'.  Careful, it is easy to get lost in a scene without a light.  Good advice would be to ALWAYS have one light (a HemisphericLight aimed to the sky, is a very handy wide-lighting tool).  You can adjust its .intensity value to set its brightness.  We have a tutorial in our Playpen Series... dedicated to talking about lights.
 
-**2. A Shape.**  A shape is also called a **mesh**.  Every scene needs something to be viewed, right?  Cameras are invisible, and so are lights.  Every scene needs a mesh, or many.  There is no limit to the number of mesh in your scene.  A mesh can be one of the many shapes that are built-in to Babylon.js, or it can be a shape that you plotted yourself using Babylon's VertexData system, or it can be a mesh that has been 'imported' into the scene... from a modeling package such as Blender or 3D Studio Max.
-
-You can learn many more things about Babylon.js scenes... in the other [tutorials and documentation](http://doc.babylonjs.com/).  And don't forget to look at the 'createScene()' functions of the playground's pre-installed demo scenes.  The Babylon.js playground is a learning wonderland, and it is a whole lot of fun, too.
+**2. A Mesh.**  Every scene needs something to be viewed, right?  Cameras are invisible, and so are lights.  Every scene needs a mesh, or many.  There is no limit to the number of meshes in your scene.  A mesh can be one of the many shapes that are built-in to Babylon.js, or it can be a shape that you plotted yourself using Babylon's VertexData system, or it can be a mesh that has been 'imported' into the scene... from a modeling package such as Blender or 3D Studio Max.
 
 ## Babylon.js Objects, Properties, Methods, and Values ##
 
@@ -308,7 +259,7 @@ The creation of the lines object was a bit strange, but it sure was easy to make
 
 ## My New Friends - .position, .rotation, and .scaling  ##
 
-As you toured the Babylon.js Playground demo scenes, you surely saw some .position, .rotation, and maybe some .scaling properties being 'set' with values.  Let's take a look at each one:
+Let's take a look at some ways of transforming a mesh:
 
 **POSITION** - Every mesh is POSITIONED in a scene using X, Y, and Z settings.  You can think of the .position property... as the mesh's LOCATION.  The link below... is a saved playground scene that illustrates using a mesh's .position property.  Try to open it in a new window or new tab, so you can jump back and forth between this tutorial... and the playground scene:
 
@@ -372,6 +323,3 @@ If you are not using physics in your scene, you might want to remark-out (disabl
 ```
 Easy.  Most of these things you already know, don't you?  I thought so.
 
-## Hey, you made it! ##
-
-You are finally at the bottom of this tutorial.  It was a long, but fun trip, wasn't it?  Things will be easy from now on.  The next tutorial in the Playpen Series tutorials... is about building a very basic scene.  I think it will be quite easy and fast, for you.  You have graduated from tutorial #0... this tutorial.  You are already a Babylon.js expert.
