@@ -19,30 +19,30 @@
                     href: '/',
                     html: '<i class="fa fa-home"></i>Home'
                 }),
-                $('<a>', {
+             /*   $('<a>', {
                     href: '/whats-new',
                     html: '<i class="fa fa-file-text-o"></i>What\'s new?'
-                }),
+                }), */
                 $('<a>', {
-                    href: '/begins',
+                    href: '/begins.html',
                     html: '<i class="fa fa-book"></i>Begin Here'
                 }),
                 $('<a>', {
-                    href: '/tutorials',
+                    href: '/tutorials.html',
                     html: '<i class="fa fa-cogs"></i>Tutorials'
                 }),
                 $('<a>', {
-                    href: '/overviews',
+                    href: '/overviews.html',
                     html: '<i class="fa fa-book"></i>Overviews'
                 }),                     
                 $('<a>', {
-                    href: '/exporters',
+                    href: '/exporters.html',
                     html: '<i class="fa fa-rocket"></i>Exporters'
                 }),
                 $('<a>', {
-                    href: '/extensions',
+                    href: '/extensions.html',
                     html: '<i class="fa fa-wrench"></i>Extensions'
-                }),
+                }) /*,
                 $('<a>', {
                     href: '/classes',
                     html: '<i class="fa fa-files-o"></i>Classes'
@@ -50,7 +50,7 @@
                 $('<a>', {
                     href: '/playground',
                     html: '<i class="fa fa-cubes"></i>Playground'
-                })
+                }) */
             ];
 
             var links = [
