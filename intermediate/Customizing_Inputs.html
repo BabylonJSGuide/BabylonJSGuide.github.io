@@ -31,13 +31,15 @@ input type (mouse, keyboard, gamepad, device orientation, ...).</p>
 <pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
 var inputManager = camera.inputs;
 </code></pre>
-<h2><a name="configure-your-inputs" class="anchor" href="#configure-your-inputs"></a>Configure your inputs</h2><p>Most inputs provide settings to customize the sensibility and adapt it to your own scene.</p>
+<p>##Configure your inputs</p>
+<p>Most inputs provide settings to customize the sensibility and adapt it to your own scene.</p>
 <p>Each input provides a short name available on the manager. The goal is to provide a friendly syntax when playing with your inputs.</p>
 <pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
 camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
 camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
 </code></pre>
-<h2><a name="adding-an-existing-input" class="anchor" href="#adding-an-existing-input"></a>Adding an existing input</h2><p>Input manager of both ArcRotateCamera and FreeCamera expose short-hand functions for adding built-in inputs.  </p>
+<p>##Adding an existing input
+Input manager of both ArcRotateCamera and FreeCamera expose short-hand functions for adding built-in inputs.  </p>
 <pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
 camera.inputs.addGamepad();
 </code></pre>
@@ -45,7 +47,8 @@ camera.inputs.addGamepad();
 <pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
 camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
 </code></pre>
-<h2><a name="enable-or-disable-inputs" class="anchor" href="#enable-or-disable-inputs"></a>Enable or disable inputs</h2><p>When you call &quot;attachControl&quot; on the camera, you are activating all inputs attached to the input manager. In the same way, you could turn off all inputs by calling &quot;detachControl&quot; on the camera.</p>
+<p>##Enable or disable inputs
+When you call &quot;attachControl&quot; on the camera, you are activating all inputs attached to the input manager. In the same way, you could turn off all inputs by calling &quot;detachControl&quot; on the camera.</p>
 <p>If you want to disable an input temporarily, you can call &quot;detachControl&quot; directly on the input... like this:</p>
 <pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
 camera.inputs.attached.mouse.detachControl();
@@ -54,7 +57,8 @@ camera.inputs.addGamepad();
 <p>You can then call &quot;attachInput&quot; when you want to turn it on again.</p>
 <pre><code class="lang-javascript">camera.inputs.attachInput(camera.inputs.attached.mouse);
 </code></pre>
-<h2><a name="removing-inputs" class="anchor" href="#removing-inputs"></a>Removing inputs</h2><p>Sometimes you want a very specific input mechanism. The best approach in such case is probably to clear all inputs and add only those you may want in your scene.</p>
+<p>##Removing inputs
+Sometimes you want a very specific input mechanism. The best approach in such case is probably to clear all inputs and add only those you may want in your scene.</p>
 <pre><code class="lang-javascript">var camera = new BABYLON.FreeCamera(&quot;sceneCamera&quot;, new BABYLON.Vector3(0, 1, -15), scene);
 camera.inputs.clear();
 camera.inputs.addMouse();
@@ -66,7 +70,8 @@ camera.inputs.remove(camera.inputs.attached.mouse);
 //remove by type
 camera.inputs.removeByType(&quot;FreeCameraKeyboardMoveInput&quot;);
 </code></pre>
-<h2><a name="implementing-your-own-input" class="anchor" href="#implementing-your-own-input"></a>Implementing your own input</h2><p>The input must be provided to the input manager as an object instance with a few required functions. If you use TypeScript, you could implement the interface ICameraInput.</p>
+<p>##Implementing your own input
+The input must be provided to the input manager as an object instance with a few required functions. If you use TypeScript, you could implement the interface ICameraInput.</p>
 <p>Even if you don&#39;t use TypeScript for your project, you will probably understand the signature of the input from the interface</p>
 <pre><code class="lang-javascript">interface ICameraInput&lt;TCamera extends BABYLON.Camera&gt; {       
     // the input manager will fill the parent camera

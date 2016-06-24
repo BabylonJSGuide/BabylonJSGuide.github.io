@@ -11,11 +11,13 @@
 </ul>
 </li>
 </ul>
-</div></div><div id="staticContent"><h3><a name="parametric-shapes" class="anchor" href="#parametric-shapes"></a>Parametric Shapes</h3><p>The appearance of the standard shapes can generally be determined by their name.<br>The appearance of the following shapes varies depending on how they are bent, tisted and turned. How these 
+</div></div><div id="staticContent"><p>###Parametric Shapes</p>
+<p>The appearance of the standard shapes can generally be determined by their name.<br>The appearance of the following shapes varies depending on how they are bent, tisted and turned. How these 
 bends, and twist and turns are achieved depends on given parameters. </p>
 <p>All the shapes, except for the Lathe, can have their shape updated by adjusting the parameters 
 of the already created instance of the mesh. </p>
-<h4><a name="lines" class="anchor" href="#lines"></a>Lines</h4><p>Creates a continguous series of line segments from a list of points.
+<p>####Lines
+Creates a continguous series of line segments from a list of points.
 You must set at least the <em>points</em> property.
 On update, you must set the <em>points</em> and <em>instance</em> properties.</p>
 <p>Example :</p>
@@ -52,7 +54,8 @@ lines = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: myArray, ins
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#8">A Playground Example of Lines</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h4><a name="dashed-lines" class="anchor" href="#dashed-lines"></a>Dashed Lines</h4><p>Creates a continguous series of dashed line segments from a list of points.
+<p>####Dashed Lines
+Creates a continguous series of dashed line segments from a list of points.
 You must set at least the <em>points</em> property.
 On update, you must set the <em>points</em> and <em>instance</em> properties.</p>
 <p>Example :</p>
@@ -105,7 +108,8 @@ dashedLines = BABYLON.MeshBuilder.CreateDashedLines(&quot;dl&quot;, {points: myA
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#9">A Playground Example of Dashed Lines</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#9', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h4><a name="linesystem" class="anchor" href="#linesystem"></a>LineSystem</h4><p>A system of lines that are independent of each other and may exist in their own space.
+<p>####LineSystem
+A system of lines that are independent of each other and may exist in their own space.
 You must set at least the <em>lines</em> property.
 On update, you must set the <em>lines</em> and <em>instance</em> properties.</p>
 <p>Example :</p>
@@ -142,7 +146,8 @@ lineSystem = BABYLON.MeshBuilder.CreateLineSystem(&quot;lineSystem&quot;, {lines
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#8">A Playground Example of a Linesystem</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h4><a name="ribbon" class="anchor" href="#ribbon"></a>Ribbon</h4><p>You must set at least the <em>pathArray</em> property.
+<p>####Ribbon
+You must set at least the <em>pathArray</em> property.
 On update, you must set the <em>pathArray</em> and <em>instance</em> properties.</p>
 <p>Example :</p>
 <pre><code class="lang-javascript">// creates an instance
@@ -198,7 +203,8 @@ ribbon = BABYLON.MeshBuilder.CreateRibbon(&quot;ribbon&quot;, {pathArray: myPath
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#13">A Playground Example of a Ribbon</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#13', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h4><a name="tube" class="anchor" href="#tube"></a>Tube</h4><p>You must set at least the <em>path</em> property.
+<p>####Tube
+You must set at least the <em>path</em> property.
 On update, you must set the <em>path</em> and <em>instance</em> properties and you can set the <em>radius</em>, <em>radiusFunction</em> or <em>arc</em> properties.</p>
 <p>Example :</p>
 <pre><code class="lang-javascript">// creates a tube
@@ -265,7 +271,8 @@ tube = BABYLON.MeshBuilder.CreateTube(&quot;tube&quot;, {path: myPath, instance:
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#15">A Playground Example of a Tube</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#15', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h4><a name="extruded-shapes" class="anchor" href="#extruded-shapes"></a>Extruded Shapes</h4><p>You must set at least the <em>shape</em> and <em>path</em> properties.
+<p>####Extruded Shapes
+You must set at least the <em>shape</em> and <em>path</em> properties.
 On update, you must set the <em>shape</em>, <em>path</em> and <em>instance</em> properties and you can set the <em>scale</em> and <em>rotation</em> properties.</p>
 <p>Example :</p>
 <pre><code class="lang-javascript">// creates an extended shape
@@ -327,7 +334,8 @@ extruded = BABYLON.MeshBuilder.ExtrudeShape(&quot;ext&quot;, {shape: myShape, pa
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#16">A Playground Example of an Extended Shape</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#16', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h4><a name="custom-extruded-shapes" class="anchor" href="#custom-extruded-shapes"></a>Custom Extruded Shapes</h4><p>You must set at least the <em>shape</em> and <em>path</em> properties.
+<p>####Custom Extruded Shapes
+You must set at least the <em>shape</em> and <em>path</em> properties.
 On update, you must set the <em>shape</em>, <em>path</em> and <em>instance</em> properties and you can set the <em>rotationFunction</em> or <em>scaleFunction</em> properties.</p>
 <p>Example :</p>
 <pre><code class="lang-javascript">//creates an instance of a Custom Extruded Shape
@@ -399,7 +407,8 @@ extruded = BABYLON.MeshBuilder.ExtrudeShapeCustom(&quot;ext&quot;, {shape: mySha
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#17">A Playground Example of a Custom Extruded Shape</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#17', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h4><a name="lathe" class="anchor" href="#lathe"></a>Lathe</h4><p>You must set at least the <em>shape</em> property.</p>
+<p>####Lathe
+You must set at least the <em>shape</em> property.</p>
 <p>Example :</p>
 <pre><code class="lang-javascript">var lathe = BABYLON.MeshBuilder.Lathe(&quot;lathe&quot;, {shape: myShape}, scene);
 </code></pre>

@@ -8,7 +8,9 @@
 </ul>
 </li>
 </ul>
-</div></div><div id="staticContent"><h2><a name="additional-shapes" class="anchor" href="#additional-shapes"></a>Additional Shapes</h2><h3><a name="ground-from-a-height-map" class="anchor" href="#ground-from-a-height-map"></a>Ground From a Height Map</h3><p>Example :</p>
+</div></div><div id="staticContent"><p>##Additional Shapes</p>
+<p>###Ground From a Height Map
+Example :</p>
 <pre><code class="lang-javascript">var ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(&quot;gdhm&quot;, url, {width: 6, subdivsions: 4}, scene);
 </code></pre>
 <p>Don&#39;t forget the <em>url</em> parameter.</p>
@@ -59,7 +61,8 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="disc" class="anchor" href="#disc"></a>Disc</h3><p>Remember you can create any kind of regular plane polygon with <em>CreateDisc()</em>
+<p>###Disc
+Remember you can create any kind of regular plane polygon with <em>CreateDisc()</em>
 Example :</p>
 <pre><code class="lang-javascript">var disc = BABYLON.MeshBuilder.CreateDisc(&quot;disc&quot;, {tessellation: 3}, scene); // makes a triangle
 </code></pre>
@@ -100,7 +103,8 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-<h3><a name="torus" class="anchor" href="#torus"></a>Torus</h3><p>Example :</p>
+<p>###Torus
+Example :</p>
 <pre><code class="lang-javascript">var torus = BABYLON.MeshBuilder.CreateTorus(&quot;torus&quot;, {thickness: 0.2}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -140,7 +144,8 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-<h3><a name="torus-knot" class="anchor" href="#torus-knot"></a>Torus Knot</h3><p>Example :</p>
+<p>###Torus Knot
+Example :</p>
 <pre><code class="lang-javascript">var torus = BABYLON.MeshBuilder.CreateTorusKnot(&quot;tk&quot;, {}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -196,7 +201,8 @@ Example :</p>
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#6">A Playground Example of the above Shapes</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#6', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h3><a name="tiled-ground" class="anchor" href="#tiled-ground"></a>Tiled Ground</h3><p>Example :</p>
+<p>###Tiled Ground
+Example :</p>
 <pre><code class="lang-javascript">var tiledGround = BABYLON.MeshBuilder.CreateTiledGround(&quot;tgd&quot;, {subdivsions: {w:4, h:6} }, scene);
 </code></pre>
 <p>Properties, all optional :</p>
