@@ -1,0 +1,475 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item active"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>intermediate</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Parametric Shapes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#parametric-shapes">Parametric Shapes</a><ul>
+<li><a href="#lines">Lines</a></li>
+<li><a href="#dashed-lines">Dashed Lines</a></li>
+<li><a href="#linesystem">LineSystem</a></li>
+<li><a href="#ribbon">Ribbon</a></li>
+<li><a href="#tube">Tube</a></li>
+<li><a href="#extruded-shapes">Extruded Shapes</a></li>
+<li><a href="#custom-extruded-shapes">Custom Extruded Shapes</a></li>
+<li><a href="#lathe">Lathe</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h3><a name="parametric-shapes" class="anchor" href="#parametric-shapes"></a>Parametric Shapes</h3><p>The appearance of the standard shapes can generally be determined by their name.<br>The appearance of the following shapes varies depending on how they are bent, tisted and turned. How these 
+bends, and twist and turns are achieved depends on given parameters. </p>
+<p>All the shapes, except for the Lathe, can have their shape updated by adjusting the parameters 
+of the already created instance of the mesh. </p>
+<h4><a name="lines" class="anchor" href="#lines"></a>Lines</h4><p>Creates a continguous series of line segments from a list of points.
+You must set at least the <em>points</em> property.
+On update, you must set the <em>points</em> and <em>instance</em> properties.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">//creates lines
+var lines = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: myArray}, scene);
+
+// updates the existing instance of lines : no need for the parameter scene here
+lines = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: myArray, instance: lines});
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>points</td>
+<td><em>(Vector3[])</em>  array of Vector3, the path of the line <strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of a line mesh to be updated</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#8">A Playground Example of Lines</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h4><a name="dashed-lines" class="anchor" href="#dashed-lines"></a>Dashed Lines</h4><p>Creates a continguous series of dashed line segments from a list of points.
+You must set at least the <em>points</em> property.
+On update, you must set the <em>points</em> and <em>instance</em> properties.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">// creates an instance of dashedlines
+var dashedLines = BABYLON.MeshBuilder.CreateDashedLines(&quot;dl&quot;, {points: myArray}, scene);
+
+// updates the existing instance of dashedLines : no need for the parameter scene here
+dashedLines = BABYLON.MeshBuilder.CreateDashedLines(&quot;dl&quot;, {points: myArray, instance: dashedLines});
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>points</td>
+<td><em>(Vector3[])</em>  array of Vector3, the path of the line <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>dashSize</td>
+<td><em>(number)</em>  size of the dashes</td>
+<td>3</td>
+</tr>
+<tr>
+<td>gapSize</td>
+<td><em>(number)</em>  size of the gaps</td>
+<td>1</td>
+</tr>
+<tr>
+<td>dashBn</td>
+<td><em>(number)</em>  intended number of dashes</td>
+<td>200</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of a line mesh to be updated</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#9">A Playground Example of Dashed Lines</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#9', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h4><a name="linesystem" class="anchor" href="#linesystem"></a>LineSystem</h4><p>A system of lines that are independent of each other and may exist in their own space.
+You must set at least the <em>lines</em> property.
+On update, you must set the <em>lines</em> and <em>instance</em> properties.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">// creates an instance of a line system
+var lineSystem = BABYLON.MeshBuilder.CreateLineSystem(&quot;lineSystem&quot;, {lines: myArray}, scene);
+
+// updates the existing instance of lineSystem : no need for the parameter scene here
+lineSystem = BABYLON.MeshBuilder.CreateLineSystem(&quot;lineSystem&quot;, {lines: myArray, instance: lineSystem});
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lines</td>
+<td><em>(Vector3[])</em>  array of lines, each line being an array of successive Vector3 <strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of a line system mesh to be updated</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#8">A Playground Example of a Linesystem</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h4><a name="ribbon" class="anchor" href="#ribbon"></a>Ribbon</h4><p>You must set at least the <em>pathArray</em> property.
+On update, you must set the <em>pathArray</em> and <em>instance</em> properties.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">// creates an instance
+var ribbon = BABYLON.MeshBuilder.CreateRibbon(&quot;ribbon&quot;, {pathArray: myPaths}, scene);
+
+// updates the existing instance of ribbon : no need for the parameter scene
+ribbon = BABYLON.MeshBuilder.CreateRibbon(&quot;ribbon&quot;, {pathArray: myPaths, instance: ribbon});
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pathArray</td>
+<td><em>(Vector3[][])</em>  array of array of Vector3, the array of paths <strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>closeArray</td>
+<td><em>(boolean)</em>  to force the ribbon to join its last and first paths</td>
+<td>false</td>
+</tr>
+<tr>
+<td>closePath</td>
+<td><em>(boolean)</em>  to force each ribbon path to join its last and first points</td>
+<td>false</td>
+</tr>
+<tr>
+<td>offset</td>
+<td><em>(number)</em>  used if the pathArray has one path only</td>
+<td>half the path length</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of a ribbon to be updated</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#13">A Playground Example of a Ribbon</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#13', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h4><a name="tube" class="anchor" href="#tube"></a>Tube</h4><p>You must set at least the <em>path</em> property.
+On update, you must set the <em>path</em> and <em>instance</em> properties and you can set the <em>radius</em>, <em>radiusFunction</em> or <em>arc</em> properties.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">// creates a tube
+var tube = BABYLON.MeshBuilder.CreateTube(&quot;tube&quot;, {path: myPath}, scene);
+
+// updates the existing instance of tube : no need for the parameter scene
+tube = BABYLON.MeshBuilder.CreateTube(&quot;tube&quot;, {path: myPath, instance: tube});
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td><em>(Vector3[])</em>  array of Vector3, the path of the tube <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>radius</td>
+<td><em>(number)</em>  the radius of the tube</td>
+<td>1</td>
+</tr>
+<tr>
+<td>tessellation</td>
+<td><em>(number)</em>  the number of radial segments</td>
+<td>64</td>
+</tr>
+<tr>
+<td>radiusFunction</td>
+<td><em>( function(i, distance) )</em>  a function returning a radius value from <em>(i, distance)</em> parameters</td>
+<td>null</td>
+</tr>
+<tr>
+<td>cap</td>
+<td><em>(number)</em> tube cap : NO_CAP, CAP_START, CAP_END, CAP_ALL</td>
+<td>NO_CAP</td>
+</tr>
+<tr>
+<td>arc</td>
+<td><em>(number)</em> ratio of the tube circumference between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of a tube to be updated</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#15">A Playground Example of a Tube</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#15', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h4><a name="extruded-shapes" class="anchor" href="#extruded-shapes"></a>Extruded Shapes</h4><p>You must set at least the <em>shape</em> and <em>path</em> properties.
+On update, you must set the <em>shape</em>, <em>path</em> and <em>instance</em> properties and you can set the <em>scale</em> and <em>rotation</em> properties.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">// creates an extended shape
+var extruded = BABYLON.MeshBuilder.ExtrudeShape(&quot;ext&quot;, {shape: myShape, path: myPath}, scene);
+
+// updates the existing instance of extruded : no need for the parameter scene
+extruded = BABYLON.MeshBuilder.ExtrudeShape(&quot;ext&quot;, {shape: myShape, path: myPath, scale: newScale, rotation: newRotation instance: extruded});
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shape</td>
+<td><em>(Vector3[])</em>  array of Vector3, the shape you want to extrude <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>path</td>
+<td><em>(Vector3[])</em>  array of Vector3, the extrusion axis <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>scale</td>
+<td><em>(number)</em>  the value to scale the shape</td>
+<td>1</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td><em>(number)</em>  the value to rotate the shape each step along the path</td>
+<td>0</td>
+</tr>
+<tr>
+<td>cap</td>
+<td><em>(number)</em> extrusion cap : NO_CAP, CAP_START, CAP_END, CAP_ALL</td>
+<td>NO_CAP</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of an extruded shape to be updated</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#16">A Playground Example of an Extended Shape</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#16', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h4><a name="custom-extruded-shapes" class="anchor" href="#custom-extruded-shapes"></a>Custom Extruded Shapes</h4><p>You must set at least the <em>shape</em> and <em>path</em> properties.
+On update, you must set the <em>shape</em>, <em>path</em> and <em>instance</em> properties and you can set the <em>rotationFunction</em> or <em>scaleFunction</em> properties.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">//creates an instance of a Custom Extruded Shape
+var extruded = BABYLON.MeshBuilder.ExtrudeShapeCustom(&quot;ext&quot;, {shape: myShape, path: myPath}, scene);
+
+// updates the existing instance of extruded : no need for the parameter scene
+extruded = BABYLON.MeshBuilder.ExtrudeShapeCustom(&quot;ext&quot;, {shape: myShape, path: myPath, scaleFunction: myScaleF, rotationFunction: myRotF instance: extruded});
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shape</td>
+<td><em>(Vector3[])</em>  array of Vector3, the shape you want to extrude <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>path</td>
+<td><em>(Vector3[])</em>  array of Vector3, the extrusion axis <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>scaleFunction</td>
+<td><em>( function(i, distance) )</em>  a function returning a scale value from <em>(i, distance)</em> parameters</td>
+<td>{return 1;}</td>
+</tr>
+<tr>
+<td>rotationFunction</td>
+<td><em>( function(i, distance) )</em>  a function returning a rotation value from <em>(i, distance)</em> parameters</td>
+<td>{return 0;}</td>
+</tr>
+<tr>
+<td>ribbonClosePath</td>
+<td><em>(boolean)</em> the underlying ribbon <em>closePath</em> parameter value</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ribbonCloseArray</td>
+<td><em>(boolean)</em> the underlying ribbon <em>closeArray</em> parameter value</td>
+<td>false</td>
+</tr>
+<tr>
+<td>cap</td>
+<td><em>(number)</em> extrusion cap : NO_CAP, CAP_START, CAP_END, CAP_ALL</td>
+<td>NO_CAP</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of an extruded shape to be updated</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#17">A Playground Example of a Custom Extruded Shape</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#17', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h4><a name="lathe" class="anchor" href="#lathe"></a>Lathe</h4><p>You must set at least the <em>shape</em> property.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">var lathe = BABYLON.MeshBuilder.Lathe(&quot;lathe&quot;, {shape: myShape}, scene);
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shape</td>
+<td><em>(Vector3[])</em>  array of Vector3, the shape you want to turn <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>radius</td>
+<td><em>(number)</em>  the value to radius of the lathe</td>
+<td>1</td>
+</tr>
+<tr>
+<td>tessellation</td>
+<td><em>(number)</em>  the number of iteration around the lathe</td>
+<td>64</td>
+</tr>
+<tr>
+<td>arc</td>
+<td><em>(number)</em> ratio of the circumference between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>cap</td>
+<td><em>(number)</em> tube cap : NO_CAP, CAP_START, CAP_END, CAP_ALL</td>
+<td>NO_CAP</td>
+</tr>
+<tr>
+<td>closed</td>
+<td><em>(boolean)</em> to open/close the lathe circumference, should be set to <code>false</code> when used with <code>arc</code></td>
+<td>true</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#12">A Playground Example of a Lathe</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#12', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

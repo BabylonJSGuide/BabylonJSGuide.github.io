@@ -1,59 +1,21 @@
 ---
-ID_PAGE: 25088
-PG_TITLE: Ribbon Tutorial
+ID_PAGE: 925088
+PG_TITLE: Maths Makes Ribbons
 ---
-Here you'll find almost everything to understand how the Ribbon object works and how to play with it. 
 
-## Under the hood
-_series of paths_
-_paths with different lengths_
+## Maths Makes Ribbons
 
+Mathematics is very useful for drawing paths in space and so can be applied to ribbons. 
 
-It's not mandatory that all paths have the same length.  
-In this example, _path2_ and _path3_ are longer than _path1_ and _path4_ : http://www.babylonjs-playground.com/#88AZQ   
-As you can see, the final ribbon adjust to different lengths. The rule is they all start from first path points and each intermediate ribbon then stops at first of its both constituting paths end.   
-There is also no incidence on light reflection for ribbon with different length paths : http://www.babylonjs-playground.com/#88AZQ#1  
-Therefore you **can't add a texture** for now to a ribbon constructed with different length paths.  
-This is due to the fact that the nested ribbon texturing algorithm only knows how to deal with a unique length for all paths. Indeed, as a ribbon is a parametric shape, so unpredictable, it's assumed that we could unwrap a volumic ribbon (so each one of its paths) onto a full rectangular image and this assumption keeps consistency only with the same length for all paths.  
-
-So it's not mandatory that all the ribbon paths have the same length, but it is hardly recommended.  
-The best way to emulate different lengths for some parts of your mesh is then to simply use many ribbons.  
-
-## Closed shapes : normals or textures ?   
-The ribbon mesh provides two ways to automatically close an unclosed shape.
-  
-* _closeArray_ parameter : this will add an extra unit ribbon between the last path and the first path of your _pathArray_.  
-* _closePath_ parameter : this will join the last and first points of each _path_ in your _pathArray_.  
-
-Here's an unclosed ribbon : http://www.babylonjs-playground.com/#3XMWZ#1
+*NOTE - * The examples on this page use the legacy method of creating ribbons
 ```javascript
-var ribbon = BABYLON.Mesh.CreateRibbon("ribbon", paths, false, false, 0, scene, false, BABYLON.Mesh.BACKSIDE);
+var ribbon = BABYLON.Mesh.CreateRibbon(name, pathArray, closeArray, closePath, offset, scene, updatable, sideOrientation);
 ```
-Don't mind about how it is mathematically built. This is not the topic.  
 
-The same closed ribbon with _closeArray_ set to _true_ : http://www.babylonjs-playground.com/#3XMWZ#2
+rather then the newer options method.
 ```javascript
-var ribbon = BABYLON.Mesh.CreateRibbon("ribbon", paths, true, false, 0, scene, false, BABYLON.Mesh.BACKSIDE);
-```
-As you can see, when rotating the camera, there is no edge on the ribbon surface. The light reflects continuously.  
-
-If we now apply a texture to this automatically closed ribbon : http://www.babylonjs-playground.com/#3XMWZ#3  
-You can notice that the texture isn't stretched on the surface added by the automatic closing.  
-
-The reason of this behavior is that, with ribbon _closeXXX_ parameters, priority is given on normals (the tools that compute light reflection) over textures.  
-
-If you don't care about continuous light reflection but you do want your texture to be stretched along the whole surface, you just have to forget automatic closing (_closeArray_ then set to _false_) and close the ribbon by yourself.  
-A simple way is just to re-push the first _path_ at the end of the _pathArray_
-```javascript
-paths.push(paths[0]);
-var ribbon = BABYLON.Mesh.CreateRibbon("ribbon", paths, false, false, 0, scene, false, BABYLON.Mesh.BACKSIDE);
-```
-Example : http://www.babylonjs-playground.com/#3XMWZ#4  
-
-Obviously, the same rules and workarounds apply to the _closePath_ parameter.  
-automatically _path_ closed : http://www.babylonjs-playground.com/#3XMWZ#5  
-then textured : http://www.babylonjs-playground.com/#3XMWZ#6  
-
+var ribbon = BABYLON.MeshBuilder.CreateRibbon("ribbon", { pathArray: paths },  scene );
+```  
 
 
 ## Maths computed paths

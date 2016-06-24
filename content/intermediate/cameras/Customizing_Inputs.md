@@ -1,8 +1,34 @@
 ---
 ID_PAGE: 29000
-PG_TITLE: 19. Customizing camera inputs
+PG_TITLE: 19. Customizing Camera Inputs
 ---
-Some of Babylon.js's cameras respond to user inputs. This is especially true for ArcRotateCamera and FreeCamera. Babylon.js v2.4 introduced a different way to manage camera inputs to provide an approach oriented toward composability of inputs. These cameras now use an input manager and each input can be seen as a plugin that is specific to this camera family, and to a given input type (mouse, keyboard, gamepad, device orientation, ...).
+
+##Inputs##
+
+Every Babylon.js camera will automatically handle inputs for you... once you call the camera's attachControl function. And you can revoke the control by using the detachControl function. Most Babylon.js experts use a two-step process to activate and attach a camera:
+
+```javascript
+//First, set the scene's activeCamera... to be YOUR camera.
+scene.activeCamera = myCamera;
+// Then attach the activeCamera to the canvas.
+//Parameters: canvas, noPreventDefault
+scene.activeCamera.attachControl(canvas, true);
+```
+
+A simpler version might look like this:
+
+```javascript
+myCamera.attachControl(canvas);
+```
+By default _noPreventDefault_ is set to false, meaning that preventDefault() is automatically called on all canvas mouse clicks and touch events.
+
+#Customizing Camera Inputs#
+
+Some of Babylon.js's cameras respond to user inputs. This is especially true for Arc Rotate Camera and Universal Camera. 
+
+Babylon.js v2.4 introduced a different way to manage camera inputs to provide an approach oriented toward composability of inputs. 
+These cameras now use an input manager and each input can be seen as a plugin that is specific to this camera family, and to a given 
+input type (mouse, keyboard, gamepad, device orientation, ...).
 
 Using input manager, you can add, remove, enable, or disable any input available for the camera. You can also implement your own input mechanism or override the existing one, very easily.
 
@@ -103,4 +129,3 @@ interface ICameraInput<TCamera extends BABYLON.Camera> {
 }
 ```
 
-Composable inputs is new, powerful, flexible, and extensible.  Familiarize yourself with its simple interface, and you will enjoy more and better camera control than ever before.

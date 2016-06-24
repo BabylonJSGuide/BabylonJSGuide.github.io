@@ -18,9 +18,21 @@
                     html: '<i class="fa fa-book"></i>Begin Here'
                 }),
                 $('<a>', {
+                    href: '/basics',
+                    html: '<i class="fa fa-book"></i>Basics'
+                }),
+                $('<a>', {
+                    href: '/intermediate',
+                    html: '<i class="fa fa-book"></i>Intermediate'
+                }),
+                $('<a>', {
+                    href: '/advanced',
+                    html: '<i class="fa fa-book"></i>Advanced'
+                }),
+                $('<a>', {
                     href: '/tutorials',
                     html: '<i class="fa fa-cogs"></i>Tutorials'
-                }),
+                })/*,
                 $('<a>', {
                     href: '/overviews',
                     html: '<i class="fa fa-book"></i>Overviews'
@@ -36,7 +48,7 @@
                 $('<a>', {
                     href: '/playground',
                     html: '<i class="fa fa-cubes"></i>Playground'
-                })
+                }) */
             ];
 
             var links = [

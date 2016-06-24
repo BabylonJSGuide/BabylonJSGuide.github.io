@@ -40,10 +40,13 @@ var __STATICS_LIST__    = path.join(appRoot, 'data/statics.json'),
 module.exports = function(done){
     var staticCategories = [
         "begins",
+        "basics",
+        "intermediate",
+        "advanced"/*
         "exporters",
         "extensions",
         "tutorials",
-        "overviews"
+        "overviews" */
     ];
 
     var globalObj = {};

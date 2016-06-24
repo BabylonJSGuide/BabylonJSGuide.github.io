@@ -20,6 +20,117 @@
    ]
    }
  ],
+ "basics": [
+   {
+      "title": "All",
+      "name": "All",
+      "desc": "All the Basic Tutorials."
+   },
+   {
+     "title": "Cameras",
+      "name": "cameras",
+      "desc": "Basic Cameras",
+      "files": [
+        {
+          "title": "Standard Cameras",
+          "filename": "Cameras"
+        }
+      ]
+   },
+   {
+     "title": "Meshes",
+      "name": "mesh",
+      "desc": "Basic Meshes",
+      "files": [
+        {
+          "title": "Standard Shapes",
+          "filename": "Shapes"
+        }
+      ]
+   }
+ ],
+ "intermediate": [
+   {
+      "title": "All",
+      "name": "All",
+      "desc": "All the Intermediate Tutorials."
+   },
+   {
+     "title": "Cameras",
+      "name": "cameras",
+      "desc": "Intermediate Cameras",
+      "files": [
+        {
+          "title": "Additional Cameras",
+          "filename": "Cameras"
+        },
+        {
+          "title": "Customizing Camera Inputs",
+          "filename": "Customizing_Inputs"
+        }
+      ]
+   },
+   {
+     "title": "Meshes",
+      "name": "mesh",
+      "desc": "Intermediate Meshes",
+      "files": [
+        {
+          "title": "Additional Shapes",
+          "filename": "Shapes"
+        },
+        {
+          "title": "Parametric Shapes",
+          "filename": "Parametric_Shapes"
+        },
+        {
+          "title": "Polyhedra",
+          "filename": "Polyhedra_Shapes"
+        }
+      ]
+   }
+ ],
+ "advanced": [
+   {
+      "title": "All",
+      "name": "All",
+      "desc": "All the Advanced Tutorials."
+   },
+   {
+     "title": "Cameras",
+      "name": "cameras",
+      "desc": "Advanced Cameras",
+      "files": [
+        {
+          "title": "Advanved Cameras",
+          "filename": "Cameras"
+        }
+      ]
+   },
+   {
+     "title": "Meshes",
+      "name": "mesh",
+      "desc": "Advanced Meshes",
+      "files": [
+        {
+          "title": "Ribbons In Detail",
+          "filename": "Ribbons_In_Detail"
+        },
+        {
+          "title": "Mathematics and Ribbons",
+          "filename": "Maths_Make_Ribbons"
+        },
+        {
+          "title": "Using Decals",
+          "filename": "Decals"
+        }
+      ]
+   }
+ ],
+
+
+
+
   "tutorials": [
     {
       "title": "All",
@@ -44,10 +155,6 @@
         {
           "title": "Materials",
           "filename": "Materials"
-        },
-        {
-          "title": "Cameras",
-          "filename": "Cameras"
         },
         {
           "title": "Lights",
@@ -94,20 +201,8 @@
           "filename": "Shadows"
         },
         {
-          "title": "Parametric Shapes",
-          "filename": "Parametric_Shapes"
-        },
-        {
           "title": "Supporting fog with ShaderMaterial",
           "filename": "Supporting_fog_with_ShaderMaterial"
-        },
-        {
-          "title": "CreateBox per face colors and textures tutorial",
-          "filename": "CreateBox_Per_Face_Textures_And_Colors"
-        },
-        {
-          "title": "Mesh CreateXXX Methods With Options Parameter",
-          "filename": "Mesh_CreateXXX_Methods_With_Options_Parameter"
         }
       ]
     },
@@ -186,24 +281,12 @@
           "filename": "Understanding_Shaders_with_Babylon.js_and_ShaderMaterial"
         },
         {
-          "title": "Using decals",
-          "filename": "Using_decals"
-        },
-        {
           "title": "Using Parallax Mapping",
           "filename": "Using_parallax_mapping"
         },
         {
           "title": "Creating a custom loading screen",
           "filename": "Creating_a_custom_loading_screen"
-        },
-        {
-          "title": "Customizing camera inputs",
-          "filename": "Customizing_Camera_Inputs"
-        },
-        {
-          "title": "Ribbon Tutorial",
-          "filename": "Ribbon_Tutorial"
         }
       ]
     },

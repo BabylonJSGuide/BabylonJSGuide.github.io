@@ -9,6 +9,10 @@ var util = require('util');
 module.exports = function (app) {
     app.use('/classes', require('./routes/classes'));
     app.use('/begins', require('./routes/begins'));
+    app.use('/basics', require('./routes/basics'));
+    app.use('/intermediate', require('./routes/intermediate'));
+    app.use('/advanced', require('./routes/advanced'));
+/*    
     app.use('/tutorials', require('./routes/tutorials'));
     app.use('/extensions', require('./routes/extensions'));
     app.use('/exporters', require('./routes/exporters'));
@@ -16,7 +20,7 @@ module.exports = function (app) {
     app.use('/page.php', require('./routes/forward'));
     app.use('/search', require('./routes/search'));
     app.use('/playground', require('./routes/playground'));
-
+*/
 
     app.use(require('./routes/root'));
 
