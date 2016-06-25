@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item active"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>basics</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Standard Shapes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins">Begin Here</a></div><div id="basic" class="item active"><a href="/basics">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>basics</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Standard Shapes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
 <li><a href="#standard-shapes">Standard Shapes</a><ul>
 <li><a href="#box">Box</a></li>
 <li><a href="#sphere">Sphere</a></li>
@@ -8,8 +8,7 @@
 </ul>
 </li>
 </ul>
-</div></div><div id="staticContent"><p>##Standard Shapes##</p>
-<p><a href="http://www.babylonjs-playground.com/#165IV6#1">A Playground Example of the Standard Shapes</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+</div></div><div id="staticContent"><h2><a name="standard-shapes" class="anchor" href="#standard-shapes"></a>Standard Shapes</h2><p><a href="http://www.babylonjs-playground.com/#165IV6#1">A Playground Example of the Standard Shapes</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <p>From BJS 2.3 onwards a mesh is created using MeshBuilder. Shapes are created using the using the following format</p>
 <pre><code class="lang-javascript">var mesh = BABYLON.MeshBuilder.CreateMesh(name, {param1 : val1, param2: val2}, scene);
 </code></pre>
@@ -18,8 +17,7 @@
 <pre><code class="lang-javascript">var mesh = BABYLON.Mesh.CreateMesh(name, param1, param2, ..., scene);
 </code></pre>
 <p>is still available and will often be seen in Playground examples.</p>
-<p>###Box
-Example :</p>
+<h3><a name="box" class="anchor" href="#box"></a>Box</h3><p>Example :</p>
 <pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {height: 5}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -74,8 +72,7 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-<p>###Sphere
-Example :</p>
+<h3><a name="sphere" class="anchor" href="#sphere"></a>Sphere</h3><p>Example :</p>
 <pre><code class="lang-javascript">var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter: 2, diameterX: 3}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -135,8 +132,7 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-<p>###Cylinder or Cone
-If you set <em>diameterTop</em> to zero, you get a cone instead of a cylinder.
+<h3><a name="cylinder-or-cone" class="anchor" href="#cylinder-or-cone"></a>Cylinder or Cone</h3><p>If you set <em>diameterTop</em> to zero, you get a cone instead of a cylinder.
 Example :</p>
 <pre><code class="lang-javascript">var cone = BABYLON.MeshBuilder.CreateCylinder(&quot;cone&quot;, {diameterTop: 0, tessellation: 4}, scene);
 </code></pre>
@@ -207,8 +203,7 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-<p>###Plane
-Example :</p>
+<h3><a name="plane" class="anchor" href="#plane"></a>Plane</h3><p>Example :</p>
 <pre><code class="lang-javascript">var plane = BABYLON.MeshBuilder.CreatePlane(&quot;plane&quot;, {width: 5}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -253,8 +248,7 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-<p>###Ground
-Example :</p>
+<h3><a name="ground" class="anchor" href="#ground"></a>Ground</h3><p>Example :</p>
 <pre><code class="lang-javascript">var ground = BABYLON.MeshBuilder.CreateGround(&quot;gd&quot;, {width: 6, subdivsions: 4}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -289,7 +283,8 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+<p><br><br></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
