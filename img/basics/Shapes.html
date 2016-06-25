@@ -1,0 +1,302 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item active"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>basics</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Standard Shapes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#standard-shapes">Standard Shapes</a><ul>
+<li><a href="#box">Box</a></li>
+<li><a href="#sphere">Sphere</a></li>
+<li><a href="#cylinder-or-cone">Cylinder or Cone</a></li>
+<li><a href="#plane">Plane</a></li>
+<li><a href="#ground">Ground</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="standard-shapes" class="anchor" href="#standard-shapes"></a>Standard Shapes</h2><p><a href="http://www.babylonjs-playground.com/#165IV6#1">A Playground Example of the Standard Shapes</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>From BJS 2.3 onwards a mesh is created using MeshBuilder. Shapes are created using the using the following format</p>
+<pre><code class="lang-javascript">var mesh = BABYLON.MeshBuilder.CreateMesh(name, {param1 : val1, param2: val2}, scene);
+</code></pre>
+<p>This method has the advantages of making some (or all) the parameters optional depending on the mesh and provides more features to the created mesh over the legacy method.</p>
+<p>The legacy method which has the form </p>
+<pre><code class="lang-javascript">var mesh = BABYLON.Mesh.CreateMesh(name, param1, param2, ..., scene);
+</code></pre>
+<p>is still available and will often be seen in Playground examples.</p>
+<h3><a name="box" class="anchor" href="#box"></a>Box</h3><p>Example :</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {height: 5}, scene);
+</code></pre>
+<p>Properties, all optional :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size</td>
+<td><em>(number)</em> size of each box side</td>
+<td>1</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> height size, overwrites <em>size</em> property</td>
+<td>size</td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> width size, overwrites <em>size</em> property</td>
+<td>size</td>
+</tr>
+<tr>
+<td>depth</td>
+<td><em>(number)</em> depth size,  overwrites <em>size</em> property</td>
+<td>size</td>
+</tr>
+<tr>
+<td>faceColors</td>
+<td><em>(Color4[])</em> array of 6 <em>Color4</em>, one per box face</td>
+<td>Color4(1, 1, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>faceUV</td>
+<td><em>(Vector4[])</em> array of 6 <em>Vector4</em>, one per box face</td>
+<td>UVs(0, 0, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="sphere" class="anchor" href="#sphere"></a>Sphere</h3><p>Example :</p>
+<pre><code class="lang-javascript">var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter: 2, diameterX: 3}, scene);
+</code></pre>
+<p>Properties, all optional :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>segments</td>
+<td><em>(number)</em> number of horizontal segments</td>
+<td>32</td>
+</tr>
+<tr>
+<td>diameter</td>
+<td><em>(number)</em> diameter of the sphere</td>
+<td>1</td>
+</tr>
+<tr>
+<td>diameterX</td>
+<td><em>(number)</em> diameter on X axis, overwrites <em>diameter</em> property</td>
+<td>diameter</td>
+</tr>
+<tr>
+<td>diameterY</td>
+<td><em>(number)</em> diameter on Y axis, overwrites <em>diameter</em> property</td>
+<td>diameter</td>
+</tr>
+<tr>
+<td>diameterZ</td>
+<td><em>(number)</em> diameter on Z axis, overwrites <em>diameter</em> property</td>
+<td>diameter</td>
+</tr>
+<tr>
+<td>arc</td>
+<td><em>(number)</em> ratio of the circumference (latitude) between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>slice</td>
+<td><em>(number)</em> ratio of the height (longitude) between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="cylinder-or-cone" class="anchor" href="#cylinder-or-cone"></a>Cylinder or Cone</h3><p>If you set <em>diameterTop</em> to zero, you get a cone instead of a cylinder.
+Example :</p>
+<pre><code class="lang-javascript">var cone = BABYLON.MeshBuilder.CreateCylinder(&quot;cone&quot;, {diameterTop: 0, tessellation: 4}, scene);
+</code></pre>
+<p>Properties, all optional :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>height</td>
+<td><em>(number)</em> height of the cylinder</td>
+<td>2</td>
+</tr>
+<tr>
+<td>diameterTop</td>
+<td><em>(number)</em> diameter of the top cap, can be zero to create a cone, overwrites the <em>diameter</em> property</td>
+<td>1</td>
+</tr>
+<tr>
+<td>diameterBottom</td>
+<td><em>(number)</em> diameter of the bottom cap, can&#39;t be zero, overwrites the <em>diameter</em> property</td>
+<td>1</td>
+</tr>
+<tr>
+<td>diameter</td>
+<td><em>(number)</em> diameter of both caps</td>
+<td>1</td>
+</tr>
+<tr>
+<td>tessellation</td>
+<td><em>(number)</em> number of radial sides</td>
+<td>24</td>
+</tr>
+<tr>
+<td>subdivisions</td>
+<td><em>(number)</em> number of rings</td>
+<td>1</td>
+</tr>
+<tr>
+<td>faceColors</td>
+<td><em>(Color4[])</em> array of 3 <em>Color4</em>, 0 : bottom cap, 1 : cylinder tube, 2 : top cap</td>
+<td>Color4(1, 1, 1, 1) for each face</td>
+</tr>
+<tr>
+<td>faceUV</td>
+<td><em>(Vector4[])</em> array of 3 <em>Vector4</em>, 0 : bottom cap, 1 : cylinder tube, 2 : top cap</td>
+<td>UVs(0, 0, 1, 1) for each face</td>
+</tr>
+<tr>
+<td>arc</td>
+<td><em>(number)</em> ratio of the circumference between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="plane" class="anchor" href="#plane"></a>Plane</h3><p>Example :</p>
+<pre><code class="lang-javascript">var plane = BABYLON.MeshBuilder.CreatePlane(&quot;plane&quot;, {width: 5}, scene);
+</code></pre>
+<p>Properties, all optional :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size</td>
+<td><em>(number)</em> side size of the plane</td>
+<td>1</td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> size of the width</td>
+<td>size</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> size of the height</td>
+<td>size</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>sourcePlane</td>
+<td><em>(Plane)</em> source plane (math) the mesh will be transformed to</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="ground" class="anchor" href="#ground"></a>Ground</h3><p>Example :</p>
+<pre><code class="lang-javascript">var ground = BABYLON.MeshBuilder.CreateGround(&quot;gd&quot;, {width: 6, subdivsions: 4}, scene);
+</code></pre>
+<p>Properties, all optional :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td><em>(number)</em> size of the width</td>
+<td>1</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> size of the height</td>
+<td>1</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>subdivisions</td>
+<td><em>(number)</em> number of square subdivisions</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

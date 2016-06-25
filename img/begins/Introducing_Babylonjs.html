@@ -1,0 +1,245 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item active"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>begins</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Introducing BabylonJS</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#babylonjs-webgl-game-creation-system">Babylon.js WebGL Game Creation System!</a></li>
+<li><a href="#the-browser">The Browser</a></li>
+<li><a href="#useful-links">Useful Links</a></li>
+<li><a href="#the-big-picture">The Big Picture</a><ul>
+<li><a href="#the-external-includes-red-section">The External Includes - Red Section</a></li>
+<li><a href="#the-css-styles-blue-section">The CSS Styles - Blue Section</a></li>
+<li><a href="#the-internal-include-green-section">The Internal Include - Green Section</a></li>
+<li><a href="#the-createscene-function-purple-section">The createScene() Function - Purple Section</a></li>
+</ul>
+</li>
+<li><a href="#babylonjs-objects-properties-methods-and-values">Babylon.js Objects, Properties, Methods, and Values</a></li>
+<li><a href="#vector3-and-color3-values">Vector3 and Color3 Values</a><ul>
+<li><a href="#vector3-values">Vector3 Values</a></li>
+<li><a href="#color3-values">Color3 Values</a></li>
+<li><a href="#my-new-friends-position-rotation-and-scaling">My New Friends - .position, .rotation, and .scaling</a></li>
+<li><a href="#quick-downloading-the-big-4-externals">Quick Downloading &#39;The Big 4&#39; Externals</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="babylonjs-webgl-game-creation-system" class="anchor" href="#babylonjs-webgl-game-creation-system"></a>Babylon.js WebGL Game Creation System!</h2><p>Hi! Welcome to The Babylon.js Primer, an introduction to some of the things you will need to know in order to get the most out of this useful Javascript-based WebGL framework.
+What is a framework, you ask?  You can think of a framework as scaffolding for a building, allowing you to build around it without worrying about the foundation. It makes a complicated system, (WebGL,) much easier to use.</p>
+<p>We hope to teach you a large amount of information in a very quick manner.  Often there are more ways than one to accomplish a task here.  I will let you discover those other ways by yourself.  For now we will teach you the quickest and easiest ways, determined by studying the traits of other new users of Babylon.js.</p>
+<h2><a name="the-browser" class="anchor" href="#the-browser"></a>The Browser</h2><p>Simply put, you will need to use a browser that supports WebGL and has Javascript activated.  Internet Explorer 11+, Firefox 4+, Google Chrome 9+, Opera 12+, etc.  WebGL is also supported by many browsers for mobile devices.  I will let you investigate the details of mobile WebGL, but know that Babylon.js has many features designed with mobile WebGL in mind.  Additionally, Babylon.js has complete support for full-immersion stereoscopic viewing and virtual reality head gear!</p>
+<h2><a name="useful-links" class="anchor" href="#useful-links"></a>Useful Links</h2><table>
+<thead>
+<tr>
+<th>Clickable Link</th>
+<th>What you will find</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.babylonjs.com/"><strong>BabylonJS Main Website</strong></a></td>
+<td>Many great demos and useful links near the bottom</td>
+</tr>
+<tr>
+<td><a href="http://www.html5gamedevs.com/forum/16-babylonjs"><strong>BabylonJS Forum</strong></a></td>
+<td>Ask questions, help others, meet great friends</td>
+</tr>
+<tr>
+<td><a href="http://doc.babylonjs.com"><strong>BabylonJS Documentation</strong></a></td>
+<td>Our fantastic docs site</td>
+</tr>
+<tr>
+<td><a href="http://babylonjs-playground.com"><strong>BabylonJS Playground</strong></a></td>
+<td>On-line white-boarding and scene-testing app</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="the-big-picture" class="anchor" href="#the-big-picture"></a>The Big Picture</h2><p><img src="http://urbanproductions.com/wingy/babylon/misc/codepic04.jpg" alt=""></p>
+<p>That is a BIG picture, isn&#39;t it?  This is a complete Babylon.js project, using the &#39;single HTML file&#39; method.  This is not the only (or best) method of setting up a proect, but it is fast and easy.  I have colored important sections of &#39;the big picture&#39; and we will now examine each section individually.</p>
+<h3><a name="the-external-includes-red-section" class="anchor" href="#the-external-includes-red-section"></a>The External Includes - Red Section</h3><p>&#39;Includes&#39; is not necessarily the best term to describe the red section of the big picture, but I will be using that term often in this tutorial.  Three external Javascript files are being included into this scene.</p>
+<p>The first external include is hand.minified-1.2.js (often simply called hand.js) - a small Javascript framework that assists the Babylon.js cameras.</p>
+<p>The next is cannon.js - an optional physics &#39;engine&#39; that allows WebGL shapes (meshes) to act like real life objects.</p>
+<p>After that comes oimo.js - a different optional physics &#39;engine&#39; that performs a similar function to cannon.js, but is generally faster although it lacks some of the more advanced features present in cannon.js.</p>
+<p>Most important, though, is the Babylon.js framework, our pride and joy.</p>
+<p>Each of these includes are JavaScript files, and so they are included-in by using HTML <code>&lt;SCRIPT&gt;</code> elements/tags.  The shown &#39;src&#39; (source location) of these files is at the Babylon.js web site folders, but later I will tell you how to put these files on your home hard drive if you wish, and include them from there.  They load-in faster when they are &#39;local&#39;, but you will need to change the &#39;src&#39; URL once you have saved them locally.  I will show you how to do that soon.</p>
+<h3><a name="the-css-styles-blue-section" class="anchor" href="#the-css-styles-blue-section"></a>The CSS Styles - Blue Section</h3><p> Notice the blue section of the big picture.  That is the CSS (Cascading Style Sheets) styles used to present the scene&#39;s web page,  and adjust its WebGL canvas to be centered and filled-out nicely in your browser.</p>
+<p>Someday, you may want to &#39;externalize&#39; these styles by placing them in a separate file, possibly called styles.css.  Then you could remove the blue section from this HTML file, and use a HTML LINK element/tag to include-in that separate CSS style document.  I will not be telling you how to do that, but there are plenty of documents on the web that will show you how.  It is very easy.</p>
+<h3><a name="the-internal-include-green-section" class="anchor" href="#the-internal-include-green-section"></a>The Internal Include - Green Section</h3><p>Here is the fifth HTML SCRIPT element/tag in the big picture scene file.  We used 4 SCRIPT elements/tags to do the external includes.  This one is an INTERNAL include.  Notice that it has no &#39;src&#39; URL.  That is because it is a section of Javascript code that YOU have written directly into this document.  Yes, YOU.  Now you are a Javascript programmer!</p>
+<p>You could &#39;externalize&#39; the entire green section, and possibly place it into a file called... &#39;myJavascript.js&#39;... maybe in a folder called &#39;jsfolder&#39;.  Then you could remove the green section, and add one more EXTERNAL INCLUDE script element/tag that might look like this:</p>
+<pre><code class="lang-html">&lt;script src=&quot;./jsfolder/myJavascript.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>You need not concern yourself with that, at this point.  Externalizing your Javascript is often done when you have written LOTS of Javascript code.  Externalizing your code into separate files helps your project be organized, but it is not necessary this early in your webGL adventures.</p>
+<p>The JS code you see inside the green section... will be talked about soon.  Mainly, I would like you to study the big picture, and see how the single HTML file method of creating Babylon.js scenes... is structured.  I want you to try to visualize and somewhat memorize... this scene file&#39;s &#39;layout&#39;.</p>
+<h3><a name="the-createscene-function-purple-section" class="anchor" href="#the-createscene-function-purple-section"></a>The createScene() Function - Purple Section</h3><p>The purple section of the big picture... is the createScene() &#39;function&#39;... a Javascript &#39;function&#39;.  It is the most important section of a &#39;single HTML file&#39; Babylon.js scene.  </p>
+<p>Inside the createScene() function ... we will be doing the actual Babylon.js commands and directives that cause beautiful webGL to happen.  The rest of the big picture sections... are simply helpers and preparations... for the fantastic purple section... the createScene() function. </p>
+<p>Every createScene() (every scene)... in Babylon.js... generally REQUIRES three things.</p>
+<p><strong>1. A Camera.</strong>  The three most commonly used TYPES of cameras... are ArcRotateCamera, FreeCamera, and TouchCamera.  There are many types of camera available in Babylon.js, but these three are the most common.  ANY number of cameras can be coded into a scene, but only one of those cameras... is the &#39;active camera&#39;.  </p>
+<p><strong>2. A Light.</strong>   There are 4 basic types of lights available in Babylon.js.  They are PointLight, SpotLight, DirectionalLight, and HemisphericLight.  ANY number of lights can be coded into a scene,  but only the first 4 lights in the scene&#39;s lights list... will be used by the scene.</p>
+<p>To be honest, a light is not an absolute requirement.  If the mesh in a scene... all have a material.emissiveColor or material.emissiveTexture properly set, then they will each produce their own light.  They will be &#39;self-illuminated&#39;.  Careful, it is easy to get lost in a scene without a light.  Good advice would be to ALWAYS have one light (a HemisphericLight aimed to the sky, is a very handy wide-lighting tool).  You can adjust its .intensity value to set its brightness.  We have a tutorial in our Playpen Series... dedicated to talking about lights.</p>
+<p><strong>2. A Mesh.</strong>  Every scene needs something to be viewed, right?  Cameras are invisible, and so are lights.  Every scene needs a mesh, or many.  There is no limit to the number of meshes in your scene.  A mesh can be one of the many shapes that are built-in to Babylon.js, or it can be a shape that you plotted yourself using Babylon&#39;s VertexData system, or it can be a mesh that has been &#39;imported&#39; into the scene... from a modeling package such as Blender or 3D Studio Max.</p>
+<h2><a name="babylonjs-objects-properties-methods-and-values" class="anchor" href="#babylonjs-objects-properties-methods-and-values"></a>Babylon.js Objects, Properties, Methods, and Values</h2><p>You have seen some createScene functions, and you have noticed that much of the Javascript code used to make a Babylon.js scene... sets values on object properties.  To illustrate what I mean:</p>
+<pre><code class="lang-javascript">object.property = value;
+</code></pre>
+<p>Let&#39;s talk more about these four things... objects, properties, methods, and values.</p>
+<p><strong>Objects</strong></p>
+<p>First, do not think of objects as 3D shapes/mesh.  Those ARE objects, but here, we are talking about...  </p>
+<p><strong>Javascript Objects</strong></p>
+<p>Some of the common Javascript objects used in a Babylon.js scene... are named <strong>engine, scene, canvas, mesh, light, camera, Vector3, Color3, ActionManager, and Animation</strong>.  </p>
+<p>For example, each of the following code lines... creates a Javascript object (or more):</p>
+<pre><code class="lang-javascript">// Create a BABYLON.Engine type of object.
+var engine = new BABYLON.Engine(canvas, true);
+
+// Creates a BABYLON.Scene type of object.
+var scene = new BABYLON.Scene(engine);
+
+// Creates a BABYLON.FreeCamera type of object
+var camera = new BABYLON.FreeCamera(&quot;freecam&quot;, new BABYLON.Vector3(0, 0, 5), scene);
+
+// Creates a BABYLON.DirectionalLight type of object
+var light = new BABYLON.DirectionalLight(&quot;Dir0&quot;, new BABYLON.Vector3(0, -1, 0), scene);
+
+// Creates a BABYLON.Mesh type of object
+var mybox = BABYLON.Mesh.CreateBox(&quot;box&quot;, 6.0, scene);
+</code></pre>
+<p>You get the idea.  Javascript objects, are used often in Babylon.js scenes.  Sometimes you will create them, and other times you will get a &#39;reference&#39; or &#39;handle&#39; to an object that was created earlier.  Getting a reference/handle to a Javascript object, essentially means opening a communication line to an already-built object.</p>
+<p>Each of these Javascript objects have named &#39;pockets&#39; to store things-within.  Often, values, data, and objects... get stored in those pockets.  These value-storing pockets are called object &#39;properties&#39;.  Properties are commonly &#39;set&#39; (putting a value INTO the pocket), and often &#39;get&#39; (looking into the pocket to see what&#39;s there).</p>
+<p><strong>Properties</strong></p>
+<p>Properties store values.  These values are used by the Babylon.js framework... to &#39;render&#39; the scene.  Here is an example:</p>
+<pre><code class="lang-javascript">light.intensity = 0.5;
+</code></pre>
+<p>Here, we &#39;set&#39; the property named &#39;intensity&#39; on the object called &#39;light&#39; to a value of 0.5 (0.5 is called a FLOATING POINT value, or just &#39;a float&#39;).  We&#39;ll talk about values, shortly.  The main thing I want you to notice is that the property (pocket) had a NAME... .intensity, and we stored the value 0.5 into that pocket (on the object named &#39;light&#39;).</p>
+<p><strong>Methods</strong></p>
+<p>The other common type of &#39;pocket&#39; on a Javascript object... is called a &#39;method&#39; (sometimes called a &#39;function&#39;).  Methods are used to store Javascript code onto Javascript objects.  Earlier, I said that properties are &#39;set&#39;.  Well, methods are &#39;called&#39;.  Here is the way a method is &#39;called&#39;.</p>
+<pre><code class="lang-javascript">scene.getMeshByName(&quot;box&quot;);
+</code></pre>
+<p>Here, we have &#39;called&#39; the getMeshByName() method that is located on the object called &#39;scene&#39;.  See that &quot;box&quot; thing inside the parentheses?  That is called a &#39;parameter&#39; or sometimes called an &#39;argument&#39; or just... &#39;an arg&#39;.  Some methods require one or more parameters inside the parentheses, and some require none at all.  If you look at your createScene function (method) from the big picture above, it had empty parentheses.  It did not require any parameters in order to be called.  At other times, you might see createScene(engine).  In this case, the createScene method DOES require a parameter...  a Javascript ENGINE-type of object.</p>
+<p>It is beyond the scope of this tutorial to teach everything about callable methods and settable properties on Javascript objects.  The main thing is to try to take notice WHEN a &#39;pocket&#39; on an object... is a property, and when it is a method.  Methods always use parentheses... sometimes empty, sometimes full of parameters/args.  Properties never use parentheses and therefore never require parameters.</p>
+<p>Sometimes, methods are used to SET values of properties, and sometimes methods are used to GET values of properties.  These methods/functions are often called GETTERS and SETTERS.  Notice the word &#39;get&#39; in the getMeshByName method above?  It is a GETTER method.  Here is a more proper use of that &#39;call&#39;:</p>
+<pre><code class="lang-javascript">var box_I_made = scene.getMeshByName(&quot;box&quot;);
+</code></pre>
+<p>This call is getting a reference/handle on a box that was made earlier in the code, and putting that reference into a variable called &#39;box_I_made&#39;.  After you get that reference, you can do things to the box... like set property values.</p>
+<pre><code class="lang-javascript">box_I_made.rotation.y = Math.PI/2;  // Rotate the box 90 degrees on the Y-axis.
+</code></pre>
+<p>It is difficult for me to explain, but actually quite easy to do, thanks to Babylon.js.  Experimenting with properties and methods... is the fastest way to learn.</p>
+<p><strong>Values</strong></p>
+<p>Values... are often the things that are stored in an object&#39;s properties (&#39;pockets&#39;) and the things that are returned when GETTER methods are called.  As crazy as this sounds, all values are Javascript objects.  Remember that 0.5 float that we saw earlier?  That is a Floating Point  NUMBER OBJECT.  The &#39;box_I_made&#39; variable above... it is a MESH OBJECT.  The names of mesh, cameras, and lights... are STRING OBJECTS. Objects are everywhere, but they are good friends that help us stay organized.</p>
+<p>There are two types of value objects that are very common in Babylon.js.  They are the Vector3 value, and the Color3 value.  Vector3 and Color3 values... deserve to have their own section in this giant tutorial.  Here we go...</p>
+<h2><a name="vector3-and-color3-values" class="anchor" href="#vector3-and-color3-values"></a>Vector3 and Color3 Values</h2><p>Two of the most-used values in Babylon.js, are Vector3 values and Color3 values.</p>
+<h3><a name="vector3-values" class="anchor" href="#vector3-values"></a>Vector3 Values</h3><p>Vector3 values take the form of...</p>
+<pre><code class="lang-javascript">BABYLON.Vector3(xValue, yValue, zValue)
+</code></pre>
+<p>They are often used to set/store...</p>
+<ul>
+<li>the value of a .position property on mesh, light, or camera objects</li>
+<li>the value of a .rotation property on a mesh object</li>
+<li>the value of a .scaling property on a mesh object</li>
+<li>the value of a .direction property on a light object</li>
+</ul>
+<p>The three &#39;parameters&#39; inside the parentheses of a Vector3 value... are floats.  They can be negative or positive, and there is no practical limit to the size of those values.  Let&#39;s look at a Vector3 being used to set the .position of a mesh.</p>
+<pre><code class="lang-javascript">box.position = new BABYLON.Vector3(0, 10, 0);
+</code></pre>
+<p>The xValue is 0, meaning that the box is positioned in the center of the x-axis.  The yValue is 10, meaning that the box is positioned 10 units above the center of the y-axis.  The zValue is 0, meaning that the box is positioned in the center of the z-axis.  Easy.  We will talk more about positioning... further below.  </p>
+<p>Now let&#39;s look at a Vector3 being used to set a .rotation value:</p>
+<pre><code class="lang-javascript">box.rotation = new BABYLON.Vector3(Math.PI/4, 0, 0);
+</code></pre>
+<p>Here, our box is being rotated around the x-axis... about 45 degrees.  In Babylon.js, rotation is measured in radians.  Math.PI/4 is approximately .707 radians.  To rotate 90 degrees, it would be Math.PI/2, or about 1.57 radians.  For 180 degrees, it would be Math.PI, or about 3.14 radians.  To rotate 360 degrees, it would Math.PI times 2, or about 6.28 radians.</p>
+<p>Keep in mind that Vector3 values can be negative numbers as well.  So you could easily use -Math.PI/4, -Math.PI/2, -Math.PI, and -Math.PI times 2.  These values would rotate the object in the opposite direction around the x-axis.  How about this Vector3 rotation:</p>
+<pre><code class="lang-javascript">box.rotation = new BABYLON.Vector3(Math.PI/2, 0, -.707);
+</code></pre>
+<p>If you think that it rotates our box in a positive (+) direction 90 degrees around the x-axis, AND ALSO rotates our box 45 degrees in a negative (-) direction around the z-axis, you would be correct.  </p>
+<p>Even though Vector3 values can contain very large negative or positive numbers, it is rarely necessary for any xValue, yValue, or zValue... to be outside the range of -6.28 to +6.28 <strong>for setting rotations</strong>.  Any numbers outside that range would be unnecessary, because -6.28 (radians) rotates 360 degrees in one direction, and +6.28 (radians) rotates 360 degrees in the opposite direction.  That&#39;s a full range of rotation, isn&#39;t it?  We&#39;ll talk a bit more about rotation, further below.</p>
+<p>Now let&#39;s see a Vector3 used for scaling (stretching and shrinking) a mesh:</p>
+<pre><code class="lang-javascript">box.scaling = new BABYLON.Vector3(1, 1, 3);
+</code></pre>
+<p>Scaling is a way to shrink or stretch a mesh along any of the 3 scene axes.  In the above example, the xValue (1) indicates that no scaling change to the mesh along its x-axis... is desired.  The yValue of 1 indicates that we want no change in scaling along the y-axis, either.  The zValue of 3 indicates that we we are &#39;stretching&#39; our mesh along its z-axis... to 3 times its normal size.  Easy, right?  You bet!  </p>
+<p>I will talk more about scaling... further below.</p>
+<p>Another use for a Vector3 value... is setting the .direction for certain types of lights:</p>
+<pre><code class="lang-javascript">mySpotLight.direction = new BABYLON.Vector3(0, -1, 0);
+</code></pre>
+<p>Generally speaking, when a Vector3 value is used to set a DIRECTION, the xValue, yValue, and zValue are each in a range of negative 1... to positive 1.  In the example above, our light is aimed negative on the y-axis... or... straight down.  Directions (directional vectors) are used for more things than just lights, but lights is a common use.  Directional vectors are not always easy things to determine the x, y, and z parameters/values for.  We have some helpful tools on our lights... that will assist you in setting directions.  You will learn about those tools in our lights tutorial.</p>
+<h3><a name="color3-values" class="anchor" href="#color3-values"></a>Color3 Values</h3><p>Color3 values look very much like Vector3 values.  Here is an example:</p>
+<pre><code class="lang-javascript">BABYLON.Color3(rValue, gValue, bValue)
+</code></pre>
+<p>The rValue is for red, the gValue is for green, and the bValue is for blue.  I bet you have already figured out that Color3 values are used for setting colors.  The rValue, gValue, and bValue, all contain float numbers in the range of 0 to 1.  Let&#39;s look at a few examples:</p>
+<pre><code class="lang-javascript">BABYLON.Color3(1, 0, 0) - red
+BABYLON.Color3(0, 1, 1) - cyan
+BABYLON.Color3(0, 1, 0) - green
+BABYLON.Color3(1, 0, 1) - violet
+BABYLON.Color3(1, 1, 0) - yellow
+BABYLON.Color3(0, 0, 0) - black
+BABYLON.Color3(1, 1, 1) - white
+BABYLON.Color3(0.5, 0.5, 0.5) - medium gray
+BABYLON.Color3(0.2, 0, 0.2) - dark purple
+</code></pre>
+<p>Not so difficult.  Let&#39;s say that you wanted to put a color on a box that you have already created.  The first thing you do is create a Javascript object called a StandardMaterial.  Then you would apply (set) that StandardMaterial as the box&#39;s .material property.  This is covered by our Materials tutorial, but let&#39;s look at how that is done, here.</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;mymat&quot;, scene);
+myBox.material = myMaterial;
+</code></pre>
+<p>The first line creates a StandardMaterial and puts it into the variable named myMaterial.  The second line sets the box&#39;s .material property... to be that newly-made StandardMaterial.  The appearance of the box will not change yet, because we have not given the StandardMaterial any information about what color we want the box to be.  </p>
+<p>One of the many properties on a StandardMaterial object... is named .diffuseColor.  That property is the primary way to set a basic color.  And right here... is where we use our new Color3 value.  Let&#39;s have a look:</p>
+<pre><code class="lang-javascript">myMaterial.diffuseColor = new BABYLON.Color3(0, 0.5, 0);
+</code></pre>
+<p>Our box is now colored medium green.  It&#39;s just that easy.  The StandardMaterial object has many other properties on it.  You can add color to properties such as  .specularColor, .emissiveColor, .ambientColor.  All those properties are set (if you choose)... using our friend... the Babylon.js Color3 value.</p>
+<p>Another use of the Color3 value is to set the .diffuse property of lights.  Take careful note that the name of this property is .diffuse, and not .diffuseColor.  Lights use a property named .diffuse to set their primary color.  Let&#39;s take a look at how to set the primary color of a light that you have already created:</p>
+<pre><code class="lang-javascript">myLight.diffuse = new BABYLON.Color3(0.5, 0, 0);
+</code></pre>
+<p>And there we go.  We have colored the light beam that emits from our light... to be medium red.  There is one more use for a Color3 value, and that is on one of our newest basic shape objects... called a LINES object.  A LINES object does not use a StandardMaterial object for its color.  It uses a property called .color.  Here is an example of a LINES object being created, and then colored:</p>
+<pre><code class="lang-javascript">// Creation of a triangular lines mesh
+var myLines = BABYLON.Mesh.CreateLines(&quot;itsName&quot;, [
+        new BABYLON.Vector3(-5, 0, 5),
+        new BABYLON.Vector3(5, 0, 5),
+        new BABYLON.Vector3(0, 0, -5),
+        new BABYLON.Vector3(-5, 0, 5)
+], scene);
+
+// And here is how it is colored green...
+myLines.color = new BABYLON.Color3(0,1,0);
+</code></pre>
+<p>The creation of the lines object was a bit strange, but it sure was easy to make it green, using a Color3 value.  You will learn more about the lines mesh.... in our Basic Elements tutorial.  For now, I just wanted to show you that it does not use a .diffuseColor property like a box with a StandardMaterial applied, nor a .diffuse property like we used for coloring light beams.  It, instead, uses a property called .color.  Simple.</p>
+<h3><a name="my-new-friends-position-rotation-and-scaling" class="anchor" href="#my-new-friends-position-rotation-and-scaling"></a>My New Friends - .position, .rotation, and .scaling</h3><p>Let&#39;s take a look at some ways of transforming a mesh:</p>
+<p><strong>POSITION</strong> - Every mesh is POSITIONED in a scene using X, Y, and Z settings.  You can think of the .position property... as the mesh&#39;s LOCATION.  The link below... is a saved playground scene that illustrates using a mesh&#39;s .position property.  Try to open it in a new window or new tab, so you can jump back and forth between this tutorial... and the playground scene:</p>
+<p><a href="http://babylonjs-playground.com/#35CPC">http://babylonjs-playground.com/#35CPC</a> - <i class="fa fa-eye" onclick="createIframe('35CPC', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>In the yellow text at the top of the scene, you will see the Babylon.js one-line way to set mybox.position (using our friend... the Vector3 value object).</p>
+<p>Below that, in green text, you will see 3 more lines of Babylon.js code.  You see, you are NOT required to use a Vector3 to set a .position on a mesh.  You can use the &#39;<strong>discrete</strong>&#39; way, instead.  Loosely defined, &#39;discrete&#39; means... piece by piece... one step at a time.  If you would like to set a mesh&#39;s .position values axis by axis, feel free to use the handy green &#39;discrete&#39; ways of doing it.</p>
+<p>Watch this positioning demo scene for some time, if you please.  It will not take long for you to completely understand mesh positioning.  </p>
+<p><strong>ROTATION</strong> - Every mesh has a ROTATION in a scene... by setting the amount of spin around the shape&#39;s X, Y, and Z axes.  Picture a box with a rod stuck through every side and coming out the opposite side.  There are 6 sides to a box, so there would be 3 rods, an X rod, a Y rod, and a Z rod.  Rotation is the amount (and direction) of spin... AROUND each of these invisible rods.  </p>
+<p>Let&#39;s take a look at a playground scene that I once created and saved.  In this demo, I made those invisible rods... be visible:</p>
+<p><a href="http://babylonjs-playground.com/#YIT1S">http://babylonjs-playground.com/#YIT1S</a> - <i class="fa fa-eye" onclick="createIframe('YIT1S', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>Take some time to carefully watch that scene.  Like the last demo scene, the yellow text shows a Vector3 being used to set the .rotation property with some computer-generated values.  The box is shown doing positive and negative rotations around each of the 3 axes.  Under the yellow text... you again see the green text...  showing the 3 &#39;discrete&#39; ways to set the box&#39;s .rotation property with values.  I bet you understand this completely, don&#39;t you?  Easy.</p>
+<p><strong>SCALING</strong> - Scaling... is stretching or shrinking... along any of the 3 scene axes.  Let&#39;s jump right into a saved playground scene that demonstrates scaling:</p>
+<p><a href="http://babylonjs-playground.com/#1VMQNH">http://babylonjs-playground.com/#1VMQNH</a> - <i class="fa fa-eye" onclick="createIframe('1VMQNH', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>Again, take some time to watch the scene.  And once more, the yellow text shows the one-line Vector3 way of setting a mesh&#39;s .scaling, or you can use one or more of the discrete ways of setting scaling... shown in the green text. You may have noticed that scaling values are never negative.  It would be illogical to use a negative scaling value, and if you decide to use some negative values, unexpected results may occur.</p>
+<p>I would like you to take note... that scaling is <strong>for mesh only</strong>.  For example, you can POSITION a mesh, camera, or light.  You can often ROTATE a mesh, camera, or light.  But SCALING... is for mesh.  If you stretch or shrink (scale) a camera or light, you will break its electrical parts.  (It&#39;s a joke, ok?)   There is no reason to set scaling for a camera or light.  They are invisible scene items.</p>
+<h3><a name="quick-downloading-39the-big-439-externals" class="anchor" href="#quick-downloading-the-big-4-externals"></a>Quick Downloading &#39;The Big 4&#39; Externals</h3><p>Remember &#39;The Big Picture&#39; far above?  In that section, I introduced you to &#39;The Big 4&#39; external include files...  hand.js, cannon.js, oimo.js, and babylon.js.  Many people use GitHub version-management systems to download those files from the Babylon.js GitHub source code repository.  Some people make their own &#39;minified&#39; versions of Babylon.js... using the absolute latest source code files.  Others like to be able to grab reasonably fresh versions of The Big 4... in simpler ways.</p>
+<p>When you click Get .zip at the Babylon.js playground, you get a zip that contains a file called index.html.  If you examine index.html in a text editor, you will see a file that looks very much like The Big Picture far above.  Look at the external includes section... the first four HTML SCRIPT elements/tags.  The .src attribute within each of those SCRIPT elements... point to URL&#39;s located at the Babylon.js web site.</p>
+<p>If you want to make your home demo scenes run faster, you can download copies of the external includes... and put them into a folder.  That folder should be located WITHIN the folder that holds your index.html.  For example, in the same folder as index.html, you could create a folder called &#39;js&#39; (no quotes).  Inside the js folder, you could put home copies of The Big 4 external include files.</p>
+<p>Once you have that folder made, you can use the 4 links shown below... to get copies of The Big 4... and put each of them into your js folder.</p>
+<p><a href="http://www.babylonjs.com/hand.minified-1.2.js"><strong>hand.js</strong></a>  &lt;= right-click... save link/target</p>
+<p><a href="http://www.babylonjs.com/cannon.js"><strong>cannon.js</strong></a>  &lt;= right-click... save link/target</p>
+<p><a href="http://www.babylonjs.com/oimo.js"><strong>oimo.js</strong></a>  &lt;= right-click... save link/target</p>
+<p><a href="http://www.babylonjs.com/babylon.js"><strong>babylon.js</strong></a>   &lt;= right-click... save link/target</p>
+<p>Store each of those files into the new js folder.  Also, you might want to copy them to some other folder as well, for using later.  Try to remember to repeat these actions fairly often, maybe once per month, to ensure that you are always using a reasonably fresh version of The Big 4 files.  Babylon.js is always evolving.  New features are being added very quickly, and you want your home versions of The Big 4... to be fresh, so you can take advantage of those new features.</p>
+<p>Once you have those external includes saved into your new js folder, you need to make some adjustments to the HTML.  In your index.html file, you will need to change the .src attributes of all four external includes (the first four SCRIPT elements).  Likely, you will want to make your SCRIPT elements look like this:</p>
+<pre><code class="lang-html">     &lt;script src=&quot;./js/hand.minified-1.2.js&quot;&gt;&lt;/script&gt;
+     &lt;script src=&quot;./js/cannon.js&quot;&gt;&lt;/script&gt;  &lt;!-- optional --&gt;
+     &lt;script src=&quot;./js/oimo.js&quot;&gt;&lt;/script&gt;  &lt;!-- optional --&gt;
+     &lt;script src=&quot;./js/babylon.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>If you are not using physics in your scene, you might want to remark-out (disable) the script elements that include-in cannon.js and oimo.js.  To do that, you could do this:</p>
+<pre><code class="lang-html">     &lt;script src=&quot;./js/hand.minified-1.2.js&quot;&gt;&lt;/script&gt;
+     &lt;!-- &lt;script src=&quot;./js/cannon.js&quot;&gt;&lt;/script&gt; --&gt;
+     &lt;!-- &lt;script src=&quot;./js/oimo.js&quot;&gt;&lt;/script&gt; --&gt;
+     &lt;script src=&quot;./js/babylon.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Easy.  Most of these things you already know, don&#39;t you?  I thought so.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
