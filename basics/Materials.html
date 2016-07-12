@@ -1,0 +1,138 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>basics</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Colors and Textures</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#materials">Materials</a><ul>
+<li><a href="#reactions-to-light">Reactions to light</a></li>
+<li><a href="#color">Color</a><ul>
+<li><a href="#diffuse-color-example">Diffuse Color Example</a></li>
+<li><a href="#ambient-color-example">Ambient Color Example</a></li>
+<li><a href="#transparent-color-example">Transparent Color Example</a></li>
+</ul>
+</li>
+<li><a href="#texture">Texture</a><ul>
+<li><a href="#texture-example">Texture Example</a></li>
+<li><a href="#transparent-texture-examples">Transparent Texture Examples</a></li>
+</ul>
+</li>
+<li><a href="#back-face-culling">Back Face Culling</a></li>
+<li><a href="#wireframe">WireFrame</a></li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#intermediate">Intermediate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="materials" class="anchor" href="#materials"></a>Materials</h1><p>Materials allow you to cover your meshes in color and texture and they need light to be seen. One material can be used to cover as many meshes as you wish.</p>
+<h2><a name="reactions-to-light" class="anchor" href="#reactions-to-light"></a>Reactions to light</h2><p>Whether the material is a color or a texture there are different ways it can react to light.</p>
+<ol>
+<li>Diffuse - the basic color or texture of the material;</li>
+<li>Specular - the highlight given to the material;</li>
+<li>Emissive - the color or texture of the material as if self lit;</li>
+<li>Ambient - the color or texture of the material lit by the environmental background lighting.</li>
+</ol>
+<p>Diffuse and Specular material require a <a href="/basics/Lights">light source</a> to be created.<br>Ambient color requires the ambient color of the scene to be set, giving the environmental background lighting.</p>
+<pre><code class="lang-javascript">scene.ambientColor = new BABYLON.Color3(1, 1, 1);
+</code></pre>
+<ol>
+<li>Transparency - the level that you can see through the material can be set and for textures images with transparent sections can be used 
+that so that appropriate parts of the material are invisible. This requires an <em>alpha</em> property to be set.</li>
+</ol>
+<h2><a name="color" class="anchor" href="#color"></a>Color</h2><p>Create a material using</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+</code></pre>
+<p>Set the material color using one, some or all of <em>diffuseColor</em>, <em>specularColor</em>, <em>emissiveColor</em> and <em>ambientColor</em>. Remember that <em>ambientColor</em> 
+will only apply if the scene ambient color has been set.</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+
+myMaterial.diffuseColor = new BABYLON.Color3(1, 0, 1);
+myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
+myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
+
+mesh.material = myMaterial;
+</code></pre>
+<h3><a name="diffuse-color-example" class="anchor" href="#diffuse-color-example"></a>Diffuse Color Example</h3><p>To give an idea how material diffuse color reacts to diffuse light color the following <a href="http://www.babylonjs-playground.com/#20OAV9#10">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#10', this)"></i><br/><div class="iframeContainer"></div><br/> shows how</p>
+<p>| Yellow Material |  Purple Material |
+| Cyan Material | White Material |</p>
+<p>react to white, red, green and blue diffuse spot lights. Notice how the viewing angle adjusts the lighting.</p>
+<p><a href="/img/spots1.png">Playground Example Spot Light</a></p>
+<h3><a name="ambient-color-example" class="anchor" href="#ambient-color-example"></a>Ambient Color Example</h3><p>In this <a href="http://www.babylonjs-playground.com/#20OAV9#14">playground example</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#14', this)"></i><br/><div class="iframeContainer"></div><br/> all spheres are lit by the same hemisphereic light, with <em>diffuse</em> red and <em>groundColor</em> green. 
+The first sphere has no ambient color, the middle has red ambient color defined on its material and the one on the right 
+has material with green ambient color.</p>
+<p><a href="/img/ambient1.png">Playground Example Ambient</a></p>
+<h3><a name="transparent-color-example" class="anchor" href="#transparent-color-example"></a>Transparent Color Example</h3><p>Transparency is achieved by setting a materials <em>alpha</em> property from 0 (invisible) to 1 (opaque).</p>
+<pre><code class="lang-javascript">var myMaterial.alpha = 0.5;
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#20OAV9#16">Playground Example Transparency</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#16', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="texture" class="anchor" href="#texture"></a>Texture</h2><p>Textures are formed using a saved image.</p>
+<p>Create a material using</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+</code></pre>
+<p>Set the material texture using one, some or all of <em>diffuseTexture</em>, <em>specularTexture</em>, <em>emissiveTexture</em> and <em>ambientTexture</em>. 
+Notice that <em>ambientTexture</em> is applied without the scene ambient color having been set.</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+
+myMaterial.diffuseTexture = new BABYLON.Texture(&quot;PATH TO IMAGE&quot;, scene);
+myMaterial.specularTexture = new BABYLON.Texture(&quot;PATH TO IMAGE&quot;, scene);
+myMaterial.emissiveTexture = new BABYLON.Texture(&quot;PATH TO IMAGE&quot;, scene);
+myMaterial.ambientTexture = new BABYLON.Texture(&quot;PATH TO IMAGE&quot;, scene);
+
+mesh.material = myMaterial;
+</code></pre>
+<h3><a name="texture-example" class="anchor" href="#texture-example"></a>Texture Example</h3><p>In this <a href="http://www.babylonjs-playground.com/#20OAV9#15">playground example</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#15', this)"></i><br/><div class="iframeContainer"></div><br/> all spheres are lit by the same hemisphereic light, with <em>diffuse</em> red and <em>groundColor</em> green. 
+The first sphere has a diffuse texture, the middle an emissive texture and the one on the right 
+has material with red diffuse color an an ambient texture.</p>
+<p><a href="/img/texture1.png">Playground Example Texture</a></p>
+<h3><a name="transparent-texture-examples" class="anchor" href="#transparent-texture-examples"></a>Transparent Texture Examples</h3><p>As for colors the transparency is achieved by setting a materials <em>alpha</em> property from 0 (invisible) to 1 (opaque).</p>
+<pre><code class="lang-javascript">var myMaterial.alpha = 0.5;
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#20OAV9#17">Playground Example Transparency</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#17', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>In addition the image used for the texture might already have a transparency setting, such as this picture of a dog from wikimedia commons, 
+which as a transparent background;</p>
+<p><a href="https://upload.wikimedia.org/wikipedia/commons/8/87/Alaskan_Malamute%2BBlank.png">A dog</a></p>
+<p>In this case we set the <em>hasAlpha</em> property of the <strong>texture</strong> to true.</p>
+<pre><code class="lang-javascript">var myMaterial.diffuseTexture.hasAlpha = true;
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#YDO1F#18">Playground Example Transparent Background</a> - <i class="fa fa-eye" onclick="createIframe('YDO1F#18', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>For the back faces of the cube to be visible through the transparent areas of the front faces we have to deal with back face culling.</p>
+<h2><a name="back-face-culling" class="anchor" href="#back-face-culling"></a>Back Face Culling</h2><p>This is a method for efficiently drawing the 2D screen rendering of the 3D model. Usually there is no need to draw the back face of a cube, or other object, 
+as it will be hidden by the front face. In BabylonJS the default setting is, as you might expect, set to true.</p>
+<p>Looking at the images below, when the material propery <em>backFaceCulling</em> is true you can see that the transparent areas around the 
+dog are still transparent, you can see the background through them. However you cannot see the images on the back faces as they have been culled (or removed). 
+When <em>backFaceCulling</em> is false the back faces are not removed during rendering so they can be seen through the transparent areas of the front faces. </p>
+<table>
+<thead>
+<tr>
+<th>Back Face Culling True</th>
+<th>Back Face Culling False</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/img/bfc2.png">BFC True</a></td>
+<td><a href="/img/bfc1.png">BFC False</a></td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#YDO1F#19">Playground Example Back Ground Culling False</a> - <i class="fa fa-eye" onclick="createIframe('YDO1F#19', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="wireframe" class="anchor" href="#wireframe"></a>WireFrame</h2><p>You can see a mesh in wireframe mode by using:</p>
+<pre><code class="lang-javascript">materialSphere1.wireframe = true;
+</code></pre>
+<p><img src="http://www.babylonjs.com/tutorials/04%20-%20Materials/04-3.png" alt="tof"></p>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h3><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h3><p><a href="/intermediate/Materials.md">More On Textures</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
