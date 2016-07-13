@@ -55,9 +55,9 @@
                 })
             ];
 
-            $('#menu').append(divSearchBarMobile)
-                .append(navigationLinks)
-                .append(links);
+    //        $('#menu').append(divSearchBarMobile)
+     //           .append(navigationLinks)
+     //           .append(links);
 
             callback();
 
