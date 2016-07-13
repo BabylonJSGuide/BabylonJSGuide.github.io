@@ -54,11 +54,11 @@ mesh.material = myMaterial;
 <p>| Yellow Material |  Purple Material |
 | Cyan Material | White Material |</p>
 <p>react to white, red, green and blue diffuse spot lights. Notice how the viewing angle adjusts the lighting.</p>
-<p><a href="/img/spots1.png">Playground Example Spot Light</a></p>
+<p><img src="/img/spots1.png" alt=" Spot Light"></p>
 <h3><a name="ambient-color-example" class="anchor" href="#ambient-color-example"></a>Ambient Color Example</h3><p>In this <a href="http://www.babylonjs-playground.com/#20OAV9#14">playground example</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#14', this)"></i><br/><div class="iframeContainer"></div><br/> all spheres are lit by the same hemisphereic light, with <em>diffuse</em> red and <em>groundColor</em> green. 
 The first sphere has no ambient color, the middle has red ambient color defined on its material and the one on the right 
 has material with green ambient color.</p>
-<p><a href="/img/ambient1.png">Playground Example Ambient</a></p>
+<p><img src="/img/ambient1.png" alt="Ambient"></p>
 <h3><a name="transparent-color-example" class="anchor" href="#transparent-color-example"></a>Transparent Color Example</h3><p>Transparency is achieved by setting a materials <em>alpha</em> property from 0 (invisible) to 1 (opaque).</p>
 <pre><code class="lang-javascript">var myMaterial.alpha = 0.5;
 </code></pre>
@@ -81,14 +81,14 @@ mesh.material = myMaterial;
 <h3><a name="texture-example" class="anchor" href="#texture-example"></a>Texture Example</h3><p>In this <a href="http://www.babylonjs-playground.com/#20OAV9#15">playground example</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#15', this)"></i><br/><div class="iframeContainer"></div><br/> all spheres are lit by the same hemisphereic light, with <em>diffuse</em> red and <em>groundColor</em> green. 
 The first sphere has a diffuse texture, the middle an emissive texture and the one on the right 
 has material with red diffuse color an an ambient texture.</p>
-<p><a href="/img/texture1.png">Playground Example Texture</a></p>
+<p><img src="/img/texture1.png" alt="Texture"></p>
 <h3><a name="transparent-texture-examples" class="anchor" href="#transparent-texture-examples"></a>Transparent Texture Examples</h3><p>As for colors the transparency is achieved by setting a materials <em>alpha</em> property from 0 (invisible) to 1 (opaque).</p>
 <pre><code class="lang-javascript">var myMaterial.alpha = 0.5;
 </code></pre>
 <p><a href="http://www.babylonjs-playground.com/#20OAV9#17">Playground Example Transparency</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#17', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <p>In addition the image used for the texture might already have a transparency setting, such as this picture of a dog from wikimedia commons, 
 which as a transparent background;</p>
-<p><a href="https://upload.wikimedia.org/wikipedia/commons/8/87/Alaskan_Malamute%2BBlank.png">A dog</a></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Alaskan_Malamute%2BBlank.png" alt="A dog"></p>
 <p>In this case we set the <em>hasAlpha</em> property of the <strong>texture</strong> to true.</p>
 <pre><code class="lang-javascript">var myMaterial.diffuseTexture.hasAlpha = true;
 </code></pre>
@@ -108,8 +108,8 @@ When <em>backFaceCulling</em> is false the back faces are not removed during ren
 </thead>
 <tbody>
 <tr>
-<td><a href="/img/bfc2.png">BFC True</a></td>
-<td><a href="/img/bfc1.png">BFC False</a></td>
+<td><img src="/img/bfc2.png" alt="BFC True"></td>
+<td><img src="/img/bfc1.png" alt="BFC False"></td>
 </tr>
 </tbody>
 </table>

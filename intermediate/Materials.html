@@ -17,10 +17,10 @@
 </div></div><div id="staticContent"><h1><a name="more-on-textures" class="anchor" href="#more-on-textures"></a>More On Textures</h1><p>A range of effects can be achieved with textures using a few extra lines of code.</p>
 <h2><a name="bump-map" class="anchor" href="#bump-map"></a>Bump Map</h2><p>Bump mapping is a technique to simulate bump and dents on a rendered surface. These are made by creating a <strong>normal map</strong> from an image. 
 The means to do this can be found on the web, a search for &#39;normal map generator&#39; will bring up free and paid for methods of doing this. </p>
-<p><a href="/img/bump_photo.png">Image</a> &nbsp;&nbsp;&nbsp;&nbsp;<a href="/img/bump_normal.png">normalMap</a></p>
+<p><img src="/img/bump_photo.png" alt="Image"> &nbsp;&nbsp;&nbsp;&nbsp;<img src="/img/bump_normal.png" alt="normalMap"></p>
 <p>Original Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Normal Map from Image</p>
 <p>A bump map can be used with a color; with its original image or another image as below.</p>
-<p><a href="/img/bump_spheres.png">Bump Example</a></p>
+<p><img src="/img/bump_spheres.png" alt="Bump Example"></p>
 <h3><a name="creating-a-bump-map-example" class="anchor" href="#creating-a-bump-map-example"></a>Creating a Bump Map Example</h3><p>Just add a <em>bumpTexture</em> to any existing textures.</p>
 <pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
 myMaterial.bumpTexture = new BABYLON.Texture(&quot;PATH TO NORMAL MAP&quot;, scene);
@@ -34,9 +34,9 @@ myMaterial.invertNormalMapY = true
 </code></pre>
 <h2><a name="opacity" class="anchor" href="#opacity"></a>Opacity</h2><p>The opacity of a material can be graded using and image with varying tranparency. The following PNG image with 
 a transparency gradient can be applied to a material using <em>opacityTexture</em></p>
-<p><a href="/img/degrade_map.png">Opacity Map</a></p>
+<p><img src="/img/degrade_map.png" alt="Opacity Map"></p>
 <p>with the same gradient applied to the material as in the image below.</p>
-<p><a href="/img/degraded_plane.png">Opacity Material</a></p>
+<p><img src="/img/degraded_plane.png" alt="Opacity Material"></p>
 <p><a href="http://www.babylonjs-playground.com/#20OAV9#24">Playground Example of Opacity</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#24', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h3><a name="applying-opacity" class="anchor" href="#applying-opacity"></a>Applying Opacity</h3><p>Add an <em>opacityTexture</em> to any existing texture.</p>
 <pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
@@ -44,7 +44,7 @@ myMaterial.opacityTexture = new BABYLON.Texture(&quot;PATH TO NORMAL MAP&quot;, 
 </code></pre>
 <h2><a name="tiling" class="anchor" href="#tiling"></a>Tiling</h2><p>When a material is applied to a mesh the image used for a texture is positioned according to coordinates. 
 Rather than x, y which are already in use for the 3D axes the letters u and v are used for the coordinates.</p>
-<p><a href="/img/crate.png">uv axes</a></p>
+<p><img src="/img/crate.png" alt="uv axes"></p>
 <p>To tile an image you use the <em>uScale</em> and/or <em>vScale</em> properties, of the texture, to set the number of tiles in each direction.</p>
 <pre><code class="lang-javascript">myMaterial.diffuseTexture.uScale = 5.0;
 myMaterial.diffuseTexture.vScale = 5.0;
