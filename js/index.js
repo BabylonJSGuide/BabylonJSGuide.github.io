@@ -7,12 +7,6 @@
     window.addEventListener("DOMContentLoaded", function () {
 
         var createSlideOutMenu = function (callback) {
-            var divSearchBarMobile =
-                $('<div>', {
-                    class: 'searchbar-mobile searchbar',
-                    html: '<form method="get" action="/search"><input type="text" name="q" placeholder="Search..."/>' +
-                    '<button type="submit"><i class="fa fa-search"></i></button></form>'
-                });
 
              var navigationLinks = [
                 $('<a>', {
@@ -20,19 +14,19 @@
                     html: '<i class="fa fa-home"></i>Home'
                 }),
                 $('<a>', {
-                    href: '/begins',
+                    href: '/begins.html',
                     html: '<i class="fa fa-book"></i>Begin Here'
                 }),
                 $('<a>', {
-                    href: '/basics',
+                    href: '/basics.html',
                     html: '<i class="fa fa-book"></i>Basics'
                 }),
                 $('<a>', {
-                    href: '/intermediate',
+                    href: '/intermediate.html',
                     html: '<i class="fa fa-book"></i>Intermediate'
                 }),
                 $('<a>', {
-                    href: '/advanced',
+                    href: '/advanced.html',
                     html: '<i class="fa fa-book"></i>Advanced'
                 })
             ];
