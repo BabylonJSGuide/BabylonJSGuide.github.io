@@ -50,8 +50,10 @@ myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
 
 mesh.material = myMaterial;
 </code></pre>
-<h3><a name="diffuse-color-example" class="anchor" href="#diffuse-color-example"></a>Diffuse Color Example</h3><p>To give an idea how material diffuse color reacts to diffuse light color the following <a href="http://www.babylonjs-playground.com/#20OAV9#10">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#10', this)"></i><br/><div class="iframeContainer"></div><br/> shows how</p>
-<p>| Yellow Material |  Purple Material |
+<h3><a name="diffuse-color-example" class="anchor" href="#diffuse-color-example"></a>Diffuse Color Example</h3><p>To give an idea how material diffuse color reacts to diffuse light color the following <a href="http://www.babylonjs-playground.com/#20OAV9#10">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#10', this)"></i><br/><div class="iframeContainer"></div><br/> shows how
+|     |     |
+|----|----|
+| Yellow Material |  Purple Material |
 | Cyan Material | White Material |</p>
 <p>react to white, red, green and blue diffuse spot lights. Notice how the viewing angle adjusts the lighting.</p>
 <p><img src="/img/spots1.png" alt=" Spot Light"></p>
@@ -88,7 +90,7 @@ has material with red diffuse color an an ambient texture.</p>
 <p><a href="http://www.babylonjs-playground.com/#20OAV9#17">Playground Example Transparency</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#17', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <p>In addition the image used for the texture might already have a transparency setting, such as this picture of a dog from wikimedia commons, 
 which as a transparent background;</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Alaskan_Malamute%2BBlank.png" alt="A dog"></p>
+<p><img src="/img/dog.png" alt="A dog"></p>
 <p>In this case we set the <em>hasAlpha</em> property of the <strong>texture</strong> to true.</p>
 <pre><code class="lang-javascript">var myMaterial.diffuseTexture.hasAlpha = true;
 </code></pre>
