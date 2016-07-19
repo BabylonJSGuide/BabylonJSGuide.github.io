@@ -1,0 +1,56 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>intermediate</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Sky</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#skybox">Skybox</a><ul>
+<li><a href="#sky-images">Sky Images</a></li>
+<li><a href="#skybox-code">Skybox Code</a></li>
+<li><a href="#available-skyboxes-in-the-playground">Available Skyboxes in the Playground</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+<li><a href="#advanced">Advanced</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="skybox" class="anchor" href="#skybox"></a>Skybox</h1><p>A simulated sky can be added to a scene using a skybox. This is created using a large standard box, special reflective textures and a group of six images, one for each face of the cube.</p>
+<h2><a name="sky-images" class="anchor" href="#sky-images"></a>Sky Images</h2><p>Six jpeg images are necessary to create a skybox, all of them should be square and of the same size which is best as a power of 2, eg 1024px x 1024px.
+The name for each image should have a common part followed by a position given by _px, _nx, _py, _ny, _pz or _nz corresponding whether 
+it is on the positive (p) or negative (n) x, y or z axis.</p>
+<p>Example Images
+<img src="/img/skybox.png" alt="Skybox"></p>
+<p>Notice that the images match seamlessly at the edges of the box.</p>
+<p><img src="/img/skybox1.png" alt="Seamless Skybox"></p>
+<p>Skybox images can be found on the web by searching for skybox images. Generally these are single images in the form of a net of a box and you will 
+need to seperate them into individual images and save each.</p>
+<h2><a name="skybox-code" class="anchor" href="#skybox-code"></a>Skybox Code</h2><p>Within the playground you can copy and paste the following into your scene.</p>
+<pre><code class="lang-javascript">var skybox = BABYLON.MeshBuilder.CreateBox(&quot;skyBox&quot;, {size:1000.0}, scene);
+var skyboxMaterial = new BABYLON.StandardMaterial(&quot;skyBox&quot;, scene);
+skyboxMaterial.backFaceCulling = false;
+skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(&quot;textures/skybox&quot;, scene);
+skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+skybox.material = skyboxMaterial;
+</code></pre>
+<p>More generally the the images are referenced in the following way</p>
+<pre><code class="lang-javascript">skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(&quot;PATH TO IMAGES FOLDER/COMMON PART OF NAMES&quot;, scene);
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#UU7RQ#1">Playground Example of a Skybox</a> - <i class="fa fa-eye" onclick="createIframe('UU7RQ#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="available-skyboxes-in-the-playground" class="anchor" href="#available-skyboxes-in-the-playground"></a>Available Skyboxes in the Playground</h2><ol>
+<li>skybox</li>
+<li>TropicalSunnyDay</li>
+</ol>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h2><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h2><p><a href="/advanced/Reflect">Reflections and Refractions</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
