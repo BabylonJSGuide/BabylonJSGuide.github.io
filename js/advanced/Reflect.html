@@ -1,0 +1,166 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>advanced</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Reflections and Refractions</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#mirrors-and-glass">Mirrors and Glass</a><ul>
+<li><a href="#reflection">Reflection</a><ul>
+<li><a href="#cubetexture">CubeTexture</a></li>
+<li><a href="#hdrcubetexture">HDRCubeTexture</a></li>
+<li><a href="#spherical-reflection-texture">Spherical Reflection Texture</a></li>
+<li><a href="#mirrors">Mirrors</a></li>
+</ul>
+</li>
+<li><a href="#refraction">Refraction</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="mirrors-and-glass" class="anchor" href="#mirrors-and-glass"></a>Mirrors and Glass</h1><p>Using reflection textures can simulate mirror like material and recfraction textures can simulate looking through glass or water.</p>
+<h2><a name="reflection" class="anchor" href="#reflection"></a>Reflection</h2><p>Reflections are created using the <em>relectionTexture</em> property  of a material. A first use is in creating a sky using a <a href="/advanced/Skybox">skybox</a></p>
+<p>This sets the <em>relectionTexture</em> to a <em>CubeTexture</em> and the <em>coordinatesMode</em> of the <em>relectionTexture</em> to SKYBOX_Mode as in</p>
+<pre><code class="lang-javascript">skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(&quot;PATH TO IMAGES FOLDER/COMMON PART OF NAMES&quot;, scene);
+skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+</code></pre>
+<h3><a name="cubetexture" class="anchor" href="#cubetexture"></a>CubeTexture</h3><p>By default six jpeg images are passed to a <em>CubeTexture</em>. The images are named in this form, commonPart_px.jpg, commonPart_nx.jpg, 
+commonPart_py.jpg, commonPart_ny.jpg, commonPart_pz.jpg, commonPart_nz.jpg corresponding to the positions shown below.</p>
+<p><img src="/img/cubetexture1.png" alt="CubeTexture Positions"></p>
+<p>When doing this for a skybox the box created is given a large size (1000 in the skybox example above) but <em>CubeTexture</em> can be used with any size box and is one 
+way of applying different textures to each side of a cube. Notice that as we are dealing with a small box and we are viewing it from the outside <em>backFaceCulling</em> can be set to <em>true</em>. This is not 
+possible when the camera is inside the large skybox since in terms of rendering the sky at the back will be still behind the fron portion and will 
+not be rendered should <em>backFaceCulling = true</em>. However we still need to use _reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE_. </p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;Box&quot;, {}, scene);
+var boxMaterial = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+boxMaterial.backFaceCulling = true;
+boxMaterial.reflectionTexture = new BABYLON.CubeTexture(&quot;http://babylonjsguide.github.io/img/cubeSide&quot;, scene);
+boxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+boxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+boxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+box.material = boxMaterial;
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#UU7RQ#2">Playground Example of Different Faces</a> - <i class="fa fa-eye" onclick="createIframe('UU7RQ#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>From BS 2.4 it is also possible to use High Dynamic Range Cube Textures </p>
+<h4><a name="reflecting-on-skybox-and-a-shape" class="anchor" href="#reflecting-on-skybox-and-a-shape"></a>Reflecting on Skybox and a shape</h4><p>Using different <em>coordinatesMode</em> with different shapes will reflect the skybox in the shape</p>
+<p><a href="http://www.babylonjs-playground.com/#UU7RQ#3">Playground Example of Box and CUBIC_MODE</a> - <i class="fa fa-eye" onclick="createIframe('UU7RQ#3', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#UU7RQ#5">Playground Example of Ground and PLANAR_MODE</a> - <i class="fa fa-eye" onclick="createIframe('UU7RQ#5', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#UU7RQ#4">Playground Example of Sphere and PLANAR_MODE</a> - <i class="fa fa-eye" onclick="createIframe('UU7RQ#4', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h3><a name="hdrcubetexture" class="anchor" href="#hdrcubetexture"></a>HDRCubeTexture</h3><p>High Dynamic Range (HDR) images are panoramic images that cover an entire field of vision.</p>
+<p>Below is an HDR image of a room</p>
+<p><img src="img/room.png" alt="Room"></p>
+<p>Replace the following line</p>
+<pre><code class="lang-javascript">skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(&quot;PATH TO IMAGES FOLDER/COMMON PART OF NAMES&quot;, scene);
+</code></pre>
+<p>with</p>
+<pre><code class="lang-javascript">skyboxMaterial.reflectionTexture = new BABYLON.HDRCubeTexture(&quot;PATH TO HDR IMAGE&quot;, scene);
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#114YPX#5">Playground Example of HDR Skybox</a> - <i class="fa fa-eye" onclick="createIframe('114YPX#5', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h3><a name="spherical-reflection-texture" class="anchor" href="#spherical-reflection-texture"></a>Spherical Reflection Texture</h3><p>Not only can a cube texture can be applied to a sphere so can a plane single image.</p>
+<p><img src="img/reflectest.png" alt="Squares"></p>
+<p>The above image was applied to each of four spheres, one as a diffuse texture and the other three with <em>reflectionTexture</em> but different <em>coordinatesMode</em>. The resuls are below.</p>
+<p><img src="img/modes.png" alt="Reflecion on Spheres"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Diffuse Texture</td>
+<td>SPHERICAL_MODE</td>
+</tr>
+<tr>
+<td>PLANAR_MODE</td>
+<td>PROJECTION_MODE</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.babylonjs-playground.com/#20OAV9#26">Playground Example of Coordinates Modes</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#26', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h3><a name="mirrors" class="anchor" href="#mirrors"></a>Mirrors</h3><p>So far reflections have been of images, using <em>MirrorTexture</em> obects within the scene can be reflected as in a mirror. This is simulated by 
+by setting the <em>reflectionTexture</em> to a <em>MirrorTexture</em> and applying it to a flat surface. </p>
+<p><a href="http://www.babylonjs-playground.com/#1YAIO7#5">Playground Example of Mirrors</a> - <i class="fa fa-eye" onclick="createIframe('1YAIO7#5', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>A real mirror is made of two parts glass and a reflected surface applied to the glass and a mirror simulated within 
+BJS also contains to parts; a flat surface and a reflector. (For a reflective surface such as metal or still water - think metal plus shine and water plus air boundary).</p>
+<p>In BJS the flat surface is a ground mesh or a plane mesh and the reflector is a Mathematical Plane which is infinite and 
+lies on top of the flat mesh and reflects where the two overlap.</p>
+<p>With a real mirror it is easy to tell if you are standing in front of it or behind it. For a BJS mirror an object is 
+in front of the mirror if the normals of the flat surface point towards the object. </p>
+<h4><a name="constructing-the-mirror-reflector" class="anchor" href="#constructing-the-mirror-reflector"></a>Constructing the Mirror Reflector</h4><p>The flat surface should be constructed first from a ground or plane mesh. BJS can then construct the reflector using the position and normal of the flat surface. Since the 
+reflection is on the opposite side of the mirror to the object being reflected the normal for reflection is in the opposite direction to that 
+of the flat surface. For example a mesh of a plane created in BJS has a normal vector (0, 0, -1) at the time of creation and so the reflected normal will be (0, 0, 1).</p>
+<p>The next thing to note is that renderings of meshes take place by applying transformations, the worldMatrix, to the original mesh values. It is 
+therefore necessary the get this worldMatrix and apply it to the data from the flat surface in order to obtain the current and actual 3D data in world space.</p>
+<p>An example of creating a &#39;glass&#39; flat surface and obtaining the reflector is</p>
+<pre><code class="lang-javascript">var glass = BABYLON.MeshBuilder.CreatePlane(&quot;glass&quot;, {width: 5, height: 5}, scene);
+
+//Position and Rotate flat surface
+glass.position = new BABYLON.Vector3(0, 0, 4);
+glass.rotation = new BABYLON.Vector3(Math.PI/4, Math.PI/6, Math.PI/8);
+
+//Ensure working with new values for flat surface by computing and obtaining its worldMatrix
+glass.computeWorldMatrix(true);
+var glass_worldMatrix = glass.getWorldMatrix();
+
+//Obtain normals for plane and assign one of them as the normal
+var glass_vertexData = glass.getVerticesData(&quot;normal&quot;);
+var glassNormal = new BABYLON.Vector3(glass_vertexData[0], glass_vertexData[1], glass_vertexData[2]);    
+//Use worldMatrix to transform normal into its current world value
+glassNormal = new BABYLON.Vector3.TransformNormal(glassNormal, glass_worldMatrix)
+
+//Create reflector using the position and reflected normal of the flat surface
+var reflector = new BABYLON.Plane.FromPositionAndNormal(glass.position, glassNormal.scale(-1));
+</code></pre>
+<h4><a name="constructing-the-mirror" class="anchor" href="#constructing-the-mirror"></a>Constructing the Mirror</h4><p>Once the reflector is obtained a <em>MirrorTexture</em> is made that can be applied to the flat surface.</p>
+<pre><code class="lang-javascript">var mirrorMaterial = new BABYLON.StandardMaterial(&quot;MirrorMat&quot;, scene);
+mirrorMaterial.reflectionTexture = new BABYLON.MirrorTexture(&quot;mirror&quot;, 512, scene, true);
+mirrorMaterial.reflectionTexture.mirrorPlane = reflector;
+mirrorMaterial.reflectionTexture.renderList = [sphere1, sphere2];
+</code></pre>
+<p>A <em>MirrorTexture</em> has four parameters: name, size of the rendering buffer (should be a power of 2, the larger the number the better image quality but performance deteriorates); scene and 
+and optional parameter, default value false, that will generate a MIP map when set to true. This increases quality durinng scaling.</p>
+<p>The <em>mirrorPlane</em> is set to the constructed reflector. It is possible to directly set the <em>mirrorPlane</em> by directly using a BABYLON.Plane(a, b, c, d) where a, b and c give the plane normal vector (a, b, c) and
+d is a scalar displacement from the <em>mirrorPlane</em> to the origin. However in all but the very simplest of situations it is more straight forward to use the method above.</p>
+<p>The <em>renderList</em> is an array of the meshes to be reflected in the mirror.</p>
+<p>Finally the mirrorMaterial can be applied to the glass.</p>
+<pre><code class="lang-javascript">glass.material = mirrorMaterial;
+</code></pre>
+<h2><a name="refraction" class="anchor" href="#refraction"></a>Refraction</h2><p>In this case an object behind glass or under water for example can have its position and size changed by the refraction of light.</p>
+<p><a href="http://www.babylonjs-playground.com/#22KZUW#15">Playground example of Refraction</a> - <i class="fa fa-eye" onclick="createIframe('22KZUW#15', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>Refraction is also achieved by taking a flat surface such as a plane or disc and adding, this this case, a refraction material applied to a flat mesh. The difference is that the object 
+that is to be refracted is placed behind the flat surface, that is the normals of the mesh all point away from the object and the refracted normals are in the same direction. </p>
+<p>The method used above to obtain the <em>reflectionPlane</em> could be used if necessary though in this case the normal of the flat surface is not reversed.</p>
+<pre><code class="lang-javascript">var refractor = new BABYLON.Plane.FromPositionAndNormal(glass.position, glassNormal);
+</code></pre>
+<p>The following example, however, uses a vertical plane for the mesh at the origin and so it is straight forward to obtain the normal (0, 0, -1) and displacement, 0, for the refractor plane. </p>
+<pre><code class="lang-javascript">    //Create flat surface
+    var surface = BABYLON.MeshBuilder.CreatePlane(&quot;surface&quot;, {width: 15, height: 15}, scene);
+
+    //Create the refraction material
+    var refractionMaterial = new BABYLON.StandardMaterial(&quot;refraction&quot;, scene);
+    refractionMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
+    refractionMaterial.refractionTexture = new BABYLON.RefractionTexture(&quot;refraction&quot;, 1024, scene, true);
+    refractionMaterial.refractionTexture.refractionPlane = new BABYLON.Plane(0, 0, -1, 0);
+    refractionMaterial.refractionTexture.renderList = [sphere];
+    refractionMaterial.refractionTexture.depth = 5;
+    refractionMaterial.indexOfRefraction = 0.5;
+    surface.material = refractionMaterial;
+</code></pre>
+<p>Two new parameters are apparent <em>depth</em> a property of the refractionTexture and <em>indexOfRefraction</em> a property of the refraction material/</p>
+<p>The two examples below show the effect of changing these.</p>
+<p><em>Note</em> in both examples the surfaces are transparent so that the actual position of the sphere can be identified. It is the refracted 
+sphere that changes psoition as the parameters are changed.</p>
+<p><a href="http://www.babylonjs-playground.com/#1YAIO7#20">Playground example of changes in refraction depth from 0 to 50</a> - <i class="fa fa-eye" onclick="createIframe('1YAIO7#20', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1YAIO7#19">Playground example of changes in index of refraction from 0.1 to 1.5</a> - <i class="fa fa-eye" onclick="createIframe('1YAIO7#19', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
