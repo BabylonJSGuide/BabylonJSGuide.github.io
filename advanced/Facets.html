@@ -36,7 +36,7 @@ and 0, 1, 5, 4 and 0, 3, 7, 4 it is not possible for vertex 3 to be assigned (1,
 Of course facets 8, 9, 7 and 3, 7, 8 will have graduated fill or messd up images but by setting vertices 8 and 3 to have the same position and also 9 and 7 to have the same position 
 the face 3, 7, 9, 8 disappears, the box appears to only have six faces and the adjoining faces have the colour or image wanted. </p>
 <p>Spheres, cylinders and other self joining meshes use this method.</p>
-<h3><a name="2-seperated-faces" class="anchor" href="#2-seperated-faces"></a>2. Seperated Faces</h3><p>In this case each face has its own set of indices for its vertices, so each face have a different material applied. </p>
+<h3><a name="2-seperated-faces" class="anchor" href="#2-seperated-faces"></a>2. Seperated Faces</h3><p>In this case each face has its own set of indices for its vertices, so each face can have a different material applied. </p>
 <p><img src="/img/box3.jpg" alt="Individual Faces"></p>
 <p>Again correct coincident positioning of vertices leads to a solid looking mesh. Think of the mesh as being made of individual faces that are brought together to form a whole.</p>
 <p>Some meshes created with the MeshBuilder method use this approach, allowing the faceColors and faceUV options.</p>

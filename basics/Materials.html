@@ -74,7 +74,8 @@ mesh.material = myMaterial;
 <p><img src="/img/spots1.png" alt=" Spot Light"></p>
 <h3><a name="ambient-color-example" class="anchor" href="#ambient-color-example"></a>Ambient Color Example</h3><p>In this <a href="http://www.babylonjs-playground.com/#20OAV9#14">playground example</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#14', this)"></i><br/><div class="iframeContainer"></div><br/> all spheres are lit by the same hemisphereic light, with <em>diffuse</em> red and <em>groundColor</em> green. 
 The first sphere has no ambient color, the middle has red ambient color defined on its material and the one on the right 
-has material with green ambient color.</p>
+has material with green ambient color. The scene ambient color, which must be present, is white. When a scene ambient color component is set to 0, for example red, then whatever the value for red in the material 
+ambient color it will have no effect. </p>
 <p><img src="/img/ambient1.png" alt="Ambient"></p>
 <h3><a name="transparent-color-example" class="anchor" href="#transparent-color-example"></a>Transparent Color Example</h3><p>Transparency is achieved by setting a materials <em>alpha</em> property from 0 (invisible) to 1 (opaque).</p>
 <pre><code class="lang-javascript">var myMaterial.alpha = 0.5;
@@ -135,9 +136,9 @@ When <em>backFaceCulling</em> is false the back faces are not removed during ren
 <pre><code class="lang-javascript">materialSphere1.wireframe = true;
 </code></pre>
 <p><img src="http://www.babylonjs.com/tutorials/04%20-%20Materials/04-3.png" alt="tof"></p>
-<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h3><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h3><p><a href="/intermediate/Materials.md">More On Textures</a></p>
-<h3><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h3><p><a href="/advanced/Reflect.md">Reflection and Refraction</a>
-<a href="/advanced/Multi_Materials.md">Multi Materials</a></p>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h3><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h3><p><a href="/intermediate/Materials.html">More On Textures</a></p>
+<h3><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h3><p><a href="/advanced/Reflect.html">Reflection and Refraction</a>
+<a href="/advanced/Multi_Materials.html">Multi Materials</a></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
