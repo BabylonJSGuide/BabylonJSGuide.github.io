@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>intermediate</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Translate and Rotate</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#translation-and-rotation">Translation and Rotation</a></li>
+<li><a href="#frames-of-reference">Frames of Reference</a><ul>
+<li><a href="#translate">Translate</a></li>
+<li><a href="#rotate">Rotate</a></li>
+</ul>
+</li>
+<li><a href="#tip">Tip</a></li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#intermediate">Intermediate</a></li>
+<li><a href="#advanced">Advanced</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="translation-and-rotation" class="anchor" href="#translation-and-rotation"></a>Translation and Rotation</h1><p>In mathematics a translation is a vector displacement of an object from its current position to a new position. A rotation turns an object 
+through an angle about an axis, which is a fixed line.</p>
+<p>View the two playgrounds below to see a translation and a rotation in progress.</p>
+<p><a href="http://www.babylonjs-playground.com/#1JLGFP">Playground Example Translation</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1JLGFP#2">Playground Example Rotation</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h1><a name="frames-of-reference" class="anchor" href="#frames-of-reference"></a>Frames of Reference</h1><p>There are two frames of reference one the <strong>world axes</strong> in <em>world space</em> and the other the <strong>local axes</strong> in <em>local space</em>. 
+When a mesh is created the <strong>world axes</strong> and the <strong>local axes</strong> coincide. As a mesh is translated or rotated the <strong>local axes</strong> move with it. 
+The frame of reference used depends whether translate and rotate take place on the <em>world space</em> or the <em>local space</em>. </p>
+<p>The <strong>world space</strong> is set using BABYLON.Space.WORLD</p>
+<p>The <strong>local space</strong> is set using BABYLON.Space.LOCAL</p>
+<h2><a name="translate" class="anchor" href="#translate"></a>Translate</h2><p>To translate a mesh a direction, distance and space need to be specified. </p>
+<pre><code class="lang-javascript">pilot.translate(BABYLON.Axis.Y, 2, BABYLON.Space.WORLD);
+
+pilot.translate(new BABYLON.Vector3(-1, 3, -2), 3, BABYLON.Space.LOCAL);
+</code></pre>
+<h2><a name="rotate" class="anchor" href="#rotate"></a>Rotate</h2><p>To rotate a mesh an axis, angle and the space specified are needed. The axis is given as any vector(x, y, z) and this is taken as the line passing through the 
+origin of the local axes.  In other words the mesh spins at its current position.
+For convenience unit vectors in the positive directions of the x, y and z axes are pre-defined as the constants BABYLON.Axis.X, BABYLON.Axis.Y and BABYLON.Axis.Z respectively.</p>
+<pre><code class="lang-javascript">pilot.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.WORLD);
+
+pilot.rotate(new BABYLON.Vector3(-1, 3, -10), 7 * Math.PI / 12, BABYLON.Space.LOCAL);
+</code></pre>
+<p>To rotate a mesh about an axis that does not pass through the origin of its local axes set a child of the mesh 
+at a point that the axis will pass through and rotate the child about the axis.</p>
+<pre><code class="lang-javascript">var pivotOnAxis = new BABYLON.Mesh(&quot;pivot&quot;, scene);
+var pivotPoint = new BABYLON.Vector3(2, 3, 1);
+pivotOnAxis.position = pivotPoint;
+
+var axis = new BABYLON.Vector3(1, -2, 5);
+
+pilot.parent =  pivotOnAxis;
+
+pilot.rotate(axis,  Math.PI / 3, BABYLON.Space.WORLD);
+</code></pre>
+<p>The rotate playground example above was constructed in this manner.</p>
+<h1><a name="tip" class="anchor" href="#tip"></a>Tip</h1><p>When animating with translate and rotate use scene.register<strong>After</strong>Render rather than scene.register<strong>Before</strong>Render</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h2><p>Making A Simple Car using Translate and Rotate {{link needed}}</p>
+<h2><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h2><p><a href="/advanced/Rotate.html">Translate and Rotate in Detail</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

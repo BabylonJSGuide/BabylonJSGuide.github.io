@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>basics</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Position and Rotation</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#frames-of-reference">Frames of Reference</a><ul>
+<li><a href="#position">Position</a></li>
+<li><a href="#rotation">Rotation</a><ul>
+<li><a href="#why-the-warning">Why the Warning</a></li>
+</ul>
+</li>
+<li><a href="#simple-animation-using-position-and-rotation">Simple Animation using Position and Rotation</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="frames-of-reference" class="anchor" href="#frames-of-reference"></a>Frames of Reference</h1><p>There are two frames of reference that BabylonJS uses with a mesh, the <strong>world axes</strong> and the <strong>local axes</strong>. 
+In all diagrams and playgrounds X axis is red, Y axis is Green and Z axis is blue. 
+In all examples a non symmetrical mesh, the pilot, will be used. </p>
+<p><img src="/img/pilot.jpg" alt="The Pilot">
+The Pilot</p>
+<p>When the pilot is created its position and rotation are both set to (0, 0, 0), its scaling to (1, 1, 1) and all frames of reference 
+coincide.</p>
+<p><img src="/img/pilot1.jpg" alt="Creation of Pilot"></p>
+<h2><a name="position" class="anchor" href="#position"></a>Position</h2><p>Position places the pilot with reference to the <strong>word axes</strong> using a vector (x, y, z). The <strong>local axes</strong> move with the pilot.</p>
+<pre><code class="lang-javascript">pilot.position = new BABYLON.Vector3(2, 3, 4);
+</code></pre>
+<p>or individual components</p>
+<pre><code class="lang-javascript">pilot.position.x  =  2;
+pilot.position.y  =  3;
+pilot.position.z  =  4;
+</code></pre>
+<p>The local and world axes remain in the same orientation.</p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#1">Playground Example for Position</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="rotation" class="anchor" href="#rotation"></a>Rotation</h2><p>WARNING using rotation on more than one axis can produce misleading results. Use <a href="link needed">rotate</a> on multiple axes.</p>
+<p>All rotations are in radians and are anticlockwise when looking in the direction of the positive axes.</p>
+<p>Rotation sets the centre of rotation at the origin of the <strong>local axes</strong> and rotation with reference axes parallel to the <strong>world axes</strong> using a vector ( alpha, beta, gamma) or individual components. 
+Where alpha is the rotation about the x axis, beta about the y axis  and gamma about the z axis. </p>
+<pre><code class="lang-javascript"> pilot.rotation = new BABYLON.Vector3(alpha, beta, gamma)
+</code></pre>
+<p>or</p>
+<pre><code class="lang-javascript">pilot.position.x  =  alpha;
+pilot.position.y  =  beta;
+pilot.position.z  =  gamma;
+</code></pre>
+<h3><a name="why-the-warning" class="anchor" href="#why-the-warning"></a>Why the Warning</h3><p>The rotation is always the result of applying the individual rotations in the order gamma, alpha, beta, no matter in which order each rotation is applied.</p>
+<p>The following diagram shows that applying a rotation of PI/2 in the axis order, z, x, y then the sequence of rotations is 
+as you would expect.</p>
+<p><img src="/img/expected.jpg" alt="Expected Rotations"></p>
+<p>When applying a rotation of PI/2 in the axis order x, y, z you would expect each rotation to follow the diagram below.</p>
+<p><img src="/img/expectedyxz.jpg" alt="Expected Rotations YXZ "></p>
+<p>However the actual sequence is show in the following diagram.</p>
+<p><img src="/img/actualyxz.jpg" alt="Actual Rotations YXZ "></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#2">Playground Example for Rotation</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>Note re-ordering and/or commenting out lines 38, 39 and 40 in the above playground will show you 
+how rotation is always done in the order around z, then x then y.</p>
+<p>There is still something else to check. What if the rotation is applied to the <strong>local axes</strong> rather than the <strong>world axes</strong>? 
+Unfortunately the answer is no. Check out the following playground which applies the rotation to the local axes as well as the pilot.</p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#3">Playground Example for Rotation of Local Axes</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#3', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="simple-animation-using-position-and-rotation" class="anchor" href="#simple-animation-using-position-and-rotation"></a>Simple Animation using Position and Rotation</h2><p>The aim is to produce an animation of a disc rotating along a straight horizontal path. When a disc of radius r 
+rotates through an angle theta the disc travels a distance of r <em> theta. For the animation this means a series of positions 
+a distance r </em> theta apart. These positions are used as the points with which to create the line. </p>
+<p><a href="http://www.babylonjs-playground.com/#92EYG#10">Playground Example Rotation Along Straight Horizontal Path</a> - <i class="fa fa-eye" onclick="createIframe('92EYG#10', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
