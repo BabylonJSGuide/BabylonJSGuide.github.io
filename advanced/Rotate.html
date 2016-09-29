@@ -1,23 +1,31 @@
 <!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>advanced</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Translate and Rotate Details</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
 <li><a href="#frames-of-reference">Frames of Reference</a></li>
+<li><a href="#warning-about-translate">Warning about Translate</a></li>
 <li><a href="#translate-and-rotate">Translate and Rotate</a><ul>
-<li><a href="#rotate">Rotate</a></li>
 <li><a href="#translate">Translate</a></li>
-<li><a href="#translate-after-a-rotate">Translate after a Rotate</a><ul>
 <li><a href="#rotate">Rotate</a></li>
-<li><a href="#combining-translate-and-rotate">Combining translate and rotate</a></li>
+<li><a href="#translate-after-a-rotate">Translate after a Rotate</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-</div></div><div id="staticContent"><h1><a name="frames-of-reference" class="anchor" href="#frames-of-reference"></a>Frames of Reference</h1><p>Two frames of reference are used <strong>world axes</strong> and <strong>local axes</strong> .<br>The frame of reference used depends whether translate and rotate take place on the <em>world space</em> or the <em>local space</em>. 
-When <em>world space</em> is specified translate uses the <em>world axes</em> and rotate use the <em>world axes</em> with centre of rotation 
-at the origin of the <em>local axes</em>. 
-When <em>local space</em> is specified translate and rotate use the <em>local axes</em> with the centre of rotation at the origin of the <em>local axes</em>. </p>
-<h1><a name="translate-and-rotate" class="anchor" href="#translate-and-rotate"></a>Translate and Rotate</h1><p>Warning when translate is used with <em>world space</em> specified you cannot combine translations with out computing the world matrix of the mesh. 
-When this is not done only the last translation given is used. In all other cases combinations of transformations are possible.</p>
-<p>Since translate and rotate are about movement all examples are animated and in all examples a non symmetrical mesh, the pilot, will be used.. </p>
+</div></div><div id="staticContent"><h1><a name="frames-of-reference" class="anchor" href="#frames-of-reference"></a>Frames of Reference</h1><p>Two frames of reference are used <strong>world axes</strong> and <strong>local axes</strong> .<br>The frame of reference used depends whether translate and rotate take place on the <em>world space</em> or the <em>local space</em>.<br>When <em>world space</em> is specified translate uses the <em>world axes</em>.<br>Rotate use the <em>world axes</em> to calculate the vector direction of the axis of rotation with the axis line passing through the origin of the <em>local axes</em>. </p>
+<p>When <em>local space</em> is specified translate uses the <em>local axes</em>. 
+Rotate use the <em>local axes</em>  to calculate the vector direction of the axis of rotation with the axis line passing through the origin of the <em>local axes</em>. </p>
+<h1><a name="warning-about-translate" class="anchor" href="#warning-about-translate"></a>Warning about Translate</h1><p>Mathematically you would expect any use of translate to move a mesh from its set current position along a vector to a new position. 
+Under some circumstances translate will not behave as expected when it follows earlier translations or rotations. For example it may not start the 
+translation from the current position of the mesh or it may not translate using the set axes. On these occasions the expected behaviour 
+can be obtained by computing the world matrix of the mesh before applying translate. </p>
+<p>The computation of the world matrix for a mesh (example - pilot) can be forced as follows </p>
+<pre><code class="lang-javascript">pilot.position = new BABYLON.Vector3(2, 3, 4);
+pilot.computeWorldMatrix(true);
+</code></pre>
+<p>During the rendering process for each frame the world matrix is computed for each mesh. Using the scene.register<em>After</em>Render() method for an animation is another way to ensure 
+that translations are as expected. In this case the code for the animation is registered (run) after the first frame has been rendered and so after the world matrix is computed 
+for each mesh. When using scene.register<em>Before</em>Render() the animation code is registered before the rendering of the current frame 
+and so before the world matrix is computed for each mesh.</p>
+<p>Of course the method to use will depend on the actual behaviour wanted and the structure of the code to produce it. </p>
+<p>Examples of these types of issues are provided in the guide to translate and rotate below.</p>
+<h1><a name="translate-and-rotate" class="anchor" href="#translate-and-rotate"></a>Translate and Rotate</h1><p>Since translate and rotate are about movement all examples are animated and in all examples a non symmetrical mesh, the pilot, will be used.. </p>
 <p><img src="/img/pilot.jpg" alt="The Pilot">
 The Pilot</p>
 <p>When the pilot is created its position and rotation are both set to (0, 0, 0) and all frames of reference 
@@ -26,33 +34,15 @@ coincide.</p>
 <p>For translate and rotate the change can be specified to take place in the world space or in local space as follows. </p>
 <p>The <strong>world space</strong> is set using BABYLON.Space.WORLD</p>
 <p>The <strong>local space</strong> is set using BABYLON.Space.LOCAL</p>
-<h2><a name="rotate" class="anchor" href="#rotate"></a>Rotate</h2><p>Since rotate alters the orientation of the local axes and so can affect local translation we will conside this first. 
-Whether in world or local space the centre of rotation is the origin of the local axes.</p>
-<p>To rotate a mesh an axis, angle and the space specified are needed. The axis is given as any vector(x, y, z). 
-For convenience unit vectors in the positive directions of the x, y and z axes are pre-defined as the constants BABYLON.Axis.X, BABYLON.Axis.Y and BABYLON.Axis.Z respectively.</p>
-<pre><code class="lang-javascript">pilot.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.WORLD);
-
-pilot.rotate(new BABYLON.Vector3(-1, 3, -10), 7 * Math.PI / 12, BABYLON.Space.LOCAL);
-</code></pre>
-<p><a href="http://www.babylonjs-playground.co
-m/#1ZMJQV#4">Playground Example Rotation World Space</a></p>
-<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#7">Playground Example Rotation Local Space</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#7', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p>In the following playgrounds yellow is the axis relative to the world space and white 
-the axis relative to local space.</p>
-<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#9">Playground Example Rotation World Space Skew Axis</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#9', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#10">Playground Example Rotation Local Space Skew Axis</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#10', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p>It is possible to combine two or more rotate calls both on world and local space</p>
-<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#11">Playground Example Combined Rotation World Space</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#11', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#12">Playground Example Combined Rotation Local Space</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#12', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h2><a name="translate" class="anchor" href="#translate"></a>Translate</h2><p>To translate a mesh a vector, distance and space need to be specified. The vector is the direction of translation, the distance * vector length gives how far to move in the given direction. 
-you can use pilot.translate(vector, distance, space) to move the pilot the given distance in the direction of the vector based on either the world or local space. 
+Use pilot.translate(vector, distance, space) to move the pilot in either the world or local space. 
 It is often useful for the vector to be a unit vector so the distance moved is precisely the distance given.</p>
-<pre><code class="lang-javascript">//BABYLON.Axis.Y is already a unit vector, as world space specified
-//pilot will move a distance of 2 from its current position in the direction (0, 1, 0).
+<pre><code class="lang-javascript">//BABYLON.Axis.Y is already a unit vector. 
+//As world space specified pilot will move a distance of 2 from its current position in the direction (0, 1, 0).
 pilot.translate(BABYLON.Axis.Y, 2, BABYLON.Space.WORLD);
 
-//Given vector has length sqrt(14), as local space specified 
-//pilot will move a distance sqrt(14)*3 = 42 from its current position in direction (-1, 3, -2)
+//Given vector has length sqrt(14). 
+//A local space specified pilot will move a distance sqrt(14)*3 from its current position in direction (-1, 3, -2)
 pilot.translate(new BABYLON.Vector3(-1, 3, -2), 3, BABYLON.Space.LOCAL);
 
 //Since vector is normalized and local space specified 
@@ -61,112 +51,50 @@ var direction = new BABYLON.Vector3(3, 5, -2);
 direction.normalize(); // direction now a unit vector
 pilot.translate(direction, 6, BABYLON.Space.LOCAL);
 </code></pre>
-<p>Unlike rotations where it is difficult to see about what axis a rotation of PI/3 about the y axis followed by a 
-rotation of PI/5 about the x axis would combine the two it is far easier with translations. A translation of 
-(1, 3, -5) followed by one of (2, -1, -2) is clearly (3, 2, -7) so really there is little call to write seperate 
-translate statements. However should you wish to do so in the <em>world space</em> then computing the world matrix is necessary.</p>
+<p>A translation of (1, 3, -5) followed by one of (2, -1, -2) is clearly (3, 2, -7) so really there is little call to write separate 
+sequential translate statements. One place where it may occur is when a mesh is positioned before its animation is run. </p>
+<p>The following examples are done in <em>world space</em>. Note the difference between A and B. Both set the position of the pilot to (2, 3, 4) before the animation.<br>In example A the pilot starts from (0, 0, 0) since the animation code is carried out before computing the world matrix and so the setting of the 
+pilot position is not carried out before the first frame is rendered.<br>In example B the pilot starts from the set position since the animation code is carried out after computing the world matrix for the pilot.</p>
 <p><a href="http://www.babylonjs-playground.com/#1ZMJQV#13">Playground Example (A) Translate World Space Animated with registerBeforeRender</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#13', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <p><a href="http://www.babylonjs-playground.com/#1ZMJQV#14">Playground Example (B) Translate World Space Animated with registerAfterRender</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#14', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p>Note the difference between example A and B, both set the position of the pilot to (2, 3, 4) within the main body of the code. 
-In example A the pilot starts from this position whereas in example B the pilot starts from (0, 0, 0). This is because it is during the rendering 
-process that the world matrix is computed for the mesh. Since in A the animation code is registred before the scene is rendered the world matrix has not been computed 
-and so the position of the pilot is still set as (0, 0, 0). In B however the code is registered after the scene has been rendered and so the world matrix has been computed 
-and the pilot position been set at (2, 3, 4);</p>
-<p>The computation of the world matrix for a mesh can be forced as follows </p>
-<pre><code class="lang-javascript">pilot.position = new BABYLON.Vector3(2, 3, 4);
-pilot.computeWorldMatrix(true);
-</code></pre>
+<p>In example C below computing the world matrix is forced in code before the animation is carried out and so even though scene.register<em>Before</em>Render is used 
+the pilot starts the animation at the set position.</p>
 <p><a href="http://www.babylonjs-playground.com/#1ZMJQV#15">Playground Example (C) Translate World Space, World Matrix Computed, Animated with registerBeforeRender </a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#15', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p>In <em>local space</em> sequences of translations will always be combined starting from the current position of the mesh.</p>
-<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#15">Playground Example Translate Local Space</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#15', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h2><a name="translate-after-a-rotate" class="anchor" href="#translate-after-a-rotate"></a>Translate after a Rotate</h2><p>Whereas using translate with <em>local space</em> specified the mesh moves with reference to the <em>world local axes</em> which are in the same orientation as the 
-<em>world local axes</em> using locallyTranslate the mesh moves in a direction with reference to the <em>local axes</em>. Compare the following two playgrounds in which 
-<em>world local axes</em> are in the same color as the <em>world axes</em> and the <em>local axes</em> are a different shade.</p>
-<h4><a name="the-world-space" class="anchor" href="#the-world-space"></a>The World Space</h4><p>The world space is set </p>
-<p><a href="http://www.babylonjs-playground.com/#UMR7M#14">Demo 5</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#14', this)"></i><br/><div class="iframeContainer"></div><br/> using the vectors (3, 3, 3) and (2, 4, 1) with a distance of 1 shows that in the world space pilot.translate behaves like pilot.position set to these vectors.</p>
-<p>Experimenting with the distance shows that the pilot moves distance * vector length.</p>
-<p>It is often useful if the given vector is a unit vector so the distance moved is precisely the distance given.</p>
-<p>For a given V = new BABYLON.Vector3(x, y, z) a unit vector in this direction is given by V.normalize(). Also V.length() will give the length of the vector.</p>
-<h4><a name="the-local-space" class="anchor" href="#the-local-space"></a>The Local Space</h4><p>The local space is set using BABYLON.Space.LOCAL. </p>
-<p>In the local space translate behaves as would a mathematical translate. That is, a sequence of translations is an accumulation of direction vectors as opposed to the setting of a position vector.</p>
-<p><a href="http://www.babylonjs-playground.com/#UMR7M#15">Demo 6</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#15', this)"></i><br/><div class="iframeContainer"></div><br/> shows how the translation (3, 3, 3) followed by the translation (2, 4, 1) results in the translation (5, 7, 4).</p>
-<h3><a name="rotate" class="anchor" href="#rotate"></a>Rotate</h3><p>NOTE  </p>
-<ul>
-<li><p>local-axes means axes local to the pilot that maintain their original orientation to the pilot, ie as the pilot turns the local axes turn with it.</p>
-</li>
-<li><p>world-local-axes means axes local to the pilot that stay in the direction of the world axes whatever the orientation of the pilot.</p>
-</li>
-</ul>
-<h4><a name="the-world-space" class="anchor" href="#the-world-space"></a>The world space</h4><p>Rotations take place around the world-local-axes and are accumulative. This can be seen in <a href="http://www.babylonjs-playground.com/#UMR7M#16">Demo 7</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#16', this)"></i><br/><div class="iframeContainer"></div><br/>.</p>
-<p>Commenting the correct lines in <a href="http://www.babylonjs-playground.com/#UMR7M#16">Demo 7</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#16', this)"></i><br/><div class="iframeContainer"></div><br/> gives the sequence in Figs 6a, b, c, d.</p>
-<p><img src="https://lh3.googleusercontent.com/-5ti2Ahyaszg/VW2q1qwIOnI/AAAAAAAAADc/4Vomi3kXUvU/s210/fig6a.jpg" alt="">
-1<a href="https://lh3.googleusercontent.com/-oNmkqraiIkg/VW2q2OmbCsI/AAAAAAAAADk/Y8_s5Y35byo/s210/fig6b.jpg"></a>
-<img src="https://lh3.googleusercontent.com/-AWKJUC_TxOU/VW2q2t_YxyI/AAAAAAAAAD4/09lbS3gKkgY/s210/fig6c.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-TcRVwV1YfKo/VW2q2n1VqpI/AAAAAAAAADs/uxqN-ft5npE/s210/fig6d.jpg" alt=""></p>
-<pre><code>        Fig 6a            Fig6b                 Fig 6c             Fig 6d
-</code></pre><p>Starting from</p>
-<p>Fig 6a rotate about the world-local-axis y to obtain</p>
-<p>Fig 6b rotate about world-local-axis y to obtain  </p>
-<p>Fig 6c rotate about world local axis x to obtain</p>
-<p>Fig 6d</p>
-<h4><a name="the-local-space" class="anchor" href="#the-local-space"></a>The local space</h4><p><a href="http://www.babylonjs-playground.com/#UMR7M#17">Demo 8</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#17', this)"></i><br/><div class="iframeContainer"></div><br/> shows that the rotations take place around the local-axes and are accumulative. The stages are shown in Figs 7a, b, c, d, e</p>
-<p><img src="https://lh3.googleusercontent.com/-9LHIGaanKrU/VW2q3T2kXFI/AAAAAAAAAEc/0Q0-fQr9SiE/s210/fig7a.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-dpp79sOIFMg/VW2q3wemWSI/AAAAAAAAAEM/AoWev1t4ODU/s210/fig7b.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-nybw5ErTfGc/VW2q4Z4IVwI/AAAAAAAAAEg/I1zCMBcJBNI/s210/fig7c.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-wC2ZcwTce9I/VW2q4_-s6GI/AAAAAAAAAEk/ApmBi9O4DQ0/s210/fig7d.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-ccXHJ4DM7s4/VW2q6NgYZ8I/AAAAAAAAAE8/GQHH_6CGlAU/s210/fig7e.jpg" alt=""></p>
-<pre><code>        Fig 7a            Fig7b                 Fig 7c               Fig 7d               Fig 7e
-</code></pre><p>Starting from </p>
-<p>Fig 7a rotate about local-axis y to obtain</p>
-<p>Fig 7b rotate about local-axis y to obtain  </p>
-<p>Fig 7c rotate about local-axis x to obtain</p>
-<p>Fig 7d rotate about local-axis z to obtain</p>
-<p>Fig 7e</p>
-<h3><a name="combining-translate-and-rotate" class="anchor" href="#combining-translate-and-rotate"></a>Combining translate and rotate</h3><p>Whether the pilot is rotated in the world or the local space applying pilot.translate in the world space is essentially equivalent to applying pilot.position. </p>
-<p>So what happens when pilot.translate is applied in the local space after rotations.</p>
-<p>Firstly when rotating in the world space the word-local-axes are used for rotation and these are then also used for pilot.translate(vector, distance, BABYLON.Space.LOCAL). See Figs 8a, b</p>
-<p><a href="http://www.babylonjs-playground.com/#UMR7M#20">Demo 9</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#20', this)"></i><br/><div class="iframeContainer"></div><br/> can be used to play with WORLD rotations followed by LOCAL translations</p>
-<p><img src="https://lh3.googleusercontent.com/-dFoKaUKuhco/VW2q6JTUs7I/AAAAAAAAAFA/Hys5M-c3F5k/s210/fig8a.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-Di1IAnzgGeo/VW2q6VjteKI/AAAAAAAAAE4/_cV4zZnFnw8/s210/fig8b.jpg" alt=""></p>
-<pre><code>        Fig 8a            Fig8b 
-</code></pre><p>Starting from </p>
-<p>Fig 8a translate LOCAL applies a translation of -2 along z world-local-axes to obtain</p>
-<p>Fig 8b</p>
-<p>Secondly when rotating in the local space the local axes are used for rotation and the world-local-axes are still used for pilot.translate(vector, distance, BABYLON.Space.LOCAL). </p>
-<p>Fig 9 shows that the translation of (0, 0, -2) is still along the world-local-axis for z as it was in Fig 8b.</p>
-<p><img src="https://lh3.googleusercontent.com/-F7SPrEzEACQ/VW2q7WOGJPI/AAAAAAAAAFE/UuZBKbLX4I8/s210/fig9.jpg" alt=""></p>
-<p><a href="http://www.babylonjs-playground.com/#UMR7M#36">Demo 10</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#36', this)"></i><br/><div class="iframeContainer"></div><br/> can be used to play with LOCAL rotations followed by LOCAL translations.</p>
-<h4><a name="what-if-you-want-to-translate-using-the-local-axes-following-rotations" class="anchor" href="#what-if-you-want-to-translate-using-the-local-axes-following-rotations"></a>What if you want to translate using the local axes following rotations?</h4><p>You use pilot.locallyTranslate(vector), where vector is a BABYLON.Vector3 giving the required translation.</p>
-<h5><a name="a-hrefhttpwwwbabylonjs-playgroundcomumr7m35demo-11a-can-be-used-to-play-with-world-rotations-followed-by-translations-applied-locally" class="anchor" href="#demo-11httpwwwbabylonjs-playgroundcomumr7m35-can-be-used-to-play-with-world-rotations-followed-by-translations-applied-locally"></a><a href="http://www.babylonjs-playground.com/#UMR7M#35">Demo 11</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#35', this)"></i><br/><div class="iframeContainer"></div><br/> can be used to play with WORLD rotations followed by translations applied locally.</h5><p>Figs 10 a, b, c and d show the pilot rotations around the world-local-axes.</p>
-<p>Fig 11 shows the final result as in Fig 10d but with the local-axes shown. </p>
-<p>Fig 12 shows the result of applying the following two translations, the first of distance 3 along the local z axis and the second of distance 3 along the local y axis.</p>
-<p><img src="https://lh3.googleusercontent.com/-fJ-XFFFnJAw/VW2qvXwty1I/AAAAAAAAABs/M0VJOjmc3Aw/s210/fig10a.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-zOYaqhIE-Sc/VW2qvaeI3LI/AAAAAAAAAFM/ii0PKtjlIro/s210/fig10b.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-np5-CAjwm4k/VW2qvtOd4pI/AAAAAAAAAFU/a4WOaoxolgc/s210/fig10c.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-HdrqHeKoBeA/VW2qv2U3x3I/AAAAAAAAACM/DkjoYYW91y0/s210/fig10d.jpg" alt=""></p>
-<pre><code>        Fig 10a            Fig10b                 Fig 10c             Fig 10d
-</code></pre><p>Starting from</p>
-<p>Fig 10a rotate around world-local-axis y to obtain</p>
-<p>Fig 10b rotate around world-local-axis y to obtain</p>
-<p>Fig 10c rotate around world-local-axis x to obtain</p>
-<p>Fig 10d</p>
-<p><img src="https://lh3.googleusercontent.com/-p5vZalr4_qc/VW2qwBetivI/AAAAAAAAACI/vJk4bAMVgI8/s210/fig11.jpg" alt="">Fig 11</p>
-<p><img src="https://lh3.googleusercontent.com/-g_R9L8SWcJ0/VW2qwXAKfLI/AAAAAAAAAB8/bI9zYIE33uU/s210/fig12.jpg" alt="">Fig 12</p>
-<h5><a name="a-hrefhttpwwwbabylonjs-playgroundcomumr7m37demo-12a-can-be-used-to-play-with-local-rotations-followed-by-translations-applied-locally" class="anchor" href="#demo-12httpwwwbabylonjs-playgroundcomumr7m37-can-be-used-to-play-with-local-rotations-followed-by-translations-applied-locally"></a><a href="http://www.babylonjs-playground.com/#UMR7M#37">Demo 12</a> - <i class="fa fa-eye" onclick="createIframe('UMR7M#37', this)"></i><br/><div class="iframeContainer"></div><br/> can be used to play with LOCAL rotations followed by translations applied locally.</h5><p>Figs 13 a, b, c and d show the pilot rotations around the local-axes.</p>
-<p>Fig 14 shows the final result as in Fig 13d but with the local-axes shown. </p>
-<p>Fig 15 shows the result of applying the following two translations, the first of distance 3 along the local z axis and the second of distance 3 along the local y axis.</p>
-<p><img src="https://lh3.googleusercontent.com/-pXngvpfxbrE/VW2qw09lIoI/AAAAAAAAACA/rxtA7murqqs/s210/fig13a.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-9ypxtidQ9k4/VW2qxCR1-VI/AAAAAAAAACE/QvToY4pprc0/s210/fig13b.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-0MUYfF7wZfw/VW2qxQb9oWI/AAAAAAAAACo/rKuPKTxjh9k/s210/fig13c.jpg" alt="">
-<img src="https://lh3.googleusercontent.com/-UWIWpjPcdCg/VW2qxv--OuI/AAAAAAAAACg/91Sz-x0fgtk/s210/fig13d.jpg" alt=""></p>
-<pre><code>        Fig 13a            Fig13b                 Fig 13c             Fig 13d
-</code></pre><p>Starting from</p>
-<p>Fig 13a rotate around local-axis y to obtain</p>
-<p>Fig 13b rotate around local-axis y to obtain</p>
-<p>Fig 13c rotate around local-axis x to obtain</p>
-<p>Fig 13d</p>
-<p><img src="https://lh3.googleusercontent.com/-X9vYvWVehWI/VW2qylL6ZWI/AAAAAAAAACs/7dcGpUnp_bQ/s210/fig14.jpg" alt="">Fig 14</p>
-<p><img src="https://lh3.googleusercontent.com/-kvP4tfZYRac/VW2qywCg3cI/AAAAAAAAACw/eaWslJbqhaA/s210/fig15.jpg" alt="">Fig 15</p>
+<p>In <em>local space</em> sequences of translations will always be combined starting from the current position of the mesh which ever method is used. 
+This can be seen in the examples below.</p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#16">Playground Example Translate Local Space Animated with registerBeforeRender</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#16', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#28">Playground Example Translate Local Space Animated with registerAfterRender</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#28', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>This is not true when translation follows a rotate.</p>
+<h2><a name="rotate" class="anchor" href="#rotate"></a>Rotate</h2><p>Whether in world or local space the axis of rotation for a mesh always passes through the origin of the <em>local axes</em> for that mesh.</p>
+<p>To rotate a mesh an axis, angle and the space specified are needed. The axis is given as any vector(x, y, z). 
+For convenience unit vectors in the positive directions of the x, y and z axes are pre-defined as the constants BABYLON.Axis.X, BABYLON.Axis.Y and BABYLON.Axis.Z respectively.</p>
+<pre><code class="lang-javascript">pilot.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.WORLD);
+
+pilot.rotate(new BABYLON.Vector3(-1, 3, -10), 7 * Math.PI / 12, BABYLON.Space.LOCAL);
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#4">Playground Example Rotation World Space</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#4', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#7">Playground Example Rotation Local Space</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#7', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>In the following playgrounds yellow is the axis relative to the world space and white 
+the axis relative to local space.</p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#9">Playground Example Rotation World Space Skew Axis</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#9', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#10">Playground Example Rotation Local Space Skew Axis</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#10', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>It is possible to combine two or more rotate calls both on world and local space</p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#11">Playground Example Combined Rotation World Space</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#11', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#12">Playground Example Combined Rotation Local Space</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#12', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="translate-after-a-rotate" class="anchor" href="#translate-after-a-rotate"></a>Translate after a Rotate</h2><p>In the following examples the intial re-positioning of the pilot mesh from (0, 0, 0) at creation to (3, 0, 0) is 
+done inside the animation loop.<br>The code to rotate the pilot is before the animation loop. </p>
+<p>In examples A, B and C the pilot behaves as expected starting with a jump translation of (3, 0, 0) followed by small translations 
+along the <em>world x axis</em> for A and B and along the <em>local x axis</em> in the case of C.</p>
+<p>In example D the pilot starts with a jump translation along the <em>world x axis</em> the small translations along the <em>local x axis</em>. 
+This demonstrates that the world matrix had not been computed for the rotates applied to the mesh for the intial animation code registration. </p>
+<p>In examples E and F, if you watch the screen carefully when &#39;RUN&#39; is clicked, you might see the jump from (0, 0, 0). 
+This is because the animation code is registered after the frame rendering the pilot at (0, 0, 0) is drawn.</p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#29">Playground Example (A) Translate World Space Animated with registerBeforeRender</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#29', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#31">Playground Example (B) Translate World Space, World Matrix Computed, Animated with registerBeforeRender </a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#31', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#32">Playground Example (C) Translate Local Space, World Matrix Computed, Animated with registerBeforeRender </a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#32', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#33">Playground Example (D) Translate Local Space Animated with registerBeforeRender</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#33', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#34">Playground Example (E) Translate World Space Animated with registerAfterRender</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#34', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#35">Playground Example (F) Translate Local Space Animated with registerAfterRender</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#35', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {

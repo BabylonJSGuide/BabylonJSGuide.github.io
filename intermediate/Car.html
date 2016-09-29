@@ -11,6 +11,7 @@
 <li><a href="#animating-the-car">Animating the Car</a></li>
 </ul>
 </li>
+<li><a href="#correction">Correction</a></li>
 </ul>
 </li>
 </ul>
@@ -163,6 +164,14 @@ scene.registerAfterRender(function() {
 });
 </code></pre>
 <p><a href="http://www.babylonjs-playground.com/#1YD970#12">Playground Finalised</a> - <i class="fa fa-eye" onclick="createIframe('1YD970#12', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="correction" class="anchor" href="#correction"></a>Correction</h2><p>After allowing the finalised playground of the car to run for a while it can be seen that the rotating of the car becomes askew. 
+This is due to rounding errors in the floating point (probably). </p>
+<p>The initial rotation quaternion is stored in <em>startRotation</em> and is now applied to the car whenever it starts a new loop.</p>
+<pre><code class="lang-javascript">if(i == 0) {
+    carBody.rotationQuaternion = startRotation;
+}
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#1YD970#14">Playground Corrected Finally</a> - <i class="fa fa-eye" onclick="createIframe('1YD970#14', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
