@@ -3,9 +3,9 @@
 <li><a href="#position">Position</a></li>
 <li><a href="#rotation">Rotation</a></li>
 <li><a href="#simple-animation-using-position-and-rotation">Simple Animation using Position and Rotation</a></li>
-<li><a href="#further-reading">Further Reading</a></li>
 </ul>
 </li>
+<li><a href="#further-reading">Further Reading</a></li>
 </ul>
 </div></div><div id="staticContent"><h1><a name="frames-of-reference" class="anchor" href="#frames-of-reference"></a>Frames of Reference</h1><p>There are two frames of reference that BabylonJS uses with a mesh, the <strong>world axes</strong> and the <strong>local axes</strong>. 
 In all diagrams and playgrounds X axis is red, Y axis is Green and Z axis is blue. 
@@ -62,13 +62,10 @@ pilot.rotation.x  =  alpha;
 <p>This consistency of order z, x, y can be further checked out in the following playground by re-ordering and/or commenting out lines 38, 39 and 40</p>
 <p><a href="http://www.babylonjs-playground.com/#1ZMJQV#2">Playground Example for Rotation</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h2><a name="simple-animation-using-position-and-rotation" class="anchor" href="#simple-animation-using-position-and-rotation"></a>Simple Animation using Position and Rotation</h2><p>The aim is to produce an animation of a disc rotating along a straight horizontal path. When a disc of radius r 
-rotates through an angle theta the disc travels a distance of r /<em> theta. For the animation this means a series of positions 
-a distance r /</em> theta apart. These positions are used as the points with which to create the line. </p>
+rotates through an angle theta the disc travels a distance of r * theta. For the animation this means a series of positions 
+a distance r * theta apart. These positions are used as the points with which to create the line. </p>
 <p><a href="http://www.babylonjs-playground.com/#92EYG#10">Playground Example Rotation Along Straight Horizontal Path</a> - <i class="fa fa-eye" onclick="createIframe('92EYG#10', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p>##Further Reading</p>
-<p><a href="/basic/Axis_Rotation.html">Rotate about Axis</a></p>
-<p><a href="/intermediate/Translate.html">Rotate a Mesh</a></p>
-<p><a href="/advanced/Applying_Rotations.html">Applying Rotations Convention BJS</a></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/basic/Axis_Rotation.html">Rotate about Axis</a><br><a href="/intermediate/Translate.html">Rotate a Mesh</a><br><a href="/advanced/Applying_Rotations.html">Applying Rotations Convention BJS</a>  </p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
