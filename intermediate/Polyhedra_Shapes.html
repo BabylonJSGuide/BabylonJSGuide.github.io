@@ -6,17 +6,18 @@
 </li>
 <li><a href="#custom-polyhedra">Custom Polyhedra</a></li>
 <li><a href="#icosphere">IcoSphere</a></li>
-</ul>
-</li>
+<li><a href="#updatable">Updatable</a></li>
 <li><a href="#further-reading">Further Reading</a><ul>
 <li><a href="#intermediate">Intermediate</a></li>
 <li><a href="#advanced">Advanced</a></li>
 </ul>
 </li>
 </ul>
-</div></div><div id="staticContent"><h2><a name="polyhedra-shapes" class="anchor" href="#polyhedra-shapes"></a>Polyhedra Shapes</h2><p>There are fifteen polyhedra that can be created simply by setting its type number from 0 to 14, and one, the icosphere that is created by name to which more variations can be applied. 
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="polyhedra-shapes" class="anchor" href="#polyhedra-shapes"></a>Polyhedra Shapes</h1><p>There are fifteen polyhedra that can be created simply by setting its type number from 0 to 14, and one, the icosphere that is created by name to which more variations can be applied. 
 However there are plenty more to choose from, just follow the instructions under Custom Polyhedra.</p>
-<h3><a name="polyhedron" class="anchor" href="#polyhedron"></a>Polyhedron</h3><p>Example :</p>
+<h2><a name="polyhedron" class="anchor" href="#polyhedron"></a>Polyhedron</h2><p>Example :</p>
 <pre><code class="lang-javascript">var octahedron = BABYLON.MeshBuilder.CreatePolyhedron(&quot;oct&quot;, {type: 1, size: 3}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -87,7 +88,7 @@ However there are plenty more to choose from, just follow the instructions under
 </tbody>
 </table>
 <p>To understand how to set <em>faceUV</em> or <em>faceColors</em>, please read this <a href="http://doc.babylonjs.com/tutorials/CreateBox_Per_Face_Textures_And_Colors">http://doc.babylonjs.com/tutorials/CreateBox_Per_Face_Textures_And_Colors</a> taking into account the right number of faces of your polyhedron, instead of only 6 for a box. </p>
-<h4><a name="provided-polyhedron-types" class="anchor" href="#provided-polyhedron-types"></a>Provided Polyhedron Types :</h4><table>
+<h3><a name="provided-polyhedron-types" class="anchor" href="#provided-polyhedron-types"></a>Provided Polyhedron Types :</h3><table>
 <thead>
 <tr>
 <th>type</th>
@@ -173,7 +174,7 @@ However there are plenty more to choose from, just follow the instructions under
 </tr>
 </tbody>
 </table>
-<h3><a name="custom-polyhedra" class="anchor" href="#custom-polyhedra"></a>Custom Polyhedra</h3><p>If you need to use a custom polyhedron visit <a href="http://www.babylonjs-playground.com/#21QRSK#1">http://www.babylonjs-playground.com/#21QRSK#1</a> - <i class="fa fa-eye" onclick="createIframe('21QRSK#1', this)"></i><br/><div class="iframeContainer"></div><br/>) : minimize the code editor with the button &quot;EDITOR-&quot; and note the polyhedron names under the mouse pointer. 
+<h2><a name="custom-polyhedra" class="anchor" href="#custom-polyhedra"></a>Custom Polyhedra</h2><p>If you need to use a custom polyhedron visit <a href="http://www.babylonjs-playground.com/#21QRSK#1">http://www.babylonjs-playground.com/#21QRSK#1</a> - <i class="fa fa-eye" onclick="createIframe('21QRSK#1', this)"></i><br/><div class="iframeContainer"></div><br/>) : minimize the code editor with the button &quot;EDITOR-&quot; and note the polyhedron names under the mouse pointer. 
 The data for each name can be found in the polyhedra.js file here <a href="https://github.com/BabylonJS/Extensions/tree/master/Polyhedron">https://github.com/BabylonJS/Extensions/tree/master/Polyhedron</a>
 Find the name and copy/paste the wanted polyhedron object in your code like this :</p>
 <pre><code class="lang-javascript">var heptagonalPrism = { &quot;name&quot;:&quot;Heptagonal Prism&quot;, &quot;category&quot;:[&quot;Prism&quot;], &quot;vertex&quot;:[[0,0,1.090071],[0.796065,0,0.7446715],[-0.1498633,0.7818315,0.7446715],[-0.7396399,-0.2943675,0.7446715],[0.6462017,0.7818315,0.3992718],[1.049102,-0.2943675,-0.03143449],[-0.8895032,0.487464,0.3992718],[-0.8658909,-0.6614378,-0.03143449],[0.8992386,0.487464,-0.3768342],[0.5685687,-0.6614378,-0.6538232],[-1.015754,0.1203937,-0.3768342],[-0.2836832,-0.8247995,-0.6538232],[0.4187054,0.1203937,-0.9992228],[-0.4335465,-0.042968,-0.9992228]],
@@ -181,7 +182,7 @@ Find the name and copy/paste the wanted polyhedron object in your code like this
 
 var mesh = BABYLON.MeshBuilder.CreatePolyhdron(&quot;h&quot;, {custom: heptagonalPrism}, scene);
 </code></pre>
-<h3><a name="icosphere" class="anchor" href="#icosphere"></a>IcoSphere</h3><p>This a sphere based upon an icosahedron with 20 triangular faces which can be subdivided.</p>
+<h2><a name="icosphere" class="anchor" href="#icosphere"></a>IcoSphere</h2><p>This a sphere based upon an icosahedron with 20 triangular faces which can be subdivided.</p>
 <pre><code class="lang-javascript">var icosphere = BABYLON.MeshBuilder.CreateIcoSphere(&quot;ico&quot;, {radius: 5, radiusY: 8, subdivisions: 6}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -238,6 +239,8 @@ var mesh = BABYLON.MeshBuilder.CreatePolyhdron(&quot;h&quot;, {custom: heptagona
 </table>
 <p>An example of an IcoSphere: <a href="http://www.babylonjs-playground.com/#24DUYD#1">http://www.babylonjs-playground.com/#24DUYD#1</a> - <i class="fa fa-eye" onclick="createIframe('24DUYD#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <p>and one with animation: <a href="http://www.babylonjs-playground.com/#E3TVT#1">http://www.babylonjs-playground.com/#E3TVT#1</a> - <i class="fa fa-eye" onclick="createIframe('E3TVT#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="updatable" class="anchor" href="#updatable"></a>Updatable</h2><p>Where a polyhedral shape has an updatable parameter in its options it means that it is possible to alter the data associated 
+with each vertex of the mesh and so alter the shape of the mesh. For more information see <a href="/advanced/Updating_Vertices.html">Updating Vertices</a></p>
 <h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h3><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h3><p><a href="/intermediate/Shapes.html">Additional Shapes</a><br><a href="/intermediate/Parametric_Shapes.html">Parametric Shapes</a></p>
 <h3><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h3><p><a href="/advanced/Ribbons_In_Detail.html">Ribbons In Detail</a>
 <a href="/advanced/Maths_Make_Ribbons.html">Maths Makes Ribbons</a>

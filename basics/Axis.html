@@ -1,0 +1,38 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>basics</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Rotation Around an Axis</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#rotation-around-an-axis">Rotation Around an Axis</a><ul>
+<li><a href="#rotate">Rotate</a></li>
+<li><a href="#rotation-quaternion">Rotation Quaternion</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="rotation-around-an-axis" class="anchor" href="#rotation-around-an-axis"></a>Rotation Around an Axis</h1><p> Rotation properties and methods of a mesh are set to be about an axis through the <em>local origin</em> of a mesh. In this case 
+ all that is necessary to define an axis is a vector.</p>
+<h2><a name="rotate" class="anchor" href="#rotate"></a>Rotate</h2><p>The rotate method has the following form where axis is a vector of the type (x, y, z), angle is in radians and space is local (BABYLON.Space.LOCAL) or 
+world (BABYLON.Space.WORLD)</p>
+<pre><code class="lang-javascript">mesh.rotate(axis, angle, space);
+</code></pre>
+<p>Using rotate is cumulative, that is the rotation angle is added to the current rotation angle.</p>
+<p>Read more about <a href="/intermediate/translate.html">rotate</a></p>
+<h2><a name="rotation-quaternion" class="anchor" href="#rotation-quaternion"></a>Rotation Quaternion</h2><p>Just as you set mesh.rotation to a 3 dimensional vector you set mesh.rotationQuaternion to a quaternion, a 4 dimensional vector (x, y, z, w) 
+where x, y, z defines a world axis and w the angle of rotation about the axis.</p>
+<p>You set the rotationQuaternion property given an axis and an angle as follows</p>
+<pre><code class="lang-javascript">mesh.rotationQuaternion = BABYLON.RotationAxis(axis, angle);
+</code></pre>
+<p>As for rotation a further use of rotationQuaternion re-sets the rotation to the new angle.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

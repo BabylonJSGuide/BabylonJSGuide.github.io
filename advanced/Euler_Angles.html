@@ -1,0 +1,46 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>advanced</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Euler Angles and Quaternions</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#euler-angles-and-quaternions">Euler Angles and Quaternions</a><ul>
+<li><a href="#quaternions-from-euler-angles">Quaternions from Euler Angles</a><ul>
+<li><a href="#yxz-local-axes-yaw-pitch-roll">YXZ <em>Local Axes</em> Yaw, Pitch, Roll</a></li>
+<li><a href="#zxz-world-axes-a-standard-convention">ZXZ <em>World Axes</em> A Standard Convention</a></li>
+</ul>
+</li>
+<li><a href="#euler-angles-from-quaternions">Euler Angles from Quaternions</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="euler-angles-and-quaternions" class="anchor" href="#euler-angles-and-quaternions"></a>Euler Angles and Quaternions</h1><p>From BabylonJS version 2.5 Euler angles for use in mesh.rotation can always be found from a built in method. For some conventions of using 
+Euler angles a quaternion can be found from those angles. Once found the quaternions can be used to rotate a mesh.</p>
+<h2><a name="quaternions-from-euler-angles" class="anchor" href="#quaternions-from-euler-angles"></a>Quaternions from Euler Angles</h2><h3><a name="yxz-emlocal-axesem-yaw-pitch-roll" class="anchor" href="#yxz-local-axes-yaw-pitch-roll"></a>YXZ <em>Local Axes</em> Yaw, Pitch, Roll</h3><p><img src="/img/yawpitchroll.jpg" alt="Yaw pitch roll"></p>
+<pre><code class="lang-javascript">var yprQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(yaw, pitch, roll);
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#1ST43U#9">Playground Example Yaw Pitch Roll to Quaternion</a> - <i class="fa fa-eye" onclick="createIframe('1ST43U#9', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h3><a name="zxz-emworld-axesem-a-standard-convention" class="anchor" href="#zxz-world-axes-a-standard-convention"></a>ZXZ <em>World Axes</em> A Standard Convention</h3><p>Rotations alpha about Z, beta about X, gamma about Z around the world axes</p>
+<pre><code class="lang-javascript">var abcQuaternion = BABYLON.Quaternion.RotationAlphaBetaGamma(alpha, beta, gamma);
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#1ST43U#10">Playground Example ZXZ to Quaternion</a> - <i class="fa fa-eye" onclick="createIframe('1ST43U#10', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="euler-angles-from-quaternions" class="anchor" href="#euler-angles-from-quaternions"></a>Euler Angles from Quaternions</h2><p>The Euler angles that can be used in mesh.rotation can be found from any quaternion the following method</p>
+<pre><code class="lang-javascript">var euler = quaternion.toEulerAngles();
+</code></pre>
+<p>To illustrate this the following playground generates three random angles, puts the axes XYZ into a random order 
+and selects at random either to use world or local for all axes. This data is then used to randomise the orientation 
+of a box. The rotationQuaternion for this box is used to generate Euler angles to rotate another box, box1, using 
+box1.rotation to obtain the same orientation as the first box.</p>
+<p><a href="http://www.babylonjs-playground.com/#1ST43U#7">Playground Example Random Orientation to Euler Angles for mesh.rotation</a> - <i class="fa fa-eye" onclick="createIframe('1ST43U#7', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

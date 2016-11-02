@@ -1,0 +1,81 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>advanced</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Applying Rotations Convention BJS</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#applying-rotations-convention-bjs">Applying Rotations Convention BJS</a><ul>
+<li><a href="#euler-angles">Euler Angles</a><ul>
+<li><a href="#zxy-world-axes">ZXY <em>World Axes</em></a></li>
+<li><a href="#yxz-local-axes-yaw-pitch-roll">YXZ <em>Local Axes</em> Yaw, Pitch, Roll</a></li>
+<li><a href="#other-conventions">Other Conventions</a></li>
+</ul>
+</li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="applying-rotations-convention-bjs" class="anchor" href="#applying-rotations-convention-bjs"></a>Applying Rotations Convention BJS</h1><p>There are several methods of achieving rotations within BabylonJS including the use of, Euler Angles, Quaternions and Yaw, Pitch and Roll. All of which 
+have in the context of BabylonJS have a particular convention when used.</p>
+<p>What each method has in common is given a set of data they have their own fixed manner to produce a rotation of a shape. 
+For example using </p>
+<pre><code class="lang-javascript">mesh.rotation = new BABYLON.Vector(alpha, beta, gamma);
+</code></pre>
+<p>produces an orientation of the mesh, relative to its initial orientation on creation, by a rotation gamma radians about the world z axis, then alpha about the 
+world x axis and finally beta about the world y axis.</p>
+<p>While using</p>
+<pre><code class="lang-javascript">mesh.rotationQuaternion = new BABYLON.Quaternion(x, y, z, delta)
+</code></pre>
+<p>produces an orientation of the mesh, relative to its initial orientation on creation, by a rotation delta radians about an axis given 
+by the vector (x, y, z) through its local origin.</p>
+<p>Let A, B and C be a random ordering of the world axes X, Y and Z. </p>
+<p>Let theta, phi and psi be three random angles and then randomise the orientation of a mesh by rotating it theta about A, phi about B and psi about C.</p>
+<p>Having done this then there exists alpha, beta, gamma and x, y, z, delta such that </p>
+<pre><code class="lang-javascript">mesh.rotation = new BABYLON.Vector(alpha, beta, gamma);
+</code></pre>
+<p>or</p>
+<pre><code class="lang-javascript">mesh.rotationQuaternion = new BABYLON.Quaternion(x, y, z, delta)
+</code></pre>
+<p>will each produce the same orientation of the mesh.</p>
+<p>The problem often faced in a project is what are the data values to use.</p>
+<h2><a name="euler-angles" class="anchor" href="#euler-angles"></a>Euler Angles</h2><p>Euler angles are the three angles that when used around the correct axes in the correct order will produce any given orientation. 
+For three axes X, Y and Z there are 12 different permutations that can produce all possible orientations. Since X, Y and Z can be treated as <em>World</em> or as <em>local</em> axes 
+this gives 24 different possibilities. Most, if not all, of these are in use in different systems around the world. So you need to be very careful that you know very clearly the convention that 
+the system you are working in uses.</p>
+<p>In BabylonJS two of these possibilities are immediately accesible using mesh.rotation if you are careful about parameter order.</p>
+<h3><a name="zxy-emworld-axesem" class="anchor" href="#zxy-world-axes"></a>ZXY <em>World Axes</em></h3><p>Rotations alpha about X, beta about Y and gamma about Z in the order ZXY using world axes.</p>
+<p>Applying independent rotations to a newly created mesh (ie one that has zero rotations) in the order ZXY</p>
+<pre><code class="lang-javascript">mesh.rotate(BABYLON.Axis.Z, gamma, BABYLON.Space.WORLD);
+mesh.rotate(BABYLON.Axis.X, alpha, BABYLON.Space.WORLD);
+mesh.rotate(BABYLON.Axis.Y, beta, BABYLON.Space.WORLD);
+</code></pre>
+<p>produces the same orientation as </p>
+<pre><code class="lang-javascript">mesh.rotation = new BABYLON.Vector(alpha, beta, gamma);
+</code></pre>
+<p>which will produce this orientation whatever the orientation of the mesh prior to its application.</p>
+<p><a href="http://www.babylonjs-playground.com/#1ST43U#2">Playground Example ZXY</a> - <i class="fa fa-eye" onclick="createIframe('1ST43U#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h3><a name="yxz-emlocal-axesem-yaw-pitch-roll" class="anchor" href="#yxz-local-axes-yaw-pitch-roll"></a>YXZ <em>Local Axes</em> Yaw, Pitch, Roll</h3><p>Rotations pitch about X, yaw about Y and roll about Z in the order YXZ using local axes.</p>
+<p>Applying independent rotations to a newly created mesh (ie one that has zero rotations) in the order YXZ using local axes</p>
+<pre><code class="lang-javascript">mesh.rotate(BABYLON.Axis.Y, yaw, BABYLON.Space.LOCAL);
+mesh.rotate(BABYLON.Axis.X, pitch, BABYLON.Space.LOCAL);
+mesh.rotate(BABYLON.Axis.Z, roll, BABYLON.Space.LOCAL);
+</code></pre>
+<p>produces the same orientation as </p>
+<pre><code class="lang-javascript">mesh.rotation = new BABYLON.Vector3(pitch, yaw, roll);
+</code></pre>
+<p>which will produce this orientation whatever the orientation of the mesh prior to its application.</p>
+<p><a href="http://www.babylonjs-playground.com/#1ST43U#4">Playground Example YXZ yaw, pitch, roll</a> - <i class="fa fa-eye" onclick="createIframe('1ST43U#4', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h3><a name="other-conventions" class="anchor" href="#other-conventions"></a>Other Conventions</h3><p>From BabylonJS version 2.5 other conventions can be converted to be used with mesh.rotation. Check out the further reading below.</p>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><p><a href="/advanced/Euler_Angles.html">Euler Angles and Quaternions</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

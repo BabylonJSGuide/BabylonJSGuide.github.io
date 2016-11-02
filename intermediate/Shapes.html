@@ -5,15 +5,16 @@
 <li><a href="#torus">Torus</a></li>
 <li><a href="#torus-knot">Torus Knot</a></li>
 <li><a href="#tiled-ground">Tiled Ground</a></li>
-</ul>
-</li>
+<li><a href="#updatable">Updatable</a></li>
 <li><a href="#further-reading">Further Reading</a><ul>
 <li><a href="#intermediate">Intermediate</a></li>
 <li><a href="#advanced">Advanced</a></li>
 </ul>
 </li>
 </ul>
-</div></div><div id="staticContent"><h2><a name="additional-shapes" class="anchor" href="#additional-shapes"></a>Additional Shapes</h2><h3><a name="ground-from-a-height-map" class="anchor" href="#ground-from-a-height-map"></a>Ground From a Height Map</h3><p>Example :</p>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="additional-shapes" class="anchor" href="#additional-shapes"></a>Additional Shapes</h1><h2><a name="ground-from-a-height-map" class="anchor" href="#ground-from-a-height-map"></a>Ground From a Height Map</h2><p>Example :</p>
 <pre><code class="lang-javascript">var ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(&quot;gdhm&quot;, url, {width: 6, subdivsions: 4}, scene);
 </code></pre>
 <p>Don&#39;t forget the <em>url</em> parameter.</p>
@@ -64,7 +65,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="disc" class="anchor" href="#disc"></a>Disc</h3><p>Remember you can create any kind of regular plane polygon with <em>CreateDisc()</em>
+<h2><a name="disc" class="anchor" href="#disc"></a>Disc</h2><p>Remember you can create any kind of regular plane polygon with <em>CreateDisc()</em>
 Example :</p>
 <pre><code class="lang-javascript">var disc = BABYLON.MeshBuilder.CreateDisc(&quot;disc&quot;, {tessellation: 3}, scene); // makes a triangle
 </code></pre>
@@ -105,7 +106,7 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-<h3><a name="torus" class="anchor" href="#torus"></a>Torus</h3><p>Example :</p>
+<h2><a name="torus" class="anchor" href="#torus"></a>Torus</h2><p>Example :</p>
 <pre><code class="lang-javascript">var torus = BABYLON.MeshBuilder.CreateTorus(&quot;torus&quot;, {thickness: 0.2}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -145,7 +146,7 @@ Example :</p>
 </tr>
 </tbody>
 </table>
-<h3><a name="torus-knot" class="anchor" href="#torus-knot"></a>Torus Knot</h3><p>Example :</p>
+<h2><a name="torus-knot" class="anchor" href="#torus-knot"></a>Torus Knot</h2><p>Example :</p>
 <pre><code class="lang-javascript">var torus = BABYLON.MeshBuilder.CreateTorusKnot(&quot;tk&quot;, {}, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -201,7 +202,7 @@ Example :</p>
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#6">A Playground Example of the above Shapes</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#6', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h3><a name="tiled-ground" class="anchor" href="#tiled-ground"></a>Tiled Ground</h3><p>Example :</p>
+<h2><a name="tiled-ground" class="anchor" href="#tiled-ground"></a>Tiled Ground</h2><p>Example :</p>
 <pre><code class="lang-javascript">var tiledGround = BABYLON.MeshBuilder.CreateTiledGround(&quot;tgd&quot;, {subdivsions: {w:4, h:6} }, scene);
 </code></pre>
 <p>Properties, all optional :</p>
@@ -254,6 +255,8 @@ Example :</p>
 <p><a href="http://www.babylonjs-playground.com/#1XBLWB#147">Example of Tiled Ground</a> - <i class="fa fa-eye" onclick="createIframe('1XBLWB#147', this)"></i><br/><div class="iframeContainer"></div><br/>.</p>
 <p>Full explanation of creating a tiled ground by its original code writer <a href="http://makina-corpus.com/blog/metier/2014/how-to-use-multimaterials-with-a-tiled-ground-in-babylonjs">here</a>. </p>
 <p>NOTE:  this uses the legacy method of BABYLON.Mesh.CreateTiledGround;</p>
+<h2><a name="updatable" class="anchor" href="#updatable"></a>Updatable</h2><p>Where an additional shape has an updatable parameter in its options it means that it is possible to alter the data associated 
+with each vertex of the mesh and so alter the shape of the mesh. For more information see <a href="/advanced/Updating_Vertices.html">Updating Vertices</a></p>
 <h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h3><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h3><p><a href="/intermediate/Parametric_Shapes.html">Parametric Shapes</a>
 <a href="/intermediate/Polyhedra_Shapes.html">Polyhedra Shapes</a></p>
 <h3><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h3><p><a href="/advanced/Ribbons_In_Detail.html">Ribbons In Detail</a>

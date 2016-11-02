@@ -1,0 +1,53 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>begins</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>The Playground</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#the-playground">The Playground</a><ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#the-menu">The Menu</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="the-playground" class="anchor" href="#the-playground"></a>The Playground</h1><h2><a name="overview" class="anchor" href="#overview"></a>Overview</h2><p><img src="/img/playground.jpg" alt="Playground Overview"></p>
+<p>The Playground consists of four areas.</p>
+<ol>
+<li><p>A Menu at the top</p>
+</li>
+<li><p>A Links Bar at the Bottom</p>
+</li>
+<li><p>A Coding Editor on the left</p>
+</li>
+<li><p>A Rendering Area of the right.</p>
+</li>
+</ol>
+<p>The space for the coding editor and rendering area can be adjusted by dragging the vertical bar between them.</p>
+<h2><a name="the-menu" class="anchor" href="#the-menu"></a>The Menu</h2><p><img src="/img/playground menu.jpg" alt="Playground Menu"></p>
+<p><strong>Run</strong> - The Run button is easy to understand. After you paste-in code to the editor, or after you make changes to the code in the editor, you press <strong>Run</strong>.  This commands the playground to try to render your scene.</p>
+<p><strong>Save</strong> - The Save button will cause your scene to be permanently stored in the playground&#39;s database and it will issue a unique URL for each save. Once saved it is a good idea to bookmark the page so you can return to it later. 
+You could then share the URL with others, for example, if it is not working as you expect you can ask a question in the forum along with the link to your playground.</p>
+<p><strong>Get .zip</strong> - The Get .zip button allows you to download a zip file named sample.zip. Once downloaded and unzipped, you will see a file named index.html 
+which contains everything necessary to run the code in your browser, including links to external babylon.js and hand.js files.</p>
+<p><strong>New</strong> - Places a basic createScene() function into the editor along with code to initialise the scene variable and provide a camera.</p>
+<p><strong>Clear</strong> - Empties all the code out of the playground editor.  You could then paste in any createScene function you are working on locally.</p>
+<p><strong>Font size</strong> - Set the font size in the editor.</p>
+<p><strong>Safe Mode</strong> - The Safe Mode checkbox is OFF by default, but auto-activates when any change is made in the editor. In safe mode, the playground issues a &quot;leaving the page?&quot; confirmation warning when you try to unload/reload a freshly-edited, un-saved scene.</p>
+<p><strong>-Editor/+Editor</strong> - This button hides or un-hides the editor portion of the playground.</p>
+<p><strong>+Debug Layer/-Dubug Layer</strong> - Toggles the debug layer which shows a multitude of variable values.</p>
+<p><strong>Scene Selector</strong> - (&#39;Custom&#39; in the picture above). This selector button is used to choose any of the pre-installed playground demo scenes.  The picture shows 
+&#39;Custom&#39; since it not the name of any of those demo scenes but is one created by a user.</p>
+<p><strong>Fullscreen</strong> - Causes the right-side rendering canvas to go into fullscreen mode.Press Esc to exit.</p>
+<p><a href="http://doc.babylonjs.com/generals/The_Playground_Tutorial">An extended tutorial on the Playground</a> can be found in the Official Documentation.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

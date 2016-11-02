@@ -1,11 +1,9 @@
 <!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>basics</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Position and Rotation</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
 <li><a href="#frames-of-reference">Frames of Reference</a><ul>
 <li><a href="#position">Position</a></li>
-<li><a href="#rotation">Rotation</a><ul>
-<li><a href="#why-the-warning">Why the Warning</a></li>
-</ul>
-</li>
+<li><a href="#rotation">Rotation</a></li>
 <li><a href="#simple-animation-using-position-and-rotation">Simple Animation using Position and Rotation</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
 </ul>
 </li>
 </ul>
@@ -27,35 +25,50 @@ pilot.position.z  =  4;
 </code></pre>
 <p>The local and world axes remain in the same orientation.</p>
 <p><a href="http://www.babylonjs-playground.com/#1ZMJQV#1">Playground Example for Position</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h2><a name="rotation" class="anchor" href="#rotation"></a>Rotation</h2><p>WARNING using rotation on more than one axis can produce misleading results. Use <a href="link needed">rotate</a> on multiple axes.</p>
-<p>All rotations are in radians and are anticlockwise when looking in the direction of the positive axes.</p>
-<p>Rotation sets the centre of rotation at the origin of the <strong>local axes</strong> and rotation with reference axes parallel to the <strong>world axes</strong> using a vector ( alpha, beta, gamma) or individual components. 
-Where alpha is the rotation about the x axis, beta about the y axis  and gamma about the z axis. </p>
-<pre><code class="lang-javascript"> pilot.rotation = new BABYLON.Vector3(alpha, beta, gamma)
+<h2><a name="rotation" class="anchor" href="#rotation"></a>Rotation</h2><p>WARNING Rotating in 3D space is always tricky. The order in which rotations are applied to a shape changes the final orientation of the shape and 
+there are many varying conventions for applying rotations. For more details on these conventions in Babylon JS see <a href="/advanced/Applying_Rotations.html">Applying Rotations Convention BJS</a></p>
+<p>In BabylonJS </p>
+<p>Rotations are set using</p>
+<pre><code class="lang-javascript"> pilot.rotation = new BABYLON.Vector3(alpha, beta, gamma);
 </code></pre>
 <p>or</p>
-<pre><code class="lang-javascript">pilot.position.x  =  alpha;
-pilot.position.y  =  beta;
-pilot.position.z  =  gamma;
+<pre><code class="lang-javascript">pilot.rotation.x  =  alpha;
+pilot.rotation.y  =  beta;
+pilot.rotation.z  =  gamma;
 </code></pre>
-<h3><a name="why-the-warning" class="anchor" href="#why-the-warning"></a>Why the Warning</h3><p>The rotation is always the result of applying the individual rotations in the order gamma, alpha, beta, no matter in which order each rotation is applied.</p>
-<p>The following diagram shows that applying a rotation of PI/2 in the axis order, z, x, y then the sequence of rotations is 
-as you would expect.</p>
-<p><img src="/img/expected.jpg" alt="Expected Rotations"></p>
-<p>When applying a rotation of PI/2 in the axis order x, y, z you would expect each rotation to follow the diagram below.</p>
-<p><img src="/img/expectedyxz.jpg" alt="Expected Rotations YXZ "></p>
-<p>However the actual sequence is show in the following diagram.</p>
-<p><img src="/img/actualyxz.jpg" alt="Actual Rotations YXZ "></p>
+<p><strong>with the following conventions</strong></p>
+<p>All rotations are in radians and are anticlockwise when looking in the direction of the positive axes.</p>
+<p>Rotation turns about the centre of rotation at the origin of the <strong>local axes</strong> and rotation with reference axes parallel to the <strong>world axes</strong> using a vector ( alpha, beta, gamma) or individual components. 
+Where alpha is the rotation about the x axis, beta about the y axis  and gamma about the z axis. </p>
+<p>Rotations are always applied in the order z, x, y  whether set as a single vector or individually.</p>
+<p>The following all produce the same orientation</p>
+<pre><code class="lang-javascript">pilot.rotation = new BABYLON.Vector3(alpha, beta, gamma);
+
+pilot.rotation.x  =  alpha;
+pilot.rotation.y  =  beta;
+pilot.rotation.z  =  gamma;
+
+pilot.rotation.z  =  gamma;
+pilot.rotation.x  =  alpha;
+pilot.rotation.y  =  beta;
+
+pilot.rotation.y  =  beta;
+pilot.rotation.z  =  gamma;
+pilot.rotation.x  =  alpha;
+</code></pre>
+<p>The following diagrams show that applying a rotation of PI/2 in the axis order, z, x, y  or  y, x, z  give the same result.</p>
+<p><img src="/img/expected.jpg" alt="Rotations  XYZ"></p>
+<p><img src="/img/actualyxz.jpg" alt="Rotations YXZ "></p>
+<p>This consistency of order z, x, y can be further checked out in the following playground by re-ordering and/or commenting out lines 38, 39 and 40</p>
 <p><a href="http://www.babylonjs-playground.com/#1ZMJQV#2">Playground Example for Rotation</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p>Note re-ordering and/or commenting out lines 38, 39 and 40 in the above playground will show you 
-how rotation is always done in the order around z, then x then y.</p>
-<p>There is still something else to check. What if the rotation is applied to the <strong>local axes</strong> rather than the <strong>world axes</strong>? 
-Unfortunately the answer is no. Check out the following playground which applies the rotation to the local axes as well as the pilot.</p>
-<p><a href="http://www.babylonjs-playground.com/#1ZMJQV#3">Playground Example for Rotation of Local Axes</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#3', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h2><a name="simple-animation-using-position-and-rotation" class="anchor" href="#simple-animation-using-position-and-rotation"></a>Simple Animation using Position and Rotation</h2><p>The aim is to produce an animation of a disc rotating along a straight horizontal path. When a disc of radius r 
-rotates through an angle theta the disc travels a distance of r <em> theta. For the animation this means a series of positions 
-a distance r </em> theta apart. These positions are used as the points with which to create the line. </p>
+rotates through an angle theta the disc travels a distance of r /<em> theta. For the animation this means a series of positions 
+a distance r /</em> theta apart. These positions are used as the points with which to create the line. </p>
 <p><a href="http://www.babylonjs-playground.com/#92EYG#10">Playground Example Rotation Along Straight Horizontal Path</a> - <i class="fa fa-eye" onclick="createIframe('92EYG#10', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>##Further Reading</p>
+<p><a href="/basic/Axis_Rotation.html">Rotate about Axis</a></p>
+<p><a href="/intermediate/Translate.html">Rotate a Mesh</a></p>
+<p><a href="/advanced/Applying_Rotations.html">Applying Rotations Convention BJS</a></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
