@@ -7,6 +7,10 @@
     window.addEventListener("DOMContentLoaded", function () {
 
         var createSlideOutMenu = function (callback) {
+             var divSearchBarMobile =
+                $('<div>', {
+                    class: 'searchbar-mobile searchbar',
+                }); 
 
              var navigationLinks = [
                 $('<a>', {
@@ -14,30 +18,30 @@
                     html: '<i class="fa fa-home"></i>Home'
                 }),
                 $('<a>', {
-                    href: '/begins',
-                    html: '<i class="fa fa-book"></i>Begin Here.html'
+                    href: '/begins.html',
+                    html: '<i class="fa fa-book"></i>Begin Here'
                 }),
                 $('<a>', {
-                    href: '/basics',
-                    html: '<i class="fa fa-book"></i>Basics.html'
+                    href: '/basics.html',
+                    html: '<i class="fa fa-book"></i>Basics'
                 }),
                 $('<a>', {
-                    href: '/intermediate',
-                    html: '<i class="fa fa-book"></i>Intermediate.html'
+                    href: '/intermediate.html',
+                    html: '<i class="fa fa-book"></i>Intermediate'
                 }),
                 $('<a>', {
-                    href: '/advanced',
-                    html: '<i class="fa fa-book"></i>Advanced.html'
+                    href: '/advanced.html',
+                    html: '<i class="fa fa-book"></i>Advanced'
                 }),
                 $('<a>', {
-                    href: '/gamelets',
-                    html: '<i class="fa fa-book"></i>Gamelets.html'
+                    href: '/gamelets.html',
+                    html: '<i class="fa fa-book"></i>Gamelets'
                 }),
                 $('<a>', {
-                    href: '/snippets',
-                    html: '<i class="fa fa-book"></i>Snippets.html'
+                    href: '/snippets.html',
+                    html: '<i class="fa fa-book"></i>Snippets'
                 })
-            ];
+            ];];
 
 
             var links = [
@@ -64,8 +68,8 @@
             ];
 
             $('#menu').append(divSearchBarMobile)
-                .append(navigationLinks)
-                .append(links);
+               .append(navigationLinks)
+               .append(links);
 
             callback();
 
