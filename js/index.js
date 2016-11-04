@@ -7,10 +7,6 @@
     window.addEventListener("DOMContentLoaded", function () {
 
         var createSlideOutMenu = function (callback) {
-             var divSearchBarMobile =
-                $('<div>', {
-                    class: 'searchbar-mobile searchbar',
-                }); 
 
              var navigationLinks = [
                 $('<a>', {
@@ -18,20 +14,28 @@
                     html: '<i class="fa fa-home"></i>Home'
                 }),
                 $('<a>', {
-                    href: '/begins.html',
-                    html: '<i class="fa fa-book"></i>Begin Here'
+                    href: '/begins',
+                    html: '<i class="fa fa-book"></i>Begin Here.html'
                 }),
                 $('<a>', {
-                    href: '/basics.html',
-                    html: '<i class="fa fa-book"></i>Basics'
+                    href: '/basics',
+                    html: '<i class="fa fa-book"></i>Basics.html'
                 }),
                 $('<a>', {
-                    href: '/intermediate.html',
-                    html: '<i class="fa fa-book"></i>Intermediate'
+                    href: '/intermediate',
+                    html: '<i class="fa fa-book"></i>Intermediate.html'
                 }),
                 $('<a>', {
-                    href: '/advanced.html',
-                    html: '<i class="fa fa-book"></i>Advanced'
+                    href: '/advanced',
+                    html: '<i class="fa fa-book"></i>Advanced.html'
+                }),
+                $('<a>', {
+                    href: '/gamelets',
+                    html: '<i class="fa fa-book"></i>Gamelets.html'
+                }),
+                $('<a>', {
+                    href: '/snippets',
+                    html: '<i class="fa fa-book"></i>Snippets.html'
                 })
             ];
 
@@ -60,8 +64,8 @@
             ];
 
             $('#menu').append(divSearchBarMobile)
-               .append(navigationLinks)
-               .append(links);
+                .append(navigationLinks)
+                .append(links);
 
             callback();
 
