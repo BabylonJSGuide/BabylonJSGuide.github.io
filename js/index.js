@@ -41,7 +41,7 @@
                     href: '/snippets.html',
                     html: '<i class="fa fa-book"></i>Snippets'
                 })
-            ];];
+            ];
 
 
             var links = [
