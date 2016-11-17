@@ -9,8 +9,8 @@
 </div></div><div id="staticContent"><h1><a name="rotating-and-enlarging-relative-to-a-centre" class="anchor" href="#rotating-and-enlarging-relative-to-a-centre"></a>Rotating and Enlarging Relative to a Centre.</h1><p>The following two code snippets give the opportunity to place a centre of rotation or enlargement, or pivot, at any time and have a mesh 
 rotate or enlarge relative to that centre.</p>
 <h2><a name="rotate" class="anchor" href="#rotate"></a>Rotate</h2><pre><code class="lang-javascript">BABYLON.Mesh.prototype.rotateAroundPivot = function(pivotPoint, axis, angle) {
-    if(!this._rq) {
-        this._rq = BABYLON.Quaternion.Identity();
+    if(!this._rotationQuaternion) {
+        this._rq = BABYLON.Quaternion.RotationYawPitchRoll(this.rotation.y, this.rotation.x, this.rotation.z);
     }        
     var _p = new BABYLON.Quaternion(this.position.x - pivotPoint.x, this.position.y - pivotPoint.y, this.position.z - pivotPoint.z, 0);
     axis.normalize();
@@ -37,7 +37,7 @@ mesh.rotateAroundPivot(new BABYLON.Vector3(1, 2, -1), new BABYLON.Axis.Y, Math.P
 mesh.scaleFromPivotnew BABYLON.Vector3(1, 2, -1), 2, 6, 0.5);
 </code></pre>
 <p>The parameters are the position of the pivot (centre of enlargemen) as a Vector3, scaling in the x, y and z directions as numbers.</p>
-<h2><a name="playground" class="anchor" href="#playground"></a>Playground</h2><p><a href="http://www.babylonjs-playground.com/#1MKHR9">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('1MKHR9', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="playground" class="anchor" href="#playground"></a>Playground</h2><p><a href="http://www.babylonjs-playground.com/#1MKHR9#2">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('1MKHR9#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
