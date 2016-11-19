@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Babylon.js sample code</title>
+    <!-- Babylon.js -->
+	<script src="http://www.babylonjs.com/hand.minified-1.2.js"></script>
+    <script src="http://www.babylonjs.com/babylon.js"></script>
+
+    <style>
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="renderCanvas"></canvas>
+	
+    <script>
+        if (BABYLON.Engine.isSupported()) {
+            var canvas = document.getElementById("renderCanvas");
+            var engine = new BABYLON.Engine(canvas, true);
+	
+			var createScene = function() {
+				var scene = new BABYLON.Scene(engine);
+			
+				var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 4, Math.PI / 4, 2, BABYLON.Vector3.Zero(), scene);
+
+				camera.attachControl(canvas, true);
+
+				var shaderMaterial = new BABYLON.ShaderMaterial("shader", scene, "./basic",
+					{
+						attributes: ["position", "normal", "uv"],
+						uniforms: ["world", "worldView", "worldViewProjection", "view", "projection"]
+					});
+
+
+				var mainTexture = new BABYLON.Texture("amiga.jpg", scene);
+
+				shaderMaterial.setTexture("textureSampler", mainTexture);
+
+				shaderMaterial.backFaceCulling = false;
+
+				var box = BABYLON.MeshBuilder.CreateBox("box", {}, scene);
+				box.material = shaderMaterial;
+
+				return scene;
+			}
+            
+
+			var scene = createScene();
+            
+			engine.runRenderLoop(function () {
+
+				scene.render();
+			});
+
+			window.addEventListener("resize", function () {
+				engine.resize();
+			});
+		}
+    </script>
+</body>
+</html>				
