@@ -1,7 +1,7 @@
 <!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div><div id="gamelets" class="item"><a href="/gamelets.html">Gamelets</a></div><div id="snippets" class="item"><a href="/snippets.html">Snippets               </a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>advanced</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Putting Shader Code in BJS</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
 <li><a href="#putting-shader-code-in-babylonjs">Putting Shader Code in BabylonJS</a><ul>
 <li><a href="#babylonjs-cyos-download">BabylonJS CYOS Download</a></li>
-<li><a href="#shader-code-in-script-tags">Shader Code in <script> Tags</a></li>
+<li><a href="#shader-code-in-ltscriptgt-tags">Shader Code in &lt;script&gt; Tags</a></li>
 <li><a href="#shader-code-in-fx-files">Shader Code in fx Files</a></li>
 </ul>
 </li>
@@ -9,7 +9,7 @@
 </div></div><div id="staticContent"><h1><a name="putting-shader-code-in-babylonjs" class="anchor" href="#putting-shader-code-in-babylonjs"></a>Putting Shader Code in BabylonJS</h1><p>Here are four ways of putting shader code into your scene:</p>
 <ol>
 <li>Use <a href="http://www.babylonjs.com/cyos/">BabylonJS Create Your Own Shader (CYOS)</a> and download a zip file; </li>
-<li>Write the Vertex and Fragment Shader Code into \<script\> tags</li>
+<li>Write the Vertex and Fragment Shader Code into &amp;ltscript&amp;gt tags</li>
 <li>Write, save and import a Vertex and Fragment Shader file of type .fx into your code; </li>
 <li>Use the shaderBuilder extension of BabylonJS.</li>
 </ol>
@@ -67,7 +67,7 @@ shaderMaterial.setTexture(&quot;textureSampler&quot;, mainTexture);
 </code></pre>
 <p>Extracting the appropriate sections of Javascript code allows you to transfer them to your own scenes.</p>
 <p><a href="/examples/cyoszip.html">Guide Example From CYOS Zip</a></p>
-<h2><a name="shader-code-in-script-tags" class="anchor" href="#shader-code-in-script-tags"></a>Shader Code in <script> Tags</h2><p>In the index.html file the Javascript code for the shaders is</p>
+<h2><a name="shader-code-in-ltscriptgt-tags" class="anchor" href="#shader-code-in-ltscriptgt-tags"></a>Shader Code in &lt;script&gt; Tags</h2><p>In the index.html file the Javascript code for the shaders is</p>
 <pre><code class="lang-javascript">&lt;script type=&quot;application/vertexShader&quot; id=&quot;vertexShaderCode&quot;&gt;
     #ifdef GL_ES
         precision highp float;
