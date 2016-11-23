@@ -3,8 +3,10 @@
 <li><a href="#babylonjs-cyos-download">BabylonJS CYOS Download</a></li>
 <li><a href="#shader-code-in-ltscriptgt-tags">Shader Code in &lt;script&gt; Tags</a></li>
 <li><a href="#shader-code-in-fx-files">Shader Code in fx Files</a></li>
+<li><a href="#shader-builder">Shader Builder</a></li>
 </ul>
 </li>
+<li><a href="#further-reading">Further Reading</a></li>
 </ul>
 </div></div><div id="staticContent"><h1><a name="putting-shader-code-in-babylonjs" class="anchor" href="#putting-shader-code-in-babylonjs"></a>Putting Shader Code in BabylonJS</h1><p>Here are four ways of putting shader code into your scene:</p>
 <ol>
@@ -13,6 +15,7 @@
 <li>Write, save and import a Vertex and Fragment Shader file of type .fx into your code; </li>
 <li>Use the shaderBuilder extension of BabylonJS.</li>
 </ol>
+<p>Methods 1, 2 and 3 use <a href="/advanced/Shader_Material.html">BABYLON.ShaderMaterial</a> to pass data to the shaders.</p>
 <h2><a name="babylonjs-cyos-download" class="anchor" href="#babylonjs-cyos-download"></a>BabylonJS CYOS Download</h2><p>This site allows you to write code for a Vertex Shader and a Fragment Shader and see the results on a variety of meshes. 
 Downloading a zip file produces a folder containing and index.html file and some image files for texture.</p>
 <p><img src="/img/cyos1.html" alt="CYOS Screen">;</p>
@@ -67,6 +70,8 @@ shaderMaterial.setTexture(&quot;textureSampler&quot;, mainTexture);
 </code></pre>
 <p>Extracting the appropriate sections of Javascript code allows you to transfer them to your own scenes.</p>
 <p><a href="/examples/cyoszip.html">Guide Example From CYOS Zip</a></p>
+<p>This method can easily be used in the Playground.</p>
+<p><a href="http://www.babylonjs-playground.com/#1OH09K#1">Playgound Example From CYOS</a> - <i class="fa fa-eye" onclick="createIframe('1OH09K#1', this)"></i><br/><div class="iframeContainer"></div><br/>;</p>
 <h2><a name="shader-code-in-ltscriptgt-tags" class="anchor" href="#shader-code-in-ltscriptgt-tags"></a>Shader Code in &lt;script&gt; Tags</h2><p>In the index.html file the Javascript code for the shaders is</p>
 <pre><code class="lang-javascript">&lt;script type=&quot;application/vertexShader&quot; id=&quot;vertexShaderCode&quot;&gt;
     #ifdef GL_ES
@@ -128,8 +133,21 @@ shaderMaterial.setTexture(&quot;textureSampler&quot;, mainTexture);
 </code></pre>
 <p><strong>Note</strong>  ./ is neccesary before the COMMON_NAME</p>
 <p>It is also possible to access the fx files from an URL by giving the full address of the URL, 
-provide the CORS in enabled for them on their host site.</p>
+provide CORS is enabled for them.</p>
 <p><a href="/examples/importcode.html">Guide Example From Import</a></p>
+<h2><a name="shader-builder" class="anchor" href="#shader-builder"></a>Shader Builder</h2><p>This is an extension to BabylonJS. Copy and save the <a href="https://github.com/BabylonJS/Extensions/blob/master/ShaderBuilder/Babylonx.ShaderBuilder.js">source code</a> for the extension and add as</p>
+<pre><code class="lang-javascript">&lt;script&gt;Babylonx.ShaderBuilder.js&lt;/script&gt;
+</code></pre>
+<p>The Shader Builder engine needs to be initialised</p>
+<pre><code class="lang-javascript">BABYLONX.ShaderBuilder.InitializeEngine();
+</code></pre>
+<p>The format for writing a ShaderBuilder is <strong>fluent coding</strong> and it deals with attributes and BABYLONJS uniforms automatically.<br>An example for the shader code used in 1 to 3 above would be</p>
+<pre><code class="lang-javascript">mesh.material = new BABYLONX.ShaderBuilder()
+    .Map({ path: &#39;textures/amiga.jpg&#39; })
+    .BuildMaterial(scene);
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#NCY1Q#1">Playground Example using ShaderBuilder</a> - <i class="fa fa-eye" onclick="createIframe('NCY1Q#1', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/advanced/Overview.html">Introduction To Shaders in BabylonJS</a><br><a href="/advanced/Shader_Material.html">ShaderMaterial Object</a></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {

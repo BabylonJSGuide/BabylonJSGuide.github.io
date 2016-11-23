@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div><div id="gamelets" class="item"><a href="/gamelets.html">Gamelets</a></div><div id="snippets" class="item"><a href="/snippets.html">Snippets               </a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>advanced</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Shader Material</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#shadermaterial">ShaderMaterial</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="shadermaterial" class="anchor" href="#shadermaterial"></a>ShaderMaterial</h1><p>The ShaderMaterial object has the necessary methods to pass data from your scene to the Vertex and Fragment Shaders and returns a 
+material that can be applied to any mesh. This returned material effects how the mesh will look based on the code in the shaders.</p>
+<p>It is called by </p>
+<pre><code class="lang-javascript">var myShaderMaterial = new BABYLON.ShaderMaterial(name, scene, route, options);
+</code></pre>
+<p>name - a string, naming the shader</p>
+<p>scene - the scene in which the shader is to be used </p>
+<p>route - the route to the shader code in one of three ways  </p>
+<pre><code>1. object - { vertex: &quot;custom&quot;,  fragment: &quot;custom&quot; }, used with BABYLON.Effect.ShadersStore[&quot;customVertexShader&quot;] and BABYLON.Effect.ShadersStore[&quot;customFragmentShader&quot;]  
+2. object - { vertexElement: &quot;vertexShaderCode&quot;, fragmentElement: &quot;fragmentShaderCode&quot; }, used with shader code in &amp;lt;script&amp;gt; tags  
+3. string - &quot;./COMMON\_NAME&quot;, used with external files COMMON\_NAME.vertex.fx and COMMON\_NAME.fragment.fx in index.html folder.
+</code></pre><p>options - object containing attributes and uniforms arrays containing their names as strings.</p>
+<p>An example</p>
+<pre><code class="lang-javascript">var myShaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, &quot;./COMMON_NAME&quot;,
+    {
+        attributes: [&quot;position&quot;, &quot;normal&quot;, &quot;uv&quot;],
+        uniforms: [&quot;world&quot;, &quot;worldView&quot;, &quot;worldViewProjection&quot;, &quot;view&quot;, &quot;projection&quot;, &quot;time&quot;, &quot;direction&quot; ]
+});
+</code></pre>
+<p>Any attribute in the Vertex Shader code <strong>must</strong> appear in the attributes array.</p>
+<p>The uniform worldViewProjection <strong>must</strong> be declared in the Vertex Shader as type mat4 and must be in the uniforms array.</p>
+<p>Attributes and uniforms named in the arrays and not used in the shader code are ignored.</p>
+<p>Uniforms assigned to textures in the shader code need not appear in the uniforms array, all other uniforms must be present.</p>
+<p>Textures are passed, for example, as </p>
+<pre><code class="lang-javascript">var amigaTexture = new BABYLON.Texture(&quot;amiga.jpg&quot;, scene);
+myShaderMaterial.setTexture(&quot;textureSampler&quot;, amigaTexture);
+</code></pre>
+<p>where textureSampler has been declared as a uniform of type sampler2D in the shader code.</p>
+<p>Other uniforms are passed, for example, as</p>
+<pre><code class="lang-javascript">myShaderMaterial.setFloat(&quot;time&quot;, 0);
+myShaderMaterial.setVector3(&quot;direction&quot;, BABYLON.Vector3.Zero());
+</code></pre>
+<p>the set method depending on the type passed.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/advanced/Overview.html">Introduction To Shaders in BabylonJS</a><br><a href="/advanced/Putting.html">Putting Shader Code in BabylonJS</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
