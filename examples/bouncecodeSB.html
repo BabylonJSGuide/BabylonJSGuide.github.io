@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Babylon.js sample code</title>
+    <!-- Babylon.js -->
+	<script src="http://www.babylonjs.com/hand.minified-1.2.js"></script>
+    <script src="http://www.babylonjs.com/babylon.js"></script>
+    <script src="shaderbuilder.js"></script>
+
+    <style>
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="renderCanvas"></canvas>
+    <script>
+        if (BABYLON.Engine.isSupported()) {
+            var canvas = document.getElementById("renderCanvas");
+            var engine = new BABYLON.Engine(canvas, true);
+	
+			var createScene = function() {
+				var scene = new BABYLON.Scene(engine);
+			
+				var camera = new BABYLON.ArcRotateCamera("Camera", - Math.PI / 2, Math.PI / 4, 10, BABYLON.Vector3.Zero(), scene);
+
+				camera.attachControl(canvas, true);
+
+                var light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, -1, 1), scene);
+                var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);   
+                light2.intensity =0.5;
+
+				BABYLONX.ShaderBuilder.InitializeEngine();
+		
+                var shaderMaterial =   new BABYLONX.ShaderBuilder()             
+		            .Solid({ b: 1 })
+		            .SetUniform('box_spacing', 'float')
+                    .Map({path:'amiga.jpg'  })
+                    .Multi([
+                        BABYLONX.Helper() 
+                         .InLine('result = float(floor(pos.x/box_spacing)')
+                       .Build()
+                    ]) 
+		            .VertexShader('result = vec4(vec3(pos.x, pos.y + sin(time + result/4.0), pos.z) ,1.)')
+		        .BuildMaterial(scene);
+
+				//Create SPS of Boxes
+                var boxes = 101; //odd number
+                var box_size = 0.25; // must be float
+                var box_gap = box_size/2;
+                var box_spacing = box_size + box_gap;
+                var box = BABYLON.MeshBuilder.CreateBox("box", {size:box_size}, scene);
+
+                var boxes_SPS = new BABYLON.SolidParticleSystem("boxesSPS", scene, {updatable: false});
+    
+                //function to position boxes
+                var set_boxes = function(particle, i, s) {   
+                    var mid_point = Math.floor(boxes/2);
+                    particle.position.x = (i - mid_point) * box_spacing + box_size/2;
+                }
+
+                boxes_SPS.addShape(box, boxes, {positionFunction:set_boxes});  
+                var boxes = boxes_SPS.buildMesh(); // mesh of leaves
+                box.dispose(); 
+
+                boxes.material = shaderMaterial;
+                boxes.material.setFloat("box_spacing", box_spacing)
+                
+
+                var time = 0;
+                scene.registerBeforeRender(function () {
+
+		            time += 0.1;
+
+                    new BABYLONX.ShaderMaterialHelper().SetUniforms(
+                        scene.meshes,
+                        camera.position,
+                        camera.target,
+                        { x: 0, y: 0 },
+                        { x: 100, y: 100 },
+                        time);
+	            
+                });
+
+
+				return scene;
+			}
+            
+
+			var scene = createScene();
+            
+            var time =0; 
+			engine.runRenderLoop(function () {
+				scene.render();
+			});
+
+			window.addEventListener("resize", function () {
+				engine.resize();
+			});
+		}
+    </script>
+</body>
+</html>				
