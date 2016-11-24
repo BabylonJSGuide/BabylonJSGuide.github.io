@@ -10,10 +10,12 @@ material that can be applied to any mesh. This returned material effects how the
 <p>name - a string, naming the shader</p>
 <p>scene - the scene in which the shader is to be used </p>
 <p>route - the route to the shader code in one of three ways  </p>
-<pre><code>1. object - { vertex: &quot;custom&quot;,  fragment: &quot;custom&quot; }, used with BABYLON.Effect.ShadersStore[&quot;customVertexShader&quot;] and BABYLON.Effect.ShadersStore[&quot;customFragmentShader&quot;]  
-2. object - { vertexElement: &quot;vertexShaderCode&quot;, fragmentElement: &quot;fragmentShaderCode&quot; }, used with shader code in &amp;lt;script&amp;gt; tags  
-3. string - &quot;./COMMON\_NAME&quot;, used with external files COMMON\_NAME.vertex.fx and COMMON\_NAME.fragment.fx in index.html folder.
-</code></pre><p>options - object containing attributes and uniforms arrays containing their names as strings.</p>
+<ol>
+<li>object - { vertex: &quot;custom&quot;,  fragment: &quot;custom&quot; }, used with BABYLON.Effect.ShadersStore[&quot;customVertexShader&quot;] and BABYLON.Effect.ShadersStore[&quot;customFragmentShader&quot;]  </li>
+<li>object - { vertexElement: &quot;vertexShaderCode&quot;, fragmentElement: &quot;fragmentShaderCode&quot; }, used with shader code in &lt;script&gt; tags  </li>
+<li>string - &quot;./COMMON_NAME&quot;, used with external files COMMON_NAME.vertex.fx and COMMON_NAME.fragment.fx in index.html folder.</li>
+</ol>
+<p>options - object containing attributes and uniforms arrays containing their names as strings.</p>
 <p>An example</p>
 <pre><code class="lang-javascript">var myShaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, &quot;./COMMON_NAME&quot;,
     {
