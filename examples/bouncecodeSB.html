@@ -44,17 +44,14 @@
                 light2.intensity =0.5;
 
 				BABYLONX.ShaderBuilder.InitializeEngine();
-		
+                		
                 var shaderMaterial =   new BABYLONX.ShaderBuilder()             
 		            .Solid({ b: 1 })
 		            .SetUniform('box_spacing', 'float')
-                    .Map({path:'amiga.jpg'  })
-                    .Multi([
-                        BABYLONX.Helper() 
-                         .InLine('result = float(floor(pos.x/box_spacing)')
-                       .Build()
-                    ]) 
-		            .VertexShader('result = vec4(vec3(pos.x, pos.y + sin(time + result/4.0), pos.z) ,1.)')
+                    .Map({path:'amiga.jpg'  }) 
+		            .VertexShader(
+                        ' float bn = pos.x/box_spacing;\
+                        result = vec4( pos.x, pos.y + sin(time + bn/4.0), pos.z  ,1.);')
 		        .BuildMaterial(scene);
 
 				//Create SPS of Boxes
