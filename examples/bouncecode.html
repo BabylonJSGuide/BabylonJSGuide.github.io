@@ -56,7 +56,7 @@
   
     <script type="application/fragmentShader" id="fragmentShaderCode">
         #ifdef GL_ES
-        precision mediump float;
+           precision mediump float;
         #endif
 
         varying vec2 vUV;
@@ -64,7 +64,7 @@
         uniform sampler2D textureSampler;
 
         void main(void) {
-        gl_FragColor = texture2D(textureSampler, vUV);
+           gl_FragColor = texture2D(textureSampler, vUV);
         }
     </script>
 	
@@ -123,7 +123,7 @@
                 boxes.material.setFloat("box_spacing", box_spacing)
                 
 
-                var time = 0;
+                var time = 0.;
                 scene.registerBeforeRender(function() {
                     boxes.material.setFloat("time", time);
                     time +=0.1;
@@ -135,7 +135,6 @@
 
 			var scene = createScene();
             
-            var time =0; 
 			engine.runRenderLoop(function () {
 				scene.render();
 			});
