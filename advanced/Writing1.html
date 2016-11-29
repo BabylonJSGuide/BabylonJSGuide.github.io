@@ -8,10 +8,13 @@
 <li><a href="#sps-code">SPS Code</a></li>
 <li><a href="#shader-material-code">Shader Material Code</a><ul>
 <li><a href="#vertex-shader">Vertex Shader</a></li>
+<li><a href="#fragment-shader">Fragment Shader</a></li>
+<li><a href="#set-material">Set Material</a></li>
 <li><a href="#animation-loop">Animation Loop</a></li>
 </ul>
 </li>
 <li><a href="#shader-builder-code">Shader Builder Code</a><ul>
+<li><a href="#shader-code">Shader Code</a></li>
 <li><a href="#set-material">Set Material</a></li>
 <li><a href="#animation-loop">Animation Loop</a></li>
 </ul>
@@ -74,35 +77,35 @@ var set_boxes = function(particle, i, s) {
 boxes_SPS.addShape(box, boxes, {positionFunction:set_boxes});  
 var boxes = boxes_SPS.buildMesh(); // mesh of leaves
 box.dispose();
-</code></pre><h2><a name="shader-material-code" class="anchor" href="#shader-material-code"></a>Shader Material Code</h2><h3><a name="vertex-shader" class="anchor" href="#vertex-shader"></a>Vertex Shader</h3><p>&#39;&#39;&#39;
-// Attributes
+</code></pre><h2><a name="shader-material-code" class="anchor" href="#shader-material-code"></a>Shader Material Code</h2><h3><a name="vertex-shader" class="anchor" href="#vertex-shader"></a>Vertex Shader</h3><pre><code>// Attributes
 attribute vec3 position;
 attribute vec3 normal;
-attribute vec2 uv;</p>
-<p>// Uniforms
+attribute vec2 uv;
+
+// Uniforms
 uniform mat4 worldViewProjection;
 uniform float box_spacing;
-uniform float time;</p>
-<p>// Normal
-varying vec2 vUV;</p>
-<p>void main(void) {
+uniform float time;
+
+// Normal
+varying vec2 vUV;
+
+void main(void) {
     vec3 p = position;
     float bn = floor(position.x / box_spacing);
     p.y = p.y + sin(time + bn/4.0);
-    gl_Position = worldViewProjection * vec4(p, 1.0);</p>
-<pre><code>vUV = uv;
-</code></pre><p>}</p>
-<pre><code>### Fragment Shader
-</code></pre><p>varying vec2 vUV;</p>
-<p>uniform sampler2D textureSampler;</p>
-<p>void main(void) {
-  gl_FragColor = texture2D(textureSampler, vUV);
-}</p>
-<pre><code>
-### Set Material
+    gl_Position = worldViewProjection * vec4(p, 1.0);
 
-```Javascript
-var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, {
+    vUV = uv;
+}
+</code></pre><h3><a name="fragment-shader" class="anchor" href="#fragment-shader"></a>Fragment Shader</h3><pre><code>varying vec2 vUV;
+
+uniform sampler2D textureSampler;
+
+void main(void) {
+  gl_FragColor = texture2D(textureSampler, vUV);
+}
+</code></pre><h3><a name="set-material" class="anchor" href="#set-material"></a>Set Material</h3><pre><code class="lang-Javascript">var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, {
         vertexElement: &quot;vertexShaderCode&quot;,
         fragmentElement: &quot;fragmentShaderCode&quot;,
     },
@@ -115,13 +118,14 @@ var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, {
 var mainTexture = new BABYLON.Texture(&quot;amiga.jpg&quot;, scene);
 
 shaderMaterial.setTexture(&quot;textureSampler&quot;, mainTexture);
-</code></pre><h3><a name="animation-loop" class="anchor" href="#animation-loop"></a>Animation Loop</h3><pre><code class="lang-Javascript">var time = 0;
+</code></pre>
+<h3><a name="animation-loop" class="anchor" href="#animation-loop"></a>Animation Loop</h3><pre><code class="lang-Javascript">var time = 0;
 scene.registerBeforeRender(function() {
     boxes.material.setFloat(&quot;time&quot;, time);
     time +=0.1;
 });
 </code></pre>
-<h2><a name="shader-builder-code" class="anchor" href="#shader-builder-code"></a>Shader Builder Code</h2><pre><code class="lang-Javascript">BABYLONX.ShaderBuilder.InitializeEngine();
+<h2><a name="shader-builder-code" class="anchor" href="#shader-builder-code"></a>Shader Builder Code</h2><h3><a name="shader-code" class="anchor" href="#shader-code"></a>Shader Code</h3><pre><code class="lang-Javascript">BABYLONX.ShaderBuilder.InitializeEngine();
 
 var shaderMaterial =   new BABYLONX.ShaderBuilder()             
     .Solid({ b: 1 })
