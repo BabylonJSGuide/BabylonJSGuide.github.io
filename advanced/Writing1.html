@@ -105,7 +105,7 @@ uniform sampler2D textureSampler;
 void main(void) {
   gl_FragColor = texture2D(textureSampler, vUV);
 }
-</code></pre><h3><a name="set-material" class="anchor" href="#set-material"></a>Set Material</h3><pre><code class="lang-Javascript">var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, {
+</code></pre><h3><a name="set-material" class="anchor" href="#set-material"></a>Set Material</h3><pre><code class="lang-javascript">var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, {
         vertexElement: &quot;vertexShaderCode&quot;,
         fragmentElement: &quot;fragmentShaderCode&quot;,
     },
@@ -119,13 +119,13 @@ var mainTexture = new BABYLON.Texture(&quot;amiga.jpg&quot;, scene);
 
 shaderMaterial.setTexture(&quot;textureSampler&quot;, mainTexture);
 </code></pre>
-<h3><a name="animation-loop" class="anchor" href="#animation-loop"></a>Animation Loop</h3><pre><code class="lang-Javascript">var time = 0;
+<h3><a name="animation-loop" class="anchor" href="#animation-loop"></a>Animation Loop</h3><pre><code class="lang-javascript">var time = 0;
 scene.registerBeforeRender(function() {
     boxes.material.setFloat(&quot;time&quot;, time);
     time +=0.1;
 });
 </code></pre>
-<h2><a name="shader-builder-code" class="anchor" href="#shader-builder-code"></a>Shader Builder Code</h2><h3><a name="shader-code" class="anchor" href="#shader-code"></a>Shader Code</h3><pre><code class="lang-Javascript">BABYLONX.ShaderBuilder.InitializeEngine();
+<h2><a name="shader-builder-code" class="anchor" href="#shader-builder-code"></a>Shader Builder Code</h2><h3><a name="shader-code" class="anchor" href="#shader-code"></a>Shader Code</h3><pre><code class="lang-javascript">BABYLONX.ShaderBuilder.InitializeEngine();
 
 var shaderMaterial =   new BABYLONX.ShaderBuilder()             
     .Solid({ b: 1 })
