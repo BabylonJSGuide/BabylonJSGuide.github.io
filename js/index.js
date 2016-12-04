@@ -42,7 +42,7 @@
                     html: '<i class="fa fa-book"></i>Snippets'
                 }),
                 $('<a>', {
-                    href: '/indx.html',
+                    href: '/intem_list.html',
                     html: '<i class="fa fa-book"></i>Index'
                 })
             ];
