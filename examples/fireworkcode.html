@@ -34,22 +34,16 @@
         // Attributes
         attribute vec3 position;
         attribute vec3 normal;
-        //attribute vec2 uv;
 
         // Uniforms
         uniform mat4 worldViewProjection;
         uniform float time;
-
-        // Normal
-        //varying vec2 vUV;
 
         void main(void) {
             vec3 p = position;
             vec3 j = vec3(0., -1.0, 0.);
             p = p + normal * log2(1. + time) * 25.0;
             gl_Position = worldViewProjection * vec4(p, 1.0);
-
-            //vUV = uv;
         }
     </script>
   
@@ -79,9 +73,9 @@
 
 				camera.attachControl(canvas, true);
 
-                //var light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, -1, 1), scene);
-               // var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);   
-                //light2.intensity =0.5;
+                var light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, -1, 1), scene);
+                var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);   
+                light2.intensity =0.5;
 
 				var shaderMaterial = new BABYLON.ShaderMaterial("shader", scene, {
 						vertexElement: "vertexShaderCode",
