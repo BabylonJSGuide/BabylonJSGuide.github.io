@@ -277,6 +277,10 @@ tube = BABYLON.MeshBuilder.CreateTube(&quot;tube&quot;, {path: myPath, instance:
 <p><a href="http://www.babylonjs-playground.com/#165IV6#15">A Playground Example of a Tube</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#15', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h2><a name="extruded-shapes" class="anchor" href="#extruded-shapes"></a>Extruded Shapes</h2><p>You must set at least the <em>shape</em> and <em>path</em> properties.
 On update, you must set the <em>shape</em>, <em>path</em> and <em>instance</em> properties and you can set the <em>scale</em> and <em>rotation</em> properties.</p>
+<p>In whatever direction you want to extrude the shape the design of the shape should be based on coordinates 
+in the XOY plane, ie the z component should be 0. Some twisting to this base shape can be applied by leaving the x and y components 
+unchanged but allowing the z component to be non zero but not taking the shape too far from generally lying in th XOY plane. Otherwise 
+results will not be as you might expect.</p>
 <p>Example :</p>
 <pre><code class="lang-javascript">// creates an extended shape
 var extruded = BABYLON.MeshBuilder.ExtrudeShape(&quot;ext&quot;, {shape: myShape, path: myPath}, scene);
@@ -336,7 +340,9 @@ extruded = BABYLON.MeshBuilder.ExtrudeShape(&quot;ext&quot;, {shape: myShape, pa
 </tr>
 </tbody>
 </table>
-<p><a href="http://www.babylonjs-playground.com/#165IV6#16">A Playground Example of an Extended Shape</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#16', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#165IV6#16">A Playground Example of a Shape in XOY plane in Z direction with Rotation</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#16', this)"></i><br/><div class="iframeContainer"></div><br/>
+<a href="http://www.babylonjs-playground.com/#165IV6#18">A Playground Example of the Same Shape in XOY plane in Y direction with Rotation</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#18', this)"></i><br/><div class="iframeContainer"></div><br/>
+<a href="http://www.babylonjs-playground.com/#165IV6#19">A Playground Example of a Shape in YOZ plane in Z direction with Rotation - Strange!</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#19', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h2><a name="custom-extruded-shapes" class="anchor" href="#custom-extruded-shapes"></a>Custom Extruded Shapes</h2><p>You must set at least the <em>shape</em> and <em>path</em> properties.
 On update, you must set the <em>shape</em>, <em>path</em> and <em>instance</em> properties and you can set the <em>rotationFunction</em> or <em>scaleFunction</em> properties.</p>
 <p>Example :</p>
