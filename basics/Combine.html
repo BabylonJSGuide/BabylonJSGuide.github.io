@@ -7,15 +7,21 @@
 </ul>
 </li>
 <li><a href="#consecutive-animations">Consecutive Animations</a><ul>
-<li><a href="#beginanimation-and-parameters">beginAnimation and Parameters</a></li>
+<li><a href="#begindirectanimation-and-parameters">beginDirectAnimation and Parameters</a></li>
 <li><a href="#examples">Examples</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#basic">Basic</a></li>
+<li><a href="#intermediate">Intermediate</a></li>
+<li><a href="#advanced">Advanced</a></li>
+</ul>
+</li>
 </ul>
 </div></div><div id="staticContent"><h1><a name="combining-animations" class="anchor" href="#combining-animations"></a>Combining Animations</h1><h2><a name="concurrent" class="anchor" href="#concurrent"></a>Concurrent</h2><p>Simply set up more animations and add to the BabylonJs object&#39;s animations array. </p>
-<p>For example adding a rotation animation to the <a href="http://www.babylonjs-playground.com/#9WUJN#5">very simple slide animation</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#5', this)"></i><br/><div class="iframeContainer"></div><br/> gives:</p>
+<p>For example adding a rotation animation to the <a href="http://www.babylonjs-playground.com/#9WUJN#11">very simple slide animation</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#11', this)"></i><br/><div class="iframeContainer"></div><br/> to get:</p>
 <h3><a name="slide-and-rotate" class="anchor" href="#slide-and-rotate"></a>Slide and Rotate</h3><pre><code class="lang-javascript">var yRot = new BABYLON.Animation(&quot;yRot&quot;, &quot;rotation.y&quot;, frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
 var keyFramesR = []; 
@@ -37,10 +43,8 @@ keyFramesR.push({
 
 
 yRot.setKeys(keyFramesR);
-
-box.animations.push(xSlide, yRot);
 </code></pre>
-<p><a href="http://www.babylonjs-playground.com/#9WUJN#5">Playground Example Slide and Rotate</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#5', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#9WUJN#12">Playground Example Slide and Rotate</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#12', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h3><a name="slide-and-faster-rotation-rate" class="anchor" href="#slide-and-faster-rotation-rate"></a>Slide and Faster Rotation Rate</h3><p>Changing the rotation values to larger numbers increases the rotation rate</p>
 <pre><code class="lang-javascript">var yRot = new BABYLON.Animation(&quot;yRot&quot;, &quot;rotation.y&quot;, frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
@@ -63,10 +67,8 @@ keyFramesR.push({
 
 
 yRot.setKeys(keyFramesR);
-
-box.animations.push(xSlide, yRot);
 </code></pre>
-<p><a href="http://www.babylonjs-playground.com/#9WUJN#6">Playground Example Slide and Faster Rotate</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#6', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#9WUJN#13">Playground Example Slide and Faster Rotate</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#13', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h3><a name="slide-and-varying-rotation-rate" class="anchor" href="#slide-and-varying-rotation-rate"></a>Slide and Varying Rotation Rate</h3><p>Changing the second key frame position to nearer the end of the frames gives a varying rotation rate.</p>
 <pre><code class="lang-javascript">var yRot = new BABYLON.Animation(&quot;yRot&quot;, &quot;rotation.y&quot;, frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
@@ -89,16 +91,16 @@ keyFramesR.push({
 
 
 yRot.setKeys(keyFramesR);
-
-box.animations.push(xSlide, yRot);
 </code></pre>
-<p><a href="http://www.babylonjs-playground.com/#9WUJN#6">Playground Example Slide and Varying Rotation Rate</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#6', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h2><a name="consecutive-animations" class="anchor" href="#consecutive-animations"></a>Consecutive Animations</h2><p>In order to have one animation follow another then a further parameter needs to be added to the beginAnimation function. This parameter is 
-itself a function to be called when the animation began by beginAnimation is ended.</p>
+<p><a href="http://www.babylonjs-playground.com/#9WUJN#14">Playground Example Slide and Varying Rotation Rate</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#14', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h2><a name="consecutive-animations" class="anchor" href="#consecutive-animations"></a>Consecutive Animations</h2><p>In order to have one animation follow another then a further parameter needs to be added to the beginDirectAnimation function. This parameter is 
+itself a function to be called when the animation began by beginDirectAnimation is ended.</p>
 <p>In fact two new parameters are needed since the function to be called is the sixth parameter and so the fifth parameter position needs to be filled.</p>
-<h3><a name="beginanimation-and-parameters" class="anchor" href="#beginanimation-and-parameters"></a>beginAnimation and Parameters</h3><p>scene.beginAnimation(target, start frame, end frame, loop, speed, on animation end);   </p>
+<h3><a name="begindirectanimation-and-parameters" class="anchor" href="#begindirectanimation-and-parameters"></a>beginDirectAnimation and Parameters</h3><p>scene.beginAnimation(target, start frame, end frame, loop, speed, on animation end);   </p>
 <ul>
 <li><p><em>target</em> - <em>BabylonJS Object</em>, the BabylonJS object to be animated</p>
+</li>
+<li><p><em>animations</em> - <em>array</em>, of all the animations to apply to the target</p>
 </li>
 <li><p><em>start frame</em> - <em>number</em>, the frame at which to start the animation</p>
 </li>
@@ -111,28 +113,25 @@ itself a function to be called when the animation began by beginAnimation is end
 <li><p><em>on animation end</em> - <em>function : optional</em>, function called when animation ends, requires loop to be false</p>
 </li>
 </ul>
-<h3><a name="examples" class="anchor" href="#examples"></a>Examples</h3><p>The following are alterations to <a href="http://www.babylonjs-playground.com/#9WUJN#5">Slide and Rotate</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#5', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h3><a name="examples" class="anchor" href="#examples"></a>Examples</h3><p>The following are alterations to <a href="http://www.babylonjs-playground.com/#9WUJN#12">Slide and Rotate</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#12', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <p>In the first example the box rotates for 5 seconds then goes into a looped slide.</p>
-<p>Code changes to beginAnimation are looping becomes false, speed maintained as default 1, and the function nextAnimation is called as the first ends.</p>
-<pre><code class="lang-javascript">scene.beginAnimation(box, 0, 2 * frameRate, false, 1, nextAnimation);
+<p>Code changes to beginDirectAnimation are looping becomes false, speed maintained as default 1, and the function nextAnimation is called as the first ends.</p>
+<pre><code class="lang-javascript">scene.beginDirectAnimation(box, [yRot], 0, 2 * frameRate, false, 1, nextAnimation);
 </code></pre>
 <p>Additional function added before this is</p>
 <pre><code class="lang-javascript">var nextAnimation = function() {
-    box.animations = [];
-    box.animations.push(xSlide);
-    scene.beginAnimation(box, 0, 2 * frameRate, true);
+    scene.beginDirectAnimation(box, [xSlide], 0, 2 * frameRate, true);
 }
 </code></pre>
-<p><a href="http://www.babylonjs-playground.com/#9WUJN#8">Playground Example Consecutive Animations Rotate then Slide</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#9WUJN#15">Playground Example Consecutive Animations Rotate then Slide</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#15', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <p>In the second example the rotation is continued as the box goes into a looped slide.</p>
-<p>Code changes to the nextAnimation function is to remove the resetting of the animations array</p>
 <pre><code class="lang-javascript">var nextAnimation = function() {
-    box.animations.push(xSlide);
-    scene.beginAnimation(box, 0, 2 * frameRate, true);
+    scene.beginDirectAnimation(box, [yRot, xSlide], 0, 2 * frameRate, true);
 }
 </code></pre>
-<p><a href="http://www.babylonjs-playground.com/#9WUJN#8">Playground Example Consecutive Animations Rotate then Rotate and Slide</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+<p><a href="http://www.babylonjs-playground.com/#9WUJN#16">Playground Example Consecutive Animations Rotate then Rotate and Slide</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#16', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic" class="anchor" href="#basic"></a>Basic</h2><p><a href="/basics/Starter.html">Introduction to Animating</a></p>
+<h2><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h2><h2><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h2></div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
