@@ -2,11 +2,11 @@
 <li><a href="#rotation-around-an-axis-through-a-pivot">Rotation Around an Axis Through a Pivot</a><ul>
 <li><a href="#setting-and-rotating-a-parent-to-the-pilot">Setting and Rotating a Parent to the Pilot</a></li>
 <li><a href="#setting-a-parent-and-rotating-the-child">Setting a Parent and Rotating the Child</a></li>
-<li><a href="#wholly-using-matrices">Wholly Using Matrices</a></li>
+<li><a href="#pivoting-with-no-parenting">Pivoting with No Parenting</a></li>
 </ul>
 </li>
 <li><a href="#further-reading">Further Reading</a><ul>
-<li><a href="#snippets">Snippets</a></li>
+<li><a href="#advanced">Advanced</a></li>
 </ul>
 </li>
 </ul>
@@ -41,33 +41,26 @@ pilot.rotate(axis, angle, BABYLON.Space.WORLD);
 </code></pre>
 <p>Note: Any movement of the pivot(sphere) will result in the pilot being moved.</p>
 <p><a href="http://www.babylonjs-playground.com/#1JLGFP#7">Playground Example - Rotating Child</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#7', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h2><a name="wholly-using-matrices" class="anchor" href="#wholly-using-matrices"></a>Wholly Using Matrices</h2><p>The pilot is positioned relative to the pivot position and the rotation is carried out by the product 
-of the matrices that translate the pilot to the pivot, rotates pilot and restores the pilot by inverting previous translation.</p>
-<pre><code class="lang-javascript">sphere.position = pivotAt;
+<h2><a name="pivoting-with-no-parenting" class="anchor" href="#pivoting-with-no-parenting"></a>Pivoting with No Parenting</h2><p>As in <em><a href="/advanced/Pivots.html">Using a Pivot</a></em> to get the pilot and pivot in the correct position the pilot is placed where the pivot is going to be 
+and the pivot translation is set using the displacement of the pilot position from the pivot position.</p>
+<pre><code class="lang-javascript">var pivotAt = new BABYLON.Vector3(1, 3, 2);
+var pilotStart = new BABYLON.Vector3(3, 6, 6);
 
-pilot.position = pivotAt.add(pilotStart);
+pilot.position = pivotAt; 
 
-var m;  //translation matrix
-var invm; //inverse matrix of m
-var r; //rotation matrix 
-var ar; //matrix for actual rotation required 
-
-  /*-------------------Animation--------------------*/
-    var i=0;
-    scene.registerAfterRender(function() {    
-        m = BABYLON.Matrix.Identity().setTranslation(pilot.position.subtract(pivotAt));
-        invm = m.clone().invert();
-        r = BABYLON.Matrix.RotationAxis(axis,(i++) * 0.02);
-        ar = m.multiply(r).multiply(invm);
-        pilot.setPivotMatrix(ar);
-    });
+var pivotTranslate = pilotStart.subtract(pivotAt);
+pilot.setPivotMatrix(BABYLON.Matrix.Translation(pivotTranslate.x, pivotTranslate.y, pivotTranslate.z));
 </code></pre>
-<p><a href="http://www.babylonjs-playground.com/#1JLGFP#8">Playground Example - Rotating Mesh No Parenting</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p><strong>Note:</strong> as can be seen in the Playgrounds below, <strong>provided the axis is not changed</strong>, the pivot position can be changed without re-positioning the pilot. 
-For a general way of placing a pivot for a mesh to rotate around any axis see <a href="/snippets/pivot.html">Centres of Rotation and Enlargement</a>.</p>
-<p><a href="http://www.babylonjs-playground.com/#1JLGFP#9">Playground Example - Rotating Mesh Moving Pivot along Axis</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#9', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p><a href="http://www.babylonjs-playground.com/#1JLGFP#10">Playground Example - Rotating Mesh Moving Pivot</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#10', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="snippets" class="anchor" href="#snippets"></a>Snippets</h2><p><a href="/snippets/Pivot.html">Centres of Rotation and Enlargement</a></p>
+<pre><code class="lang-javascript">/*-------------------Rotation Animation--------------------*/
+var angle=0.025;   
+scene.registerAfterRender(function() {
+    pilot.rotate(axis, angle, BABYLON.Space.LOCAL);  
+});
+</code></pre>
+<p><a href="http://www.babylonjs-playground.com/#1JLGFP#19">Playground Example - Rotating Mesh No Parenting</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#19', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1JLGFP#20">Playground Example - Rotating Mesh Moving Pivot along Axis</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#20', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1JLGFP#21">Playground Example - Rotating Mesh Moving Pivot</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#21', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h2><p><a href="/advanced/Pivots.html">Using a Pivot</a></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {

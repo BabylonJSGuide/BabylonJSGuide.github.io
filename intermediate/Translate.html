@@ -3,6 +3,7 @@
 <li><a href="#frames-of-reference">Frames of Reference</a><ul>
 <li><a href="#translate">Translate</a></li>
 <li><a href="#rotate">Rotate</a></li>
+<li><a href="#add-rotations">Add Rotations</a></li>
 </ul>
 </li>
 <li><a href="#tip">Tip</a></li>
@@ -14,9 +15,10 @@
 </ul>
 </div></div><div id="staticContent"><h1><a name="translation-and-rotation" class="anchor" href="#translation-and-rotation"></a>Translation and Rotation</h1><p>In mathematics a translation is a vector displacement of an object from its current position to a new position. A rotation turns an object 
 through an angle about an axis, which is a fixed line. When using rotate on a mesh the axis passes through the <em>local origin</em> of the mesh.</p>
-<p>View the two playgrounds below to see a translation and a rotation in progress.</p>
-<p><a href="http://www.babylonjs-playground.com/#1JLGFP">Playground Example Translation</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p><a href="http://www.babylonjs-playground.com/#1JLGFP#3">Playground Example Rotation</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#3', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>Unlike mesh.rotation using mesh.rotate adds new angles of roation to previous ones.</p>
+<p>View the two playgrounds below to see a translation and a rotation, using rotate, in progress.</p>
+<p><a href="http://www.babylonjs-playground.com/#1JLGFP">Playground Example Translate</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1JLGFP#3">Playground Example Rotate</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#3', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h1><a name="frames-of-reference" class="anchor" href="#frames-of-reference"></a>Frames of Reference</h1><p>There are two frames of reference one the <strong>world axes</strong> in <em>world space</em> and the other the <strong>local axes</strong> in <em>local space</em>. 
 When a mesh is created the <strong>world axes</strong> and the <strong>local axes</strong> coincide. As a mesh is translated or rotated the <strong>local axes</strong> move with it. 
 The frame of reference used depends whether translate and rotate take place on the <em>world space</em> or the <em>local space</em>. </p>
@@ -35,10 +37,19 @@ For convenience unit vectors in the positive directions of the x, y and z axes a
 pilot.rotate(new BABYLON.Vector3(-1, 3, -10), 7 * Math.PI / 12, BABYLON.Space.LOCAL);
 </code></pre>
 <p>Should you wish to rotate a mesh about a pivot that is not the <em>local origin</em> of the mesh then there are method to do so. See the links in further reading.</p>
+<h2><a name="add-rotations" class="anchor" href="#add-rotations"></a>Add Rotations</h2><p>From BabylonJS version 2.6 there is a new property that also allows the accumulation of rotations but only about <strong>local axes</strong>, this is mesh.addRotation(x, y, z). 
+Only one of x, y or z should be non zero</p>
+<pre><code class="lang-javascript">mesh.addRotation(Math.PI/2, 0, 0).addRotation(0, Math.PI/4, 0).addRotation(0, Math.PI/6, 0)
+</code></pre>
+<p>Whatever the current rotation of the mesh this will rotate it further first around the <em>local X axis</em>, followed by a rotation around the <em>local Y axis</em> followed by 
+a rotation around the <em>local Z axis</em>.</p>
+<p>In the following playground the sequence of boxes shows the result of applying a rotation around the <em>local Z axis</em>, followed by a rotation around the <em>local Y axis</em> followed by 
+a rotation around the <em>local X axis</em>.</p>
+<p><a href="http://www.babylonjs-playground.com/#1PON40#8">Playground Example - Addition of Rotations</a> - <i class="fa fa-eye" onclick="createIframe('1PON40#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1PON40#12">Playground Example - Wheels</a> - <i class="fa fa-eye" onclick="createIframe('1PON40#12', this)"></i><br/><div class="iframeContainer"></div><br/> Author <a href="http://jerome.bousquie.fr/BJS/demos/">Jerome Bousquie</a></p>
 <h1><a name="tip" class="anchor" href="#tip"></a>Tip</h1><p>When animating with translate and rotate use scene.register<strong>After</strong>Render rather than scene.register<strong>Before</strong>Render</p>
 <h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h2><p><a href="/gamelets/Car.html">A Simple Car Following a Path</a></p>
-<h2><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h2><p><a href="/advanced/Pivot.html">Rotate About a Pivot Other than the Local Origin</a></p>
-<p><a href="/advanced/Rotate.html">Translate and Rotate in Detail</a></p>
+<h2><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h2><p><a href="/advanced/Pivots.html">Using Pivots</a><br><a href="/advanced/Pivot.html">Rotate About a Pivot Other than the Local Origin</a><br><a href="/advanced/Rotate.html">Translate and Rotate in Detail</a></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
