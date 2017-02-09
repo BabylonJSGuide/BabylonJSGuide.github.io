@@ -17,8 +17,7 @@
 through an angle about an axis, which is a fixed line. When using rotate on a mesh the axis passes through the <em>local origin</em> of the mesh.</p>
 <p>Unlike mesh.rotation using mesh.rotate adds new angles of roation to previous ones.</p>
 <p>View the two playgrounds below to see a translation and a rotation, using rotate, in progress.</p>
-<p><a href="http://www.babylonjs-playground.com/#1JLGFP">Playground Example Translate</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p><a href="http://www.babylonjs-playground.com/#1JLGFP#3">Playground Example Rotate</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#3', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#1JLGFP">Playground Example - Translate</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP', this)"></i><br/><div class="iframeContainer"></div><br/><br><a href="http://www.babylonjs-playground.com/#1JLGFP#3">Playground Example - Rotate</a> - <i class="fa fa-eye" onclick="createIframe('1JLGFP#3', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h1><a name="frames-of-reference" class="anchor" href="#frames-of-reference"></a>Frames of Reference</h1><p>There are two frames of reference one the <strong>world axes</strong> in <em>world space</em> and the other the <strong>local axes</strong> in <em>local space</em>. 
 When a mesh is created the <strong>world axes</strong> and the <strong>local axes</strong> coincide. As a mesh is translated or rotated the <strong>local axes</strong> move with it. 
 The frame of reference used depends whether translate and rotate take place on the <em>world space</em> or the <em>local space</em>. </p>
@@ -45,8 +44,7 @@ Only one of x, y or z should be non zero</p>
 a rotation around the <em>local Z axis</em>.</p>
 <p>In the following playground the sequence of boxes shows the result of applying a rotation around the <em>local Z axis</em>, followed by a rotation around the <em>local Y axis</em> followed by 
 a rotation around the <em>local X axis</em>.</p>
-<p><a href="http://www.babylonjs-playground.com/#1PON40#8">Playground Example - Addition of Rotations</a> - <i class="fa fa-eye" onclick="createIframe('1PON40#8', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<p><a href="http://www.babylonjs-playground.com/#1PON40#12">Playground Example - Wheels</a> - <i class="fa fa-eye" onclick="createIframe('1PON40#12', this)"></i><br/><div class="iframeContainer"></div><br/> Author <a href="http://jerome.bousquie.fr/BJS/demos/">Jerome Bousquie</a></p>
+<p><a href="http://www.babylonjs-playground.com/#1PON40#8">Playground Example - Addition of Rotations</a> - <i class="fa fa-eye" onclick="createIframe('1PON40#8', this)"></i><br/><div class="iframeContainer"></div><br/><br><a href="http://www.babylonjs-playground.com/#1PON40#12">Playground Example - Wheels</a> - <i class="fa fa-eye" onclick="createIframe('1PON40#12', this)"></i><br/><div class="iframeContainer"></div><br/> Author <a href="http://jerome.bousquie.fr/BJS/demos/">Jerome Bousquie</a></p>
 <h1><a name="tip" class="anchor" href="#tip"></a>Tip</h1><p>When animating with translate and rotate use scene.register<strong>After</strong>Render rather than scene.register<strong>Before</strong>Render</p>
 <h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h2><p><a href="/gamelets/Car.html">A Simple Car Following a Path</a></p>
 <h2><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h2><p><a href="/advanced/Pivots.html">Using Pivots</a><br><a href="/advanced/Pivot.html">Rotate About a Pivot Other than the Local Origin</a><br><a href="/advanced/Rotate.html">Translate and Rotate in Detail</a></p>
