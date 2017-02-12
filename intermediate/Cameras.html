@@ -55,11 +55,12 @@ camera.maxCameraSpeed = 10
 // This attaches the camera to the canvas
    camera.attachControl(canvas, true);
 
-// NOTE:: SET CAMERA TARGET AFTER THE TARGET&#39;S CREATION
+// NOTE:: SET CAMERA TARGET AFTER THE TARGET&#39;S CREATION AND NOTE CHANGE FROM BABYLONJS V 2.5
 //targetMesh created here
-camera.target = targetMesh;
+camera.target = targetMesh;   // version 2.4 and earlier
+camera.lockedTarget = targetMesh; //version 2.5 onwards
 </code></pre>
-<p><a href="http://www.babylonjs-playground.com/#12WBC#78">A Playground Example of a Follow Camera following a moving target</a> - <i class="fa fa-eye" onclick="createIframe('12WBC#78', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p><a href="http://www.babylonjs-playground.com/#12WBC#84">A Playground Example of a Follow Camera following a moving target</a> - <i class="fa fa-eye" onclick="createIframe('12WBC#84', this)"></i><br/><div class="iframeContainer"></div><br/></p>
 <h2><a name="anaglyphcameras" class="anchor" href="#anaglyphcameras"></a>AnaglyphCameras</h2><p>These extend the use of the Universal and Arc Rotate Cameras for use with red and cyan 3D glasses. They use post-processing filtering techniques. </p>
 <h3><a name="constructing-anaglyph-universal-camera" class="anchor" href="#constructing-anaglyph-universal-camera"></a>Constructing Anaglyph Universal Camera</h3><pre><code class="lang-javascript">
 // Parameters : name, position, eyeSpace, scene
