@@ -24,7 +24,7 @@ else {
 <p><img src="/img/collide2.jpg" alt="Fig 2"><br>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 2]</p>
 <p>However consider the sphere as having unit diameter and is moving towards the ball with a speed of 5 units per frame. The check for collision has to be 
 considered for each frame. The first frame is as in Fig 3 and the next frame as in Fig 4</p>
-<p><img src="/img/collide3.jpg" alt="Fig 3"><br>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 3]</p>
+<p><img src="/img/collide2.jpg" alt="Fig 3"><br>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 3]</p>
 <p>The sphere will have gone past the wall and is not intersecting it and so no collision will be detected</p>
 <p><img src="/img/collide3.jpg" alt="Fig 4"><br>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 4]</p>
 <h2><a name="size-and-speed-matter" class="anchor" href="#size-and-speed-matter"></a>Size and Speed Matter.</h2><p>Consider a sphere of radius r travelling towards a wall with speed v, at a position just out of contact with the wall. To be able definitely to use of the <em>intersectsMesh</em> method the sphere must be in contact with the wall during the next frame. The maximum distance the sphere can travel between frames must be less than twice the radius, as in Fig 5. </p>
@@ -34,7 +34,7 @@ considered for each frame. The first frame is as in Fig 3 and the next frame as 
 <p><img src="/img/collide6.jpg" alt="Fig 6"><br>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 6]</p>
 <p>So for two spheres to start in any random positions and travel directly towards each other and for an intersection with the wall definitely to take place during a frame 2v &lt;= 4r, which is again v &lt;= 2r.</p>
 <p>To generalise , should one sphere have radius r<sub>1</sub> and speed v<sub>1</sub> and the other radius r<sub>2</sub> and speed v<sub>2</sub> 
-intersections from random positions will definitely take place when v<sub>1</sub> + v<sub>2</sub> &lt; 2(r<sub>1</sub> + r<sub>2</sub>)</p>
+intersections from random positions will definitely take place<br>when v<sub>1</sub> + v<sub>2</sub> &lt; 2(r<sub>1</sub> + r<sub>2</sub>)</p>
 <p>What is the situation when v &gt; 2r?</p>
 <p>Consider that the front of the sphere is a distance d from the wall in a frame, F, and in the next frame, N, the sphere intersects the wall or has moved passed it, then 0 &lt;= d &lt;= v. If d &gt; v then d - v &gt; 0 and so in the next frame the sphere is still a distance d - v &gt; 0 from the wall. In fact when the sphere is any distance p away from the wall, p &gt; 0, then for frame F,  d = p modulo v. Fig 7 shows that for the sphere to intersect the wall v - 2r &lt; d V v.</p>
 <p><img src="/img/collide6.jpg" alt="Fig 7"><br>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 7]</p>
