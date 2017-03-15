@@ -1,0 +1,64 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BabylonJS Guide</title><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"></head><body><nav id="menu"></nav><nav class="nav-main"><!-- Hamburger menu : displayed only in small screens--><i id="mobilemenu" class="fa fa-bars"></i><!-- this button only shows on mobile version of a "class" page--><div class="banner"><div class="menu"><div id="home" class="do-not-hover"><a href="/">Babylon.js | GUIDE</a></div><div id="begin" class="item"><a href="/begins.html">Begin Here</a></div><div id="basic" class="item"><a href="/basics.html">Basics</a></div><div id="intermediate" class="item"><a href="/intermediate.html">Intermediate</a></div><div id="advanced" class="item"><a href="/advanced.html">Advanced</a></div><div id="gamelets" class="item"><a href="/gamelets.html">Gamelets</a></div><div id="snippets" class="item"><a href="/snippets.html">Snippets  </a></div><div id="item_list" class="item"><a href="/item_list.html">Index                      </a></div></div></div></nav><div id="wrapper"><div class="statics-banner"><h1>gamelets</h1></div><div class="horizontal-separator"></div><div class="static-content"><h1>Issues</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-arrow-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#collision-issues">Collision Issues</a><ul>
+<li><a href="#moving-too-fast-to-intersect">Moving Too Fast To Intersect</a></li>
+<li><a href="#size-and-speed-matter">Size and Speed Matter.</a><ul>
+<li><a href="#playground-example">Playground Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="collision-issues" class="anchor" href="#collision-issues"></a>Collision Issues</h1><h2><a name="moving-too-fast-to-intersect" class="anchor" href="#moving-too-fast-to-intersect"></a>Moving Too Fast To Intersect</h2><p>One way to check in BabylonJS whether two meshes are colliding is to use the <em>intersectsMesh</em> method. So for Fig 1 </p>
+<pre><code class="lang-javascript">sphere.intersectsMesh(wall)
+</code></pre>
+<p>would give the result <em>true</em></p>
+<p><img src="/gamelets/collide4.jpg" alt="Fig 1"><br>[nbsp;nbsp;nbsp;nbsp;nbsp;Fig 1]</p>
+<p>You may think that where the sphere in Fig 2 is travelling towards the wall that you could use</p>
+<pre><code class="lang-javascript">if(sphere.intersectsMesh(wall)) {
+    //bounce sphere off wall
+}
+else {
+    //move sphere left
+}
+</code></pre>
+<p><img src="/gamelets/collide2.jpg" alt="Fig 2"><br>[nbsp;nbsp;nbsp;nbsp;nbsp;Fig 2]</p>
+<p>However consider the sphere as having unit diameter and is moving towards the ball with a speed of 5 units per frame. The check for collision has to be 
+considered for each frame. The first frame is as in Fig 3 and the next frame as in Fig 4</p>
+<p><img src="/gamelets/collide3.jpg" alt="Fig 3"><br>[nbsp;nbsp;nbsp;nbsp;nbsp;Fig 3]</p>
+<p>The sphere will have gone past the wall and is not intersecting it and so no collision will be detected</p>
+<p><img src="/gamelets/collide3.jpg" alt="Fig 4"><br>[nbsp;nbsp;nbsp;nbsp;nbsp;Fig 4]</p>
+<h2><a name="size-and-speed-matter" class="anchor" href="#size-and-speed-matter"></a>Size and Speed Matter.</h2><p>Consider a sphere of radius r travelling towards a wall with speed v, at a position just out of contact with the wall. To be able definitely to use of the <em>intersectsMesh</em> method the sphere must be in contact with the wall during the next frame. The maximum distance the sphere can travel between frames must be less than twice the radius, as in Fig 5. </p>
+<p><img src="/gamelets/collide5.jpg" alt="Fig 5"><br>[nbsp;nbsp;nbsp;nbsp;nbsp;Fig 5]</p>
+<p>So for the sphere to start in any random position and travel directly towards the wall and for an intersection with the wall definitely to take place during a frame v &lt;= 2r</p>
+<p>Now consider two spheres travelling towards each other, each sphere having a speed v. The relative velocity is 2v. Take one sphere as stationary and the other moving with speed v at a position just out of contact with each other. To be able to use the <em>intersectsMesh</em> method the spheres must be in contact with each other during the next frame. The maximum distance the moving sphere can travel between frames must be less than four times the radius, as in Fig 6. </p>
+<p><img src="/gamelets/collide6.jpg" alt="Fig 6"><br>[nbsp;nbsp;nbsp;nbsp;nbsp;Fig 6]</p>
+<p>So for two spheres to start in any random positions and travel directly towards each other and for an intersection with the wall definitely to take place during a frame 2v &lt;= 4r, which is again v &lt;= 2r.</p>
+<p>To generalise , should one sphere have radius r<sub>1</sub> and speed v<sub>1</sub> and the other radius r<sub>2</sub> and speed v<sub>2</sub> 
+intersections from random positions will definitely take place when v<sub>1</sub> + v<sub>2</sub> &lt; 2(r<sub>1</sub> + r<sub>2</sub>)</p>
+<p>What is the situation when v &gt; 2r?</p>
+<p>Consider that the front of the sphere is a distance d from the wall in a frame, F, and in the next frame, N, the sphere intersects the wall or has moved passed it, then 0 &lt;= d &lt;= v. If d &gt; v then d - v &gt; 0 and so in the next frame the sphere is still a distance d - v &gt; 0 from the wall. In fact when the sphere is any distance p away from the wall, p &gt; 0, then for frame F,  d = p modulo v. Fig 7 shows that for the sphere to intersect the wall v - 2r &lt; d V v.</p>
+<p><img src="/gamelets/collide6.jpg" alt="Fig 7"><br>[nbsp;nbsp;nbsp;nbsp;nbsp;Fig 7]</p>
+<p>The sphere just touches the wall when d = 0 and so for a display where the sphere does not penetrate the wall p modulo v is 0.</p>
+<p>Expressing this in quotient and remainder form p = qv, q &gt;= 0 </p>
+<p>Since p is the distance from the front of the wall the centre of the sphere will be at qv + r</p>
+<h3><a name="playground-example" class="anchor" href="#playground-example"></a>Playground Example</h3><p>In the following playground the three spheres are positioned so that for sphere1, d &lt; v - r and so will pass through the wall; for sphere2 
+d = 0 and for sphere3  v - 2r &lt; d &lt; v. The radius and speed for each sphere have been set at the same values but can be changed easily should you wish to.
+Sphere1 is at the top, sphere2 the middle and sphere3 at the bottom.</p>
+<p><a href="http://babylonjs-playground.azurewebsites.net/#1LOEWK#1">Playground Example</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-66146410-1', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
