@@ -9,7 +9,7 @@
 <p>The velocity of a particle is its displacement per frame.</p>
 <h2><a name="colliding-with-a-wall" class="anchor" href="#colliding-with-a-wall"></a>Colliding with a Wall</h2><p>Given a particle of radius r, at position p and velocity v in <em>frame n</em>, the particle will collide with a wall when it is travelling towards the wall in <em>frame n</em> and in <em>frame n+1</em> the centre of the particle, at p + v,  is within a distance r from the wall or is moving away from the wall.</p>
 <p>For example consider a left hand wall, with plane parallel to the YZ plane, and a particle travelling towards it with velocity (dx, dy, dz), dx &lt; 0.</p>
-<p>In <em>frame n</em>, the position of the particle is (x, y, z) and during the time between <em>frame n</em> and <em>frame n+1</em> it overlapped the wall. At <em>frame n+1</em>, the particle may still be overlapping the wall and its centre may be to the right or left of the wall or, it the particle may have gone beyond the wall completely. The 2D diagrams show the latter case but the calculations apply in all cases. Fig 16 indicates the particle passing through the wall.</p>
+<p>In <em>frame n</em>, the position of the particle is (x, y, z) and during the time between <em>frame n</em> and <em>frame n+1</em> it overlapped the wall. At <em>frame n+1</em>, the particle may still be overlapping the wall and its centre may be to the right or left of the wall or, the particle may have gone beyond the wall completely. The 2D diagrams show the latter case but the calculations apply in all cases. Fig 16 indicates the particle passing through the wall.</p>
 <p><img src="/img/collide18.jpg" alt="Fig 16"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 16. </p>
 <p>The particle at <em>frame n+1</em>, is at position (x + dx, y + dy, z + dz)</p>
 <p>Sometime between <em>frame n</em> and <em>frame n+1</em> the particle would just touch the wall as in Fig 17.</p>
@@ -24,12 +24,29 @@
 <p>= (x + dx<sub>1</sub> - dx<sub>2</sub> + dx, y, z)</p>
 <p>= (x + dx<sub>1</sub> - dx<sub>2</sub> + dx<sub>1</sub> + dx<sub>2</sub>, y, z) </p>
 <p>= (x + 2dx<sub>1</sub>, y, z)</p>
-<p>Which is the reflection of the particlee at <em>frame n</em> in the plane parallel to the YZ plane through the centre of the particle, see Fig 21.</p>
+<p>Which is the reflection of the particle at <em>frame n</em> in the plane parallel to the YZ plane through the centre of the particle, see Fig 21.</p>
 <p><img src="/img/collide23.jpg" alt="Fig 21"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 21.</p>
 <p>This means after <em>frame n</em> is displayed the particle&#39;s position has to be reset as indicated.</p>
-<h2><a name="colliding-particles" class="anchor" href="#colliding-particles"></a>Colliding Particles</h2><p>Much more complicated rules will be needed to determine the positions and velocities of colliding spheres. Fig 23 shows the movement of a red and green sphere over two frames when the collision is not detected, including the potential collision point and the component vectors perpendicular and tangential to the point of contact. Fig 24 shows the rearrangement of the component vectors and positions of the spheres when the collision is detected.</p>
+<h2><a name="colliding-particles" class="anchor" href="#colliding-particles"></a>Colliding Particles</h2><p>Given a two particles P and Q of radius r, at positions p and q with velocities v and u repectively in <em>frame n</em>, the particles will collide when they are travelling towards each other in <em>frame n</em> and in <em>frame n+1</em> the centres of the particle, at p + v and q + u  are within a distance 2r from each other or they are moving away from each other.</p>
+<p>Since only the velocities along the line joining the centres are affected during the collision consider a system of three multually perpendicular axes one along the line joining the centres and the others in the plane with this line as its normal. Writing the velocities as vectors with components along these axes</p>
+<p>v = (dr, dt, dw) and u = (sr, st, sw)</p>
+<p>In <em>frame n</em>, the position of particle P is (px, py, pz) and the position of Q is (qx, qy, qz). During the time between <em>frame n</em> and <em>frame n+1</em> the particles overlap. At <em>frame n+1</em>, one particle may still be overlapping the other or the particles may have passed each other and are moving away. The 2D diagrams show the latter case but the calculations apply in all cases. Fig 22 indicates the particles passing through each other and also shows the point of contact.</p>
 <p><img src="/img/collide16.jpg" alt="Fig 22"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 22.</p>
-<p><img src="/img/collide17.jpg" alt="Fig 23"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 24.</p>
+<p>The displacements dr and sr can be split into dr<sub>1</sub> and sr<sub>1</sub> which take the particles to the point of contact and dr<sub>2</sub> and sr<sub>2</sub> the remaining displacements.</p>
+<p>Fig 24 shows the rearrangement of the component velocities and positions of the spheres when the collision is detected and component velocities along the line joining the centres are exchanged.</p>
+<p><img src="/img/collide17.jpg" alt="Fig 23"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 23.</p>
+<p>For <em>frame n+1</em>, particle P is at  (px + dr<sub>1</sub> + sr<sub>2</sub>, py + dt, pz + dw) and Q is at (qx + sr<sub>1</sub> + dr<sub>2</sub>, qy + st, qz + sw). </p>
+<p>After the collision the velocity of P is (sr, dt, dw) and that of Q is (dr, st, sw). Since before <em>frame n+1</em>, is displayed the velocities of P and Q will be added to the positions of P and Q and so we need these positions to have these velocities subtracted. See Fig 24 </p>
+<p><img src="/img/collide24.jpg" alt="Fig 24"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 24.</p>
+<p>P<br>(px + dr<sub>1</sub> + sr<sub>2</sub>, py + dt, pz + dw) - (sr, dt, dw)</p>
+<p>= (px + dr<sub>1</sub> + sr<sub>2</sub> - sr, py, pz)</p>
+<p>= (px + dr<sub>1</sub> + sr<sub>2</sub> - sr<sub>1</sub> - sr<sub>2</sub>, py, pz)</p>
+<p>= (px + dr<sub>1</sub> - sr<sub>1</sub>, py, pz)</p>
+<p>Q<br>(qx + sr<sub>1</sub> + dr<sub>2</sub>, qy + st, qz + sw) - (dr, st, sw)</p>
+<p>= (qx + sr<sub>1</sub> + dr<sub>2</sub> - dr, qy, qz)</p>
+<p>= (qx + sr<sub>1</sub> + dr<sub>2</sub> - dr<sub>1</sub> - dr<sub>2</sub>, qy, qz)</p>
+<p>= (qx + sr<sub>1</sub> - dr<sub>1</sub>, qy, qz)</p>
+<p>Again after a collision the positions of particles have to be recalculated before <em>frame n+1</em>.</p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="http://www.html5gamedevs.com/forum/16-babylonjs" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute</a></div><div class="footer-item"><a href="http://doc.babylonjs.com/" target="_blank"><i class="fa fa-html5"></i>    Official Documentation        </a></div></footer><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
