@@ -20,11 +20,9 @@
 </ul>
 </div></div><div id="staticContent"><h1><a name="parametric-shapes" class="anchor" href="#parametric-shapes"></a>Parametric Shapes</h1><h2><a name="names" class="anchor" href="#names"></a>Names</h2><p>The appearance of the standard shapes can generally be determined by their name, though they can be bent, tisted and turned. How these 
 bends, and twist and turns are achieved depends on given parameters. </p>
-<h2><a name="updatable" class="anchor" href="#updatable"></a>Updatable</h2><p>Where a parametric shape has an updatable parameter in its options it means that it is possible to alter the data associated 
-with each vertex of the mesh and so alter the shape of the mesh. For more information see <a href="/advanced/Updating_Vertices.html">Updating Vertices</a>.</p>
-<p>When in addition the shape has an instance parameter in its options then its shape can be updated by using MeshBuilder with instance set to 
-the name of the shape. </p>
-<p>In prectice all the parametric shapes, except for the Lathe, can have their shape updated in this way by using the already created instance of the mesh.</p>
+<h2><a name="updatable" class="anchor" href="#updatable"></a>Updatable</h2><p>Where a parametric shape has an updatable parameter in its options it means that it is possible to alter the data associated with each vertex of the mesh and so alter the shape of the mesh. For more information see <a href="/advanced/Updating_Vertices.html">Updating Vertices</a>.</p>
+<p>When in addition the shape has an instance parameter in its options then its shape can be updated by using MeshBuilder with instance set to the name of the shape. </p>
+<p>In prectice all the parametric shapes, except for the Lathe and Polygon (both Create and Extend), can have their shape updated in this way by using the already created instance of the mesh.</p>
 <h2><a name="lines" class="anchor" href="#lines"></a>Lines</h2><p>Creates a continguous series of line segments from a list of points.
 You must set at least the <em>points</em> property.
 On update, you must set the <em>points</em> and <em>instance</em> properties.</p>
@@ -472,6 +470,108 @@ extruded = BABYLON.MeshBuilder.ExtrudeShapeCustom(&quot;ext&quot;, {shape: mySha
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#12">A Playground Example of a Lathe</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#12', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<h4><a name="polygon" class="anchor" href="#polygon"></a>Polygon</h4><p>You must set at least the <em>shape</em> property.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">var polygon = BABYLON.MeshBuilder.CreatePolygon(&quot;polygon&quot;, {shape: myShape, sideOrientation: BABYLON.Mesh.DOUBLESIDE, frontUVs: myFrontUVs, backUVs: myBackUVs}, scene);
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shape</td>
+<td><em>(Vector3[])</em>  array of Vector3, the shape you want to turn <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>holes</td>
+<td><em>(Vector3[])</em>  array of holes, each hole being an array of successive Vector3 </td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>frontUVs</td>
+<td><em>(Vector4[])</em>  array of Vector4, <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE is an option</strong></td>
+</tr>
+<tr>
+<td>backUVs</td>
+<td><em>(Vector4[])</em>  array of Vector4, <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE is an option</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Both frontUVs and backUVs have the form Vector4(u0,v0,u1,v1) with 0&gt;=  u0,v0,u1,v1 &lt;= 1 and 
+(u0, v0) are the bottom left coordinates and (u1, v1) the top right coordinates of the clipping rectangle 
+of the image.</p>
+<p><a href="http://playground.babylonjs.com/#4G18GY#2">A Playground Example of a Polygon</a></p>
+<p>Uses <a href="http://doc.babylonjs.com/tutorials/polygonmeshbuilder">PolygonMeshBuilder</a></p>
+<h4><a name="extruded-polygon" class="anchor" href="#extruded-polygon"></a>Extruded Polygon</h4><p>You must set at least the <em>shape</em> and <em>depth</em> properties.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">var polygon = BABYLON.MeshBuilder.ExtrudePolygon(&quot;polygon&quot;, {shape: myShape, depth: 2, faceUV: myUVs}, scene);
+</code></pre>
+<p>Properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shape</td>
+<td><em>(Vector3[])</em>  array of Vector3, the shape you want to turn <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>depth</td>
+<td><em>(number)</em>  the depth of the extrusion <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>faceColors</td>
+<td><em>(Color4[])</em> array of 3 <em>Color4</em>, one per box face</td>
+<td>Color4(1, 1, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>faceUV</td>
+<td><em>(Vector4[])</em> array of 3 <em>Vector4</em>, one per box face</td>
+<td>UVs(0, 0, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>holes</td>
+<td><em>(Vector3[])</em>  array of holes, each hole being an array of successive Vector3 </td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+</tbody>
+</table>
+<p>To understand how to set <em>faceUV</em> or <em>faceColors</em>, please read this : <a href="http://doc.babylonjs.com/tutorials/CreateBox_Per_Face_Textures_And_Colors">http://doc.babylonjs.com/tutorials/CreateBox_Per_Face_Textures_And_Colors</a></p>
+<p>face 0 is top polygon, 1 is side of extruded polygon and 2 is bottom polygon</p>
+<p><a href="http://www.babylonjs-playground.com/#RNCYVM#2">Playground Example of Extruded Polygon</a> - <i class="fa fa-eye" onclick="createIframe('RNCYVM#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
+<p>Uses <a href="http://doc.babylonjs.com/tutorials/polygonmeshbuilder">PolygonMeshBuilder</a></p>
 <h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="intermediate" class="anchor" href="#intermediate"></a>Intermediate</h2><p><a href="/intermediate/Shapes.html">Additional Shapes</a><br><a href="/intermediate/Polyhedra_Shapes.html">Polyhedra Shapes</a></p>
 <h2><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h2><p><a href="/advanced/Ribbons_In_Detail.html">Ribbons In Detail</a>
 <a href="/advanced/Maths_Make_Ribbons.html">Maths Makes Ribbons</a>
