@@ -10,6 +10,8 @@
 <li><a href="#extruded-shapes">Extruded Shapes</a></li>
 <li><a href="#custom-extruded-shapes">Custom Extruded Shapes</a></li>
 <li><a href="#lathe">Lathe</a></li>
+<li><a href="#polygon">Polygon</a></li>
+<li><a href="#extruded-polygon">Extruded Polygon</a></li>
 </ul>
 </li>
 <li><a href="#further-reading">Further Reading</a><ul>
@@ -470,7 +472,7 @@ extruded = BABYLON.MeshBuilder.ExtrudeShapeCustom(&quot;ext&quot;, {shape: mySha
 </tbody>
 </table>
 <p><a href="http://www.babylonjs-playground.com/#165IV6#12">A Playground Example of a Lathe</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#12', this)"></i><br/><div class="iframeContainer"></div><br/></p>
-<h4><a name="polygon" class="anchor" href="#polygon"></a>Polygon</h4><p>You must set at least the <em>shape</em> property.</p>
+<h2><a name="polygon" class="anchor" href="#polygon"></a>Polygon</h2><p>You must set at least the <em>shape</em> property.</p>
 <p>Example :</p>
 <pre><code class="lang-javascript">var polygon = BABYLON.MeshBuilder.CreatePolygon(&quot;polygon&quot;, {shape: myShape, sideOrientation: BABYLON.Mesh.DOUBLESIDE, frontUVs: myFrontUVs, backUVs: myBackUVs}, scene);
 </code></pre>
@@ -518,7 +520,7 @@ extruded = BABYLON.MeshBuilder.ExtrudeShapeCustom(&quot;ext&quot;, {shape: mySha
 of the image.</p>
 <p><a href="http://playground.babylonjs.com/#4G18GY#2">A Playground Example of a Polygon</a></p>
 <p>Uses <a href="http://doc.babylonjs.com/tutorials/polygonmeshbuilder">PolygonMeshBuilder</a></p>
-<h4><a name="extruded-polygon" class="anchor" href="#extruded-polygon"></a>Extruded Polygon</h4><p>You must set at least the <em>shape</em> and <em>depth</em> properties.</p>
+<h2><a name="extruded-polygon" class="anchor" href="#extruded-polygon"></a>Extruded Polygon</h2><p>You must set at least the <em>shape</em> and <em>depth</em> properties.</p>
 <p>Example :</p>
 <pre><code class="lang-javascript">var polygon = BABYLON.MeshBuilder.ExtrudePolygon(&quot;polygon&quot;, {shape: myShape, depth: 2, faceUV: myUVs}, scene);
 </code></pre>
