@@ -493,7 +493,8 @@ extruded = BABYLON.MeshBuilder.ExtrudeShapeCustom(&quot;ext&quot;, {shape: mySha
 </tr>
 <tr>
 <td>holes</td>
-<td><em>(Vector3[])</em>  array of holes, each hole being an array of successive Vector3 </td>
+<td><em>(Vector3[])</em>  array of holes, each hole being an array of successive Vector3</td>
+<td>[]</td>
 </tr>
 <tr>
 <td>updatable</td>
@@ -508,13 +509,16 @@ extruded = BABYLON.MeshBuilder.ExtrudeShapeCustom(&quot;ext&quot;, {shape: mySha
 <tr>
 <td>frontUVs</td>
 <td><em>(Vector4[])</em>  array of Vector4, <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE is an option</strong></td>
+<td>Vector4(0,0, 1,1) </td>
 </tr>
 <tr>
 <td>backUVs</td>
 <td><em>(Vector4[])</em>  array of Vector4, <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE is an option</strong></td>
+<td>Vector4(0,0, 1,1) </td>
 </tr>
 </tbody>
 </table>
+<p>All vectors for shape and holes are Vector3 and should be in the XoZ plane, ie of the form BABYLON.Vector3(x, 0, z) and in counter clockwise order;</p>
 <p>Both frontUVs and backUVs have the form Vector4(u0,v0,u1,v1) with 0&gt;=  u0,v0,u1,v1 &lt;= 1 and 
 (u0, v0) are the bottom left coordinates and (u1, v1) the top right coordinates of the clipping rectangle 
 of the image.</p>
@@ -556,7 +560,8 @@ of the image.</p>
 </tr>
 <tr>
 <td>holes</td>
-<td><em>(Vector3[])</em>  array of holes, each hole being an array of successive Vector3 </td>
+<td><em>(Vector3[])</em>  array of holes, each hole being an array of successive Vector3</td>
+<td>[] </td>
 </tr>
 <tr>
 <td>updatable</td>
@@ -570,6 +575,7 @@ of the image.</p>
 </tr>
 </tbody>
 </table>
+<p>All vectors for shape and holes are Vector3 and should be in the XoZ plane, ie of the form BABYLON.Vector3(x, 0, z) and in counter clockwise order;</p>
 <p>To understand how to set <em>faceUV</em> or <em>faceColors</em>, please read this : <a href="http://doc.babylonjs.com/tutorials/CreateBox_Per_Face_Textures_And_Colors">http://doc.babylonjs.com/tutorials/CreateBox_Per_Face_Textures_And_Colors</a></p>
 <p>face 0 is top polygon, 1 is side of extruded polygon and 2 is bottom polygon</p>
 <p><a href="http://www.babylonjs-playground.com/#RNCYVM#2">Playground Example of Extruded Polygon</a> - <i class="fa fa-eye" onclick="createIframe('RNCYVM#2', this)"></i><br/><div class="iframeContainer"></div><br/></p>
