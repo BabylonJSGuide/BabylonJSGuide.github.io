@@ -18,13 +18,13 @@
 </ul>
 </div></div><div id="staticContent"><h1><a name="build-a-house-from-plans" class="anchor" href="#build-a-house-from-plans"></a>Build a House from Plans.</h1><p>Starting with a polygon as the footprint, a house is built by giving the footprint thickness (ply), extruding and adding door and window spaces at given positions.</p>
 <h2><a name="data-structure" class="anchor" href="#data-structure"></a>Data Structure</h2><h3><a name="walls" class="anchor" href="#walls"></a>Walls</h3><p><strong>A footprint</strong> is a sequence of consecutive corners in counter clockwise order. Each <strong>corner</strong> is a Vector3 in the form (x, 0, z). This footprint forms the inner walls of the house, see Fig 1. The inner walls do not have to be set at right angles to each other.</p>
-<p><img src="img/house1.jpg" alt="Footprint"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 1</p>
+<p><img src="/img/house1.jpg" alt="Footprint"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 1</p>
 <p>This footprint is then copied and extended by <strong>ply</strong> (the thickness of the walls) to form the base of the walls for the house.</p>
 <p>The number of walls will be the number of corners in the footprint, with wall w extending from corner w. The position of each new corner is determined using trigonometry on half the angle formed at the corners.</p>
 <p>If the number of walls is nbWalls the new corners are numbered by adding nbWalls to the corresponding inner corners. Then the base for wall w, consists of corners numbered, w, (w + 1) % nbWalls, w + nbWalls, (w + 1) % nbWalls + nbWalls. See Fig 2.</p>
-<p><img src="img/house2.jpg" alt="Base of Walls"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 2</p>
+<p><img src="/img/house2.jpg" alt="Base of Walls"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 2</p>
 <p>The top of wall is formed by adding the <strong>height</strong> of the walls to the base corners to form the top corners, having the form of a Vector3 (x, height, z). The new corners are numbered by adding 2 <em> nbWalls to the corresponding base corners. The top of wall w will consist  of corners numbered , w + 2 </em> nbWalls, (w + 1) % nbWalls + 2 <em> nbWalls, w + nbWalls + 2 </em> nbWalls, (w + 1) % nbWalls + nbWalls + 2 * nbWalls. See Fig 3.</p>
-<p><img src="img/house3.jpg" alt="Top of Walls"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 3</p>
+<p><img src="/img/house3.jpg" alt="Top of Walls"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 3</p>
 <h2><a name="walls-mesh" class="anchor" href="#walls-mesh"></a>Walls Mesh</h2><p>The table of positions for the vetexData buffer looks like this</p>
 <table>
 <thead>
@@ -158,7 +158,7 @@
 </table>
 <p>To form the mesh, the base, top, inner wall and outer wall have to be split into triangular facets by grouping sets of three corners for each and pushing these into the indices array. To form the normals in the correct direction the order of corners is important. For the base and the inner wall this is clockwise and for the top and outer wall this is counter clockwise.</p>
 <p>Fig 4 shows the corner numbers for a completed wall. For simplification this is without taking into account that for the final wall the far corners will be the starting corners so in any code each w + 1 must be calculated using modulo nbWalls.</p>
-<p><img src="img/house4.jpg" alt="Wall w"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 4</p>
+<p><img src="/img/house4.jpg" alt="Wall w"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 4</p>
 <p>By corner number 
 base facets : w, w + 1, w + 1 + nbWalls, w, w + 1 + nbWalls, w + nbWalls</p>
 <p>inner wall facets : w, w + 2nbWalls, w + 1 + 2nbWalls, w, w + 1 + 2nbWalls, w + 1</p>
@@ -170,7 +170,7 @@ base facets : w, w + 1, w + 1 + nbWalls, w, w + 1 + nbWalls, w + nbWalls</p>
 <p>The placement of door and window spaces must be checked by the user. They must not overlap and must be contained wholly within a wall. These conditions are not checked by the code.</p>
 <p>A door has two properties, width and height. A doorspace has two properties -  a door and left, which, when it is part of wall w, is its horizontal distance from the inner corner w.</p>
 <p>A window has two properties, width and height. A windowspace has three properties - a window, left and top, which, when it is part of wall w, are its horizonal distance from the inner corner w and the vertical distance from the top of the wall to the top of the window. Top must be greater than zero and less than wall height -  window height.</p>
-<p><img src="img/house5.jpg" alt="Doors and Windows"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 5</p>
+<p><img src="/img/house5.jpg" alt="Doors and Windows"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 5</p>
 <h2><a name="walls-with-doors-and-windows" class="anchor" href="#walls-with-doors-and-windows"></a>Walls with Doors and Windows</h2><p>To include the doors and walls the positions of their corners have to be added to the positions array.</p>
 <p>So far the positions array has this form</p>
 <p>[ inner corners base, outer corners base, inner corners top, outer corners top]</p>
@@ -186,7 +186,7 @@ base facets : w, w + 1, w + 1 + nbWalls, w, w + 1 + nbWalls, w + nbWalls</p>
 <h2><a name="inner-and-outer-walls-with-doors-and-windows-mesh" class="anchor" href="#inner-and-outer-walls-with-doors-and-windows-mesh"></a>Inner and Outer Walls with Doors and Windows Mesh</h2><p>A flat shaded mesh will be created so the the normals for all surfaces will be at right angles to the surface.</p>
 <p>Consider inner wall w with one door and one window added as in Fig 6 showing corner labels.</p>
 <p>Let V<sub>label</sub> be the position of a corner with the given label in the form of the triple x, y, z.</p>
-<p><img src="img/house6.jpg" alt="Polygon wiith Holes"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 6</p>
+<p><img src="/img/house6.jpg" alt="Polygon wiith Holes"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 6</p>
 <p>Using polygonMeshBuilder would create an interior wall positions array with </p>
 <p>[V<sub>w</sub>, V<sub>dw0</sub>, V<sub>dw1</sub>, V<sub>dw2</sub>, V<sub>dw3</sub>, V<sub>w+1</sub>, V<sub>w+1 + 2nbWalls</sub>, V<sub>w + 2nbWalls</sub>, V<sub>ww0</sub>, V<sub>ww1</sub>, V<sub>ww2</sub>, V<sub>www3</sub>]</p>
 <p>with indices 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11</p>
@@ -236,7 +236,7 @@ Add entires to the uvs array and colors array.</p>
 <p>Each window object has two parameters, example new window(1, 2)
 <em>width</em> : width of window<br><em>height</em> : height of window</p>
 <p>Using the plan in fig 7 we can construct a house.</p>
-<p><img src="img/house7.jpg" alt="House floorplan"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 7</p>
+<p><img src="/img/house7.jpg" alt="House floorplan"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 7</p>
 <p>Inner base corner coordinates</p>
 <p>(-3, -2), (-1, -4), (1, -4), (3, -2), (5, -2), (5, 1), (2, 1), (2, 3), (-3, 3)</p>
 <p>window 0 width 1.2, height 2.4</p>
