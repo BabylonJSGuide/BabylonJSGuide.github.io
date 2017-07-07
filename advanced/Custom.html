@@ -236,9 +236,12 @@ vertexData.applyToMesh(customMesh);
 <p><a href="http://www.babylonjs-playground.com/#VKBJN#8">Playground Example Setting Vertex Colors</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#8', this)"></i><br/><div class="iframeContainer"></div><br/> </p>
 <h3><a name="notes-on-the-playground" class="anchor" href="#notes-on-the-playground"></a>Notes on the Playground</h3><p>Since a material is no longer being used backFaceCulling cannot be set and so the camera will have to be rotated for the far facet to be seen. The far facet will remain black 
 whatever color is applied since all light is still being absorbed by this facet. When the scene starts the camera is very nearly full face on 
-to the facet and pointing in the dirrection the light is travelling. With the camera in this position most of the white light is reflected back into the camera as a highlight
+to the facet and pointing in the direction the light is travelling. With the camera in this position most of the white light is reflected back into the camera as a highlight
 and the facet is seen as almost white. As the camera is rotated around the facet will change from appearing as white to red as the highlight effect disipates. For a more 
 controlled lighting effects use a <a href="/basics/Materials.html">material</a> as well as, or instead of, setting vertex colors.</p>
+<p>Adding a light with direction the reverse of the current one will light both sides.</p>
+<p><a href="http://www.babylonjs-playground.com/#VKBJN#104">Playground Example Both Sides Lit</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#104', this)"></i><br/><div class="iframeContainer"></div><br/> </p>
+<p><a href="http://www.babylonjs-playground.com/#VKBJN#105">Playground Example Both Sides Colour Variation</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#105', this)"></i><br/><div class="iframeContainer"></div><br/> </p>
 <h2><a name="texture" class="anchor" href="#texture"></a>Texture</h2><p>The simplest method is to just use <a href="/basics/Materials.html">materials</a> and let BabylonJS apply the given image as a texture. 
 However should you wish to have more control on how a texture is applied to a facet then you need to create and set the uv array.</p>
 <p>Think of any image, to be applied as a texture, as having a pair of axes set at the bottom and left hand side of the image, the u axis and the v axis respectively. 
