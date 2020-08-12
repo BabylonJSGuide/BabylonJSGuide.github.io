@@ -279,15 +279,15 @@
         }
     };
     var findQuery = function(TypeQuery, strTypeResultat, data, page, pageChange, linkType) {
-        var htmlFindQuery = '<div class="searchHeader"><h2> <span id="resultCount">...</span> result(s)  for <a href="/playground?' + linkType + '=' + TypeQuery + '">' + strTypeResultat + '</a></h2></div>';
+        var htmlFindQuery = '<div class="searchHeader"><h2> <span id="resultCount">...</span> result(s)  for <a href ="/public/html/playground?' + linkType + '=' + TypeQuery + '">' + strTypeResultat + '</a></h2></div>';
         var pages = 10;
         pageChange = '<div class="pageChangeWrapper" style="margin: 20px;">';
         if (page > 0) {
-            pageChange += '<a id="previousPageButton" style="display:none" class="pageChangeLink previousResults" href="/playground?' + linkType + '=' + TypeQuery + '&page=' + (page - 1) + '">Previous Page</a>';
+            pageChange += '<a id="previousPageButton" style="display:none" class="pageChangeLink previousResults" href ="/public/html/playground?' + linkType + '=' + TypeQuery + '&page=' + (page - 1) + '">Previous Page</a>';
         }
 
         if (page + 1 < pages) {
-            pageChange += '<a id="nextPageButton" style="display:none" class="pageChangeLink nextResults" href="/playground?' + linkType + '=' + TypeQuery + '&page=' + (page + 1) + '">Next Page</a>';
+            pageChange += '<a id="nextPageButton" style="display:none" class="pageChangeLink nextResults" href ="/public/html/playground?' + linkType + '=' + TypeQuery + '&page=' + (page + 1) + '">Next Page</a>';
         }
         return [htmlFindQuery, pageChange];
     };
