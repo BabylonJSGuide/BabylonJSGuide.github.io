@@ -1,0 +1,248 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Vertex Normals - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Vertex Normals</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#normals-and-minimum-vertices">Normals and Minimum Vertices</a><ul>
+<li><a href="#table-of-indices-positions-and-normals-for-box-with-minimum-vertices">Table of Indices, Positions and Normals for Box with Minimum Vertices</a></li>
+</ul>
+</li>
+<li><a href="#normals-and-flat-shaded-meshes">Normals and Flat Shaded Meshes.</a><ul>
+<li><a href="#table-of-indices-positions-and-normals-for-flat-shaded-box">Table of Indices, Positions and Normals for Flat Shaded Box</a></li>
+</ul>
+</li>
+<li><a href="#playground-showing-box-normals">Playground Showing Box Normals</a></li>
+<li><a href="#advantage-of-shared-normals">Advantage of Shared Normals</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="vertex-normals" class="anchor" href="#vertex-normals"></a>Vertex Normals</h1><p>Each triangular facet of a mesh comprises three vertices.</p>
+<p>For an individual facet BabylonJS computes its normals as mathematical normals, at right angle to the facet.</p>
+<p>However there is no necessity for them to be set at right angles and for curved shapes such as a sphere they are not. In the case of a sphere they are set as the mathematical normal of the sphere surface rather than that of the flat facets of the mesh that create the sphere.</p>
+<p>Vertex normals are used by the <a href="/resources/ShaderIntro">shader code</a> in calculating how the mesh is lit.</p>
+<p>In the following two playgrounds see how the changing directions within the normals array affect how it is lit:</p>
+<ul>
+<li><p><a href="https://www.babylonjs-playground.com/#VKBJN#18">Playground Example Showing Normals Varying in Unison</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#18', this)"></i><div class="iframeContainer"></div></p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#VKBJN#19">Playground Example Showing Normals Varying</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#19', this)"></i><div class="iframeContainer"></div></p>
+</li>
+</ul>
+<h1><a name="normals-and-minimum-vertices" class="anchor" href="#normals-and-minimum-vertices"></a>Normals and Minimum Vertices</h1><p><img src="/img/how_to/Mesh/box1.jpg" alt="Wireframe"></p>
+<p>The box above has 8 vertices. If we want to keep the indices to the minimum they will be 0, 1, 2, 3, 4, 5, 6, 7.</p>
+<p>Facets 0, 3, 7 and 3, 7, 6 and 0, 3, 2 all have vertex 3 in common and vertex 3 can only have one 
+entry in the normals array associated with it.</p>
+<p>How does BabylonJS calculate the <code>normal</code> for vertex 3? </p>
+<p>The diagram below shows that the average of the three mathematical normals at each vertex is used:</p>
+<p><img src="/img/how_to/Mesh/box4.jpg" alt="Normals"></p>
+<p><em>Note:</em> each of the triples in the normals array is referred to as a normal even though they are not strictly speaking 
+the mathematical normal of the facet they belong to. They could however be the mathematical normal of the intended surface of the shape at that position.</p>
+<p>Besides minimising the number of vertices needed there are other advantages as will be seen when creating a sphere.</p>
+<h2><a name="table-of-indices-positions-and-normals-for-box-with-minimum-vertices" class="anchor" href="#table-of-indices-positions-and-normals-for-box-with-minimum-vertices"></a>Table of Indices, Positions and Normals for Box with Minimum Vertices</h2><table>
+<thead>
+<tr>
+<th>index</th>
+<th>position</th>
+<th>normal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>( -1 ,  1 ,  -1 )</td>
+<td>( -0.5773502691896258 ,  0.5773502691896258 ,  -0.5773502691896258 )</td>
+</tr>
+<tr>
+<td>1</td>
+<td>( 1 ,  1 ,  -1 )</td>
+<td>( 0.8164965809277261 ,  0.4082482904638631 ,  -0.4082482904638631 )</td>
+</tr>
+<tr>
+<td>2</td>
+<td>( 1 ,  -1 ,  -1 )</td>
+<td>( 0.4082482904638631 ,  -0.4082482904638631 ,  -0.8164965809277261 )</td>
+</tr>
+<tr>
+<td>3</td>
+<td>( -1 ,  -1 ,  -1 )</td>
+<td>( -0.4082482904638631 ,  -0.8164965809277261 ,  -0.4082482904638631 )</td>
+</tr>
+<tr>
+<td>4</td>
+<td>( -1 ,  1 ,  1 )</td>
+<td>( -0.4082482904638631 ,  0.4082482904638631 ,  0.8164965809277261 )</td>
+</tr>
+<tr>
+<td>5</td>
+<td>( 1 ,  1 ,  1 )</td>
+<td>( 0.4082482904638631 ,  0.8164965809277261 ,  0.4082482904638631 )</td>
+</tr>
+<tr>
+<td>6</td>
+<td>( 1 ,  -1 ,  1 )</td>
+<td>( 0.5773502691896258 ,  -0.5773502691896258 ,  0.5773502691896258 )</td>
+</tr>
+<tr>
+<td>7</td>
+<td>( -1 ,  -1 ,  1 )</td>
+<td>( -0.8164965809277261 ,  -0.4082482904638631 ,  0.4082482904638631 )</td>
+</tr>
+</tbody>
+</table>
+<h1><a name="normals-and-flat-shaded-meshes" class="anchor" href="#normals-and-flat-shaded-meshes"></a>Normals and Flat Shaded Meshes.</h1><p>There are times, such as needing each face of a box to be covered in a <a href="/resources/Facets.html">different material</a>, 
+when it is better to have the box constructed from seperate faces each of which are contructed by two facets and no two faces 
+sharing a vertex indices. They will of course share vertex positions.</p>
+<p><img src="/img/how_to/Mesh/box3.jpg" alt="Seperate Faces"></p>
+<p>In BabylonJS this can be achieved using the <code>convertToFlatShadedMesh</code> function. The results are shown below:</p>
+<p><img src="/img/how_to/Mesh/box5.jpg" alt="Flat Shaded Normals"></p>
+<h2><a name="table-of-indices-positions-and-normals-for-flat-shaded-box" class="anchor" href="#table-of-indices-positions-and-normals-for-flat-shaded-box"></a>Table of Indices, Positions and Normals for Flat Shaded Box</h2><table>
+<thead>
+<tr>
+<th>index</th>
+<th>position</th>
+<th>normal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>( -1 ,  1 ,  -1 )</td>
+<td>( 0 ,  0 ,  -1 )</td>
+</tr>
+<tr>
+<td>1</td>
+<td>( 1 ,  -1 ,  -1 )</td>
+<td>( 0 ,  0 ,  -1 )</td>
+</tr>
+<tr>
+<td>2</td>
+<td>( 1 ,  1 ,  -1 )</td>
+<td>( 0 ,  0 ,  -1 )</td>
+</tr>
+<tr>
+<td>3</td>
+<td>( -1 ,  1 ,  -1 )</td>
+<td>( 0 ,  0 ,  -1 )</td>
+</tr>
+<tr>
+<td>4</td>
+<td>( -1 ,  1 ,  1 )</td>
+<td>( 0 ,  0 ,  1 )</td>
+</tr>
+<tr>
+<td>5</td>
+<td>( 1 ,  -1 ,  1 )</td>
+<td>( 0 ,  0 ,  1 )</td>
+</tr>
+<tr>
+<td>6</td>
+<td>( -1 ,  -1 ,  1 )</td>
+<td>( 0 ,  0 ,  1 )</td>
+</tr>
+<tr>
+<td>7</td>
+<td>( -1 ,  1 ,  1 )</td>
+<td>( 0 ,  0 ,  1 )</td>
+</tr>
+<tr>
+<td>8</td>
+<td>( 1 ,  1 ,  -1 )</td>
+<td>( 1 ,  -0 ,  0 )</td>
+</tr>
+<tr>
+<td>9</td>
+<td>( 1 ,  -1 ,  1 )</td>
+<td>( 1 ,  -0 ,  0 )</td>
+</tr>
+<tr>
+<td>10</td>
+<td>( 1 ,  1 ,  1 )</td>
+<td>( 1 ,  -0 ,  0 )</td>
+</tr>
+<tr>
+<td>11</td>
+<td>( 1 ,  1 ,  -1 )</td>
+<td>( 1 ,  0 ,  0 )</td>
+</tr>
+<tr>
+<td>12</td>
+<td>( -1 ,  1 ,  -1 )</td>
+<td>( -1 ,  0 ,  0 )</td>
+</tr>
+<tr>
+<td>13</td>
+<td>( -1 ,  -1 ,  1 )</td>
+<td>( -1 ,  0 ,  0 )</td>
+</tr>
+<tr>
+<td>14</td>
+<td>( -1 ,  -1 ,  -1 )</td>
+<td>( -1 ,  0 ,  0 )</td>
+</tr>
+<tr>
+<td>15</td>
+<td>( -1 ,  1 ,  -1 )</td>
+<td>( -1 ,  -0 ,  -0 )</td>
+</tr>
+<tr>
+<td>16</td>
+<td>( -1 ,  1 ,  -1 )</td>
+<td>( 0 ,  1 ,  0 )</td>
+</tr>
+<tr>
+<td>17</td>
+<td>( 1 ,  1 ,  1 )</td>
+<td>( 0 ,  1 ,  0 )</td>
+</tr>
+<tr>
+<td>18</td>
+<td>( -1 ,  1 ,  1 )</td>
+<td>( 0 ,  1 ,  0 )</td>
+</tr>
+<tr>
+<td>19</td>
+<td>( 1 ,  1 ,  -1 )</td>
+<td>( 0 ,  1 ,  -0 )</td>
+</tr>
+<tr>
+<td>20</td>
+<td>( -1 ,  -1 ,  -1 )</td>
+<td>( 0 ,  -1 ,  -0 )</td>
+</tr>
+<tr>
+<td>21</td>
+<td>( 1 ,  -1 ,  1 )</td>
+<td>( 0 ,  -1 ,  -0 )</td>
+</tr>
+<tr>
+<td>22</td>
+<td>( 1 ,  -1 ,  -1 )</td>
+<td>( 0 ,  -1 ,  -0 )</td>
+</tr>
+<tr>
+<td>23</td>
+<td>( -1 ,  -1 ,  1 )</td>
+<td>( 0 ,  -1 ,  0 )</td>
+</tr>
+</tbody>
+</table>
+<h1><a name="playground-showing-box-normals" class="anchor" href="#playground-showing-box-normals"></a>Playground Showing Box Normals</h1><ul>
+<li><a href="https://www.babylonjs-playground.com/#1H7L5C#37">Playground Example for Box Normals</a> - <i class="fa fa-eye" onclick="createIframe('1H7L5C#37', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="advantage-of-shared-normals" class="anchor" href="#advantage-of-shared-normals"></a>Advantage of Shared Normals</h1><p>Sharing normals means that the shader produces a rounder looking sphere since the vertex normals are the mathematical normals of the sphere surface.</p>
+<p>Applying the function <code>converToFlatShadedMesh</code> shows the individual faces making up the sphere. For a flat shaded sphere the normals of each facet are the mathematical normals of the facet.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1H7L5C#38">Playground Example Comparing Shading of Spheres</a> - <i class="fa fa-eye" onclick="createIframe('1H7L5C#38', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/How_To/Custom.html">Custom Meshes</a><br><a href="/How_To/Updating_Vertices.html">Updating Vertices</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

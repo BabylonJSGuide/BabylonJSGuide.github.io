@@ -1,0 +1,563 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Points Cloud Particle System  - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Points Cloud Particle System </h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#pcs-creation">PCS Creation</a><ul>
+<li><a href="#add-points">Add Points</a></li>
+<li><a href="#add-surface-volume-points">Add Surface / Volume Points</a></li>
+<li><a href="#building-the-mesh">Building the Mesh</a></li>
+</ul>
+</li>
+<li><a href="#particle-management">Particle Management</a><ul>
+<li><a href="#particle-properties">Particle Properties</a></li>
+<li><a href="#initialising-particles">Initialising Particles</a></li>
+<li><a href="#updating-particles">Updating Particles</a></li>
+<li><a href="#uvs">UVs</a></li>
+<li><a href="#recycling-particles">Recycling Particles</a></li>
+<li><a href="#particle-parenting">Particle Parenting</a></li>
+<li><a href="#particle-intersections">Particle Intersections</a></li>
+</ul>
+</li>
+<li><a href="#pcs-management">PCS Management</a><ul>
+<li><a href="#start-and-end-indexes-for-setparticles">Start and End Indexes for setParticles()</a></li>
+</ul>
+</li>
+<li><a href="#hints-and-tips">Hints and Tips</a></li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#intermediate-l2">Intermediate - L2</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="points-cloud-particle-system-pcs" class="anchor" href="#points-cloud-particle-system-pcs"></a>Points Cloud Particle System (PCS)</h1><p>A PCS is a single updatable mesh with the the <code>PointsCloud</code> property of its material set to <code>true</code>. The point particles are simply the vertices of the mesh. As a mesh a PCS has most of the properties of a mesh, The exceptions are those related to its material which is already set and cannot be changed and also anything related to its vertex normals and indices as it does not have any set.</p>
+<p>As a particle system the PCS provides some methods to manage the particles. However it is behavior agnostic. This means it has no emitter, no particle physics, no particle recycler. You have to implement your own behavior.  </p>
+<p>Particles can be added to a PCS with a function or using an existing mesh as a model, where particles are randomly evenly distributed on either the surface of the model or inside the model. </p>
+<p>The expected usage is: </p>
+<ul>
+<li>First, create your PCS with <code>new PointsCloudSystem()</code>.</li>
+<li>Then, add particles in the PCS, using one of <code>addPoints(number, function)</code>, <code>addSurfacePoints(mesh, number, method)</code> or <code>addVolumePoints(mesh, number, method)</code>.  </li>
+<li>Redo the additions as many times as needed. Each addition creates a new group of particles identified by <code>particle.groupID</code>.  </li>
+<li>When done, build the PCS mesh with <code>buildMeshAsync()</code>.</li>
+<li>Changes to particle properties can be achieved with the <code>initParticles()</code> or <code>updateParticle(particle)</code> methods and a call to <code>setParticles</code>.</li>
+<li>Particle animation can be accomplished by defining their individual behavior in <code>updateParticle(particle)</code> and calling <code>setParticles()</code> within the render loop.</li>
+</ul>
+<h2><a name="limitations" class="anchor" href="#limitations"></a>Limitations</h2><p>The way the PCS is created using vertex points with a pre-applied material with <code>PointsCloud</code> set to true means that:</p>
+<ol>
+<li>Particles cannot be destroyed and particles off screen are still enabled;</li>
+<li>Transparency does not work on individual particles. </li>
+</ol>
+<h2><a name="pcs-creation" class="anchor" href="#pcs-creation"></a>PCS Creation</h2><p>To create an empty PCS requires three parameters; its name, the size for every particle and the scene, for example</p>
+<pre><code class="lang-javascript">var pcs= new BABYLON.PointsCloudSystem(&quot;pcs&quot;, 5, scene); 
+</code></pre>
+<p>After creating the PCS there are a number of options for adding particles</p>
+<h3><a name="add-points" class="anchor" href="#add-points"></a>Add Points</h3><p>By default point particles are randomly added within a unit cube.</p>
+<pre><code class="lang-javascipt">pcs.addPoints(10000);
+</code></pre>
+<p>will add 10000 points.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC">Playground Example - Add Points Default</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>You can use your own function as a second parameter to set particle properties such as position and color. This function must have this kind of signature:</p>
+<pre><code class="lang-javascript">var myFunc = function(particle, i, s) {
+  // particle is the current particle, the i-th one in the PCS and the s-th one in its group
+};
+</code></pre>
+<p>For example using i;</p>
+<pre><code class="lang-javascript">var myfunc = function(particle, i, s) {
+        particle.position = new BABYLON.Vector3(0.5 + 0.25 * Math.random(), i / 5000, 0.25 * Math.random());
+        particle.color = new BABYLON.Color4(Math.random(), Math.random(), Math.random(), Math.random() )
+}
+    pcs.addPoints(10000, myfunc);
+    pcs.addPoints(10000, myfunc);
+</code></pre>
+<p>will produce a tall block of points whose heights cover the full range of 20000 points. Whereas using s,</p>
+<pre><code class="lang-javascript">var myfunc = function(particle, i, s) {
+        particle.position = new BABYLON.Vector3(0.5 + 0.25 * Math.random(), s / 5000, 0.25 * Math.random());
+        particle.color = new BABYLON.Color4(Math.random(), Math.random(), Math.random(), Math.random() )
+}
+    pcs.addPoints(10000, myfunc);
+    pcs.addPoints(10000, myfunc);
+</code></pre>
+<p>will produce a denser block of points whose heights only cover a range of 10000 points, as you can see in the picture below.</p>
+<p><img src="/img/how_to/particles/points1.jpg" alt="use of i or s"></p>
+<p>In addition the use of <code>particle.groupId</code> can have an effect on all particles within a group. For example </p>
+<pre><code class="lang-javascript">var myfunc = function(particle, i, s) {
+        particle.position = new BABYLON.Vector3(particle.groupId * 0.5 + 0.25 * Math.random(), i / 5000, 0.25 * Math.random());
+        particle.color = new BABYLON.Color4(Math.random(), Math.random(), Math.random(), Math.random() )
+}
+    pcs.addPoints(10000, myfunc);
+    pcs.addPoints(10000, myfunc);
+</code></pre>
+<p>will displace the second group of points along the x axis.</p>
+<p><img src="/img/how_to/particles/points2.jpg" alt="use groupId"></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#1">Playground Example - Pass a Function</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="add-surface-volume-points" class="anchor" href="#add-surface-volume-points"></a>Add Surface / Volume Points</h3><p>You are able to take a mesh such as this one as a model</p>
+<p><img src = "/img/how_to/particles/points3.jpg" width = "25%"></p>
+<p>and convert it to particle points on its surface or within its volume</p>
+<p><img src = "/img/how_to/particles/points4.jpg" width = "40%"></p>
+<p>The points are evenly randomly distributed based on the size of the individual triangular facets of the mesh model. The density of points is the same for all facets. </p>
+<p>For both the surface and the volume the default is that the points are randomly colored. For example the following are equivalents for the two surface and two volume additions. </p>
+<pre><code class="lang-javascript">pcs.addSurfacePoints(model, 10000);
+pcs.addSurfacePoints(model, 10000, BABYLON.PointColor.Random);
+
+pcs.addVolumePoints(model, 10000);
+pcs.addVolumePoints(model, 10000, BABYLON.PointColor.Random);
+</code></pre>
+<p><strong>Note:</strong> additional calculations in <code>addVolumePoint</code> means that it takes longer than <code>addSurfacePoints</code> for the same number of points. For a large number of points this can be noticeable.</p>
+<p>There are four available methods for coloring the points.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BABYLON.PointColor.Random</td>
+<td>Colors are assigned randomly to each point, default method .</td>
+</tr>
+<tr>
+<td>BABYLON.PointColor.Stated</td>
+<td>This method requires two extra parameters, the base color to use, default white, plus a range from 0 to 1 to randomize both the shade and tone of the stated color. A value of 0, default, gives no variation and 1 the largest variation.</td>
+</tr>
+<tr>
+<td>BABYLON.PointColor.Color</td>
+<td>When the model has a texture material applied the color of each point is determined by the texture color of a matching point on a facet. When the material used has color but no texture then the material color is used. When the model has no material applied random coloring is used.</td>
+</tr>
+<tr>
+<td>BABYLON.PointColor.UV</td>
+<td>The model uv values for each facet corner are used to determine the uv values for the points. An emissive texture can be applied to the pcs.mesh.material to color the PCS mesh</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<pre><code class="lang-javascript">pcs.addSurfacePoints(box, 1000, BABYLON.PointColor. Stated, new BABYLON.Color3(1, 0, 0), 0.5);
+pcs.addVolumePoints(box, 10000, BABYLON.PointColor.Color);
+pcs.addSurfacePoints(box, 100000, BABYLON.PointColor.UV);
+</code></pre>
+<p><strong>Note:</strong>  Using <code>BABYLON.PointColor.UV</code> can be limiting. Several models can be added to the PCS. These models may all have different textures. However only one emissive texture can be applied to a PCS mesh. In this case a separate PCS mesh is needed for each model. This is not a restriction when using <code>BABYLON.PointColor.Color</code>.</p>
+<p><strong>Imported Models and Multiple Textures</strong>
+In some cases (for example PBRMaterial) more than one texture can be applied to a model. In which case adding surface or volume points with <code>BABYLON.PointColor.Color</code> will, by default, use the first in the model&#39;s texture array. Though often it is, the first texture may not be the color map, for example it may be a normal map. To specify which texture to use its position in the texture array can be added as a second parameter. </p>
+<pre><code class="lang-javascript">pcs.addSurfacePoints(model, 10000, BABYLON.PointColor.Color, 1);
+
+pcs.addVolumePoints(model, 10000, BABYLON.PointColor.Color, 3);
+</code></pre>
+<p>Of course when you import a model you may not know how many child meshes the model is made up off nor the order of textures for each mesh. Using the <a href="/how_to/debug_layer">inspector</a> you can check the loaded textures and see if their names give you a clue. If not then use trial and error from 0 to the number of textures. Alternatively you can check out meshes and textures once loaded along the lines of</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;location&quot;, &quot;file&quot;, scene, function (meshes) {
+  var n = meshes.length;
+  var p;
+  var t;
+  for (var i = 0; i &lt; n; i++) {
+    if (meshes[i].material !== null) {
+      console.log(&quot;Mesh&quot;, i)
+      t = meshes[i].material.getActiveTextures();
+      p = t.length;
+      for (var j = 0; j &lt; p; j++) {
+        console.log(&quot;Texture&quot;, j, &quot;Name&quot;, t[j].name)
+      }
+    }
+  }
+});
+</code></pre>
+<p><strong>Examples</strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#2">Playground Example - Surface Random</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#2', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#3">Playground Example - Surface Stated</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#3', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#4">Playground Example - Surface Color from Mesh Color</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#4', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#5">Playground Example - Surface Color from Mesh Texture</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#5', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#6">Playground Example - Surface UV from Mesh Texture</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#6', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#28">Playground Example - Surface Color from Imported Mesh Texture</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#28', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#7">Playground Example - Volume Random</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#7', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#8">Playground Example - Volume Stated</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#8', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#9">Playground Example - Volume Color from Mesh Color</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#9', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#10">Playground Example - Volume Color from Mesh Texture</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#10', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#11">Playground Example - Volume UV from Mesh Texture</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#11', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#29">Playground Example - Volume Color from Imported Mesh Texture</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#29', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="building-the-mesh" class="anchor" href="#building-the-mesh"></a>Building the Mesh</h3><p>The PCS mesh cannot be built until all relevant data is collected. Since this can involve ensuring that the material, applied to a model used in adding surface or volume points, is fully loaded, building the mesh is an asynchronous process.</p>
+<p>For example when a mesh model is used in determining the points the model cannot be disposed of until the process of PCS construction is completed. This is achieved by, for example</p>
+<pre><code class="lang-javascript">pcs.addSurfacePoints(box, 10000, BABYLON.PointColor.Color);
+pcs.addPoints(10000, myFunc);
+pcs.buildMeshAsync().then(() =&gt; box.dispose());
+</code></pre>
+<p>If you never want the particle properties of your PCS to change, ie you want it to be immutable then you need do no more. Alternatively you can set the PCS as immutable on creation by setting the updatable option. (Currently updatable is the only item in the option list that is available but the option list is open for future expansions)</p>
+<pre><code class="lang-javascript">var pcs= new BABYLON.PointsCloudSystem(&quot;pcs&quot;, 5, scene, {updatable: false}); 
+</code></pre>
+<p>After making updatable false the following methods will no longer have any effect, <code>initParticles()</code>, <code>updateParticle(particle)</code> and <code>setParticles()</code>.</p>
+<h2><a name="particle-management" class="anchor" href="#particle-management"></a>Particle Management</h2><h3><a name="particle-properties" class="anchor" href="#particle-properties"></a>Particle Properties</h3><p>Once the PCS mesh is built, unless immutable, it can respond to changes in the properties of each particle. Existing properties are shown in the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>position</td>
+<td>Vector3</td>
+<td>(0, 0, 0)</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>Vector3</td>
+<td>(0, 0, 0)</td>
+</tr>
+<tr>
+<td>rotationQuaternion</td>
+<td>Vector3</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>velocity</td>
+<td>Vector3</td>
+<td>(0, 0, 0)</td>
+</tr>
+<tr>
+<td>color</td>
+<td>Vector4</td>
+<td>(1, 1, 1, 1)</td>
+</tr>
+<tr>
+<td>pivot</td>
+<td>Vector3</td>
+<td>(0, 0, 0)</td>
+</tr>
+<tr>
+<td>uvs</td>
+<td>Vector2</td>
+<td>(0,0)</td>
+</tr>
+<tr>
+<td>translateFromPivot</td>
+<td>boolean</td>
+<td>false</td>
+</tr>
+<tr>
+<td>parentId</td>
+<td>integer</td>
+<td>null</td>
+</tr>
+<tr>
+<td>idx</td>
+<td>integer (read only)</td>
+<td>index of particle</td>
+</tr>
+<tr>
+<td>groupId</td>
+<td>integer (read only)</td>
+<td>group number for a particle</td>
+</tr>
+</tbody>
+</table>
+<p>If you set a particle rotation quaternion, its rotation property will then be ignored.</p>
+<p>New properties can be initialised.</p>
+<p><strong>Note:</strong> Since point particles <strong><em>always</em></strong> face the camera setting the rotation of a particle only has any effect in two cases:</p>
+<ol>
+<li>The rotation of a particle parent will rotate its children about itself;</li>
+<li>A pivot is set for the particle.</li>
+</ol>
+<h3><a name="initialising-particles" class="anchor" href="#initialising-particles"></a>Initialising Particles</h3><p>Using <code>addPoints</code> particle properties can be set in the passed function. The <code>addSurfacePoints</code> and <code>addVolumePoints</code> methods obviously set the position and color properties  of the particles but you may still want to set the initial values of other particle properties.</p>
+<p>This can be done using <code>initParticles</code>. With this you must iterate over all the particles by using the <code>nbParticles</code> property and follow a call to this function with a call to <code>setParticles</code>. For example</p>
+<pre><code class="lang-javascript">pcs.initParticles = function() {
+   for (var p = 0; p &lt; pcs.nbParticles; p++) {
+       pcs.particles[p].velocity = BABYLON.Vector3.Zero();
+       pcs.particles[p].acceleration = pcs.particles[p].position.scale(0.01);
+   }
+}
+
+pcs.addSurfacePoints(model, 10000, BABYLON.PointColor.Color);
+pcs.buildMeshAsync().then(() =&gt; {
+  model.dispose()
+  pcs.initParticles();
+  pcs.setParticles();
+});
+</code></pre>
+<h3><a name="updating-particles" class="anchor" href="#updating-particles"></a>Updating Particles</h3><p>When any appropriate particle properties are initiated the the <code>updateParticles</code> method can be used. Unlike <code>initParticles</code> the function is called by <code>setParticles</code> and already passes a particle as an argument.  The method <code>setParticles</code> will only execute after the PCS mesh has been built and so may safely be placed inside a render loop to produce an animation. For example</p>
+<pre><code class="lang-javascript">pcs.updateParticle = function(particle) {
+  particle.velocity.addInPlace(particle.acceleration);
+  particle.position.addInPlace(particle.velocity);
+}
+
+scene.registerBeforeRender(() =&gt; {
+  pcs.setParticles();
+});
+</code></pre>
+<p><strong>Note:</strong> All particle positions are expressed in the <em>local space</em> of the PCS mesh. </p>
+<p>The particle <code>pivot</code> vector is also in <em>local space</em> of the PCS mesh. By default rotations around a pivot are calculated by translating the particle to the pivot point, then rotating it and then the inverse translation applied. By setting the particle method <code>translateFromPivot</code> to <code>true</code> (default <code>false</code>) rotations will only be calculated using the initial translation followed by the rotation leaving the particle at the translated location.  </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#12">Playground Example - Simple Animation</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#12', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>In the following playground the particle pivots in the top PCS are set relative to the particle position and in the lower one are set in the same place.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#14">Playground Example - Pivot Animation</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#14', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>In this playground the only difference is that the lower PCS has <code>translateFromPivot</code> set to <code>true</code>.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#15">Playground Example - Pivot Animation</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#15', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>This playground animates the mesh not the particles.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#16">Playground Example - Immutable Animation</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#16', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>This playground loads meshes from a file, converts to particles and animates</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#17">Playground Example - Loaded Mesh Animation</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#17', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="uvs" class="anchor" href="#uvs"></a>UVs</h3><p>While setting and changing particle colors is straightforward doing this for UVs is a little more complex. Using <code>BABYLON.PointColor.UV</code> as a parameter within <code>addSurfacepoints</code> or <code>addVolumePoints</code> will set the UVs automatically for you based on the passed mesh.</p>
+<p>You can also set the uv value for each particle using the passed function for <code>addPoints</code>. To make sense of the texture as the image used the uv values should relate in some way to the positional values for each particle. To then apply the texture with these uvs both the emissiveColor and emissiveTexture for the PCS mesh material must be set after the mesh is built.</p>
+<p><strong>Note:</strong> Only use emissive.</p>
+<p>For example</p>
+<pre><code class="lang-javascript">var myfunc = function(particle) { 
+    var x = Math.random();
+    var y = Math.random();
+    var z = 0;
+    particle.position = new BABYLON.Vector3(x, y, z);
+    //Relate uv values to positional values
+    particle.uv.x = x;
+    particle.uv.y = y; 
+    }
+    pcs.addPoints(5000, myfunc);
+
+    pcs.buildMeshAsync().then(() =&gt; {
+      pcs.mesh.material.emissiveColor = new BABYLON.Color3(0, 0, 0);
+      pcs.mesh.material.emissiveTexture = myTexture;
+    });
+</code></pre>
+<p>It is possible to use a texture atlas but you need to customize and calculate the more complex relationship between positional and uv values.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#23">Playground Example - UV with Add Points</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#23', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#24">Playground Example - UV with Texture Atlas</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#24', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="recycling-particles" class="anchor" href="#recycling-particles"></a>Recycling Particles</h3><p>You can write your own code to recycle particles using <code>recycleParticle</code> which can be called from within <code>updateParticle</code>. For example,</p>
+<pre><code class="lang-javascript">pcs.recycleParticle = function(particle) {
+    particle.position = BABYLON.Vector3.Zero();
+    particle.velocity = BABYLON.Vector3.Zero();
+    particle.heightLim = 4 + 0.5 * Math.random();
+}
+
+pcs.updateParticle = function(particle) {
+    if (particle.position.y &gt; particle.heightLim) {
+      this.recycleParticle(particle);
+    }
+    particle.velocity.addInPlace(particle.acceleration);
+    particle.position.addInPlace(particle.velocity);
+}
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#19">Playground Example - Recycle Animation</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#19', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="particle-parenting" class="anchor" href="#particle-parenting"></a>Particle Parenting</h3><p>Each particle can be given another particle as a parent.<br>The parent must be created before the child particle. This means the parent has to have a lower index Id (<code>particle.idx</code>) than the current particle. So the first particle in the pool (<code>idx = 0</code>) can&#39;t have a parent. To give a parent to a particle, just set its property <code>parentId</code> to the parent index Id value. </p>
+<pre><code class="lang-javascript">if (particle.idx &gt; 0) {
+    particle.parentId = particle.idx - 1; // the previous particle becomes the parent of the current one
+}
+</code></pre>
+<p>To un-parent a particle, just set <code>.parentId</code> back to <code>null</code> which is the default value.  </p>
+<p>When a particle has got a parent, its position and rotation are then expressed in its parent local space.  </p>
+<pre><code class="lang-javascript">if (particle.idx &gt; 0) {
+    particle.parentId = particle.idx - 1; // the previous particle becomes the parent of the current one
+    // the particle position and rotation are expressed in the previous particle space, this one being already 
+    // rotated and translated from the yet previous particle. Etc.
+    particle.rotation.z = 0.01;
+    particle.position.x = 1.0;
+}
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#18">Playground Example - Parent Animation</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#18', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="particle-intersections" class="anchor" href="#particle-intersections"></a>Particle Intersections</h3><p>The PCS provides a simple way to deal with intersections between a particle and other meshes. As this feature consumes more memory and CPU do not include it unless necessary.</p>
+<p>To use it call the method <code>intersectsMesh(target)</code> (target is a mesh) for any particle to check if this particle intersects the <em>target</em>.<br>It just will return true or false depending whether the particle intersects the target or not.    </p>
+<pre><code class="lang-javascript">if (particle.intersectsMesh(anyMesh)) { 
+  // change properties of particle
+}
+</code></pre>
+<p>By default the check is carried out on the (AABB) bounding box of the mesh. When you wish to use the bounding sphere of the mesh add the parameter true.</p>
+<pre><code class="lang-javascript">if (particle.intersectsMesh(mesh, true) {
+    // change properties of particle
+}; 
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#20">Playground Example - Recycle Particle Collision</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#20', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#21">Playground Example - Mesh Collides into Cloud</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#21', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="pcs-management" class="anchor" href="#pcs-management"></a>PCS Management</h2><p>As you can see above the <code>setParticles()</code> function is used in the BabylonJS render loop to provide behavior to the PCS.  </p>
+<p>Available custom functions of PCS are:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>initParticles()</td>
+<td>sets the initial particle properties.</td>
+</tr>
+<tr>
+<td>updateParticle(particle)</td>
+<td>sets the particle properties. This function is called per particle by <code>PCS.setParticles()</code></td>
+</tr>
+<tr>
+<td>recycleParticle(particle)</td>
+<td>re-sets the particle properties. This function is called conditionally per particle by <code>PCS.updateParticles()</code></td>
+</tr>
+<tr>
+<td>beforeUpdateParticles()</td>
+<td>lets you do things within the call to <code>PCS.setParticles()</code> just before iterating over all the particles.</td>
+</tr>
+<tr>
+<td>afterUpdateParticles()</td>
+<td>lets you do things within the call to <code>PCS.setParticles()</code>  just after the iteration over all the particles is done.</td>
+</tr>
+</tbody>
+</table>
+<p>The pseudo-code for <code>setParticles</code> is</p>
+<pre><code class="lang-javascript">function setParticles() {
+  beforeUpdateParticles();
+  for (var p = 0; p &lt; nbParticles; p++) {
+        updateParticles(particles[p]);
+  }
+  afterUpdateParticles();
+}
+</code></pre>
+<p>The particle properties that can be set are :</p>
+<p>Available properties of PCS are</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Usage</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>particles</td>
+<td>An array containing all the particles. You iterate over this array in <code>initParticles()</code> function for instance.</td>
+<td></td>
+</tr>
+<tr>
+<td>nbParticles</td>
+<td>The number of particles in the PCS.</td>
+<td></td>
+</tr>
+<tr>
+<td>counter</td>
+<td>A counter for your own usage</td>
+<td>0</td>
+</tr>
+<tr>
+<td>computeParticleRotation</td>
+<td>Allows ( default) or prevents <code>setParticle</code> computing particle.rotation</td>
+<td>true</td>
+</tr>
+<tr>
+<td>computeParticleTexture</td>
+<td>Allows ( default) or prevents <code>setParticle</code> computing particle.uvs</td>
+<td>true</td>
+</tr>
+<tr>
+<td>computeParticleColor</td>
+<td>Allows ( default) or prevents <code>setParticle</code> computing particle.color</td>
+<td>true</td>
+</tr>
+<tr>
+<td>computeBoundingBox</td>
+<td>Allows or prevents (default) <code>setParticle</code> computing the PCS mesh bounding box</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p>The particle properties of color, uvs and rotation are set either during the addition phase or by using <code>initParticles</code> and then <code>setParticles</code>. Updating particle properties requires the use of <code>updateParticle</code> which is called by <code>setParticles</code>. Setting the <strong><em>compute</em></strong> properties to false prevents <code>setParticles()</code> from updating the value of the relevant particle property when it is called. Setting one or more of these to false can increase fps, especially with repeated call to <code>setParticles</code> within the render loop.</p>
+<p>If you don&#39;t need your PCS any longer, you can dispose it to free the memory</p>
+<pre><code class="lang-javascript">PCS.dispose();
+PCS = null    // tells the garbage collector the reference can be also cleaned up
+</code></pre>
+<h3><a name="start-and-end-indexes-for-setparticles" class="anchor" href="#start-and-end-indexes-for-setparticles"></a>Start and End Indexes for setParticles()</h3><p>For performance reasons you may not want to compute the properties of all  the particles each frame. There are three optional parameters for <code>setParticles()</code> that you can use to choose a range of particles to compute or not : <code>start</code>, <code>end</code>, <code>update</code>  </p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Definition</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td><em>(number)</em> the index from where to start to iterate in the <code>particles</code> array</td>
+<td>0</td>
+</tr>
+<tr>
+<td>stop</td>
+<td><em>(number)</em> the index (included) where to stop to iterate in the<br><code>particles</code> array</td>
+<td>nbParticles - 1</td>
+</tr>
+<tr>
+<td>update</td>
+<td><em>(boolean)</em> to force the PCS mesh vertex buffer to be updated</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>If you pass a <code>end</code> value greater than <code>nbParticles</code> - 1, the iteration will stop at <code>nbParticles</code> - 1 to prevent you from trying to access to undefined elements.</p>
+<p>Example 1 : to only update 10000 particles mesh every three frames  </p>
+<ul>
+<li>frame 1 : <code>setParticles(0, 3300, false)</code> computes everything for particles from 0 to 3300 and doesn&#39;t update the mesh.</li>
+<li>frame 2 : <code>setParticles(3301, 6600, false)</code> computes everything for particles from 3301 to 6600 and doesn&#39;t update the mesh.</li>
+<li>frame 3 : <code>setParticles(6601, 9999, true)</code> computes everything for particles from 6601 to 9999 and finally updates the mesh. </li>
+</ul>
+<p>In this playground change <em>invSpeed</em> (line 29) to change speed.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#25">Playground Example - Start and End For Animation Speed</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#25', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Example 2 : you could keep, say, the first 5000 particles as unused ones and compute the particle behavior only for the last 5000 in your global pool -  <code>setParticles(5000, 9999, true)</code> computes everything for particles from 5000 to 9999 and updates the mesh.  </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UI95UC#26">Playground Example - Start and End For Part Animation</a> - <i class="fa fa-eye" onclick="createIframe('UI95UC#26', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="hints-and-tips" class="anchor" href="#hints-and-tips"></a>Hints and Tips</h2><p>A PCS can iterate over a very large number of particles during a call to <code>updateParticle</code> and it would be nice to avoid any apparent pauses in scene generation. The JavaScript Garbage Collector can start its cleaning in the middle of what you want to be a very smooth animation and produce lags. One possibility of lessening these is avoid creating new objects in the loops that execute often, where particles are created or updated.  </p>
+<p>For example, consider a PCS with, say, 30000 particles where you change their velocities</p>
+<pre><code class="lang-javascript">pcs.updateParticle = function(particle) {
+    var accel = new BABYLON.Vector3(0, 0.5, 0);
+    particle.velocity = particle.velocity.add(accel);
+    // ...
+}
+</code></pre>
+<p>will create two new <code>Vector3</code> objects each call, or 60 000 new objects over the course of the update.  </p>
+<p>Instead, make your update loops reuse variables that are declared outside the loop, and don&#39;t call any methods inside the loop that create new objects, for example</p>
+<pre><code class="lang-javascript">var accel = new BABYLON.Vector3(0, 0.5, 0);
+pcs.updateParticle = function(particle) {
+    particle.velocity.addInPlace(accel);
+    // ...
+}
+</code></pre>
+<p>A PCS also has a <code>vars</code> property, which is an object that you can use to store any variables you want to reuse. Any variables you store there will share the PCS lifecycle, and get cleaned up when you dispose it:</p>
+<pre><code class="lang-javascript">pcs.vars.tempVector = new BABYLON.Vector3(0, 0, 0);
+// ...
+pcs.dispose();  // cleans explicitly all your PCS.vars !
+</code></pre>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h3><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h3><p><a href="/features/Particles">Particles Overview</a>  </p>
+<p><a href="/babylon101/particles">Particles 101</a>  </p>
+<p><a href="/how_to/Animate">How to Create Animated Particles</a><br><a href="/how_to/Sub_Emitters">How to Use Sub Emitters</a></p>
+<p><a href="/How_To/Solid_Particles">Solid Particle System</a></p>
+<h3><a name="intermediate-l2" class="anchor" href="#intermediate-l2"></a>Intermediate - L2</h3><p><a href="/how_to/Customise">How to Customize the Particle System</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

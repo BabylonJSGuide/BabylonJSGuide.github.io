@@ -1,0 +1,107 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Thin Instances - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Thin Instances</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#creating-thin-instances">Creating thin instances</a></li>
+<li><a href="#custom-attributes">Custom attributes</a></li>
+<li><a href="#faster-thin-instances">Faster thin instances</a></li>
+<li><a href="#support">Support</a></li>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#going-further">Going further</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-thin-instances" class="anchor" href="#how-to-use-thin-instances"></a>How to use Thin Instances</h1><p>Starting with Babylon.js v4.2, thin intances are a new feature of meshes.</p>
+<p>PG: <a href="https://playground.babylonjs.com/#V1JE4Z#1">https://playground.babylonjs.com/#V1JE4Z#1</a> - <i class="fa fa-eye" onclick="createIframe('V1JE4Z#1', this)"></i><div class="iframeContainer"></div></p>
+<p>As explained in <a href="/How_To/How_to_use_Instances">How To Use Instances</a>, instances are an excellent way to use hardware accelerated rendering to draw a huge number of identical meshes.</p>
+<p>However, regular instances still have a performance penalty on the javascript side because each instance is its own object (<code>InstancedMesh</code>): if you have 10000 instances in your scene, the engine must loop over all those objects to make a number of processing (visibility check, etc).</p>
+<p>Thin instances don&#39;t create new objects so you don&#39;t incur any penalty on the javascript side by having thousands of them. This performance increase does come with a cost:</p>
+<ul>
+<li>all thin instances are always all drawn (if the mesh is deemed visible) or none. It&#39;s all or nothing.</li>
+<li>adding / removing a thin instance is more costly than with <code>InstancedMesh</code></li>
+</ul>
+<p>Thin instances should be used when you need a lot of static instances that you know won&#39;t change often / at all. Think of the seats of a stadium, for eg.</p>
+<p>So, regular instances may still be the way to go, depending on your scene: if you have a lot of objects scattered and only a few are visible in a frame, or if you must add/remove instances continuously, it may be better to use instances than thin instances.</p>
+<h2><a name="creating-thin-instances" class="anchor" href="#creating-thin-instances"></a>Creating thin instances</h2><p>A thin instance is represented by a position/rotation/scaling data packed into a matrix.</p>
+<p>The easiest way to create a thin instance is by doing:</p>
+<pre><code class="lang-javascript">var matrix = BABYLON.Matrix.Translation(-2, 2, 0);
+var idx = sphere.thinInstanceAdd(matrix);
+</code></pre>
+<p>You can also pass an array of matrices to <code>thinInstanceAdd</code> if you want to create multiple thin instances at once.</p>
+<p>Note that <code>sphere</code> itself is not rendered. If you want to render it, use <code>thinInstanceAddSelf()</code>:</p>
+<pre><code class="lang-javascript">var idx2 = sphere.thinInstanceAddSelf();
+</code></pre>
+<p>These methods return an index that you can use to reference the thin instance.</p>
+<p>For example, you can update a thin instance afterwards:</p>
+<pre><code class="lang-javascript">var matrix2 = BABYLON.Matrix.Translation(2, 1, 0);
+sphere.thinInstanceSetMatrixAt(idx2, matrix2);
+</code></pre>
+<p>Example: <a href="https://playground.babylonjs.com/#217750">https://playground.babylonjs.com/#217750</a> - <i class="fa fa-eye" onclick="createIframe('217750#', this)"></i><div class="iframeContainer"></div></p>
+<p>Those 3 methods take an additional <code>refresh</code> parameter (<code>true</code> by default) that allows you to block the buffer refresh mechanism to save performances: if you must use those methods multiple times, pass <code>false</code> for all calls except for the last one.</p>
+<p>The bounding info of the mesh is recomputed each time you call these methods to encompass all the thin instances (except if you set <code>doNotSyncBoundingInfo</code> to <code>true</code>). You can also refresh explicitely the bounding info by calling <code>thinInstanceRefreshBoundingInfo</code>.</p>
+<h2><a name="custom-attributes" class="anchor" href="#custom-attributes"></a>Custom attributes</h2><p>As for regular instances, you can add custom attributes to thin instances.</p>
+<p>To do so, register the attribute and set the value(s) for the thin instance(s):</p>
+<pre><code class="lang-typescript">sphere.thinInstanceRegisterAttribute(&quot;color&quot;, 4);
+
+sphere.thinInstanceSetAttributeAt(&quot;color&quot;, idx, [1, 1, 0, 1]);
+sphere.thinInstanceSetAttributeAt(&quot;color&quot;, idx2, [1, 0, 0, 1]);
+</code></pre>
+<p>As the thin instance indexes are really indexes into the underlying buffer, you can set the values for several thin instances at once:</p>
+<pre><code class="lang-typescript">sphere.thinInstanceRegisterAttribute(&quot;color&quot;, 4);
+
+sphere.thinInstanceSetAttributeAt(&quot;color&quot;, 0, [1, 1, 0, 1, 1, 0, 0, 1]);
+</code></pre>
+<p>Example: <a href="https://playground.babylonjs.com/#217750#1">https://playground.babylonjs.com/#217750#1</a> - <i class="fa fa-eye" onclick="createIframe('217750#1', this)"></i><div class="iframeContainer"></div></p>
+<p>You can get or set the number of thin instances to display through the <code>thinInstanceCount</code> property.</p>
+<p>Note that you can&#39;t set a number that is higher than what the underlying buffer can handle!</p>
+<p>Set the number to 0 to bypass the thin instance rendering and render the mesh as usual.</p>
+<h2><a name="faster-thin-instances" class="anchor" href="#faster-thin-instances"></a>Faster thin instances</h2><p>To get the most of the thin instance support, you can directly pass the pre-built buffer of matrices / custom attributes:</p>
+<pre><code class="lang-typescript">var matrix1 = BABYLON.Matrix.Translation(-2, 2, 0);
+var matrix2 = BABYLON.Matrix.IdentityReadOnly;
+var matrix3 = BABYLON.Matrix.Translation(2, 1, 0);
+
+var bufferMatrices = new Float32Array(16 * 3);
+
+matrix1.copyToArray(bufferMatrices, 0);
+matrix2.copyToArray(bufferMatrices, 16);
+matrix3.copyToArray(bufferMatrices, 32);
+
+var bufferColors = new Float32Array(3 * 4);
+
+bufferColors.set([1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1]);
+
+sphere.thinInstanceSetBuffer(&quot;matrix&quot;, bufferMatrices, 16);
+sphere.thinInstanceSetBuffer(&quot;color&quot;, bufferColors, 4);
+</code></pre>
+<p>Example: <a href="https://playground.babylonjs.com/#217750#2">https://playground.babylonjs.com/#217750#2</a> - <i class="fa fa-eye" onclick="createIframe('217750#2', this)"></i><div class="iframeContainer"></div></p>
+<p>If you have a lot of thin instances to create, it could be a lot faster than calling <code>thinInstanceAdd</code> / <code>thinInstanceSetAttributeAt</code>. Also, you can allocate a bigger buffer than what you really need at start and play with the <code>thinInstanceCount</code> property to adjust the number of instances to display during the course of your program.</p>
+<p>Note that you don&#39;t need to call <code>thinInstanceRegisterAttribute</code> if you set a custom attribute buffer by calling <code>thinInstanceSetBuffer</code>.</p>
+<p>If you update the buffers you passed to <code>thinInstanceSetBuffer</code>, you must call <code>thinInstanceBufferUpdated</code> for the changes to take effect.</p>
+<p>To gain some performances, you can flag the buffers as <strong>static</strong>, meaning you won&#39;t change them later on. This way, the system can apply some optimizations to your buffers.</p>
+<p>To do so, pass <code>true</code> for the 4th parameter of <code>thinInstanceSetBuffer</code>:</p>
+<pre><code class="lang-javascript">sphere.thinInstanceSetBuffer(&quot;matrix&quot;, bufferMatrices, 16, true);
+sphere.thinInstanceSetBuffer(&quot;color&quot;, bufferColors, 4, true);
+</code></pre>
+<h2><a name="support" class="anchor" href="#support"></a>Support</h2><p>Thin instances are supported for collisions, picking, rendering and shadows. However, for collisions, a single bounding info encompassing all the thin instances is used to check intersection: the check is not done for each thin instance separately.</p>
+<p>For picking, you need to forcefully opt-in as this could be an expensive process:</p>
+<pre><code>sphere.thinInstanceEnablePicking = true;
+</code></pre><h2><a name="limitations" class="anchor" href="#limitations"></a>Limitations</h2><p>Thin instances with mixed positive and negative determinant matrices won&#39;t be rendered correctly. If you need thin instances with both positive and negative determinants, create two meshes and add the thin instances to one or the other (don&#39;t forget to set the <code>sideOrientation</code> property properly for both mesh materials!).</p>
+<p>For eg: <a href="https://playground.babylonjs.com/#217750#3">https://playground.babylonjs.com/#217750#3</a> - <i class="fa fa-eye" onclick="createIframe('217750#3', this)"></i><div class="iframeContainer"></div>
+<img src="/img/how_to/Mesh/thinInstancesWrongSideOrientation.png" alt="Wrong rendering"></p>
+<p>The green and blue cubes are not rendered correctly because they have a -1 scale for the X direction, making the determinant of their matrix negative.</p>
+<p>To correct the problem, create another mesh, add the green/blue instances to that mesh (and remove them from the first mesh!) and set the side orientation of the material of that mesh to be <strong>Clockwise</strong> (by default, it is <strong>Counter clockwise</strong>):</p>
+<p>PG: <a href="https://playground.babylonjs.com/#217750#4">https://playground.babylonjs.com/#217750#4</a> - <i class="fa fa-eye" onclick="createIframe('217750#4', this)"></i><div class="iframeContainer"></div>
+<img src="/img/how_to/Mesh/thinInstancesOkSideOrientation.png" alt="Correct rendering"></p>
+<h2><a name="going-further" class="anchor" href="#going-further"></a>Going further</h2><p><a href="/How_To/How_to_use_Instances">How To Use Instances</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

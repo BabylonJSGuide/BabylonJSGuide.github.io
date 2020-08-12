@@ -1,0 +1,170 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Pivots and Axes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Pivots and Axes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#playground-examples-connected-axle-has-zero-mass-and-is-at-the-origin-with-no-rotation">Playground Examples  - Connected Axle Has Zero Mass and is at the Origin with No Rotation</a></li>
+<li><a href="#playground-examples-connected-axle-has-zero-mass-and-position-or-rotation-non-zero">Playground Examples  - Connected Axle Has Zero Mass and Position or Rotation Non-Zero</a></li>
+<li><a href="#playground-examples-connected-axle-has-non-zero-mass-and-is-at-the-origin-with-no-rotation">Playground Examples  - Connected Axle Has Non-Zero Mass and is at the Origin with No Rotation</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="pivots-and-axes" class="anchor" href="#pivots-and-axes"></a>Pivots and Axes</h1><p>Through the use of playgrounds this section considers how the pivot and axis parameters of the hinge joint effect the behaviour of the joint in the three physics engines </p>
+<ol>
+<li>Cannon.js;</li>
+<li>Oimo.js;</li>
+<li>Ammo.js</li>
+</ol>
+<p>See <a href="/how_to/using_the_physics_engine">How to Use The Physics&#39; Engines</a> for an overall view of setting up and using the three plugins.</p>
+<p>The examples on this page a hinge joint and a main body are added to a connected axle using</p>
+<pre><code class="lang-javascript">connectedAxle.physicsImpostor.addJoint(mainBody.physicsImpostor, joint);
+</code></pre>
+<p>the following parameters need to be set</p>
+<ul>
+<li>mainPivot: main body pivot;</li>
+<li>mainAxis: main body axis ;</li>
+<li>connectedPivot: connected axle pivot;</li>
+<li>connectedAxis: connected axle axis.</li>
+</ul>
+<p>In all the following playgrounds the X axis is red, the Y axis green and the Z axis blue and unless clearly stated otherwise the gravity is zero. </p>
+<p>The main body is a purple box and the connected axle is a yellow box. Local axes are shown for both.</p>
+<p>The purple sphere marks the position of the main pivot and is the center of rotation for the main body around the local axis of the main body. The yellow sphere marks the position of the connected pivot which is the negative of the set value for the connected pivot. </p>
+<p>The initial position of the main body is set by the values of the main pivot and the connected pivot and is may be shown by the slightly larger black sphere. The radius of rotation for the main body around the main pivot is determined by the value of the connected pivot.</p>
+<p>The main body is orientated so that the connected axis and the main axis align but can be in the opposite directions.</p>
+<p>When the position and orientation of the bodies&#39; imposters set by their pivots do not match the position of the bodies&#39; meshes then, at the start, movement of the bodies can occur as the meshes re-position to that given by the pivots. </p>
+<p><strong>Note</strong> In some instances pivot and axes in <code>Cannon.js</code> can result in the an axis or movement of the body in the opposite direction to those of <code>Oimo.js</code> and <code>Ammo.js</code>.</p>
+<p>The first and second set of playgrounds show examples when the mass of the connected axle is zero. In the first set the connected axle is positioned at the origin with no rotation. In the second the connected axle one or both of position or rotation can be non-zero. In the third set of examples both the body and the axle have a non-zero mass.</p>
+<h2><a name="playground-examples-connected-axle-has-zero-mass-and-is-at-the-origin-with-no-rotation" class="anchor" href="#playground-examples-connected-axle-has-zero-mass-and-is-at-the-origin-with-no-rotation"></a>Playground Examples  - Connected Axle Has Zero Mass and is at the Origin with No Rotation</h2><p>(A) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(0, 0, 0),  
+connectedPivot: new BABYLON.Vector3(0, 0, 0), 
+mainAxis: new BABYLON.Vector3(0, 1, 0), //
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#2">Playground Example - A</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<hr>
+<p>(B) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(0, 5, 0), //set main body position
+connectedPivot: new BABYLON.Vector3(0, 0, 0),
+mainAxis: new BABYLON.Vector3(0, 1, 0),
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#3">Playground Example - B</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<hr>
+<p>(C) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(0, 0, 0),
+connectedPivot: new BABYLON.Vector3(5, 0, 0), //adjust main body position and radius of rotation
+mainAxis: new BABYLON.Vector3(0, 1, 0),
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#4">Playground Example - C</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<hr>
+<p>(D) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(10, 0, 0),
+connectedPivot: new BABYLON.Vector3(0, 5, 0),
+mainAxis: new BABYLON.Vector3(1, 0, 0), //different axes will orientate main body to align axes.
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#5">Playground Example - D</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<hr>
+<p>(E) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(0, 0, 0), //set main body position
+connectedPivot: new BABYLON.Vector3(0, 0, 0), //adjust main body position and radius of rotation
+mainAxis: new BABYLON.Vector3(0, 0, 1), //different axes will orientate main body to align axes.
+connectedAxis: new BABYLON.Vector3(1, 0, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#6">Playground Example - E</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="playground-examples-connected-axle-has-zero-mass-and-position-or-rotation-non-zero" class="anchor" href="#playground-examples-connected-axle-has-zero-mass-and-position-or-rotation-non-zero"></a>Playground Examples  - Connected Axle Has Zero Mass and Position or Rotation Non-Zero</h2><p>Any translation or rotation of the connected axle results in the same transformation being applied to the whole hinge joint system.</p>
+<p>(F) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(0, 0, 0),  
+connectedPivot: new BABYLON.Vector3(0, 0, 0), 
+mainAxis: new BABYLON.Vector3(0, 1, 0), //
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#7">Playground Example - F</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<hr>
+<p>(G) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(0, 0, 0),
+connectedPivot: new BABYLON.Vector3(0, 0, 0),
+mainAxis: new BABYLON.Vector3(0, 1, 0),
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#8">Playground Example - G</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<hr>
+<p>(H) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(5, 0, 0),
+connectedPivot: new BABYLON.Vector3(0, 0, 0), 
+mainAxis: new BABYLON.Vector3(0, 1, 0),
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#9">Playground Example - H</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#9', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<hr>
+<p>(J) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(10, 0, 0),
+connectedPivot: new BABYLON.Vector3(0, 5, 0), //adjust main body position and radius of rotation
+mainAxis: new BABYLON.Vector3(0, 1, 0), 
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#10">Playground Example - J</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#10', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<hr>
+<p>(K) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(10, 0, 0), //set main body position
+connectedPivot: new BABYLON.Vector3(0, 5, 0), //adjust main body position and radius of rotation
+mainAxis: new BABYLON.Vector3(0, 0, 1), //different axes will rotate main body so stated axes align.
+connectedAxis: new BABYLON.Vector3(1, 0, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#11">Playground Example - K</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#11', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="playground-examples-connected-axle-has-non-zero-mass-and-is-at-the-origin-with-no-rotation" class="anchor" href="#playground-examples-connected-axle-has-non-zero-mass-and-is-at-the-origin-with-no-rotation"></a>Playground Examples  - Connected Axle Has Non-Zero Mass and is at the Origin with No Rotation</h2><p>When the position of the main body mesh is not the same as the position imposed on the impostors by the pivots or axes the body the physics will move the body from its mesh position to the position determined by the pivots and axes. This movement acts in the physics&#39; world and so will set the hinge joint system in motion. </p>
+<p>In the following example the parameter setting will be applied in four situations, the last two just for fun.</p>
+<p>  i. No Motor - main body mesh position and rotation made to be equal to that determined by pivots and axes;<br> ii. No Motor - main body mesh position and rotation different to that determined by pivots and axes;<br>iii. Motor Applied - as ii.;<br> iv. Motor Applied in Non-Zero gravity - as ii.</p>
+<p>(L) Parameter Settings</p>
+<pre><code class="lang-javascript">mainPivot: new BABYLON.Vector3(0, 0, 0),  
+connectedPivot: new BABYLON.Vector3(0, 0, 0), 
+mainAxis: new BABYLON.Vector3(0, 1, 0),
+connectedAxis: new BABYLON.Vector3(0, 1, 0)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#13">Playground Example - L i</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#13', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#14">Playground Example - L ii</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#14', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#15">Playground Example - L iii</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#15', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#8RQJ1R#16">Playground Example - L iv</a> - <i class="fa fa-eye" onclick="createIframe('8RQJ1R#16', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/how_to/using_the_physics_engine">How To Use The Physics&#39; Engines</a><br><a href="/how_to/forces">How To Use Forces</a><br><a href="/how_to/joints">How to use Joints</a><br><a href="/how_to/compounds">How To Create Compound Bodies</a><br><a href="/how_to/soft_bodies">How To Create Soft Bodies</a> </p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/how_to/Using_Advanced_Physics_Features">How To Use Advanced Features</a></p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/how_to/Adding_Your_Own_Physics_Engine_Plugin_to_Babylon.js">How To Add Your Own Physics Engine</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

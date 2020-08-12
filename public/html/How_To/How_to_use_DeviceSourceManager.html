@@ -1,0 +1,81 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the DeviceSourceManager for Inputs - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the DeviceSourceManager for Inputs</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#events-and-observables">Events and Observables</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p>The <a href="https://doc.babylonjs.com/api/classes/babylon.devicesourcemanager">DeviceSourceManager</a> is a class that will manage the connections for various user input devices and provide methods of querying those devices for their current state.<br>This class supports several methods of input:</p>
+<ul>
+<li><strong>Keyboard</strong> <em>(DeviceType: BABYLON.DeviceType.Keyboard, Inputs: number)</em></li>
+<li><strong>Mouse</strong> <em>(DeviceType: BABYLON.DeviceType.Mouse, Inputs: BABYLON.PointerInput)</em></li>
+<li><strong>Touch</strong> <em>(DeviceType: BABYLON.DeviceType.Pointer, Inputs: BABYLON.PointerInput)</em></li>
+<li><strong>DualShock Gamepad</strong> <em>(DeviceType: BABYLON.DeviceType.DualShock, Inputs: BABYLON.DualShockInput)</em></li>
+<li><strong>Xbox Gamepad, One or 360</strong> <em>(DeviceType: BABYLON.DeviceType.Xbox, Inputs: BABYLON.XboxInput)</em></li>
+<li><strong>Switch Gamepad, L+R JoyCon Grip or Pro Controller</strong> <em>(DeviceType: BABYLON.DeviceType.Switch, Inputs: BABYLON.SwitchInput)</em></li>
+<li><strong>Generic/Other Gamepad</strong> <em>(DeviceType: BABYLON.DeviceType.Generic, Inputs: number)</em></li>
+</ul>
+<p>Here&#39;s an example of the DeviceSourceManager in use</p>
+<ul>
+<li><a href="https://playground.babylonjs.com/#C7PM2B">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('C7PM2B#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>To use the DeviceSourceManager, first create an instance of it.  You will need to provide an engine object.</p>
+<pre><code class="lang-javascript">var deviceSourceManager = new BABYLON.DeviceSourceManager(scene.getEngine());
+</code></pre>
+<p>Within your scene&#39;s render/game loop, you can query the DeviceSourceManager for the current state of a specific input.  First, you will need to get the DeviceSource object.  With this object, you can then query for a specific input&#39;s status.</p>
+<pre><code class="lang-javascript">// If the device has been registered in the DeviceSourceManager
+if (deviceSourceManager.getDeviceSource(BABYLON.DeviceType.Xbox)) {
+    // And the A button was pressed
+    if (deviceSourceManager.getDeviceSource(BABYLON.DeviceType.Xbox).getInput(BABYLON.XboxInput.A) == 1) {
+        // Do something
+    }
+}
+</code></pre>
+<p>It should also be noted that you can use optional chaining to make checks fit into a single line</p>
+<pre><code class="lang-javascript">if (deviceSourceManager.getDeviceSource(BABYLON.DeviceType.Xbox)?.getInput(BABYLON.XboxInput.A) == 1) {
+    // Do something
+}
+</code></pre>
+<h1><a name="events-and-observables" class="anchor" href="#events-and-observables"></a>Events and Observables</h1><p>You can use the following Observables to work with identifiers for a given device</p>
+<pre><code class="lang-javascript">// Before a device is registered
+onBeforeDeviceConnectedObservable.add((device) =&gt; {
+    // You can get the device type by using device.deviceType
+    // You can also get the device slot (only applicable to gamepads and touch) by using device.deviceSlot
+});
+
+onBeforeDeviceDisconnectedObservable.add((device) =&gt; {
+    // You can get the device type by using device.deviceType
+    // You can also get the device slot (only applicable to gamepads and touch) by using device.deviceSlot
+});
+
+// After a device is registered
+onAfterDeviceConnectedObservable.add((device) =&gt; {
+    // You can get the device type by using device.deviceType
+    // You can also get the device slot (only applicable to gamepads and touch) by using device.deviceSlot
+});
+
+onAfterDeviceDisconnectedObservable.add((device) =&gt; {
+    // You can get the device type by using device.deviceType
+    // You can also get the device slot (only applicable to gamepads and touch) by using device.deviceSlot
+});
+</code></pre>
+<p>For Keyboards and Pointers, you can use an event based system to get the current input and previous input when an input is activated</p>
+<pre><code class="lang-javascript">deviceSourceManager.getDeviceSource(BABYLON.DeviceType.Keyboard).onInputChangedObservable.add((device) =&gt; {
+    // device.inputIndex is the activated input
+    // device.currentState is the current value
+    // device.previousState is the previous value (before activation)
+});
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

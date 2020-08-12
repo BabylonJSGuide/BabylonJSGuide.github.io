@@ -1,0 +1,178 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>A Vertical Wave with Shader Code - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>A Vertical Wave with Shader Code</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#first-stage-design">First Stage Design</a></li>
+<li><a href="#first-challenge">First Challenge</a></li>
+<li><a href="#second-stage-design">Second Stage Design</a></li>
+<li><a href="#third-stage-design">Third Stage Design</a></li>
+<li><a href="#sps-code">SPS Code</a></li>
+<li><a href="#shader-material-code">Shader Material Code</a><ul>
+<li><a href="#vertex-shader">Vertex Shader</a></li>
+<li><a href="#fragment-shader">Fragment Shader</a></li>
+<li><a href="#set-material">Set Material</a></li>
+<li><a href="#animation-loop">Animation Loop</a></li>
+</ul>
+</li>
+<li><a href="#shader-builder-code">Shader Builder Code</a><ul>
+<li><a href="#shader-code">Shader Code</a></li>
+<li><a href="#set-material">Set Material</a></li>
+<li><a href="#animation-loop">Animation Loop</a></li>
+</ul>
+</li>
+<li><a href="#vertical-wave">Vertical Wave</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="vertical-wave-with-vertex-shader" class="anchor" href="#vertical-wave-with-vertex-shader"></a>Vertical Wave with Vertex Shader</h1><p>As with any code it is important to have a firm idea of what you want to achieve, what is possible to code and 
+a design. </p>
+<h2><a name="requirements" class="anchor" href="#requirements"></a>Requirements</h2><p>The requirements are a row of many boxes that move vertically in a wave motion. The motion will be achieved by 
+changing the the apparent positions of all vertices within a Vertex Shader. To be clear the positions of the boxes within 
+the scene model will not be altered. What will be changed through the Vertex Shader is their projection onto the screen.</p>
+<h2><a name="first-stage-design" class="anchor" href="#first-stage-design"></a>First Stage Design</h2><p>The boxes will be generated using the Solid Particle System as this deals with a multitude of repeated boxes efficiently. 
+The vertical height of a box at any time will depend on the time and its position along the x axis using the sin function.</p>
+<h2><a name="first-challenge" class="anchor" href="#first-challenge"></a>First Challenge</h2><p>Generally coding this project in Javascript, for example, would give access to the position of a box and so</p>
+<pre><code class="lang-Javascript">box.position.y = Math.sin(box.position.x + time)
+</code></pre>
+<p>could be used.</p>
+<p>However the data passed to a Vertex Shader Code is the attributes of the vertices of a mesh or is through using uniforms. Also the 
+Vertex Shader Code applies to a single vertex with no access to any other vertices. 
+Since the x coordinate of vertices on the left hand side of the box will differer by the size of the box to those on the right hand side. 
+So sin(x<sub>Left</sub> + time) with differ from sin(x<sub>Right</sub> + time) distorting the box. </p>
+<p>What is needed is a method of obtaining the same number h, from the numbers x<sub>Left</sub> and x<sub>Right</sub>. </p>
+<h2><a name="second-stage-design" class="anchor" href="#second-stage-design"></a>Second Stage Design</h2><p>The boxes are cubes arranged equally spaced with the following parameters, <em>size</em> of box, <em>gap</em> between boxes and <em>spacing</em> = <em>size</em> + <em>gap</em></p>
+<p><img src="/img/how_to/Shaders/wave1.jpg" alt="spaced boxes"></p>
+<p>The number of boxes n will be odd, numbered from the left starting with 0. </p>
+<p>The box i will be at position (i - floor(n/2)) * <em>spacing</em> + <em>size</em>/2</p>
+<p>For example when n = 5, floor(n/2) = 2 and the left hand edges of the boxes 0 to 4 will have positions</p>
+<p>-2 * <em>spacing</em>, -1 * <em>spacing</em>, 0, 1 * <em>spacing</em>, 2 * <em>spacing</em> respectively. Adding size to these gives their hand edges.</p>
+<p><img src="/img/how_to/Shaders/wave2.jpg" alt="spaced boxes positions"></p>
+<p>Dividing these left and right hand edge positions by <em>spacing</em> gives a pair of numbers for each box of</p>
+<p>-2, -2 + (<em>size</em>/<em>spacing</em>), &nbsp;&nbsp;&nbsp;-1, -1 + (<em>size</em>/<em>spacing</em>), &nbsp;&nbsp;&nbsp;0, (<em>size</em>/<em>spacing</em>), &nbsp;&nbsp;&nbsp;1, 1 + (<em>size</em>/<em>spacing</em>), &nbsp;&nbsp;&nbsp;2, 2 + (<em>size</em>/<em>spacing</em>).</p>
+<p>Since <em>spacing</em> = <em>size</em> + <em>gap</em>  <em>spacing</em> &gt; <em>size</em> and so (<em>size</em>/<em>spacing</em>) &lt; 1 and it follows that applying the 
+function floor to each of these numbers gives </p>
+<p>-2, -2, &nbsp;&nbsp;&nbsp;-1, -1, &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;0, 0, &nbsp;&nbsp;&nbsp;1, 1, &nbsp;&nbsp;&nbsp;2,2.</p>
+<p>Hence obtaining a number h that is the same from the numbers x<sub>Left</sub> and x<sub>Right</sub>.<br>For a box the x coordinate of any vertex will either be on a left hand or a right hand edge and so for each box <em>x/spacing</em> 
+will give a unique number. </p>
+<h2><a name="third-stage-design" class="anchor" href="#third-stage-design"></a>Third Stage Design</h2><p>Within the Vertex Shader Main function </p>
+<pre><code>vec3 p = position;
+float bn = floor(position.x / box_spacing);
+p.y = p.y + sin(time + bn/4.0);
+gl_Position = worldViewProjection * vec4(p, 1.0);
+</code></pre><p>where time and box_spacing are uniforms.</p>
+<h2><a name="sps-code" class="anchor" href="#sps-code"></a>SPS Code</h2><pre><code>//Create SPS of Boxes
+var boxes = 101; //odd number
+var box_size = 0.25; // must be float
+var box_gap = box_size/2;
+var box_spacing = box_size + box_gap;
+var box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {size:box_size}, scene);
+
+var boxes_SPS = new BABYLON.SolidParticleSystem(&quot;boxesSPS&quot;, scene, {updatable: false});
+
+//function to position boxes
+var set_boxes = function(particle, i, s) {   
+    var mid_point = Math.floor(boxes/2);
+    particle.position.x = (i - mid_point) * box_spacing + box_size/2;
+}
+
+boxes_SPS.addShape(box, boxes, {positionFunction:set_boxes});  
+var boxes = boxes_SPS.buildMesh(); // mesh of leaves
+box.dispose();
+</code></pre><h2><a name="shader-material-code" class="anchor" href="#shader-material-code"></a>Shader Material Code</h2><h3><a name="vertex-shader" class="anchor" href="#vertex-shader"></a>Vertex Shader</h3><pre><code>// Attributes
+attribute vec3 position;
+attribute vec3 normal;
+attribute vec2 uv;
+
+// Uniforms
+uniform mat4 worldViewProjection;
+uniform float box_spacing;
+uniform float time;
+
+// Normal
+varying vec2 vUV;
+
+void main(void) {
+    vec3 p = position;
+    float bn = floor(position.x / box_spacing);
+    p.y = p.y + sin(time + bn/4.0);
+    gl_Position = worldViewProjection * vec4(p, 1.0);
+
+    vUV = uv;
+}
+</code></pre><h3><a name="fragment-shader" class="anchor" href="#fragment-shader"></a>Fragment Shader</h3><pre><code>varying vec2 vUV;
+
+uniform sampler2D textureSampler;
+
+void main(void) {
+  gl_FragColor = texture2D(textureSampler, vUV);
+}
+</code></pre><h3><a name="set-material" class="anchor" href="#set-material"></a>Set Material</h3><pre><code class="lang-javascript">var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, {
+        vertexElement: &quot;vertexShaderCode&quot;,
+        fragmentElement: &quot;fragmentShaderCode&quot;,
+    },
+    {
+        attributes: [&quot;position&quot;, &quot;normal&quot;, &quot;uv&quot;],
+        uniforms: [&quot;world&quot;, &quot;worldView&quot;, &quot;worldViewProjection&quot;, &quot;view&quot;, &quot;projection&quot;]
+    });
+
+
+var mainTexture = new BABYLON.Texture(&quot;amiga.jpg&quot;, scene);
+
+shaderMaterial.setTexture(&quot;textureSampler&quot;, mainTexture);
+</code></pre>
+<h3><a name="animation-loop" class="anchor" href="#animation-loop"></a>Animation Loop</h3><pre><code class="lang-javascript">var time = 0;
+scene.registerBeforeRender(function() {
+    boxes.material.setFloat(&quot;time&quot;, time);
+    time +=0.1;
+});
+</code></pre>
+<h2><a name="shader-builder-code" class="anchor" href="#shader-builder-code"></a>Shader Builder Code</h2><h3><a name="shader-code" class="anchor" href="#shader-code"></a>Shader Code</h3><pre><code class="lang-javascript">BABYLONX.ShaderBuilder.InitializeEngine();
+
+var shaderMaterial =   new BABYLONX.ShaderBuilder()             
+    .Solid({ b: 1 })
+    .SetUniform(&#39;box_spacing&#39;, &#39;float&#39;)
+    .Map({path:&#39;amiga.jpg&#39;  }) 
+    .VertexShader(
+        &#39; float bn = pos.x/box_spacing;\
+          result = vec4( pos.x, pos.y + sin(time + bn/4.0), pos.z  ,1.);&#39;)
+    .BuildMaterial(scene);
+</code></pre>
+<h3><a name="set-material" class="anchor" href="#set-material"></a>Set Material</h3><pre><code class="lang-javascript">boxes.material = shaderMaterial;
+boxes.material.setFloat(&quot;box_spacing&quot;, box_spacing)
+</code></pre>
+<h3><a name="animation-loop" class="anchor" href="#animation-loop"></a>Animation Loop</h3><pre><code class="lang-javascript">var time = 0;
+scene.registerBeforeRender(function () {
+
+    time += 0.1;
+
+    new BABYLONX.ShaderMaterialHelper().SetUniforms(
+        scene.meshes,
+        camera.position,
+        camera.target,
+        { x: 0, y: 0 },
+        { x: 100, y: 100 },
+        time);
+
+});
+</code></pre>
+<h2><a name="vertical-wave" class="anchor" href="#vertical-wave"></a>Vertical Wave</h2><p><a href="http://babylonjsguide.github.io/examples/bouncecode.html">Guide Example - Shader Material</a></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1OH09K#3">Playground Example - Shader Material</a> - <i class="fa fa-eye" onclick="createIframe('1OH09K#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><a href="http://babylonjsguide.github.io/examples/bouncecodeSB.html">Guide Example - Shader Builder</a></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1NXPC3#4">Playground Example - Shader Builder</a> - <i class="fa fa-eye" onclick="createIframe('1NXPC3#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

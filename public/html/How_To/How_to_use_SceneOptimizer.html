@@ -1,0 +1,172 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use SceneOptimizer - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use SceneOptimizer</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#basic-usage">Basic usage</a></li>
+<li><a href="#helper">Helper</a></li>
+<li><a href="#options">Options</a></li>
+<li><a href="#advanced-usage">Advanced usage</a></li>
+<li><a href="#improvement-mode">Improvement mode</a></li>
+<li><a href="#demo">Demo</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-sceneoptimizer" class="anchor" href="#how-to-use-sceneoptimizer"></a>How To Use SceneOptimizer</h1><p>Rendering a scene on a browser is a great experience because you can reach a lot of different users and hardware. But the main associated caveat is that you can encounter very low-end devices.</p>
+<p>The SceneOptimizer tool is designed to help you reach a specific framerate by gracefully degrading rendering quality at runtime.</p>
+<h2><a name="basic-usage" class="anchor" href="#basic-usage"></a>Basic usage</h2><p>To start using the SceneOptimizer, you can create a new <code>BABYLON.SceneOptimizer</code> instance.
+The SceneOptimizer constructor requires the current scene and a <code>BABYLON.SceneOptimizerOptions</code> object (we will get back to it later):</p>
+<pre><code>var options = new BABYLON.SceneOptimizerOptions();
+options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
+
+// Optimizer
+var optimizer = new BABYLON.SceneOptimizer(scene, options);
+</code></pre><p>When creating the SceneOptimizer you can provide the following parameters:</p>
+<ul>
+<li>A <code>BABYLON.Scene</code> which will defines the scene to work on</li>
+<li>A <code>BABYLON.SceneOptimizerOptions</code> which will defines the options to use with the SceneOptimizer</li>
+<li>A <code>boolean</code> which will defines if priorities must be generated and not read from SceneOptimization property (true by default)</li>
+<li>A <code>boolean</code> which will defines if the optimizer will run in improvement mode (see below) (false by default)</li>
+</ul>
+<p>The SceneOptimizer object allows you to set several properties:</p>
+<ul>
+<li><code>optimizations</code>: This property contains the list of current optimizations</li>
+<li><code>targetFrameRate</code>: This property defines the target frame rate to reach (60 by default)</li>
+<li><code>trackerDuration</code>: This property defines the interval between two checks (2000ms by default)</li>
+<li><code>currentFrameRate</code>: This property (read-only) gets the current frame rate checked by the SceneOptimizer</li>
+<li><code>currentPriorityLevel</code>: This property (read-only) gets the current priority level (0 at start)</li>
+<li><code>onSuccessObservable</code>: This property defines an observable called when the optimizer reaches the target frame rate</li>
+<li><code>onNewOptimizationAppliedObservable</code>: This property defines an observable called when the optimizer enables an optimization</li>
+<li><code>onFailureObservable</code>: This property defines an observable called when the optimizer is not able to reach the target frame rate</li>
+</ul>
+<p>It also provides several functions:</p>
+<ul>
+<li><code>start()</code>: used to start the overall optimization process</li>
+<li><code>stop()</code>: used to stop the current process</li>
+<li><code>reset()</code>: used to restore the current priority level to 0</li>
+<li><code>dispose()</code>: used to release all resources</li>
+</ul>
+<h2><a name="helper" class="anchor" href="#helper"></a>Helper</h2><p>You can also decide to use a static helper that will create everything you need in one line. <code>BABYLON.SceneOptimizer.OptimizeAsync()</code>. You can call this function when you want to optimize your scene. The simplest call you can do is the following:</p>
+<pre><code class="lang-javascript">BABYLON.SceneOptimizer.OptimizeAsync(scene),
+</code></pre>
+<p>You have to provide at least a scene. That previous code line is actually equivalent to this:</p>
+<pre><code class="lang-javascript">BABYLON.SceneOptimizer.OptimizeAsync(scene, BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(),
+function() {
+   // On success
+}, function() {
+   // FPS target not reached
+});
+</code></pre>
+<p>As you can see, you can provide success/fail callbacks and a set of options.
+Please note that the <code>BABYLON.SceneOptimizer.OptimizeAsync()</code> function returns a SceneOptimizer object which is created with <code>autoGeneratePriorities</code> to false.</p>
+<h2><a name="options" class="anchor" href="#options"></a>Options</h2><p>A set of options contains a list of optimizations to apply in a specific order. As soon as the target FPS is reached, the SceneOptimizer stops. There are different layers (or passes) that are applied one after another. The SceneOptimizer pauses between each layer to ensure a stable FPS, for measuring.</p>
+<p>By default, there are 3 sets available:</p>
+<pre><code class="lang-javascript">BABYLON.SceneOptimizerOptions.LowDegradationAllowed()
+BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed()
+BABYLON.SceneOptimizerOptions.HighDegradationAllowed()
+</code></pre>
+<p>All these sets return a <code>BABYLON.SceneOptimizerOptions</code> object configured with progressive degradations.</p>
+<p>Here are the properties available on a <code>BABYLON.SceneOptimizerOptions</code> object:</p>
+<ul>
+<li>targetFrameRate: a number defining the FPS you want to achieve (60 by default)</li>
+<li>optimizations: an array of <code>BABYLON.SceneOptimization</code> objects.</li>
+<li>trackerDuration: time in milliseconds between passes (2000 by default)</li>
+</ul>
+<p>SceneOptimizer comes with some out-of-the-box optimizations:</p>
+<ul>
+<li><code>BABYLON.MergeMeshesOptimization(priority)</code>: This optimization will merge meshes with same material.</li>
+<li><code>BABYLON.TextureOptimization(priority, maximumSize)</code>: This optimization tries to reduce the size of render textures.</li>
+<li><code>BABYLON.HardwareScalingOptimization(priority, maximumScale)</code>: This optimization increments or decrements the value of hardware scaling. This is a really aggressive optimization that could really help if you are GPU bound.</li>
+<li><code>BABYLON.ShadowsOptimization(priority)</code>: This optimization disables shadows (It will turn them on if the optimizer is in improvement mode (see below)).</li>
+<li><code>BABYLON.PostProcessesOptimization(priority)</code>: This optimization disables post-processes (It will turn them on if the optimizer is in improvement mode (see below)).</li>
+<li><code>BABYLON.LensFlaresOptimization(priority)</code>: This optimization disables lens flares (It will turn them on if the optimizer is in improvement mode (see below)).</li>
+<li><code>BABYLON.ParticlesOptimization(priority)</code>: This optimization disables particles (It will turn them on if the optimizer is in improvement mode (see below)).</li>
+<li><code>BABYLON.RenderTargetsOptimization(priority)</code>: This optimization disables render targets (It will turn them on if the optimizer is in improvement mode (see below)).</li>
+<li><code>BABYLON.CustomOptimization(priority)</code>: This optimization will call two callbacks when required: <ul>
+<li><code>onApply(scene, optimizer)</code>: A custom callback used to apply custom optimizations. It must return true if all optimizations where applied</li>
+<li><code>onGetDescription()</code>: This callback must return a string describing the action of the optimization</li>
+</ul>
+</li>
+</ul>
+<p>Based on these optimizations, the basic sets are configured like this:</p>
+<ul>
+<li>BABYLON.SceneOptimizerOptions.LowDegradationAllowed():<ul>
+<li>Level 0: MergeMeshesOptimization, ShadowsOptimization and LensFlaresOptimization</li>
+<li>Level 1: PostProcessesOptimization and ParticlesOptimization</li>
+<li>Level 2: TextureOptimization(2, 1024)</li>
+</ul>
+</li>
+<li>BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed():<ul>
+<li>Level 0: MergeMeshesOptimization, ShadowsOptimization and LensFlaresOptimization</li>
+<li>Level 1: PostProcessesOptimization and ParticlesOptimization</li>
+<li>Level 2: TextureOptimization(2, 512)</li>
+<li>Level 3: RenderTargetsOptimization</li>
+<li>Level 4: HardwareScalingOptimization(4, 2)</li>
+</ul>
+</li>
+<li>BABYLON.SceneOptimizerOptions.HighDegradationAllowed():<ul>
+<li>Level 0: MergeMeshesOptimization, ShadowsOptimization and LensFlaresOptimization</li>
+<li>Level 1: PostProcessesOptimization and ParticlesOptimization</li>
+<li>Level 2: TextureOptimization(2, 256)</li>
+<li>Level 3: RenderTargetsOptimization</li>
+<li>Level 4: HardwareScalingOptimization(4, 4)</li>
+</ul>
+</li>
+</ul>
+<h2><a name="advanced-usage" class="anchor" href="#advanced-usage"></a>Advanced usage</h2><p>You can create your own set of options with the following code (please note that if <code>autoGeneratePriorities</code> is true, you don&#39;t need to define the priority value)</p>
+<pre><code class="lang-javascript">var result = new BABYLON.SceneOptimizerOptions(60, 2000);
+
+var priority = 0;
+result.optimizations.push(new BABYLON.ShadowsOptimization(priority));
+result.optimizations.push(new BABYLON.LensFlaresOptimization(priority));
+
+// Next priority
+priority++;
+result.optimizations.push(new BABYLON.PostProcessesOptimization(priority));
+result.optimizations.push(new BABYLON.ParticlesOptimization(priority));
+
+// Next priority
+priority++;
+result.optimizations.push(new BABYLON.TextureOptimization(priority, 256));
+
+// Next priority
+priority++;
+result.optimizations.push(new BABYLON.RenderTargetsOptimization(priority));
+
+// Next priority
+priority++;
+result.optimizations.push(new BABYLON.HardwareScalingOptimization(priority, 4));
+
+return result;
+</code></pre>
+<p>You can also create your own optimization by creating your own object:</p>
+<pre><code class="lang-javascript">function mySceneOptimization(priority) {
+  if (typeof priority === &quot;undefined&quot;) {
+     priority = 0;
+  }
+
+  this.priority = priority;
+  this.apply = function (scene) {
+    // Work on scene...
+    return true;
+  };
+
+ this.getDescription = function () {
+    return &quot;Applying some changes to the scene&quot;;
+  };
+}
+</code></pre>
+<h2><a name="improvement-mode" class="anchor" href="#improvement-mode"></a>Improvement mode</h2><p>When created in improvement mode (4th parameter of the constructor), the SceneOptimizer object will run all optimization while the current FPS is above the target frame rate. So, for instance if, the target FPS is 60, the optimizer will execute all optimizations in its list while the FPS remains at 60. It is a good tool to provide rendering improvements to a given scene.
+Please note that when in improvement mode, the optimizations will adapt their behavior automatically (for instance, the ShadowsOptimization will turn shadows on instead of off).</p>
+<h2><a name="demo" class="anchor" href="#demo"></a>Demo</h2><p>A demo can be found here: <a href="https://www.babylonjs-playground.com/#3Q8PCL">https://www.babylonjs-playground.com/#3Q8PCL</a> - <i class="fa fa-eye" onclick="createIframe('3Q8PCL#', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

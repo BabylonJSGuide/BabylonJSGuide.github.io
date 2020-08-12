@@ -1,0 +1,145 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Using Code Editor - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Using Code Editor</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#explaining-the-code">Explaining the code</a></li>
+<li><a href="#debugging-the-code">Debugging the code</a></li>
+<li><a href="#importing-custom-classes-in-your-scripts">Importing custom classes in your scripts</a></li>
+<li><a href="#accessing-the-project-files">Accessing the project files</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="writing-custom-scripts" class="anchor" href="#writing-custom-scripts"></a>Writing custom scripts</h1><p>The editor provides a tool to write and attach custom scripts to objects in the scene</p>
+<p>This includes:</p>
+<ul>
+<li>The scene itself</li>
+<li>Meshes</li>
+<li>Cameras</li>
+<li>Lights</li>
+<li>Particle systems</li>
+</ul>
+<p>To access the tool, just click on the toolbar <strong>Tools -&gt; Code Editor...</strong>.</p>
+<p>All the scripts you will write are standalone and can be attached to objects (by creating links).
+That means you&#39;ll first have to add a new script. Then, attach the new script to your object(s).</p>
+<p>To add a new script, just click <strong>Add New Script...</strong> in the toolbar and give it a name. If you selected an object before, the script will be automatically attached.
+Once you added the new script, the assets panel will be updated and you able to drag&#39;n&#39;drop the new script on another objects.</p>
+<p>To add a new reference to a script to the selected object, just click on <strong>Add New</strong> in the grid and select the script to attach.</p>
+<p>Once you select another object in the scene, the tool will refresh and draw the available scripts for the new selected object.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6U87lDX8i3A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1><a name="explaining-the-code" class="anchor" href="#explaining-the-code"></a>Explaining the code</h1><pre><code class="lang-javascript">import { Scene, Color4 } from &#39;babylonjs&#39;;
+
+class Script implements IScript {
+    // Public members
+    public blackColor = new Color4(0, 0, 0, 1);
+    public customParam: string = &#39;&#39;;
+
+    /**
+     * Constructor
+     * @param mesh the mesh reference the script is applied on. Can be of type &quot;Scene&quot;, &quot;Light&quot;, etc.
+     * @param scene the scene reference containing the current script.
+     */
+    constructor (public mesh: Mesh, public scene: Scene) {
+
+    }
+
+    /**
+     * Called once starting the script
+     */
+    public start (): void {
+        // You can access the scene everywhere.
+        // That means the scene is globally accessible
+        this.scene.clearColor = this.blackColor;
+
+        // You can access the attached object everywhere
+        // The attached object can also be &quot;scene&quot;, &quot;pointlight&quot;, etc.
+        console.log(this.mesh);
+
+        // Finally, you can console.log a custom parameter set from the editor
+        console.log(this.customParam);
+    }
+
+    /**
+     * Called on each frame
+     */
+    public update (): void {
+        // Your code... For example:
+        this.mesh.rotation.y += 0.01;
+    }
+}
+
+// Function that exports the script
+exportScript(
+    Script, // Constructor of the script. No parameters allowed
+
+    // Custom parameters accessible from the editor in order to customize the script.
+    // These values will be available in the Inspector panel in the folder &#39;Script&#39;
+    { customParam: &#39;Hello&#39; }
+);
+</code></pre>
+<h1><a name="debugging-the-code" class="anchor" href="#debugging-the-code"></a>Debugging the code</h1><p>Once you are happy and want to test your code, just run the scene by clicking in the toolbar <strong>Play and Debug</strong>. The editor will open a new window.</p>
+<p>To see errors and debug your code (break points, logs, etc.), just type F12 in the new opened window. To set breakpoints, all the custom scripts are available at <strong>behaviors/</strong>. For instance, sourcemaps are not supported but will come in future versions.</p>
+<h1><a name="importing-custom-classes-in-your-scripts" class="anchor" href="#importing-custom-classes-in-your-scripts"></a>Importing custom classes in your scripts</h1><p>To help you factorizing your code, you can create different kinds of scripts:</p>
+<ul>
+<li>Scripts that you&#39;ll attach to nodes</li>
+<li>Scripts used to store functionalities</li>
+</ul>
+<p>Given this script named <code>&quot;Maki&quot;</code> attached to <code>Sphere Standard</code>:
+<img src="/img/extensions/Editor/CodeEditor/maki.png" alt="EditorCodeEditor"></p>
+<p>We would like to import a class we&#39;ll write to create new instances and call methods. To add a new script you&#39;ll import, just click the button &quot;Add&quot; in the assets panel and give it a name (here <code>&quot;Dog&quot;</code>):
+<img src="/img/extensions/Editor/CodeEditor/dog.png" alt="EditorCodeEditor"></p>
+<p>By default, the new class implements a constructor and a function <code>&quot;log&quot;</code>.</p>
+<p>Let&#39;s rename the class to <code>Dog</code>:</p>
+<p><img src="/img/extensions/Editor/CodeEditor/class_dog.png" alt="EditorCodeEditor"></p>
+<p>Back to our script <code>&quot;Maki&quot;</code>, we are now able to import the class <code>Dog</code> from the script named <code>&quot;Dog&quot;</code>:</p>
+<p><img src="/img/extensions/Editor/CodeEditor/maki_final.png" alt="EditorCodeEditor"></p>
+<p>Then, running your project, the <code>.log</code> function is called:</p>
+<p><img src="/img/extensions/Editor/CodeEditor/maki_result.png" alt="EditorCodeEditor"></p>
+<h1><a name="accessing-the-project-files" class="anchor" href="#accessing-the-project-files"></a>Accessing the project files</h1><p>The Editor is designed to create, edit and add the maximum of scene objects using the Editor&#39;s tools. The code editor is done to only interact with the scene objects and add logic.
+Anyway, it is also possible to create scene objects in scripts such as textures etc. and that means you have to access the files.</p>
+<p>To access the files of the project in your scripts, you have to use the editor&#39;s tools class to get the right URLs of the wanted files.
+Each script exposes a <strong><code>tools</code></strong> object that contains some useful methods. In our case, the tools provide a method to get a the real URL of a file according to its name.</p>
+<p>Example creating a cube texture:</p>
+<pre><code class="lang-javascript">import { Scene, CubeTexture } from &#39;babylonjs&#39;;
+
+class Script implements IScript {
+    /**
+     * Constructor
+     * @param mesh the mesh reference the script is applied on. Can be of type &quot;Scene&quot;, &quot;Light&quot;, etc.
+     * @param scene the scene reference containing the current script.
+     */
+    constructor (public mesh: Mesh, public scene: Scene) {
+
+    }
+
+    /**
+     * Called once starting the script
+     */
+    public start (): void {
+        const cubeTexture = new CubeTexture(&#39;Space&#39;, this.scene, null, false, [
+            tools.getFileUrl(&#39;tex1.jpg&#39;),
+            tools.getFileUrl(&#39;tex2.jpg&#39;),
+            tools.getFileUrl(&#39;tex3.jpg&#39;),
+            tools.getFileUrl(&#39;tex4.jpg&#39;),
+            tools.getFileUrl(&#39;tex5.jpg&#39;),
+            tools.getFileUrl(&#39;tex6.jpg&#39;),
+        ]);
+
+        this.mesh.material.reflectionTexture = cubeTexture;
+    }
+}
+
+...
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

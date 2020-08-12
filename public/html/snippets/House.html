@@ -1,0 +1,277 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Developing Build a House from a Floorplan - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Developing Build a House from a Floorplan</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#data-structure">Data Structure</a><ul>
+<li><a href="#walls">Walls</a></li>
+</ul>
+</li>
+<li><a href="#walls-mesh">Walls Mesh</a></li>
+<li><a href="#door-and-window-spaces">Door and Window Spaces.</a></li>
+<li><a href="#walls-with-doors-and-windows">Walls with Doors and Windows</a></li>
+<li><a href="#inner-and-outer-walls-with-doors-and-windows-mesh">Inner and Outer Walls with Doors and Windows Mesh</a><ul>
+<li><a href="#general-case">General Case</a></li>
+</ul>
+</li>
+<li><a href="#top-base-and-edge-side-for-walls-doors-and-windows">Top, Base and Edge Side for Walls, Doors and Windows.</a></li>
+<li><a href="#the-function-and-how-to-use-it">The Function and How to Use It.</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#level-1">Level 1</a></li>
+<li><a href="#level-2">Level 2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="developing-build-a-house-from-plans" class="anchor" href="#developing-build-a-house-from-plans"></a>Developing Build a House from Plans.</h1><p>Starting with a polygon as the footprint, a house is built by giving the footprint thickness (ply), extruding and adding door and window spaces at given positions.</p>
+<p><strong>Please note that some functions used in this project uses Earcut, so, in non playground projects, you will have to add a reference to their <a href="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js">cdn</a> or download their <a href="https://github.com/mapbox/earcut#install">npm package</a></strong></p>
+<h2><a name="data-structure" class="anchor" href="#data-structure"></a>Data Structure</h2><h3><a name="walls" class="anchor" href="#walls"></a>Walls</h3><p><strong>A footprint</strong> is a sequence of consecutive corners in counter clockwise order. Each <strong>corner</strong> is a Vector3 in the form (x, 0, z). This footprint forms the inner walls of the house, see Fig 1. The inner walls do not have to be set at right angles to each other.</p>
+<p><img src="/img/samples/house1.jpg" alt="Footprint"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 1</p>
+<p>This footprint is then copied and extended by <strong>ply</strong> (the thickness of the walls) to form the base of the walls for the house.</p>
+<p>The number of walls will be the number of corners in the footprint, with wall w extending from corner w. The position of each new corner is determined using trigonometry on half the angle formed at the corners.</p>
+<p>If the number of walls is nbWalls the new corners are numbered by adding nbWalls to the corresponding inner corners. Then the base for wall w, consists of corners numbered, w, (w + 1) % nbWalls, w + nbWalls, (w + 1) % nbWalls + nbWalls. See Fig 2.</p>
+<p><img src="/img/samples/house2.jpg" alt="Base of Walls"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 2</p>
+<p>The top of wall is formed by adding the <strong>height</strong> of the walls to the base corners to form the top corners, having the form of a Vector3 (x, height, z). The new corners are numbered by adding 2 <em> nbWalls to the corresponding base corners. The top of wall w will consist  of corners numbered , w + 2 </em> nbWalls, (w + 1) % nbWalls + 2 <em> nbWalls, w + nbWalls + 2 </em> nbWalls, (w + 1) % nbWalls + nbWalls + 2 * nbWalls. See Fig 3.</p>
+<p><img src="/img/samples/house3.jpg" alt="Top of Walls"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 3</p>
+<h2><a name="walls-mesh" class="anchor" href="#walls-mesh"></a>Walls Mesh</h2><p>The table of positions for the vetexData buffer looks like this</p>
+<table>
+<thead>
+<tr>
+<th>corner</th>
+<th>position</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>x<sub>0</sub>, 0, z<sub>0</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2B9D; </td>
+</tr>
+<tr>
+<td>1</td>
+<td>x<sub>1</sub>, 0, z<sub>1</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>2</td>
+<td>x<sub>2</sub>, 0, z<sub>1</sub></td>
+<td><strong>inner base</strong></td>
+</tr>
+<tr>
+<td>..</td>
+<td>..., ..., ...</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>..</td>
+<td>..., ..., ...</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>nbWalls - 1</td>
+<td>x<sub>nbWalls - 1</sub>, 0, z<sub>nbWalls - 1</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2B9F; </td>
+</tr>
+<tr>
+<td>nbWalls</td>
+<td>x<sub>nbWalls</sub>, 0, z<sub>nbWalls</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2B9D;</td>
+</tr>
+<tr>
+<td>nbWalls + 1</td>
+<td>x<sub>nbWalls + 1</sub>, 0, z<sub>nbWalls + 1</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>nbWalls + 2</td>
+<td>x<sub>nbWalls + 2</sub>, 0, z<sub>nbWalls + 2</sub></td>
+<td><strong>outer base</strong> </td>
+</tr>
+<tr>
+<td>..</td>
+<td>..., ..., ...</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>..</td>
+<td>..., ..., ...</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>2 * nbWalls - 1</td>
+<td>x<sub>2 <em> nbWalls - 1</sub>, 0, z<sub>2 </em> nbWalls - 1</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2B9F;</td>
+</tr>
+<tr>
+<td>2 * nbWalls</td>
+<td>x<sub>2 <em> nbWalls</sub>, 0, z<sub>2 </em> nbWalls</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2B9D; </td>
+</tr>
+<tr>
+<td>2 * nbWalls + 1</td>
+<td>x<sub>2 <em> nbWalls + 1</sub>, 0, z<sub>2 </em> nbWalls + 1</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>2 * nbWalls + 2</td>
+<td>x<sub>2 <em> nbWalls + 2</sub>, 0, z<sub>2 </em> nbWalls + 2</sub></td>
+<td><strong>inner top</strong></td>
+</tr>
+<tr>
+<td>..</td>
+<td>..., ..., ...</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>..</td>
+<td>..., ..., ...</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>3 * nbWalls - 1</td>
+<td>x<sub>3 <em> nbWalls - 1</sub>, 0, z<sub>3 </em> nbWalls - 1</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2B9F; </td>
+</tr>
+<tr>
+<td>3 * nbWalls</td>
+<td>x<sub>3 <em> nbWalls</sub>, 0, z<sub>3 </em> nbWalls</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2B9D;</td>
+</tr>
+<tr>
+<td>3 * nbWalls + 1</td>
+<td>x<sub>3 <em> nbWalls + 1</sub>, 0, z<sub>3 </em> nbWalls + 1</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>3 * nbWalls + 2</td>
+<td>x<sub>3 <em> nbWalls + 2</sub>, 0, z<sub>3 </em> nbWalls + 2</sub></td>
+<td><strong>outer top</strong> </td>
+</tr>
+<tr>
+<td>..</td>
+<td>..., ..., ...</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>..</td>
+<td>..., ..., ...</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2503;</td>
+</tr>
+<tr>
+<td>4 * nbWalls - 1</td>
+<td>x<sub>4 <em> nbWalls - 1</sub>, 0, z<sub>4 </em> nbWalls - 1</sub></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&#x2B9F;</td>
+</tr>
+</tbody>
+</table>
+<p>To form the mesh, the base, top, inner wall and outer wall have to be split into triangular facets by grouping sets of three corners for each and pushing these into the indices array. To form the normals in the correct direction the order of corners is important. For the base and the inner wall this is clockwise and for the top and outer wall this is counter clockwise.</p>
+<p>Fig 4 shows the corner numbers for a completed wall. For simplification this is without taking into account that for the final wall the far corners will be the starting corners so in any code each w + 1 must be calculated using modulo nbWalls.</p>
+<p><img src="/img/samples/house4.jpg" alt="Wall w"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 4</p>
+<p>By corner number 
+base facets : w, w + 1, w + 1 + nbWalls, w, w + 1 + nbWalls, w + nbWalls</p>
+<p>inner wall facets : w, w + 2nbWalls, w + 1 + 2nbWalls, w, w + 1 + 2nbWalls, w + 1</p>
+<p>top facets : w + 1 + 3nbWalls, w + 1 + 2nbWalls, w + 2nbWalls, w + 3nbWalls, w + 1 + nbWalls, w + 2nbWalls</p>
+<p>outer facets : w + 1 + 3nbWalls, w + 3nbWalls, w + nbWalls, w + 1 + nbWalls, w + 1 + 3nbWalls, w + nbWalls</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#4GBWI5">Playground Example Walls Only</a> - <i class="fa fa-eye" onclick="createIframe('4GBWI5#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>So far fairly straight forward, now to add door and window spaces.</p>
+<h2><a name="door-and-window-spaces" class="anchor" href="#door-and-window-spaces"></a>Door and Window Spaces.</h2><p>For this project doors and windows must be rectangular and are just defined by their width and height. However a door space is assumed to be a space cut from the base and upwards, whereas a window space can be cut anywhere in the wall. Both types of spaces are cut at right angles to the wall they belong in.</p>
+<p>The placement of door and window spaces must be checked by the user. They must not overlap and must be contained wholly within a wall. These conditions are not checked by the code.</p>
+<p>A door has two properties, width and height. A doorspace has two properties -  a door and left, which, when it is part of wall w, is its horizontal distance from the inner corner w.</p>
+<p>A window has two properties, width and height. A windowspace has three properties - a window, left and top, which, when it is part of wall w, are its horizonal distance from the inner corner w and the vertical distance from the top of the wall to the top of the window. Top must be greater than zero and less than wall height -  window height.</p>
+<p><img src="/img/samples/house5.jpg" alt="Doors and Windows"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 5</p>
+<h2><a name="walls-with-doors-and-windows" class="anchor" href="#walls-with-doors-and-windows"></a>Walls with Doors and Windows</h2><p>To include the doors and walls the positions of their corners have to be added to the positions array.</p>
+<p>So far the positions array has this form</p>
+<p>[ inner corners base, outer corners base, inner corners top, outer corners top]</p>
+<p>and each group of corners has  3 * nbWalls entries.</p>
+<p>Once the inner corner positions for the doors and windows are added then their outer corner positions are easily calculated.</p>
+<p>Adding in the door positions will turn the wall from a rectangle to a concave polygon. Then the placement of the window positions will add holes to the polygon. Luckily there is already a method of triangulating a polygon using PolygonMeshBuilder. This will be used to triangulate the wall polygons and a new method wallBuild (based on the existing build method) can be created that will correctly correlate indices to vertices to form the necessary 3D mesh. </p>
+<p>Whereas the top surface between the inner and outer walls will not be changed the base surface will now have to accommodate vertical sections to form the gaps for the doors. Also for each window, surfaces will have to be created at right angles to the inner and outer walls at the edges of the window.</p>
+<p>Since for polygonMeshBuilder corners have to be in counter clockwise consecutive order, all doorspaces for each wall will have to be sorted in increasing order of their left value.</p>
+<p>At this stage code was written to add in the doors using existing positions. However as you can see in the following playground sharing vertices and normals made the triangular facets stand out.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#4GBWI5#266">Playground Example with Shared Vertices</a> - <i class="fa fa-eye" onclick="createIframe('4GBWI5#266', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>To stop this effect a flat shaded mesh is necessary and rather than just converting the existing mesh to a flat shaded one it was decided to re-code for a flat shaded mesh from the start. This simplified the procedures for adding in the edges to doors and windows. Also because the interior and exterior walls were now separate it gave the possibility of applying different materials and colors to these walls.</p>
+<p>It was decided that edges to doors and windows would be exterior.</p>
+<h2><a name="inner-and-outer-walls-with-doors-and-windows-mesh" class="anchor" href="#inner-and-outer-walls-with-doors-and-windows-mesh"></a>Inner and Outer Walls with Doors and Windows Mesh</h2><p>A flat shaded mesh will be created so the the normals for all surfaces will be at right angles to the surface.</p>
+<p>Consider inner wall w with one door and one window added as in Fig 6 showing corner labels.</p>
+<p>Let V<sub>label</sub> be the position of a corner with the given label in the form of the triple x, y, z.</p>
+<p><img src="/img/samples/house6.jpg" alt="Polygon with Holes"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 6</p>
+<p>Using polygonMeshBuilder would create an interior wall positions array with </p>
+<p>[V<sub>w</sub>, V<sub>dw0</sub>, V<sub>dw1</sub>, V<sub>dw2</sub>, V<sub>dw3</sub>, V<sub>w+1</sub>, V<sub>w+1 + 2nbWalls</sub>, V<sub>w + 2nbWalls</sub>, V<sub>ww0</sub>, V<sub>ww1</sub>, V<sub>ww2</sub>, V<sub>www3</sub>]</p>
+<p>with indices 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11</p>
+<p>Where nbIndices is the current number of indices. These wall positions can be added to the house positions array and their indices incremented by nbIndices. </p>
+<h3><a name="general-case" class="anchor" href="#general-case"></a>General Case</h3><p>More generally w+1 must be calculated using modulo nbWalls to complete the final wall of the house.</p>
+<p>When d doors and ww windows have been calculated using PolygonMeshBuilder then the form of the positions for interior wall w is</p>
+<p>[ 
+ position of base inner left wall corner, 
+ 4 door inner positions <em> number of doors, 
+ position of base inner right, 
+ position of top inner right wall corner,
+ position of top inner left wall corrner,
+ 4 window inner positions </em> number of windows
+]</p>
+<p>These can be pushed to the house positions array and their wall indices to the house indices array, with a suitable increment to their value. 
+Add entires to the uvs array and colors array.</p>
+<p>Also since this is the only interior wall for wall w record the end position of the house positions array so that later all other vertices can be linked to the exterior color.</p>
+<p>The doors occupy positions with indices 1 to 4d and windows occupy positions with from index 1 + 4d. So the data for doors and windows can be extracted from the array.</p>
+<p>Having done so incrementing their positions values by ply along their normals will give their positions on the exterior wall.</p>
+<p>Data for each door and window giving inner and outer corners is saved.</p>
+<p>Using this data the vertices for the exterior wall corresponding to wall w can be found.</p>
+<p>[ 
+ position of base outer left wall corner, 
+ 4 door outer positions <em> number of doors, 
+ position of base outer right, 
+ position of top outer right wall corner,
+ position of top outer left wall corner,
+ 4 window outer positions </em> number of windows
+]</p>
+<p>The these can be pushed to the house positions array. Since the wall indices array for these still apply but the order must be reversed, so that any normals formed will be in the correct direction, and appropriate increments added.  Add appropriate values to the uv array.</p>
+<h2><a name="top-base-and-edge-side-for-walls-doors-and-windows" class="anchor" href="#top-base-and-edge-side-for-walls-doors-and-windows"></a>Top, Base and Edge Side for Walls, Doors and Windows.</h2><p>All that is left now is to consider each base sections between doors, the side and top edges for the doors and base, top and side edges for the windows for wall w. </p>
+<p>Since the data for all corners for each of these has now been saved it is fairly straight forward to form the correct triangular facets and uv values for each</p>
+<p>Once all positions are in the house positions array and knowing that the first block only relates to the interior wall it is easy to link the remaining vertices to the exterior colour.</p>
+<h2><a name="the-function-and-how-to-use-it" class="anchor" href="#the-function-and-how-to-use-it"></a>The Function and How to Use It.</h2><p>The function <strong>buildFromPlan</strong> has five parameters and returns a mesh</p>
+<p><em>walls</em> : an array of wall objects<br><em>ply</em> : thickness of each wall<br><em>height</em> : height of each wall<br><em>options</em> : an object containing 4 optional parameters<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interiorUV: a Vector4(bottom left u, bottom left v, top right u, top right v)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exteriorUV: a Vector4(bottom left u, bottom left v, top right u, top right v)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interiorColor: a Color4(r, g, b, a)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exteriorColor: a Color4(r, g, b, a)<br><em>scene</em> : the scene</p>
+<p>Examples</p>
+<p>buildFromPlan(walls, 0.3, 2, {}, scene)<br>buildFromPlan(walls, 1, 10, {interiorColor: new BABYLON.Color4(1, 0, 0, 1), exteriorColor: new BABYLON.Color4(0, 0.5, 1, 1)}, scene)<br>buildFromPlan(walls, 0.87, 6.210, {interiorUV: new BABYLON.Vector4(0, 0, 0.5, 1), exteriorUV: new BABYLON.Color4(0.5, 1, 1, 1)}, scene)  </p>
+<p>Each wall object has one two or three parameters</p>
+<p><em>corners</em>: an array of corner objects - required<br><em>doorSpaces</em> : an array of doorSpace objects - optional<br><em>windowSpaces</em> an array of windowSpace objects - optional   </p>
+<p>Each corner object has two parameters giving its position in 2D , example new corner(-3, 2)</p>
+<p>Each doorSpace object has two parameters
+<em>door</em> : door object<br><em>left</em> : distance from left hand edge of wall  </p>
+<p>Each door object has two parameters, example new door(2, 1)
+<em>width</em> : width of door<br><em>height</em> : height of door</p>
+<p>Each windowSpace object has three parameters
+<em>window</em> : window object<br><em>left</em> : distance from left hand edge of wall<br><em>top</em> : distance from top of wall  </p>
+<p>Each window object has two parameters, example new window(1, 2)
+<em>width</em> : width of window<br><em>height</em> : height of window</p>
+<p>Using the plan in fig 7 we can construct a house.</p>
+<p><img src="/img/samples/house7.jpg" alt="House floorplan"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 7</p>
+<p>Inner base corner coordinates</p>
+<p>(-3, -2), (-1, -4), (1, -4), (3, -2), (5, -2), (5, 1), (2, 1), (2, 3), (-3, 3)</p>
+<p>window 0 width 1.2, height 2.4</p>
+<p>window 1 width 2, height 2,4</p>
+<p>wall 0 - windowSpace window 0, left 0.814, top 0.4<br>wall 1 - windowSpace window 0, left 0.4 top 0.4<br>wall 2 - windowSpace window 0, left 0.814, top 0.4<br>wall 7 - windowSpace window 1, left 1.5, top 0.4<br>wall 8 - windowSpace window 1, left 1.5, top 0.4  </p>
+<p>door width 1 height 1.8</p>
+<p>wall 6 - doorSpace door, left 1</p>
+<p>Applying the plan leads to</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#4GBWI5#272">Playground Example of a House Built from a FloorPlan</a> - <i class="fa fa-eye" onclick="createIframe('4GBWI5#272', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/samples/House_Use">The Code for Build From Plans</a><br><a href="/samples/roof">Adding a Roof</a></p>
+<h2><a name="level-1" class="anchor" href="#level-1"></a>Level 1</h2><p><a href="/how_to/parametric_shapes#extruded-non-regular-polygon">Extruded Non Regular Polygon</a>  </p>
+<h2><a name="level-2" class="anchor" href="#level-2"></a>Level 2</h2><p><a href="/How_To/PolygonMeshBuilder">Polygon Mesh Builder</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Resizer Control - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Resizer Control</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#how-to-use">How to use</a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#instantiation">Instantiation</a></li>
+<li><a href="#resizing-to-the-canvas">Resizing to the canvas</a></li>
+<li><a href="#resizing-to-a-babylon-texture">Resizing to a Babylon Texture</a></li>
+<li><a href="#how-to-use-with-the-timeline">How to use with the timeline</a></li>
+</ul>
+</li>
+<li><a href="#full-code-sample">Full Code Sample</a></li>
+<li><a href="#live-demo">Live Demo</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="resizer-control" class="anchor" href="#resizer-control"></a>Resizer Control</h1><p>The Babylon.js Resizer Control is a web control built on top of Babylon.js in order to accelerate the resizing of pictures in web pages.</p>
+<h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>It regularly happens on the web that one needs to resize a picture on demand. It is easy enough to do with static pictures and css, but what about capturing a frame from a video or a snapshot from a canvas ?</p>
+<p>Also this component can come in as a pair with the <a href="./timeline">Timeline</a> and helps resizing thumbnails before uploading them to the GPU without relying on a separate canvas element and thus preventing the extra copies required.</p>
+<p><img src="/img/features/controls/resizer.png" alt="Resizer"></p>
+<h2><a name="how-to-use" class="anchor" href="#how-to-use"></a>How to use</h2><h3><a name="installation" class="anchor" href="#installation"></a>Installation</h3><p>To begin with the timeline, you first need to install the controls npm package.</p>
+<pre><code>npm install @babylonjs/controls
+</code></pre><p>To reduce the size of your web page, the controls library is based on the es6 version of <code>@babylonjs/core</code> used as a peer dependency. Therefore if you are not relying on it so far in you project, you also need to install core:</p>
+<pre><code>npm install @babylonjs/core
+</code></pre><p>Please note, that while the controls are still in preview, it might be preferable to use their latest update with:</p>
+<pre><code>npm install @babylonjs/controls@preview
+npm install @babylonjs/core@preview
+</code></pre><h3><a name="instantiation" class="anchor" href="#instantiation"></a>Instantiation</h3><p>Once done, you can now import the resizer control in your code:</p>
+<pre><code>import { Resizer } from &quot;@babylonjs/controls/resizer&quot;;
+</code></pre><p>And simply instantiate it in your page:</p>
+<pre><code>const resizer = new Resizer(resizerCanvas);
+</code></pre><p>You simply need to provide a canvas on which we will be able to use a WebGL context. You could as well provide another Babylon.js control in order to share the WebGL context.</p>
+<h3><a name="resizing-to-the-canvas" class="anchor" href="#resizing-to-the-canvas"></a>Resizing to the canvas</h3><p>This is by far the simplest, if you have a canvas in your page. You simply need to use the following code to fit the provided element to the canvas size:</p>
+<pre><code>resizer.resize(imageToResize);
+</code></pre><p>On the previous line, imageToResize could be either:</p>
+<ul>
+<li>the url of a picture.</li>
+<li>a video element (the current visible frame of the video will be used)</li>
+<li>another canvas element (the current visible state will be used)</li>
+</ul>
+<p>The source image will be stretch in both direction to fit in the target canvas.</p>
+<h3><a name="resizing-to-a-babylon-texture" class="anchor" href="#resizing-to-a-babylon-texture"></a>Resizing to a Babylon Texture</h3><p>Instead of resizing directly to a canvas, you could prefer to only create a Babylon.js texture on the GPU. For this, you can use the following function:</p>
+<pre><code>const texture = resizer.getResizedTexture(imageToResize, { width: 128, height: 100 });
+</code></pre><p>Like before, imageToResize could be either:</p>
+<ul>
+<li>the url of a picture.</li>
+<li>a video element (the current visible frame of the video will be used).</li>
+<li>another canvas element (the current visible state will be used).</li>
+</ul>
+<p>You also need to provide the size you want your texture to have on the GPU.</p>
+<p>Now you are free to use this texture with any other controls.</p>
+<h3><a name="how-to-use-with-the-timeline" class="anchor" href="#how-to-use-with-the-timeline"></a>How to use with the timeline</h3><p>Creating the texture is one thing but being able to use it is even better.</p>
+<p>For instance you can simply pair the use of the resizer with the timeline:</p>
+<pre><code>const resizer = new Resizer(canvas);
+const timeline = new Timeline(resizer, {
+    [...]
+    getThumbnailCallback: (time: number) =&gt; {
+        hiddenVideo.currentTime = time;
+        return resizer.getResizedTexture(hiddenVideo, { width: 128, height: 100 });
+    }
+});
+</code></pre><p>The 2 important points are:</p>
+<ul>
+<li>Use a shared control context by passing one control to the constructor of the other one.</li>
+<li>Returning a resized texture from the thumbnail callback.</li>
+</ul>
+<p>That is it, both controls are linked together making an efficient use of the GPU without wasting resources with bigger thumbnails than needed.</p>
+<p>This is actually the technique we are relying on in the demo. The source can be seen on <a href="https://github.com/BabylonJS/Controls/blob/master/www/timeline/index.ts">Github</a></p>
+<h2><a name="full-code-sample" class="anchor" href="#full-code-sample"></a>Full Code Sample</h2><p>You can find the integrallity of the code sample above on <a href="https://github.com/BabylonJS/Controls/blob/master/www/resizer/index.ts">Github</a> if you want to see it in action and better see how some of the functionnalities could be used.</p>
+<h2><a name="live-demo" class="anchor" href="#live-demo"></a>Live Demo</h2><p>Please, have a look at the <a href="https://controls.babylonjs.com/resizer">Live Resizer Demo</a> to better appreciate how it works.</p>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further reading</h2><p><a href="/features/controls">Babylon.js Controls</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

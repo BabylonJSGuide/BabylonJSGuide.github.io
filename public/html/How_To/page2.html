@@ -1,0 +1,234 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Getting Set Up - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Getting Set Up</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#first-steps">First Steps</a><ul>
+<li><a href="#creating-a-project">Creating A Project</a></li>
+<li><a href="#installing-babylonjs">Installing Babylon.js</a></li>
+<li><a href="#setting-up-webpack">Setting Up Webpack</a></li>
+<li><a href="#creating-a-scene">Creating A Scene</a></li>
+<li><a href="#bundling-the-project-and-running-locally">Bundling the Project and Running Locally</a></li>
+<li><a href="#optional-github-for-version-control">(Optional) Github for Version Control</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#how-to">How To</a></li>
+<li><a href="#external">External</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="getting-set-up" class="anchor" href="#getting-set-up"></a>Getting Set Up</h1><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>This setup process is based off of the <a href="/features/NPM_Support">NPM-support</a> documentation for getting started with Babylon.js and the <a href="https://github.com/RaananW/babylonjs-webpack-es6">babylonjs webpack</a> sample project, but with a few additions and modifications. The setup of the project will probably be the hardest part!</p>
+<h2><a name="first-steps" class="anchor" href="#first-steps"></a>First Steps</h2><h3><a name="creating-a-project" class="anchor" href="#creating-a-project"></a>Creating A Project</h3><p>First you&#39;ll need to set up where you want the project to be located.</p>
+<ol>
+<li>Create a folder where you&#39;ll be storing your project files</li>
+<li>Set up the file folder structure to be something like this:<ul>
+<li>dist</li>
+<li>public</li>
+<li>src</li>
+</ul>
+</li>
+<li>Main files<ul>
+<li>Go into your src folder and create an app.ts file</li>
+<li>Go into your public folder and create an index.html file</li>
+<li>Your html file should look something like:<pre><code class="lang-javascript">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Title of Your Project&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+Notice that we currently don&#39;t have anything within the body of our html file. We&#39;ll be generating a canvas within our app.ts file later on.</li>
+</ul>
+</li>
+</ol>
+<h3><a name="installing-babylonjs" class="anchor" href="#installing-babylonjs"></a>Installing Babylon.js</h3><ol>
+<li><p>Using the text editor of your choice, open up your project folder. I will be using Visual Studio Code for this series.</p>
+</li>
+<li><p>Open up the terminal (in VSCode you can do this by going to the top bar &gt; Terminal &gt; New Terminal).</p>
+</li>
+<li><p>Install Babylon.js</p>
+<pre><code class="lang-javascript">npm install --save-dev @babylonjs/core
+npm install --save-dev @babylonjs/inspector
+</code></pre>
+<p>This will install all of the dependencies for babylon that you&#39;ll need.</p>
+</li>
+<li><p>Typescript Support</p>
+<pre><code class="lang-javascript">tsc --init
+</code></pre>
+<p>This will create a default tsconfig.json. You can replace the contents with:</p>
+<pre><code class="lang-javascript">{
+&quot;compilerOptions&quot;: {
+ &quot;target&quot;: &quot;es6&quot;,
+ &quot;module&quot;: &quot;commonjs&quot;,
+ &quot;noResolve&quot;: false,
+ &quot;noImplicitAny&quot;: false,
+ &quot;sourceMap&quot;: true,
+ &quot;preserveConstEnums&quot;:true,
+ &quot;lib&quot;: [
+     &quot;dom&quot;,
+     &quot;es6&quot;
+ ],
+ &quot;rootDir&quot;: &quot;src&quot;
+}
+}
+</code></pre>
+</li>
+<li><p>Generate the package.json</p>
+<pre><code class="lang-javascript">npm init
+</code></pre>
+</li>
+</ol>
+<h3><a name="setting-up-webpack" class="anchor" href="#setting-up-webpack"></a>Setting Up Webpack</h3><p><strong> Installing Dependencies </strong><br>Now that we have our package.json generated, we need to install the dev dependencies for using webpack.</p>
+<pre><code class="lang-javascript">npm install --save-dev typescript webpack ts-loader webpack-cli
+</code></pre>
+<p><strong> Configure Webpack </strong><br>Now we will need to configure webpack to know what to do. Create a webpack.config.js file within your root directory. This is an example of what my configuration looks like:</p>
+<pre><code class="lang-javascript">const path = require(&quot;path&quot;);
+const fs = require(&#39;fs&#39;);
+const appDirectory = fs.realpathSync(process.cwd());
+
+module.exports = {
+    entry: path.resolve(appDirectory, &quot;src/app.ts&quot;), //path to the main .ts file
+    output: {
+        filename: &#39;js/bundleName.js&#39; //name for the javascript file that is created/compiled in memory
+    },
+    resolve: {
+        extensions: [&quot;.tsx&quot;, &quot;.ts&quot;, &quot;.js&quot;]
+    },
+    module: {
+        rules: [
+            {
+              test: /\.tsx?$/,
+              use: &quot;ts-loader&quot;,
+              exclude: /node_modules/
+            },
+        ]
+    },
+    mode: &quot;development&quot;
+};
+</code></pre>
+<p><strong> Plugins </strong><br>Additionally, we will install some plugins that will help with updating when running locally, and cleaning our bundle.</p>
+<pre><code class="lang-javascript">npm install --save-dev html-webpack-plugin
+npm install --save-dev clean-webpack-plugin
+npm install --save-dev webpack-dev-server
+</code></pre>
+<p>After we have these installed, we&#39;ll need to add them to our webpack.config.js. Our updated webpack.config.js should look something like this now:</p>
+<pre><code class="lang-javascript">const path = require(&quot;path&quot;);
+const fs = require(&#39;fs&#39;);
+const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;);
+const { CleanWebpackPlugin } = require(&#39;clean-webpack-plugin&#39;);
+const appDirectory = fs.realpathSync(process.cwd());
+
+module.exports = {
+    entry: path.resolve(appDirectory, &quot;src/app.ts&quot;), //path to the main .ts file
+    output: {
+        filename: &#39;js/bundleName.js&#39; //name for the js file that is created/compiled in memory
+    },
+    resolve: {
+        extensions: [&quot;.tsx&quot;, &quot;.ts&quot;, &quot;.js&quot;]
+    },
+    devServer: {
+        host: &#39;0.0.0.0&#39;,
+        port: 8080, //port that we&#39;re using for local host (localhost:8080)
+        disableHostCheck: true,
+        contentBase: path.resolve(appDirectory, &quot;public&quot;), //tells webpack to serve from the public folder
+        publicPath: &#39;/&#39;,
+        hot: true
+    },
+    module: {
+        rules: [
+            {
+              test: /\.tsx?$/,
+              use: &quot;ts-loader&quot;,
+              exclude: /node_modules/
+            },
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: path.resolve(appDirectory, &quot;public/index.html&quot;)
+        }),
+        new CleanWebpackPlugin()
+    ],
+    mode: &quot;development&quot;
+};
+</code></pre>
+<p>Now when we build and run our project, if we make any updates, the browser will refresh so that we can see our changes. In addition, the HTML Webpack plugin is taking the javascript bundle file that is compiled and injects it into our index.html file. This .js bundle will show up inside of the dist folder.</p>
+<h3><a name="creating-a-scene" class="anchor" href="#creating-a-scene"></a>Creating A Scene</h3><p>We&#39;ll be setting up the app.ts file to be the main entry point for our project.</p>
+<p><strong> Set up and create the App class </strong></p>
+<p>The App class will serve as our entire game application. This is a very simple example of how to set up a scene and should be separated out into different functions and make use of class variables for your project as you progress.</p>
+<pre><code class="lang-javascript">class App {
+    constructor() {
+        // create the canvas html element and attach it to the webpage
+        var canvas = document.createElement(&quot;canvas&quot;);
+        canvas.style.width = &quot;100%&quot;;
+        canvas.style.height = &quot;100%&quot;;
+        canvas.id = &quot;gameCanvas&quot;;
+        document.body.appendChild(canvas);
+
+        // initialize babylon scene and engine
+        var engine = new Engine(canvas, true);
+        var scene = new Scene(engine);
+
+        var camera: ArcRotateCamera = new ArcRotateCamera(&quot;Camera&quot;, Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
+        camera.attachControl(canvas, true);
+        var light1: HemisphericLight = new HemisphericLight(&quot;light1&quot;, new Vector3(1, 1, 0), scene);
+        var sphere: Mesh = MeshBuilder.CreateSphere(&quot;sphere&quot;, { diameter: 1 }, scene);
+
+        // hide/show the Inspector
+        window.addEventListener(&quot;keydown&quot;, (ev) =&gt; {
+            // Shift+Ctrl+Alt+I
+            if (ev.shiftKey &amp;&amp; ev.ctrlKey &amp;&amp; ev.altKey &amp;&amp; ev.keyCode === 73) {
+                if (scene.debugLayer.isVisible()) {
+                    scene.debugLayer.hide();
+                } else {
+                    scene.debugLayer.show();
+                }
+            }
+        });
+
+        // run the main render loop
+        engine.runRenderLoop(() =&gt; {
+            scene.render();
+        });
+    }
+}
+new App();
+
+</code></pre>
+<p>At this point, you should be seeing a lot of errors. This is because we haven&#39;t imported the babylonjs dependencies. Add to the top of your file:</p>
+<pre><code class="lang-javascript">import &quot;@babylonjs/core/Debug/debugLayer&quot;;
+import &quot;@babylonjs/inspector&quot;;
+import &quot;@babylonjs/loaders/glTF&quot;;
+import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder } from &quot;@babylonjs/core&quot;;
+</code></pre>
+<h3><a name="bundling-the-project-and-running-locally" class="anchor" href="#bundling-the-project-and-running-locally"></a>Bundling the Project and Running Locally</h3><p>Now that we have our project set up, how do we run it locally? We need to set up tasks in our package.json. In your package.json add this:</p>
+<pre><code class="lang-javascript">    &quot;scripts&quot;: {
+        &quot;build&quot;: &quot;webpack&quot;,
+        &quot;start&quot;: &quot;webpack-dev-server --port 8080&quot;
+    },
+</code></pre>
+<p>Now all we need to do is:</p>
+<pre><code class="lang-javascript">npm run build
+npm run start
+</code></pre>
+<p>Then when you visit localhost:8080 in our browser, you should see a sphere!</p>
+<h3><a name="optional-github-for-version-control" class="anchor" href="#optional-github-for-version-control"></a>(Optional) Github for Version Control</h3><p>If you&#39;re working with a large project, you&#39;ll most likely want to keep it in a safe place in case your computer breaks, you lose your files, etc. Github is also very useful for keeping track of changes that you make and can make things a lot easier in case you need to bring back a previous version of your project. You can follow this to learn how to <a href="https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/adding-an-existing-project-to-github-using-github-desktop">add a project</a> using Github Desktop.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="how-to" class="anchor" href="#how-to"></a>How To</h2><p><a href="/babylon101/first">First Steps</a><br><a href="/babylon101/how_to_get">How To Get Babylon.js</a><br><a href="/features/NPM_Support">Npm Support</a>  </p>
+<h2><a name="external" class="anchor" href="#external"></a>External</h2><p><a href="https://www.npmjs.com/package/html-webpack-plugin">HTML Webpack Plugin</a><br><a href="https://www.npmjs.com/package/clean-webpack-plugin">Clean Webpack Plugin</a><br><a href="https://www.npmjs.com/package/webpack-dev-server">Webpack Dev Server</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

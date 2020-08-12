@@ -1,0 +1,291 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>3DSMax to glTF - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>3DSMax to glTF</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#features">Features</a><ul>
+<li><a href="#exported-features">Exported features</a></li>
+</ul>
+</li>
+<li><a href="#conversion-standard-to-pbr-materials">Conversion Standard to PBR materials</a></li>
+<li><a href="#pbr-materials">PBR materials</a><ul>
+<li><a href="#base-color-and-transparency">Base color and Transparency</a></li>
+<li><a href="#metalness-and-roughness">Metalness and Roughness</a></li>
+<li><a href="#emission">Emission</a></li>
+<li><a href="#ambient-occlusion">Ambient occlusion</a></li>
+<li><a href="#bump-map">Bump map</a></li>
+</ul>
+</li>
+<li><a href="#standard-surface-arnold-material">Standard Surface Arnold material</a><ul>
+<li><a href="#base-color-and-transparency">Base color and Transparency</a></li>
+<li><a href="#metalness-roughness-and-occlusion">Metalness, Roughness and Occlusion</a><ul>
+<li><a href="#metalness-and-roughness">Metalness and roughness</a></li>
+<li><a href="#metalness-roughness-and-occlusion-all-in-one-map">Metalness, roughness and occlusion all in one map</a></li>
+</ul>
+</li>
+<li><a href="#emission">Emission</a></li>
+<li><a href="#normal">Normal</a></li>
+</ul>
+</li>
+<li><a href="#what-you-should-know">What you should know</a><ul>
+<li><a href="#babylon-properties">Babylon properties</a></li>
+<li><a href="#lights">Lights</a></li>
+<li><a href="#left-to-right-handed-coordinate-system">Left to right handed coordinate system</a></li>
+<li><a href="#consideration-about-skins">Consideration about skins</a></li>
+<li><a href="#textures-image-format">Textures image format</a></li>
+<li><a href="#texture-transform">Texture transform</a></li>
+<li><a href="#environment-texture">Environment texture</a></li>
+<li><a href="#double-sided-material">Double sided material</a></li>
+<li><a href="#babylon-material-attributes">Babylon material attributes</a></li>
+<li><a href="#custom-attributes">Custom attributes</a></li>
+<li><a href="#shell-material">Shell material</a></li>
+<li><a href="#directx-shader-material">DirectX Shader material</a></li>
+<li><a href="#draco-compression">Draco compression</a></li>
+</ul>
+</li>
+<li><a href="#how-to-export-3d-model-with-animation-to-babylon-gltf-format">How to export 3D model with animation to .babylon / .gltf format</a><ul>
+<li><a href="#single-animation-clip">Single animation clip</a></li>
+<li><a href="#multiple-animation-clips">Multiple animation clips</a></li>
+</ul>
+</li>
+<li><a href="#try-it-out">Try it out!</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-export-3ds-max-scene-as-gltf" class="anchor" href="#how-to-export-3ds-max-scene-as-gltf"></a>How to export 3DS MAX scene as glTF</h1><p>If you have not already installed the babylon plugin for 3DS MAX, you can find all instructions <a href="/resources/3dsmax">here</a> as well as general information about the plugin.</p>
+<p>With this plugin, you can also export your project to glTF 2.0 format (<a href="https://github.com/KhronosGroup/glTF/)">https://github.com/KhronosGroup/glTF/)</a>.</p>
+<p>All you need to do is choose <strong>gltf</strong> as <strong>Output format</strong>.</p>
+<p><img src="/img/exporters/3DSMax/14_gltf_export_window.jpg" alt="glTF export window"></p>
+<p>The plugin exports to babylon format before converting it to glTF.
+The notable exported files are the .gltf and .bin ones.</p>
+<p>To export to a single .glb file, choose <strong>glb</strong> as <strong>Output format</strong>.</p>
+<h1><a name="features" class="anchor" href="#features"></a>Features</h1><h2><a name="exported-features" class="anchor" href="#exported-features"></a>Exported features</h2><p>Since the plugin first exports to babylon then converts it to glTF, glTF features are a subset of the <a href="/resources/3dsmax#features">babylon ones</a>.</p>
+<ul>
+<li><p><em>Cameras</em></p>
+<ul>
+<li>zfar</li>
+<li>znear</li>
+<li>yfov (Perspective camera)</li>
+<li>Position / rotation (from nodes)</li>
+</ul>
+</li>
+<li><p><em>Meshes</em></p>
+<ul>
+<li>Geometry: position, normal, color, texture coordinates (2 channels)</li>
+<li>Position / rotation / scaling (from nodes)</li>
+<li>Skin</li>
+<li>Instances</li>
+<li>Morph targets</li>
+<li>Animations: bones, morph weights</li>
+</ul>
+</li>
+<li><p><em>Nodes</em></p>
+<ul>
+<li>Hierarchy</li>
+<li>Position / rotation / scaling</li>
+<li>Animations: position, rotation, scaling</li>
+<li>Custom attributes</li>
+</ul>
+</li>
+<li><p><em>Materials</em></p>
+<ul>
+<li>Standard material (converted to PBR, see below)</li>
+<li>Physical material (PBR)</li>
+<li>Standard Surface Arnold material</li>
+<li>Base color and alpha</li>
+<li>Metalness and roughness</li>
+<li>Emission, ambient occlusion</li>
+<li>Bump mapping</li>
+<li>Multi-materials</li>
+<li>Double-sided materials</li>
+<li>Unlit</li>
+<li>Backface culling</li>
+<li>Opacity/Transparency mode</li>
+<li>Custom attributes</li>
+<li>RGB Multiply map</li>
+</ul>
+</li>
+<li><p><em>Textures</em></p>
+<ul>
+<li>Wrap mode (Clamp, mirror, repeat)</li>
+<li>magFilter, minFilter</li>
+<li>Image format conversion to jpg / png</li>
+<li>Texture transform</li>
+</ul>
+</li>
+<li><p><em>Animations</em></p>
+<ul>
+<li>Export without animations</li>
+<li>Export animations only</li>
+</ul>
+</li>
+</ul>
+<h1><a name="conversion-standard-to-pbr-materials" class="anchor" href="#conversion-standard-to-pbr-materials"></a>Conversion Standard to PBR materials</h1><p>3DS MAX Standard materials are converted to PBR materials based on their diffuse, specular, opacity and glossiness.</p>
+<p><a href="https://github.com/bghgary/glTF/blob/gh-pages/convert-between-workflows-bjs/js/babylon.pbrUtilities.js">The complete algorithm is detailed here</a></p>
+<p><a href="https://bghgary.github.io/glTF/convert-between-workflows-bjs/">A demo is available here</a></p>
+<p>Note that the conversion duration scales with images size and may have a severe impact on export duration.</p>
+<h1><a name="pbr-materials" class="anchor" href="#pbr-materials"></a>PBR materials</h1><p>The physical materials are exported to glTF format as PBR materials.</p>
+<p>Involved parameters are highlighted bellow and described in the following sections.</p>
+<p><img src="/img/exporters/3DSMax/18_3dsmax_physical_materials_parameters.png" alt="3DS MAX physical material parameters"></p>
+<p>Remember that in 3DS MAX, when a map is assigned to a parameter, the basic parameter value is ignored. This behaviour is kept when exporting.</p>
+<h2><a name="base-color-and-transparency" class="anchor" href="#base-color-and-transparency"></a>Base color and Transparency</h2><p>Only the color of base color is used. The weight of base color is ignored.</p>
+<p>Only the weight of transparency is used. The color of the transparency is ignored, as well as other parameters (depth, thin-walled, transparency roughness).</p>
+<p>In glTF format, the transparency is expressed in alpha (alpha = 1 - transparency).</p>
+<p>The base color RGB and the alpha A are merged together into a single color RGBA:</p>
+<p><img src="/img/exporters/3DSMax/16_gltf_baseColor_alpha_combined.jpg" alt="glTF base color and alpha maps combined"></p>
+<p>The 2 maps must have same sizes to be merged successfully.</p>
+<p>Note that the duration of this process scales with images size and may have a severe impact on export duration.</p>
+<p>The basic parameter value is used as default value when binded map is not provided:</p>
+<p><img src="/img/exporters/3DSMax/17_gltf_baseColor_transparencyWeight_combined.jpg" alt="glTF base color map and transparency weight combined"></p>
+<h2><a name="metalness-and-roughness" class="anchor" href="#metalness-and-roughness"></a>Metalness and Roughness</h2><p>The metalness is used.</p>
+<p>The roughness of the material is used. It can be inverted to mean Glossiness - this also affects roughness map. The IOR parameter is ignored.</p>
+<p>The metalness and roughness maps are combined together:</p>
+<p><img src="/img/exporters/3DSMax/15_gltf_metallic_roughness_combined.jpg" alt="glTF metalness and roughness maps combined"></p>
+<p>In 3DS MAX, metalness and roughness maps are black and white images (R=G=B).</p>
+<p>In glTF format, metalness is stored in blue channel, roughness in green.</p>
+<p>The 2 maps must have same sizes to be merged successfully.</p>
+<p>Note that the duration of this process scales with images size and may have a severe impact on export duration.</p>
+<p>Like for base color and transparency, the basic parameter value is used as default value when binded map is not provided.</p>
+<h2><a name="emission" class="anchor" href="#emission"></a>Emission</h2><p>The exported emission color value is computed based on all 4 parameters: emission weight, color, luminance and Kelvin.</p>
+<p>However, the exported emission color map is identical to the specified one in generic map. This mean that emisson weight, luminance and Kelvin <strong>are not</strong> used. The emission map is assumed to be precomputed.</p>
+<h2><a name="ambient-occlusion" class="anchor" href="#ambient-occlusion"></a>Ambient occlusion</h2><p>The diffuse roughness map is used as ambient occlusion.</p>
+<h2><a name="bump-map" class="anchor" href="#bump-map"></a>Bump map</h2><p>The bump map (or normal map) and its weight are used.  A tangent-space normal map can be directly connected to the Bump input.  Note that glTF does not support height maps.  Connecting a height map may yield to unexpected results.  <strong>Normal Bump map nodes are currently not supported</strong>.</p>
+<h1><a name="standard-surface-arnold-material" class="anchor" href="#standard-surface-arnold-material"></a>Standard Surface Arnold material</h1><p>The Standard Surface Arnold material is exported to glTF format as a PBR material.</p>
+<p>Involved parameters are highlighted bellow.</p>
+<p><img src="/img/exporters/3DSMax/standardSurfaceParameters.jpg" alt="3DS Max Standard Surface parameters"></p>
+<p>When exporting, if a map is assigned to a parameter, the basic parameter value is ignored.</p>
+<h2><a name="base-color-and-transparency" class="anchor" href="#base-color-and-transparency"></a>Base color and Transparency</h2><p>In the <em>Basic Parameters</em> and <em>Transparency</em> sections, the base color weight, the base color and the transparency weight values are supported.
+And you can use a map for the base color and the transparency weight (the base color weight map is not supported).</p>
+<p>If you use a map for the base color, then the base color weight is overrided to 1 for the export.
+Also if the base color map and the transparency map are used, they must have the same size in order to be merged successfully.</p>
+<p><em>Note:</em> it is recommended to always set the base color weight to 1.</p>
+<h2><a name="metalness-roughness-and-occlusion" class="anchor" href="#metalness-roughness-and-occlusion"></a>Metalness, Roughness and Occlusion</h2><p>In the <em>Specular Reflections</em> section, the metalness and the roughness values and maps are supported.
+If both maps are used, they must have the same size to be merged successfully.</p>
+<p>In 3DS Max, metalness and roughness maps are black and white images (R=G=B).
+But in glTF format, the metalness is stored in the blue channel and the roughness in the green one (the red channel is for the occlusion).
+So during the export the metalness and roughness maps are merged in one map using their respective channel.</p>
+<h3><a name="metalness-and-roughness" class="anchor" href="#metalness-and-roughness"></a>Metalness and roughness</h3><p>If you use one of the two maps, then the exporter creates a new map using the provided map and the value of the other parameter.</p>
+<p>If you use two different maps, then the exporter merges them in one map.</p>
+<h3><a name="metalness-roughness-and-occlusion-all-in-one-map" class="anchor" href="#metalness-roughness-and-occlusion-all-in-one-map"></a>Metalness, roughness and occlusion all in one map</h3><p>Alternatively, you can provide a single texture used in both <em>Metalness</em> and <em>Roughness</em> to set an extra attribut: the Ambient Occlusion.</p>
+<p>The Ambient Occlusion cannot be set in the Standard Surface material. Thus you cannot take it into account when rendering with Arnold.</p>
+<p>However, such feature is exported and you can hopefully use it in an engine of your choice, provided it does take it into account (Babylon does!). Since there isn&#39;t a dedicated channel for Occlusion, the trick is to use a single file for multiple purposes called ORM texture.</p>
+<p>Such texture defines:</p>
+<ul>
+<li>the <strong>O</strong>cclusion in Red channel and is assigned to none of the material attributes</li>
+<li>the <strong>R</strong>oughness in Green channel and is assigned to the material <em>Roughness</em></li>
+<li>the <strong>M</strong>etalness in Blue channel and is assigned to the material <em>Metalness</em></li>
+</ul>
+<p><img src="/img/exporters/3DSMax/ORM.jpg" alt="glTF ORM map"></p>
+<p>In this case the exporter does not merge textures, but instead assumes the texture provided is already merged.</p>
+<p>You can see how to get <a href="/resources/Maya_to_glTF#get-a-merged-occlusionroughnessmetallic-texture">a merged ORM texture here</a>.</p>
+<h2><a name="emission" class="anchor" href="#emission"></a>Emission</h2><p>In the <em>Emission section</em>, the emission weight and the emission color values are supported. But only the emission color map is supported.
+If the emission color map is used, then the emission weight and the emission color values are ignored.</p>
+<h2><a name="normal" class="anchor" href="#normal"></a>Normal</h2><p>In the <em>Special Features</em> section, only the normal map is supported.</p>
+<h1><a name="what-you-should-know" class="anchor" href="#what-you-should-know"></a>What you should know</h1><h2><a name="babylon-properties" class="anchor" href="#babylon-properties"></a>Babylon properties</h2><p>Most babylon properties are not used when exporting to glTF format. The only one which matter is:</p>
+<ul>
+<li><strong>Do not export</strong>: Self-explanatory, this object/light/camera won’t be exported. False by default.</li>
+</ul>
+<h2><a name="lights" class="anchor" href="#lights"></a>Lights</h2><p>Lights are not supported in glTF 2.0. An empty node is exported in place of light only when it is relevant to do so (when a light has a mesh or a camera as descendant).<br>There is a glTF lights extension, (<a href="https://github.com/KhronosGroup/glTF/pull/1223)[KHR_lights_punctual]">https://github.com/KhronosGroup/glTF/pull/1223)[KHR_lights_punctual]</a> that is in the process of ratification, so should be considered experimental.  It can be enabled by turning on the KHR_lights_punctual extension checkbox.</p>
+<h2><a name="left-to-right-handed-coordinate-system" class="anchor" href="#left-to-right-handed-coordinate-system"></a>Left to right handed coordinate system</h2><p>As glTF export relies on conversion from babylon, the coordinate system is changing from left (babylon) to right handed (glTF).
+To do it simply, a root node named &quot;root&quot; is added to the scene. All nodes are set as descendants of this root node. It has specific rotation and scaling to do the trick.</p>
+<h2><a name="consideration-about-skins" class="anchor" href="#consideration-about-skins"></a>Consideration about skins</h2><p>In glTF, a skin is binded to a node. The skeleton (root bone) of a skin should be positioned at origin, without rotation or scaling. The node to which is applied the skin is responsible of its transformation (translation, rotation, scale).</p>
+<h2><a name="textures-image-format" class="anchor" href="#textures-image-format"></a>Textures image format</h2><p>glTF 2.0 only supports the following image formats: jpg and png. You are adviced to use those formats for your textures when exporting to glTF.</p>
+<p>Note that the exporter also supports textures with bmp, gif, tga, tif and dds formats. But, those textures will be automatically converted to png/jpg by the exporter to follow glTF specifications.</p>
+<h2><a name="texture-transform" class="anchor" href="#texture-transform"></a>Texture transform</h2><p>glTF 2.0 supports the <a href="https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_texture_transform">KHR_texture_transform extension</a>.  When enabled during export, it would be set to required, meaning that the loader is expected to support the extension.  Disabling the extension checkbox from the exporter window will export textures without apply the texture transform, which may look visually incorrect when loading into a glTF importer.</p>
+<h2><a name="environment-texture" class="anchor" href="#environment-texture"></a>Environment texture</h2><p>To enjoy PBR material rendering, you should have an environmnent texture in your scene. The plugin exports the environment map if any is provided in 3DS MAX.</p>
+<p>However, glTF format does not support this feature and the environment map needs to be added manually in client implementations. The Babylon Sandbox, see bellow, provides such feature.</p>
+<h2><a name="double-sided-material" class="anchor" href="#double-sided-material"></a>Double sided material</h2><p>The handling of the double sided material is mimic from babylon format. <a href="/resources/3DSMax#double-sided-material">Detailed explanations here</a>.</p>
+<h2><a name="babylon-material-attributes" class="anchor" href="#babylon-material-attributes"></a>Babylon material attributes</h2><p>Native materials are enhanced to have extra attributes under Babylon attributes section.</p>
+<p><img src="/img/exporters/3DSMax/BabylonMaterialAttributes.jpg" alt="3DS MAX babylon material attributes"></p>
+<p>Most Babylon attributes are common to all materials:</p>
+<ul>
+<li><strong>Unlit</strong>: A material can be exported as Unlit, meaning independent of lighting. This implies that light-relative attributes or textures are not exported: ambient, specular, emissive, bump mapping and reflection texture. Additionally in gltf, the <strong>KHR_materials_unlit</strong> extension is added to the material. <a href="https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_materials_unlit">More details on this extension here</a>. During export, enable the _KHR_materials_unlit_ checkbox.</li>
+<li><strong>Backface Culling</strong>: When true, the back faces are not rendered. When false, back faces are rendered using same material as front faces. <strong>This property is native to Standard material and is called <em>2-Sided</em>.</strong></li>
+<li><strong>Opacity/Transparency Mode</strong>: You can select how transparency is handled for this material among 3 choices:<ul>
+<li><em>Opaque</em>: The alpha color and texture are ignored during export process.</li>
+<li><em>Cutoff</em>: The alpha cutoff value is 0.5 (not exported as it is the glTF default value). Alpha values under this threshold are fully transparent. Alpha values above this threshold are fully opaque.</li>
+<li><em>Blend</em>: This how 3ds Max handles transparency when rendering. This is the default mode for any material with an alpha color or texture.</li>
+</ul>
+</li>
+</ul>
+<h2><a name="custom-attributes" class="anchor" href="#custom-attributes"></a>Custom attributes</h2><p>Attributes defined by you, the user, are exported as well!</p>
+<p>Almost all types of parameters are supported (<em>Float</em>, <em>Color</em>, <em>Boolean</em>...). The only exceptions are <em>Texture</em>, <em>Node</em> and <em>Material</em> types.
+All nodes (meshes, lights...) and materials have their custom attributes exported.</p>
+<p>To define custom attributes either use the Parameter Editor window or scripting:</p>
+<p><img src="/img/exporters/3DSMax/CustomAttributesDefinition_3dsMax.jpg" alt="3DS MAX custom attributes parameter editor"></p>
+<p>Custom attributes are exported under <em>extras</em>:</p>
+<p><img src="/img/exporters/3DSMax/CustomAttributes_glTF.jpg" alt="3DS MAX custom attributes glTF"></p>
+<p>Note that the custom attributes are added to the node, not to the mesh or light component itself.</p>
+<p>Following types have particularities you should know:</p>
+<ul>
+<li><em>Angle</em> : Set in degrees (°) in 3ds Max but exported as radians. Ex: 360° =&gt; 3.1416 rads</li>
+<li><em>Array</em> : An array in 3ds Max is an enumeration of values. Each value has an incremental index, starting from 1. Only one value can be selected. The index of selection is exported, not the displayed value.</li>
+<li><em>Color</em> and <em>FRGBA</em> : Exported in base 1 as all other colors. Ex: Red (255,0,0) =&gt; (1,0,0)</li>
+<li><em>Percent</em> : Exported in base 1 as well. Ex: 80% =&gt; 0.8</li>
+<li><em>Texture</em> : <strong>Not supported</strong>. Custom attributes are exported as row values. Thus textures are exported under babylon format instead of glTF format. Bitmaps associated to textures are not exported.</li>
+</ul>
+<h2><a name="shell-material" class="anchor" href="#shell-material"></a>Shell material</h2><p>In 3DS Max, the <em>Shell material</em> is a container for other materials and controls which material is used in which rendering.</p>
+<p>It contains two materials:</p>
+<ul>
+<li><em>Original Material</em> used for rendering (for example Arnold, Mental ray, V-Ray)</li>
+<li><em>Baked Material</em> exported by the Babylonjs exporter</li>
+</ul>
+<p><img src="/img/exporters/3DSMax/shellMaterial.png" alt="3DS Max Shell material parameters"></p>
+<h2><a name="directx-shader-material" class="anchor" href="#directx-shader-material"></a>DirectX Shader material</h2><p>In 3DS Max the DirectX shader material is used to represent more accurately how the material will render in another application. That is why only the material contained in its <em>Software Render Style</em> section is exported. All other parameters are ignored.</p>
+<p><img src="/img/exporters/3DSMax/directXShader.png" alt="3DS Max DirectX Shader parameters"></p>
+<p>More information on how you could use this material in conjunction with the Shell material in the discussion <a href="https://github.com/BabylonJS/Exporters/issues/296">here</a>.</p>
+<h2><a name="draco-compression" class="anchor" href="#draco-compression"></a>Draco compression</h2><p>On the export form, the <em>Use Draco compression</em> option enables the Draco compression. It needs <a href="https://nodejs.org">Node.js</a> and <a href="https://github.com/AnalyticalGraphicsInc/gltf-pipeline">gltf-pipeline</a> in order to work.</p>
+<p>To install the Node.js, go to the web site download and install it.
+Then to install gltf-pipeline, open et normal shell (cmd.exe or powershell.exe) and run the following command <code>npm install -g gltf-pipeline</code>.
+Once they are installed, check the <em>Use Draco compression</em> option and the compression will be automatically done at the export end.</p>
+<h1><a name="how-to-export-3d-model-with-animation-to-babylon-gltf-format" class="anchor" href="#how-to-export-3d-model-with-animation-to-babylon-gltf-format"></a>How to export 3D model with animation to .babylon / .gltf format</h1><h2><a name="single-animation-clip" class="anchor" href="#single-animation-clip"></a>Single animation clip</h2><p>You can export all animations of the objects in your scene into a single animation clip following these steps:</p>
+<ol>
+<li><p>Open FBX / DAE or any other 3D model with animations in 3ds Max</p>
+</li>
+<li><p>Check / Apply texture to model</p>
+</li>
+<li><p>Go to “Time Configuration” window and change “Start Time:”, “End Time” under “Animation” section properly.</p>
+</li>
+</ol>
+<p><img src="/img/exporters/3DSMax/time_configuration_window.jpg" alt="3ds Time Configuration Window"></p>
+<ol start="4">
+<li>Right click on the imported 3D model. Navigate “Babylon... &gt; Babylon Properties” and open the “Babylon.js Object Properties” window as below.</li>
+</ol>
+<p><img src="/img/exporters/3DSMax/3ds_babylon_plugin_properties_window.jpg" alt="3ds Babylon Plugin Properties Window"></p>
+<ol start="5">
+<li><p>Update the “From:”, “To:” fields under “Animations” section with expected animation frames to be exported</p>
+</li>
+<li><p>Open “Babylon Exporter” window from menu “Babylon &gt; Babylon File Exporter ...” as below.</p>
+</li>
+</ol>
+<p><img src="/img/exporters/3DSMax/babylon_exporter.jpg" alt="3ds Babylon Exporter"></p>
+<h2><a name="multiple-animation-clips" class="anchor" href="#multiple-animation-clips"></a>Multiple animation clips</h2><p>You can also export multiple animations clips and play one of them depending on the situation. For example, a character would have &quot;Walk&quot;, &quot;Run&quot; and &quot;Jump&quot; animations, each spread along the timeline.</p>
+<p>To setup the animations clips (also named animation groups) right-click on your scene, you will have a menu Babylon -&gt; Babylon Animation Groups, which opens the Animation Groups window.</p>
+<p><img src="/img/exporters/3DSMax/animation_groups_window.jpg" alt="3ds animation groups window"></p>
+<p>Features are explained below:</p>
+<ul>
+<li><p>Create / delete an animation group</p>
+</li>
+<li><p>Set a name</p>
+</li>
+<li><p>Set start and end frames. Values out of timeline bounds are automatically clamped at runtime.</p>
+</li>
+<li><p>Add / remove node selection. This acts as a layer per animation group: only added nodes will be part of the animation group. This is useful when you export a complex scene and want to animate only a small part of it.</p>
+</li>
+<li><p><strong>Export non-animated node targets</strong> option: when checked, all added nodes will be part of the animation group. Nodes that are actually not animated (no key in the timeline) will have a fake scale animation exported. This option might be useful if you want to add an in-game behaviour to all the nodes of an animation group, like toggle visibilty.</p>
+</li>
+</ul>
+<p>When updating an input field or the animation nodes, changes are highlighted through a color. Press the <em>Confirm</em> button to submit changes.</p>
+<p>Note that when updating the scene hierarchy, like deleting a node, while the Animation Group window is opened, the Animation Nodes frame is not updated. Close the Animation Groups window and re-open it to take hierarchy updates into account.</p>
+<h1><a name="try-it-out" class="anchor" href="#try-it-out"></a>Try it out!</h1><p>Export your own scene from 3DS MAX to glTF format and load it into the <a href="http://sandbox.babylonjs.com/">Babylon Sandbox</a>. Or load them via scripts using the <a href="/how_to/gltf">babylon loader</a>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

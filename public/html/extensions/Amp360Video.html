@@ -1,0 +1,190 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Amp 360 Video - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Amp 360 Video</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#how-to-run-locally">How to Run Locally</a></li>
+<li><a href="#how-it-works">How it works</a></li>
+<li><a href="#how-use-in-your-web-site">How use in your web site</a><ul>
+<li><a href="#external-resources">External Resources</a></li>
+<li><a href="#plugin-script">Plugin Script</a></li>
+<li><a href="#plugin-setup">Plugin Setup</a><ul>
+<li><a href="#html-initialization">Html Initialization</a></li>
+<li><a href="#code-initialization">Code Initialization</a></li>
+</ul>
+</li>
+<li><a href="#define-the-video-360-format-monoscopic-side-by-side-top-bottom">Define the video 360 format (Monoscopic, Side By Side, Top Bottom)</a><ul>
+<li><a href="#by-html-configuration">By HTML configuration</a></li>
+<li><a href="#by-code-configuration">By code configuration</a></li>
+</ul>
+</li>
+<li><a href="#enabledisable-the-vr-button">Enable/Disable the VR Button</a><ul>
+<li><a href="#by-html-configuration">By HTML configuration</a></li>
+<li><a href="#by-code-configuration">By code configuration</a></li>
+</ul>
+</li>
+<li><a href="#update-the-camera-fov">Update the camera FOV</a><ul>
+<li><a href="#by-html-configuration">By HTML configuration</a></li>
+<li><a href="#by-code-configuration">By code configuration</a></li>
+</ul>
+</li>
+<li><a href="#update-the-default-camera-orientation">Update the default camera orientation</a><ul>
+<li><a href="#by-html-configuration">By HTML configuration</a></li>
+<li><a href="#by-code-configuration">By code configuration</a></li>
+</ul>
+</li>
+<li><a href="#disable-webgl2">Disable WebGL2</a><ul>
+<li><a href="#by-html-configuration">By HTML configuration</a></li>
+<li><a href="#by-code-configuration">By code configuration</a></li>
+</ul>
+</li>
+<li><a href="#adapt-to-native-resolution">Adapt to native resolution</a><ul>
+<li><a href="#by-html-configuration">By HTML configuration</a></li>
+<li><a href="#by-code-configuration">By code configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="azure-media-player-360-video-plugin" class="anchor" href="#azure-media-player-360-video-plugin"></a>Azure Media Player 360 Video Plugin</h1><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>The <a href="http://amp.azure.net/libs/amp/latest/docs/index.html">Azure media player</a> 360 Video is a plugin for AMP (aka <a href="http://amp.azure.net/libs/amp/latest/docs/index.html">Azure media player</a>) using Babylon.js in order to facilitate the integration of 360 videos in your Web App.</p>
+<p>The plugin natively supports VR headsets (Windows Mixed Reality, etc.).</p>
+<p><a href="http://www.babylonjs.com/Demos/Amp360Video/">Online Demo of the plugin</a></p>
+<h2><a name="how-to-run-locally" class="anchor" href="#how-to-run-locally"></a>How to Run Locally</h2><p>First, clone the Babylon.js extensions repository:</p>
+<pre><code>git clone https://github.com/BabylonJS/Extensions.git
+</code></pre><p>Once the repository has been cloned, open a command prompt in the Amp360Video folder.</p>
+<p>Then, type the following commands:</p>
+<pre><code>npm install
+npm start
+</code></pre><p>The hosting web page will automatically open (using webpack-dev-server).</p>
+<h2><a name="how-it-works" class="anchor" href="#how-it-works"></a>How it works</h2><p>The 360 video is a <a href="https://docs.videojs.com/tutorial-plugins.html">videojs</a> plugin compatible with from AMP version 2.1.7 to the latest (2.2.3 at time of writing).</p>
+<p>The plugin depends on Babylon.js in order to enable 3D functionalities in AMP.</p>
+<p>For more information about AMP, you can access their <a href="http://amp.azure.net/libs/amp/latest/docs/index.html">documentation</a>.</p>
+<h2><a name="how-use-in-your-web-site" class="anchor" href="#how-use-in-your-web-site"></a>How use in your web site</h2><p>After deploying the bundled javascript file <a href="https://raw.githubusercontent.com/BabylonJS/Extensions/master/Amp360Video/dist/amp-360video.js"><code>dist/amp-360video.js</code></a> from the dist directory to your WebSite you can follow the steps below.</p>
+<blockquote>
+<p>Note: if you were using the plugin before, you might have needed to reference Babylon.js in your site. We have now released a bundle ensuring the smallest delivery possible so the reference to Babylon.js is not required anymore.</p>
+</blockquote>
+<h3><a name="external-resources" class="anchor" href="#external-resources"></a>External Resources</h3><p>Include the following resources in you html:</p>
+<pre><code>&lt;!-- Link to pep.js to ensure pointer events work consistently in all browsers --&gt;
+&lt;script src=&quot;https://code.jquery.com/pep/0.4.1/pep.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- Link to the AMP resources --&gt;
+&lt;link href=&quot;https://amp.azure.net/libs/amp/2.2.3/skins/amp-default/azuremediaplayer.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;script src=&quot;https://amp.azure.net/libs/amp/2.2.3/azuremediaplayer.min.js&quot;&gt;&lt;/script&gt;
+</code></pre><h3><a name="plugin-script" class="anchor" href="#plugin-script"></a>Plugin Script</h3><p>Include the link to your previously downloaded plugin script in your HTML:</p>
+<pre><code>&lt;!-- Link to the plugin file --&gt;
+&lt;script src=&quot;amp-360video.js&quot;&gt;&lt;/script&gt;
+</code></pre><h3><a name="plugin-setup" class="anchor" href="#plugin-setup"></a>Plugin Setup</h3><p>You can either embed the plugin in your HTML or initialize it by code like specified in the <a href="http://amp.azure.net/libs/amp/latest/docs/index.html#plugins">AMP documentation</a>.</p>
+<h4><a name="html-initialization" class="anchor" href="#html-initialization"></a>Html Initialization</h4><p>Add the <strong>threeSixty plugin</strong> to your video data-setup:</p>
+<pre><code>&lt;video playsinline crossorigin=&quot;anonymous&quot; class=&quot;azuremediaplayer amp-default-skin amp-big-play-centered&quot; autoplay controls width=&quot;100%&quot; height=&quot;100%&quot; data-setup=&#39;{ &quot;techOrder&quot;: [&quot;azureHtml5JS&quot;, &quot;html5&quot;], &quot;plugins&quot;: { &quot;threeSixty&quot;: { } } }&#39;&gt;
+    &lt;source src=&quot;//willzhanmswest.streaming.mediaservices.windows.net/1f2dd2dd-ee99-40be-aae9-d0c2209982eb/DroneFlightOverLasVegasStripH3Pro7.ism/Manifest&quot; type=&quot;application/vnd.ms-sstr+xml&quot; /&gt;
+    &lt;p class=&quot;amp-no-js&quot;&gt;
+        To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+    &lt;/p&gt;
+&lt;/video&gt;
+</code></pre><p>The only difference with your default AMP initialization is the presence of the 360 plugin:</p>
+<pre><code>&quot;plugins&quot;: { &quot;threeSixty&quot;: { } }&#39;
+</code></pre><p>One example can be found in the index.html file located in the <a href="https://github.com/BabylonJS/Extensions/blob/master/Amp360Video/index.html">repo</a>.</p>
+<h4><a name="code-initialization" class="anchor" href="#code-initialization"></a>Code Initialization</h4><p>The following code will initialize the plugin in your amp player:</p>
+<pre><code>var myPlayer = amp(&#39;videoPlayer&#39;, {
+        &quot;nativeControlsForTouch&quot;: false,
+        autoplay: false,
+        controls: true,
+        width: &quot;640&quot;,
+        height: &quot;480&quot;,
+        poster: &quot;&quot;,
+        techOrder: [&quot;azureHtml5JS&quot;, &quot;html5&quot;], 
+        plugins: { 
+            &quot;threeSixty&quot;: {
+                enableVR: true
+            }
+        }
+    }, function() {
+        console.log(&#39;Good to go!&#39;);
+        // add an event listener
+        this.addEventListener(&#39;ended&#39;, function() {
+            console.log(&#39;Finished!&#39;);
+        });
+    });
+
+myPlayer.src([{
+    src: &quot;//willzhanmswest.streaming.mediaservices.windows.net/1f2dd2dd-ee99-40be-aae9-d0c2209982eb/DroneFlightOverLasVegasStripH3Pro7.ism/Manifest&quot;,
+    type: &quot;application/vnd.ms-sstr+xml&quot;
+}]);
+</code></pre><p>One example can be found in the indexCode.html file located in the <a href="https://github.com/BabylonJS/Extensions/blob/master/Amp360Video/indexCode.html">repo</a>.</p>
+<h3><a name="define-the-video-360-format-monoscopic-side-by-side-top-bottom" class="anchor" href="#define-the-video-360-format-monoscopic-side-by-side-top-bottom"></a>Define the video 360 format (Monoscopic, Side By Side, Top Bottom)</h3><p>Several types of 360 video exist today. The most common being Monoscopic Panoramic, Stereoscopic Side by Side panoramic and Top bottom panoramic.</p>
+<p>The first one represents a panoramic view which is dedicated to one eye. The second one contains two panoramic views dedicated to each eyes whereas the last one contains both panoramic views respectively on the top and bottom of the video.</p>
+<p>The plugin defaults to Monoscopic panoramic mode.</p>
+<p>In order to specify the type of your source (this can unfortunately not be automated in the plugin), you can specify a different value in your options:</p>
+<h4><a name="by-html-configuration" class="anchor" href="#by-html-configuration"></a>By HTML configuration</h4><p>In the data-setup plugin section:</p>
+<pre><code>&quot;plugins&quot;: { &quot;threeSixty&quot;: { &quot;videoType&quot;: &quot;stereoscopicTopBottom&quot; } }
+</code></pre><p>The available types are: &quot;monoscopicPanoramic&quot;, &quot;stereoscopicSideBySide&quot;, &quot;stereoscopicTopBottom&quot;.</p>
+<h4><a name="by-code-configuration" class="anchor" href="#by-code-configuration"></a>By code configuration</h4><p>This works exactly the same as the previous point. In the options of your plugin:</p>
+<pre><code>plugins: { 
+    &quot;threeSixty&quot;: {
+        videoType: &quot;stereoscopicTopBottom&quot;
+    }
+}
+</code></pre><p>The available types are: &quot;monoscopicPanoramic&quot;, &quot;stereoscopicSideBySide&quot;, &quot;stereoscopicTopBottom&quot;.</p>
+<h3><a name="enabledisable-the-vr-button" class="anchor" href="#enabledisable-the-vr-button"></a>Enable/Disable the VR Button</h3><p>By default, the plugin is delivered with a VR mode available through a button shaped like a head-mounted display.</p>
+<p>In order to disable the button, you can specify in your options:</p>
+<h4><a name="by-html-configuration" class="anchor" href="#by-html-configuration"></a>By HTML configuration</h4><p>In the data-setup plugin section:</p>
+<pre><code>&quot;plugins&quot;: { &quot;threeSixty&quot;: { &quot;enableVR&quot;: false } }
+</code></pre><h4><a name="by-code-configuration" class="anchor" href="#by-code-configuration"></a>By code configuration</h4><p>This works exactly the same as the previous point. In the options of your plugin:</p>
+<pre><code>plugins: { 
+    &quot;threeSixty&quot;: {
+        enableVR: false
+    }
+}
+</code></pre><h3><a name="update-the-camera-fov" class="anchor" href="#update-the-camera-fov"></a>Update the camera FOV</h3><p>By default the plugin is delivered with a camera of a 1.18 radians field of view.</p>
+<p>In order to change it if needed, you can specify a different value in your options:</p>
+<h4><a name="by-html-configuration" class="anchor" href="#by-html-configuration"></a>By HTML configuration</h4><p>In the data-setup plugin section:</p>
+<pre><code>&quot;plugins&quot;: { &quot;threeSixty&quot;: { &quot;fov&quot;: 1 } }
+</code></pre><h4><a name="by-code-configuration" class="anchor" href="#by-code-configuration"></a>By code configuration</h4><p>This works exactly the same as the previous point. In the options of your plugin:</p>
+<pre><code>plugins: { 
+    &quot;threeSixty&quot;: {
+        fov: 1
+    }
+}
+</code></pre><h3><a name="update-the-default-camera-orientation" class="anchor" href="#update-the-default-camera-orientation"></a>Update the default camera orientation</h3><p>In case the camera is not looking at what you expect when the video starts, you can use both options defaultCameraOrientationX and defaultCameraOrientationY to adapt the starting point of the camera to your use case. Those properties are angles respectively around the x and y axis defined in radians.</p>
+<p>In order to change them, you can specify a different value in your options:</p>
+<h4><a name="by-html-configuration" class="anchor" href="#by-html-configuration"></a>By HTML configuration</h4><p>In the data-setup plugin section:</p>
+<pre><code>&quot;plugins&quot;: { &quot;threeSixty&quot;: { &quot;defaultCameraOrientationX&quot;: 1 } }
+</code></pre><h4><a name="by-code-configuration" class="anchor" href="#by-code-configuration"></a>By code configuration</h4><p>This works exactly the same as the previous point. In the options of your plugin:</p>
+<pre><code>plugins: { 
+    &quot;threeSixty&quot;: {
+        defaultCameraOrientationY: 1
+    }
+}
+</code></pre><h3><a name="disable-webgl2" class="anchor" href="#disable-webgl2"></a>Disable WebGL2</h3><p>The default setup enables Webgl2 to enhance the performances of the application. In case of compatibility issues with all platforms, would you wish to disable it, you can rely on the setup below:</p>
+<h4><a name="by-html-configuration" class="anchor" href="#by-html-configuration"></a>By HTML configuration</h4><p>In the data-setup plugin section:</p>
+<pre><code>&quot;plugins&quot;: { &quot;threeSixty&quot;: { &quot;disableWebGL2Support&quot;: true } }
+</code></pre><h4><a name="by-code-configuration" class="anchor" href="#by-code-configuration"></a>By code configuration</h4><p>This works exactly the same as the previous point. In the options of your plugin:</p>
+<pre><code>plugins: { 
+    &quot;threeSixty&quot;: {
+        disableWebGL2Support: true
+    }
+}
+</code></pre><h3><a name="adapt-to-native-resolution" class="anchor" href="#adapt-to-native-resolution"></a>Adapt to native resolution</h3><p>To provide the best performances, by default the plugin does not account for you <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio">devicePixelRatio</a> setup. It renders 1 to 1 with CSS pixels. In case of HiDPI or Retina display the ratio might be pretty high meaning if you want to get the most of your pixels (using physical pixels), the plugin should for instance render 4 times more pixels than the actual CSS number of pixels.</p>
+<p>You can use the hardwareScalingLevel settings of the plugin to chose how many times the Physical Pixels of your device are multiplied to define the number of CSS pixels. For instance a value of 0.5 means there would be twice as much pixels on width and height than the number of CSS pixels enhancing a lot the resolution.</p>
+<h4><a name="by-html-configuration" class="anchor" href="#by-html-configuration"></a>By HTML configuration</h4><p>In the data-setup plugin section:</p>
+<pre><code>&quot;plugins&quot;: { &quot;threeSixty&quot;: { &quot;hardwareScalingLevel&quot;: 0.5 } }
+</code></pre><h4><a name="by-code-configuration" class="anchor" href="#by-code-configuration"></a>By code configuration</h4><p>This works exactly the same as the previous point. In the options of your plugin:</p>
+<pre><code>plugins: { 
+    &quot;threeSixty&quot;: {
+        hardwareScalingLevel: 0.5
+    }
+}
+</code></pre></div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

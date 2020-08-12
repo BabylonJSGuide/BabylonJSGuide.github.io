@@ -1,0 +1,268 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use PostProcesses - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use PostProcesses</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#base-postprocess">Base postprocess</a></li>
+<li><a href="#additional-parameters">Additional parameters</a></li>
+<li><a href="#attach-postprocess">Attach postprocess</a><ul>
+<li><a href="#builtin-postprocesses">Builtin postprocesses</a></li>
+</ul>
+</li>
+<li><a href="#pass">Pass</a><ul>
+<li><a href="#black-and-white">Black and white</a></li>
+<li><a href="#blur">Blur</a></li>
+<li><a href="#convolution">Convolution</a></li>
+<li><a href="#screen-space-curvature">Screen Space Curvature</a></li>
+<li><a href="#fxaa">FXAA</a></li>
+<li><a href="#highlights">Highlights</a></li>
+<li><a href="#tonemap">Tonemap</a></li>
+<li><a href="#imageprocessing">ImageProcessing</a></li>
+</ul>
+</li>
+<li><a href="#refraction">Refraction</a></li>
+<li><a href="#color-correction">Color Correction</a></li>
+<li><a href="#custom-postprocesses">Custom postprocesses</a></li>
+<li><a href="#chaining-postprocesses">Chaining postprocesses</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-postprocess" class="anchor" href="#how-to-use-postprocess"></a>How To Use PostProcess</h1><p>Postprocesses allow you to create 2D effects on top of your scene.
+A postprocess is linked to a camera and can be part of a chain of postprocesses where each postprocess uses the result of the previous one as input for its own processing.</p>
+<h2><a name="base-postprocess" class="anchor" href="#base-postprocess"></a>Base postprocess</h2><p>Every postprocess is based upon <code>BABYLON.PostProcess</code> which uses this constructor:</p>
+<pre><code class="lang-javascript">BABYLON.PostProcess = function (name, fragmentUrl, parameters, samplers, ratio, camera, samplingMode, engine, reusable)
+</code></pre>
+<p>We will get back to <em>fragmentUrl</em>, <em>parameters</em> and <em>samplers</em> parameters.</p>
+<p>The <em>ratio</em> is used to define the size of the postprocess (0.5 means that your postprocess will have a width = canvas.width <em> 0.5 and a height = canvas.height </em> 0.5).</p>
+<p>The <em>camera</em> parameter specifies which camera to attach to. If creating a post process to be managed by a render pipeline this should be set to null. See <a href="/how_to/how_to_use_postprocessrenderpipeline">Post Process Pipeline</a></p>
+<p>The <em>samplingMode</em> can be one of the following:</p>
+<ul>
+<li>BABYLON.Texture.NEAREST_SAMPLINGMODE</li>
+<li>BABYLON.Texture.BILINEAR_SAMPLINGMODE (<strong>default</strong>)</li>
+<li>BABYLON.Texture.TRILINEAR_SAMPLINGMODE</li>
+</ul>
+<p>Please note that postprocess with trilinear sampling will be force to have a power of two size (256, 512, 1024, etc.)</p>
+<p>The <em>engine</em> parameter is the engine where you want to attach your postprocess.</p>
+<p>The <em>reusable</em> paameter indicates if your postprocess can be reused multiple times on the same camera (default is false).</p>
+<h2><a name="additional-parameters" class="anchor" href="#additional-parameters"></a>Additional parameters</h2><p>By default (and if you are not using trilinear sampling) the postprocesses used the size of the screen scaled by the ratio you provide. But you can decide to force them to be rescaled to a power of two size in order to be more efficient. To enable this, just call <code>mypostprocess.alwaysForcePOT = true</code>.</p>
+<p>You can also control how the size is chosen by setting <code>mypostprocess.scaleMode</code> to one of these values:</p>
+<ul>
+<li>BABYLON.Engine.SCALEMODE_FLOOR: Will fint the next lowest power of two.</li>
+<li>BABYLON.Engine.SCALEMODE_NEAREST: Will fint the nearest power of two.</li>
+<li>BABYLON.Engine.SCALEMODE_CEILING: Will fint the next highest power of two.</li>
+</ul>
+<p>You can also control if the postprocess is cleared upon rendering with <code>mypostprocess.autoClear = true</code>. This is the default behavior.</p>
+<p>If you turn off autoClear, you will be able to blend the render of the postprocess with its previous content by defining an alphaMode with <code>mypostprocess.alphaMode = BABYLON.Engine.ALPHA_COMBINE</code>.</p>
+<p>This could be really useful when you have multiple postprocesses enabled together. You can even choose to share the output of several postprocesses with <code>mypostprocess.shareOutputWith(anotherPostprocess)</code>.</p>
+<h2><a name="attach-postprocess" class="anchor" href="#attach-postprocess"></a>Attach postprocess</h2><p>Depending on how you have defined a postprocess, it can be attached one or more times to the same camera.
+The same instance can also be attached to multiple cameras.</p>
+<p>A camera has two methods:</p>
+<h4><a name="strongattachpostprocessstrong" class="anchor" href="#attachpostprocess"></a><strong>attachPostProcess</strong></h4><pre><code class="lang-javascript">NUMBER function(PostProcess postProcess [,NUMBER atIndice])
+</code></pre>
+<h4><a name="strongdetachpostprocessstrong" class="anchor" href="#detachpostprocess"></a><strong>detachPostProcess</strong></h4><pre><code class="lang-javascript">NUMBER function(PostProcess postProcess [,NUMBER[] atIndices])
+</code></pre>
+<h1><a name="builtin-postprocesses" class="anchor" href="#builtin-postprocesses"></a>Builtin postprocesses</h1><p>Babylon.js comes with a set of ready to use postprocesses.</p>
+<h2><a name="pass" class="anchor" href="#pass"></a>Pass</h2><p>Do nothing. Used to copy the framebuffer into a postprocess for further use</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.PassPostProcess(&quot;Scene copy&quot;, 1.0, camera);
+</code></pre>
+<h3><a name="black-and-white" class="anchor" href="#black-and-white"></a>Black and white</h3><p>Apply a black and white effect:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.BlackAndWhitePostProcess(&quot;bandw&quot;, 1.0, camera);
+</code></pre>
+<h3><a name="blur" class="anchor" href="#blur"></a>Blur</h3><p>Apply a directional blur using a kernel based blur:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.BlurPostProcess(&quot;Horizontal blur&quot;, new BABYLON.Vector2(1.0, 0), kernel, 0.25, camera);
+</code></pre>
+<p>The kernel value will define the ideal number of taps done by the postprocess. The postprocess will then adapt the kernel based on screen size and DPI resolution.</p>
+<p>For instance here is an example with a kernel value of 32: <a href="https://www.babylonjs-playground.com/#FBH4J7#3">https://www.babylonjs-playground.com/#FBH4J7#3</a> - <i class="fa fa-eye" onclick="createIframe('FBH4J7#3', this)"></i><div class="iframeContainer"></div>
+Or 256: <a href="https://www.babylonjs-playground.com/#FBH4J7#4">https://www.babylonjs-playground.com/#FBH4J7#4</a> - <i class="fa fa-eye" onclick="createIframe('FBH4J7#4', this)"></i><div class="iframeContainer"></div></p>
+<p>Obviously, as usual, try to stay reasonable with kernel size as it will impact the overall rendering speed.</p>
+<h3><a name="convolution" class="anchor" href="#convolution"></a>Convolution</h3><p>Apply a kernel matrix to every pixel:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.ConvolutionPostProcess(&quot;Sepia&quot;, BABYLON.ConvolutionPostProcess.EmbossKernel, 1.0, camera);
+</code></pre>
+<h3><a name="screen-space-curvature" class="anchor" href="#screen-space-curvature"></a>Screen Space Curvature</h3><p>Apply a nice effect highlightint the ridges and valley of your meshes:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.ScreenSpaceCurvaturePostProcess(&quot;&quot;, scene, 1, scene.activeCamera);
+</code></pre>
+<p>You can easily define the ridge and valley level you want relying on the respective <code>postProcess.ridge</code> and <code>postProcess.valley</code> properties.</p>
+<p>You can see a live demo here: <a href="https://www.babylonjs-playground.com/#YF8D42#5">https://www.babylonjs-playground.com/#YF8D42#5</a> - <i class="fa fa-eye" onclick="createIframe('YF8D42#5', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="fxaa" class="anchor" href="#fxaa"></a>FXAA</h3><p>Apply a full screen antialiasing filter:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.FxaaPostProcess(&quot;fxaa&quot;, 1.0, camera);
+</code></pre>
+<h3><a name="highlights" class="anchor" href="#highlights"></a>Highlights</h3><p>Apply a full screen highlight filter which will increment the luminosity of highlihts in your scene:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.HighlightsPostProcess(&quot;highlights&quot;, 1.0, camera);
+</code></pre>
+<h3><a name="tonemap" class="anchor" href="#tonemap"></a>Tonemap</h3><p>Apply a full screen tone mapping filter:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.TonemapPostProcess(&quot;tonemap&quot;, BABYLON.TonemappingOperator.Hable, 0.8, 1.0, camera);
+</code></pre>
+<p>The second parameter helps defining which operator will be used among the following ones:</p>
+<ul>
+<li>BABYLON.TonemappingOperator.Hable</li>
+<li>BABYLON.TonemappingOperator.Reinhard</li>
+<li>BABYLON.TonemappingOperator.HejiDawson</li>
+<li>BABYLON.TonemappingOperator.Photographic</li>
+</ul>
+<p>The third parameter define the exposure adjustement.</p>
+<p>You can find a demo here: <a href="https://www.babylonjs-playground.com/debug.html#J9H084#8">https://www.babylonjs-playground.com/debug.html#J9H084#8</a></p>
+<h3><a name="imageprocessing" class="anchor" href="#imageprocessing"></a>ImageProcessing</h3><p>Apply a complete range of special image treaments (image processing):</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.ImageProcessingPostProcess(&quot;processing&quot;, 1.0, camera);
+</code></pre>
+<p>You have several options available:</p>
+<ul>
+<li>colorGradingTexture: Used to provide a color grading texture applied on your scene. You can use:<ul>
+<li>a <a href="//doc.babylonjs.com/api/classes/babylon.colorgradingtexture">colorGradingTexture</a> using a <a href="https://en.wikipedia.org/wiki/3D_lookup_table">.3dl</a> format. Demo: <a href="https://www.babylonjs-playground.com/#17VHYI#15">https://www.babylonjs-playground.com/#17VHYI#15</a> - <i class="fa fa-eye" onclick="createIframe('17VHYI#15', this)"></i><div class="iframeContainer"></div></li>
+<li>a standard texture (using .png for example) but with <em>invertY</em> set to <em>true</em>, wrap mode as clamp and <em>imageProcessingConfiguration.colorGradingWithGreenDepth</em> set to <em>false</em>. Demo: <a href="https://www.babylonjs-playground.com/#17VHYI#9">https://www.babylonjs-playground.com/#17VHYI#9</a> - <i class="fa fa-eye" onclick="createIframe('17VHYI#9', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</li>
+<li>colorCurves: Used to provide several properties to change colors. More <a href="/overviews/physically_based_rendering_master#color-curves">details here</a>. Demo: <a href="https://www.babylonjs-playground.com/#J9H084#12">https://www.babylonjs-playground.com/#J9H084#12</a> - <i class="fa fa-eye" onclick="createIframe('J9H084#12', this)"></i><div class="iframeContainer"></div></li>
+<li>contrast: 1.0 by default. Used to change the contrast. Demo: <a href="https://www.babylonjs-playground.com/#J9H084#9">https://www.babylonjs-playground.com/#J9H084#9</a> - <i class="fa fa-eye" onclick="createIframe('J9H084#9', this)"></i><div class="iframeContainer"></div></li>
+<li>exposure: 1.0 by default. Used to change the exposure of the image. Demo: <a href="https://www.babylonjs-playground.com/#J9H084#10">https://www.babylonjs-playground.com/#J9H084#10</a> - <i class="fa fa-eye" onclick="createIframe('J9H084#10', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>You can also use this postprocess to enable a vignette effect. The vignette is positioned thanks to the following parameters:</p>
+<ul>
+<li>vignetteStretch: 0 by default</li>
+<li>vignetteCentreX: X coordinate of the center (0,0 is the center of the screen)</li>
+<li>vignetteCentreY: Y coordinate of the center (0,0 is the center of the screen)</li>
+<li>vignetteWeight: 1.5 by default</li>
+<li>vignetteColor: Color4 value to define the overall color</li>
+<li>vignetteBlendMode: BABYLON.ImageProcessingPostProcess.VIGNETTEMODE_MULTIPLY or BABYLON.ImageProcessingPostProcess.VIGNETTEMODE_OPAQUE</li>
+</ul>
+<p>You can find a demo of the vignette here: <a href="https://www.babylonjs-playground.com/#J9H084#11">https://www.babylonjs-playground.com/#J9H084#11</a> - <i class="fa fa-eye" onclick="createIframe('J9H084#11', this)"></i><div class="iframeContainer"></div></p>
+<p>All features can be turned on and off with the following booleans:</p>
+<ul>
+<li>colorCurvesEnabled</li>
+<li>vignetteEnabled</li>
+<li>cameraToneMappingEnabled</li>
+<li>colorGradingEnabled</li>
+</ul>
+<h4><a name="configuration" class="anchor" href="#configuration"></a>Configuration</h4><p>Image postprocessing can be done with the ImageProcessingPostProcess but you can also use StandardMaterial and PBRMaterial built-in image processing features. To simplify the overall configuration of your image processing setup, you can define the properties you want on <code>scene.imageProcessingConfiguration</code>.
+This object hosts the same properties as the ImageProcessingPostProcess.</p>
+<p>By default, ImageProcessingPostProcess, StandardMaterial and PBRMaterial share the same configuration object (The one from the scene). This means that if you change a value on <code>scene.imageProcessingConfiguration</code> or directly on ImageProcessingPostProcess, StandardMaterial or PBRMaterial, this will affect all entities sharing the same configuration.</p>
+<p>Here is an example of a global configuration: <a href="https://www.babylonjs-playground.com/#J9H084#13">https://www.babylonjs-playground.com/#J9H084#13</a> - <i class="fa fa-eye" onclick="createIframe('J9H084#13', this)"></i><div class="iframeContainer"></div></p>
+<p>Furthermore, as they share the same configuration, you can just dispose a postprocess you were using and automatically the image processing will be done at materials level. So here is an example of a configuration done at scene level, but with no postprocess to use it: <a href="https://www.babylonjs-playground.com/#J9H084#14">https://www.babylonjs-playground.com/#J9H084#14</a> - <i class="fa fa-eye" onclick="createIframe('J9H084#14', this)"></i><div class="iframeContainer"></div> (As you can see the processing is then done by the material itself).</p>
+<p>You can also decide to instantiate your own configuration and affect it to your material or to your postprocess with <code>postProcess.imageProcessingConfiguration = new BABYLON.ImageProcessingConfiguration()</code>. In this case, you will be able to configure this object independantly.</p>
+<h4><a name="default-rendering-pipeline" class="anchor" href="#default-rendering-pipeline"></a>Default rendering pipeline</h4><p>The image processing post process is also included in a rendering pipeline: the DefaultRenderingPipeline. This pipeline adds support for FXAA and bloom on top of the image processing. You can find a complete interactive demo here: <a href="https://www.babylonjs-playground.com/#5XB8YT#1">https://www.babylonjs-playground.com/#5XB8YT#1</a> - <i class="fa fa-eye" onclick="createIframe('5XB8YT#1', this)"></i><div class="iframeContainer"></div></p>
+<p>You can turn pipeline features on and off with the following booleans:</p>
+<ul>
+<li>fxaaEnabled</li>
+<li>bloomEnabled</li>
+<li>imageProcessingEnabled</li>
+</ul>
+<h2><a name="refraction" class="anchor" href="#refraction"></a>Refraction</h2><p>Apply a refraction texture:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.RefractionPostProcess(&quot;Refraction&quot;, &quot;refMap.jpg&quot;, new BABYLON.Color3(1.0, 1.0, 1.0), 0.5, 0.5, 1.0, camera);
+</code></pre>
+<p>The constructor of this postprocess is the following:</p>
+<pre><code class="lang-javascript">BABYLON.RefractionPostProcess = function (name, refractionTextureUrl, color, depth, colorLevel, ratio, null, samplingMode, engine, reusable)
+</code></pre>
+<p><em>refractionTextureUrl</em> is the URL of the refraction map. The luminance of every pixel is used to define the refraction level (white = min, black = max)
+<em>color</em> is the base color of the refraction (used to taint the rendering)
+<em>depth</em> is the simulated refraction depth
+<em>colorLevel</em> is the coefficient of the base color (0 to remove base color tainting)</p>
+<h2><a name="color-correction" class="anchor" href="#color-correction"></a>Color Correction</h2><p>Apply a color filter:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.ColorCorrectionPostProcess(&quot;color_correction&quot;, &quot;./table.png&quot;, 1.0, camera);
+</code></pre>
+<p>The second parameter of the constructor is the URL of the color look-up table (also known as <em>LUT</em>) that contains the filter to apply. This must be a texture 16 pixels high and 256 pixels wide containing a modified set of RGB colors (x=red value, y=green value, z=blue value). The post-processing will then map the RGB values of the rendered pixels to the new values contained in the look-up table.</p>
+<p>Here is what the default (without filter) look-up table looks like:</p>
+<p><img src="/img/how_to/post-processes/lut-default.png" alt="LUT"></p>
+<p>Examples of filtered LUT to use for various filters:</p>
+<p><img src="/img/how_to/post-processes/lut-inverted.png" alt="LUT">
+ Inverted colors</p>
+<p><img src="/img/how_to/post-processes/lut-highcontrast.png" alt="LUT">
+ High contrast</p>
+<p><img src="/img/how_to/post-processes/lut-posterized.png" alt="LUT">
+ Posterize</p>
+<p>You can easily create new filters by using a image editing software to alter the look-up table to fit your needs. Copy/paste the default look-up table on a screenshot or picture before altering it to see in real time what the filtered image will look like.</p>
+<h2><a name="custom-postprocesses" class="anchor" href="#custom-postprocesses"></a>Custom postprocesses</h2><p>You can also develop your own postprocess using <code>BABYLON.PostProcess</code> object.</p>
+<p>To do so, you need to create a .fragment.fx file, a shader-storing DOM node, or a ShaderStore entry where you will store the GLSL shader code used for every pixel of the screen:</p>
+<pre><code class="lang-javascript">GLSL
+#ifdef GL_ES
+precision highp float;
+#endif
+
+// Samplers
+varying vec2 vUV;
+uniform sampler2D textureSampler;
+
+// Parameters
+uniform vec2 screenSize;
+uniform float highlightThreshold;
+
+float highlights(vec3 color)
+{
+ return smoothstep(highlightThreshold, 1.0, dot(color, vec3(0.3, 0.59, 0.11)));
+}
+
+void main(void)
+{
+ vec2 texelSize = vec2(1.0 / screenSize.x, 1.0 / screenSize.y);
+ vec4 baseColor = texture2D(textureSampler, vUV + vec2(-1.0, -1.0) * texelSize) * 0.25;
+ baseColor += texture2D(textureSampler, vUV + vec2(1.0, -1.0) * texelSize) * 0.25;
+ baseColor += texture2D(textureSampler, vUV + vec2(1.0, 1.0) * texelSize) * 0.25;
+ baseColor += texture2D(textureSampler, vUV + vec2(-1.0, 1.0) * texelSize) * 0.25;
+
+ baseColor.a = highlights(baseColor.rgb);
+
+ gl_FragColor = baseColor;
+}
+</code></pre>
+<p>Your shader must define the following values:</p>
+<ul>
+<li>Precision must be set to highp</li>
+<li>A varying vUV must be used to read texture coordinates</li>
+<li>The first sampler must be named textureSampler</li>
+</ul>
+<p>Once you created your sampler, you can create a postprocess:</p>
+<pre><code class="lang-javascript">var postProcess = new BABYLON.PostProcess(&quot;Down sample&quot;, &quot;./Scenes/Customs/postprocesses/downsample&quot;, [&quot;screenSize&quot;, &quot;highlightThreshold&quot;], null, 0.25, camera);
+</code></pre>
+<p>You have to specify:</p>
+<ul>
+<li>A name</li>
+<li>The URL of the shader coder*</li>
+<li>A list of your uniforms parameters</li>
+<li>A list of additional samplers</li>
+<li>The ratio</li>
+<li>The parent camera (deprecated)</li>
+<li>The sampling mode</li>
+<li>The engine</li>
+<li>Can be reusable</li>
+</ul>
+<p>(*Please see the link at the bottom of this document to learn more ways to store shader code.)</p>
+<p>You can set up things before the postprocess is applied by specifying a onApply function:</p>
+<pre><code class="lang-javascript">postProcess.onApply = function (effect) {
+    effect.setFloat2(&quot;screenSize&quot;, postProcess1.width, postProcess1.height);
+    effect.setFloat(&quot;highlightThreshold&quot;, 0.90);
+};
+</code></pre>
+<p>You can find another example here: <a href="https://www.babylonjs-playground.com/#DAC1WM">https://www.babylonjs-playground.com/#DAC1WM</a> - <i class="fa fa-eye" onclick="createIframe('DAC1WM#', this)"></i><div class="iframeContainer"></div></p>
+<p>To use the output of a previous post process setTextureFromPostProcess can be used.
+Note: This will set sceneSampler to the output of the post process before postProcess0 NOT the output of postProcess0.</p>
+<pre><code class="lang-javascript">effect.setTextureFromPostProcess(&quot;sceneSampler&quot;, postProcess0);
+</code></pre>
+<h2><a name="chaining-postprocesses" class="anchor" href="#chaining-postprocesses"></a>Chaining postprocesses</h2><p>You can chain postprocesses on a specific camera. They are processed using the creation order. For instance here is the code used to simulate a bloom effect:</p>
+<pre><code class="lang-javascript">var blurWidth = 1.0;
+
+var postProcess0 = new BABYLON.PassPostProcess(&quot;Scene copy&quot;, 1.0, camera);
+var postProcess1 = new BABYLON.PostProcess(&quot;Down sample&quot;, &quot;./Scenes/Customs/postprocesses/downsample&quot;, [&quot;screenSize&quot;, &quot;highlightThreshold&quot;], null, 0.25, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE);
+postProcess1.onApply = function (effect) {
+    effect.setFloat2(&quot;screenSize&quot;, postProcess1.width, postProcess1.height);
+    effect.setFloat(&quot;highlightThreshold&quot;, 0.90);
+};
+var postProcess2 = new BABYLON.BlurPostProcess(&quot;Horizontal blur&quot;, new BABYLON.Vector2(1.0, 0), blurWidth, 0.25, camera);
+var postProcess3 = new BABYLON.BlurPostProcess(&quot;Vertical blur&quot;, new BABYLON.Vector2(0, 1.0), blurWidth, 0.25, camera);
+var postProcess4 = new BABYLON.PostProcess(&quot;Final compose&quot;, &quot;./Scenes/Customs/postprocesses/compose&quot;, [&quot;sceneIntensity&quot;, &quot;glowIntensity&quot;, &quot;highlightIntensity&quot;], [&quot;sceneSampler&quot;], 1, camera);
+postProcess4.onApply = function (effect) {
+    effect.setTextureFromPostProcess(&quot;sceneSampler&quot;, postProcess0);
+    effect.setFloat(&quot;sceneIntensity&quot;, 0.5);
+    effect.setFloat(&quot;glowIntensity&quot;, 0.4);
+    effect.setFloat(&quot;highlightIntensity&quot;, 1.0);
+};
+</code></pre>
+<p>You might want to <a href="https://www.eternalcoding.com/what-do-you-mean-by-shaders-learn-how-to-create-shaders-with-babylon-js/">read more about shaders</a> and try our <a href="https://cyos.babylonjs.com/">CYOS shader editor</a>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

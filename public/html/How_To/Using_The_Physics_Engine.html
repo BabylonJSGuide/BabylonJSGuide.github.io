@@ -1,0 +1,427 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use a Physics Engine - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use a Physics Engine</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#what-physics-engine-are-integrated">What physics engine are integrated</a></li>
+<li><a href="#basic-usage">Basic usage</a><ul>
+<li><a href="#enabling-the-physics-engine">Enabling the physics engine</a></li>
+<li><a href="#impostors">Impostors</a></li>
+<li><a href="#authoring-and-loading-a-mesh-with-a-collider-mesh-currently-works-with-ammojs-plugin-only">Authoring and loading a mesh with a collider mesh (Currently works with AmmoJS plugin only)</a></li>
+<li><a href="#babylons-physics-impostor">Babylon&#39;s physics impostor</a></li>
+<li><a href="#basic-physics-scene">Basic physics scene</a></li>
+<li><a href="#further-functionality-of-the-impostor-class">Further functionality of the Impostor class</a></li>
+<li><a href="#physics-joints">Physics Joints</a></li>
+<li><a href="#interaction-with-the-physics-engine">Interaction with the physics engine</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-a-physics-engine" class="anchor" href="#how-to-use-a-physics-engine"></a>How to Use a Physics Engine</h1><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>Babylon.js has a plugin system for physics engines that enables the user to add physics interactions to the scene&#39;s objects.
+Unlike the internal collision system, a physics engine calculates objects&#39;  body dynamics and emulates &quot;real-life&quot; interactions between them. So if two objects collide, they will &quot;bounce&quot; off one another, just like you would expect from a real-life object.</p>
+<p>Babylon.js&#39; plugin system allowed us to use well established physics engines and to integrate them into Babylon.js&#39; render loop. Apart from very advanced usage, there is no need to interact directly with the physics engine. Babylon.js does the work for you.</p>
+<p>This tutorial will show the basic usage of the physics system.</p>
+<h2><a name="what-physics-engine-are-integrated" class="anchor" href="#what-physics-engine-are-integrated"></a>What physics engine are integrated</h2><p>There are plugins for 4 physics engines:</p>
+<ol>
+<li>Cannon.js - a wonderful physics engine written entirely in JavaScript</li>
+<li>Oimo.js - a JS port of the lightweight Oimo physics engine</li>
+<li>Energy.js - (Not yet publicly available) - a JS port of a C++ physics engine</li>
+<li>Ammo.js - a JS port of the C++ Bullet physics engine</li>
+</ol>
+<p>Each engine has its own features and its own way of calculating the body dynamics. We at Babylon.js tried collecting the common usage of all engines and provide an easy-to-use interface to them.</p>
+<p>Once you picked an engine, do not forget to add a reference to the engine code:</p>
+<ol>
+<li>Cannon: <a href="https://cdn.babylonjs.com/cannon.js">https://cdn.babylonjs.com/cannon.js</a></li>
+<li>Oimo: <a href="https://cdn.babylonjs.com/Oimo.js">https://cdn.babylonjs.com/Oimo.js</a></li>
+<li>Ammo: <a href="https://cdn.babylonjs.com/ammo.js">https://cdn.babylonjs.com/ammo.js</a> or directly from <a href="https://github.com/kripken/ammo.js/blob/master/builds/ammo.js">https://github.com/kripken/ammo.js/blob/master/builds/ammo.js</a></li>
+</ol>
+<h2><a name="basic-usage" class="anchor" href="#basic-usage"></a>Basic usage</h2><h3><a name="enabling-the-physics-engine" class="anchor" href="#enabling-the-physics-engine"></a>Enabling the physics engine</h3><p>To enable the physics engine, call the scene&#39;s <code>enablePhysics</code> function:</p>
+<pre><code class="lang-javascript">var scene = new BABYLON.Scene(engine);
+var gravityVector = new BABYLON.Vector3(0,-9.81, 0);
+var physicsPlugin = new BABYLON.CannonJSPlugin();
+scene.enablePhysics(gravityVector, physicsPlugin);
+</code></pre>
+<p>Both parameters are optional. The default parameters are shown in the example. This is the same as calling:</p>
+<pre><code class="lang-javascript">scene.enablePhysics();
+</code></pre>
+<p>To use OimoJS simply change the 2nd parameter to <code>new BABYLON.OimoJSPlugin()</code>:</p>
+<pre><code class="lang-javascript">scene.enablePhysics(new BABYLON.Vector3(0,-9.81, 0), new BABYLON.OimoJSPlugin());
+</code></pre>
+<p>Calling this function will create a new BABYLON.PhysicsEngine object that will be in charge of handling the physics interactions.</p>
+<p>The physics engine is now enabled and is running during the render loop.</p>
+<h3><a name="impostors" class="anchor" href="#impostors"></a>Impostors</h3><p>To allow interaction between objects, the physics engines use an impostor, which is a simpler representation of a complex object. 
+An impostor, as a rule, is a rigid body - meaning it cannot be changed during interaction. A sphere will always have the same radius, a box will always have the same length. If you want to change the object, a new impostor will be created.</p>
+<p>Each physics engine has different types of Impostors. The following table shows what each engine supports, and what it uses to simulate the missing impostors</p>
+<table>
+<thead>
+<tr>
+<th>Impostor Type</th>
+<th>Cannon.js</th>
+<th>Oimo.js</th>
+<th>Energy.js</th>
+<th>Ammo.js</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Box</td>
+<td>Box</td>
+<td>Box</td>
+<td>Box</td>
+<td>Box</td>
+<td></td>
+</tr>
+<tr>
+<td>Sphere</td>
+<td>Sphere</td>
+<td>Sphere</td>
+<td>Sphere</td>
+<td>Sphere</td>
+<td></td>
+</tr>
+<tr>
+<td>Particle</td>
+<td>Particle</td>
+<td>Sphere</td>
+<td>Unknown</td>
+<td>Sphere</td>
+<td></td>
+</tr>
+<tr>
+<td>Plane</td>
+<td>Plane</td>
+<td>Box</td>
+<td>Plane</td>
+<td>Box</td>
+<td>Simulates an unlimited surface. Like a floor that never ends. Consider using Box</td>
+</tr>
+<tr>
+<td>Cylinder</td>
+<td>Cylinder</td>
+<td>Cylinder</td>
+<td>Cylinder</td>
+<td>Cylinder</td>
+<td></td>
+</tr>
+<tr>
+<td>Mesh</td>
+<td>Mesh</td>
+<td>Box</td>
+<td>Mesh</td>
+<td>Mesh</td>
+<td>Use only when necessary - will lower performance. Cannon&#39;s mesh impostor only collides against spheres and planes</td>
+</tr>
+<tr>
+<td>Heightmap</td>
+<td>Heightmap</td>
+<td>Box</td>
+<td>Mesh</td>
+<td>Mesh</td>
+<td></td>
+</tr>
+<tr>
+<td>ConvexHull</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Mesh</td>
+<td>Allows physics impostor support for convex mesh hull shapes</td>
+</tr>
+</tbody>
+</table>
+<p>Using simple impostors for complex objects will increase performance but decrease the reality of the scene&#39;s physics. Consider when complex impostors (like the mesh or the heightmap) is needed, and when the simpler geometries can be used.</p>
+<h3><a name="authoring-and-loading-a-mesh-with-a-collider-mesh-currently-works-with-ammojs-plugin-only" class="anchor" href="#authoring-and-loading-a-mesh-with-a-collider-mesh-currently-works-with-ammojs-plugin-only"></a>Authoring and loading a mesh with a collider mesh (Currently works with AmmoJS plugin only)</h3><p>To get reasonably accurate collisions without overloading the physics engine, a collider mesh is recommended. One way to do this is as followed:</p>
+<h4><a name="authoring" class="anchor" href="#authoring"></a>Authoring</h4><ol>
+<li>Model a mesh as usual (eg. in Blender, Babylon, Maya, etc.)</li>
+<li>Using impostor primitives (eg. Box or Sphere) create collider meshes outlining the mesh</li>
+<li>Label the collider meshes so they can be accessed within Babylon by name</li>
+<li>Ensure that the collider mesh nodes do not have their orientation frozen as this info is needed within Babylon to generate the physics imposters</li>
+<li>Export to a Babylon supported file format: GLTF, GLB, Babylon, etc.</li>
+</ol>
+<h4><a name="loading" class="anchor" href="#loading"></a>Loading</h4><ol>
+<li>Import mesh file within Babylon</li>
+<li>Create a new Babylon mesh which will be used as the root of physics mesh, the position of this mesh act as the center of mass for the physics object</li>
+<li>Iterate over the loaded mesh&#39;s children and add the collider meshes (marked by the label during creation) as a child of the root physics mesh, make them non-visible and create physics impostors from each</li>
+<li>Iterate over the loaded mesh again and add the parent nodes as a child of the root physics mesh</li>
+<li>Scale the root physics mesh to the desired size (Scaling must be uniform)</li>
+<li>Create a physics impostor of the root physics mesh of type NoImpostor (The mass of this impostor will override the mass of the child impostors)</li>
+<li>Position/rotate the root physics mesh to the desired place within the world</li>
+</ol>
+<h4><a name="examples" class="anchor" href="#examples"></a>Examples</h4><ol>
+<li>Loading mesh and colliders from file: <a href="https://playground.babylonjs.com/#66PS52">https://playground.babylonjs.com/#66PS52</a> - <i class="fa fa-eye" onclick="createIframe('66PS52#', this)"></i><div class="iframeContainer"></div></li>
+<li>Loading and adding colliders manually in Babylon: <a href="https://playground.babylonjs.com/#FD65RR">https://playground.babylonjs.com/#FD65RR</a> - <i class="fa fa-eye" onclick="createIframe('FD65RR#', this)"></i><div class="iframeContainer"></div></li>
+<li>Loading and adding collider with joints and pointer interactions: <a href="https://playground.babylonjs.com/#DGEP8N">https://playground.babylonjs.com/#DGEP8N</a> - <i class="fa fa-eye" onclick="createIframe('DGEP8N#', this)"></i><div class="iframeContainer"></div></li>
+<li>WebVR grabbing and throwing: <a href="https://playground.babylonjs.com/#ZNX043">https://playground.babylonjs.com/#ZNX043</a> - <i class="fa fa-eye" onclick="createIframe('ZNX043#', this)"></i><div class="iframeContainer"></div></li>
+<li>Custom engine with <a href="https://doc.babylonjs.com/babylon101/animations#deterministic-lockstep"><code>deterministicLockstep</code></a>: <a href="https://www.babylonjs-playground.com/#3ZW889#8">https://www.babylonjs-playground.com/#3ZW889#8</a> - <i class="fa fa-eye" onclick="createIframe('3ZW889#8', this)"></i><div class="iframeContainer"></div></li>
+</ol>
+<h3><a name="babylon39s-physics-impostor" class="anchor" href="#babylons-physics-impostor"></a>Babylon&#39;s physics impostor</h3><p>To enable physics on an object(*) you need to assign it a physics impostor. The signature of the impostor&#39;s constructor is (provided with TypeScript type definition):</p>
+<pre><code class="lang-javascript">new BABYLON.PhysicsImpostor(object: IPhysicsEnabledObject, type: number, options: PhysicsImpostorParameters, scene:BABYLON.Scene);
+</code></pre>
+<h4><a name="object" class="anchor" href="#object"></a>object</h4><p>You will notice that I keep on writing object and not mesh, and that the first parameter is not a mesh but an interface (IPhysicsEnabledObject). It is possible to assign an impostor to any Babylon object that has at least two parameters:</p>
+<pre><code class="lang-javascript">position: BABYLON.Vector3;
+rotationQuaternion: BABYLON.Quaternion
+</code></pre>
+<p>An AbstractMesh will be the first choice, of course. But a Solid Particle also applies, and so does a light or certain cameras. I will show how to use an impostor on different object types in the advanced tutorial.</p>
+<h4><a name="type" class="anchor" href="#type"></a>type</h4><p>Type can be one of the following:</p>
+<pre><code class="lang-javascript">BABYLON.PhysicsImpostor.SphereImpostor;
+BABYLON.PhysicsImpostor.BoxImpostor;
+BABYLON.PhysicsImpostor.PlaneImpostor;
+BABYLON.PhysicsImpostor.MeshImpostor;
+BABYLON.PhysicsImpostor.CylinderImpostor;
+BABYLON.PhysicsImpostor.ParticleImpostor;
+BABYLON.PhysicsImpostor.HeightmapImpostor;
+BABYLON.PhysicsImpostor.ConvexHullImpostor;
+</code></pre>
+<h4><a name="options" class="anchor" href="#options"></a>options</h4><p>Options is a JSON. The interface is as follows:</p>
+<pre><code class="lang-javascript">    export interface PhysicsImpostorParameters {
+        mass: number;
+        friction?: number;
+        restitution?: number;
+        nativeOptions?: any;
+        ignoreParent?: boolean;
+        disableBidirectionalTransformation?: boolean;
+    }
+</code></pre>
+<ul>
+<li>mass: The only mandatory parameters is mass, which is the object&#39;s mass in kg. A <code>0</code> as a value will create a static impostor - good for floors.</li>
+<li>friction: is the impostor&#39;s friction when colliding against other impostors.</li>
+<li>restitution: is the amount of force the body will &quot;give back&quot; when colliding. A low value will create no bounce, a value of 1 will be a very bouncy interaction.</li>
+<li>nativeOptions: is a JSON with native options of the selected physics plugin. More about it in the advanced tutorial.</li>
+<li>ignoreParent: when using babylon&#39;s parenting system, the physics engine will use the compound system. To avoid using the compound system, set this flag to true. More about it in the advanced tutorial.</li>
+<li>disableBidirectionalTransformation: will disable the bidirectional transformation update. Setting this will make sure the physics engine ignores changes made to the mesh&#39;s position and rotation (and will increase performance a bit)</li>
+<li>group: set the collision group (ammojs only)</li>
+<li>mask: collision bit mask. Only impostor&#39;s group that have at least one bit in the mask will have collisions (ammojs)</li>
+</ul>
+<h4><a name="scene" class="anchor" href="#scene"></a>scene</h4><p>I hope no explanation is required.</p>
+<h3><a name="basic-physics-scene" class="anchor" href="#basic-physics-scene"></a>Basic physics scene</h3><p>I will extend the playground&#39;s basic scene to have physics interactions between the sphere and the ground.</p>
+<p>I will first have to enable physics:</p>
+<pre><code class="lang-javascript">scene.enablePhysics();
+</code></pre>
+<p>Afterwards, I can create the impostors.</p>
+<pre><code class="lang-javascript">sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
+ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene);
+</code></pre>
+<p>Playground example:  <a href="https://www.babylonjs-playground.com/#BEFOO">https://www.babylonjs-playground.com/#BEFOO</a> - <i class="fa fa-eye" onclick="createIframe('BEFOO#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="further-functionality-of-the-impostor-class" class="anchor" href="#further-functionality-of-the-impostor-class"></a>Further functionality of the Impostor class</h3><p>In the example above, you noticed I kept a reference of the physics impostor attached to the sphere and the ground. This is not mandatory, but it is recommended to keep a reference of this object in order to interact with the physics body.</p>
+<p>The physics impostor holds a set of functions that can be executed on the physics engine&#39;s body:</p>
+<h4><a name="bidirectional-transformation-linking" class="anchor" href="#bidirectional-transformation-linking"></a>Bidirectional transformation linking</h4><p>The physics impostor synchronizes the physics engine&#39;s body and the connected object with each frame.
+That means that changing the object&#39;s position or rotation in Babylon code will also move the impostor. The impostor is also the one updating the object&#39;s position after the physics engine is finished calculating the next step.</p>
+<p>Playground example (sphere rotation and position) -  <a href="https://www.babylonjs-playground.com/#B5BDU">https://www.babylonjs-playground.com/#B5BDU</a> - <i class="fa fa-eye" onclick="createIframe('B5BDU#', this)"></i><div class="iframeContainer"></div>
+Notice how the sphere rotates (due to the rotate function), but this rotation is not being taken into account by the physics engine.</p>
+<p>Playground example (box rotation and position) -  <a href="https://www.babylonjs-playground.com/#2ADVLV">https://www.babylonjs-playground.com/#2ADVLV</a> - <i class="fa fa-eye" onclick="createIframe('2ADVLV#', this)"></i><div class="iframeContainer"></div>
+In this case, the rotation does influence the physics engine due to the geometric shape - a box standing on its edge will need to fall to either side, which influences its velocities.</p>
+<h4><a name="linear-velocity" class="anchor" href="#linear-velocity"></a>Linear velocity</h4><p>Simply put, the linear velocity is in charge of updating the object&#39;s position. A velocity in any axis will cause a movement in its direction.
+To get the object&#39;s liner velocity (a BABYLON.Vector3):</p>
+<pre><code class="lang-javascript">impostor.getLinearVelocity();
+</code></pre>
+<p>To set the object&#39;s linear velocity use:</p>
+<pre><code class="lang-javascript">impostor.setLinearVelocity(new BABYLON.Vector3(0,1,0));
+</code></pre>
+<p>Playground example -  <a href="https://www.babylonjs-playground.com/#BXII">https://www.babylonjs-playground.com/#BXII</a> - <i class="fa fa-eye" onclick="createIframe('BXII#', this)"></i><div class="iframeContainer"></div></p>
+<p>The physics engine is in charge of calculating the body&#39;s velocity. Changing it will not make it fixed, but give it a &quot;push&quot;. The physics engine will take the velocity into account and will modify it using gravity and collision interactions.</p>
+<h4><a name="angular-velocity" class="anchor" href="#angular-velocity"></a>Angular velocity</h4><p>If the linear velocity was changing the position, the angular velocity is changing the rotation.</p>
+<p>To get the object&#39;s angular velocity (a BABYLON.Quaternion):</p>
+<pre><code class="lang-javascript">impostor.getAngularVelocity();
+</code></pre>
+<p>To set the object&#39;s angular velocity use:</p>
+<pre><code class="lang-javascript">impostor.setAngularVelocity(new BABYLON.Quaternion(0,1,0,0));
+</code></pre>
+<p>Playground example -  <a href="https://www.babylonjs-playground.com/#IGM3H">https://www.babylonjs-playground.com/#IGM3H</a> - <i class="fa fa-eye" onclick="createIframe('IGM3H#', this)"></i><div class="iframeContainer"></div></p>
+<p>Same as the linear velocity - setting this value will only cause the physics engine to recalculate the body dynamics. The value will not stay fixed.</p>
+<h4><a name="impulses-and-forces" class="anchor" href="#impulses-and-forces"></a>Impulses and forces</h4><p>Applying a force/impulse on a body will change its velocities (linear and angular) according to the body&#39;s properties (mass is taken into account, for example).</p>
+<p>Cannon supports both force and impulse (different aspects of the same concept. Read about the difference here - <a href="http://www.differencebetween.com/difference-between-impulse-and-vs-force/">http://www.differencebetween.com/difference-between-impulse-and-vs-force/</a>)
+Oimo only supports impulses. Applying a force will fallback to impulse.</p>
+<p>To apply an impulse, use the applyImpulse function of the impostor:</p>
+<pre><code class="lang-javascript">impostor.applyImpulse(new BABYLON.Vector3(10, 10, 0), sphere.getAbsolutePosition());
+</code></pre>
+<p>The first variable is the direction and amount of impulse to apply. The second is where on the body itself the force will be applied. Using this in a game of pool - you can hit the ball at various contact point locations and the interaction will vary (sometimes called &quot;using English&quot;). This is the way to simulate that.</p>
+<p>Playground example -  <a href="https://www.babylonjs-playground.com/#26LQEZ">https://www.babylonjs-playground.com/#26LQEZ</a> - <i class="fa fa-eye" onclick="createIframe('26LQEZ#', this)"></i><div class="iframeContainer"></div>
+Playground example with a different position of the impulse, giving the ball a &quot;spin&quot; -  <a href="https://www.babylonjs-playground.com/#26LQEZ#1">https://www.babylonjs-playground.com/#26LQEZ#1</a> - <i class="fa fa-eye" onclick="createIframe('26LQEZ#1', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="radial-explosion-impulseforce-amp-gravitational-fields" class="anchor" href="#radial-explosion-impulseforce-gravitational-fields"></a>Radial explosion impulse/force &amp; gravitational fields</h4><p>You have the ability to create radial explosions &amp; gravitational forces. </p>
+<p>The forces are never applied to impostors that have mass equal 0 (the ground for example).</p>
+<pre><code class="lang-javascript">var physicsHelper = new BABYLON.PhysicsHelper(scene);
+
+var origin = BABYLON.Vector3(0, 0, 0);
+var radius = 10;
+var strength = 20;
+var falloff = BABYLON.PhysicsRadialImpulseFalloff.Linear; // or BABYLON.PhysicsRadialImpulseFalloff.Constant
+
+var explosionEvent = physicsHelper.applyRadialExplosionImpulse( // or .applyRadialExplosionForce
+    origin,
+    radius,
+    strength,
+    falloff
+);
+// the second `radius` argument can also act as options: `.applyRadialExplosionImpulse(origin, { radius: radius, strength: strength, falloff: falloff })`
+
+// or
+
+var gravitationalFieldEvent = physicsHelper.gravitationalField(
+    origin,
+    radius,
+    strength,
+    falloff
+);
+// the second `radius` argument can also act as options: `.gravitationalField(origin, { radius: radius, strength: strength, falloff: falloff })`
+gravitationalFieldEvent.enable(); // need to call, if you want to activate the gravitational field.
+setTimeout(function (gravitationalFieldEvent) { gravitationalFieldEvent.disable(); }, 3000, gravitationalFieldEvent);
+
+// or
+
+var updraftEvent = physicsHelper.updraft(
+    origin,
+    radius,
+    strength,
+    height,
+    BABYLON.PhysicsUpdraftMode.Center // or BABYLON.PhysicsUpdraftMode.Perpendicular
+);
+// the second `radius` argument can also act as options: `.updraft(origin, { radius: radius, strength: strength, height: height, updraftMode: PhysicsUpdraftMode.Center })`
+updraftEvent.enable();
+setTimeout(function (updraftEvent) { updraftEvent.disable(); }, 5000, updraftEvent);
+
+// or
+
+var vortexEvent = physicsHelper.vortex(
+    origin,
+    radius,
+    strength,
+    height
+);
+// the second `radius` argument can also act as options: `.vortex(origin, { radius: radius, strength: strength, height: height, centripetalForceThreshold: 0.7, centripetalForceMultiplier: 5, centrifugalForceMultiplier: 0.5, updraftForceMultiplier: 0.02 })`
+vortexEvent.enable();
+setTimeout(function (vortexEvent) { vortexEvent.disable(); }, 5000, vortexEvent);
+</code></pre>
+<p>In case you want to do some debug, like visually show the sphere and/or rays, you can do that by calling <code>event.getData()</code> <em>(note that if you do that, you will need to manually call <code>event.dispose()</code> to dispose the unused meshes, after you are done debugging)</em>. The <code>event.getData()</code> will return back the <code>sphere</code> mesh variable, which you can then use, to apply a semi-transparent material, so you can visualize it. The <code>explosionEvent.getData()</code> will also return back the <code>rays</code> rays variable, in case you want them for debugging purposes.</p>
+<p><em>For a more detailed explanation, please take a look at the playground example below.</em></p>
+<p>Playground example - <a href="https://playground.babylonjs.com/index.html#UZHINX">https://playground.babylonjs.com/index.html#UZHINX</a></p>
+<h4><a name="collision-callbacks" class="anchor" href="#collision-callbacks"></a>Collision callbacks</h4><p>You can add a callback function that will be called when an impostor collides with another impostor. 
+This is how to change the color of an object if it collides against the ground.</p>
+<pre><code class="lang-javascript">sphereImpostor.registerOnPhysicsCollide(groundImpostor, function(main, collided) {
+    main.object.material.diffuseColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+});
+</code></pre>
+<p>Note that in this case, I assumed the impostor&#39;s body is a mesh with a material.</p>
+<p>Playground example -  <a href="https://www.babylonjs-playground.com/#1NASOD">https://www.babylonjs-playground.com/#1NASOD</a> - <i class="fa fa-eye" onclick="createIframe('1NASOD#', this)"></i><div class="iframeContainer"></div></p>
+<p>Notice that the callback will be executed each and every time both impostors collide, but will stop when they are touching (when the sphere no longer bounces).</p>
+<h3><a name="physics-joints" class="anchor" href="#physics-joints"></a>Physics Joints</h3><h4><a name="what-are-joints" class="anchor" href="#what-are-joints"></a>What are joints</h4><p>To connect two impostors together, you can now use joints.
+Think of the joint as a limitation (or constraint) of either rotation or position (or both) between two impostors.
+Each engine supports different types of joints (which usually have different names as well):</p>
+<table>
+<thead>
+<tr>
+<th>Joint Type</th>
+<th>Cannon.js</th>
+<th>Oimo.js</th>
+<th>Energy.js</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Distance</td>
+<td>Distance</td>
+<td>Distance</td>
+<td>---</td>
+<td>A fixed distance between two impostors</td>
+</tr>
+<tr>
+<td>Hinge</td>
+<td>Hinge</td>
+<td>Hinge</td>
+<td>Hinge</td>
+<td>A joint allowing rotation on a single axis (much like your knee)</td>
+</tr>
+<tr>
+<td>Hinge2</td>
+<td>----</td>
+<td>Wheel</td>
+<td>Hinge2</td>
+<td>A joint allowing rotation on a single axis in two different points</td>
+</tr>
+<tr>
+<td>Ball And Socket</td>
+<td>Point To Point</td>
+<td>Ball</td>
+<td>Ball And Socket</td>
+<td>A joint allowing one of the objects to rotate around a specific socket (like your hip)</td>
+</tr>
+<tr>
+<td>Slider</td>
+<td>----</td>
+<td>Slider</td>
+<td>Slider</td>
+<td>A joint allowing changing the position along a single axis</td>
+</tr>
+</tbody>
+</table>
+<p>Cannon also has a special Spring joint that will simulate a spring connected between two impostors.</p>
+<h4><a name="adding-a-new-joint" class="anchor" href="#adding-a-new-joint"></a>Adding a new joint</h4><p>To add a new joint the impostor has two help classes:</p>
+<pre><code class="lang-javascript">impostor.addJoint(otherImpostor, joint);
+//or
+impostor.createJoint(otherImpostor, jointType, jointData);
+</code></pre>
+<p>Joint types can be selected from the following enum:</p>
+<pre><code class="lang-javascript">BABYLON.PhysicsJoint.DistanceJoint;
+BABYLON.PhysicsJoint.HingeJoint;
+BABYLON.PhysicsJoint.BallAndSocketJoint;
+BABYLON.PhysicsJoint.WheelJoint;
+BABYLON.PhysicsJoint.SliderJoint;
+BABYLON.PhysicsJoint.Hinge2Joint = BABYLON.PhysicsJoint.WheelJoint;
+BABYLON.PhysicsJoint.PointToPointJoint = BABYLON.PhysicsJoint.BallAndSocketJoint;
+BABYLON.PhysicsJoint.SpringJoint;
+</code></pre>
+<p>Babylon has 3 help-classes to add joints:</p>
+<p><code>BABYLON.DistanceJoint</code> , <code>BABYLON.HingeJoint</code>, <code>BABYLON.Hinge2Joint</code>.</p>
+<p>DistanceJoint playground -  <a href="https://www.babylonjs-playground.com/#26QVLZ">https://www.babylonjs-playground.com/#26QVLZ</a> - <i class="fa fa-eye" onclick="createIframe('26QVLZ#', this)"></i><div class="iframeContainer"></div> 
+SpringJoint example -  <a href="https://www.babylonjs-playground.com/#1BHF6C">https://www.babylonjs-playground.com/#1BHF6C</a> - <i class="fa fa-eye" onclick="createIframe('1BHF6C#', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="setting-the-joint-data" class="anchor" href="#setting-the-joint-data"></a>Setting the joint data</h4><p>The physics joint data interface looks like this:</p>
+<pre><code class="lang-javascript">interface PhysicsJointData {
+    mainPivot?: Vector3;
+    connectedPivot?: Vector3;
+    mainAxis?: Vector3,
+    connectedAxis?: Vector3,
+    collision?: boolean
+    nativeParams?: any; //Native Oimo/Cannon data
+}
+</code></pre>
+<ul>
+<li>mainPivot: is the point on the main mesh (the mesh creating the joint) to which the constraint will be connected. Demo: <a href="https://www.babylonjs-playground.com/#BGUY#3">https://www.babylonjs-playground.com/#BGUY#3</a> - <i class="fa fa-eye" onclick="createIframe('BGUY#3', this)"></i><div class="iframeContainer"></div></li>
+<li>connectedPivot: is the point on the connected mesh (the mesh creating the joint) to which the constraint will be connected.</li>
+<li>mainAxis: the axis on the main object on which the constraint will work. <a href="https://www.babylonjs-playground.com/#BGUY#5">https://www.babylonjs-playground.com/#BGUY#5</a> - <i class="fa fa-eye" onclick="createIframe('BGUY#5', this)"></i><div class="iframeContainer"></div></li>
+<li>connectedAxis: the axis on the connected object on which the constraint will work.</li>
+<li>collision: should the two connected objects also collide with each other. The objects are sometimes forced to be close by and this can prevent constant collisions between them.</li>
+<li>nativParams: further parameters that will be delivered to the constraint without a filter. Those are native parameters of the specific physics engine you chose.</li>
+</ul>
+<p>You can read further about joint data in this blog article : <a href="https://blog.raananweber.com/2016/09/06/webgl-car-physics-using-babylon-js-and-oimo-js/">https://blog.raananweber.com/2016/09/06/webgl-car-physics-using-babylon-js-and-oimo-js/</a></p>
+<h3><a name="interaction-with-the-physics-engine" class="anchor" href="#interaction-with-the-physics-engine"></a>Interaction with the physics engine</h3><p>Using <code>scene.getPhysicsEngine()</code>, you can get access to functions that will influence the engine directly.</p>
+<h4><a name="setting-the-time-step" class="anchor" href="#setting-the-time-step"></a>Setting the time step</h4><p>The physics engine assumes a certain frame-rate to be taken into account when calculating the interactions.
+The time between each step can be changed to &quot;accelerate&quot; or &quot;slow down&quot; the physics interaction.
+Here is the same scene with different time steps - accelerating and slowing down:</p>
+<p>Default time step -  <a href="https://www.babylonjs-playground.com/#2B84TV">https://www.babylonjs-playground.com/#2B84TV</a> - <i class="fa fa-eye" onclick="createIframe('2B84TV#', this)"></i><div class="iframeContainer"></div>
+Slowing down -  <a href="https://www.babylonjs-playground.com/#2B84TV#1">https://www.babylonjs-playground.com/#2B84TV#1</a> - <i class="fa fa-eye" onclick="createIframe('2B84TV#1', this)"></i><div class="iframeContainer"></div>
+Speeding up -  <a href="https://www.babylonjs-playground.com/#2B84TV#2">https://www.babylonjs-playground.com/#2B84TV#2</a> - <i class="fa fa-eye" onclick="createIframe('2B84TV#2', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="setting-the-scene39s-gravity" class="anchor" href="#setting-the-scenes-gravity"></a>Setting the scene&#39;s gravity</h4><p>You can change the scene&#39;s gravity using the physics engine&#39;s <code>setGravity(vector3)</code> function.
+This can be done in real time, even after setting the gravity:</p>
+<p>Playground demo (click to toggle positive/negative gravity) -  <a href="https://www.babylonjs-playground.com/#A2WGF">https://www.babylonjs-playground.com/#A2WGF</a> - <i class="fa fa-eye" onclick="createIframe('A2WGF#', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="see-it-all-working-together" class="anchor" href="#see-it-all-working-together"></a>See it all working together</h4><p>Marble Tower Playground -  <a href="https://playground.babylonjs.com/#3I55DK#0">https://playground.babylonjs.com/#3I55DK#0</a> - <i class="fa fa-eye" onclick="createIframe('3I55DK#0', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/how_to/forces">How To Use Forces</a><br><a href="/how_to/joints">How to use Joints</a><br><a href="/how_to/joint_pivots">How To Use Pivots and Axes</a><br><a href="/how_to/compounds">How To Create Compound Bodies</a><br><a href="/how_to/soft_bodies">How To Create Soft Bodies</a></p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/how_to/Using_Advanced_Physics_Features">How To Use Advanced Features</a></p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/how_to/Adding_Your_Own_Physics_Engine_Plugin_to_Babylon.js">How To Add Your Own Physics Engine</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

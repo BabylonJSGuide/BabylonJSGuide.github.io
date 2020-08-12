@@ -1,0 +1,225 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Actions - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Actions</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#triggers">Triggers</a></li>
+<li><a href="#available-actions">Available Actions</a></li>
+<li><a href="#conditions">Conditions</a></li>
+<li><a href="#experimenting-with-actions">Experimenting with Actions</a></li>
+<li><a href="#sprites">Sprites</a></li>
+<li><a href="#playground">Playground</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-actions" class="anchor" href="#how-to-use-actions"></a>How to use Actions</h1><p>Actions are a simple way to add interactions in your scenes. An action is launched when its trigger is fired. For instance, you can specify that when the user clicks (or touches) a mesh, an action is executed.</p>
+<p>To use actions, you have to attach an <code>BABYLON.ActionManager</code> to a mesh or to your scene:</p>
+<pre><code class="lang-javascript">mesh.actionManager = new BABYLON.ActionManager(scene);
+</code></pre>
+<p>Once the ActionManager is created, you can start registering actions:</p>
+<pre><code class="lang-javascript">mesh.actionManager.registerAction(
+    new BABYLON.InterpolateValueAction(
+        BABYLON.ActionManager.OnPickTrigger,
+        light,
+        &#39;diffuse&#39;,
+        BABYLON.Color3.Black(),
+        1000
+    )
+);
+</code></pre>
+<p>For instance this action will animate the <code>light.diffuse</code> property to black in 1000ms when the user picks the mesh.</p>
+<p>You can also chain actions:</p>
+<pre><code class="lang-javascript">mesh.actionManager
+    .registerAction(
+        new BABYLON.InterpolateValueAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            light,
+            &#39;diffuse&#39;,
+            BABYLON.Color3.Black(),
+            1000
+        )
+    )
+    .then(
+        new BABYLON.SetValueAction(
+            BABYLON.ActionManager.NothingTrigger,
+            mesh.material,
+            &#39;wireframe&#39;,
+            false
+        )
+    );
+</code></pre>
+<p>In this case, the first click will animate the <code>light.diffuse</code> property, the second click will set <code>mesh.material</code> to false.
+The third one will start again and will animate the <code>light.diffuse</code> property and so on...</p>
+<p>Finally, you can add a condition to your actions. In this case, actions are launched when the trigger is fired if the condition is true:</p>
+<pre><code class="lang-javascript">mesh.actionManager.registerAction(
+    new BABYLON.InterpolateValueAction(
+        BABYLON.ActionManager.OnPickTrigger,
+        camera,
+        &#39;alpha&#39;,
+        0,
+        500,
+        new BABYLON.PredicateCondition(
+            mesh.actionManager,
+            function () {
+                return light.diffuse.equals(BABYLON.Color3.Red());
+            }
+        )
+    )
+);
+</code></pre>
+<p>In this example, the <code>camera.alpha</code> property will be animated to 0 in 500ms when the user clicks the mesh only if the <code>light.diffuse</code> property is equal to red.</p>
+<h2><a name="triggers" class="anchor" href="#triggers"></a>Triggers</h2><p>Currently, there are 14 different triggers available for meshes, and three for scenes.</p>
+<p>The triggers available for meshes are:</p>
+<ul>
+<li><code>BABYLON.ActionManager.NothingTrigger</code>: Never raised. Used for sub-actions with <code>action.then</code> function.</li>
+<li><code>BABYLON.ActionManager.OnPickTrigger</code>: Raised when the user touches/clicks on a mesh.</li>
+<li><code>BABYLON.ActionManager.OnDoublePickTrigger</code>: Raised when the user double touches/clicks on a mesh.</li>
+<li><code>BABYLON.ActionManager.OnPickDownTrigger</code>: Raised when the user touches/clicks down on a mesh</li>
+<li><code>BABYLON.ActionManager.OnPickUpTrigger</code>: Raised when the user touches/clicks up on a mesh.</li>
+<li><code>BABYLON.ActionManager.OnPickOutTrigger</code>: Raised when the user touches/clicks down on a mesh and then move off-of the mesh.</li>
+<li><code>BABYLON.ActionManager.OnLeftPickTrigger</code>: Raised when the user touches/clicks on a mesh with left button.</li>
+<li><code>BABYLON.ActionManager.OnRightPickTrigger</code>: Raised when the user touches/clicks on a mesh with right button.</li>
+<li><code>BABYLON.ActionManager.OnCenterPickTrigger</code>: Raised when the user touches/clicks on a mesh with center button.</li>
+<li><code>BABYLON.ActionManager.OnLongPressTrigger</code>: Raised when the user touches/clicks up on a mesh for a long period of time in milliseconds (defined by BABYLON.Scene.LongPressDelay). </li>
+<li><code>BABYLON.ActionManager.OnPointerOverTrigger</code>: Raised when the pointer is over a mesh. Raised just once.</li>
+<li><code>BABYLON.ActionManager.OnPointerOutTrigger</code>: Raised when the pointer is no more over a mesh. Raised just once.</li>
+<li><code>BABYLON.ActionManager.OnIntersectionEnterTrigger</code>: Raised when the mesh is in intersection with a specific mesh. Raised just once.</li>
+<li><code>BABYLON.ActionManager.OnIntersectionExitTrigger</code>: Raised when the mesh is no more in intersection with a specific mesh. Raised just once. </li>
+</ul>
+<p>Note that the two intersection triggers require you specify a specific mesh, which can be done like so:</p>
+<pre><code class="lang-javascript">mesh.actionManager.registerAction(
+    new BABYLON.SetValueAction(
+        {
+            trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger, 
+            parameter: { 
+                mesh: otherMesh, 
+                usePreciseIntersection: true
+            }
+        }, 
+        mesh,
+        &quot;scaling&quot;,
+        new BABYLON.Vector3(1.2, 1.2, 1.2)
+    )
+);
+</code></pre>
+<p>Note the optional <code>usePreciseIntersection</code> property. If you don&#39;t want to use precise intersections, you can simply pass the mesh being targeted as the value of the parameter property:</p>
+<pre><code class="lang-javascript">mesh.actionManager.registerAction(
+    new BABYLON.SetValueAction(
+        {
+            trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger,
+            parameter: otherMesh
+        },
+        mesh,
+        &#39;scaling&#39;,
+        new BABYLON.Vector3(1.2, 1.2, 1.2)
+    )
+);
+</code></pre>
+<p>The triggers available for scenes are:</p>
+<ul>
+<li><code>BABYLON.ActionManager.OnEveryFrameTrigger</code>: Raised once per frame.</li>
+<li><code>BABYLON.ActionManager.OnKeyDownTrigger</code>: Raised when a key is pressed.</li>
+<li><code>BABYLON.ActionManager.OnKeyUpTrigger</code>: Raised when a key is released.</li>
+</ul>
+<p>Both the OnKeyUpTrigger and OnKeyDownTrigger triggers accept a string parameter value, which is compared to the event&#39;s <code>sourceEvent.key</code> value.
+This allows you to create key triggers that will only trigger on specific keys, like so:</p>
+<pre><code class="lang-javascript">scene.actionManager.registerAction(
+    new BABYLON.ExecuteCodeAction(
+        {
+            trigger: BABYLON.ActionManager.OnKeyUpTrigger,
+            parameter: &#39;r&#39;
+        },
+        function () { console.log(&#39;r button was pressed&#39;); }
+    )
+);
+</code></pre>
+<h2><a name="available-actions" class="anchor" href="#available-actions"></a>Available Actions</h2><p>Most of the actions have a <code>propertyPath</code> property. This string defines the path to the property to affect with the action. 
+You can use direct values like <code>position</code> or <code>diffuse</code>. But you can also provide complex paths like <code>position.x</code></p>
+<ul>
+<li><code>BABYLON.SwitchBooleanAction(trigger, target, propertyPath, condition)</code>: Switchs a boolean property.</li>
+<li><code>BABYLON.SetValueAction(trigger, target, propertyPath, value, condition)</code>: Sets a direct value for a property.</li>
+<li><code>BABYLON.IncrementValueAction(trigger, target, propertyPath, value, condition)</code>: Adds a number to a number property.</li>
+<li><code>BABYLON.PlayAnimationAction(trigger, target, from, to, loop, condition)</code>: Plays an animation on a target.</li>
+<li><code>BABYLON.StopAnimationAction(trigger, target, condition)</code>: Stops any animation being played by the target.</li>
+<li><code>BABYLON.DoNothingAction(trigger, condition)</code>: Do nothing :)</li>
+<li><code>BABYLON.CombineAction(trigger, children[], condition)</code>: Executes multiple actions simultaneously. The children property must be an array of actions.</li>
+<li><code>BABYLON.ExecuteCodeAction(trigger, func, condition)</code>: Executes code.</li>
+<li><code>BABYLON.SetParentAction(trigger, target, parent, condition)</code>: Sets the parent of the target.</li>
+<li><code>BABYLON.PlaySoundAction(trigger, sound, condition)</code>: Plays a given sound.</li>
+<li><code>BABYLON.StopSoundAction(trigger, sound, condition)</code>: Stops a given sound</li>
+<li><code>BABYLON.InterpolateValueAction(trigger, target, propertyPath, value, duration, condition, stopOtherAnimations)</code>: Creates an animation to interpolate the current value of a property to a given target. The following types are supported:<ul>
+<li><code>number</code></li>
+<li><code>BABYLON.Color3</code></li>
+<li><code>BABYLON.Vector3</code></li>
+<li><code>BABYLON.Quaternion</code></li>
+</ul>
+</li>
+</ul>
+<h2><a name="conditions" class="anchor" href="#conditions"></a>Conditions</h2><p>There are three kinds of conditions:</p>
+<ul>
+<li><code>BABYLON.ValueCondition(actionManager, target, propertyPath, value, operator)</code>: true when the given property and value conform to the operator. The following operators are supported:<ul>
+<li><code>BABYLON.ValueCondition.IsEqual</code></li>
+<li><code>BABYLON.ValueCondition.IsDifferent</code></li>
+<li><code>BABYLON.ValueCondition.IsGreater</code></li>
+<li><code>BABYLON.ValueCondition.IsLesser</code></li>
+</ul>
+</li>
+<li><code>BABYLON.PredicateCondition(actionManager, predicate)</code>: true when the given predicate function returns true.</li>
+<li><code>BABYLON.StateCondition(actionManager, target, value)</code>: true when the <code>state</code> property of the target matches the given value.</li>
+</ul>
+<h2><a name="experimenting-with-actions" class="anchor" href="#experimenting-with-actions"></a>Experimenting with Actions</h2><p>Imagine you want to almost hide a mesh when the user touches it.</p>
+<p>First, you&#39;d add a  <code>BABYLON.ActionManager</code> to the mesh in question:</p>
+<pre><code class="lang-javascript">mesh.actionManager = new BABYLON.ActionManager(scene);
+</code></pre>
+<p>Secondly, you&#39;d register an action associated with the <code>BABYLON.ActionManager.OnPickTrigger</code> trigger.
+This action will interpolate the <code>mesh.visibility</code> property to 0.2.</p>
+<pre><code class="lang-javascript">mesh.actionManager.registerAction(
+    new BABYLON.InterpolateValueAction(
+        BABYLON.ActionManager.OnPickTrigger,
+        mesh,
+        &#39;visibility&#39;,
+        0.2,
+        1000
+    )
+);
+</code></pre>
+<p>And you&#39;re done! Easy, right?</p>
+<p>If after fading out the mesh, you wished it to fade back in, you&#39;d do so by chaining an action
+to restore the <code>mesh.visibility</code> property to default value:</p>
+<pre><code class="lang-javascript">mesh.actionManager
+        .registerAction(
+            new BABYLON.InterpolateValueAction(
+                BABYLON.ActionManager.OnPickTrigger,
+                mesh,
+                &#39;visibility&#39;,
+                0.2,
+                1000
+            )
+        )
+        .then(
+            new BABYLON.InterpolateValueAction(
+                BABYLON.ActionManager.OnPickTrigger,
+                mesh,
+                &#39;visibility&#39;,
+                1.0,
+                1000
+            )
+        );
+</code></pre>
+<p>In this case, the first click will hide the button, the following click will restore it, and so on...</p>
+<h2><a name="sprites" class="anchor" href="#sprites"></a>Sprites</h2><p>Starting with Babylon.js 2.3, sprites can have an action manager: <a href="https://www.babylonjs-playground.com/#9RUHH#5">https://www.babylonjs-playground.com/#9RUHH#5</a> - <i class="fa fa-eye" onclick="createIframe('9RUHH#5', this)"></i><div class="iframeContainer"></div></p>
+<p>Please note that the SpriteManager must turn picking support on by using <code>spriteManager.isPickable = true</code>
+Sprites can also control picking with <code>sprite.isPickable = false / true</code> (False by default)</p>
+<h2><a name="playground" class="anchor" href="#playground"></a>Playground</h2><p>If you want to play with actions, you can try them at our playground:
+<a href="https://www.babylonjs-playground.com/#J19GYK#0">https://www.babylonjs-playground.com/#J19GYK#0</a> - <i class="fa fa-eye" onclick="createIframe('J19GYK#0', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

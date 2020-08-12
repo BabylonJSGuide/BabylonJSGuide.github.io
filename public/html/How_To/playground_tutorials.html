@@ -1,0 +1,338 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Write a Playground Based Tutorial - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Write a Playground Based Tutorial</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#creating-a-pbt">Creating a PBT</a><ul>
+<li><a href="#first-step">First Step</a></li>
+<li><a href="#playground-amending-methods">Playground Amending Methods</a></li>
+<li><a href="#editor-amending-methods">Editor Amending Methods</a><ul>
+<li><a href="#line-decoration">Line Decoration</a></li>
+<li><a href="#line-changes">Line Changes</a></li>
+<li><a href="#line-fetch">Line Fetch</a></li>
+</ul>
+</li>
+<li><a href="#gui-dialogue-methods">GUI Dialogue Methods</a><ul>
+<li><a href="#informative-dialogue-box">Informative Dialogue Box</a></li>
+<li><a href="#selection-dialogue-box">Selection Dialogue Box</a></li>
+</ul>
+</li>
+<li><a href="#where-to-write-the-code">Where to Write The Code</a></li>
+</ul>
+</li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="playground-based-tutorials" class="anchor" href="#playground-based-tutorials"></a>Playground Based Tutorials</h1><p>This type of playground takes a student step by step through a feature of Babylon.js at the same time as higlighting the code used by that feature. The whole of the code exists in the playground editor but any distracting code can be hidden from the user. Generally the student should not be given the facility to edit the code or to use all features of the playground since doing so would destroy the tutorial they are trying to follow. </p>
+<p>Below are three PBT examples to give you an idea of what is possible.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#KNSQD7">Playground Tutorial - .rotation v .rotate</a> - <i class="fa fa-eye" onclick="createIframe('KNSQD7#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UL6BCD">Playground Tutorial - Sliders</a> - <i class="fa fa-eye" onclick="createIframe('UL6BCD#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#4HA2KK">Playground Tutorial - Hiding Lines</a> - <i class="fa fa-eye" onclick="createIframe('4HA2KK#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#U825TZ">Playground Tutorial - Camera Collisions and Input Customization</a> - <i class="fa fa-eye" onclick="createIframe('U825TZ#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>However since they are uneditable it is not possible to see how they are written. Links to guides on writing them are:</p>
+<p><a href="/how_to/playground_tutorials">Intermediate Guide</a>  </p>
+<h1><a name="creating-a-pbt" class="anchor" href="#creating-a-pbt"></a>Creating a PBT</h1><p>To help in the coding of a PBT several functions are provided to manipulate the text in the playground editor and to create basic dialogue boxes using the Babylon.GUI. While editor manipulation needs the functions provided any method of writing a user interface that works with Babylon.js is possible. </p>
+<p>The other important thing to consider is where to write the PBT code. Once the code is in the playground editor and &#39;Run&#39; or &#39;Save&#39;d the text of the code will be amended by its own code. For this reason it is better to write it externally to the playground. More on this later.</p>
+<h2><a name="first-step" class="anchor" href="#first-step"></a>First Step</h2><p>Think about the playground code you want to demonstrate and write it in the usual way</p>
+<pre><code class="lang-javascript">var createScene = function() {
+
+    //Usual PG code
+
+    return scene;
+}    
+</code></pre>
+<p>To start a new tutorial you need a &#39;new PBT()&#39;</p>
+<pre><code class="lang-javascript">var createScene = function() {
+
+    //Usual PG code
+
+    var pbt = new PBT();
+
+    return scene;
+}    
+</code></pre>
+<p>In the rest of this section consider pbt as the newly created PBT.</p>
+<h2><a name="playground-amending-methods" class="anchor" href="#playground-amending-methods"></a>Playground Amending Methods</h2><p><em>hideMenu</em> removes all the menu items from the menu bar except the title and the drop down choices of example playgrounds.</p>
+<pre><code class="lang-javascript">pbt.hideMenu()
+</code></pre>
+<p><em>editOff</em> makes any code in the playground uneditable</p>
+<pre><code class="lang-javascript">pbt.editOff();
+</code></pre>
+<p><em>editOn</em> allows the code in the playground editor to be edited. This is needed when any line changes need to be made by the code itself. When left on a user can also edit the text in the playground tutorial.</p>
+<pre><code class="lang-javascript">pbt.editOff();
+</code></pre>
+<h2><a name="editor-amending-methods" class="anchor" href="#editor-amending-methods"></a>Editor Amending Methods</h2><h3><a name="line-decoration" class="anchor" href="#line-decoration"></a>Line Decoration</h3><p><em>clearDecorLines</em> clears all decorations on all lines and will lighten all text.</p>
+<pre><code class="lang-javascript">pbt.clearDecorLines() 
+</code></pre>
+<p><em>setDecorLines</em> emphasises lines by adding decoration to them and darkening text. Lines to be decorated are passed as start line, end line pairs in an array.</p>
+<pre><code class="lang-javascript">pbt.setDecorLines([27, 27]); //decorates line 27 only
+pbt.setDecorLines([3, 15]); //decorates lines 3 to 15 inclusive
+pbt.setDecorLines([10, 17, 25, 31]); //decorates lines 10 to 17 and lines 25 to 3 
+</code></pre>
+<h3><a name="line-changes" class="anchor" href="#line-changes"></a>Line Changes</h3><p><em>replaceLines</em> replaces the text in the given line range with the given new text. Only one range of lines is possible which is passed as an array pair.</p>
+<pre><code class="lang-javascript">pbt.replaceLines([13, 13], &quot;mesh.rotation.x = Math.PI/4&quot;); //replaces line 13 with one line of text
+pbt.replaceLines([15, 15]), &quot;mesh.position.x = 4;\r\nmesh.position.y = 6;\r\nmesh.position.z = -2;&quot;); // replaces line 15 with multiple lines
+pbt.replaceLines([23,28], &quot;//All Gone&quot;); //replaces lines 23 to 28 with a single line
+</code></pre>
+<p><em>replaceText</em> inserts text in the given line from the start to end position.</p>
+<pre><code class="lang-javascript">pbt.replaceText(12, 3, 8, &quot;WORLD&quot;); // On line 12 replaces the characters from 3 to 8 with WORD
+</code></pre>
+<p><em>hideLines</em> hides the lines passed as start and end pairs in an array. Each call to <em>hideLines</em> only hides those lines given in the array all other lines become shown. </p>
+<pre><code class="lang-javascript">pbt.hideLines([27, 27]); //hides line 27 only, all other lines are displayed
+pbt.hideLines([3, 15]); //hides lines 3 to 15 inclusive only, all other lines are displayed
+pbt.hideLines([10, 17, 25, 31]); //hides lines 10 to 17 and lines 25 to 31 only, all other lines are displayed
+</code></pre>
+<p><em>hideRange</em> hides the range of lines passed as start and end pairs in an array. The method <em>hideRange</em> adds the range of lines given to lines already hidden.  </p>
+<pre><code class="lang-javascript">pbt.hideRange([27, 27]); //hides line 27 together with already hidden lines
+pbt.hideRange([3, 15]); //hides lines 3 to 15 together with already hidden lines
+pbt.hideRange([10, 17, 25, 31]); //hides lines 10 to 17 and lines 25  to 31 together with already hidden lines
+</code></pre>
+<p><em>showRange</em> displays the range of lines passed as start and end pairs in an array. The method <em>showRange</em> only affects the given line range if previously hidden using <em>hideRange</em> with the same line range.</p>
+<pre><code class="lang-javascript">pbt.showRange([27, 27]); //displays line 27 together with already displayed lines
+pbt.showRange([3, 15]); //displays lines 3 to 15 inclusive together with already displayed lines
+pbt.showRange([10, 17, 25, 31]); //displays lines 10 to 17 and lines 25 to 31 together with already displayed lines
+</code></pre>
+<h3><a name="line-fetch" class="anchor" href="#line-fetch"></a>Line Fetch</h3><p><em>getLineText</em> returns the text on the given line number.</p>
+<pre><code class="lang-javascript">var lineText = pbt.getLineText();
+</code></pre>
+<h2><a name="gui-dialogue-methods" class="anchor" href="#gui-dialogue-methods"></a>GUI Dialogue Methods</h2><p>There are two dialogue boxes that can be created for a PBT.</p>
+<h3><a name="informative-dialogue-box" class="anchor" href="#informative-dialogue-box"></a>Informative Dialogue Box</h3><p>This consists of an image area, a text area and &#39;Prev&#39; and &#39;Next&#39; buttons.</p>
+<p><img src="/img/how_to/playground-tutorials/informative-dialogue-box.jpg" alt="Standard Dialogue"></p>
+<p>Whilst a &#39;Prev&#39; button is available the difficulty of undoing any actions already done means that this can usually be hidden.</p>
+<pre><code class="lang-javascript">var dialog = new PBT.StandardDialog(options)
+</code></pre>
+<p>There are a number of options available on creation</p>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>text</td>
+<td><em>(String)</em></td>
+<td>&quot;Playground Based Tutorial&quot;</td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(string)</em></td>
+<td>&quot;50%&quot;</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(string)</em></td>
+<td>&quot;25%&quot;</td>
+</tr>
+<tr>
+<td>top</td>
+<td><em>(string)</em></td>
+<td>&quot;0px&quot;</td>
+</tr>
+<tr>
+<td>left</td>
+<td><em>(string)</em></td>
+<td>&quot;0px&quot;</td>
+</tr>
+<tr>
+<td>verticalAlignment</td>
+<td><em>(number)</em></td>
+<td>BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP</td>
+</tr>
+<tr>
+<td>horizontalAlignment</td>
+<td><em>(number)</em></td>
+<td>BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT</td>
+</tr>
+<tr>
+<td>useImage</td>
+<td><em>(boolean)</em></td>
+<td>true</td>
+</tr>
+<tr>
+<td>imageUrl</td>
+<td><em>(string)</em></td>
+<td>path to BJS PBT logo</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="lang-javascript">options = {
+    left: &quot;0.5%&quot;,
+    top: &quot;0.2%&quot;,
+    text: &quot;Read on for the difference between .rotation and .rotate and follow to the end for examples.&quot;
+}
+var dialog = new pbt.StandardDialog(option);  
+dialog.hidePrev();
+</code></pre>
+<p>Setting &#39;useImage&#39; to &#39;false&#39; extends the width of the text area.</p>
+<p>There are a number of methods available to change an informative dialogue box after construction.</p>
+<pre><code class="lang-javascript">dialog.setText(&quot;More Information&quot;);
+dialog.setWidth(&quot;20%&quot;);
+dialog.setHeight(&quot;45px&quot;);
+dialog.setTop(&quot;5px&quot;);
+dialog.setLeft(&quot;15%&quot;);
+dialog.setHorizontalAlignment(BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER);
+dialog.setVerticalAlignment(BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM);
+dialog.show(); //information box visible
+dialog.hide(); //information box hidden
+dialog.showNext(); //next button visible
+dialog.hideNext(); //next button hidden
+dialog.showPrev(); //prev button visible
+dialog.hidePrev(); //prev button hidden
+</code></pre>
+<p>Two further methods <em>getNextButton</em> and <em>getPrevButton</em> allow functions to be added to the &#39;Next&#39; and &#39;Prev&#39; buttons.</p>
+<pre><code class="lang-javascript">dialog.getNextButton().onPointerUpObservable.add(function() {       
+    tutorIndex++;   
+    tutorial.setText(tutorTexts[tutorIndex]);
+    nextAction(tutorIndex);
+});
+</code></pre>
+<h3><a name="selection-dialogue-box" class="anchor" href="#selection-dialogue-box"></a>Selection Dialogue Box</h3><p>This selection dialogue box contains <em>button groups</em> of &#39;radio&#39;, &#39;checkbox&#39; or &#39;slider&#39; buttons. Each group can contain only one type of button but you can mix and match the types of groups in one box if you wish.</p>
+<p><img src="/img/how_to/pbt5.png" alt="Selection Dialog">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 1. </p>
+<p>Button groups are constructed using the <code>ButtonGroup</code> function</p>
+<pre><code class="lang-javascript">var myRadioGroup = new PBT.ButtonGroup(&quot;Name for Radio Group&quot;, &quot;R&quot;);
+
+var myCheckboxGroup = new PBT.ButtonGroup(&quot;Name for Checkbox Group&quot;, &quot;C&quot;);
+
+var mySliderGroup = new PBT.ButtonGroup(&quot;Name for Slider Group&quot;, &quot;S&quot;);
+</code></pre>
+<p>The first parameter is the name of the group which will appear as the group header in the selection box. The second optional parameter gives the type of button, &quot;radio&quot; or &quot;R&quot; for a <code>radio</code> button, &quot;checkbox&quot; or &quot;C&quot; for a <code>checkbox</code> or &quot;slider&quot; or &quot;S&quot; for a <code>slider</code>. The default is &quot;checkbox&quot; so can be missed out if this is the type of button you want. In the case of &#39;radio&#39; buttons the button group also places together those buttons that react together. For &quot;checkbox&quot; and &quot;slider&quot; buttons the grouping is just cosmetic.</p>
+<p>The <code>buttonGroup</code> object has two methods <code>addButton</code> for adding a &quot;radio&quot; or &quot;checkbox&quot; button and <code>addSlider</code> to add a slider.</p>
+<h4><a name="addbutton" class="anchor" href="#addbutton"></a>addButton</h4><p>The <code>addButton</code> method takes three parameters and creates the appropriate radio or checkbox button. </p>
+<pre><code class="lang-javascript">myRadioGroup.addButton(&quot;Radio Button Name&quot;, function, false)
+
+myCheckboxGroup.addButton(&quot;Checkbox Button Name&quot;, function, true);
+</code></pre>
+<p>The first two parameters are required and the third optional. </p>
+<ul>
+<li>Name: string, the name of the button, which will appear as the text for the button;</li>
+<li>Function: function, to be called when selected;</li>
+<li>Checked: boolean,  defaults to <em>false</em> and when set to <em>true</em> means that button is selected or checked.</li>
+</ul>
+<p>For the above Fig 1. the code for the button groups could be </p>
+<pre><code class="lang-javascript">var boxGroup = new pbt.ButtonGroup(&quot;Box Code&quot;);
+boxGroup.addButton(&quot;Hide&quot;, hideBoxCode, true);
+
+var animGroup = new pbt.ButtonGroup(&quot;Anim Code&quot;);
+animGroup.addButton(&quot;Hide&quot;, hideAnimCode, true);
+
+var spaceGroup = new pbt.ButtonGroup(&quot;Space&quot;, &quot;radio&quot;);    
+spaceGroup.addButton(&quot;WORLD&quot;, worldSpace, true);
+spaceGroup.addButton(&quot;LOCAL&quot;, localSpace);
+</code></pre>
+<h4><a name="addslider" class="anchor" href="#addslider"></a>addSlider</h4><p><img src="/img/how_to/pbt6.png" alt="Slider">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 2.</p>
+<p>The <code>addSlider</code> method takes seven parameters</p>
+<pre><code class="lang-javascript">mySliderGroup.addSlider(&quot;Slider Name&quot;, function, &quot;units&quot;, label function, minimum, maximum, start);
+</code></pre>
+<ul>
+<li>Name string, appears as text for the slider, this is followed by the slider value;</li>
+<li>Function: function, to be called when slider moves;</li>
+<li>Units: string, unit of measurement appears after slider value;</li>
+<li>Label Function: function, also to be called when slider moves, used to update the slider value in the dialogue;</li>
+<li>Minimum: number, the minimum value for the slider;</li>
+<li>Maximum: number, the maximum value of the slider;</li>
+<li>Start: number, the initial value of the slider.</li>
+</ul>
+<p>For Fig 2. the code could be</p>
+<pre><code class="lang-javascript">var slider = new pbt.ButtonGroup(&quot;Angle&quot;, &quot;S&quot;);
+slider.addSlider(&quot;X axis&quot;, boxAboutX, &quot;degs&quot;, updateLabelX, 0, 2 * Math.PI, 0);
+slider.addSlider(&quot;Y axis&quot;, boxAboutY, &quot;degs&quot;, updateLabelY, 0, 2 * Math.PI, 0);
+slider.addSlider(&quot;Z axis&quot;, boxAboutZ, &quot;degs&quot;, updateLabelZ, 0, 2 * Math.PI, 0);
+</code></pre>
+<h4><a name="options" class="anchor" href="#options"></a>Options</h4><p>These groups can then be added to a new <code>SelectionDialog</code> box in the <code>groups</code> option.</p>
+<pre><code class="lang-javascript">var selector = new SelectionDialog(options);
+</code></pre>
+<p>The options for a selection dialogue box are</p>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td><em>(string)</em></td>
+<td>&quot;50%&quot;</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(string)</em></td>
+<td>&quot;25%&quot;</td>
+</tr>
+<tr>
+<td>top</td>
+<td><em>(string)</em></td>
+<td>&quot;0px&quot;</td>
+</tr>
+<tr>
+<td>left</td>
+<td><em>(string)</em></td>
+<td>&quot;0px&quot;</td>
+</tr>
+<tr>
+<td>verticalAlignment</td>
+<td><em>(number)</em></td>
+<td>BABYLON.GUI.Control.VERTICA\L_ALIGNMENT_BOTTOM;</td>
+</tr>
+<tr>
+<td>horizontalAlignment</td>
+<td><em>(number)</em></td>
+<td>BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT</td>
+</tr>
+<tr>
+<td>groups</td>
+<td><em>(array)</em> REQUIRED</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="lang-javascript">var selector = new pbt.SelectionDialog({groups:[boxGroup, animGroup, spaceGroup]});
+</code></pre>
+<p>or</p>
+<pre><code class="lang-javascript">var sliderSelector = new pbt.SelectionDialog({groups: [slider]});
+</code></pre>
+<p>or possibly</p>
+<pre><code class="lang-javascript">var options = {
+    width: &quot;40%&quot;,
+    height: &quot;10%&quot;,
+    top: &quot;20%&quot;,
+    groups: [boxGroup, animGroup, spaceGroup, slider]
+}
+
+var selector = new pbt.SelectionDialog(options);
+</code></pre>
+<h2><a name="where-to-write-the-code" class="anchor" href="#where-to-write-the-code"></a>Where to Write The Code</h2><p>To repeat an earlier statement; while it is possible to write a PBT directly into the playground editor it is not a good idea. Running and saving your code in the playground changes the code and you are likely not to bele to get the original text back.</p>
+<p>The simplest way is to use your favourite text editor and save as a text file. When you think it is ready to try copy the text and paste it into the playground. Click the RUN button to test, avoiding the SAVE button until you are sure all is working well. You will probably find it needs many adjustments until it is correct. More than anything is getting the line numbers correct. As you find you need to add and edit your code these line numbers keep changing.</p>
+<p>For those of you familiar with Node.js, git and npm there is another way that avoids the copying and pasting part until you have a finished working copy. For this you will need to run a version of the playground locally. </p>
+<p>Clone Babylon.js</p>
+<pre><code class="lang-javascript">git clone https://github.com/BabylonJS/Babylon.js.git
+</code></pre>
+<p>In the Babylon.js directory install gulp globally<br><img src="/img/how_to/pbt1.png" alt="gulp install"></p>
+<p>Change to the Playground directory and npm install<br><img src="/img/how_to/pbt2.png" alt="monaco install"></p>
+<p>Change to the Tools/Gulp directory and npm install<br><img src="/img/how_to/pbt3.png" alt="npm install"></p>
+<p>To write a tutorial use your favourite IDE (VSCode for example) to open the Playground directory. Inside this there is a <code>scripts</code> folder, save your Javascript tutorial code in this folder. Also in this folder is a <code>scripts.txt</code> file that lists all the files in the <code>scripts</code> folder and makes then accessible to the <em>Scenes</em> drop down list at the top right of the playground. Add your file name to the list. Now you can write and edit your file, run a local version of the playground and by choosing it from the list test it. </p>
+<p>To run a local version of the playground make sure you are in the Tools/Gulp directory of your copy of Babylon.js and npm run start
+<img src="/img/how_to/pbt4.png" alt="gulp run"></p>
+<p>Once the server is running in your browser type address <a href="http://localhost:1338/Playground/index.html">http://localhost:1338/Playground/index.html</a> to run the playground.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/how_to/playground_tutorials">Intermediate Guide</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Powerful Camera Types - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Powerful Camera Types</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#universal-camera">Universal Camera</a></li>
+<li><a href="#arc-rotate-camera">Arc Rotate Camera</a></li>
+<li><a href="#follow-camera">Follow Camera</a></li>
+<li><a href="#anaglyph-cameras">Anaglyph Cameras</a></li>
+<li><a href="#device-orientation-cameras">Device Orientation Cameras</a></li>
+<li><a href="#virtual-joysticks-camera">Virtual Joysticks Camera</a></li>
+<li><a href="#virtual-reality-cameras">Virtual Reality Cameras</a></li>
+<li><a href="#customizing-inputs">Customizing Inputs</a></li>
+<li><a href="#using-more-than-one-camera">Using More Than One Camera</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="cameras" class="anchor" href="#cameras"></a>Cameras</h1><p>There are a range of cameras to use with Babylon.js, Probably the two most used are the universal and arcRotate cameras. As the use of virtual reality increase so will the use of cameras for this purpose.</p>
+<h2><a name="universal-camera" class="anchor" href="#universal-camera"></a>Universal Camera</h2><p>The Universal Camera is the one to choose for first person shooter type games, and works with all the keyboard, mouse, touch and gamepads. This replaces the earlier Free Camera, which still works and will still be found in many Playgrounds.</p>
+<p>As you move around a world using the Universal Camera you will want to know if the camera (you) is in collision with other objects in the scene. All this is possible with Babylon.js and in addition you can have gravity affecting the camera. </p>
+<h2><a name="arc-rotate-camera" class="anchor" href="#arc-rotate-camera"></a>Arc Rotate Camera</h2><p> This camera acts like a satellite in orbit around a target and always points towards the target position. Its radius and longitudinal and latitudinal rotation can be changed to set its position as well as giving a vector position.</p>
+<h2><a name="follow-camera" class="anchor" href="#follow-camera"></a>Follow Camera</h2><p>A follow camera takes a mesh as a target and follows it as it moves. Both a free camera version <em>followCamera</em> and an arc rotate version <em>arcFollowCamera</em> are available.</p>
+<h2><a name="anaglyph-cameras" class="anchor" href="#anaglyph-cameras"></a>Anaglyph Cameras</h2><p>These extend the use of the Universal and Arc Rotate Cameras for use with red and cyan 3D glasses. </p>
+<h2><a name="device-orientation-cameras" class="anchor" href="#device-orientation-cameras"></a>Device Orientation Cameras</h2><p>This is a camera specifically designed to react to device orientation events such as a modern mobile device being tilted forward or back and left or right. </p>
+<h2><a name="virtual-joysticks-camera" class="anchor" href="#virtual-joysticks-camera"></a>Virtual Joysticks Camera</h2><p>Virtual Joysticks are on-screen 2D graphics that are used to control the camera or other scene items. </p>
+<h2><a name="virtual-reality-cameras" class="anchor" href="#virtual-reality-cameras"></a>Virtual Reality Cameras</h2><p>A new range of cameras for VR devices including the VR device orientation free and arc rotate cameras and the WebVR free camera</p>
+<h2><a name="customizing-inputs" class="anchor" href="#customizing-inputs"></a>Customizing Inputs</h2><p>The cameras rely upon user inputs to move the camera. It is possible to customize one of the existing presets, or use your own input mechanisms. </p>
+<h2><a name="using-more-than-one-camera" class="anchor" href="#using-more-than-one-camera"></a>Using More Than One Camera</h2><p>This can be achieved using the multi-view approach which splits the screen into different views, one for each camera. The alternative way is to use layer masks which superimposes the views from the cameras.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/babylon101/Cameras">Cameras 101</a><br><a href="/babylon101/Cameras,_Mesh_Collisions_and_Gravity">Camera Mesh Collisions 101</a><br><a href="/How_To/Camera_Behaviors">Camera Behaviours</a></p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/How_To/Customizing_Camera_Inputs">Customizing Camera Inputs</a> </p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/How_To/How_to_use_Multi-Views">Multi-Views</a><br><a href="/How_To/Layermasks_and_Multi-Cam_Textures">Layermasks and Multi-Camera Textures</a><br><a href="/How_To/WebVR_Camera">Web Virtual Reality Camera</a> </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

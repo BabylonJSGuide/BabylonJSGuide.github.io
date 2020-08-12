@@ -1,0 +1,195 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Set and Use a Pivot - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Set and Use a Pivot</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#breaking-change">Breaking Change</a></li>
+<li><a href="#how-to-set-the-pivot-matrix">How To Set the Pivot Matrix</a></li>
+<li><a href="#how-to-set-pivot-position-to-world-space-coordinates">How To Set Pivot Position to World Space Coordinates</a></li>
+<li><a href="#how-to-reset-the-pivot">How To Reset the Pivot</a></li>
+<li><a href="#how-to-set-and-get-a-pivot-point">How To Set and Get a Pivot Point</a><ul>
+<li><a href="#set-pivot-point">Set Pivot Point</a></li>
+<li><a href="#get-pivot-point">Get Pivot Point</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="a-pivot" class="anchor" href="#a-pivot"></a>A Pivot</h1><p>The latest pivot in Babylon (v3.2+) is a pre-transformation pivot and behaves differently than in tools like 3DS Max and Maya as the object&#39;s position will move if scale is applied prior to setting the pivot. To get pivot behavior that matches these tools it is recommended to set the object as a child of another transform node that will act as the pivot see: <a href="https://www.babylonjs-playground.com/#GH4N1R#1">https://www.babylonjs-playground.com/#GH4N1R#1</a> - <i class="fa fa-eye" onclick="createIframe('GH4N1R#1', this)"></i><div class="iframeContainer"></div></p>
+<p>A pivot an be set with a <a href="/how_to/pivots#how-to-set-the-pivot-matrix">translation matrix</a> or directly with the <a href="/how_to/pivots#how-to-set-and-get-a-pivot-point"><em>setPivotPoint</em></a> method.</p>
+<p>A pivot in Babylon.js is the center of transformation for a mesh, that is the point used as the center of rotation or the center of enlargement. When a mesh is created the pivot (red sphere) is always at the local origin (yellow sphere) and the local origin always at the world origin, as in Fig 1. When the pivot and local origin are coincident they are shown as a red and yellow striped sphere.</p>
+<p><img src="/img/how_to/pivots/pivot1.png" alt="Initial Creation of The Box"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 1</p>
+<p>When positioning a mesh it is the local origin that is placed at the given position, for example</p>
+<pre><code class="lang-javascript">box.position.x = 2;
+</code></pre>
+<p>moves the box as in Fig 2</p>
+<p><img src="/img/how_to/pivots/pivot2.png" alt="Box Repositioned"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 2.</p>
+<p>Now, mathematically, it is always more straight forward to rotate or enlarge about the local origin and any code to that does rotation and enlargement uses that principle.</p>
+<p>When you want the pivot to be at a corner as in Fig 3 the way this is done is to translate the box corner to the local origin resulting as in Fig 4.</p>
+<p><img src="/img/how_to/pivots/pivot3.png" alt="Corner Pivot">       <img src="/img/how_to/pivots/pivot4.png" alt="Box Translate"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 3.   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 4.</p>
+<p>Since it is the box that is translated the values used in the translation will be negative with regard to position. For example given a cube with sides of length 2 to set the pivot at position (-1, -1, -1) requires a translation of (1, 1, 1).</p>
+<p>Prior to Babylon.js v3.2 setting a pivot meant that the mesh was translated as in Fig 4 and the local origin of the mesh was reset to the pivot point. This meant that after setting a pivot when you reset the the position of the mesh it was the pivot that was placed at this position. Compare Fig 2 with Fig 5 which shows the result of setting a pivot with the move mesh method followed by</p>
+<pre><code class="lang-javascript">box.position.x = 2;
+</code></pre>
+<p><img src="/img/how_to/pivots/pivot5.png" alt="Box Repositioned after pivot added &lt; 3.2"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 5.</p>
+<p>From Babylon.js v3.2 there is a breaking change and setting the pivot no longer produces a change in position of the mesh unless the mesh has been scaled. </p>
+<p><img src="/img/how_to/pivots/pivot6.png" alt="Box Repositioned after pivot added from 3.2"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 6.</p>
+<p>Fig 6 shows result of using setting a pivot with this method followed by</p>
+<pre><code class="lang-javascript">box.position.x = 2;
+</code></pre>
+<p>Compare this with Fig 5.</p>
+<p>So there are two ways of setting a pivot, one that does not alter the position of the mesh (<em>set pivot only</em>) and one that does alter the mesh position (<em>set pivot with move</em>). The <em>set pivot only</em> method is much more straightforward and all playground examples on this page use this method. The <a href="/how_to/pivots#how-to-set-and-get-a-pivot-point"><em>setPivotPoint</em></a> function, describe later, uses <em>set pivot only</em>. </p>
+<p>In fact unless you have an older project coded for versions before 3.2 or want to <a href="/features/Position,_Rotation,_Scaling#pivot">change the local origin to that of the pivot</a> do not use the <em>set pivot with move</em> method. It is usually better to <em>set pivot only</em> and then move the mesh as normal with <em>mesh.position</em> or <em>mesh.translate</em> When you do have an older project there is a simple way to update your project code to work with version 3.2 or later as described in the <code>Breaking Change</code> section below.</p>
+<h2><a name="breaking-change" class="anchor" href="#breaking-change"></a>Breaking Change</h2><p>You set a pivot at the point (x, y, z) with a translation matrix that using </p>
+<pre><code class="lang-javascript">mesh.setPivotMatrix(BABYLON.Matrix.Translation(-x, -y, -z));
+</code></pre>
+<p>Before v3.2 this would result in the mesh being moved and the local origin of the mesh being reset to the pivot point.</p>
+<p>From v3.2 this results in the pivot point being set without the mesh being moved and the current local origin of the mesh is kept. Should you want to maintain the older behaviour of moving the mesh a second parameter, <code>false</code> is needed</p>
+<pre><code class="lang-javascript">mesh.setPivotMatrix(BABYLON.Matrix.Translation(-x, -y, -z), false);
+</code></pre>
+<p><strong>STRESSED NOTE</strong> For those of you who wrote code using a pivot for versions of Babylon.js before v3.2 and who want to update the version of Babylon.js to a current one should change each occurrence, in their project code,  of </p>
+<pre><code class="lang-javascript">mesh.setPivotMatrix(BABYLON.Matrix.Translation(-x, -y, -z));
+</code></pre>
+<p>to</p>
+<pre><code class="lang-javascript">mesh.setPivotMatrix(BABYLON.Matrix.Translation(-x, -y, -z), false);
+</code></pre>
+<h2><a name="how-to-set-the-pivot-matrix" class="anchor" href="#how-to-set-the-pivot-matrix"></a>How To Set the Pivot Matrix</h2><p>To set a pivot at (x, y, z) relative to the local origin of a mesh requires the applied translation to be (-x, -y, -z).</p>
+<pre><code class="lang-javascript">mesh.setPivotMatrix(BABYLON.Matrix.Translation(-x, -y, -z));
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P">Playground Example - Set Pivot Matrix</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="how-to-set-pivot-position-to-world-space-coordinates" class="anchor" href="#how-to-set-pivot-position-to-world-space-coordinates"></a>How To Set Pivot Position to World Space Coordinates</h2><p>When there is a mesh at position (xc, yc, zc) you want to set a pivot at (xp, yp, zp) then you need to use (xc - xp, yc - yp, zc - zp) as the translation.</p>
+<pre><code class="lang-javascript">mesh.setPivotMatrix(BABYLON.Matrix.Translation(xc - xp, yc - yp, zc - zp));
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#2">Playground Example - Set Pivot with World Coordinates</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="how-to-reset-the-pivot" class="anchor" href="#how-to-reset-the-pivot"></a>How To Reset the Pivot</h2><p>Simply recalculate the translation of the pivot to the local origin of the mesh as above.</p>
+<p>The following sequence of playgrounds goes from setting the first pivot position to scaling about the second pivot position</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#3">Playground Example - Set First Pivot</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#3', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#11">Playground Example - Set Second Pivot</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#11', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#12">Playground Example - Scaling from Second Pivot</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#12', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong>NOTE:</strong> When a mesh has been rotated before resetting the pivot on resetting the pivot the mesh will move since the current rotation will be applied to the new pivot point.</p>
+<p>The following sequence of playgrounds shows setting the first pivot, rotating around the pivot then resetting the pivot.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#3">Playground Example - Set First Pivot</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#3', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#6">Playground Example - Rotate About First Pivot</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#6', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#7">Playground Example - Set Second Pivot</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#7', this)"></i><div class="iframeContainer"></div>  </li>
+</ul>
+<h2><a name="how-to-set-and-get-a-pivot-point" class="anchor" href="#how-to-set-and-get-a-pivot-point"></a>How To Set and Get a Pivot Point</h2><p>There are three useful functions to aid setting and getting a pivot point. These are</p>
+<pre><code class="lang-javascript">mesh.setPivotPoint(Vector3);
+mesh.getPivotPoint(); // returns Vector3
+mesh.getAbsolutePivotPoint(); // returns Vector3
+</code></pre>
+<h3><a name="set-pivot-point" class="anchor" href="#set-pivot-point"></a>Set Pivot Point</h3><p>Using <em>setPivotPoint</em> you simply pass a Vector3 object that is the relative position of the pivot to the local origin of the mesh. To set a pivot at (x, y, z) relative to the local origin of a mesh requires</p>
+<pre><code class="lang-javascript">mesh.setPivotPoint(new BABYLON.Vector3(x, y, z));
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#8">Playground Example - Set Pivot Point</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>When there is a mesh at position (xc, yc, zc) you want to set a pivot at (xp, yp, zp) then the relative position is (xp - xc, yp - yc, zp - z) and use</p>
+<pre><code class="lang-javascript">mesh.setPivotPoint(BABYLON.Vector3(xp - xc, yp - yc, zp - z));
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#9">Playground Example - Set Pivot Point to World Coordinates</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#9', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The following sequence of playgrounds goes from setting the first pivot point to scaling about the second pivot point</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#10">Playground Example - Set First Pivot Point</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#10', this)"></i><div class="iframeContainer"></div>  </li>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#14">Playground Example - Set Second Pivot Point</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#14', this)"></i><div class="iframeContainer"></div>  </li>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#15">Playground Example - Scaling from Second Pivot Point</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#15', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>It is possible to reset the pivot point and maintain the position and rotation of the mesh.  </p>
+<p>To do this the current rotation of the mesh has to be stored and then the mesh&#39;s rotation set to (0, 0, 0) before the pivot point is reset. The current rotation is then re-applied to the mesh.</p>
+<p>The following sequence of playgrounds shows setting the first pivot point, rotating the pivot then resetting the pivot point and re-applying the rotation.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#10">Playground Example - Set First Pivot Point</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#10', this)"></i><div class="iframeContainer"></div>  </li>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#16">Playground Example - Rotate About First Pivot Point</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#16', this)"></i><div class="iframeContainer"></div>  </li>
+<li><a href="https://www.babylonjs-playground.com/#3RTT8P#17">Playground Example - Set Second Pivot Point and Rotate</a> - <i class="fa fa-eye" onclick="createIframe('3RTT8P#17', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="get-pivot-point" class="anchor" href="#get-pivot-point"></a>Get Pivot Point</h3><p>When using <code>getPivotPoint</code> or <code>getAbsolutePivotPoint</code> the results obtained depend on whether you are using a <em>set pivot only</em> method, that is <code>setPivotMatrix(translation)</code> or <code>setPivotPoint</code> or the <em>set pivot with move</em> method, that is <code>setPivotMatrix(translation)</code>.</p>
+<p>In both of the following cases the box has then been rotated through 90 degrees, positioned at (6, 1, 2) and the pivot has been set to world position (5, 0, 1) which is (-1, -1, -1) relative to the current position of the local origin of the box.  </p>
+<p><strong>Set Pivot Only Method</strong></p>
+<p><img src="/img/how_to/pivots/pivot7.png" alt="Pivoted Box"></p>
+<table>
+<thead>
+<tr>
+<th>Getter</th>
+<th>&nbsp;Results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>box.position</td>
+<td>(6, 1, 2)</td>
+<td>Position as set</td>
+</tr>
+<tr>
+<td>box.getAbsolutePosition()</td>
+<td>(6, 1, 0)</td>
+<td>Position of box (yellow sphere) as seen, in world coordinates</td>
+</tr>
+<tr>
+<td>box.getPivotPoint()</td>
+<td>(-1, -1, -1)</td>
+<td>Position of pivot (red sphere) relative to local origin of box, as set</td>
+</tr>
+<tr>
+<td>box.getAbsolutePivotPoint()</td>
+<td>(5, 0, 1)</td>
+<td>Position of pivot as seen, in world coordinates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Set Pivot Only Method</strong></p>
+<p><img src="/img/how_to/pivots/pivot8.png" alt="Pivoted Box"></p>
+<table>
+<thead>
+<tr>
+<th>Getter</th>
+<th>&nbsp;Results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>box.position</td>
+<td>(6, 1, 2)</td>
+<td>Position as set</td>
+</tr>
+<tr>
+<td>box.getAbsolutePosition()</td>
+<td>(7, 2, 1)</td>
+<td>World coordinate position of the created origin of box (green sphere)</td>
+</tr>
+<tr>
+<td>box.getPivotPoint()</td>
+<td>(-1, -1, -1)</td>
+<td>Position of pivot (red/yellow sphere) relative to the created origin of box</td>
+</tr>
+<tr>
+<td>box.getAbsolutePivotPoint()</td>
+<td>(6, 1, 2)</td>
+<td>Position of pivot which is the same as the position of the box due to the change in the box&#39;s local origin</td>
+</tr>
+</tbody>
+</table>
+<p>This table alone shows one good reason not to use the <em>set pivot with move</em> method unless for amending old projects.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/How_To/Pivot">How To Rotate Around an Axis about a Point</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Mathematics and Ribbons - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Mathematics and Ribbons</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#maths-computed-paths">Maths computed paths</a><ul>
+<li><a href="#first-lets-have-a-small-recall">First, let&#39;s have a small recall.</a></li>
+<li><a href="#back-to-the-ribbon">Back to the Ribbon</a></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</li>
+<li><a href="#from-basic-shapes-to-complex-ones">From Basic Shapes to Complex Ones</a><ul>
+<li><a href="#sphere">Sphere</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="mathematics-and-ribbons" class="anchor" href="#mathematics-and-ribbons"></a>Mathematics and Ribbons</h1><p>Mathematics is very useful for drawing paths in space and so can be applied to ribbons. </p>
+<p><em>NOTE - </em> The examples on this page use the legacy method of creating ribbons</p>
+<pre><code class="lang-javascript">var ribbon = BABYLON.Mesh.CreateRibbon(name, pathArray, closeArray, closePath, offset, scene, updatable, sideOrientation);
+</code></pre>
+<p>rather then the newer options method.</p>
+<pre><code class="lang-javascript">var ribbon = BABYLON.MeshBuilder.CreateRibbon(&quot;ribbon&quot;, { pathArray: paths },  scene );
+</code></pre>
+<h2><a name="maths-computed-paths" class="anchor" href="#maths-computed-paths"></a>Maths computed paths</h2><p>The Ribbon is very adapted to elaborated maths computed meshes.<br>You can easily start from an equation to get a full volumic complex shape.<br>There are many ways to do it.  </p>
+<p>If you don&#39;t feel at ease with maths, here is a way to start :   </p>
+<h3><a name="first-let39s-have-a-small-recall" class="anchor" href="#first-lets-have-a-small-recall"></a>First, let&#39;s have a small recall.</h3><p>We just set points in space. These points have got each a set of three coordinates : x, y and z.<br>We call here these points <em>Vector3</em>.  </p>
+<p>When we want to design a curve or a path in space, we need to get a collection of successive <em>Vector3</em>.<br>We can&#39;t have an infinity of points.<br>So we define a path with a certain number of <em>Vector3</em>. The more <em>Vector3</em>, the more smooth the curve and the more computations too.   </p>
+<p>So when you want your path to follow a mathematical curve, you need to compute each path <em>Vector3</em> coordinates.<br>You could choose a known math curve in wikipedia or dedicated sites (<a href="http://en.wikipedia.org/wiki/List_of_curves">http://en.wikipedia.org/wiki/List_of_curves</a> , <a href="http://www.mathcurve.com/courbes2d/courbes2d.shtml">http://www.mathcurve.com/courbes2d/courbes2d.shtml</a> , <a href="http://www.uiowa.edu/~examserv/mathmatters/tutorial_quiz/geometry/commoncurves.html">http://www.uiowa.edu/~examserv/mathmatters/tutorial_quiz/geometry/commoncurves.html</a>, etc) or, when you feel more comfortable, create you own.  </p>
+<p>As you can see, curve equations are often like this : <em>f(x, y) = 0</em> or like this : <em>y = f(x)</em>.<br>This means _y_ is expressed in function of _x_.<br>This kind of equation is called a <em>cartesian equation</em>. It is probably the most used among mathematicians, but it won&#39;t help us a lot because we need to compute _x_ and _y_ (and _z_) simultaneously to set each <em>Vector3</em>.<br>So we will prefer the <em>parametric equations</em>.<br>In a <em>parametric equation</em> each different coordinate is defined in function of a parameter _k_ :<br>  <em>x = fct1(k)</em><br>  <em>y = fct2(k)</em><br>  <em>z = fct3(k)</em>   </p>
+<p>So if you are given a <em>cartesian equation</em>, it is quite almost possible to translate it in a <em>parametric equation</em>.<br>example with a parabola : y =  x²<br><em>the cartesian equation y = x * x</em> will give the <em>parametric equation :</em><br>  <em>x = k</em><br>  <em>y = k * k</em><br>You then give _k_ values from -20 to 20 for example and you  get your 40 successive <em>Vector3</em> on the parabola. Easy, isn&#39;t it ?<br>You now know the way to fill a path with successive <em>Vector3</em> along a math curve.  </p>
+<h3><a name="back-to-the-ribbon" class="anchor" href="#back-to-the-ribbon"></a>Back to the Ribbon</h3><p>Well, we just learnt how to fill a path but a Ribbon needs many paths (okay, we can still construct a ribbon with a single path too, but it&#39;s more complex), so how do we add different paths as there is no real interest to add many times the same path ?<br>It&#39;s quite easy once you&#39;ve got your parametric equation.  </p>
+<p>Let&#39;s get into javascript now.<br>Your former parametric equation could be this way :   </p>
+<pre><code class="lang-javascript">var path = [];
+for (var k = -20; k &lt;= 20; k++) {
+  var x = k;
+  var y = k * k;
+  var z = 0;
+  path.push(new BABYLON.Vector3(x, y, z));
+}
+</code></pre>
+<p>Right ?<br> <a href="https://www.babylonjs-playground.com/#1HSC2O">https://www.babylonjs-playground.com/#1HSC2O</a> - <i class="fa fa-eye" onclick="createIframe('1HSC2O#', this)"></i><div class="iframeContainer"></div>   </p>
+<p>Let&#39;s now imagine, you create the same path array 10 times on the z-axis with <em>z = t</em> :   </p>
+<pre><code class="lang-javascript">var paths = [];
+for (var t = 0; t &lt; 10; t++) {
+  var path = [];
+  for (var k = -20; k &lt;= 20; k++) {
+    var x = k;
+    var y = k * k;
+    var z = t;
+    path.push(new BABYLON.Vector3(x, y, z));
+  }
+  paths.push(path);
+}
+</code></pre>
+<p>What do we get now ?<br> <a href="https://www.babylonjs-playground.com/#1HSC2O#1">https://www.babylonjs-playground.com/#1HSC2O#1</a> - <i class="fa fa-eye" onclick="createIframe('1HSC2O#1', this)"></i><div class="iframeContainer"></div><br>An array <em>paths</em> filled with 10 similar <em>paths</em>.<br>Just what is needed to create a ribbon :  <a href="https://www.babylonjs-playground.com/#1HSC2O#2">https://www.babylonjs-playground.com/#1HSC2O#2</a> - <i class="fa fa-eye" onclick="createIframe('1HSC2O#2', this)"></i><div class="iframeContainer"></div><br>If you now change slightly each path equation so they aren&#39;t all similar, say, by dividing _y_ by _t_ :  </p>
+<pre><code class="lang-javascript">var paths = [];
+for (var t = 1; t &lt; 10; t++) {
+  var path = [];
+  for (var k = -20; k &lt;= 20; k++) {
+    var x = k;
+    var y = k * k / t;
+    var z = t;
+    path.push(new BABYLON.Vector3(x, y, z));
+  }
+  paths.push(path);
+}
+</code></pre>
+<p>You immediatly get a set of different paths along the z-axis :  <a href="https://www.babylonjs-playground.com/#1HSC2O#8">https://www.babylonjs-playground.com/#1HSC2O#8</a> - <i class="fa fa-eye" onclick="createIframe('1HSC2O#8', this)"></i><div class="iframeContainer"></div><br>So a more complex ribbon :  <a href="https://www.babylonjs-playground.com/#1HSC2O#9">https://www.babylonjs-playground.com/#1HSC2O#9</a> - <i class="fa fa-eye" onclick="createIframe('1HSC2O#9', this)"></i><div class="iframeContainer"></div>     </p>
+<p>At last, if we change a bit _x_ and _z_ variation to scale the curve, we can get a nice parabolic shape :   </p>
+<pre><code class="lang-javascript">var paths = [];
+for (var t = 1; t &lt; 10; t++) {
+  var path = [];
+  for (var k = -20; k &lt;= 20; k++) {
+    var x = k * 8;
+    var y = k * k / t;
+    var z = t * 50;
+    path.push(new BABYLON.Vector3(x, y, z));
+  }
+  paths.push(path);
+}
+</code></pre>
+<p> <a href="https://www.babylonjs-playground.com/#1HSC2O#10">https://www.babylonjs-playground.com/#1HSC2O#10</a> - <i class="fa fa-eye" onclick="createIframe('1HSC2O#10', this)"></i><div class="iframeContainer"></div><br>Quick fun ?<br>multiply _y_ by <em>Math.sin(t)</em> to make it wave :  <a href="https://www.babylonjs-playground.com/#1HSC2O#11">https://www.babylonjs-playground.com/#1HSC2O#11</a> - <i class="fa fa-eye" onclick="createIframe('1HSC2O#11', this)"></i><div class="iframeContainer"></div><br>or funnier :  <a href="https://www.babylonjs-playground.com/#1HSC2O#12">https://www.babylonjs-playground.com/#1HSC2O#12</a> - <i class="fa fa-eye" onclick="createIframe('1HSC2O#12', this)"></i><div class="iframeContainer"></div><br>I couldn&#39;t stop playing ...  </p>
+<h3><a name="summary" class="anchor" href="#summary"></a>Summary</h3><p>An easy way to create math computed shapes is so :  </p>
+<ul>
+<li>to choose a 2D math curve,</li>
+<li>to get its parametric equation,</li>
+<li>to fill an array with <em>Vector3</em> computed with a simple <em>for</em> loop iterating on the number of points wanted (set them in a 2D plane to start, with z = 0 for instance),</li>
+<li>to check your curve with <em>BABYLON.Mesh.CreateLines(&quot;name&quot;, yourArray, scene)</em>,</li>
+<li>to derivate your first curve by varying _x_ or _y_ and iterating on _z_ since adding each derivated path into a <em>paths</em> array,</li>
+<li>to check again with <em>BABYLON.Mesh.CreateLines(&quot;name&quot;, yourArray, scene)</em> on each _z_ iteration,</li>
+<li>to finally build your ribbon with the <em>paths</em> array. </li>
+</ul>
+<h2><a name="from-basic-shapes-to-complex-ones" class="anchor" href="#from-basic-shapes-to-complex-ones"></a>From Basic Shapes to Complex Ones</h2><p>The Ribbon is very versatile. So you can redo every BabylonJS basic shapes.<br>Why would you want to do this ?<br>Well, you probably don&#39;t. There is no need to re-invent the wheel. But you could need to model your own shape which derivates from one of the basic shapes.<br>The main rule should be :  </p>
+<ul>
+<li>if you need a basic shape as it stands, then use the provided BJS basic shapes.</li>
+<li>if you need a shape made up of many basic shapes, then use Constructive Solid Geometry or merge provided BJS basic shapes.</li>
+<li>if you need a computed shape having a symetry axis, then use the Tube mesh or the extrusion, which don&#39;t require many maths.</li>
+<li>if you need something else, then use the Ribbon itself... and your maths skills.</li>
+</ul>
+<h3><a name="sphere" class="anchor" href="#sphere"></a>Sphere</h3><p>Let&#39;s try here to redo a sphere and then to modify it into something different.<br>As you&#39;ve seen in the former part, you need to create many paths to build a ribbon. For a sphere, you can imagine that you stack many circles, each circle being a path.<br>To create a circle, you just set points at <em>x = sin(angle)</em> and <em>z = cos(angle)</em> and give <em>angle</em> some values between 0 and 2 x PI.   </p>
+<pre><code class="lang-javascript">var pi2 = Math.PI * 2;
+var step = pi2 / 60;       // we want 60 points
+for (var i = 0; i &lt; pi2; i += step ) {
+  var x = radius * Math.sin(i);
+  var z = radius * Math.cos(i);
+  var y = 0;
+  path.push( new BABYLON.Vector3(x, y, z) );
+  }
+path.push(path[0]);       // to close the circle
+</code></pre>
+<p>demo :  <a href="https://www.babylonjs-playground.com/#E6IX1#1">https://www.babylonjs-playground.com/#E6IX1#1</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#1', this)"></i><div class="iframeContainer"></div>   </p>
+<p>Now, you add circles along the y-axis, making the radius evolving with another angle _p_ varying from the sphere south pole -PI / 2 to its north pole +PI /2. These circles (path) are stored in an array called <em>paths</em> :     </p>
+<pre><code class="lang-javascript">var radius = 10;
+var tes = 60;
+var pi2 = Math.PI * 2;
+var step = pi2 / tes;
+var paths = [];
+for (var p = -Math.PI / 2; p &lt; Math.PI / 2; p += step / 2) {
+  var path = [];
+  for (var i = 0; i &lt; pi2; i += step ) {
+    var x = radius * Math.sin(i) * Math.cos(p);
+    var z = radius * Math.cos(i) * Math.cos(p);
+    var y = radius * Math.sin(p);
+    path.push( new BABYLON.Vector3(x, y, z) );
+    }
+    path.push(path[0]);
+    paths.push(path);
+}
+</code></pre>
+<p>demo :  <a href="https://www.babylonjs-playground.com/#E6IX1">https://www.babylonjs-playground.com/#E6IX1</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#', this)"></i><div class="iframeContainer"></div>  </p>
+<p>Let&#39;s apply a ribbon to these paths :  <a href="https://www.babylonjs-playground.com/#E6IX1#2">https://www.babylonjs-playground.com/#E6IX1#2</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#2', this)"></i><div class="iframeContainer"></div><br>You get (almost) a sphere.<br>To get a nice full sphere, you need to complete the missing point at north pole and set the ribbon <em>closePath</em> parameter to true instead of manually close each circle after the former iteration :   </p>
+<pre><code class="lang-javascript">var lastPath = [];
+for (var j = 0; j &lt; pi2; j += step ) {
+  lastPath.push( new BABYLON.Vector3(0, radius, 0) );
+}
+paths.push(lastPath);
+
+var sphere = BABYLON.Mesh.CreateRibbon(&quot;sph&quot;, paths, false, true ,  0, scene);
+</code></pre>
+<p>demo :  <a href="https://www.babylonjs-playground.com/#E6IX1#3">https://www.babylonjs-playground.com/#E6IX1#3</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#3', this)"></i><div class="iframeContainer"></div><br>Pretty much maths and iterations o far to get a simple sphere, isn&#39;t it ?<br>This is why you should really use the BJS provided sphere if you only want a sphere !  </p>
+<p>But don&#39;t worry, all those efforts so far aren&#39;t vain. From now, let&#39;s the magic happens with only little changes ...<br>Remember : the <em>for</em> loop iterating on _p_ is for the south to north pole angle. What if you don&#39;t increment _p_ until PI / 2 but stop before, say at PI /2 - 1.5 :   </p>
+<pre><code class="lang-javascript">for (var p = -Math.PI / 2; p &lt; Math.PI / 2 - 1.5; p += step / 2) {
+</code></pre>
+<p>demo :  <a href="https://www.babylonjs-playground.com/#E6IX1#4">https://www.babylonjs-playground.com/#E6IX1#4</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#4', this)"></i><div class="iframeContainer"></div><br>Quite easy. You just derivated the initial sphere into another shape you wouldn&#39;t have got another way.   </p>
+<p>Now, you can keep the original pole angle limit PI / 2 but add a new behavior : if a certain angle limit is reached, then inverse the y radius around this limit.  </p>
+<pre><code class="lang-javascript">var yRadius;
+var limit = Math.PI / 2 - 1;
+for (var p = -Math.PI / 2; p &lt; Math.PI / 2; p += step / 2) {
+  var path = [];
+  yRadius = p &lt; limit ? Math.sin(p) : 2 * Math.sin(limit) - Math.sin(p) ;
+  for (var i = 0; i &lt; pi2; i += step ) {
+    var x = radius * Math.sin(i) * Math.cos(p);
+    var z = radius * Math.cos(i) * Math.cos(p);
+    var y = radius * yRadius;
+    path.push( new BABYLON.Vector3(x, y, z) );
+  }
+  paths.push(path);
+} 
+</code></pre>
+<p>demo :   <a href="https://www.babylonjs-playground.com/#E6IX1#5">https://www.babylonjs-playground.com/#E6IX1#5</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#5', this)"></i><div class="iframeContainer"></div>   </p>
+<p>Let&#39;s change the initial <em>for</em> loop limits now :  </p>
+<pre><code class="lang-javascript">for (var p = -Math.PI / 2 + 0.5; p &lt; Math.PI / 2  - 0.5; p += step / 2) {
+</code></pre>
+<p>demo :  <a href="https://www.babylonjs-playground.com/#E6IX1#6">https://www.babylonjs-playground.com/#E6IX1#6</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#6', this)"></i><div class="iframeContainer"></div><br>Well, is this still a sphere ?<br>Let&#39;s close the ribbon :</p>
+<pre><code class="lang-javascript">var sphere = BABYLON.Mesh.CreateRibbon(&quot;sph&quot;, paths, true, true ,  0, scene);
+</code></pre>
+<p>demo :  <a href="https://www.babylonjs-playground.com/#E6IX1#7">https://www.babylonjs-playground.com/#E6IX1#7</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#7', this)"></i><div class="iframeContainer"></div><br>Well, it&#39;s no longer a sphere, but a symetric shape you could probably have got in a simpler way with a Tube mesh or with CSG ... or not.<br>Since you wrote the initial sphere maths code, you&#39;ve added until now very few changes to get this derivated shape.
+Too symetric, not enough, ok ? let&#39;s morph it once more so you get out the CSG or Tube way :  let&#39;s moderate _x_ with an extra <em>cosinus</em> function</p>
+<pre><code class="lang-javascript">for (var i = 0; i &lt; pi2; i += step ) {
+  var x = radius * Math.sin(i) * Math.cos(p) * Math.cos(i / 6);
+  var z = radius * Math.cos(i) * Math.cos(p);
+  var y = radius * yRadius;
+  path.push( new BABYLON.Vector3(x, y, z) );
+}
+</code></pre>
+<p>demo :  <a href="https://www.babylonjs-playground.com/#E6IX1#8">https://www.babylonjs-playground.com/#E6IX1#8</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#8', this)"></i><div class="iframeContainer"></div><br>You are now in the real Ribbon world !
+Want more ? let&#39;s moderate _y_ with another <em>cosinus</em> function and multiply _z_ by 2 (why ? why not !).</p>
+<pre><code class="lang-javascript">for (var i = 0; i &lt; pi2; i += step ) {
+  var x = radius * Math.sin(i) * Math.cos(p) * Math.cos(i / 6);
+  var z = radius * Math.cos(i) * Math.cos(p) * 2;
+  var y = radius * yRadius * Math.cos(i * 2);
+  path.push( new BABYLON.Vector3(x, y, z) );
+}
+</code></pre>
+<p>demo :  <a href="https://www.babylonjs-playground.com/#E6IX1#9">https://www.babylonjs-playground.com/#E6IX1#9</a> - <i class="fa fa-eye" onclick="createIframe('E6IX1#9', this)"></i><div class="iframeContainer"></div>  </p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/babylon101/Parametric_Shapes.html">Parametric Shapes</a><br><a href="/How_To/Polyhedra_Shapes.html">Polyhedra Shapes</a><br><a href="/How_To/Decals.html">Decals</a> </p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/How_To/Ribbon_Tutorial.html">Ribbons In Detail</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

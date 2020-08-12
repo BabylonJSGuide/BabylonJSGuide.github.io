@@ -1,0 +1,201 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Points Inside a Mesh - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Points Inside a Mesh</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#design-outline">Design Outline.</a></li>
+<li><a href="#design-method">Design Method.</a></li>
+<li><a href="#the-whole-function">The Whole function</a></li>
+<li><a href="#examples-of-use">Examples of Use</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-create-points-inside-a-mesh" class="anchor" href="#how-to-create-points-inside-a-mesh"></a>How To Create Points Inside a Mesh</h1><p>This utility enables you to create and store Vector3 points each of which is randomly positioned inside a given mesh.</p>
+<h2><a name="design-outline" class="anchor" href="#design-outline"></a>Design Outline.</h2><ol>
+<li>Take a random triangular facet belonging to the mesh;</li>
+<li>Choose a random point inside this triangle;</li>
+<li>For the facet construct an inward pointing random vector;</li>
+<li>Using that point as ray origin and the vector as ray direction find the hit point of the ray on the mesh;</li>
+<li>Determine a random point on the line segment joining the origin point to the hit point.</li>
+</ol>
+<h2><a name="design-method" class="anchor" href="#design-method"></a>Design Method.</h2><ol>
+<li>For the mesh get the vertex positions and indices using</li>
+</ol>
+<pre><code class="lang-javascript">var positions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+var indices = mesh.getIndices();
+</code></pre>
+<p>Select a facet, F,  at random.</p>
+<ol start="2">
+<li>Obtain the three facet vertex positions, vertex0, vertex1 and vertex2 using the positions array. From these construct vectors, <u>vec0</u> and <u>vec1</u>, along two sides of the triangle one following the other. For a value 0  &le; &lambda; &le; 1,&nbsp; &lambda;<u>vec0</u> and &lambda;<u>vec1</u> will form two sides of a triangle similar to the facet. So when also given a value 0  &le; &mu; &le; 1,&nbsp; &lambda;<u>vec0</u> and &lambda;&mu;<u>vec1</u> will give a point inside the facet. The range of values for &lambda; and &mu; will determine all points within the facet. Hence random values for  &lambda; and &mu; will give random points on the facet plane.</li>
+</ol>
+<p><img src="/img/samples/manypoints.jpg" alt="Find point"></p>
+<pre><code class="lang-javascript">lamda = BABYLON.Scalar.RandomRange(0, 1);    
+mu = BABYLON.Scalar.RandomRange(0, 1);
+facetPoint = vertex0.add(vec0.scale(lambda)).add(vec1.scale(lambda * mu));
+</code></pre>
+<ol start="3">
+<li>In order to generate a vector pointing inwards get the normal vector of the facet (which points outward), reverse it to get the vector <u>n</u>, use <u>t</u> = <u>vec0</u> as one vector in the plane and, <u>b</u>, the cross product of the normal and <u>vec0</u> as the other. For an angle 0 &le; &theta; &le; 2&pi;, &nbsp;&nbsp; <u>f</u> = <u>t</u>cos(&theta;) + <u>b</u>sin(&theta;) will give a vector in the facet plane. For an angle 0 &le; &phi; &le; &pi;, &nbsp;&nbsp;  <u>f</u>cos(&phi;) + <u>n</u>sin(&phi;) will give a vector whose direction is towards the inside of the mesh. </li>
+</ol>
+<pre><code class="lang-javascript">mesh.updateFacetData(); // needed to use getFacetNormal
+
+norm = mesh.getFacetNormal(index).normalize().scale(-1);    
+tang = vec0.clone().normalize();
+biNorm = BABYLON.Vector3.Cross(norm, tang);
+angle = BABYLON.Scalar.RandomRange(0, 2 * Math.PI);
+facetPlaneVec = tang.scale(Math.cos(angle)).add(biNorm.scale(Math.sin(angle)));
+angle = BABYLON.Scalar.RandomRange(0.1, Math.PI);
+direction = facetPlaneVec.scale(Math.cos(angle)).add(norm.scale(Math.sin(angle)));
+</code></pre>
+<ol start="4">
+<li>Construct a ray using the facet point, direction and a distance equal to the diameter of the mesh&#39;s bounding sphere to ensure it is long enough to hit another facet of the mesh and find the hit point.</li>
+</ol>
+<pre><code class="lang-javascript">var boundInfo = mesh.getBoundingInfo();
+var diameter = 2 * boundInfo.boundingSphere.radius;
+
+var ray = new BABYLON.Ray(facetPoint, direction, diameter);
+var hitPoint = ray.intersectsMesh(mesh).pickedPoint;
+</code></pre>
+<ol start="5">
+<li>Take some random fraction, 0 *le; r &le; 1, of the distance between the hit point and facet point and use this to determine a position of a point along this line using facetPoint + r(hitPoint - facetPoint) to determine a point within the mesh.</li>
+</ol>
+<pre><code class="lang-javascript">var ray = new BABYLON.Ray(facetPoint, direction, diameter);
+var pickInfo = ray.intersectsMesh(this);    
+    if (pickInfo.hit) {            
+        var distance = pickInfo.pickedPoint.subtract(facetPoint).length();
+        var gap = BABYLON.Scalar.RandomRange(0, 1) * distance;
+        var point = facetPoint.add(direction.scale(gap));
+    }
+    else { // just in the rare case the facet point randomly chosen is on the adjoining axis of two concave meeting facets
+            point.set(0, 0, 0);
+    }
+</code></pre>
+<h2><a name="the-whole-function" class="anchor" href="#the-whole-function"></a>The Whole function</h2><p>Set how many inside points to generate and store and return them in an array.</p>
+<pre><code class="lang-javascript">BABYLON.Mesh.prototype.createInnerPoints = function(pointsNb) {
+    var boundInfo = this.getBoundingInfo();
+    var diameter = 2 * boundInfo.boundingSphere.radius;
+    this.updateFacetData();
+
+    var positions = this.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+    var indices = this.getIndices();
+
+    var point = BABYLON.Vector3.Zero();
+    var points = [];
+    var directions = [];
+
+    var randX = 0;
+    var randY = 0;
+    var randZ = 0
+
+    var index = 0;
+    var id0 = 0;
+    var id1 = 0; 
+    var id2 = 0;
+    var v0X = 0;
+    var v0Y = 0;
+    var v0Z = 0;
+    var v1X = 0;
+    var v1Y = 0
+    var v1Z = 0;
+    var v2X = 0;
+    var v2Y = 0;
+    var v2Z = 0;
+    var vertex0 = BABYLON.Vector3.Zero();
+    var vertex1 = BABYLON.Vector3.Zero();
+    var vertex2 = BABYLON.Vector3.Zero();
+    var vec0 = BABYLON.Vector3.Zero();
+    var vec1 = BABYLON.Vector3.Zero();
+
+    var lamda = 0;    
+    var mu = 0;
+    var norm = BABYLON.Vector3.Zero();
+    var tang = BABYLON.Vector3.Zero();
+    var biNorm = BABYLON.Vector3.Zero();
+    var angle = 0;
+    var facetPlaneVec = BABYLON.Vector3.Zero();
+
+    var gap = 0;
+    var distance = 0;
+    var ray = new BABYLON.Ray(BABYLON.Vector3.Zero(), BABYLON.AxisX);
+    var pickInfo;
+    var facetPoint = BABYLON.Vector3.Zero();
+    var direction = BABYLON.Vector3.Zero();
+    var particleDirection = BABYLON.Vector3.Zero();
+    var particleDistance = 0;
+    var testPoint = BABYLON.Vector3.Zero();
+
+    for(var p = 0; p &lt;pointsNb; p++) {            
+        index = Math.floor(BABYLON.Scalar.RandomRange(0, indices.length / 3));        
+        id0 = indices[3 * index];
+        id1 = indices[3 * index + 1]; 
+        id2 = indices[3 * index + 2];
+        v0X = positions[3 * id0];
+        v0Y = positions[3 * id0 + 1];
+        v0Z = positions[3 * id0 + 2];
+        v1X = positions[3 * id1];
+        v1Y = positions[3 * id1 + 1];
+        v1Z = positions[3 * id1 + 2];
+        v2X = positions[3 * id2];
+        v2Y = positions[3 * id2 + 1];
+        v2Z = positions[3 * id2 + 2];
+        vertex0.set(v0X, v0Y, v0Z);
+        vertex1.set(v1X, v1Y, v1Z);
+        vertex2.set(v2X, v2Y, v2Z);
+        vertex1.subtractToRef(vertex0, vec0);
+        vertex2.subtractToRef(vertex1, vec1);
+
+        norm = this.getFacetNormal(index).normalize().scale(-1);    
+        tang = vec0.clone().normalize();
+        biNorm = BABYLON.Vector3.Cross(norm, tang);
+        angle = BABYLON.Scalar.RandomRange(0, 2 * Math.PI);
+        facetPlaneVec = tang.scale(Math.cos(angle)).add(biNorm.scale(Math.sin(angle)));
+        angle = BABYLON.Scalar.RandomRange(0.1, Math.PI);
+        direction = facetPlaneVec.scale(Math.cos(angle)).add(norm.scale(Math.sin(angle)));
+
+        //form a point inside the facet v0, v1, v2;
+        lamda = BABYLON.Scalar.RandomRange(0, 1);    
+        mu = BABYLON.Scalar.RandomRange(0, 1);
+        facetPoint = vertex0.add(vec0.scale(lamda)).add(vec1.scale(lamda * mu));
+
+        gap = 0;
+        distance = 0;
+        pickInfo;    
+        ray.origin = facetPoint;
+        ray.direction = direction;
+        ray.length = diameter;    
+        pickInfo = ray.intersectsMesh(this);    
+        if (pickInfo.hit) {            
+            distance = pickInfo.pickedPoint.subtract(facetPoint).length();
+            gap = BABYLON.Scalar.RandomRange(0, 1) * distance;
+            point = facetPoint.add(direction.scale(gap));
+        }
+        else {
+            point.set(0, 0, 0);
+        }
+        points.push(point);    
+    }
+
+    return points;
+}
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#2K3T61#8">Playground Example - Points Inside a Twelve Pointed Stare</a> - <i class="fa fa-eye" onclick="createIframe('2K3T61#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="examples-of-use" class="anchor" href="#examples-of-use"></a>Examples of Use</h2><ul>
+<li><a href="https://www.babylonjs-playground.com/#2K3T61#2">Playground Example - Using SPS</a> - <i class="fa fa-eye" onclick="createIframe('2K3T61#2', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#2K3T61#7">Playground Example - Using Particles</a> - <i class="fa fa-eye" onclick="createIframe('2K3T61#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/snippets/SurfaceMeshPoints">How To Create Points on a Mesh Surface</a><br><a href="/snippets/isInside">How To Check When Point is Inside a Mesh</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Check When Point is Inside a Mesh - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Check When Point is Inside a Mesh</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#design-outline">Design Outline</a></li>
+<li><a href="#design-method">Design Method</a></li>
+<li><a href="#the-whole-function">The Whole Function</a></li>
+<li><a href="#playground-example">Playground Example</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-check-when-point-is-inside-a-mesh" class="anchor" href="#how-to-check-when-point-is-inside-a-mesh"></a>How To Check When Point is Inside a Mesh</h1><p>This mesh method takes a Vector3 point and checks if it inside the mesh.</p>
+<h2><a name="design-outline" class="anchor" href="#design-outline"></a>Design Outline</h2><ol>
+<li>Check if point inside or outside of bounding box, when inside continue with following checks;</li>
+<li>Cast a ray from the point in the positive and negative x directions;</li>
+<li>When there is a hit, move forward from hit point a very small amount along ray direction and recast ray from new point;</li>
+<li>Count hits, when zero or an odd number of hits then point is inside mesh and for a even number of hits &gt; 0 non zero then point is outside of mesh. </li>
+</ol>
+<h2><a name="design-method" class="anchor" href="#design-method"></a>Design Method</h2><ol>
+<li>Check bounding box;</li>
+</ol>
+<pre><code class="lang-javascript">var boundInfo = this.getBoundingInfo();
+var max = boundInfo.maximum;
+var min = boundInfo.minimum;
+if(point.x &lt; min.x || point.x &gt; max.x) {
+    return false;
+}
+if(point.y &lt; min.y || point.y &gt; max.y) {
+    return false;
+}
+if(point.z &lt; min.z || point.z &gt; max.z) {
+    return false;
+}
+</code></pre>
+<ol start="2">
+<li>Use the diameter of the mesh&#39;s bounding sphere as the distance to cast the ray</li>
+</ol>
+<pre><code class="lang-javascript">var diameter = 2 * boundInfo.boundingSphere.radius;
+ray = new BABYLON.Ray(point, direction, diameter);
+</code></pre>
+<ol start="3">
+<li>Set hit count to zero, while hits occurring increment hit count</li>
+</ol>
+<pre><code class="lang-javascript">var hitCount = 0;
+var pickInfo = ray.intersectsMesh(this);
+while (pickInfo.hit) {    
+    hitCount++;
+    pickInfo.pickedPoint.addToRef(direction.scale(0.00000001), point); //move point a small amout in ray direction
+    ray.origin  = point;
+    pickInfo = ray.intersectsMesh(this);
+}
+</code></pre>
+<ol start="4">
+<li>Count hits.</li>
+</ol>
+<pre><code class="lang-javascript">if((hitCount % 2) === 1) {
+    var pointFound = true;
+}
+else if ((hitCount % 2) === 0 &amp;&amp; hitCount &gt; 0) {
+    var pointFound = true;
+}
+
+return pointFound;
+</code></pre>
+<h2><a name="the-whole-function" class="anchor" href="#the-whole-function"></a>The Whole Function</h2><p>Returns true if point is inside mesh, false otherwise.</p>
+<pre><code class="lang-javascript">BABYLON.Mesh.prototype.pointIsInside = function (point) {    
+    var boundInfo = this.getBoundingInfo();
+    var max = boundInfo.maximum;
+    var min = boundInfo.minimum;
+    var diameter = 2 * boundInfo.boundingSphere.radius;
+    if(point.x &lt; min.x || point.x &gt; max.x) {
+        return false;
+    }
+    if(point.y &lt; min.y || point.y &gt; max.y) {
+        return false;
+    }
+    if(point.z &lt; min.z || point.z &gt; max.z) {
+        return false;
+    }
+
+    var pointFound = false;
+    var d = 0;
+    var hitCount = 0;
+    var gap = 0;
+    var distance = 0;
+    var ray = new BABYLON.Ray(BABYLON.Vector3.Zero(), BABYLON.Axis.X, diameter);;
+    var pickInfo;
+    var direction = point.clone();
+    var refPoint = point.clone();
+
+
+    hitCount = 0;
+    ray.origin = refPoint;
+    ray.direction = direction;
+    ray.distance = diameter;        
+    pickInfo = ray.intersectsMesh(this);
+    while (pickInfo.hit) {    
+        hitCount++;
+        pickInfo.pickedPoint.addToRef(direction.scale(0.00000001), refPoint);
+        ray.origin  = refPoint;
+        pickInfo = ray.intersectsMesh(this);
+    }    
+    if((hitCount % 2) === 1) {
+        pointFound = true;
+    }
+
+    return pointFound;
+};
+</code></pre>
+<h2><a name="playground-example" class="anchor" href="#playground-example"></a>Playground Example</h2><p>Generate random points in a volume around a twelve pointed star mesh. Place a sphere at each point and turn it red when inside the star.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#XJEG9A#4">Playground Example - Twelve Pointed Star</a> - <i class="fa fa-eye" onclick="createIframe('XJEG9A#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/snippets/innerMeshPoints">How To Create Points Inside a Mesh</a><br><a href="/snippets/SurfaceMeshPoints">How To Create Points on a Mesh Surface</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

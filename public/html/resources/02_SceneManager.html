@@ -1,0 +1,134 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Scene Manager (Unity exporter) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Scene Manager (Unity exporter)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#babylon-scene-manager">Babylon Scene Manager</a></li>
+<li><a href="#babylon-scene-controller">Babylon Scene Controller</a></li>
+<li><a href="#babylon-scene-components">Babylon Scene Components</a><ul>
+<li><a href="#mesh-script-components">Mesh Script Components</a></li>
+<li><a href="#light-script-components">Light Script Components</a></li>
+<li><a href="#camera-script-components">Camera Script Components</a></li>
+</ul>
+</li>
+<li><a href="#babylon-global-script-files">Babylon Global Script Files</a></li>
+</ul>
+</div></div><div id="staticContent"><p>The babylon scene manager extension provides runtime life cycle management for game objects. The extension supports a scene component application programming interface to enable the usage of <strong>modern game mechanics</strong> to ease web browser game development and provide a <strong>native game editor style development</strong> experience simular to native <a href="https://www.unity3d.com/">Unity</a> and <a href="https://www.unrealengine.com/">Unreal Engine</a> game development.</p>
+<h1><a name="babylon-scene-manager" class="anchor" href="#babylon-scene-manager"></a>Babylon Scene Manager</h1><p>The <a href="https://github.com/BabylonJS/Extensions/tree/master/SceneManager">Scene Manager</a> is packaged with latest toolkit extension but is availble on github for download and customization. You can preview the latest stable <a href="https://github.com/BabylonJS/Extensions/blob/master/SceneManager/dist/babylon.manager.d.ts">TypeScript Definitions</a> file. To use a custom build you must copy your new output files to your project&#39;s <strong>Assets &gt; Babylon &gt; Library</strong> folder as:</p>
+<ul>
+<li><p><strong>babylon.manager.bjs</strong> - Scene manager compiled javascript output file renamed to .bjs extension </p>
+</li>
+<li><p><strong>babylon.manager.d.ts</strong> - Scene manager application programming interface script definition file</p>
+</li>
+</ul>
+<h1><a name="babylon-scene-controller" class="anchor" href="#babylon-scene-controller"></a>Babylon Scene Controller</h1><p>The scene controller script is designed to be used as the main entry point and logic controller for the specified scene. The scene contoller exposes and addition life cyle function called <strong>Ready</strong> that gets called during the scene loading <strong>Execute When Ready</strong> stage. This is the ideal place for main scene setup code that runs <strong>before</strong> the game render loop is started. The scene controller is a sub class of <strong>BABYLON.MeshComponent</strong> and should be used on a single empty game object in the scene.</p>
+<p>Example scene controller script file:</p>
+<pre><code>module PROJECT {
+    export class NewSceneController extends BABYLON.MeshComponent {
+        public constructor(owner: BABYLON.AbstractMesh, scene: BABYLON.Scene, tick: boolean = true, propertyBag: any = {}) {
+            super(owner, scene, tick, propertyBag);
+        }
+
+        protected ready() :void {
+            // Scene execute when ready
+        }
+
+        protected start() :void {
+            // Start component function
+        }
+
+        protected update() :void {
+            // Update render loop function
+        }
+
+        protected after() :void {
+            // After render loop function
+        }
+
+        protected destroy() :void {
+            // Destroy component function
+        }
+    }
+}
+</code></pre><h1><a name="babylon-scene-components" class="anchor" href="#babylon-scene-components"></a>Babylon Scene Components</h1><p>Managed scene components provide modern game mechanic helper functions to ease web game development. Some notable toolkit managed scene component examples:</p>
+<p><strong>GetProperty</strong> - Gets a property from the attached editor script component.</p>
+<pre><code>module PROJECT {
+    export class TestMeshComponent extends BABYLON.MeshComponent {
+
+        protected start() :void {
+            var hello:string = this.getProperty(&quot;hello&quot;, &quot;Default Value&quot;);
+            console.log(&quot;Echo Hello: &quot; + hello);
+        }
+    }
+}
+</code></pre><p><strong>GetComponent</strong> - Get a reference to another component attached to the owner object.</p>
+<pre><code>module PROJECT {
+    export class TestMeshComponent extends BABYLON.MeshComponent {
+
+        protected start() :void {
+            var animator:BABYLON.AnimationState = this.getComponent(&quot;BABYLON.AnimationState&quot;);
+            if (animator) console.log(&quot;Echo Owner: &quot; + animator.owned.name);
+        }
+    }
+}
+</code></pre><p><strong>GetUserInput</strong> - Get the <strong>local multiplayer</strong> user input from the scene manager for the specified input axis.</p>
+<pre><code>module PROJECT {
+    export class TestMeshComponent extends BABYLON.MeshComponent {
+
+        protected update() :void {
+            var vertical:number = this.manager.getUserInput(BABYLON.UserInputAxis.Vertical, BABYLON.PlayerNumber.One);
+            var horizontal:number = this.manager.getUserInput(BABYLON.UserInputAxis.Horizontal, BABYLON.PlayerNumber.One);
+            console.log(&quot;Echo Input: &quot; + vertical.toString() + &quot; x &quot; + horizontal.toString());
+        }
+    }
+}
+</code></pre><h2><a name="mesh-script-components" class="anchor" href="#mesh-script-components"></a>Mesh Script Components</h2><p>The mesh component script is to be used by <strong>All Non Light And Camera</strong> game objects. The component provides access to the owner mesh via its <strong>BABYLON.AbtractMesh</strong> property:</p>
+<pre><code>module PROJECT {
+    export class NewMeshComponent extends BABYLON.MeshComponent {
+
+        protected start() :void {
+            console.log(&quot;Starting mesh component for owner: &quot; + this.mesh.name);
+        }
+    }
+}
+</code></pre><h2><a name="light-script-components" class="anchor" href="#light-script-components"></a>Light Script Components</h2><p>The light component script is to be used on <strong>Light</strong> game objects <strong>Only</strong>. The component provides runtime access to the owner light via its <strong>BABYLON.Light</strong> property.</p>
+<pre><code>module PROJECT {
+    export class NewLightComponent extends BABYLON.LightComponent {
+
+        protected start() :void {
+            console.log(&quot;Starting light component for owner: &quot; + this.light.name);
+        }
+    }
+}
+</code></pre><h2><a name="camera-script-components" class="anchor" href="#camera-script-components"></a>Camera Script Components</h2><p>The camera component script is to be used on <strong>Camera</strong> game objects <strong>Only</strong>. The component provides runtime access to the owner camera via its <strong>BABYLON.Camera</strong> property.</p>
+<pre><code>module PROJECT {
+    export class NewCameraComponent extends BABYLON.CameraComponent {
+
+        protected start() :void {
+            console.log(&quot;Starting camera component for owner: &quot; + this.camera.name);
+        }
+    }
+}
+</code></pre><h1><a name="babylon-global-script-files" class="anchor" href="#babylon-global-script-files"></a>Babylon Global Script Files</h1><p>Global scripts enable inline global function for all scenes in the project. The global application script can also be used to capture window load and scene exeute when ready events for the entire project.</p>
+<p>Example global startup script:</p>
+<pre><code>BABYLON.SceneManager.OnWindowLoad(() =&gt; {
+    // Global Page Loaded Handler
+});
+
+BABYLON.SceneManager.ExecuteWhenReady((scene:BABYLON.Scene, manager:BABYLON.SceneManager)=&gt; {
+    // Global Scene Ready Handler
+});
+</code></pre><p>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

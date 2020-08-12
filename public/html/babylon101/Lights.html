@@ -1,0 +1,157 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Lights - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Lights</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#types-of-lights">Types of Lights</a><ul>
+<li><a href="#the-point-light">The Point Light</a></li>
+<li><a href="#the-directional-light">The Directional Light</a></li>
+<li><a href="#the-spot-light">The Spot Light</a></li>
+<li><a href="#the-hemispheric-light">The Hemispheric Light</a></li>
+</ul>
+</li>
+<li><a href="#color-properties">Color Properties</a><ul>
+<li><a href="#intersecting-lights-colors">Intersecting Lights Colors</a></li>
+</ul>
+</li>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#on-off-or-dimmer">On, Off or Dimmer</a></li>
+<li><a href="#choosing-meshes-to-light">Choosing Meshes to Light</a></li>
+<li><a href="#lighting-normals">Lighting Normals</a></li>
+<li><a href="#lightmaps">Lightmaps</a></li>
+<li><a href="#projection-texture">Projection Texture</a></li>
+<li><a href="#next-step">Next step</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="lights" class="anchor" href="#lights"></a>Lights</h1><p>Lights are used, as you would expect, to affect how meshes are seen, in terms of both illumination and colour.
+All meshes allow light to pass through them unless shadow generation is activated. The default number of lights allowed is
+four but this can be increased.</p>
+<p><img src="https://doc.babylonjs.com/img/testlight.jpg" alt="Elements"></p>
+<p><em>A pretty sphere with multiple lights</em></p>
+<h2><a name="types-of-lights" class="anchor" href="#types-of-lights"></a>Types of Lights</h2><p>There are four types of lights that can be used with a range of lighting properties.</p>
+<h3><a name="the-point-light" class="anchor" href="#the-point-light"></a>The Point Light</h3><p>A point light is a light defined by an unique point in world space. The light is emitted in every direction from this point. A good example of a point light is a standard light bulb.</p>
+<pre><code class="lang-javascript">var light = new BABYLON.PointLight(&quot;pointLight&quot;, new BABYLON.Vector3(1, 10, 1), scene);
+</code></pre>
+<h3><a name="the-directional-light" class="anchor" href="#the-directional-light"></a>The Directional Light</h3><p>A directional light is defined by a direction (what a surprise!). The light is emitted from everywhere in the specified direction, and has an infinite range.
+An example of a directional light is when a distant planet is lit by the apparently parallel lines of light from its sun. Light in a downward direction will light
+the top of an object.</p>
+<pre><code class="lang-javascript">var light = new BABYLON.DirectionalLight(&quot;DirectionalLight&quot;, new BABYLON.Vector3(0, -1, 0), scene);
+</code></pre>
+<h3><a name="the-spot-light" class="anchor" href="#the-spot-light"></a>The Spot Light</h3><p>A spot light is defined by a position, a direction, an angle, and an exponent. These values define a cone of light starting from the position, emitting toward the direction.</p>
+<p>The angle, in radians, defines the size (field of illumination) of the spotlight&#39;s conical beam , and the exponent defines the speed of the decay of the light with distance (reach).</p>
+<p><em>A simple use of a spot light</em></p>
+<pre><code class="lang-javascript">var light = new BABYLON.SpotLight(&quot;spotLight&quot;, new BABYLON.Vector3(0, 30, -10), new BABYLON.Vector3(0, -1, 0), Math.PI / 3, 2, scene);
+</code></pre>
+<h3><a name="the-hemispheric-light" class="anchor" href="#the-hemispheric-light"></a>The Hemispheric Light</h3><p>A hemispheric light is an easy way to simulate an ambient environment light. A hemispheric light is defined by a direction, usually &#39;up&#39; towards the sky. However it is by setting the color properties
+that the full effect is achieved.</p>
+<pre><code class="lang-javascript">var light = new BABYLON.HemisphericLight(&quot;HemiLight&quot;, new BABYLON.Vector3(0, 1, 0), scene);
+</code></pre>
+<h2><a name="color-properties" class="anchor" href="#color-properties"></a>Color Properties</h2><p>There are three properties of lights that affect color. Two of these <em>diffuse</em> and <em>specular</em> apply to all four types of light, the third, <em>groundColor</em>, only applies to an Hemispheric Light.</p>
+<ol>
+<li>Diffuse gives the basic color to an object;</li>
+<li>Specular produces a highlight color on an object.</li>
+</ol>
+<p>In these playgrounds see how the specular color (green) is combined with the diffuse color (red) to produce a yellow highlight.</p>
+<ul>
+<li><p><a href="https://www.babylonjs-playground.com/#20OAV9">Playground example of a point light</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#', this)"></i><div class="iframeContainer"></div></p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#20OAV9#1">Playground example of a directional light</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#1', this)"></i><div class="iframeContainer"></div></p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#20OAV9#3">Playground example of a spot light</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#3', this)"></i><div class="iframeContainer"></div></p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#20OAV9#5">Playground example of a hemispheric light</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#5', this)"></i><div class="iframeContainer"></div></p>
+</li>
+</ul>
+<p>For a hemispheric light the <em>groundColor</em> is the light in the opposite direction to the one specified during creation.
+You can think of the <em>diffuse</em> and <em>specular</em> light as coming from the centre of the object in the given direction and the <em>groundColor</em> light in the opposite direction.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#6">Playground example of a hemispheric light on two spheres</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>White hemispheric light with a black groundColor is a useful lighting method.</p>
+<h3><a name="intersecting-lights-colors" class="anchor" href="#intersecting-lights-colors"></a>Intersecting Lights Colors</h3><ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#9">Playground example of intersecting spot lights</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#9', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="limitations" class="anchor" href="#limitations"></a>Limitations</h2><p>Babylon.js allows you to create and register as many lights as you choose, but know that a single StandardMaterial can only handle a defined number simultaneous lights (by default this value is equal to 4 which means the first four enabled lights of the scene&#39;s lights list).
+You can change this number with this code:</p>
+<pre><code class="lang-javascript">var material = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+material.maxSimultaneousLights = 6;
+</code></pre>
+<p>But beware! Because with more dynamic lights, Babylon.js will generate bigger shaders which may not be compatible with low end devices like mobiles or small tablets. In this case, babylon.js will try to recompile shaders with less lights.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#IRVAX#0">Playground example of 6 interacting point lights</a> - <i class="fa fa-eye" onclick="createIframe('IRVAX#0', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="on-off-or-dimmer" class="anchor" href="#on-off-or-dimmer"></a>On, Off or Dimmer</h2><p>Every light can be switched off using</p>
+<pre><code class="lang-javascript">light.setEnabled(false);
+</code></pre>
+<p>and switched on with</p>
+<pre><code class="lang-javascript">light.setEnabled(true);
+</code></pre>
+<p>Want to dim or brighten the light? Then set the <em>intensity</em> property (default values is 1)</p>
+<pre><code class="lang-javascript">light0.intensity = 0.5;
+light1.intensity = 2.4;
+</code></pre>
+<p>For point and spot lights you can set how far the light reaches using the <em>range</em> property</p>
+<pre><code class="lang-javascript">light.range = 100;
+</code></pre>
+<h2><a name="choosing-meshes-to-light" class="anchor" href="#choosing-meshes-to-light"></a>Choosing Meshes to Light</h2><p>when a light is created all current meshes will be lit by it. There are two ways to exclude some meshes from being lit.
+A mesh can be added to the <em>excludedMeshes</em> array or add the ones not to be excluded to the <em>includedOnlyMeshes</em> array. The number of meshes to be excluded can be one factor in deciding which method to use. In the following example two meshes are to be excluded from <em>light0</em> and twenty three from <em>light1</em>. Commenting out lines 26 and 27 in turn will show the individual effect.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#8">Playground Example Excluding Lights</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="lighting-normals" class="anchor" href="#lighting-normals"></a>Lighting Normals</h2><p>How lights react to a mesh depend on values set for each mesh vertex termed <em>normals</em>, shown in the picture below as arrows giving the direction of the lighting normals. The picture shows two planes and two lights. One light is a spot light, the other is a point light. The front face of each plane is the one you see when the <em>normals</em> are pointing towards you, the back face the opposite side.</p>
+<p><img src="https://doc.babylonjs.com/img/how_to/Mesh/normals6.jpg" alt="Elements"></p>
+<p><em>A blue back-faced plane and a blue front-faced plane, with a spot light and point light</em></p>
+<p>As you can see, the lights only affect the front face and not the back face.</p>
+<h2><a name="lightmaps" class="anchor" href="#lightmaps"></a>Lightmaps</h2><p>Complex lighting can be computationally expensive to compute at runtime. To save on computation, lightmaps may be used to store calculated lighting in a texture which will be applied to a given mesh.</p>
+<pre><code class="lang-javascript">var lightmap = new BABYLON.Texture(&quot;lightmap.png&quot;, scene);
+var material = new BABYLON.StandardMaterial(&quot;material&quot;, scene);
+material.lightmapTexture = lightmap;
+</code></pre>
+<p>Note: To use the texture as a shadowmap instead of lightmap, set the material.useLightmapAsShadowmap field to true.</p>
+<p>The way that the scene lights are blended with the lightmap is based on the lightmapMode of the lights in the scene.</p>
+<pre><code class="lang-javascript">light.lightmapMode = BABYLON.Light.LIGHTMAP_DEFAULT;
+</code></pre>
+<p>This will cause lightmap texture to be blended after the lighting from this light is applied.</p>
+<pre><code class="lang-javascript">light.lightmapMode = BABYLON.Light.LIGHTMAP_SPECULAR;
+</code></pre>
+<p>This is the same as LIGHTMAP_DEFAULT except only the specular lighting and shadows from the light will be applied.</p>
+<pre><code class="lang-javascript">light.lightmapMode = BABYLON.Light.LIGHTMAP_SHADOWSONLY;
+</code></pre>
+<p>This is the same as LIGHTMAP_DEFAULT except only the shadows cast from this light will be applied.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ULACCM#2">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('ULACCM#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="projection-texture" class="anchor" href="#projection-texture"></a>Projection Texture</h2><p>In some cases it would be nice to define the diffuse color of the light (Diffuse gives the basic color to an object) from a texture instead of a constant color. Imagine that you are trying to simulate the light effects inside of a cathedral. The light going through the stained glasses will be projected on the ground. This is also true for the light coming from a projector or the light effects you can see in a disco.</p>
+<p>In order to support this feature, you can rely on the <code>projectionTexture</code> property of the lights. This is only supported by the <strong>SpotLight</strong> so far.</p>
+<pre><code class="lang-javascript">var spotLight = new BABYLON.SpotLight(&quot;spot02&quot;, new BABYLON.Vector3(30, 40, 30),
+        new BABYLON.Vector3(-1, -2, -1), 1.1, 16, scene);
+spotLight.projectionTexture = new BABYLON.Texture(&quot;textures/stainedGlass.png&quot;, scene);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#CQNGRK">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('CQNGRK#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>In order to control the projection orientation and range, you can also rely on the following properties:</p>
+<ul>
+<li><code>projectionTextureLightNear</code> : near range of the texture projection. If a plane is before the range in light space, there is no texture projection.</li>
+<li><code>projectionTextureLightFar</code> : far range of the texture projection. If a plane is before the range in light space, there is no texture projection.</li>
+<li><code>projectionTextureUpDirection</code> : helps defining the light space which is oriented towards the light direction and aligned with the up direction.</li>
+</ul>
+<p>The projected information is multiplied against the normal light values to better fit in the Babylon JS lighting. It also only impact the diffuse value. So it might be necessary to change the specular color of the light to better fit with the scene.</p>
+<h2><a name="next-step" class="anchor" href="#next-step"></a>Next step</h2><p>With the use of these powerful lights, your scene is likely really starting to &#39;shine&#39;. And don&#39;t forget that you can animate light positions, directions, colors, and therefore create wonderful &#39;light shows&#39;. We&#39;ll talk about that soon, or have fun discovering how to do it on your own. Maybe you could do light property settings inside the scene&#39;s render loop function. Its fun and beautiful!</p>
+<p>Guess what! The next tutorial... is about animation! <a href="/babylon101/Animations">Click this and let&#39;s go!</a></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/features/Lights">Lights Overview</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

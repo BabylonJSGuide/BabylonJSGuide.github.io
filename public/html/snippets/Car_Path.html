@@ -1,0 +1,202 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Simple Car Following Path - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Simple Car Following Path</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#the-design">The Design</a><ul>
+<li><a href="#car-body">Car body</a></li>
+<li><a href="#wheel">Wheel</a></li>
+<li><a href="#attaching-the-wheels-to-the-car">Attaching the Wheels to the Car</a></li>
+<li><a href="#rotate-wheels">Rotate Wheels</a></li>
+<li><a href="#path">Path</a></li>
+<li><a href="#following-the-path">Following the Path</a></li>
+<li><a href="#placing-the-car">Placing the Car</a></li>
+<li><a href="#animating-the-car">Animating the Car</a></li>
+</ul>
+</li>
+<li><a href="#correction">Correction</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="making-a-simple-car" class="anchor" href="#making-a-simple-car"></a>Making a Simple Car</h1><p>This is to show the practical use of rotate. </p>
+<h2><a name="the-design" class="anchor" href="#the-design"></a>The Design</h2><p>The car will consist of a trapezoid for the body, four cylinders for wheels. The car will be animated to follow a path an remain parallel to it. 
+The wheels will rotate and be given a texture to show that they are rotating. For simplicity all wheels will remain parallel to the car and 
+their rotation will not be matched to the forward speed of the car. The car will move forward by following a sequence of points on the path. 
+The path will be a curved line with large turning radius and will be shown in the scene.</p>
+<p><img src="/img/samples/car1.jpg" alt="Basic Car"></p>
+<h3><a name="car-body" class="anchor" href="#car-body"></a>Car body</h3><p>The car body will be an extrusion of the trapezium formed from the trapezium given by the points (-4, 2), (4, 2), (5, -2), (-7, -2) 
+in the direction of the positive x axis from (0, 0, -2) to (0, 0, 2)</p>
+<pre><code class="lang-javascript">var bodyMaterial = new BABYLON.StandardMaterial(&quot;body_mat&quot;, scene);
+bodyMaterial.diffuseColor = new BABYLON.Color3(1.0, 0.25, 0.25);
+bodyMaterial.backFaceCulling = false;
+
+var side = [new BABYLON.Vector3(-4, 2, -2),
+            new BABYLON.Vector3(4, 2, -2),
+            new BABYLON.Vector3(5, -2, -2),
+            new BABYLON.Vector3(-7, -2, -2)                
+];
+
+side.push(side[0]);    //close trapezium
+
+var extrudePath = [new BABYLON.Vector3(0, 0, 0),     new BABYLON.Vector3(0, 0, 4)];
+
+var carBody = BABYLON.MeshBuilder.ExtrudeShape(&quot;body&quot;, {shape: side, path: extrudePath, cap : BABYLON.Mesh.CAP_ALL}, scene);
+carBody.material = bodyMaterial;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1YD970#8">Playground Construction of the Car Body</a> - <i class="fa fa-eye" onclick="createIframe('1YD970#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="wheel" class="anchor" href="#wheel"></a>Wheel</h3><p>The wheel is made from a cylinder using MeshBuilder as this allows different textures and colours to be applied 
+to the flat and curved surfaces of the cylinder.</p>
+<pre><code class="lang-javascript">var wheelMaterial = new BABYLON.StandardMaterial(&quot;wheel_mat&quot;, scene);
+var wheelTexture = new BABYLON.Texture(&quot;http://i.imgur.com/ZUWbT6L.png&quot;, scene);
+wheelMaterial.diffuseTexture = wheelTexture;
+
+//Set color for wheel tread as black
+var faceColors=[];
+faceColors[1] = new BABYLON.Color3(0,0,0);
+
+//set texture for flat face of wheel 
+var faceUV =[];
+faceUV[0] = new BABYLON.Vector4(0,0,1,1);
+faceUV[2] = new BABYLON.Vector4(0,0,1,1);
+
+var wheel = BABYLON.MeshBuilder.CreateCylinder(&quot;wheel&quot;, {diameter: 3, height: 1, tessellation: 24, faceColors:faceColors, faceUV:faceUV}, scene);
+wheel.material = wheelMaterial;
+
+//rotate wheel so tread in xz plane  
+wheel.rotation.x = Math.PI/2;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1YD970#4">Playground Construction of a Wheel</a> - <i class="fa fa-eye" onclick="createIframe('1YD970#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="attaching-the-wheels-to-the-car" class="anchor" href="#attaching-the-wheels-to-the-car"></a>Attaching the Wheels to the Car</h3><p>As the car moves forward so will the wheels, this can be achieved by making the car the parent of the wheels. </p>
+<p>As the wheels need to first rotate around the x axis to orientate the cylinder correctly and then rotate about another axis 
+the rotate method will be used instead of rotation.</p>
+<pre><code class="lang-javascript">var wheelFI = BABYLON.MeshBuilder.CreateCylinder(&quot;wheelFI&quot;, {diameter: 3, height: 1, tessellation: 24, faceColors:faceColors, faceUV:faceUV}, scene);
+wheelFI.material = wheelMaterial;
+
+wheelFI.rotate(BABYLON.Axis.X, Math.PI/2, BABYLON.Space.WORLD);
+wheelFI.parent = carBody;  
+
+var wheelFO = wheelFI.createInstance(&quot;FO&quot;);
+wheelFO.parent = carBody;
+wheelFO.position = new BABYLON.Vector3(-4.5, -2, 2.8);
+
+var wheelRI = wheelFI.createInstance(&quot;RI&quot;);
+wheelRI.parent = carBody;
+wheelRI.position = new BABYLON.Vector3(2.5, -2, -2.8);
+
+var wheelRO = wheelFI.createInstance(&quot;RO&quot;);
+wheelRO.parent = carBody;
+wheelRO.position = new BABYLON.Vector3(2.5, -2, 2.8);
+
+wheelFI.position = new BABYLON.Vector3(-4.5, -2, -2.8);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1YD970#5">Playground Attachment of Wheels</a> - <i class="fa fa-eye" onclick="createIframe('1YD970#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="rotate-wheels" class="anchor" href="#rotate-wheels"></a>Rotate Wheels</h3><p>The animation is achieved using scene.registerAfterRender and small rotations within the render loop. </p>
+<p><em>Note:</em> when using rotate and translate scene.register<em>After</em>Render is preferable to scene.register<em>Before</em>Render as 
+the calculations will take place after the world matrix has been computer for each mesh.</p>
+<pre><code class="lang-javascript">  scene.registerAfterRender(function() {
+     wheelFI.rotate(BABYLON.Axis.Z, Math.PI/64, BABYLON.Space.WORLD); 
+     wheelFO.rotate(BABYLON.Axis.Z, Math.PI/64, BABYLON.Space.WORLD);
+     wheelRI.rotate(BABYLON.Axis.Z, Math.PI/64, BABYLON.Space.WORLD);
+     wheelRO.rotate(BABYLON.Axis.Z, Math.PI/64, BABYLON.Space.WORLD);
+
+  });
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1YD970#7">Playground Rotate Wheels</a> - <i class="fa fa-eye" onclick="createIframe('1YD970#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="path" class="anchor" href="#path"></a>Path</h3><p>To draw a path a sequence of points are needed. Starting with a circle of radius r in the xz plane with centre (0, 0, 0) calculate points around the
+circle and vary r slightly and smoothly on the way round to give a less regular path. This is achieved by adding to the radius, at each angle, a fraction of r 
+times the sine of a multiple of the angle turned. In addition a ground is added.</p>
+<p>Since on creation the side of the car is perpendicuar to the z axis the base circle will start with theta = 0 and x = r <em> sin(theta) and z = r </em> cos(theta). 
+This means that when the car can be positioned tangental to the circle by setting z = r. </p>
+<p>Since the circle has been given a perturbation some small rotation of the car will be necessary for it to be truly tangential.</p>
+<pre><code class="lang-javascript">var points = [];
+var n = 50; // number of points - more points the slower the car
+var r = 50; //radius
+for (var i = 0; i &lt; n + 1; i++) {
+    points.push( new BABYLON.Vector3((r + (r/5)*Math.sin(8*i*Math.PI/n))* Math.cos(2*i*Math.PI/n), 0, (r + (r/10)*Math.sin(6*i*Math.PI/n)) * Math.sin(2*i*Math.PI/n)));
+}    
+
+var track = BABYLON.MeshBuilder.CreateLines(&#39;track&#39;, {points: points}, scene);
+track.color = new BABYLON.Color3(0, 0, 0);
+
+var ground = BABYLON.MeshBuilder.CreateGround(&quot;ground&quot;, {width: 3*r, height: 3*r}, scene);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#172C5E#2">Playground Path</a> - <i class="fa fa-eye" onclick="createIframe('172C5E#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="following-the-path" class="anchor" href="#following-the-path"></a>Following the Path</h3><p>The car will be moved forward using the sequence of points calculated for the path. As it moves round the path the car side should remain tangential to the path and the wheels should rotate about an axis that is normal to the path. 
+Since the normals to the path need to be calculated for the wheel axes it will be the normals that will be used to rotate the car. 
+The angle to be rotated at any point can be found from the angle between the previous normal and the current one. This angle can be found 
+by using the dot product of the two normal vectors. However the dot product only gives the amount of rotation not the direction.</p>
+<p>Determining the normals at any point is achieved by forming the Path3D object from the array of points defining the path and extracting 
+the normals which are unit vectors.</p>
+<pre><code class="lang-javascript">var path3d = new BABYLON.Path3D(points);
+var normals = path3d.getNormals();
+</code></pre>
+<p>As can be seen from the diagram below the direction that the normal changes varies from clockwise to anti-clockwise depending whether the 
+path is a convex or concave curve.</p>
+<p><img src="/img/samples/car2.jpg" alt="Rotation of Normal"> </p>
+<p>Both normals lie in the xz plane and so the cross product of the two normals will lie in the y axis and so the direction of turn can be 
+determined from the sign of the y component of the cross product.</p>
+<pre><code class="lang-javascript">theta = Math.acos(BABYLON.Vector3.Dot(normals[i],normals[i+1]));  //amount of turn
+var dir = BABYLON.Vector3.Cross(normals[i],normals[i+1]).y; //enables direction of turn to be found depending if +ve or -ve
+var dir = dir/Math.abs(dir); //dir takes value 1 or -1
+carBody.rotate(BABYLON.Axis.Y, dir * theta, BABYLON.Space.WORLD);
+</code></pre>
+<h3><a name="placing-the-car" class="anchor" href="#placing-the-car"></a>Placing the Car</h3><p>To stand on the ground the car will need to be lifted. To be set on the path it will be moved to the point (0, r, 4). Its current normal is 
+along the z axis so determine the turn necessary from</p>
+<pre><code class="lang-javascript">var theta = Math.acos(BABYLON.Vector3.Dot(BABYLON.Axis.Z,normals[0]));
+carBody.rotate(BABYLON.Axis.Y, theta, BABYLON.Space.WORLD);
+</code></pre>
+<h3><a name="animating-the-car" class="anchor" href="#animating-the-car"></a>Animating the Car</h3><p>The animation is achieved using scene.registerAfterRender. Within this render loop:
+the car is moved forward from point to point; 
+it is rotated tangential to the path at the current point;
+the wheels are now rotated a small amount about the <em>normal</em> at the current point. </p>
+<pre><code class="lang-javascript">var i=0;
+scene.registerAfterRender(function() {
+ carBody.position.x = points[i].x;
+ carBody.position.z = points[i].z;
+ wheelFI.rotate(normals[i], Math.PI/32, BABYLON.Space.WORLD); 
+ wheelFO.rotate(normals[i], Math.PI/32, BABYLON.Space.WORLD);
+ wheelRI.rotate(normals[i], Math.PI/32, BABYLON.Space.WORLD);
+ wheelRO.rotate(normals[i], Math.PI/32, BABYLON.Space.WORLD);
+
+ theta = Math.acos(BABYLON.Vector3.Dot(normals[i],normals[i+1]));
+ var dir = BABYLON.Vector3.Cross(normals[i],normals[i+1]).y;
+ var dir = dir/Math.abs(dir);
+ carBody.rotate(BABYLON.Axis.Y, dir * theta, BABYLON.Space.WORLD);
+
+ i = (i + 1) % (n-1);    //continuous looping  
+});
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1YD970#12">Playground Finalised</a> - <i class="fa fa-eye" onclick="createIframe('1YD970#12', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="correction" class="anchor" href="#correction"></a>Correction</h2><p>After allowing the finalised playground of the car to run for a while it can be seen that the rotating of the car becomes askew. 
+This is due to rounding errors in the floating point (probably). </p>
+<p>The initial rotation quaternion is stored in <em>startRotation</em> and is now applied to the car whenever it starts a new loop.</p>
+<pre><code class="lang-javascript">if(i == 0) {
+    carBody.rotationQuaternion = startRotation;
+}
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1YD970#14">Playground Corrected Finally</a> - <i class="fa fa-eye" onclick="createIframe('1YD970#14', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

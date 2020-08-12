@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>GLTFFileLoader - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.gltffileloader.html">GLTFFileLoader</a>
+					</li>
+				</ul>
+				<h1>GLTFFileLoader</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>File loader for loading glTF files into a scene.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">GLTFFileLoader</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel">
+					<h3>Implements</h3>
+					<ul class="tsd-hierarchy">
+						<li><a href="../interfaces/babylon.idisposable.html" class="tsd-signature-type">IDisposable</a></li>
+						<li><a href="../interfaces/babylon.isceneloaderpluginasync.html" class="tsd-signature-type">ISceneLoaderPluginAsync</a></li>
+						<li><a href="../interfaces/babylon.isceneloaderpluginfactory.html" class="tsd-signature-type">ISceneLoaderPluginFactory</a></li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#alwayscomputeboundingbox" class="tsd-kind-icon">always<wbr>Compute<wbr>Bounding<wbr>Box</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#animationstartmode" class="tsd-kind-icon">animation<wbr>Start<wbr>Mode</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#compilematerials" class="tsd-kind-icon">compile<wbr>Materials</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#compileshadowgenerators" class="tsd-kind-icon">compile<wbr>Shadow<wbr>Generators</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#coordinatesystemmode" class="tsd-kind-icon">coordinate<wbr>System<wbr>Mode</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#createinstances" class="tsd-kind-icon">create<wbr>Instances</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#loadallmaterials" class="tsd-kind-icon">load<wbr>All<wbr>Materials</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#name" class="tsd-kind-icon">name</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#oncameraloadedobservable" class="tsd-kind-icon">on<wbr>Camera<wbr>Loaded<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#oncompleteobservable" class="tsd-kind-icon">on<wbr>Complete<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#ondisposeobservable" class="tsd-kind-icon">on<wbr>Dispose<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onerrorobservable" class="tsd-kind-icon">on<wbr>Error<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onextensionloadedobservable" class="tsd-kind-icon">on<wbr>Extension<wbr>Loaded<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onmaterialloadedobservable" class="tsd-kind-icon">on<wbr>Material<wbr>Loaded<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onmeshloadedobservable" class="tsd-kind-icon">on<wbr>Mesh<wbr>Loaded<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onparsedobservable" class="tsd-kind-icon">on<wbr>Parsed<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#ontextureloadedobservable" class="tsd-kind-icon">on<wbr>Texture<wbr>Loaded<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onvalidatedobservable" class="tsd-kind-icon">on<wbr>Validated<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#preprocessurlasync" class="tsd-kind-icon">preprocess<wbr>Url<wbr>Async</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#transparencyascoverage" class="tsd-kind-icon">transparency<wbr>AsCoverage</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#useclipplane" class="tsd-kind-icon">use<wbr>Clip<wbr>Plane</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#userangerequests" class="tsd-kind-icon">use<wbr>Range<wbr>Requests</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.gltffileloader.html#validate" class="tsd-kind-icon">validate</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Accessors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.gltffileloader.html#captureperformancecounters" class="tsd-kind-icon">capture<wbr>Performance<wbr>Counters</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#loaderstate" class="tsd-kind-icon">loader<wbr>State</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.gltffileloader.html#loggingenabled" class="tsd-kind-icon">logging<wbr>Enabled</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#oncameraloaded" class="tsd-kind-icon">on<wbr>Camera<wbr>Loaded</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#oncomplete" class="tsd-kind-icon">on<wbr>Complete</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#ondispose" class="tsd-kind-icon">on<wbr>Dispose</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onerror" class="tsd-kind-icon">on<wbr>Error</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onextensionloaded" class="tsd-kind-icon">on<wbr>Extension<wbr>Loaded</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onmaterialloaded" class="tsd-kind-icon">on<wbr>Material<wbr>Loaded</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onmeshloaded" class="tsd-kind-icon">on<wbr>Mesh<wbr>Loaded</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onparsed" class="tsd-kind-icon">on<wbr>Parsed</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#ontextureloaded" class="tsd-kind-icon">on<wbr>Texture<wbr>Loaded</a></li>
+									<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="babylon.gltffileloader.html#onvalidated" class="tsd-kind-icon">on<wbr>Validated</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.gltffileloader.html#dispose" class="tsd-kind-icon">dispose</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.gltffileloader.html#rewriterooturl" class="tsd-kind-icon">rewrite<wbr>RootURL</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.gltffileloader.html#whencompleteasync" class="tsd-kind-icon">when<wbr>Complete<wbr>Async</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="alwayscomputeboundingbox" class="tsd-anchor"></a>
+						<h3>always<wbr>Compute<wbr>Bounding<wbr>Box</h3>
+						<a href="/playground/?code=alwaysComputeBoundingBox" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">always<wbr>Compute<wbr>Bounding<wbr>Box<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the loader should always compute the bounding boxes of meshes and not use the min/max values from the position accessor. Defaults to false.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="animationstartmode" class="tsd-anchor"></a>
+						<h3>animation<wbr>Start<wbr>Mode</h3>
+						<a href="/playground/?code=animationStartMode" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">animation<wbr>Start<wbr>Mode<span class="tsd-signature-symbol">:</span> <a href="../enums/babylon.gltfloaderanimationstartmode.html" class="tsd-signature-type">GLTFLoaderAnimationStartMode</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The animation start mode. Defaults to FIRST.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="compilematerials" class="tsd-anchor"></a>
+						<h3>compile<wbr>Materials</h3>
+						<a href="/playground/?code=compileMaterials" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">compile<wbr>Materials<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the loader should compile materials before raising the success callback. Defaults to false.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="compileshadowgenerators" class="tsd-anchor"></a>
+						<h3>compile<wbr>Shadow<wbr>Generators</h3>
+						<a href="/playground/?code=compileShadowGenerators" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">compile<wbr>Shadow<wbr>Generators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the loader should compile shadow generators before raising the success callback. Defaults to false.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="coordinatesystemmode" class="tsd-anchor"></a>
+						<h3>coordinate<wbr>System<wbr>Mode</h3>
+						<a href="/playground/?code=coordinateSystemMode" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">coordinate<wbr>System<wbr>Mode<span class="tsd-signature-symbol">:</span> <a href="../enums/babylon.gltfloadercoordinatesystemmode.html" class="tsd-signature-type">GLTFLoaderCoordinateSystemMode</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The coordinate system mode. Defaults to AUTO.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="createinstances" class="tsd-anchor"></a>
+						<h3>create<wbr>Instances</h3>
+						<a href="/playground/?code=createInstances" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">create<wbr>Instances<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the loader should create instances when multiple glTF nodes point to the same glTF mesh. Defaults to true.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="loadallmaterials" class="tsd-anchor"></a>
+						<h3>load<wbr>All<wbr>Materials</h3>
+						<a href="/playground/?code=loadAllMaterials" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">load<wbr>All<wbr>Materials<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>If true, load all materials defined in the file, even if not used by any mesh. Defaults to false.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="name" class="tsd-anchor"></a>
+						<h3>name</h3>
+						<a href="/playground/?code=name" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/babylon.isceneloaderpluginfactory.html">ISceneLoaderPluginFactory</a>.<a href="../interfaces/babylon.isceneloaderpluginfactory.html#name">name</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Name of the loader (&quot;gltf&quot;)</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="oncameraloadedobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Camera<wbr>Loaded<wbr>Observable</h3>
+						<a href="/playground/?code=onCameraLoadedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Camera<wbr>Loaded<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.camera.html" class="tsd-signature-type">Camera</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised when the loader creates a camera after parsing the glTF properties of the camera.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="oncompleteobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Complete<wbr>Observable</h3>
+						<a href="/playground/?code=onCompleteObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Complete<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised when the asset is completely loaded, immediately before the loader is disposed.
+									For assets with LODs, raised when all of the LODs are complete.
+								For assets without LODs, raised when the model is complete, immediately after the loader resolves the returned promise.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="ondisposeobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Dispose<wbr>Observable</h3>
+						<a href="/playground/?code=onDisposeObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Dispose<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised after the loader is disposed.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onerrorobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Error<wbr>Observable</h3>
+						<a href="/playground/?code=onErrorObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Error<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised when an error occurs.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onextensionloadedobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Extension<wbr>Loaded<wbr>Observable</h3>
+						<a href="/playground/?code=onExtensionLoadedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Extension<wbr>Loaded<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/babylon.igltfloaderextension.html" class="tsd-signature-type">IGLTFLoaderExtension</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised after a loader extension is created.
+								Set additional options for a loader extension in this event.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onmaterialloadedobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Material<wbr>Loaded<wbr>Observable</h3>
+						<a href="/playground/?code=onMaterialLoadedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Material<wbr>Loaded<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.material.html" class="tsd-signature-type">Material</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised when the loader creates a material after parsing the glTF properties of the material.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onmeshloadedobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Mesh<wbr>Loaded<wbr>Observable</h3>
+						<a href="/playground/?code=onMeshLoadedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Mesh<wbr>Loaded<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.abstractmesh.html" class="tsd-signature-type">AbstractMesh</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised when the loader creates a mesh after parsing the glTF properties of the mesh.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onparsedobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Parsed<wbr>Observable</h3>
+						<a href="/playground/?code=onParsedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Parsed<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/babylon.igltfloaderdata.html" class="tsd-signature-type">IGLTFLoaderData</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Raised when the asset has been parsed</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="ontextureloadedobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Texture<wbr>Loaded<wbr>Observable</h3>
+						<a href="/playground/?code=onTextureLoadedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Texture<wbr>Loaded<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.basetexture.html" class="tsd-signature-type">BaseTexture</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised when the loader creates a texture after parsing the glTF properties of the texture.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onvalidatedobservable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Validated<wbr>Observable</h3>
+						<a href="/playground/?code=onValidatedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Validated<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IGLTFValidationResults</span><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observable raised after validation when validate is set to true. The event data is the result of the validation.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="preprocessurlasync" class="tsd-anchor"></a>
+						<h3>preprocess<wbr>Url<wbr>Async</h3>
+						<a href="/playground/?code=preprocessUrlAsync" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">preprocess<wbr>Url<wbr>Async<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function called before loading a url referenced by the asset.</p>
+							</div>
+						</div>
+						<div class="tsd-type-declaration">
+							<h4>Type declaration</h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-siganture">
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>url: <span class="tsd-signature-type">string</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="transparencyascoverage" class="tsd-anchor"></a>
+						<h3>transparency<wbr>AsCoverage</h3>
+						<a href="/playground/?code=transparencyAsCoverage" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">transparency<wbr>AsCoverage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the Alpha blended materials are only applied as coverage.
+									If false, (default) The luminance of each pixel will reduce its opacity to simulate the behaviour of most physical materials.
+								If true, no extra effects are applied to transparent pixels.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="useclipplane" class="tsd-anchor"></a>
+						<h3>use<wbr>Clip<wbr>Plane</h3>
+						<a href="/playground/?code=useClipPlane" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">use<wbr>Clip<wbr>Plane<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the loader should also compile materials with clip planes. Defaults to false.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="userangerequests" class="tsd-anchor"></a>
+						<h3>use<wbr>Range<wbr>Requests</h3>
+						<a href="/playground/?code=useRangeRequests" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">use<wbr>Range<wbr>Requests<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the loader should use range requests when load binary glTF files from HTTP.
+									Enabling will disable offline support and glTF validator.
+								Defaults to false.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="validate" class="tsd-anchor"></a>
+						<h3>validate</h3>
+						<a href="/playground/?code=validate" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">validate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the loader should validate the asset.</p>
+							</div>
+						</div>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Accessors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="captureperformancecounters" class="tsd-anchor"></a>
+						<h3>capture<wbr>Performance<wbr>Counters</h3>
+						<a href="/playground/?code=capturePerformanceCounters" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> capturePerformanceCounters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> capturePerformanceCounters<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Defines if the loader should capture performance counters.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Defines if the loader should capture performance counters.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>value: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="loaderstate" class="tsd-anchor"></a>
+						<h3>loader<wbr>State</h3>
+						<a href="/playground/?code=loaderState" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> loaderState<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="../enums/babylon.gltfloaderstate.html" class="tsd-signature-type">GLTFLoaderState</a><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>The loader state or null if the loader is not active.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="../enums/babylon.gltfloaderstate.html" class="tsd-signature-type">GLTFLoaderState</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="loggingenabled" class="tsd-anchor"></a>
+						<h3>logging<wbr>Enabled</h3>
+						<a href="/playground/?code=loggingEnabled" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> loggingEnabled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> loggingEnabled<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Defines if the loader logging is enabled.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Defines if the loader logging is enabled.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>value: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="oncameraloaded" class="tsd-anchor"></a>
+						<h3>on<wbr>Camera<wbr>Loaded</h3>
+						<a href="/playground/?code=onCameraLoaded" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onCameraLoaded<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised when the loader creates a camera after parsing the glTF properties of the camera.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>camera<span class="tsd-signature-symbol">: </span><a href="babylon.camera.html" class="tsd-signature-type">Camera</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>camera: <a href="babylon.camera.html" class="tsd-signature-type">Camera</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="oncomplete" class="tsd-anchor"></a>
+						<h3>on<wbr>Complete</h3>
+						<a href="/playground/?code=onComplete" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onComplete<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised when the asset is completely loaded, immediately before the loader is disposed.
+											For assets with LODs, raised when all of the LODs are complete.
+										For assets without LODs, raised when the model is complete, immediately after the loader resolves the returned promise.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="ondispose" class="tsd-anchor"></a>
+						<h3>on<wbr>Dispose</h3>
+						<a href="/playground/?code=onDispose" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onDispose<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised after the loader is disposed.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="onerror" class="tsd-anchor"></a>
+						<h3>on<wbr>Error</h3>
+						<a href="/playground/?code=onError" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onError<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised when an error occurs.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>reason: <span class="tsd-signature-type">any</span></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="onextensionloaded" class="tsd-anchor"></a>
+						<h3>on<wbr>Extension<wbr>Loaded</h3>
+						<a href="/playground/?code=onExtensionLoaded" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onExtensionLoaded<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised after a loader extension is created.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>extension<span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.igltfloaderextension.html" class="tsd-signature-type">IGLTFLoaderExtension</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>extension: <a href="../interfaces/babylon.igltfloaderextension.html" class="tsd-signature-type">IGLTFLoaderExtension</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="onmaterialloaded" class="tsd-anchor"></a>
+						<h3>on<wbr>Material<wbr>Loaded</h3>
+						<a href="/playground/?code=onMaterialLoaded" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onMaterialLoaded<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised when the loader creates a material after parsing the glTF properties of the material.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>material<span class="tsd-signature-symbol">: </span><a href="babylon.material.html" class="tsd-signature-type">Material</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>material: <a href="babylon.material.html" class="tsd-signature-type">Material</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="onmeshloaded" class="tsd-anchor"></a>
+						<h3>on<wbr>Mesh<wbr>Loaded</h3>
+						<a href="/playground/?code=onMeshLoaded" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onMeshLoaded<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised when the loader creates a mesh after parsing the glTF properties of the mesh.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>mesh<span class="tsd-signature-symbol">: </span><a href="babylon.abstractmesh.html" class="tsd-signature-type">AbstractMesh</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>mesh: <a href="babylon.abstractmesh.html" class="tsd-signature-type">AbstractMesh</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="onparsed" class="tsd-anchor"></a>
+						<h3>on<wbr>Parsed</h3>
+						<a href="/playground/?code=onParsed" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onParsed<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Raised when the asset has been parsed</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>loaderData<span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.igltfloaderdata.html" class="tsd-signature-type">IGLTFLoaderData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>loaderData: <a href="../interfaces/babylon.igltfloaderdata.html" class="tsd-signature-type">IGLTFLoaderData</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="ontextureloaded" class="tsd-anchor"></a>
+						<h3>on<wbr>Texture<wbr>Loaded</h3>
+						<a href="/playground/?code=onTextureLoaded" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onTextureLoaded<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised when the loader creates a texture after parsing the glTF properties of the texture.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>texture<span class="tsd-signature-symbol">: </span><a href="babylon.basetexture.html" class="tsd-signature-type">BaseTexture</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>texture: <a href="babylon.basetexture.html" class="tsd-signature-type">BaseTexture</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+						<a name="onvalidated" class="tsd-anchor"></a>
+						<h3>on<wbr>Validated</h3>
+						<a href="/playground/?code=onValidated" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> onValidated<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Callback raised after a loader extension is created.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>results<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IGLTFValidationResults</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>results: <span class="tsd-signature-type">IGLTFValidationResults</span></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="dispose" class="tsd-anchor"></a>
+						<h3>dispose</h3>
+						<a href="/playground/?code=dispose" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+									<p>Implementation of <a href="../interfaces/babylon.idisposable.html">IDisposable</a>.<a href="../interfaces/babylon.idisposable.html#dispose">dispose</a></p>
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Disposes the loader, releases resources during load, and cancels any outstanding requests.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="rewriterooturl" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> rewrite<wbr>RootURL</h3>
+						<a href="/playground/?code=rewriteRootURL" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">rewrite<wbr>RootURL<span class="tsd-signature-symbol">(</span>rootUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, responseURL<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+									<p>Implementation of <a href="../interfaces/babylon.isceneloaderpluginasync.html">ISceneLoaderPluginAsync</a>.<a href="../interfaces/babylon.isceneloaderpluginasync.html#rewriterooturl">rewriteRootURL</a></p>
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>The callback that allows custom handling of the root url based on the response url.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>rootUrl: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the original root url</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> responseURL: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the response url if available</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+								<p>the new root url</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="whencompleteasync" class="tsd-anchor"></a>
+						<h3>when<wbr>Complete<wbr>Async</h3>
+						<a href="/playground/?code=whenCompleteAsync" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">when<wbr>Complete<wbr>Async<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns a promise that resolves when the asset is completely loaded.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>a promise that resolves when the asset is completely loaded.</p>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace">
+							<a href="babylon.gltffileloader.html" class="tsd-kind-icon">GLTFFile<wbr>Loader</a>
+							<ul>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#alwayscomputeboundingbox" class="tsd-kind-icon">always<wbr>Compute<wbr>Bounding<wbr>Box</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#animationstartmode" class="tsd-kind-icon">animation<wbr>Start<wbr>Mode</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#compilematerials" class="tsd-kind-icon">compile<wbr>Materials</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#compileshadowgenerators" class="tsd-kind-icon">compile<wbr>Shadow<wbr>Generators</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#coordinatesystemmode" class="tsd-kind-icon">coordinate<wbr>System<wbr>Mode</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#createinstances" class="tsd-kind-icon">create<wbr>Instances</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#loadallmaterials" class="tsd-kind-icon">load<wbr>All<wbr>Materials</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#name" class="tsd-kind-icon">name</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#oncameraloadedobservable" class="tsd-kind-icon">on<wbr>Camera<wbr>Loaded<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#oncompleteobservable" class="tsd-kind-icon">on<wbr>Complete<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#ondisposeobservable" class="tsd-kind-icon">on<wbr>Dispose<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onerrorobservable" class="tsd-kind-icon">on<wbr>Error<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onextensionloadedobservable" class="tsd-kind-icon">on<wbr>Extension<wbr>Loaded<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onmaterialloadedobservable" class="tsd-kind-icon">on<wbr>Material<wbr>Loaded<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onmeshloadedobservable" class="tsd-kind-icon">on<wbr>Mesh<wbr>Loaded<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onparsedobservable" class="tsd-kind-icon">on<wbr>Parsed<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#ontextureloadedobservable" class="tsd-kind-icon">on<wbr>Texture<wbr>Loaded<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onvalidatedobservable" class="tsd-kind-icon">on<wbr>Validated<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#preprocessurlasync" class="tsd-kind-icon">preprocess<wbr>Url<wbr>Async</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#transparencyascoverage" class="tsd-kind-icon">transparency<wbr>AsCoverage</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#useclipplane" class="tsd-kind-icon">use<wbr>Clip<wbr>Plane</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#userangerequests" class="tsd-kind-icon">use<wbr>Range<wbr>Requests</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#validate" class="tsd-kind-icon">validate</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#captureperformancecounters" class="tsd-kind-icon">capture<wbr>Performance<wbr>Counters</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#loaderstate" class="tsd-kind-icon">loader<wbr>State</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#loggingenabled" class="tsd-kind-icon">logging<wbr>Enabled</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#oncameraloaded" class="tsd-kind-icon">on<wbr>Camera<wbr>Loaded</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#oncomplete" class="tsd-kind-icon">on<wbr>Complete</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#ondispose" class="tsd-kind-icon">on<wbr>Dispose</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onerror" class="tsd-kind-icon">on<wbr>Error</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onextensionloaded" class="tsd-kind-icon">on<wbr>Extension<wbr>Loaded</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onmaterialloaded" class="tsd-kind-icon">on<wbr>Material<wbr>Loaded</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onmeshloaded" class="tsd-kind-icon">on<wbr>Mesh<wbr>Loaded</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onparsed" class="tsd-kind-icon">on<wbr>Parsed</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#ontextureloaded" class="tsd-kind-icon">on<wbr>Texture<wbr>Loaded</a>
+								</li>
+								<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#onvalidated" class="tsd-kind-icon">on<wbr>Validated</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#dispose" class="tsd-kind-icon">dispose</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#rewriterooturl" class="tsd-kind-icon">rewrite<wbr>RootURL</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.gltffileloader.html#whencompleteasync" class="tsd-kind-icon">when<wbr>Complete<wbr>Async</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

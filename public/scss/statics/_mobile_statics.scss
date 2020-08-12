@@ -1,0 +1,23 @@
+/* MEDIUM SCREEN*/
+@include media($medium-screen) {
+
+    .statics-banner {
+        .img-holder {
+            width: 80%;
+        }
+    }
+
+  .statics-content{
+    .fileList {
+      @include outer-container(100%);
+    }
+  }
+}
+
+@include media($small-screen) {
+    .statics-banner {
+        .img-holder {
+        display: none;
+    }
+  }
+}

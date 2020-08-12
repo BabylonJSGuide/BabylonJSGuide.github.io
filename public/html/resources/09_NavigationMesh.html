@@ -1,0 +1,104 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Navigation Mesh (Unity exporter) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Navigation Mesh (Unity exporter)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#babylon-navigation-mesh">Babylon Navigation Mesh</a></li>
+<li><a href="#managed-runtime-support">Managed Runtime Support</a></li>
+</ul>
+</div></div><div id="staticContent"><p>The process of creating a navigation mesh from the level geometry is called <strong>NavMesh Baking</strong>. The process collects the <strong>Render Meshes</strong> and <strong>Terrains</strong> of all game objects which are marked as Navigation Static, and then processes them to create a navigation mesh that approximates the walkable surfaces of the level. Please refer to <a href="https://docs.unity3d.com/Manual/nav-Overview.html">Unity Navigation</a> documentation on navigation.</p>
+<p>In Unity, navigation mesh generation is handled from the <em> <strong>Navigation</strong> </em> window (Menu: <strong>Window &gt; Navigation</strong>).</p>
+<p>Building a navigation mesh for your scene can be done in 4 quick steps. Please refer to the <a href="https://docs.unity3d.com/Manual/nav-BuildingNavMesh.html">Unity Navigation Mesh</a> documentation for details.</p>
+<h1><a name="babylon-navigation-mesh" class="anchor" href="#babylon-navigation-mesh"></a>Babylon Navigation Mesh</h1><p>The <a href="https://github.com/wanadev/babylon-navigation-mesh">Babylon Navigation Mesh</a> extension is a path finder for AI agents. It uses the <strong>A Star</strong> and <strong>Funnel</strong> algorithms to calculate a path on the exported baked navigation mesh and is packaged as a toolkit plugin.</p>
+<h1><a name="managed-runtime-support" class="anchor" href="#managed-runtime-support"></a>Managed Runtime Support</h1><p>The toolkit scene manager provides easy to use helper functions for client side navigation:</p>
+<pre><code>declare module BABYLON {
+    class SceneManager {
+
+        /** Gets the native babylon mesh navigation tool */
+        getNavigationTool(): Navigation;
+
+        /** Gets the current navigation zone */
+        getNavigationZone(): string;
+
+        /** Finds a navigation path and returns a array of navigation positions */
+        findNavigationPath(origin: BABYLON.Vector3, destination: BABYLON.Vector3): BABYLON.Vector3[];
+
+        /** Gets true if the scene has a navigation mesh */
+        hasNavigationMesh(): boolean;
+
+        /** Returns the current scene&#39;s navigation mesh */
+        getNavigationMesh(): BABYLON.AbstractMesh;
+
+        /** Builds the current scene&#39;s navigation nodes */
+        buildNavigationMesh(mesh: BABYLON.AbstractMesh): any;
+
+        /** Returns a picked navigation point */
+        getNavigationPoint(position: BABYLON.Vector3, raise?: number, length?: number): BABYLON.Vector3;
+
+        /** Moves the specified navigation again along a path of positions */
+        moveNavigationAgent(agent: BABYLON.AbstractMesh, path: BABYLON.Vector3[], speed?: number, loop?: boolean, callback?: () =&gt; void): void;
+
+        /** Returns an array of navigation agents */
+        getNavigationAgents(): BABYLON.Mesh[];
+
+        /** Returns the specfied navigation agent info */
+        getNavigationAgentInfo(agent: BABYLON.AbstractMesh): BABYLON.NavigationAgent;
+
+        /** Returns the current scene&#39;s navigation area table */
+        getNavigationAreaTable(): BABYLON.INavigationArea[];
+
+        /** Returns the current scene&#39;s navigation area indexes */
+        getNavigationAreaIndexes(): number[];
+
+        /** Returns the current scene&#39;s navigation area names */
+        getNavigationAreaName(index: number): string;
+
+        /** Returns the current scene&#39;s navigation area cost */
+        getNavigationAreaCost(index: number): number;
+    }
+}
+</code></pre><p>Example <strong>Navigation Mesh</strong> script component:</p>
+<pre><code>module PROJECT {
+    export class NavMeshComponent extends BABYLON.MeshComponent {
+        private navmesh:BABYLON.AbstractMesh = null;
+        public constructor(owner: BABYLON.AbstractMesh, scene: BABYLON.Scene, tick: boolean = true, propertyBag: any = {}) {
+            super(owner, scene, tick, propertyBag);
+        }
+        protected start() :void {
+            this.navmesh = this.manager.getNavigationMesh();
+            if (this.navmesh) {
+                var minimoi = BABYLON.Mesh.CreateBox(&quot;MiniMoi&quot;, 0.5, this.scene);
+                minimoi.material = new BABYLON.StandardMaterial(&quot;MoiMaterial&quot;, this.scene);
+                (&lt;BABYLON.StandardMaterial&gt;minimoi.material).diffuseColor = new BABYLON.Color3(1., 0., 0);
+                minimoi.position = new BABYLON.Vector3(0, 0.25, 0);
+
+                // Setup point and click demo navigation
+                var canvas = document.getElementById(&quot;cvs&quot;);
+                canvas.addEventListener(&#39;click&#39;, (evt)=&gt; {
+                    var pickingInfo = this.scene.pick(this.scene.pointerX, this.scene.pointerY, (mesh) =&gt; { return (mesh === this.navmesh); });
+                    if (pickingInfo.hit) {
+                        var navpoint = pickingInfo.pickedPoint;
+                        var path = this.manager.findNavigationPath(minimoi.position, navpoint);
+                        if (path != null) {
+                            this.manager.moveNavigationAgent(minimoi, path, 5.0);
+                        }
+                    }
+                });
+            }
+        }
+    }
+}
+</code></pre><p>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

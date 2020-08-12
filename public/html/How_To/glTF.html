@@ -1,0 +1,62 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the glTF File Loader Plugin - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the glTF File Loader Plugin</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#full-version">Full Version</a></li>
+<li><a href="#version-2-only">Version 2 Only</a></li>
+<li><a href="#version-1-only">Version 1 Only</a><ul>
+<li><a href="#loading-the-scene">Loading the Scene</a></li>
+<li><a href="#api-version-2">API (Version 2)</a></li>
+</ul>
+</li>
+<li><a href="#properties-and-methods">Properties and Methods</a></li>
+<li><a href="#extensions">Extensions</a><ul>
+<li><a href="#api-version-1">API (Version 1)</a></li>
+</ul>
+</li>
+<li><a href="#properties">Properties</a><ul>
+<li><a href="#incrementalloading">IncrementalLoading</a></li>
+<li><a href="#homogeneouscoordinates">HomogeneousCoordinates</a></li>
+</ul>
+</li>
+<li><a href="#extensions">Extensions</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="setup" class="anchor" href="#setup"></a>Setup</h1><p>The glTF loader files are located <a href="https://github.com/BabylonJS/Babylon.js/tree/master/dist/preview%20release/loaders">here</a>.</p>
+<h2><a name="full-version" class="anchor" href="#full-version"></a>Full Version</h2><p>This loader supports both glTF 1.0 and 2.0 and will use the correct loader based on the glTF version string.</p>
+<pre><code class="lang-html">&lt;script src=&quot;babylon.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;babylon.glTFFileLoader.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h2><a name="version-2-only" class="anchor" href="#version-2-only"></a>Version 2 Only</h2><p>This loader supports only glTF 2.0 and will fail to load glTF 1.0.</p>
+<pre><code class="lang-html">&lt;script src=&quot;babylon.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;babylon.glTF2FileLoader.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h2><a name="version-1-only" class="anchor" href="#version-1-only"></a>Version 1 Only</h2><p>This loader supports only glTF 1.0 and will fail to load glTF 2.0.</p>
+<pre><code class="lang-html">&lt;script src=&quot;babylon.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;babylon.glTF1FileLoader.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h1><a name="loading-the-scene" class="anchor" href="#loading-the-scene"></a>Loading the Scene</h1><p>Use one of the static function on the <code>SceneLoader</code> to load a glTF asset.
+See <a href="/how_to/Load_From_Any_File_Type">Load from any file type</a>.</p>
+<p><a href="https://www.babylonjs-playground.com/#WGZLGJ">Demo</a> - <i class="fa fa-eye" onclick="createIframe('WGZLGJ#', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="api-version-2" class="anchor" href="#api-version-2"></a>API (Version 2)</h1><h2><a name="properties-and-methods" class="anchor" href="#properties-and-methods"></a>Properties and Methods</h2><p>See the available <a href="https://doc.babylonjs.com/api/classes/babylon.gltffileloader">properties and methods</a> from the API documentation.</p>
+<h2><a name="extensions" class="anchor" href="#extensions"></a>Extensions</h2><p>See the available <a href="https://doc.babylonjs.com/api/modules/babylon.gltf2.loader.extensions">extensions</a> from the API documentation.</p>
+<h1><a name="api-version-1" class="anchor" href="#api-version-1"></a>API (Version 1)</h1><h2><a name="properties" class="anchor" href="#properties"></a>Properties</h2><h3><a name="incrementalloading" class="anchor" href="#incrementalloading"></a>IncrementalLoading</h3><p>Set this property to false to disable incremental loading which delays the loader from calling the success callback until after loading the meshes and shaders. Textures always loads asynchronously. For example, the success callback can compute the bounding information of the loaded meshes when incremental loading is disabled. Defaults to true.</p>
+<pre><code class="lang-javascript">BABYLON.GLTFFileLoader.IncrementalLoading = false;
+</code></pre>
+<h3><a name="homogeneouscoordinates" class="anchor" href="#homogeneouscoordinates"></a>HomogeneousCoordinates</h3><p>Set this property to true in order to work with homogeneous coordinates, available with some converters and exporters. Defaults to false.</p>
+<pre><code class="lang-javascript">BABYLON.GLTFFileLoader.HomogeneousCoordinates = true;
+</code></pre>
+<h2><a name="extensions" class="anchor" href="#extensions"></a>Extensions</h2><p><a href="https://github.com/KhronosGroup/glTF/tree/master/extensions/1.0/Khronos/KHR_binary_glTF">KHR_binary_glTF</a><br><a href="https://github.com/KhronosGroup/glTF/tree/master/extensions/1.0/Khronos/KHR_materials_common">KHR_materials_common</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>A Range of Meshes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>A Range of Meshes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#types">Types</a></li>
+<li><a href="#ways-of-creating-a-predefined-mesh">Ways of Creating a Predefined Mesh</a></li>
+<li><a href="#creating-a-custom-mesh">Creating a Custom Mesh</a></li>
+<li><a href="#other-mesh-features">Other Mesh Features</a><ul>
+<li><a href="#copying-a-mesh">Copying a Mesh</a></li>
+<li><a href="#collide-with-a-camera-another-mesh-a-ray-or-pointer">Collide with a Camera, another Mesh, a Ray or Pointer</a></li>
+<li><a href="#accessing-mesh-data-morphing-or-updating">Accessing Mesh Data, Morphing or Updating</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="meshes" class="anchor" href="#meshes"></a>Meshes</h1><p>In the 3D virtual world shapes are built from meshes, lots of trangular facets joined together, each facet made from three vertices.</p>
+<p><img src="/img/features/scene/custom1.jpg" alt="A mesh"></p>
+<p>Babylon.js provides for the creation of predefined meshes and of custom meshes. For all meshes the underlying data structure is exposed and can be updated.</p>
+<p>Specialist meshes such as <a href="/babylon101/Sprites">sprites</a>, <a href="/babylon101/Particles">2D particles</a> and <a href="/How_To/solid_particles">3D solid particles</a> are also available.</p>
+<h2><a name="types" class="anchor" href="#types"></a>Types</h2><p>There are two types of predefined meshes, <a href="/How_To/Set_Shapes">set shapes</a> and <a href="/How_To/Parametric_Shapes">parametric shapes</a>. Set shapes usually already have names in everyday use and their forms are well known and recognized. They are a box (or cuboid), a sphere, a cylinder, a cone, regular polygons, a plane and a specialist horizontal plane called the ground. Slightly less well known but also included in set shapes are a torus, a torus knot and the polyhedra. Parametric shapes have no everyday names but are formed through data sets and parameters and most often their shape is unpredictable. These include lines, a system of lines, ribbons, tubes, extrusions, lathed shapes and irregular polygons. </p>
+<p>Mention has already been made of the horizonal plane called the ground which is your common flat everyday surface like a floor. You will be pleased to know that it comes in other varieties to provide an outside terrain with rolling hills and valleys. For a view from a distance terrain you use <a href="/babylon101/Height_Map">GroundFromAHeightMap</a>. If you literally want rolling hills add the extension <a href="/extensions/dynamic_terrain">dynamic terrain</a> which gives you an infinite landscape to fly over.</p>
+<h2><a name="ways-of-creating-a-predefined-mesh" class="anchor" href="#ways-of-creating-a-predefined-mesh"></a>Ways of Creating a Predefined Mesh</h2><p>Since Babylon.js version 2.3 there are two techniques to use to create a predefined mesh. Using the newest technique a mesh is created using the <em>MeshBuilder</em> method where meshes are created with the following format and &lt;Mesh&gt; is replaced with the required type of mesh.</p>
+<pre><code class="lang-javascript">var mesh = BABYLON.MeshBuilder.Create&lt;Mesh&gt;(name, {param1 : val1, param2: val2}, scene);
+</code></pre>
+<p>The older or legacy method which has the form </p>
+<pre><code class="lang-javascript">var mesh = BABYLON.Mesh.Create&lt;Mesh&gt;(name, param1, param2, ..., scene, optional_parameter1, ........);
+</code></pre>
+<p>and is still available and will often be seen in Playground examples.</p>
+<p>The <em>MeshBuilder</em> method has the advantages of making all (or some) of the parameters optional depending on the mesh and provides more features than the legacy method. Using default values for the shapes the only parameters need for mesh creation is a name, which can be blank and an empty object.</p>
+<p>For example to create a box which is an unit cube all that is needed is</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;&quot;, {});
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3QW4J1#2">Playground Example Default Box</a> - <i class="fa fa-eye" onclick="createIframe('3QW4J1#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>However, You will find most people will still write</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;&quot;, {}, scene);
+</code></pre>
+<p>since the ability to drop the scene parameter is fairly recent, not well know, old habits die hard and if you transfer your code to a project with more than one scene then missing it out can cause confusion. But if you are working with just one scene, and most people are, and you are happy to do so you can leave it out.</p>
+<p>With the legacy method the scene parameter must be present, you can only create a box that is a cube and if you wanted a cuboid you needed to apply scaling, which is some circumastance could prove tricky. However it can be fairly quick to type.</p>
+<p>For example if you want an updatable cuboid with different dimensions in all directions that is doublesided so you can view it from the inside and outside then using <em>MeshBuilder</em> requires</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;&quot;, {height: 6, width: 4, depth: 2, updatable: true, sideOrientation: BABYLON.Mesh.DOUBLESIDE});
+</code></pre>
+<p>whereas the legacy method needs</p>
+<pre><code class="lang-javascript">var box = BABYLON.Mesh.CreateBox(&quot;box&quot;, 1, scene, true, BABYLON.Mesh.DOUBLESIDE);
+box.scaling = new BABYLON.Vector3(4, 6, 2);
+</code></pre>
+<p>and the scene prameter is necessary to position the updatable and sideOrientation parameters correctly.</p>
+<p>Also using <em>MeshBuilder</em> you can <a href="/How_To/CreateBox_Per_Face_Textures_And_Colors">apply different colors and images to individual faces</a> of meshes that have distinct faces (for example a box does but a sphere does not). This is not possible with the legacy method.</p>
+<p>For a second example consider the creation of a truncated cone with a diameter of 3 top and and 6 at the bottom, with height 5 constructed using 16 radial sections and 10 vertical subdivisions.</p>
+<p><strong>MeshBuilder</strong></p>
+<pre><code class="lang-javascript">var options = {
+    diameterTop:3, 
+    diameterBottom: 6, 
+    height: 5, 
+    tessellation: 16, 
+    subdivisions: 10
+}
+var cylinder = BABYLON.MeshBuilder.CreateCylinder(&quot;myCylinder&quot;, options);
+</code></pre>
+<p><strong>Legacy</strong></p>
+<pre><code class="lang-javascript">var cylinder = BABYLON.Mesh.CreateCylinder(&quot;myCylinder&quot;, 5, 3, 6, 16, 10, scene);
+</code></pre>
+<h2><a name="creating-a-custom-mesh" class="anchor" href="#creating-a-custom-mesh"></a>Creating a Custom Mesh</h2><p>To create your own custom mesh requires you to know the internal data structure of a mesh and how to transfer details of your shape to this structure by setting the positions and normals of the vertices making up each triangular facet.  With a little mathematics knowledge this is quite straight forward should you wish to do it. </p>
+<p>Want to know more about the facets that make up a mesh then enabling <em>FacetData</em> is just for you. You can obtain a facets position and its mathematical normal for example. </p>
+<p><a href="#further-reading">Further Reading</a> will show you how to do all of these.</p>
+<h2><a name="other-mesh-features" class="anchor" href="#other-mesh-features"></a>Other Mesh Features</h2><h3><a name="copying-a-mesh" class="anchor" href="#copying-a-mesh"></a>Copying a Mesh</h3><p>The following features reduce the number of draw calls. When you want a number of meshes that share the same geometry and material, you can create one mesh and then obtain many instances of that mesh and re-position each and rotate each seperately. When you want many meshes with the same geometry but having different materials then Babylon.js provides you with the facility to clone a mesh. </p>
+<p>Another way available to you, especially if you want a very large number of identical meshes is to use particles. You have the option of using 2D meshes or sprites or f or very many identical 3D meshes that can be positioned and rotated individually and are fast then the solid particle system (SPS) is for you.</p>
+<h3><a name="collide-with-a-camera-another-mesh-a-ray-or-pointer" class="anchor" href="#collide-with-a-camera-another-mesh-a-ray-or-pointer"></a>Collide with a Camera, another Mesh, a Ray or Pointer</h3><p>When you are moving around a scene in a <em>first person shooter</em>  manner then you want to be able to react if an object is blocking the way. You can as <a href="/babylon101/Cameras,_Mesh_Collisions_and_Gravity">Camera Collision</a> is a provided facility. As is the <a href="/babylon101/Intersect_Collisions_-_mesh">Intersection of Meshes</a>, <a href="/babylon101/Raycasts">Raycasting</a> and <a href="/babylon101/Picking_Collisions">Pointer Clicked on Mesh</a></p>
+<h3><a name="accessing-mesh-data-morphing-or-updating" class="anchor" href="#accessing-mesh-data-morphing-or-updating"></a>Accessing Mesh Data, Morphing or Updating</h3><p>The facility to read data on the facets making up a mesh and also the vertices making up each facet of the mesh is available for all meshes. This data can be over written to update an existing mesh, <strong>provided</strong> the mesh was created as updatable (the mesh&#39;s updatable parameter is set to <em>true</em>) in the first place and no change is made in the number of vertices. For more information see <a href="/How_To/Updating_Vertices.html">Updating Vertices</a>. </p>
+<p>Some parametric shapes have an instance parameter in its <em>MeshBuilder</em> options and can be updated by setting the instance option the initially created parametric shape. Currently all the parametric shapes, except for the Lathe and Polygon (both Create and Extend), can have their mesh updated in this way.</p>
+<p>From Babylon.js version 3.0 morphing, or distoring a mesh through a number of transitions, is possible by creating a copy of the mesh, the target, updating the target and then adjusting the influence of the target mesh from 0 to 1.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/babylon101/Discover_Basic_Elements">Meshes 101</a><br><a href="/babylon101/Parametric_Shapes">Parametric Shapes 101</a><br><a href="/babylon101/Sprites">Sprites 101</a><br><a href="/babylon101/Particles">Particles 101</a><br><a href="/babylon101/Intersect_Collisions_-_mesh">Mesh Collisions 101</a><br><a href="/babylon101/Picking_Collisions">Mesh Picking 101</a><br><a href="/babylon101/Raycasts">Ray Casting 101</a><br><a href="/How_To/Polyhedra_Shapes">Polyhedra</a><br><a href="/How_To/Decals">Using Decals</a><br><a href="/How_To/solid_particles">How to Use the Solid Particle System</a><br><a href="/features/Position,_Rotation,_Scaling">Set the Position, Rotation and Scale of a Mesh</a></p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/How_To/PolygonMeshBuilder">Using PolygonMeshBuilder</a><br><a href="/How_To/Ribbon_Tutorial">Ribbon Tutorial</a><br><a href="/How_To/Highlight_Layer">Highlight Layer</a>  </p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/How_To/How_to_use_Instances">How to use Instances</a><br><a href="/How_To/How_to_Merge_Meshes">How to Merge Meshes</a><br><a href="/resources/Maths_Make_Ribbons">Mathematics and Ribbons</a><br><a href="/How_To/How_to_use_Curve3">How to use Curve3</a><br><a href="/How_To/How_to_use_Path3D">How to use Path3D</a><br><a href="/How_To/How_to_use_FacetData">How to use Facet Data</a><br><a href="/How_To/How_to_use_LOD">How to use LOD</a><br><a href="/How_To/How_to_dynamically_morph_a_mesh">How to Dynamically Morph a Mesh</a><br><a href="/How_To/How_to_use_MorphTargets">How to use Morph Targets</a><br><a href="/How_To/How_to_use_Bones_and_Skeletons">How to use Bones and Skeletons</a><br><a href="/How_To/How_to_use_EdgesRenderer">How to use EdgesRenderer</a><br><a href="/How_To/Custom">Creating Custom Meshes</a><br><a href="/how_to/how_to_use_facetdata#facet-normal">Facet Normals</a><br><a href="/How_To/Updating_Vertices">Updating Vertices</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

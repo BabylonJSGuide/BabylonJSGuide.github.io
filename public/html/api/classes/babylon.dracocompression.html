@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>DracoCompression - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.dracocompression.html">DracoCompression</a>
+					</li>
+				</ul>
+				<h1>DracoCompression</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Draco compression (<a href="https://google.github.io/draco/">https://google.github.io/draco/</a>)</p>
+						</div>
+						<p>This class wraps the Draco module.</p>
+						<p><strong>Encoder</strong></p>
+						<p>The encoder is not currently implemented.</p>
+						<p><strong>Decoder</strong></p>
+						<p>By default, the configuration points to a copy of the Draco decoder files for glTF from the babylon.js preview cdn <a href="https://preview.babylonjs.com/draco_wasm_wrapper_gltf.js">https://preview.babylonjs.com/draco_wasm_wrapper_gltf.js</a>.</p>
+						<p>To update the configuration, use the following code:</p>
+						<pre><code class="language-javascript">    DracoCompression.Configuration = {
+        <span class="hljs-attr">decoder</span>: {
+            <span class="hljs-attr">wasmUrl</span>: <span class="hljs-string">&quot;&lt;url to the WebAssembly library&gt;&quot;</span>,
+            <span class="hljs-attr">wasmBinaryUrl</span>: <span class="hljs-string">&quot;&lt;url to the WebAssembly binary&gt;&quot;</span>,
+            <span class="hljs-attr">fallbackUrl</span>: <span class="hljs-string">&quot;&lt;url to the fallback JavaScript library&gt;&quot;</span>,
+        }
+    };</code></pre>
+						<p>Draco has two versions, one for WebAssembly and one for JavaScript. The decoder configuration can be set to only support Webssembly or only support the JavaScript version.
+							Decoding will automatically fallback to the JavaScript version if WebAssembly version is not configured or if WebAssembly is not supported by the browser.
+						Use <code>DracoCompression.DecoderAvailable</code> to determine if the decoder configuration is available for the current context.</p>
+						<p>To decode Draco compressed data, get the default DracoCompression object and call decodeMeshAsync:</p>
+						<pre><code class="language-javascript">    <span class="hljs-keyword">var</span> vertexData = <span class="hljs-keyword">await</span> DracoCompression.Default.decodeMeshAsync(data);</code></pre>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://www.babylonjs-playground.com/#N3EK4B#0">https://www.babylonjs-playground.com/#N3EK4B#0</a></p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">DracoCompression</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel">
+					<h3>Implements</h3>
+					<ul class="tsd-hierarchy">
+						<li><a href="../interfaces/babylon.idisposable.html" class="tsd-signature-type">IDisposable</a></li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Constructors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="babylon.dracocompression.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="babylon.dracocompression.html#configuration" class="tsd-kind-icon">Configuration</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="babylon.dracocompression.html#defaultnumworkers" class="tsd-kind-icon">Default<wbr>Num<wbr>Workers</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Accessors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-static"><a href="babylon.dracocompression.html#decoderavailable" class="tsd-kind-icon">Decoder<wbr>Available</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-static"><a href="babylon.dracocompression.html#default" class="tsd-kind-icon">Default</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.dracocompression.html#decodemeshasync" class="tsd-kind-icon">decode<wbr>Mesh<wbr>Async</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.dracocompression.html#dispose" class="tsd-kind-icon">dispose</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.dracocompression.html#whenreadyasync" class="tsd-kind-icon">when<wbr>Ready<wbr>Async</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Constructors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+						<a name="constructor" class="tsd-anchor"></a>
+						<h3>constructor</h3>
+						<a href="/playground/?code=constructor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">new <wbr>Draco<wbr>Compression<span class="tsd-signature-symbol">(</span>numWorkers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.dracocompression.html" class="tsd-signature-type">DracoCompression</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Constructor</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> numWorkers: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>The number of workers for async operations. Specify <code>0</code> to disable web workers and run synchronously in the current context.</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.dracocompression.html" class="tsd-signature-type">DracoCompression</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+						<a name="configuration" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Configuration</h3>
+						<a href="/playground/?code=Configuration" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">Configuration<span class="tsd-signature-symbol">:</span> <a href="../interfaces/babylon.idracocompressionconfiguration.html" class="tsd-signature-type">IDracoCompressionConfiguration</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The configuration. Defaults to the following urls:</p>
+								<ul>
+									<li>wasmUrl: &quot;<a href="https://preview.babylonjs.com/draco_wasm_wrapper_gltf.js&quot;">https://preview.babylonjs.com/draco_wasm_wrapper_gltf.js&quot;</a></li>
+									<li>wasmBinaryUrl: &quot;<a href="https://preview.babylonjs.com/draco_decoder_gltf.wasm&quot;">https://preview.babylonjs.com/draco_decoder_gltf.wasm&quot;</a></li>
+									<li>fallbackUrl: &quot;<a href="https://preview.babylonjs.com/draco_decoder_gltf.js&quot;">https://preview.babylonjs.com/draco_decoder_gltf.js&quot;</a></li>
+								</ul>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+						<a name="defaultnumworkers" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Default<wbr>Num<wbr>Workers</h3>
+						<a href="/playground/?code=DefaultNumWorkers" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">Default<wbr>Num<wbr>Workers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Default number of workers to create when creating the draco compression object.</p>
+							</div>
+						</div>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Accessors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+						<a name="decoderavailable" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Decoder<wbr>Available</h3>
+						<a href="/playground/?code=DecoderAvailable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> DecoderAvailable<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns true if the decoder configuration is available.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+						<a name="default" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Default</h3>
+						<a href="/playground/?code=Default" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> Default<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.dracocompression.html" class="tsd-signature-type">DracoCompression</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Default instance for the draco compression object.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.dracocompression.html" class="tsd-signature-type">DracoCompression</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="decodemeshasync" class="tsd-anchor"></a>
+						<h3>decode<wbr>Mesh<wbr>Async</h3>
+						<a href="/playground/?code=decodeMeshAsync" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">decode<wbr>Mesh<wbr>Async<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ArrayBufferView</span>, attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vertexdata.html" class="tsd-signature-type">VertexData</a><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Decode Draco compressed mesh data to vertex data.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>data: <span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ArrayBufferView</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>The ArrayBuffer or ArrayBufferView for the Draco compression data</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> attributes: <span class="tsd-signature-type">object</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>A map of attributes from vertex buffer kinds to Draco unique ids</p>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-index-signature">
+												<h5><span class="tsd-signature-symbol">[</span>kind: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vertexdata.html" class="tsd-signature-type">VertexData</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>A promise that resolves with the decoded vertex data</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="dispose" class="tsd-anchor"></a>
+						<h3>dispose</h3>
+						<a href="/playground/?code=dispose" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+									<p>Implementation of <a href="../interfaces/babylon.idisposable.html">IDisposable</a>.<a href="../interfaces/babylon.idisposable.html#dispose">dispose</a></p>
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Stop all async operations and release resources.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="whenreadyasync" class="tsd-anchor"></a>
+						<h3>when<wbr>Ready<wbr>Async</h3>
+						<a href="/playground/?code=whenReadyAsync" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">when<wbr>Ready<wbr>Async<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns a promise that resolves when ready. Call this manually to ensure draco compression is ready before use.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>a promise that resolves when ready</p>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace">
+							<a href="babylon.dracocompression.html" class="tsd-kind-icon">Draco<wbr>Compression</a>
+							<ul>
+								<li class=" tsd-kind-constructor tsd-parent-kind-class">
+									<a href="babylon.dracocompression.html#constructor" class="tsd-kind-icon">constructor</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.dracocompression.html#configuration" class="tsd-kind-icon">Configuration</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.dracocompression.html#defaultnumworkers" class="tsd-kind-icon">Default<wbr>Num<wbr>Workers</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.dracocompression.html#decoderavailable" class="tsd-kind-icon">Decoder<wbr>Available</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.dracocompression.html#default" class="tsd-kind-icon">Default</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.dracocompression.html#decodemeshasync" class="tsd-kind-icon">decode<wbr>Mesh<wbr>Async</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.dracocompression.html#dispose" class="tsd-kind-icon">dispose</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.dracocompression.html#whenreadyasync" class="tsd-kind-icon">when<wbr>Ready<wbr>Async</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

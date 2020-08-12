@@ -1,0 +1,265 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the WebVR Camera - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the WebVR Camera</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#browser-support">Browser support</a><ul>
+<li><a href="#webvr">WebVR</a></li>
+<li><a href="#webvr-controllers">WebVR controllers</a></li>
+</ul>
+</li>
+<li><a href="#the-webvrfreecamera-class">The WebVRFreeCamera class</a><ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#extra-webvr-transformation-pose-data">Extra WebVR transformation (Pose data)</a></li>
+<li><a href="#resetting-the-devices-rotation">Resetting the device&#39;s rotation</a></li>
+<li><a href="#low-level-fun">Low level fun</a></li>
+</ul>
+</li>
+<li><a href="#the-gamepad-extensions-support-webvr-controllers">The Gamepad Extensions support (WebVR controllers)</a><ul>
+<li><a href="#init-controllers">Init controllers</a></li>
+<li><a href="#using-the-controllers">Using the controllers</a></li>
+<li><a href="#controller-button-mapping">Controller button mapping</a></li>
+<li><a href="#attaching-to-a-mesh">Attaching to a mesh</a></li>
+<li><a href="#low-level">Low level</a></li>
+</ul>
+</li>
+<li><a href="#a-few-notes">A few notes</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="webvr-vs-webxr" class="anchor" href="#webvr-vs-webxr"></a>WebVR vs WebXR</h2><p>While the WebVR camera will continue to be supported, it is strongly recommended that projects instead use the <a href="https://doc.babylonjs.com/how_to/webxr_camera">WebXR camera</a>. For more information, check out our <a href="https://doc.babylonjs.com/how_to/introduction_to_webxr">introduction to WebXR</a>.</p>
+<h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>Since v2.5 Babylon.js supports WebVR using the WebVRFreeCamera.</p>
+<p>In Babylon v3.0 we fully support the WebVR 1.1 specifications (<a href="https://w3c.github.io/webvr/">https://w3c.github.io/webvr/</a>) which is supported by the latest version of Microsoft Edge, Chromium and Firefox.</p>
+<p>The WebVR camera is Babylon&#39;s simple interface to interaction with Windows Mixed Reality, HTC Vive, Oculus Rift, Google Daydream and Samsung GearVR.</p>
+<p>Babylon.js also supports the VR devices&#39; controllers - The Windows Mixed Reality controllers, HTC Vive&#39;s controllers, the Oculus touch, GearVR controller and Daydream controller - using the gamepad extension. Further details below.</p>
+<p>To quickly get started creating WebVR scene the <a href="/how_to/WebVR_Helper">WebVR Experience Helper</a> class can be used to automatically setup the WebVR camera and enable other features such as teleportation out of the box.</p>
+<h2><a name="browser-support" class="anchor" href="#browser-support"></a>Browser support</h2><h3><a name="webvr" class="anchor" href="#webvr"></a>WebVR</h3><p>WebVR 1.1 is enabled in specific versions of Microsoft Edge, Chromium and Firefox. To get constant status updates, please visit WebVR rocks at <a href="https://webvr.rocks/">https://webvr.rocks/</a> . We support any browser that implements WebVR 1.1.</p>
+<h3><a name="webvr-controllers" class="anchor" href="#webvr-controllers"></a>WebVR controllers</h3><p>The WebVR controllers are offered in browsers that support the WebVR gamepad extensions - <a href="https://w3c.github.io/gamepad/extensions.html">https://w3c.github.io/gamepad/extensions.html</a> . In Chromium you must enable this API in chrome://flags in order to get it working. Make sure to visit <a href="https://mozvr.com/">https://mozvr.com/</a> for full installation instructions.</p>
+<h2><a name="the-webvrfreecamera-class" class="anchor" href="#the-webvrfreecamera-class"></a>The WebVRFreeCamera class</h2><h3><a name="getting-started" class="anchor" href="#getting-started"></a>Getting started</h3><p>The WebVRFreeCamera is being initialized the same as a standard free camera:</p>
+<p><code>var camera = new BABYLON.WebVRFreeCamera(&quot;camera1&quot;, new BABYLON.Vector3(0, 0, 0), scene);</code></p>
+<p>This will initialize a new WebVR camera and will enable WebVR in the engine.</p>
+<p>Just like any other camera, to get the camera working correctly with user input and interactions, we will need to attach the camera (and the VR device) to the canvas and the scene. To do that we use the same method we know from the free camera:</p>
+<p><code>camera.attachControl(canvas, true);</code></p>
+<p>Most browsers only support attaching the VR device to the scene during a user interaction (a mouse click, for example). To get that working correctly, a simple solution would be:</p>
+<pre><code class="lang-javascript">scene.onPointerDown = function() {
+  scene.onPointerDown = undefined;
+  camera.attachControl(canvas, true);
+};
+</code></pre>
+<p>What it does is attach control once the user click on the canvas, and disables the onPointerDown callback.</p>
+<p>This can be done with an HTML or a Canvas2D button as well, and using vanilla javascript event listeners. Any intentional user interaction is allowed. A mouse-move event will not trigger it, so don&#39;t bother trying. A simple example would be:</p>
+<pre><code class="lang-javascript">// after creating a button with vrButton as ID:
+
+let button = document.getElementById(&quot;vrButton&quot;);
+
+function attachWebVR() {
+  camera.attachControl(canvas, true);
+  window.removeEventListener(&quot;click&quot;, attachWebVR, false);
+}
+
+button.addEventListener(&quot;click&quot;, attachWebVR, false);
+</code></pre>
+<p>Don&#39;t forget to remove the event listener, other wise any click on the button will trigger the attach function. It won&#39;t attach again, but it a waste of function calls and is not needed.</p>
+<p>You should now be able to see your scene in the WebVR device. If not, go to troubleshooting!</p>
+<h3><a name="extra-webvr-transformation-pose-data" class="anchor" href="#extra-webvr-transformation-pose-data"></a>Extra WebVR transformation (Pose data)</h3><p>The WebVR camera is an extended FreeCamera. Apart from all of the abilities a standard FreeCamera has, the WebVR camera has 2 major extensions - an extra position and an extra rotation, which are the pose data broadcasted by the VR device connected to the browser. This means that the camera has actually two transformation - one is controlled by you, and the other by the device. They are accumulated - position is being added and rotation multiplied - in order to combine the developer&#39;s input and the VR device&#39;s pose data.</p>
+<p>To understand that think of your head and your body. Without moving your body, your head can move in all directions, and rotate in all directions. The WebVR device is your head. Your body is the regular position and rotationQuaternion we all know and love. If you rotate your body, the head rotates with it. But if you move the head, the body stays in the same position.</p>
+<p>This is exactly how you should see the WebVR extra transformation - your head position is set by the VR device (and cannot be interfered with). Your body (or position in the world) is fully controlled by you.</p>
+<p>This allows you to use the same code you use for a game based on the FreeCamera with the WebVR camera. the only difference is that the user will have the ability to rotate the camera locally using the VR device and not the mouse.</p>
+<p>This also allows the WebVR to be controlled by the same input devices that control the FreeCamera - keyboard, mouse (with rotation exception), XBOX controller and so on.</p>
+<h3><a name="resetting-the-device39s-rotation" class="anchor" href="#resetting-the-devices-rotation"></a>Resetting the device&#39;s rotation</h3><p>The device&#39;s &quot;front&quot; position is set by the device itself (it is set during the device&#39;s setup and has not a lot to do with WebVR directly). The developer, however, has the ability to change the &quot;front&quot; rotation with a simple function call:</p>
+<p><code>camera.resetToCurrentRotation()</code>.</p>
+<p>This will set the current Y axis (and Y axis direction only!!) to be the current front rotation of the user.</p>
+<h3><a name="low-level-fun" class="anchor" href="#low-level-fun"></a>Low level fun</h3><ul>
+<li>If you want to use the vrDevice directly, it is exposed using <code>camera._vrDevice</code>, a public hidden member in the camera.</li>
+<li>If you want to use the raw pose data (Right handed data!), it is exposed at <code>camera.rawPose</code>. The rawPose has the following interface (a dream for physics lovers!):</li>
+</ul>
+<pre><code class="lang-javascript">export interface DevicePose {
+    readonly position?: Float32Array;
+    readonly linearVelocity?: Float32Array;
+    readonly linearAcceleration?: Float32Array;
+
+    readonly orientation?: Float32Array;
+    readonly angularVelocity?: Float32Array;
+    readonly angularAcceleration?: Float32Array;
+}
+</code></pre>
+<p>Note: Raw pose values are not modified based on the webVRCamera&#39;s rotation or position. To reference modified position and rotation in Babylon space, use the devicePosition and deviceRotationQuaternion fields.</p>
+<pre><code class="lang-javascript">webVRCamera.devicePosition;
+webVRCamera.deviceRotationQuaternion;
+webVRCamera.leftController.devicePosition;
+webVRCamera.leftController.deviceRotationQuaternion;
+</code></pre>
+<h2><a name="the-gamepad-extensions-support-webvr-controllers" class="anchor" href="#the-gamepad-extensions-support-webvr-controllers"></a>The Gamepad Extensions support (WebVR controllers)</h2><p>Each VR device currently available (Windows Mixed Reality, Oculus Rift, Vive, Daydream and GearVR) has controllers that complement its usage. Windows Mixed Reality controllers, Vive controllers, Oculus touch controllers, Daydream Controller and GearVR Controller are supported by using the gamepad extensions.</p>
+<h3><a name="init-controllers" class="anchor" href="#init-controllers"></a>Init controllers</h3><p>During the WebVRFreeCamera initialization it will attempt to attach the controllers and detect them if found. If found, the controllers will be located at <code>camera.controllers</code> which is an array that will either have a length of 2 or 0 (GearVR and Daydream support only 1 controller). If the controllers are attached and were not detected, you could also try to manually call <code>camera.initControllers()</code> at a future time.</p>
+<p>To fire a callback when the controllers are found you can use the optional <code>camera.onControllersAttached</code> callback:</p>
+<pre><code class="lang-javascript">onControllersAttached = function(controllers) {
+  console.log(controllers.length === 2); // outputs true;
+};
+</code></pre>
+<p>Initializing the controllers using the camera will also attach them to the camera, which will allow moving the controllers together with the WebVR camera, if moved by the user.</p>
+<h3><a name="using-the-controllers" class="anchor" href="#using-the-controllers"></a>Using the controllers</h3><p>There are a few high level implementations that are automatically assigned to a WebVR controller:</p>
+<p><code>WindowsMotionController</code> for the Windows Mixed Reality controllers.</p>
+<p><code>OculusTouchController</code> for the Oculus touch.</p>
+<p><code>ViveController</code> for the Vive controllers.</p>
+<p><code>GearVRController</code> for the Samsung Gear VR controller.</p>
+<p><code>DaydreamController</code> for the Google Daydream controller.</p>
+<p>each extends the <code>WebVRController</code> class, which extends the <code>PoseEnabledController</code>.</p>
+<p>To cut a long story short - Each controller is assigned the same set of functions, with the only different being the button mappings. The type of the device can be retrieved using <code>controller.controllerType</code>, which has the following values:</p>
+<pre><code class="lang-javascript">export enum PoseEnabledControllerType {
+    VIVE,
+    OCULUS,
+    WINDOWS,
+    GEAR_VR,
+    DAYDREAM,
+    GENERIC
+}
+</code></pre>
+<p>This enum will be extended when needed.</p>
+<h3><a name="controller-button-mapping" class="anchor" href="#controller-button-mapping"></a>Controller button mapping</h3><p>A controller button has the following set of data:</p>
+<pre><code class="lang-javascript">interface ExtendedGamepadButton extends GamepadButton {
+    readonly pressed: boolean;
+    readonly touched: boolean;
+    readonly value: number;
+}
+</code></pre>
+<p>These values will be sent to the observers of any specific button when either on of them was changed.</p>
+<p>The controllers also have Axes-data, which can be compared to the stick value of an x-box controller. They consist of a 2D vector (with x and y values). Stick values (SHOULD BE) are between -1, -1 and 1, 1, with 0,0 being the default value.</p>
+<ul>
+<li>Not all buttons of each controller support all 3 values, but all 3 will always be provided. For example, the Vive&#39;s trigger doesn&#39;t support &quot;touched&quot;, which will always be false, but will send the value data when pressed (a percentage of the press from 0 to 1).</li>
+<li>Having a value does not automatically mean that &quot;pressed&quot; is set to true. The oculus controllers, for example, will only set the trigger&#39;s &quot;pressed&quot; to true when the value exceeds 0.15 (15% pressed).</li>
+<li>The controllers have a &quot;hand&quot; assigned to them, which is a string, either &quot;left&quot; or &quot;right&quot;. This can be found at controller.hand .</li>
+</ul>
+<p><strong>Abstract mapping</strong></p>
+<p>The following observables exist on all types of WebVR controllers, in case you wish to develop an abstract solution to all VR devices and not focus on a specific device:</p>
+<ol>
+<li><code>onTriggerStateChangedObservable</code> is the main trigger observable</li>
+<li><code>onMainButtonStateChangedObservable</code> the main button observable</li>
+<li><code>onSecondaryButtonStateChangedObservable</code> - you get the point...</li>
+<li><code>onPadStateChangedObservable</code> - stick-button observable (NOT the Stick Values)</li>
+<li><code>onPadValuesChangedObservable</code> - stick values changed observable</li>
+</ol>
+<p>To use any of them, simple register a new function with the desired observable.
+For example, to monitor the trigger and observe pad value changes:</p>
+<pre><code class="lang-javascript">controller.onPadValuesChangedObservable.add(function(stateObject) {
+  console.log(stateObject); // {x: 0.1, y: -0.3}
+});
+controller.onTriggerStateChangedObservable.add(function(stateObject) {
+  let value = stateObject.value;
+  console.log(value);
+});
+</code></pre>
+<p><strong>Windows Mixed Reality Controller mapping</strong></p>
+<p>The Windows Mixed Reality controller supports:</p>
+<ol>
+<li>Thumb stick axis - axis values. Mapped to <code>onPadValuesChangedObservable</code>.</li>
+<li>Thumb stick press - pressed. Mapped to <code>onPadStateChangedObservable</code>.</li>
+<li>Touchpad axis - axis values. Mapped to <code>onTouchpadValuesChangedObservable</code> and <code>onTrackpadValuesChangedObservable</code> (aliases).</li>
+<li>Touchpad press - pressed and touch. Mapped to <code>onTouchpadButtonStateChangedObservable</code> and <code>onTrackpadChangedObservable</code> (aliases).</li>
+<li>Trigger - pressed and value. Mapped to <code>onTriggerStateChangedObservable</code></li>
+<li>Grip button - pressed. Mapped to <code>onMainButtonStateChangedObservable</code> and <code>onGripButtonStateChangedObservable</code> (aliases)</li>
+<li>Menu button - pressed. Mapped to <code>onSecondaryButtonStateChangedObservable</code> and <code>onMenuButtonStateChangedObservable</code> (aliases).</li>
+</ol>
+<p><strong>Vive Controller mapping</strong></p>
+<p>The vive supports:</p>
+<ol>
+<li>touchpad - pressed, touch and axis values. Mapped to <code>onPadStateChangedObservable</code></li>
+<li>trigger - pressed and value. Mapped to <code>onTriggerStateChangedObservable</code></li>
+<li>left AND right buttons together (!) - touched, pressed. Mapped to <code>onMainButtonStateChangedObservable</code>, <code>onRightButtonStateChangedObservable</code> and <code>onLeftButtonStateChangedObservable</code> (aliases to the same observable object!);</li>
+<li>menu button - touched, pressed. Mapped to <code>onSecondaryButtonStateChangedObservable</code> and <code>onMenuButtonStateChangedObservable</code> (aliases).</li>
+</ol>
+<p><strong>Oculus touch mapping</strong></p>
+<p>The oculus touch supports 6 different buttons:</p>
+<ol>
+<li>Thumb stick - touch, press, value = pressed (0,1). Mapped to <code>onPadStateChangedObservable</code>.</li>
+<li>Index trigger - touch (?), press (only when value &gt; 0.1). Mapped to <code>onTriggerStateChangedObservable</code>.</li>
+<li>Secondary trigger (same). Mapped to <code>onSecondaryTriggerStateChangedObservable</code>.</li>
+<li>A (right) X (left) - touch, pressed = value. Mapped to <code>onMainButtonStateChangedObservable</code>, <code>onAButtonStateChangedObservable</code> on the right hand and <code>onXButtonStateChangedObservable</code> on the left hand.</li>
+<li>B / Y - touch, pressed = value. Mapped to <code>onSecondaryButtonStateChangedObservable</code>, <code>onBButtonStateChangedObservable</code> on the right hand and <code>onYButtonStateChangedObservable</code> on the left hand.</li>
+<li>thumb rest. Mapped to <code>onThumbRestChangedObservable</code> .</li>
+</ol>
+<p><strong>Gear VR Controller mapping</strong></p>
+<p>The Gear VR controller supports:</p>
+<ol>
+<li>trackpad - pressed, touch and axis values. Mapped to <code>onPadValuesChangedObservable</code> and <code>onTrackpadChangedObservable</code></li>
+<li>trigger - pressed and values. Mapped to <code>onTriggerStateChangedObservable</code></li>
+</ol>
+<p><strong>Google Daydream Controller mapping</strong></p>
+<p>The Google Daydream controller supports:</p>
+<ol>
+<li>touchpad - pressed, touch and axis values. Mapped to <code>onPadValuesChangedObservable</code> and <code>onTriggerStateChangedObservable</code></li>
+</ol>
+<p>note: The Daydream controller home and app buttons are not mapped in WebVR.</p>
+<h3><a name="attaching-to-a-mesh" class="anchor" href="#attaching-to-a-mesh"></a>Attaching to a mesh</h3><p>Instead of forcing you to use the controller meshes (which will prevent you from implementing a single app for many types of devices), we have decided to allow you to attach the controller to a mesh. This will make the controller the mesh&#39;s &quot;parent&quot; (but not using the parenting system! As a controller is not a node). The controller&#39;s actions (rotation and position changes) will reflect directly to the mesh.</p>
+<p>To attach the controller to a mesh:</p>
+<pre><code class="lang-javascript">controller.attachToMesh(mesh);
+</code></pre>
+<p>Note that this will create a new quaternion to the mesh .</p>
+<p>The default controller mesh can be hidden with the following code.</p>
+<pre><code class="lang-javascript">scene.createDefaultVRExperience({ controllerMeshes: true });
+</code></pre>
+<h3><a name="low-level" class="anchor" href="#low-level"></a>Low level</h3><p><strong>Controllers without WebVR camera</strong></p>
+<p>The controllers can also be initialized without using a WebVR camera, which means - you can use them to control your regular WebGL game or 3D application.</p>
+<p>To do that, simply initialize the Gamepads Class:</p>
+<pre><code class="lang-javascript">new BABYLON.Gamepads(gp =&gt; {
+  if (gp.type === BABYLON.Gamepad.POSE_ENABLED) {
+    // Do something with the controller!
+  }
+});
+</code></pre>
+<p>Note that the position will be relative to the initial VR Device that is related to those controllers.</p>
+<p><strong>Pose data</strong></p>
+<p>Just like the WebVR camera, the controllers export their (right handed!!) raw pose data. The data is updated each frame at <code>controller.rawPose</code>.</p>
+<h2><a name="a-few-notes" class="anchor" href="#a-few-notes"></a>A few notes</h2><ul>
+<li>The WebVR camera supports both left-handed systems and right-handed systems.</li>
+<li>When using the oculus rift, pay attention that the oculus controller (this little )</li>
+<li>To further read about WebVR try <a href="https://mozvr.com/">https://mozvr.com/</a> .</li>
+</ul>
+<h2><a name="examples" class="anchor" href="#examples"></a>Examples</h2><ul>
+<li><a href="https://www.babylonjs-playground.com/#G46RP6#2">Helmet</a> - <i class="fa fa-eye" onclick="createIframe('G46RP6#2', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#5MV04">Basic Scene</a> - <i class="fa fa-eye" onclick="createIframe('5MV04#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Enjoy!</p>
+<h2><a name="troubleshooting" class="anchor" href="#troubleshooting"></a>Troubleshooting</h2><ul>
+<li><p>My WebVR camera is not working!!</p>
+<p>Seems like a very common problem - a WebVRFreeCamera class is initialized, but you can&#39;t see a thing in the device.</p>
+<ol>
+<li>Check the console - Are you seeing any errors? COuld it be that WebVR is not supported on your browser?</li>
+<li>in your console type <code>navigator.getVRDevices().then((vrs) =&gt; {console.log(vrs.length)})</code> . If you got 0 or an error, the device is not properly connected.</li>
+<li>If using oculus rift - did you enable &quot;unknown sources&quot; in the oculus rift settings?</li>
+<li>Try following the instructions in <a href="https://mozvr.com/">https://mozvr.com/</a> . Does the camera work there?</li>
+</ol>
+</li>
+<li><p>The camera&#39;s rotation is changing, but i can&#39;t see a thing in my display</p>
+<p>This error occurs when you didn&#39;t attach control to the VR device.</p>
+<ol>
+<li>Make sure that attach control is called inside a user-interaction callback. Chrome will not allow broadcasting to the VR device without user consent.</li>
+</ol>
+</li>
+<li><p>My (Vive) controllers are not detected!! HELP!!!!</p>
+<p>Ah, I know this problem.</p>
+<ol>
+<li>Try pressing the left and right buttons of the vive controller, or the pad button of the oculus touch. This should turn them on and make them visible.</li>
+<li>Make sure you called <code>camera.initControllers()</code> !</li>
+<li>open your console, search for errors.</li>
+<li>type <code>navigator.getGamepads()</code> in your console. Is the list empty? are there controllers in the list? what controllers?</li>
+<li>make sure the gamepad extensions is enabled in your browser! Check <a href="https://mozvr.com/">https://mozvr.com/</a> for installation instructions.</li>
+</ol>
+</li>
+<li><p>Gear VR or Daydream controller models are not showing</p>
+<p>These are 3 DoF devices (no position). The models positions aren&#39;t yet determined, but you have the rays from controller orientation and functional trigger buttons.</p>
+</li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Display and Use the Inspector - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Display and Use the Inspector</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#invocation">Invocation</a></li>
+<li><a href="#loading">Loading</a></li>
+<li><a href="#control">Control</a></li>
+<li><a href="#observable">Observable</a></li>
+<li><a href="#highlighting-a-specific-entity">Highlighting a specific entity</a></li>
+<li><a href="#extensibility">Extensibility</a><ul>
+<li><a href="#explorer">Explorer</a></li>
+<li><a href="#inspector">Inspector</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-display-and-use-the-inspector" class="anchor" href="#how-to-display-and-use-the-inspector"></a>How to Display and use The Inspector</h1><h2><a name="invocation" class="anchor" href="#invocation"></a>Invocation</h2><p>You can display the Inspector by calling:</p>
+<pre><code class="lang-javascript">scene.debugLayer.show();
+</code></pre>
+<p>The <code>show</code> function will return a promise that you can use to know when the Inspector is loaded and visible.</p>
+<h2><a name="loading" class="anchor" href="#loading"></a>Loading</h2><p><strong>Provided</strong> your project is running on a <strong>server</strong> the Inspector is automatically loaded from the BabylonJS server <strong>when</strong> it is called as above. </p>
+<p>The latest version of the inspector can be pulled from: <code>https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js</code></p>
+<p>You can update this URL by setting the variable:</p>
+<pre><code class="lang-javascript">BABYLON.DebugLayer.InspectorURL = &#39;http://myurl/babylon.inspector.bundle.js&#39;;
+</code></pre>
+<p>To use the Inspector when your project is stored and run <strong>locally</strong> with an <strong>internet connection</strong> then you need to load the Inspector directly</p>
+<pre><code class="lang-html">&lt;script src=https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js&gt;&lt;/script&gt;
+</code></pre>
+<p>To use the Inspector <strong>locally</strong> with no internet connection you will need to obtain a copy of the file from</p>
+<p><a href="https://github.com/BabylonJS/Babylon.js/blob/master/dist/inspector/babylon.inspector.bundle.js">https://github.com/BabylonJS/Babylon.js/blob/master/dist/inspector/babylon.inspector.bundle.js</a></p>
+<h2><a name="control" class="anchor" href="#control"></a>Control</h2><p>A <code>config</code> object can be given to the <code>show</code> method in order to control the following parameters of the Inspector : </p>
+<ul>
+<li><code>overlay</code>: boolean - Should the Inspector opens by default in overlay mode? False by default</li>
+<li><code>enablePopup</code>: boolean - Should the Inspector allows the panes to popup? True by default</li>
+<li><code>globalRoot</code>: HTMLElement - The HTML element where the Inspector should be created - null by default (will be created alongside the canvas)</li>
+<li><code>showExplorer</code>: boolean - Should the Inspector opens the scene explorer pane? True by default</li>
+<li><code>showInspector</code>: boolean - Should the Inspector opens the inspector pane? True by default</li>
+<li><code>embedMode</code>: boolean - Should the Inspector opens in embedded mode (only one pane)? False by default</li>
+<li><code>handleResize</code>: boolean - Should the Inspector resize the Babylon.js engine associated with the scene when the canvas is resized due to user moving the panes? False by default</li>
+<li><code>explorerExtensibility</code>: See below</li>
+</ul>
+<p>Example:</p>
+<pre><code class="lang-javascript">scene.debugLayer.show({
+    overlay:false, 
+    globalRoot:document.getElementById(&#39;mydiv&#39;)
+});
+</code></pre>
+<h2><a name="observable" class="anchor" href="#observable"></a>Observable</h2><p>It is possible to attach an <code>Observer</code> to an <code>Observable</code> called when a property is modified in the Inspector.
+You can call it like this :</p>
+<pre><code class="lang-javascript">scene.debugLayer.onPropertyChangedObservable.add((result) =&gt; {});
+</code></pre>
+<p>The result object contains :</p>
+<ul>
+<li><code>object</code> : BABYLON.Node - The object modified. It can be a scene, a mesh, a light or any other element that can be modified in the Inspector</li>
+<li><code>property</code> : string - The modified property name.</li>
+<li><code>value</code> : any - The new value.</li>
+<li><code>initialValue</code> : any - The old value, before the modification.</li>
+</ul>
+<p>You can also register an <code>Observer</code> when the selection changes with</p>
+<pre><code class="lang-javascript">scene.debugLayer.onSelectionChangedObservable.add((result) =&gt; {});
+</code></pre>
+<p>The result object will be the new selected object.</p>
+<h2><a name="highlighting-a-specific-entity" class="anchor" href="#highlighting-a-specific-entity"></a>Highlighting a specific entity</h2><p>By calling the following code, you can make sure to select a specific entity and highlight a specific portion of its property grid:</p>
+<pre><code>scene.debugLayer.show().then((layer) =&gt; {
+    layer.select(pbrmaterial, &quot;ANISOTROPIC&quot;);
+});
+</code></pre><h2><a name="extensibility" class="anchor" href="#extensibility"></a>Extensibility</h2><p>We know that it would be impossible to provide a tool that will target every single need that a Babylon.js may have. This is why the new inspector supports an extensibility API.</p>
+<h3><a name="explorer" class="anchor" href="#explorer"></a>Explorer</h3><p>You can use the <code>explorerExtensibility</code> property of the config object to define an array of predicates that will add new options to scene explorer actions.:</p>
+<pre><code class="lang-javascript">BABYLON.Inspector.Show(scene, {
+    explorerExtensibility: [
+        {
+            predicate: entity =&gt; entity.getClassName &amp;&amp; entity.getClassName().indexOf(&quot;Material&quot;) !== -1,
+            entries: [
+                {
+                    label: &quot;Say hello&quot;,
+                    action: (entity) =&gt; alert(&quot;hello &quot; + entity.name)
+                },
+                {
+                    label: &quot;Do something fun with materials&quot;,
+                    action: (entity) =&gt; alert(&quot;hello &quot; + entity.name)
+                }]
+        },
+        {
+            predicate: entity =&gt; entity.getClassName &amp;&amp; entity.getClassName().indexOf(&quot;Texture&quot;) !== -1,
+            entries: [
+                {
+                    label: &quot;Say hello textures!&quot;,
+                    action: (entity) =&gt; alert(&quot;hello &quot; + entity.name)
+                }]
+        },
+        {
+            predicate: entity =&gt; entity.getClassName &amp;&amp; entity.getClassName().indexOf(&quot;Mesh&quot;) !== -1,
+            entries: [
+                {
+                    label: &quot;Say hello&quot;,
+                    action: (entity) =&gt; alert(&quot;hello &quot; + entity.name)
+                }]
+        }
+    ]
+});
+</code></pre>
+<p>Each predicate will be evaluated with all entites displayed in the scene explorer. If the predicate returns true, then the entries will be added to the entity&#39;s actions:</p>
+<p><img src="/img/features/debuglayer/exploreraddons.png" alt="explorer extensibility"></p>
+<h3><a name="inspector" class="anchor" href="#inspector"></a>Inspector</h3><p>You can also decide to add your own property controls to any property grid. To do so you can declare an array of inspectable properties:</p>
+<pre><code>var mesh = BABYLON.Mesh.CreateGround(&quot;ground1&quot;, 6, 6, 2, scene);
+
+mesh.myProperty = BABYLON.Color3.Red();
+
+mesh.inspectableCustomProperties = [
+    {
+        label: &quot;My property&quot;,
+        propertyName: &quot;myProperty&quot;,
+        type: BABYLON.InspectableType.Color3
+    }
+]
+</code></pre><p>The <code>inspectableCustomProperties</code> property can be found on:</p>
+<ul>
+<li>Nodes</li>
+<li>Materials</li>
+<li>Textures</li>
+<li>Skeletons</li>
+</ul>
+<p>You can set it up to an array of <code>IInspectable</code> which are defined by:</p>
+<ul>
+<li>a label</li>
+<li>a property name </li>
+<li>a type which could be <ul>
+<li>BABYLON.InspectableType.Checkbox</li>
+<li>BABYLON.InspectableType.Slider</li>
+<li>BABYLON.InspectableType.Color3</li>
+<li>BABYLON.InspectableType.Vector3</li>
+<li>BABYLON.InspectableType.Quaternion</li>
+<li>BABYLON.InspectableType.String</li>
+</ul>
+</li>
+<li>For sliders, you can specify <code>min</code>, <code>max</code> and <code>step</code></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/features/playground_debuglayer">The Inspector Features</a><br><a href="/How_To/customize_debug_layer">How To Customize the Inspector</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

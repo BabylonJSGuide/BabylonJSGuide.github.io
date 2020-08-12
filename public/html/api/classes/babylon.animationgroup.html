@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>AnimationGroup - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.animationgroup.html">AnimationGroup</a>
+					</li>
+				</ul>
+				<h1>AnimationGroup</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Use this class to create coordinated animations on multiple targets</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">AnimationGroup</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel">
+					<h3>Implements</h3>
+					<ul class="tsd-hierarchy">
+						<li><a href="../interfaces/babylon.idisposable.html" class="tsd-signature-type">IDisposable</a></li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Constructors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="babylon.animationgroup.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.animationgroup.html#name" class="tsd-kind-icon">name</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.animationgroup.html#onanimationendobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>End<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.animationgroup.html#onanimationgroupendobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>End<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.animationgroup.html#onanimationgrouploopobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Loop<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.animationgroup.html#onanimationgrouppauseobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Pause<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.animationgroup.html#onanimationgroupplayobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Play<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.animationgroup.html#onanimationloopobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Loop<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.animationgroup.html#uniqueid" class="tsd-kind-icon">unique<wbr>Id</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Accessors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.animationgroup.html#animatables" class="tsd-kind-icon">animatables</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.animationgroup.html#children" class="tsd-kind-icon">children</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.animationgroup.html#from" class="tsd-kind-icon">from</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.animationgroup.html#isadditive" class="tsd-kind-icon">is<wbr>Additive</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.animationgroup.html#isplaying" class="tsd-kind-icon">is<wbr>Playing</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.animationgroup.html#isstarted" class="tsd-kind-icon">is<wbr>Started</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.animationgroup.html#loopanimation" class="tsd-kind-icon">loop<wbr>Animation</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.animationgroup.html#speedratio" class="tsd-kind-icon">speed<wbr>Ratio</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.animationgroup.html#targetedanimations" class="tsd-kind-icon">targeted<wbr>Animations</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.animationgroup.html#to" class="tsd-kind-icon">to</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#addtargetedanimation" class="tsd-kind-icon">add<wbr>Targeted<wbr>Animation</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#clone" class="tsd-kind-icon">clone</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#dispose" class="tsd-kind-icon">dispose</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#getclassname" class="tsd-kind-icon">get<wbr>Class<wbr>Name</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#gotoframe" class="tsd-kind-icon">go<wbr>ToFrame</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#normalize" class="tsd-kind-icon">normalize</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#pause" class="tsd-kind-icon">pause</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#play" class="tsd-kind-icon">play</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#reset" class="tsd-kind-icon">reset</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#restart" class="tsd-kind-icon">restart</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#serialize" class="tsd-kind-icon">serialize</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#setweightforallanimatables" class="tsd-kind-icon">set<wbr>Weight<wbr>For<wbr>All<wbr>Animatables</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#start" class="tsd-kind-icon">start</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#stop" class="tsd-kind-icon">stop</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#syncallanimationswith" class="tsd-kind-icon">sync<wbr>All<wbr>Animations<wbr>With</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.animationgroup.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.animationgroup.html#makeanimationadditive" class="tsd-kind-icon">Make<wbr>Animation<wbr>Additive</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.animationgroup.html#parse" class="tsd-kind-icon">Parse</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Constructors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+						<a name="constructor" class="tsd-anchor"></a>
+						<h3>constructor</h3>
+						<a href="/playground/?code=constructor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">new <wbr>Animation<wbr>Group<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, scene<span class="tsd-signature-symbol">?: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.scene.html" class="tsd-signature-type">Scene</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Instantiates a new Animation Group.
+										This helps managing several animations at once.</p>
+									</div>
+									<dl class="tsd-comment-tags">
+										<dt>see</dt>
+										<dd><p><a href="https://doc.babylonjs.com/how_to/group">https://doc.babylonjs.com/how_to/group</a></p>
+										</dd>
+									</dl>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>name: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>Defines the name of the group</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> scene: <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.scene.html" class="tsd-signature-type">Scene</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>Defines the scene the group belongs to</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="name" class="tsd-anchor"></a>
+						<h3>name</h3>
+						<a href="/playground/?code=name" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The name of the animation group</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onanimationendobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Animation<wbr>End<wbr>Observable</h3>
+						<a href="/playground/?code=onAnimationEndObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>End<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.targetedanimation.html" class="tsd-signature-type">TargetedAnimation</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This observable will notify when one animation have ended</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onanimationgroupendobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Animation<wbr>Group<wbr>End<wbr>Observable</h3>
+						<a href="/playground/?code=onAnimationGroupEndObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>End<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This observable will notify when all animations have ended.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onanimationgrouploopobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Animation<wbr>Group<wbr>Loop<wbr>Observable</h3>
+						<a href="/playground/?code=onAnimationGroupLoopObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Loop<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observer raised when all animations have looped</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onanimationgrouppauseobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Animation<wbr>Group<wbr>Pause<wbr>Observable</h3>
+						<a href="/playground/?code=onAnimationGroupPauseObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Pause<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This observable will notify when all animations have paused.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onanimationgroupplayobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Animation<wbr>Group<wbr>Play<wbr>Observable</h3>
+						<a href="/playground/?code=onAnimationGroupPlayObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Play<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This observable will notify when all animations are playing.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onanimationloopobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Animation<wbr>Loop<wbr>Observable</h3>
+						<a href="/playground/?code=onAnimationLoopObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Loop<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.targetedanimation.html" class="tsd-signature-type">TargetedAnimation</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observer raised when one animation loops</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="uniqueid" class="tsd-anchor"></a>
+						<h3>unique<wbr>Id</h3>
+						<a href="/playground/?code=uniqueId" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">unique<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets or sets the unique id of the node</p>
+							</div>
+						</div>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Accessors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="animatables" class="tsd-anchor"></a>
+						<h3>animatables</h3>
+						<a href="/playground/?code=animatables" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> animatables<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.animatable.html" class="tsd-signature-type">Animatable</a><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>returning the list of animatables controlled by this animation group.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.animatable.html" class="tsd-signature-type">Animatable</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="children" class="tsd-anchor"></a>
+						<h3>children</h3>
+						<a href="/playground/?code=children" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> children<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.targetedanimation.html" class="tsd-signature-type">TargetedAnimation</a><span class="tsd-signature-symbol">[]</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the list of target animations</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.targetedanimation.html" class="tsd-signature-type">TargetedAnimation</a><span class="tsd-signature-symbol">[]</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="from" class="tsd-anchor"></a>
+						<h3>from</h3>
+						<a href="/playground/?code=from" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> from<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the first frame</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="isadditive" class="tsd-anchor"></a>
+						<h3>is<wbr>Additive</h3>
+						<a href="/playground/?code=isAdditive" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isAdditive<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> isAdditive<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets or sets if all animations should be evaluated additively</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets or sets if all animations should be evaluated additively</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>value: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="isplaying" class="tsd-anchor"></a>
+						<h3>is<wbr>Playing</h3>
+						<a href="/playground/?code=isPlaying" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isPlaying<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets a value indicating that the current group is playing</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="isstarted" class="tsd-anchor"></a>
+						<h3>is<wbr>Started</h3>
+						<a href="/playground/?code=isStarted" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isStarted<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Define if the animations are started</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="loopanimation" class="tsd-anchor"></a>
+						<h3>loop<wbr>Animation</h3>
+						<a href="/playground/?code=loopAnimation" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> loopAnimation<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> loopAnimation<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets or sets if all animations should loop or not</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets or sets if all animations should loop or not</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>value: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="speedratio" class="tsd-anchor"></a>
+						<h3>speed<wbr>Ratio</h3>
+						<a href="/playground/?code=speedRatio" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> speedRatio<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> speedRatio<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets or sets the speed ratio to use for all animations</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets or sets the speed ratio to use for all animations</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>value: <span class="tsd-signature-type">number</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="targetedanimations" class="tsd-anchor"></a>
+						<h3>targeted<wbr>Animations</h3>
+						<a href="/playground/?code=targetedAnimations" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> targetedAnimations<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.targetedanimation.html" class="tsd-signature-type">TargetedAnimation</a><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the targeted animations for this animation group</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.targetedanimation.html" class="tsd-signature-type">TargetedAnimation</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="to" class="tsd-anchor"></a>
+						<h3>to</h3>
+						<a href="/playground/?code=to" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> to<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the last frame</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="addtargetedanimation" class="tsd-anchor"></a>
+						<h3>add<wbr>Targeted<wbr>Animation</h3>
+						<a href="/playground/?code=addTargetedAnimation" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">add<wbr>Targeted<wbr>Animation<span class="tsd-signature-symbol">(</span>animation<span class="tsd-signature-symbol">: </span><a href="babylon.animation.html" class="tsd-signature-type">Animation</a>, target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.targetedanimation.html" class="tsd-signature-type">TargetedAnimation</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Add an animation (with its target) in the group</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>animation: <a href="babylon.animation.html" class="tsd-signature-type">Animation</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the animation we want to add</p>
+										</div>
+									</li>
+									<li>
+										<h5>target: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the target of the animation</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.targetedanimation.html" class="tsd-signature-type">TargetedAnimation</a></h4>
+								<p>the TargetedAnimation object</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="clone" class="tsd-anchor"></a>
+						<h3>clone</h3>
+						<a href="/playground/?code=clone" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span>newName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, targetConverter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Clone the current animation group and returns a copy</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>newName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the name of the new group</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> targetConverter: <span class="tsd-signature-type">function</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines an optional function used to convert current animation targets to new ones</p>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>oldTarget<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>oldTarget: <span class="tsd-signature-type">any</span></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the new aniamtion group</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="dispose" class="tsd-anchor"></a>
+						<h3>dispose</h3>
+						<a href="/playground/?code=dispose" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+									<p>Implementation of <a href="../interfaces/babylon.idisposable.html">IDisposable</a>.<a href="../interfaces/babylon.idisposable.html#dispose">dispose</a></p>
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Dispose all associated resources</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="getclassname" class="tsd-anchor"></a>
+						<h3>get<wbr>Class<wbr>Name</h3>
+						<a href="/playground/?code=getClassName" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">get<wbr>Class<wbr>Name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns the string &quot;AnimationGroup&quot;</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+								<p>&quot;AnimationGroup&quot;</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="gotoframe" class="tsd-anchor"></a>
+						<h3>go<wbr>ToFrame</h3>
+						<a href="/playground/?code=goToFrame" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">go<wbr>ToFrame<span class="tsd-signature-symbol">(</span>frame<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Goes to a specific frame in this animation group</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>frame: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the frame number to go to</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animationGroup</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="normalize" class="tsd-anchor"></a>
+						<h3>normalize</h3>
+						<a href="/playground/?code=normalize" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">normalize<span class="tsd-signature-symbol">(</span>beginFrame<span class="tsd-signature-symbol">?: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span>, endFrame<span class="tsd-signature-symbol">?: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>This function will normalize every animation in the group to make sure they all go from beginFrame to endFrame
+										It can add constant keys at begin or end</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> beginFrame: <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the new begin frame for all animations or the smallest begin frame of all animations if null (defaults to null)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> endFrame: <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the new end frame for all animations or the largest end frame of all animations if null (defaults to null)</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animation group</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="pause" class="tsd-anchor"></a>
+						<h3>pause</h3>
+						<a href="/playground/?code=pause" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">pause<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Pause all animations</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animation group</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="play" class="tsd-anchor"></a>
+						<h3>play</h3>
+						<a href="/playground/?code=play" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">play<span class="tsd-signature-symbol">(</span>loop<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Play all animations to initial state
+										This function will start() the animations if they were not started or will restart() them if they were paused</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> loop: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines if animations must loop</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animation group</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="reset" class="tsd-anchor"></a>
+						<h3>reset</h3>
+						<a href="/playground/?code=reset" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">reset<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Reset all animations to initial state</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animation group</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="restart" class="tsd-anchor"></a>
+						<h3>restart</h3>
+						<a href="/playground/?code=restart" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">restart<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Restart animations from key 0</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animation group</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="serialize" class="tsd-anchor"></a>
+						<h3>serialize</h3>
+						<a href="/playground/?code=serialize" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">serialize<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Serializes the animationGroup to an object</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+								<p>Serialized object</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="setweightforallanimatables" class="tsd-anchor"></a>
+						<h3>set<wbr>Weight<wbr>For<wbr>All<wbr>Animatables</h3>
+						<a href="/playground/?code=setWeightForAllAnimatables" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">set<wbr>Weight<wbr>For<wbr>All<wbr>Animatables<span class="tsd-signature-symbol">(</span>weight<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Set animation weight for all animatables</p>
+									</div>
+									<dl class="tsd-comment-tags">
+										<dt>see</dt>
+										<dd><p><a href="https://doc.babylonjs.com/babylon101/animations#animation-weights">https://doc.babylonjs.com/babylon101/animations#animation-weights</a></p>
+										</dd>
+									</dl>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>weight: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the weight to use</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animationGroup</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="start" class="tsd-anchor"></a>
+						<h3>start</h3>
+						<a href="/playground/?code=start" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span>loop<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, speedRatio<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, from<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, to<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, isAdditive<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Start all animations on given targets</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> loop: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines if animations must loop</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> speedRatio: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the ratio to apply to animation speed (1 by default)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> from: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the from key (optional)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> to: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the to key (optional)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> isAdditive: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the additive state for the resulting animatables (optional)</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the current animation group</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="stop" class="tsd-anchor"></a>
+						<h3>stop</h3>
+						<a href="/playground/?code=stop" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Stop all animations</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animation group</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="syncallanimationswith" class="tsd-anchor"></a>
+						<h3>sync<wbr>All<wbr>Animations<wbr>With</h3>
+						<a href="/playground/?code=syncAllAnimationsWith" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">sync<wbr>All<wbr>Animations<wbr>With<span class="tsd-signature-symbol">(</span>root<span class="tsd-signature-symbol">: </span><a href="babylon.animatable.html" class="tsd-signature-type">Animatable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Synchronize and normalize all animatables with a source animatable</p>
+									</div>
+									<dl class="tsd-comment-tags">
+										<dt>see</dt>
+										<dd><p><a href="https://doc.babylonjs.com/babylon101/animations#animation-weights">https://doc.babylonjs.com/babylon101/animations#animation-weights</a></p>
+										</dd>
+									</dl>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>root: <a href="babylon.animatable.html" class="tsd-signature-type">Animatable</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the root animatable to synchronize with</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>the animationGroup</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="tostring" class="tsd-anchor"></a>
+						<h3>to<wbr>String</h3>
+						<a href="/playground/?code=toString" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">to<wbr>String<span class="tsd-signature-symbol">(</span>fullDetails<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a detailled string about the object</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> fullDetails: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines if the output string will support multiple levels of logging within scene loading</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+								<p>a string representing the object</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="makeanimationadditive" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Make<wbr>Animation<wbr>Additive</h3>
+						<a href="/playground/?code=MakeAnimationAdditive" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Make<wbr>Animation<wbr>Additive<span class="tsd-signature-symbol">(</span>sourceAnimationGroup<span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a>, referenceFrame<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, range<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, cloneOriginal<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, clonedName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Convert the keyframes for all animations belonging to the group to be relative to a given reference frame.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>sourceAnimationGroup: <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the AnimationGroup containing animations to convert</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> referenceFrame: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the frame that keyframes in the range will be relative to</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> range: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the name of the AnimationRange belonging to the animations in the group to convert</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> cloneOriginal: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines whether or not to clone the group and convert the clone or convert the original group (default is false)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> clonedName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the name of the resulting cloned AnimationGroup if cloneOriginal is true</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>a new AnimationGroup if cloneOriginal is true or the original AnimationGroup if cloneOriginal is false</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="parse" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Parse</h3>
+						<a href="/playground/?code=Parse" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Parse<span class="tsd-signature-symbol">(</span>parsedAnimationGroup<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, scene<span class="tsd-signature-symbol">: </span><a href="babylon.scene.html" class="tsd-signature-type">Scene</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns a new AnimationGroup object parsed from the source provided.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>parsedAnimationGroup: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the source</p>
+										</div>
+									</li>
+									<li>
+										<h5>scene: <a href="babylon.scene.html" class="tsd-signature-type">Scene</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the scene that will receive the animationGroup</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.animationgroup.html" class="tsd-signature-type">AnimationGroup</a></h4>
+								<p>a new AnimationGroup</p>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace">
+							<a href="babylon.animationgroup.html" class="tsd-kind-icon">Animation<wbr>Group</a>
+							<ul>
+								<li class=" tsd-kind-constructor tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#constructor" class="tsd-kind-icon">constructor</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#name" class="tsd-kind-icon">name</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#onanimationendobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>End<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#onanimationgroupendobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>End<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#onanimationgrouploopobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Loop<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#onanimationgrouppauseobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Pause<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#onanimationgroupplayobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Group<wbr>Play<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#onanimationloopobservable" class="tsd-kind-icon">on<wbr>Animation<wbr>Loop<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#uniqueid" class="tsd-kind-icon">unique<wbr>Id</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#animatables" class="tsd-kind-icon">animatables</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#children" class="tsd-kind-icon">children</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#from" class="tsd-kind-icon">from</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#isadditive" class="tsd-kind-icon">is<wbr>Additive</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#isplaying" class="tsd-kind-icon">is<wbr>Playing</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#isstarted" class="tsd-kind-icon">is<wbr>Started</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#loopanimation" class="tsd-kind-icon">loop<wbr>Animation</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#speedratio" class="tsd-kind-icon">speed<wbr>Ratio</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#targetedanimations" class="tsd-kind-icon">targeted<wbr>Animations</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#to" class="tsd-kind-icon">to</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#addtargetedanimation" class="tsd-kind-icon">add<wbr>Targeted<wbr>Animation</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#clone" class="tsd-kind-icon">clone</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#dispose" class="tsd-kind-icon">dispose</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#getclassname" class="tsd-kind-icon">get<wbr>Class<wbr>Name</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#gotoframe" class="tsd-kind-icon">go<wbr>ToFrame</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#normalize" class="tsd-kind-icon">normalize</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#pause" class="tsd-kind-icon">pause</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#play" class="tsd-kind-icon">play</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#reset" class="tsd-kind-icon">reset</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#restart" class="tsd-kind-icon">restart</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#serialize" class="tsd-kind-icon">serialize</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#setweightforallanimatables" class="tsd-kind-icon">set<wbr>Weight<wbr>For<wbr>All<wbr>Animatables</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#start" class="tsd-kind-icon">start</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#stop" class="tsd-kind-icon">stop</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#syncallanimationswith" class="tsd-kind-icon">sync<wbr>All<wbr>Animations<wbr>With</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.animationgroup.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.animationgroup.html#makeanimationadditive" class="tsd-kind-icon">Make<wbr>Animation<wbr>Additive</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.animationgroup.html#parse" class="tsd-kind-icon">Parse</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

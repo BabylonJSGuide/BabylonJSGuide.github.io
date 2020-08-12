@@ -1,0 +1,87 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Transform Coordinates - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Transform Coordinates</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-to-use-coordinate-transformation">How To Use Coordinate Transformation</a><ul>
+<li><a href="#satellite">Satellite</a></li>
+<li><a href="#disc-world">Disc World</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="transformation-chapter-page-7" class="anchor" href="#transformation-chapter-page-7"></a>Transformation Chapter Page 7</h1><h1><a name="how-to-use-coordinate-transformation" class="anchor" href="#how-to-use-coordinate-transformation"></a>How To Use Coordinate Transformation</h1><p>The <em>TransformCoordinates</em> function takes a position vector in one frame of reference and places it in another frame of reference using the matrix that transforms one frame of reference into the other.</p>
+<p>You are able to use the world matrix of a mesh to transform position vectors, and only position vectors, from a mesh&#39;s <strong>local space</strong> coordinates to the <strong>world space</strong> coordinates. For example</p>
+<pre><code class="lang-javascript">var matrix = mesh.computeWorldMatrix(true); //true forces a recalculation rather than using cache version
+var local_position = new BABYLON.Vector3(0, 1, 0);
+var global_position = BABYLON.Vector3.TransformCoordinates(local_position, matrix);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TRAIXW">Playground Example - TransformCoordinates</a> - <i class="fa fa-eye" onclick="createIframe('TRAIXW#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Should you want to translate the local_position, in the above example, its current local position of (0, 1, 0) by (1, 1, 1) then this must be done to the local position before applying <code>TransformCoodinates</code> since this only transforms position vectors not direction vectors.</p>
+<pre><code class="lang-javascript">var matrix = mesh.computeWorldMatrix(true);
+var local_position = new BABYLON.Vector3(0,1,0);
+local_position.addInPlace(new BABYLON.Vector3(1, 1, 1));
+var global_position = BABYLON.Vector3.TransformCoordinates(local_position, matrix);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TRAIXW#1">Playground Example - TransformCoordinates with a Translation</a> - <i class="fa fa-eye" onclick="createIframe('TRAIXW#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Potential uses of <code>BABYLON.Vector3.TransformCoordinates()</code> may be:</p>
+<ul>
+<li>setting the position and speed of a mesh relative to another, without the use of parenting
+(e.g. a spaceship shooting missiles)</li>
+<li>applying a projection matrix to a world position vector to end up with a screen-space position vector</li>
+</ul>
+<h2><a name="satellite" class="anchor" href="#satellite"></a>Satellite</h2><p>Take a box that is rotating and translating from the top of which emerges a smaller box and travels in a direction always perpendicular to the top face of the box. </p>
+<p>In the local coordinate system of the box the up direction is (0, 1, 0) and so locally the position of anything travelling in that direction will be (0, y, 0).</p>
+<p>Knowing the world matrix of the box, for any frame, it can then be applied to the vector (0, y, 0) position of the smaller box to determine the world position of the smaller box for that frame.</p>
+<p>Obtaining the world matrix for the box inside a <em>registerAfterRender</em> loop means that the world matrix will already have been obtained for the box and you can get it directly.</p>
+<p>To match the orientation of the smaller box to the box whatever rotation has been applied to the box has to be re-applied to the smaller box. The easiest way to do this is to re-use the _rotate_methods applied to the box to the small box.</p>
+<p>The following code gives the animation.</p>
+<pre><code class="lang-javascript">    scene.registerAfterRender(function () {
+        box.rotate(BABYLON.Axis.Y, Math.PI / 150, BABYLON.Space.LOCAL);
+        box.rotate(BABYLON.Axis.X, Math.PI / 200, BABYLON.Space.LOCAL);
+        box.translate(new BABYLON.Vector3(-1, -1, -1).normalize(), 0.001, BABYLON.Space.WORLD)
+        small.rotationQuaternion = box.rotationQuaternion;
+        matrix = box.getWorldMatrix();
+        y += 0.001;
+        local_pos = new BABYLON.Vector3(0, y, 0);
+        small.position = BABYLON.Vector3.TransformCoordinates(local_pos, matrix);
+
+    })
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TRAIXW#2">Playground Animation - TransformCoordinates</a> - <i class="fa fa-eye" onclick="createIframe('TRAIXW#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="disc-world" class="anchor" href="#disc-world"></a>Disc World</h2><p>Imagine a disc flying around space with building on it. In fact the following example uses a thin cylinder as the disc since the top circular face is horizontal whilst the face of a disc in Babylon.js is vertical. (OK it does make any real difference but it more natural to start with a horizontal ground).</p>
+<p>The building will be an array of boxes. Leaving the boxes as separate meshes would mean applying the <em>TransformCoordinates</em> function to each of them, so instead they will be merged into one mesh. As in the example above the rotation of the disc and the boxes are matched and the coordinate position of the boxes transformed.</p>
+<pre><code class="lang-javascript">    var phi = 0;
+    scene.registerAfterRender(function () {
+        matrix = disc.getWorldMatrix();
+        disc.rotate(BABYLON.Axis.Y, Math.PI / 150, BABYLON.Space.LOCAL);
+        disc.rotate(BABYLON.Axis.Z, Math.PI / 200, BABYLON.Space.LOCAL);
+        disc.position = new BABYLON.Vector3(15 * Math.cos(phi), 16 * Math.sin(phi), 5)
+        boxes.rotationQuaternion = disc.rotationQuaternion;
+        boxes.position = BABYLON.Vector3.TransformCoordinates(boxes_position, matrix);
+        phi +=0.01;
+
+    });
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TRAIXW#5">Playground Animation - Disc World</a> - <i class="fa fa-eye" onclick="createIframe('TRAIXW#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><a href="/resources/rotation_conventions">Prev</a>  Euler Angles and Rotation Quaternions<br><a href="/resources/Frame_Of_Reference">Next</a> Frame of Reference</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

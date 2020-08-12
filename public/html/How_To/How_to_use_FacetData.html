@@ -1,0 +1,211 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Facet Data - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Facet Data</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#what-is-facetdata">What is FacetData ?</a></li>
+<li><a href="#what-is-a-mesh-facet">What is a mesh facet ?</a></li>
+<li><a href="#how-to-enable-the-facet-data">How to enable the facet data ?</a></li>
+<li><a href="#the-facet-data-tools">The facet data tools</a><ul>
+<li><a href="#facet-position">Facet position</a></li>
+<li><a href="#facet-normal">Facet normal</a><ul>
+<li><a href="#note">Note</a></li>
+<li><a href="#examples">Examples :</a></li>
+</ul>
+</li>
+<li><a href="#mesh-partitioning">Mesh partitioning</a><ul>
+<li><a href="#note">Note</a></li>
+<li><a href="#example">Example</a></li>
+</ul>
+</li>
+<li><a href="#tweaking-the-partitioning">Tweaking the partitioning</a></li>
+<li><a href="#updating-facet-data">Updating Facet Data</a></li>
+<li><a href="#facet-depth-sort">Facet Depth Sort</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="facet-data" class="anchor" href="#facet-data"></a>Facet Data</h1><h2><a name="what-is-facetdata" class="anchor" href="#what-is-facetdata"></a>What is FacetData ?</h2><p>FacetData is a feature that can be enabled on a mesh.<br>As it requires some extra memory, it&#39;s not enabled by default.<br>This feature provides some methods and properties to access each facet of a mesh, like the facet positions, normals or the ability to retrieve all of a mesh facets in a given zone of the world space.</p>
+<h2><a name="what-is-a-mesh-facet" class="anchor" href="#what-is-a-mesh-facet"></a>What is a mesh facet ?</h2><p>We use here the term &quot;facet&quot; in order to be not confused with the term &quot;face&quot;.<br>A mesh can have some planar faces. For example, a box has 6 sides, so 6 planar squared faces. Each of its faces are drawn at the WebGL level with 2 triangles.<br>We call &quot;facets&quot; these elementary triangles. </p>
+<h2><a name="how-to-enable-the-facet-data" class="anchor" href="#how-to-enable-the-facet-data"></a>How to enable the facet data ?</h2><p>The feature <code>facetData</code> can work for any mesh whatever it is created from BJS provided shapes (box, sphere, cylinder, tube, parametric shapes, etc), cloned ones or instances, merged ones or imported ones from an external source (Blender, etc).<br>To enable this feature, just call once <code>updateFacetData()</code>.<br>If the mesh belongs to some parent-child relationship, the feature is then not enabled for its parents or children.  </p>
+<pre><code class="lang-javascript">var mesh = BABYLON.MeshBuilder.CreateTorusKnot(&quot;t&quot;, {radius: 2.0}, scene);
+mesh.updateFacetData();
+console.log(mesh.facetNb);
+</code></pre>
+<p>As soon as the feature is enabled, you can get the mesh total number of facets with the read-only property <code>.facetNb</code>.  </p>
+<p>The method <code>updateFacetData()</code> creates two permanent arrays : the mesh facet positions and facet normals.<br>Moreover, it logically divides the mesh according to some partitioning and stores all the facets in this partitioning.<br>Unless the mesh is updated or morphed afterwards, you don&#39;t need to call this method anymore once it has been done.<br>If you don&#39;t need this feature any longer, you can disabled it to release the memory with <code>mesh.disableFacetData()</code>.  </p>
+<pre><code class="lang-javascript">mesh.updateFacetData();
+console.log(mesh.isFacetDataEnabled);  // displays &quot;true&quot;
+mesh.disableFacetData();
+console.log(mesh.isFacetDataEnabled);  // displays &quot;false&quot;
+</code></pre>
+<p>The read-only property <code>.isFacetDataEnabled</code> returns the current state of the feature.<br>Note that disposing the mesh will automatically disable its facet data.  </p>
+<h2><a name="the-facet-data-tools" class="anchor" href="#the-facet-data-tools"></a>The facet data tools</h2><h3><a name="facet-position" class="anchor" href="#facet-position"></a>Facet position</h3><p>The position of a facet is the position of its barycenter.<br>You can get the position of the i-th facet of a mesh with <code>getFacetPosition(i)</code>. This returns a new <code>Vector3</code> that is the world coordinates of the facet center.  </p>
+<pre><code class="lang-javascript">var pos = mesh.getFacetPosition(50); // returns the world position of the mesh 50th facet
+</code></pre>
+<p>If you don&#39;t want to allocate a new <code>Vector3</code> per call, you can use <code>getFacetPositionToRef(i, ref)</code> instead.</p>
+<pre><code class="lang-javascript">var pos = BABYLON.Vector3.Zero();
+mesh.getFacetPositionToRef(50, pos); // stores the facet world position in the variable &quot;pos&quot;
+</code></pre>
+<p>Actually, in the internal array containing the facet positions, all the stored coordinates are computed in the mesh local space.<br>If you need to get some facet local position, call <code>getFacetLocalPositions()</code> to get the array of the facet positions, then access the i-th element.  </p>
+<pre><code class="lang-javascript">var localPositions = mesh.getFacetLocalPositions(); // returns the array of facet positions in the local space
+var localPos = localPositions[50];                  // Vector3 : the 50th facet local position
+</code></pre>
+<h3><a name="facet-normal" class="anchor" href="#facet-normal"></a>Facet normal</h3><p>The normal of a facet is the normalized vector orthogonal to the facet plane.<br>You can get the normal of the i-th facet of a mesh with <code>getFacetNormal(i)</code>. This returns a new <code>Vector3</code> that is the world coordinates of the facet normal.  </p>
+<pre><code class="lang-javascript">var norm = mesh.getFacetNormal(50); // returns the world normal of the mesh 50th facet
+</code></pre>
+<p>If you don&#39;t want to allocate a new <code>Vector3</code> per call, you can use <code>getFacetNormalToRef(i, ref)</code> instead.</p>
+<pre><code class="lang-javascript">var norm = BABYLON.Vector3.Zero();
+mesh.getFacetNormalToRef(50, norm); // stores the facet world normal in the variable &quot;norm&quot;
+</code></pre>
+<p>Like for the positions, in the internal array containing the facet normals, all the stored coordinates are computed in the mesh local space.<br>If you need to get some facet local normal, call <code>getFacetLocalNormals()</code> to get the array of the facet local normals, then access the i-th element.  </p>
+<pre><code class="lang-javascript">var localNormals = mesh.getFacetLocalNormals();   // returns the array of facet normals in the local space
+var localPos = localNormals[50];                  // Vector3 : the 50th facet local position
+</code></pre>
+<h4><a name="note" class="anchor" href="#note"></a>Note</h4><p>All the methods dealing with the world coordinates use the mesh world matrix. As you may know, this matrix is automatically computed on the render call.<br>If you&#39;ve just moved, scaled or rotated your mesh before calling the facetData methods using the world values and you&#39;re not sure about this, you can ever force the world matrix computation.  </p>
+<pre><code class="lang-javascript">mesh.rotate.y += 0.2;               // the mesh will be rotated on the next render call, but I need a rotated normal
+mesh.computeWorldMatrix(true);      // force the world matrix computation
+var norm = mesh.getFacetNormal(50); // returns the world normal of the mesh 50th facet
+</code></pre>
+<h4><a name="examples" class="anchor" href="#examples"></a>Examples :</h4><p>Displaying all the facet normals of an icosphere :  <a href="https://www.babylonjs-playground.com/#1YTZAC">https://www.babylonjs-playground.com/#1YTZAC</a> - <i class="fa fa-eye" onclick="createIframe('1YTZAC#', this)"></i><div class="iframeContainer"></div><br>Just change the mesh shape, torus knot :  <a href="https://www.babylonjs-playground.com/#1YTZAC#1">https://www.babylonjs-playground.com/#1YTZAC#1</a> - <i class="fa fa-eye" onclick="createIframe('1YTZAC#1', this)"></i><div class="iframeContainer"></div><br>Smarter : set a box at a distance of 2 from the mesh 10th facet and keep it there, even if the mesh rotates :  <a href="https://www.babylonjs-playground.com/#1YTZAC#3">https://www.babylonjs-playground.com/#1YTZAC#3</a> - <i class="fa fa-eye" onclick="createIframe('1YTZAC#3', this)"></i><div class="iframeContainer"></div><br>Of course, you can add some translation to the mesh and even some rotation to the box :  <a href="https://www.babylonjs-playground.com/#1YTZAC#4">https://www.babylonjs-playground.com/#1YTZAC#4</a> - <i class="fa fa-eye" onclick="createIframe('1YTZAC#4', this)"></i><div class="iframeContainer"></div>   </p>
+<p>Note also that the facet index is the same than the facet id <code>faceId</code> used by the pickingInfo object or the <code>faceId</code> used by the SPS when pickable.<br>Here is an example combining pickingInfo, pickable SPS and facetData facet index :  <a href="https://www.babylonjs-playground.com/#2FPT1A#119">https://www.babylonjs-playground.com/#2FPT1A#119</a> - <i class="fa fa-eye" onclick="createIframe('2FPT1A#119', this)"></i><div class="iframeContainer"></div><br>Just click and the ball is positionned at the clicked facet position, not a the clicked point.    </p>
+<h3><a name="mesh-partitioning" class="anchor" href="#mesh-partitioning"></a>Mesh partitioning</h3><p>The feature <code>facetData</code> provides also another tool called the mesh partitioning.<br>The mesh is logically divided in 3D blocks aligned with the X, Y and Z axis in its local space.<br>Here&#39;s an illustration about how this logical partitioning looks like (please wait until the skull is downloaded) :  <a href="https://www.babylonjs-playground.com/#UZGNA#5">https://www.babylonjs-playground.com/#UZGNA#5</a> - <i class="fa fa-eye" onclick="createIframe('UZGNA#5', this)"></i><div class="iframeContainer"></div>
+In order to improve the visibility, the planes along the axis Z weren&#39;t displayed.<br>As you can see, there are by default 10 subdivisions on each axis.<br>When you call <code>updateFacetData()</code>, the indexes of the all the facets are sorted in the partioning array according to the facet belonging to each block.  </p>
+<p>Thus you can get all the facet indexes from some local coordinates <em>(x, y, z)</em> with <code>getFacetsAtLocalCoordinates(x, y, z)</code>.  </p>
+<pre><code class="lang-javascript">var indexes = mesh.getFacetsAtLocalCoordinates(x, y, z);    // returns an array containing the facet indexes
+if (indexes != null) {
+    var worldPos = mesh.getFacetPosition(indexes[0]);       // the world position of the first facet in the block
+}
+</code></pre>
+<p>This method returns an array containing the indexes of the facet belonging to the block containing the point at the coordinates <em>(x, y, z)</em>.<br>If <em>(x, y, z)</em> aren&#39;t in any block or if there&#39;s no facet in the block containing <em>(x, y, z)</em>, it returns <code>null</code>.<br>So you can retrieve this way all the facets near some position and do your own treatment.<br>This method can be called as many times you need, even in the render loop. It doesn&#39;t allocate any object in memory.    </p>
+<p>Sometimes you don&#39;t need all the facets from a given block but only the closest facet to some world, but not local, coordinates.<br>You can then use the method <code>getClosestFacetAtCoordinates(x, y, z)</code> what returns the index of the closest facet to the World coordinates <em>(x, y, z)</em>.  </p>
+<pre><code class="lang-javascript">var index = mesh.getClosestFacetAtCoordinates(x, y, z); // returns the index of the closest facet to (x, y, z)
+if (index != null) {
+    var worldPos = mesh.getFacetPosition(index);   // the world position of this facet
+}
+</code></pre>
+<p>The method returns just the index of the closest facet, if any.<br>Actually the world coordinates <em>(x, y, z)</em> are internally transformed to local coordinates in the mesh local system.<br>If these local coordinates aren&#39;t in any block or if there&#39;s no facet in this block, it returns <code>null</code>.<br>This method can be called as many times you need, even in the render loop.  </p>
+<p>This method can also compute for you the coordinates of the projection of <em>(x, y, z)</em> on the closest facet plane. You can imagine this projection point as the contact point of <em>(x, y, z)</em> on the facet, or the nearest point from <em>(x, y, z)</em> on the facet.<br>Just pass it a<code>Vector3</code> as a reference :</p>
+<pre><code class="lang-javascript">var projected = BABYLON.Vector3.Zero();
+var index = mesh.getClosestFacetAtCoordinates(x, y, z, projected); // sets the point &quot;projected&quot; world coordinates
+if (index != null) {
+    var worldPos = mesh.getFacetPosition(index);              // the world position of this facet
+    // use the vector3 projected here ...
+}
+</code></pre>
+<p>You can even filter the returned facet index.<br>Imagine that you want only the facet &quot;facing&quot; the coordinates <em>(x, y, z)</em>, it is to say the facet of which the dot product normal * facetPosition_to_(x, y, z) is positive.  </p>
+<p>So just set the fifth parameter <code>checkFace</code> to <code>true</code> (default <code>false</code>) and the sixth parameter <code>facing?</code> to <code>true</code> (default <code>true</code>).  </p>
+<pre><code class="lang-javascript">var projected = BABYLON.Vector3.Zero();
+var index = mesh.getClosestFacetAtCoordinates(x, y, z, projected, true); // just the &quot;facing&quot; closest facet
+if (index != null) {
+    var worldPos = mesh.getFacetPosition(index);                    // the world position of this facet
+    // use the vector3 projected here ...
+}
+</code></pre>
+<p>On the contrary, if you just want the closest facet &quot;turning its back&quot; to <em>(x, y, z)</em>, set <code>checkFace</code> to <code>true</code> and <code>facing?</code> to <code>false</code>.  </p>
+<pre><code class="lang-javascript">var projected = BABYLON.Vector3.Zero();
+var index = mesh.getClosestFacetAtCoordinates(x, y, z, projected, true, false); // just the &quot;turning back&quot; closest facet
+if (index != null) {
+    var worldPos = mesh.getFacetPosition(index);                           // the world position of this facet
+    // use the vector3 projected here ...
+}
+</code></pre>
+<p>If you need it, this method exists also in the mesh local space. Everything is then expressed in the local space : <em>(x, y, z)</em> and the returned coordinates of the projected point.<br>Just call <code>getClosestFacetAtLocalCoordinates(x, y, z, projected, checkFace, facing?)</code> instead.  </p>
+<pre><code class="lang-javascript">var localProj = BABYLON.Vector3.Zero();
+var index = mesh.getClosestFacetAtLocalCoordinates(x, y, z, localProj); // local projection
+if (index != null) {
+    var worldPos = mesh.getFacetPosition(index);                    // the world position of this facet
+    // use the vector3 localProj here ...
+}
+</code></pre>
+<h4><a name="note" class="anchor" href="#note"></a>Note</h4><p>As said before, the returned facet indexes from all these former methods are the same values than the <code>PickingInfo</code> or pickable SPS <code>faceId</code> values. 
+So, you can easily mix all these features together. Ex : to get the facet normal from a picked mesh.  </p>
+<h4><a name="example" class="anchor" href="#example"></a>Example</h4><p>A rotating torus knot with facet data enabled and a Solid Particle System (SPS) moving balls with simple custom physics :  </p>
+<ul>
+<li>move the ball,</li>
+<li>get the torus closest facet to the particle,</li>
+<li><p>if any, bounce back the particle.    </p>
+<p><a href="https://www.babylonjs-playground.com/#7ATLX">https://www.babylonjs-playground.com/#7ATLX</a> - <i class="fa fa-eye" onclick="createIframe('7ATLX#', this)"></i><div class="iframeContainer"></div></p>
+</li>
+</ul>
+<h3><a name="tweaking-the-partitioning" class="anchor" href="#tweaking-the-partitioning"></a>Tweaking the partitioning</h3><p>By default, the partitioning is set to 10 subdivisions per axis. These subdivisions are applied to the mesh bounding box.<br>Actually, it&#39;s a bit smarter. It divides the biggest bounding box dimension by 10 and adjust the other ones to their ratio to this biggest.<br>Example : if the mesh is sized 200 on X, 100 on Z and 3 on Y, it will subdive X in 10 subdivisions, Z in 5 subdivisions and Y in only 1.<br>10 subdivisions is an arbitrary default value. You can change it according to your mesh geometry.<br>Just keep in mind these two principles :</p>
+<ul>
+<li>the subdivisions (blocks) must be bigger than the facets to get accurate results,</li>
+<li>the more subdivisions, the fastest the method <code>getClosestFacetAtCoordinates()</code>.  </li>
+</ul>
+<p>So if you deal with a huge mesh with plenty of very small facets like the BJS skull, you can easily set the subdivision number to 50, but if you deal with your own ribbon built with only one hundred big facets, you should probably reduce this number to 4.<br>To set the number of subdivisions, just use the property <code>.partitioningSubdivisions</code>. It will be taken in account at the next call to <code>updateFacetData()</code> and can be changed at will.  </p>
+<pre><code class="lang-javascript">mesh.partitioningSubdivisions = 50;  // set a bigger value than the default one (integer)
+mesh.updateFacetData();              // now the internal partitioning has 50 blocks per axis
+</code></pre>
+<p>You can also enlarge a bit the space used by the blocks to have a bigger &quot;detection zone&quot; (remember that if <em>(x, y, z)</em> is outside the block zone, the methods return <code>null</code>).<br>By default, the block area is 1% bigger than the mesh bounding box in order to keep a little space between the peripheric blocks and their contained facets.<br>You can set your own value with the property <code>.partitioningBBoxRatio</code> (default = 1.01). It will be taken in account at the next call to <code>updateFacetData()</code> and can be changed at will.  </p>
+<pre><code class="lang-javascript">mesh.partitioningBBoxRatio = 1.05;   // 5% bigger than the bounding box instead of 1% bigger
+mesh.updateFacetData();              // now the internal block area if 5% bigger than the bounding box
+</code></pre>
+<p>In order to understand, here are two examples :<br>ratio = 1.20 (20% bigger)   <a href="https://www.babylonjs-playground.com/#UZGNA#6">https://www.babylonjs-playground.com/#UZGNA#6</a> - <i class="fa fa-eye" onclick="createIframe('UZGNA#6', this)"></i><div class="iframeContainer"></div><br>ratio = 0.80  (20% smaller)  <a href="https://www.babylonjs-playground.com/#UZGNA#7">https://www.babylonjs-playground.com/#UZGNA#7</a> - <i class="fa fa-eye" onclick="createIframe('UZGNA#7', this)"></i><div class="iframeContainer"></div><br>Those examples aren&#39;t pertinent, because the values are too big or too small : the block area is too far from the mesh or inside the mesh.<br>Right values should keep between 1.0 and 1.10.  </p>
+<h3><a name="updating-facet-data" class="anchor" href="#updating-facet-data"></a>Updating Facet Data</h3><p>As said in the first part, you need to call once <code>updateFacetData()</code> to enable the feature.<br>This is enough if the mesh geometry keep unchanged afterwards.  </p>
+<p>Nonetheless, if you update or morph your mesh afterwards, you need to call <code>updateFacetData()</code> again to force the partitioning recomputation.  </p>
+<pre><code class="lang-javascript">var mesh = myBlenderImportedMesh;   // import some mesh from an external source
+mesh.updateFacetData();             // enable facetData
+// ... process here using the mesh with its current geometry and FacetData
+if (condition) {
+    customMorphFunction(mesh);      // update the mesh geometry
+    mesh.updateFacetData();         // update the facet data
+}
+</code></pre>
+<p><code>updateFacetData()</code> can be called on demand, even in the render loop. However this method as a CPU cost, actually exactly the same than the static method <code>ComputeNormals()</code>.<br>So if your mesh has a very huge amount of facets like the BJS skul, this can take some times.  </p>
+<p>Some of the provided BJS mesh types are updatable/morphable by their dedicated methods : the parametric shapes and the SPS.  </p>
+<ul>
+<li>the parametric shapes are updatable by calling again the method <code>CreateXXX()</code> with the parameter <code>instance</code>,</li>
+<li>the SPS is updated each call to <code>setParticles()</code>.</li>
+</ul>
+<p>For these specific types of updatable meshes, you don&#39;t need to call <code>updateFacetData()</code> by your own, if the feature is already enabled. 
+It will be done automatically, generally in an optimized way, inside the process loop of the mesh geometry update.  </p>
+<pre><code class="lang-javascript">var paths = someArrayOfPaths;
+var mesh = BABYLON.MeshBuilder.CreateRibbon(&quot;m&quot;, {pathArray: paths, updatable: true}, scene); // create an updatable ribbon
+mesh.updateFacetData();    // enable the feature once
+// morphing function : change the ribbon geometry
+var morphRibbon = function(k) {
+    for (var p = 0; p &lt; paths.length; p++) {
+        var path = paths[p];
+        for (var i = 0; i &lt; path.length) {
+            path[i].y = Math.sin(k) * Math.cos(i);
+        }
+    }
+}
+var k = 0.0;
+// render loop
+scene.registerBeforeRender(function() {
+    morphRibbon(k);                     // change the geometry
+    BABYLON.MeshBuilder.CreateRibbon(null, {pathArray: paths, instance: mesh}); // actually morph the ribbon
+    // No need for updateFacetData() here, CreateRibbon() just did it ... faster !
+    k += 0.01;
+});
+</code></pre>
+<p>Example :<br>Custom simple physics on a dynamically morphed ribbon :  <a href="https://www.babylonjs-playground.com/#XVGK0#3">https://www.babylonjs-playground.com/#XVGK0#3</a> - <i class="fa fa-eye" onclick="createIframe('XVGK0#3', this)"></i><div class="iframeContainer"></div>  </p>
+<h3><a name="facet-depth-sort" class="anchor" href="#facet-depth-sort"></a>Facet Depth Sort</h3><p> As you may know, for performance reasons, the facets of a given mesh are always drawn in the same order. This comes to visual issues when the mesh is transparent, concave and is no longer oriented in the right place from the camera :</p>
+<p><a href="https://playground.babylonjs.com/#FWKUY0">https://playground.babylonjs.com/#FWKUY0</a> - <i class="fa fa-eye" onclick="createIframe('FWKUY0#', this)"></i><div class="iframeContainer"></div> </p>
+<p>This new feature solves the self transparency issue by sorting the mesh facets from some location (the camera position by default) just before drawing them.<br>The mesh is <strong>required</strong> to be <code>updatable</code>.<br>The depth sort is done on each call to <code>updateFacetData()</code>. It can be disabled at any time to save CPU cycles if the mesh and the camera don&#39;t move any more.<br>Usage : </p>
+<pre><code class="lang-javascript">// the mesh must be updatable
+var mesh = BABYLON.MeshBuilder.CreateTorusKnot(&quot;mesh&quot;, {updatable: true}, scene);
+mesh.material = mat;                         // transparent material
+mesh.mustDepthSortFacets = true;             // enable the depth sort, can be disabled at any time
+
+scene.registerBeforeRender(function() {
+mesh.updateFacetData();     // sort the facets each frame
+</code></pre>
+<p>Example : <a href="https://playground.babylonjs.com/#FWKUY0#1">https://playground.babylonjs.com/#FWKUY0#1</a> - <i class="fa fa-eye" onclick="createIframe('FWKUY0#1', this)"></i><div class="iframeContainer"></div><br>Depth sorted on the left, standard on the right.  </p>
+<p>If don&#39;t need the depth sort once enabled, you can simply stop to call <code>updateFacetData()</code>.<br>If for some reasons, you still need to call <code>updateFacetData()</code> but you don&#39;t need the depth sort any longer, just disabled it with <code>mesh.mustDepthSortFacets = false</code>.<br>In both cases, the facet will keep the last given order.  </p>
+<p>Note that if your mesh is a SPS (Solid Particle System), it&#39;s better to not enable the facet depth sort in the same time than the particle depth sort, simply because the underlying sort is done twice, so more CPU used and no gain.<br>In this case, just choose what kind of sorting is better for you : at particle level (faster) or at facet level (more accurate).  </p>
+<p>As the facet depth sort reorganizes the mesh indices, it <strong>can&#39;t work</strong> with the MultiMaterials.   </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

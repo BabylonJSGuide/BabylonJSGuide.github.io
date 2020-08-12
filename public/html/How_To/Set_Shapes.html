@@ -1,0 +1,820 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Set Shapes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Set Shapes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-to-create-set-shapes-using-meshbuilder">How To Create Set Shapes using MeshBuilder</a><ul>
+<li><a href="#box">Box</a></li>
+<li><a href="#tiled-box">Tiled Box</a></li>
+<li><a href="#sphere">Sphere</a></li>
+<li><a href="#cylinder-or-cone">Cylinder or Cone</a></li>
+<li><a href="#plane">Plane</a></li>
+<li><a href="#tiled-plane">Tiled Plane</a></li>
+<li><a href="#disc-or-regular-polygon">Disc or Regular Polygon</a></li>
+<li><a href="#torus">Torus</a></li>
+<li><a href="#torus-knot">Torus Knot</a></li>
+<li><a href="#ground">Ground</a></li>
+<li><a href="#ground-from-a-height-map">Ground From a Height Map</a></li>
+<li><a href="#tiled-ground">Tiled Ground</a></li>
+</ul>
+</li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#how-to-make-the-most-of-options">How To Make the Most of Options</a></li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="set-shapes" class="anchor" href="#set-shapes"></a>Set Shapes</h1><p>These are shapes that usually already have names in everyday use and their form is well known. They are a box (or cuboid), a sphere, a cylinder, a cone, regular polygons, a plane and a specialist horizontal plane called the ground. Slightly less well known but also included in set shapes are ground from height map, tiled ground, a torus, a torus knot and the polyhedra.</p>
+<p>The <em>MeshBuilder</em> method uses a number of options that you can set or you can just settle for the default values. Whilst some options such as size or diameter have an obvious meaning others such as updatable or faceUV require <a href="#further-reading">Further Reading</a> to fully understand what they are and how to use them.</p>
+<h1><a name="how-to-create-set-shapes-using-meshbuilder" class="anchor" href="#how-to-create-set-shapes-using-meshbuilder"></a>How To Create Set Shapes using MeshBuilder</h1><p>To create all the set shapes you just follow the pattern </p>
+<pre><code class="lang-javascript">var mesh = BABYLON.MeshBuilder.Create&lt;Shape Name&gt;(&quot;name&quot;, options, scene);
+</code></pre>
+<h2><a name="box" class="anchor" href="#box"></a>Box</h2><p>Example :</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {height: 5}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size</td>
+<td><em>(number)</em> size of each box side</td>
+<td>1</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> height size, overwrites <em>size</em> option</td>
+<td>size</td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> width size, overwrites <em>size</em> option</td>
+<td>size</td>
+</tr>
+<tr>
+<td>depth</td>
+<td><em>(number)</em> depth size,  overwrites <em>size</em> option</td>
+<td>size</td>
+</tr>
+<tr>
+<td>faceColors</td>
+<td><em>(Color4[])</em> array of 6 <em>Color4</em>, one per box face</td>
+<td>Color4(1, 1, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>faceUV</td>
+<td><em>(Vector4[])</em> array of 6 <em>Vector4</em>, one per box face</td>
+<td>UVs(0, 0, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>wrap</td>
+<td><em>(boolean)</em> ( BJS 4.0 or &gt;) when true all vertical sides (0, 1, 2, 3) will apply image textures upright</td>
+<td>false</td>
+</tr>
+<tr>
+<td>topBaseAt</td>
+<td><em>(number)</em> (BJS 4.0 or &gt;) base of top touches side given 0, 1, 2, 3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>bottomBaseAt</td>
+<td><em>(number)</em> (BJS 4.0 or &gt;) base of bottom touches side given 0, 1, 2, 3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>frontUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+<tr>
+<td>backUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3QW4J1#1">Playground Example of a Box</a> - <i class="fa fa-eye" onclick="createIframe('3QW4J1#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="tiled-box" class="anchor" href="#tiled-box"></a>Tiled Box</h2><p>A <a href="/how_to/tiled#tiled-box">tiled box</a> is only available with MeshBuilder. The tile size, pattern and alignment of tiles will be the same for each face.<br>Example :</p>
+<pre><code class="lang-javascript">var tiledBox = BABYLON.MeshBuilder.CreateTiledBox(&quot;box&quot;, {size:5, tileSize:1}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size</td>
+<td><em>(number)</em> size of each box side</td>
+<td>1</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> height size, overwrites <em>size</em> option</td>
+<td>size</td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> width size, overwrites <em>size</em> option</td>
+<td>size</td>
+</tr>
+<tr>
+<td>depth</td>
+<td><em>(number)</em> depth size,  overwrites <em>size</em> option</td>
+<td>size</td>
+</tr>
+<tr>
+<td>tileSize</td>
+<td><em>(number)</em> size of each tile side</td>
+<td>1</td>
+</tr>
+<tr>
+<td>tileHeight</td>
+<td><em>(number)</em> tile height size, overwrites <em>tileSize</em> option</td>
+<td>tileSize</td>
+</tr>
+<tr>
+<td>tileWidth</td>
+<td><em>(number)</em> tile width size, overwrites <em>tileSize</em> option</td>
+<td>tileSize</td>
+</tr>
+<tr>
+<td>faceColors</td>
+<td><em>(Color4[])</em> array of 6 <em>Color4</em>, one per box face</td>
+<td>Color4(1, 1, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>faceUV</td>
+<td><em>(Vector4[])</em> array of 6 <em>Vector4</em>, one per box face</td>
+<td>UVs(0, 0, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>pattern</td>
+<td><em>(number)</em> how tiles are reflected or rotated on a face</td>
+<td>NO_FLIP</td>
+</tr>
+<tr>
+<td>alignVertical</td>
+<td><em>(number)</em> positions whole tiles at top, bottom or center of a face</td>
+<td>CENTER</td>
+</tr>
+<tr>
+<td>alignHorizontal</td>
+<td><em>(number)</em> positions whole tiles at left, right or center of a face</td>
+<td>CENTER</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#Z5JFSM#1">Playground Example of a Tiled Box</a> - <i class="fa fa-eye" onclick="createIframe('Z5JFSM#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="sphere" class="anchor" href="#sphere"></a>Sphere</h2><p>Different values for <em>diameterX</em>, <em>diameterY</em> and diameterZ_ lead to an ellipsoid.
+Example :</p>
+<pre><code class="lang-javascript">var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter: 2, diameterX: 3}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>segments</td>
+<td><em>(number)</em> number of horizontal segments</td>
+<td>32</td>
+</tr>
+<tr>
+<td>diameter</td>
+<td><em>(number)</em> diameter of the sphere</td>
+<td>1</td>
+</tr>
+<tr>
+<td>diameterX</td>
+<td><em>(number)</em> diameter on X axis, overwrites <em>diameter</em> option</td>
+<td>diameter</td>
+</tr>
+<tr>
+<td>diameterY</td>
+<td><em>(number)</em> diameter on Y axis, overwrites <em>diameter</em> option</td>
+<td>diameter</td>
+</tr>
+<tr>
+<td>diameterZ</td>
+<td><em>(number)</em> diameter on Z axis, overwrites <em>diameter</em> option</td>
+<td>diameter</td>
+</tr>
+<tr>
+<td>arc</td>
+<td><em>(number)</em> ratio of the circumference (latitude) between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>slice</td>
+<td><em>(number)</em> ratio of the height (longitude) between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>frontUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0, 0, 1,1)</td>
+</tr>
+<tr>
+<td>backUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0, 0, 1,1) </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#K6M44R#2">Playground Example of a Sphere</a> - <i class="fa fa-eye" onclick="createIframe('K6M44R#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="cylinder-or-cone" class="anchor" href="#cylinder-or-cone"></a>Cylinder or Cone</h2><p>If you set <em>diameterTop</em> to zero, you get a cone instead of a cylinder, with different values for <em>diameterTop</em> and <em>diameterBottom</em> you get a truncated cone.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">var cone = BABYLON.MeshBuilder.CreateCylinder(&quot;cone&quot;, {diameterTop: 0, tessellation: 4}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>height</td>
+<td><em>(number)</em> height of the cylinder</td>
+<td>2</td>
+</tr>
+<tr>
+<td>diameterTop</td>
+<td><em>(number)</em> diameter of the top cap, can be zero to create a cone, overwrites the <em>diameter</em> option</td>
+<td>1</td>
+</tr>
+<tr>
+<td>diameterBottom</td>
+<td><em>(number)</em> diameter of the bottom cap, can&#39;t be zero, overwrites the <em>diameter</em> option</td>
+<td>1</td>
+</tr>
+<tr>
+<td>diameter</td>
+<td><em>(number)</em> diameter of both caps</td>
+<td>1</td>
+</tr>
+<tr>
+<td>tessellation</td>
+<td><em>(number)</em> number of radial sides</td>
+<td>24</td>
+</tr>
+<tr>
+<td>subdivisions</td>
+<td><em>(number)</em> number of rings</td>
+<td>1</td>
+</tr>
+<tr>
+<td>faceColors</td>
+<td><em>(Color4[])</em> array of 3 <em>Color4</em>, 0 : bottom cap, 1 : cylinder tube, 2 : top cap</td>
+<td>Color4(1, 1, 1, 1) for each face</td>
+</tr>
+<tr>
+<td>faceUV</td>
+<td><em>(Vector4[])</em> array of 3 <em>Vector4</em>, 0 : bottom cap, 1 : cylinder tube, 2 : top cap</td>
+<td>UVs(0, 0, 1, 1) for each face</td>
+</tr>
+<tr>
+<td>arc</td>
+<td><em>(number)</em> ratio of the circumference between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>frontUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+<tr>
+<td>backUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#CWPN2T">Playground Example of a Cone</a> - <i class="fa fa-eye" onclick="createIframe('CWPN2T#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="plane" class="anchor" href="#plane"></a>Plane</h2><p>A flat surface parallel to XoY plane.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">var plane = BABYLON.MeshBuilder.CreatePlane(&quot;plane&quot;, {width: 5, size:5, tileSize:1}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size</td>
+<td><em>(number)</em> side size of the plane</td>
+<td>1</td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> size of the width</td>
+<td>size</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> size of the height</td>
+<td>size</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>sourcePlane</td>
+<td><em>(Plane)</em> source plane (math) the mesh will be transformed to</td>
+<td>null</td>
+</tr>
+<tr>
+<td>frontUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+<tr>
+<td>backUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#LXZPJK#1">Playground Example of a DOUBLESIDE Plane</a> - <i class="fa fa-eye" onclick="createIframe('LXZPJK#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="tiled-plane" class="anchor" href="#tiled-plane"></a>Tiled Plane</h2><p>A <a href="/how_to/tiled">tiled plane</a> is only available with MeshBuilder. The tile size, pattern and alignment of tiles can be set. </p>
+<p>Example :</p>
+<pre><code class="lang-javascript">var tiledPlane = BABYLON.MeshBuilder.CreateTiledPlane(&quot;plane&quot;, {width: 5}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size</td>
+<td><em>(number)</em> side size of the plane</td>
+<td>1</td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> size of the width</td>
+<td>size</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> size of the height</td>
+<td>size</td>
+</tr>
+<tr>
+<td>tileSize</td>
+<td><em>(number)</em> size of each tile side</td>
+<td>1</td>
+</tr>
+<tr>
+<td>tileHeight</td>
+<td><em>(number)</em> tile height size, overwrites <em>tileSize</em> option</td>
+<td>tileSize</td>
+</tr>
+<tr>
+<td>tileWidth</td>
+<td><em>(number)</em> tile width size, overwrites <em>tileSize</em> option</td>
+<td>tileSize</td>
+</tr>
+<tr>
+<td>frontUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+<tr>
+<td>backUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1)</td>
+</tr>
+<tr>
+<td>pattern</td>
+<td><em>(number)</em> how tiles are reflected or rotated</td>
+<td>NO_FLIP</td>
+</tr>
+<tr>
+<td>alignVertical</td>
+<td><em>(number)</em> positions whole tiles at top, bottom or center of a face</td>
+<td>CENTER</td>
+</tr>
+<tr>
+<td>alignHorizontal</td>
+<td><em>(number)</em> positions whole tiles at left, right or center of a face</td>
+<td>CENTER</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE   </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#Z5JFSM#4">Playground Example of a DOUBLESIDE Tiled Plane</a> - <i class="fa fa-eye" onclick="createIframe('Z5JFSM#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="disc-or-regular-polygon" class="anchor" href="#disc-or-regular-polygon"></a>Disc or Regular Polygon</h2><p>You can create any kind of regular polygon with <em>CreateDisc()</em>, the number of sides is dependent on the value given to <em>tessellation</em>. The larger this value the closer to an actual disc. Using the arc option you can create a sector.</p>
+<p>Example :</p>
+<pre><code class="lang-javascript">var disc = BABYLON.MeshBuilder.CreateDisc(&quot;disc&quot;, {tessellation: 3}, scene); // makes a triangle
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>radius</td>
+<td><em>(number)</em> the radius of the disc or polygon</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>tessellation</td>
+<td><em>(number)</em> the number of disc/polygon sides</td>
+<td>64</td>
+</tr>
+<tr>
+<td>arc</td>
+<td><em>(number)</em> ratio of the circumference between 0 and 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#DJF437">Playground Example of a Sector of Dodecagon</a> - <i class="fa fa-eye" onclick="createIframe('DJF437#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="torus" class="anchor" href="#torus"></a>Torus</h2><p>Example :</p>
+<pre><code class="lang-javascript">var torus = BABYLON.MeshBuilder.CreateTorus(&quot;torus&quot;, {thickness: 0.2}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diameter</td>
+<td><em>(number)</em> diameter of the torus</td>
+<td>1</td>
+</tr>
+<tr>
+<td>thickness</td>
+<td><em>(number)</em> thickness of its tube</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>tessellation</td>
+<td><em>(number)</em> number of segments along the circle</td>
+<td>16</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>frontUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+<tr>
+<td>backUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#A7SVB6">Playground Example Using Thickness to Create a Hoop and a Donut</a> - <i class="fa fa-eye" onclick="createIframe('A7SVB6#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="torus-knot" class="anchor" href="#torus-knot"></a>Torus Knot</h2><p>Example :</p>
+<pre><code class="lang-javascript">var torus = BABYLON.MeshBuilder.CreateTorusKnot(&quot;tk&quot;, {}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>radius</td>
+<td><em>(number)</em> radius of the torus knot</td>
+<td>2</td>
+</tr>
+<tr>
+<td>tube</td>
+<td><em>(number)</em> thickness of its tube</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>radialSegments</td>
+<td><em>(number)</em> number of radial segments</td>
+<td>32</td>
+</tr>
+<tr>
+<td>tubularSegments</td>
+<td><em>(number)</em> number of tubular segments</td>
+<td>32</td>
+</tr>
+<tr>
+<td>p</td>
+<td><em>(number)</em> number of windings</td>
+<td>2</td>
+</tr>
+<tr>
+<td>q</td>
+<td><em>(number)</em> number of windings</td>
+<td>3</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+<tr>
+<td>frontUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+<tr>
+<td>backUVs</td>
+<td><em>(Vector4)</em>  <strong>ONLY WHEN sideOrientation:BABYLON.Mesh.DOUBLESIDE set</strong></td>
+<td>Vector4(0,0, 1,1) </td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://www.babylonjs-playground.com/#K9UC68">A Playground Example of a Torus Knot</a> - <i class="fa fa-eye" onclick="createIframe('K9UC68#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="ground" class="anchor" href="#ground"></a>Ground</h2><p>A flat horizontal surface parallel to the plane XoZ subdivided into sections.
+Example :</p>
+<pre><code class="lang-javascript">var ground = BABYLON.MeshBuilder.CreateGround(&quot;gd&quot;, {width: 6, subdivisions: 4}, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td><em>(number)</em> size of the width</td>
+<td>1</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> size of the height</td>
+<td>1</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>subdivisions</td>
+<td><em>(number)</em> number of square subdivisions</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MJ6YSM">Playground Example of Ground</a> - <i class="fa fa-eye" onclick="createIframe('MJ6YSM#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="ground-from-a-height-map" class="anchor" href="#ground-from-a-height-map"></a>Ground From a Height Map</h2><p>Example :</p>
+<pre><code class="lang-javascript">var ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(&quot;gdhm&quot;, url, {width: 6, subdivisions: 4}, scene);
+</code></pre>
+<p>Don&#39;t forget the <em>url</em> parameter, which is the link to the heightmap file, a greyscale file where lighter areas will be displayed higher than darker areas.</p>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td><em>(number)</em> size of the map width</td>
+<td>10</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>(number)</em> size of the map height</td>
+<td>10</td>
+</tr>
+<tr>
+<td>subdivisions</td>
+<td><em>(number)</em> number of map subdivisions</td>
+<td>1</td>
+</tr>
+<tr>
+<td>minHeight</td>
+<td><em>(number)</em> minimum altitude</td>
+<td>0</td>
+</tr>
+<tr>
+<td>maxHeigth</td>
+<td><em>(number)</em> maximum altitude</td>
+<td>1</td>
+</tr>
+<tr>
+<td>onReady</td>
+<td><em>(function)</em> a callback js function that is called and passed the just built mesh</td>
+<td>(mesh) =&gt; {return;}</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MJ6YSM#1">Playground Example Ground From Height Map</a> - <i class="fa fa-eye" onclick="createIframe('MJ6YSM#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="tiled-ground" class="anchor" href="#tiled-ground"></a>Tiled Ground</h2><p>Example :</p>
+<pre><code class="lang-javascript">var tiledGround = BABYLON.MeshBuilder.CreateTiledGround(&quot;tgd&quot;, {subdivisions: {w:4, h:6} }, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>xmin</td>
+<td><em>(number)</em> map min x coordinate value</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>zmin</td>
+<td><em>(number)</em> map min z coordinate value</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>xmax</td>
+<td><em>(number)</em> map max x coordinate value</td>
+<td>1</td>
+</tr>
+<tr>
+<td>zmin</td>
+<td><em>(number)</em> map max z coordinate value</td>
+<td>1</td>
+</tr>
+<tr>
+<td>subdivisions</td>
+<td><em>( {w: number, h: number} )</em> number of subdivisions (tiles) on the height and the width of the map</td>
+<td>{w: 6, h: 6}</td>
+</tr>
+<tr>
+<td>precision</td>
+<td><em>( {w: number, h: number} )</em> number of subdivisions on the height and the width of each tile</td>
+<td>{w: 2, h: 2}</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1XBLWB#147">Playground Example of Tiled Ground</a> - <i class="fa fa-eye" onclick="createIframe('1XBLWB#147', this)"></i><div class="iframeContainer"></div>.</li>
+</ul>
+<p>Full explanation of creating a tiled ground by its original code writer <a href="http://makina-corpus.com/blog/metier/2014/how-to-use-multimaterials-with-a-tiled-ground-in-babylonjs">here</a>. </p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="how-to-make-the-most-of-options" class="anchor" href="#how-to-make-the-most-of-options"></a>How To Make the Most of Options</h2><p><a href="/babylon101/Discover_Basic_Elements#side-orientation">Side Orientation</a><br><a href="/How_To/Updating_Vertices">Updatable</a><br><a href="/How_To/CreateBox_Per_Face_Textures_And_Colors">Face UV and Face Colors</a><br><a href="/How_To/FrontandBackUV">Front and Back UV</a><br><a href="/how_to/createbox_per_face_textures_and_colors#how-to-orientate-a-sprite-on-a-face-with-the-texture-atlas-from-version-40">Face Texture Orientation</a></p>
+<h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/features/Shapes">Mesh Overview</a><br><a href="/babylon101/Discover_Basic_Elements">Set Shapes 101</a><br><a href="/babylon101/Parametric_Shapes">Parametric Shapes 101</a><br><a href="/How_To/Parametric_Shapes">Parametric Shapes</a><br><a href="/How_To/Polyhedra_Shapes">Polyhedra Shapes</a><br><a href="/How_To/Tiled">Tiled Planes and Boxes</a><br><a href="/How_To/Decals">Decals</a> </p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/How_To/Ribbon_Tutorial">Ribbons In Detail</a></p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/resources/Maths_Make_Ribbons">Maths Makes Ribbons</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

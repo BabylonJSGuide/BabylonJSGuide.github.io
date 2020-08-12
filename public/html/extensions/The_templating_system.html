@@ -1,0 +1,325 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>The viewer templating system - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>The viewer templating system</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#basics-of-the-templating-engine">Basics of the templating engine</a><ul>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#location-vs-html">Location vs. HTML</a></li>
+<li><a href="#simple-walkthrough">Simple walkthrough</a></li>
+<li><a href="#handlebasrs-expressions">Handlebasrs expressions</a></li>
+<li><a href="#event-binding">Event binding</a></li>
+</ul>
+</li>
+<li><a href="#the-template-manager">The template manager</a><ul>
+<li><a href="#the-template-object">The template object</a></li>
+</ul>
+</li>
+<li><a href="#templates-of-the-default-viewer">Templates of the default viewer</a><ul>
+<li><a href="#changing-an-existing-template">Changing an existing template:</a></li>
+<li><a href="#extending-an-existing-template">Extending an existing template</a></li>
+</ul>
+</li>
+<li><a href="#creating-your-own-templates">Creating your own templates</a><ul>
+<li><a href="#the-main-template">The main template</a></li>
+<li><a href="#you-need-a-canvas">You need a canvas</a></li>
+</ul>
+</li>
+<li><a href="#if-help-is-needed">If help is needed</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="the-viewer-templating-system" class="anchor" href="#the-viewer-templating-system"></a>The viewer templating system</h1><p>The viewer has a simple integrated templating system for you to use and extend. Using the templating system you can decide how the viewer components, such as the navbar, the error screen, help screen and so on, look like.</p>
+<p>The templating system is using <a href="http://handlebarsjs.com/">Handlebars.js</a> to parse the HTML. We recommend understanding the basic concepts of Handelbars before making major changes to the HTML templates.</p>
+<h2><a name="basics-of-the-templating-engine" class="anchor" href="#basics-of-the-templating-engine"></a>Basics of the templating engine</h2><h3><a name="configuration" class="anchor" href="#configuration"></a>Configuration</h3><p>As with the general configuration, the template configuration is based on a TypeScript interface for ease of usage. These are the interfaces:</p>
+<pre><code class="lang-javascript">export interface ITemplateConfiguration {
+    location?: string; // #template-id OR http://example.com/loading.html
+    html?: string; // raw html string
+    id?: string;
+    params?: { [key: string]: string | number | boolean | object };
+    events?: {
+        // pointer events
+        pointerdown?: boolean | { [id: string]: boolean; };
+        pointerup?: boolean | { [id: string]: boolean; };
+        pointermove?: boolean | { [id: string]: boolean; };
+        pointerover?: boolean | { [id: string]: boolean; };
+        pointerout?: boolean | { [id: string]: boolean; };
+        pointerenter?: boolean | { [id: string]: boolean; };
+        pointerleave?: boolean | { [id: string]: boolean; };
+        pointercancel?: boolean | { [id: string]: boolean; };
+        //click, just in case
+        click?: boolean | { [id: string]: boolean; };
+        // drag and drop
+        dragstart?: boolean | { [id: string]: boolean; };
+        drop?: boolean | { [id: string]: boolean; };
+
+        [key: string]: boolean | { [id: string]: boolean; } | undefined; // allow injecting further events
+    }
+}
+</code></pre>
+<h3><a name="location-vs-html" class="anchor" href="#location-vs-html"></a>Location vs. HTML</h3><p>There are two ways of defining where the template is found. The location and the html parameters. One of them will have to be defined. if both are defined, the &#39;html&#39; parameter will be used.</p>
+<p>The location parameter define a URL where the HTML can be found, or an ID of a script tag with the type &quot;text/x-babylon-viewer-template&quot;. For example, the HTML page can have somewhere in it the following HTML element:</p>
+<pre><code class="lang-html">&lt;script id=&quot;loading-screen&quot; type=&quot;text/x-babylon-viewer-template&quot;&gt;
+  &lt;img class=&quot;loading-image&quot; src=&quot;{{loadingImage}}&quot;&gt;
+&lt;/script&gt;
+</code></pre>
+<p>The configuration for using this would be:</p>
+<pre><code class="lang-javascript">    ...,
+    templates: {
+        main: {
+            html: &quot;&lt;viewer&gt;&lt;/viewer&gt;&lt;loading-screen&gt;&lt;/loading-screen&gt;&quot;
+        },
+        loadingScreen: {
+            location: &#39;#loading-screen&#39;,
+            params: {
+                loadingImage: &quot;data:image/png;base64,....&quot;
+            }
+        },
+        viewer: {
+            html: &#39;&lt;canvas class=&quot;babylonjs-canvas&quot;&gt;&lt;/canvas&gt;&#39;,
+        }
+    }
+</code></pre>
+<p>The &#39;html&#39; parameter simply contains the raw HTML of the template. For example:</p>
+<pre><code class="lang-javascript">    ...,
+    templates: {
+        viewer: {
+            html: &#39;&lt;canvas class=&quot;babylonjs-canvas&quot;&gt;&lt;/canvas&gt;&#39;,
+        }
+    }
+</code></pre>
+<p>When the template is a simple HTML file and no other configuration is needed, the template configuration can be a single string of the URL or #id where the template can be found.</p>
+<p>So this:</p>
+<pre><code class="lang-javascript">    .....,
+    templates: {
+        main: {
+            location: &quot;#main-template&quot;
+        }
+    },
+    ....
+</code></pre>
+<p>is equal to this:</p>
+<pre><code class="lang-javascript">    .....,
+    templates: {
+        main: &quot;#main-template&quot;
+    },
+    ....
+</code></pre>
+<h3><a name="simple-walkthrough" class="anchor" href="#simple-walkthrough"></a>Simple walkthrough</h3><p>The templating engine will load all defined templates in the configuration and parse them. As part of the parsing process, it will look for tags that are defined in the template configuration and will inject them in the right place. The template that will be injected to the main component (the <babylon> HTML tag per default) is always called &#39;main&#39;.</p>
+<p>For example, if the templating configuration looks like this:</p>
+<pre><code class="lang-javascript">    templates: {
+        main: {
+            html: &quot;&lt;viewer&gt;&lt;/viewer&gt;&lt;loading-screen&gt;&lt;/loading-screen&gt;&quot;
+        },
+        loadingScreen: {
+            html: &#39;&lt;img class=&quot;loading-image&quot; src=&quot;{{loadingImage}}&quot;&gt;&#39;,
+            params: {
+                loadingImage: &quot;data:image/png;base64,....&quot;
+            }
+        },
+        viewer: {
+            html: &#39;&lt;canvas class=&quot;babylonjs-canvas&quot;&gt;&lt;/canvas&gt;&#39;,
+        }
+    }
+</code></pre>
+<p>the final <babylon> tag will look like this:</p>
+<pre><code class="lang-html">&lt;babylon .....&gt;
+    &lt;viewer&gt;
+        &lt;canvas class=&quot;babylonjs-canvas&quot;&gt;&lt;/canvas&gt;
+    &lt;/viewer&gt;
+    &lt;loading-screen&gt;
+        &lt;img class=&quot;loading-image&quot; src=&quot;data:image/png;base64,....&quot;&gt;
+    &lt;/loading-screen&gt;
+&lt;/babylon&gt;
+</code></pre>
+<p><em>Note that the html tag names are in kebab-case. The configuration (when in JSON format) uses camelCase</em>.</p>
+<h3><a name="handlebasrs-expressions" class="anchor" href="#handlebasrs-expressions"></a>Handlebasrs expressions</h3><p>Going back to the configuration from the last section, you can see that the HTML template of the loading screen is:</p>
+<pre><code class="lang-html">&lt;img class=&quot;loading-image&quot; src=&quot;{{loadingImage}}&quot;&gt;
+</code></pre>
+<p>Anything inside a <code>{{</code> and <code>}}</code> is considered to be a handlebars expression. This parameter can be defiend in the configuration file, as also seen in the last section:</p>
+<pre><code class="lang-javascript">    templates: {
+        ...,
+        loadingScreen: {
+            html: &#39;&lt;img class=&quot;loading-image&quot; src=&quot;{{loadingImage}}&quot;&gt;&#39;,
+            params: {
+                loadingImage: &quot;data:image/png;base64,....&quot;
+            }
+        }
+    }
+</code></pre>
+<p>Using this method you can easily achieve internationalization, injecting the parameters using the configuration and not embedding them into the HTML.</p>
+<h3><a name="event-binding" class="anchor" href="#event-binding"></a>Event binding</h3><p>Any template can have any native JavaScript event registered to it or to one of its children. The callback will  be bound to the selected element, and will trigger a callback in the template, which can be used when registering the onEventTriggered observer of the template. But first, let&#39;s see how to simply bind events:</p>
+<p>Let&#39;S take a look at the following configuration (taken from the default configuration with a bit of changes):</p>
+<pre><code class="lang-javascript">        navBar: {
+            html: &#39;&lt;div class=&quot;button-container flex-container&quot;&gt;  &lt;div id=&quot;fullscreen-button&quot; class=&quot;button&quot;&gt; &lt;span&gt;Full screen&lt;/span&gt;&gt; &lt;/div&gt; &lt;/div&gt;&#39;,
+            events: {
+                pointerdown: { &#39;fullscreen-button&#39;: true, &#39;some-other-id&#39;: true },
+                drop: true
+            }
+        },
+</code></pre>
+<p>This events configuration will register two events:</p>
+<ol>
+<li>pointerdown event that will be bound to the inner <code>#fullscreen-button</code> div</li>
+<li>drop event that will be bound to the navbar element itself.</li>
+</ol>
+<p><em>If you are wondering why the event definition ({ &#39;fullscreen-button&#39;: true, &#39;some-other-id&#39;: true }) is a map and not an array of IDs - the template can also be configured using HTML, and HTML DOM elements don&#39;t support Arrays. This way the HTML can override the event by setting it to &quot;false&quot;.</em></p>
+<p>The event callback will deliver the following object:</p>
+<pre><code class="lang-javascript">export interface EventCallback {
+    event: Event; // the native browser event
+    template: Template; // the template on which is was executed
+    selector: string; // the selector used (for example #fullscreen-button)
+    payload?: any; // any extra payload. For future development, currently not being used.
+}
+</code></pre>
+<p>To register for event listening, load the template using the template manager and add an observer to the <code>onEventTriggered</code> observable:</p>
+<pre><code class="lang-javascript">// viewer is a viewer instance. See Advanced usage (//doc.babylonjs.com/extensions/Advanced_usage) for further details on how to get it.
+let navbar = viewer.templateManager.getTemplate(&#39;navBar&#39;);
+// let&#39;s be safe!
+if (!navbar) return;
+
+// register a new observer
+navbar.onEventTriggered.add((data) =&gt; {
+    switch (data.event.type) {
+        case &#39;pointerdown&#39;:
+            switch (data.selector) {
+                case &#39;#fullscreen-button&#39;:
+                    // let&#39;s go full screen!!
+                    break;
+                case &#39;#some-other-id&#39;:
+                    // just do something else please
+                    break;
+            }
+            break;
+        case &#39;drop&#39;:
+            // What shall we do with the dropped data?
+            break;
+    }
+});
+</code></pre>
+<h2><a name="the-template-manager" class="anchor" href="#the-template-manager"></a>The template manager</h2><p>Any template-enabled viewer (the default viewer, for example) has its own template manager, which is in charge of loading and parsing the templates.</p>
+<p>The template manager is a public member of the viewer and can be used to retrieve already-parsed templates:</p>
+<pre><code class="lang-javascript">// not a part of this section, let&#39;s assume the viewer is being retrieved
+let viewer = getViewer();
+
+// We have previously defined a &quot;canvas&quot; element in the configuration. We can now retrieve it!
+let canvasContainer = viewer.templateManager.getTemplate(&#39;canvasContainer&#39;);
+</code></pre>
+<h3><a name="the-template-object" class="anchor" href="#the-template-object"></a>The template object</h3><p>Any configured template is creating a new instance of the <a href="https://github.com/BabylonJS/Babylon.js/blob/master/Viewer/src/templateManager.ts#L148">Template class</a>.</p>
+<p>Here are the public variables we can access:</p>
+<pre><code class="lang-javascript">public onInit: Observable&lt;Template&gt;;
+public onLoaded: Observable&lt;Template&gt;;
+public onAppended: Observable&lt;Template&gt;;
+public onStateChange: Observable&lt;Template&gt;;
+public onEventTriggered: Observable&lt;EventCallback&gt;;
+
+public isLoaded: boolean; // is the template fully loaded
+
+public parent: HTMLElement; // the HTML container of this template. In this case, the &lt;canvas-container&gt; element.
+</code></pre>
+<p>The Template class has also a few promise-based help functions for common tasks:</p>
+<pre><code class="lang-javascript">public show(visibilityFunction?: (template: Template) =&gt; Promise&lt;Template&gt;): Promise&lt;Template&gt;;
+public hide(visibilityFunction?: (template: Template) =&gt; Promise&lt;Template&gt;): Promise&lt;Template&gt;;
+</code></pre>
+<p>If calling those functions without any parameters, the <code>display</code>of this template will be set to <code>flex</code> or <code>none</code> respectively.</p>
+<p>To define your own show or hide functions, simply provide the visibilityFuntion as the first parameter. The following is a real example from the default viewer:</p>
+<pre><code class="lang-javascript">template.hide((template =&gt; {
+    // set the opacity to &#39;0&#39;. Opacity transition is set using CSS.
+    template.parent.style.opacity = &quot;0&quot;;
+    // define a function for when the transition has ended:
+    let onTransitionEnd = () =&gt; {
+        template.parent.removeEventListener(&quot;transitionend&quot;, onTransitionEnd);
+        // set display none when opacity is &#39;0&#39;
+        template.parent.style.display = &#39;none&#39;;
+    }
+    // add the transitionend event listener
+    template.parent.addEventListener(&quot;transitionend&quot;, onTransitionEnd);
+    // return immediately, don&#39;t wait for the transition to end
+    return Promise.resolve(template);
+}));
+</code></pre>
+<h2><a name="templates-of-the-default-viewer" class="anchor" href="#templates-of-the-default-viewer"></a>Templates of the default viewer</h2><p>The default viewer comes with predefined templates that can be simply changed if needed.</p>
+<p>The list of templates that are delivered:</p>
+<ul>
+<li>main - the main template (must always be present)</li>
+<li>viewer - containing the canvas</li>
+<li>loading screen - a simple loading screen template</li>
+<li>nav-bar - the bottom navigation bar</li>
+<li>overlay - a container for overlays, such as error or help</li>
+<li>error - an error screen</li>
+<li>help - a help screen</li>
+<li>share - a share screen</li>
+</ul>
+<p>All templates can be found at the assets directory of the viewer - <a href="https://github.com/BabylonJS/Babylon.js/tree/master/Viewer/assets/templates/default">https://github.com/BabylonJS/Babylon.js/tree/master/Viewer/assets/templates/default</a>. The templates include CSS internally, and are self-contained.</p>
+<h3><a name="changing-an-existing-template" class="anchor" href="#changing-an-existing-template"></a>Changing an existing template:</h3><p>If you want to change one of the templates, simply create a new HTML structure and set it in the viewer configuration. For example, if we want to change the loading screen so it will not show an image at all:</p>
+<p>The new loadingScreen HTML injected in the page as <code>&lt;script&gt;</code> tag:</p>
+<pre><code class="lang-html">&lt;script id=&quot;loading-screen&quot; type=&quot;text/x-babylon-viewer-template&quot;&gt;
+      &lt;style&gt;
+        loading-screen {
+            position: absolute;
+            z-index: 100;
+            opacity: 1;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-transition: opacity 2s ease;
+            -moz-transition: opacity 2s ease;
+            transition: opacity 2s ease;
+        }
+    &lt;/style&gt;
+
+    &lt;span&gt; LOADING... &lt;/span&gt;
+&lt;/script&gt;
+</code></pre>
+<p>This can be added to the configuration of the viewer element:</p>
+<pre><code class="lang-html">&lt;babylon templates.loading-screen.location=&quot;#loading-screen&quot; templates.loading-screen.html=&quot;&quot; model=&quot;....&quot;&gt;&lt;/babylon&gt;
+</code></pre>
+<h3><a name="extending-an-existing-template" class="anchor" href="#extending-an-existing-template"></a>Extending an existing template</h3><p>The nav bar, for example, can be extended to hold further buttons. The navbar default configuration is:</p>
+<pre><code class="lang-javascript">navBar: {
+    html: require(&quot;../../../assets/templates/default/navbar.html&quot;),
+    params: {
+        buttons: [
+            {
+                id: &#39;fullscreen-button&#39;,
+                altText: &quot;Fullscreen&quot;,
+                image: require(&#39;../../../assets/img/fullscreen.png&#39;)
+            }
+        ],
+        visibilityTimeout: 2000
+    },
+    events: {
+        pointerdown: { &#39;fullscreen-button&#39;: true }
+    }
+}
+</code></pre>
+<p>If you want, for example, to change the visibilityTimeout to 1 second, set it using your viewer configuration:</p>
+<pre><code class="lang-html">&lt;babylon templates.nav-bar.params.visibility-timeout=&quot;1000&quot; model=&quot;....&quot;&gt;&lt;/babylon&gt;
+</code></pre>
+<h2><a name="creating-your-own-templates" class="anchor" href="#creating-your-own-templates"></a>Creating your own templates</h2><p>If you don&#39;t want to use the default templates and want to completely create your own, here are a few important notes.</p>
+<h3><a name="the-main-template" class="anchor" href="#the-main-template"></a>The main template</h3><p>You should always have a template named &quot;main&quot;, which will be the starting point of your template. Apart from &quot;main&quot;, it is up to you to decide how to organize your templates. Main can technically contain everything, there is no actual need to create any other templates, unless you want to internally overwrite certain templates.</p>
+<p>The main template can technically be a single canvas element, and that&#39;s about it.</p>
+<h3><a name="you-need-a-canvas" class="anchor" href="#you-need-a-canvas"></a>You need a canvas</h3><p>Well, a canvas is needed, obviously. <strong>and only one!</strong> To avoid creating further unneeded configuration parameters, the first canvas found inside the parsed main template will be used as the canvas for Babylon.</p>
+<h2><a name="if-help-is-needed" class="anchor" href="#if-help-is-needed"></a>If help is needed</h2><p>Look at the code or contact us, we will be more than happy to help!</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><ul>
+<li><a href="/extensions/The_Babylon_Viewer">The Babylon.js Viewer</a></li>
+<li><a href="/extensions/Configuring_the_viewer">Configuring the viewer</a></li>
+<li><a href="/extensions/The_templating_system">The templating system</a></li>
+<li><a href="/extensions/Recreating_the_default_configuration">Recreating the default configuration for the viewer</a></li>
+<li><a href="/extensions/Advanced_usage">Advanced usage</a></li>
+<li><a href="/extensions/Viewer_examples">Babylon.js viewer examples</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

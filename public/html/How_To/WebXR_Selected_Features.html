@@ -1,0 +1,260 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>WebXR Selected Features - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>WebXR Selected Features</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#enabling-teleportation">Enabling teleportation</a></li>
+<li><a href="#setting-floor-meshes">Setting floor meshes</a></li>
+<li><a href="#direct-and-indirect-landing-zones">Direct and indirect landing zones</a></li>
+<li><a href="#different-input-sources">Different input sources</a></li>
+<li><a href="#the-teleportation-landing-zone">The teleportation landing zone</a><ul>
+<li><a href="#the-landing-zones-material">The landing zone&#39;s material</a></li>
+<li><a href="#the-rings-material">The ring&#39;s material</a></li>
+<li><a href="#disable-the-ring-up-and-down-animation">Disable the ring up-and-down animation</a></li>
+<li><a href="#disable-lighting-on-the-ring">Disable lighting on the ring</a></li>
+</ul>
+</li>
+<li><a href="#rotating-while-teleporting">Rotating while teleporting</a></li>
+<li><a href="#backwards-movement">Backwards movement</a></li>
+<li><a href="#rotation-in-place">Rotation in place</a></li>
+<li><a href="#rendering-to-a-different-layer-or-rendering-group">Rendering to a different layer or rendering group</a></li>
+<li><a href="#snap-to-hotspots">Snap-to (Hotspots)</a></li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="teleportation-module" class="anchor" href="#teleportation-module"></a>Teleportation Module</h2><p>A lot of (native) VR games have a teleportation feature to allow movement in the scene. It is the most convenient way of moving in a scene without the user feeling dizzy or disoriented.</p>
+<p>Babylon has supported teleportation in WebVR and has now upgraded the feature to have a lot of different abilities.</p>
+<p>The teleportation feature enabled the following ways to interact with the camera&#39;s position:</p>
+<p>1) Move forward using direct/indirect rays
+2) Move backwards
+3) Rotate in place.</p>
+<p>Quick note about the <strong>WebXR emulator</strong> - Even thou it doesn&#39;t have support for it just yet, the WebXR emulator adds a Thumbstick to the emulated controller, making it impossible to simulate teleportation. To get teleportation working you will need to enable <code>useMainComponentOnly</code> (described below) to disable the thumbstick&#39;s teleportation. It is recommended to only enable this during development, unless this is the required behavior.</p>
+<h3><a name="enabling-teleportation" class="anchor" href="#enabling-teleportation"></a>Enabling teleportation</h3><p>The teleportation module is turned on per default when using the <a href="./WebXR_Experience_Helpers#the-webxr-default-experience-helper">WebXR Default Experience Helper</a>. To turn it on or re-enable it use the following code:</p>
+<pre><code class="lang-javascript">const featuresManager = xr.baseExperience.featuresManager; // or any other way to get a features manager
+featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39; /* or latest */ , {
+    xrInput: xr.input,
+    // add options here
+    floorMeshes: [ground, secondFloor, thirdFloor],
+
+});
+</code></pre>
+<p>The latest options can be found in the <a href="https://github.com/BabylonJS/Babylon.js/blob/master/src/XR/features/WebXRControllerTeleportation.ts#L31">WebXR teleportation feature&#39;s source code</a>.</p>
+<p>Some teleportation parameters are needed during construction and are therefore only configurable in the constructor&#39;s <code>options</code> parameter. To reconfigure parameters which have no public getter/setter, re-enable the feature:</p>
+<pre><code class="lang-javascript">var xrHelper = await scene.createDefaultXRExperienceAsync({
+    xrInput: xrHelper.input,
+    floorMeshes: [ground] /* Array of meshes to be used as landing points */
+});
+// ...
+// needs a reconfigure - re-enable the feature (will discard the old one and create a new one!)
+xrHelper.teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39; /* or latest */ , {
+    xrInput: xrHelper.input,
+    floorMeshes: [ground],
+    renderingGroupId: 1
+});
+</code></pre>
+<p>Notice that the only obligatory option for the teleportation feature is the xrInput, which are the controllers it is going to use in order to teleport the user.</p>
+<h3><a name="setting-floor-meshes" class="anchor" href="#setting-floor-meshes"></a>Setting floor meshes</h3><p>Floor meshes are most important for teleportation, as the module needs to know where the users are allowed to land and where not.</p>
+<p>When using the <a href="./WebXR_Experience_Helpers#the-webxr-default-experience-helper">WebXR Default Experience Helper</a> you can set the floorMeshes during initialization:</p>
+<pre><code class="lang-javascript">var xrHelper = await scene.createDefaultXRExperienceAsync({
+    xrInput: xr.input,
+    floorMeshes: [ground] /* Array of meshes to be used as landing points */
+});
+const teleportation = xrHelper.teleportation;
+</code></pre>
+<p>When enabling the feature yourself you can provide it in the options object:</p>
+<pre><code class="lang-javascript">const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+});
+</code></pre>
+<p>If you want to add a mesh after the teleportation feature was enabled, you can use the <code>addFloorMesh</code> function:</p>
+<pre><code class="lang-javascript">teleportation.addFloorMesh(ground2);
+</code></pre>
+<p>And to remove simply use the <code>removeFloorMesh</code> function:</p>
+<pre><code class="lang-javascript">teleportation.removeFloorMesh(ground2);
+</code></pre>
+<p>A simple example for <a href="https://playground.babylonjs.com/pg/B8D5Z6">enabling floor meshes</a> - <i class="fa fa-eye" onclick="createIframe('B8D5Z6#', this)"></i><div class="iframeContainer"></div>.</p>
+<h3><a name="direct-and-indirect-landing-zones" class="anchor" href="#direct-and-indirect-landing-zones"></a>Direct and indirect landing zones</h3><p>The teleportation landing zone is defined by the person holding the controllers. There are two ways of teleportation: direct teleportation and indirect (parabolic) teleportation.</p>
+<p>Direct teleportation means - the user aims at the position they want to land at (a straight line). This is used when the ground and the landing location is in sight and is the most convenient and straight-forward way of moving forward.</p>
+<p><img src="/img/how_to/xr/xr-direct-teleportation.png" alt="Direct WebXR teleportation"></p>
+<p>An indirect line means the user aims up high and creates a parabolic path. This is used to go across obstacles, or to teleport from one floor to the other.</p>
+<p><img src="/img/how_to/xr/xr-indirect-teleportation.png" alt="Indirect WebXR teleportation"></p>
+<p>The direct teleportation is always enabled. The indirect teleportation is enabled per default, but it is possible to disable it using a flag:</p>
+<pre><code class="lang-javascript">// disable the parabolic (indirect) teleportation ray
+teleportation.parabolicRayEnabled = false;
+</code></pre>
+<p>To make the parabolic ray go further you can set the radius that is used to create the inspection ray when pointing the ray at 90 degrees up (Default is 5):</p>
+<pre><code class="lang-javascript">teleportation.parabolicCheckRadius = 10;
+</code></pre>
+<p>Note that the parabolic ray&#39;s radius is bigger, the lower the rotation angle of the controller. The compensation calculation is done using this formula:</p>
+<pre><code class="lang-javascript">const compensation = (1 + ((Math.PI / 2) - Math.abs(rotationOnTheXAxis)));
+</code></pre>
+<p>The compensation is multiplied by the defined radius and changes the current ray intersection radius.</p>
+<h3><a name="different-input-sources" class="anchor" href="#different-input-sources"></a>Different input sources</h3><p>The default input source is an XR headset with two handheld controllers. This input source in WebXR is called <code>TrackedPointer</code> .</p>
+<p>When the input source has a thumbstick or a touchpad, moving the finger forward will trigger the ray-casting mode. Rotating the finger after seeing the ray casted will rotate the direction in which the user lands. Releasing the finger when seeing a landing zone will move the user there.</p>
+<p>When no thumbstick or touchpad is available, the main component (usually a trigger) will be used. See <a href="./WebXR_Controller_Support">WebXR input sources</a> for more information about the main component. When using the main component, which is usually a button, you can define a certain amount of time in milliseconds after which the user will teleport, if still holding the trigger. The default is 3 seconds.</p>
+<p>This configuration value can be found in the constructor&#39;s options and it is called <code>timeToTeleport</code> :</p>
+<pre><code class="lang-javascript">const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    timeToTeleport: 5000
+});
+</code></pre>
+<p>Note that when using a button, it is impossible to allow rotation, so the user&#39;s orientation will stay the same as it was before they teleported.</p>
+<p>To force the user to use the main component only (even if a thumbstick is available) use the <code>useMainComponentOnly</code> flag when constructing:</p>
+<pre><code class="lang-javascript">const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    timeToTeleport: 5000,
+    useMainComponentOnly: true
+});
+</code></pre>
+<h3><a name="the-teleportation-landing-zone" class="anchor" href="#the-teleportation-landing-zone"></a>The teleportation landing zone</h3><p>The teleportation landing zone is a group of meshes means to show the user where they are going to land and in which direction. Its default version looks like this:</p>
+<p><img src="/img/how_to/xr/xr-teleportation-landing-zone.png" alt="Indirect WebXR teleportation"></p>
+<p>Each part of the teleportation landing zone is configurable:</p>
+<h4><a name="the-landing-zone39s-material" class="anchor" href="#the-landing-zones-material"></a>The landing zone&#39;s material</h4><p>The material of the landing zone (the dark circle on the floor) can be configured when constructing the feature using css colors:</p>
+<pre><code class="lang-javascript">const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    defaultTargetMeshOptions: {
+        teleportationFillColor: &#39;#55FF99&#39;,
+        teleportationBorderColor: &#39;blue&#39;
+    }
+});
+</code></pre>
+<p>Which looks like this:</p>
+<p><img src="/img/how_to/xr/xr-landing-zone-custom.png" alt="WebXR Custom landing zone"></p>
+<p>The example can be found here: <a href="https://playground.babylonjs.com/pg/B8D5Z6/revision/20">https://playground.babylonjs.com/pg/B8D5Z6/revision/20</a> - <i class="fa fa-eye" onclick="createIframe('B8D5Z6#20', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="the-ring39s-material" class="anchor" href="#the-rings-material"></a>The ring&#39;s material</h4><p>The rotation ring&#39;s material can be provided by the user:</p>
+<pre><code class="lang-javascript">let myCustomMaterial = new BABYLON.StandardMaterial(&quot;ground&quot;, scene);
+myCustomMaterial.backFaceCulling = false;
+myCustomMaterial.diffuseColor = BABYLON.Color3.Green();
+myCustomMaterial.diffuseTexture = new BABYLON.Texture(&#39;textures/grass.png&#39;, scene);
+
+const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    defaultTargetMeshOptions: {
+        torusArrowMaterial: myCustomMaterial
+    }
+});
+</code></pre>
+<p>Will look like this:</p>
+<p><img src="/img/how_to/xr/xr-custom-material-turos-ring.png" alt="Custom material for ring"></p>
+<h4><a name="disable-the-ring-up-and-down-animation" class="anchor" href="#disable-the-ring-up-and-down-animation"></a>Disable the ring up-and-down animation</h4><pre><code class="lang-javascript">const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    defaultTargetMeshOptions: {
+        disableAnimation: true
+    }
+});
+</code></pre>
+<p>And now the ring won&#39;t animate up and down when the target zone is casted</p>
+<h4><a name="disable-lighting-on-the-ring" class="anchor" href="#disable-lighting-on-the-ring"></a>Disable lighting on the ring</h4><p>To make sure the ring is always visible no matter the lighting in the scene is, set the <code>disableLighting</code> flag when constructing the feature:</p>
+<pre><code class="lang-javascript">const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    defaultTargetMeshOptions: {
+        disableLighting: true
+    }
+});
+</code></pre>
+<p>This will look like this with light intensity 0.5:</p>
+<p><img src="/img/how_to/xr/xr-ring-disable-lighting.png" alt="Disable lighting on ring"></p>
+<h3><a name="rotating-while-teleporting" class="anchor" href="#rotating-while-teleporting"></a>Rotating while teleporting</h3><p>It is possible to not allow the user to rotate after casting the initial ray. It is a flag straight on the teleportation object and it is called <code>rotationEnabled</code> :</p>
+<pre><code class="lang-javascript">teleportation.rotationEnabled = false;
+</code></pre>
+<h3><a name="backwards-movement" class="anchor" href="#backwards-movement"></a>Backwards movement</h3><p>Backwards movement is on per default. When the user &quot;pulls&quot; the thumbstick or the touchpad backwards they will move a predefined distance, if this distance is available on any floor mesh behind them.</p>
+<p>To configure the distance to move use the <code>backwardsTeleportationDistance</code> flag:</p>
+<pre><code class="lang-javascript">teleportation.backwardsTeleportationDistance = 1.0; // Default is 0.7
+</code></pre>
+<p>To disable backwards moving use this flag:</p>
+<pre><code class="lang-javascript">teleportation.backwardsMovementEnabled = false; // Default is 0.7
+</code></pre>
+<h3><a name="rotation-in-place" class="anchor" href="#rotation-in-place"></a>Rotation in place</h3><p>When moving the thumbstick left and right (X-Axis movement on the thumbstick/touchpad) the user will rotate a predefined amount. To default rotation is 22.5 degrees (in radians: <code>Math.PI / 8</code> ). To change this use the <code>rotationAngle</code> flag:</p>
+<pre><code class="lang-javascript">// rotate 45 degrees
+teleportation.backwardsMovementEnabled = Math.PI / 4;
+</code></pre>
+<h3><a name="rendering-to-a-different-layer-or-rendering-group" class="anchor" href="#rendering-to-a-different-layer-or-rendering-group"></a>Rendering to a different layer or rendering group</h3><p>If you want the render the teleportation target zone on top of the rest of the meshes you can use one of two ways:</p>
+<p>1) rendering group id (See <a href="/resources/transparency_and_how_meshes_are_rendered#rendering-groups">Rendering groups</a>)
+2) Utility layer (See <a href="https://doc.babylonjs.com/how_to/utilitylayerrenderer">UtilityLayerRenderer</a>)</p>
+<p>To set the rendering group id :</p>
+<pre><code class="lang-javascript">const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    renderingGroupId: 1
+});
+</code></pre>
+<p>This will look like this (notice it renders on top of the ground that should hide it):</p>
+<p><img src="/img/how_to/xr/xr-rendering-group-ring.png" alt="Rendering group for target zone"></p>
+<p>To set a utility layer:</p>
+<pre><code class="lang-javascript">const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    useUtilityLayer: true,
+    // optional
+    customUtilityLayerScene: customScene // a different utility layer scene to use. If not the default utility layer scene will be used
+});
+</code></pre>
+<h3><a name="snap-to-hotspots" class="anchor" href="#snap-to-hotspots"></a>Snap-to (Hotspots)</h3><p>Some XR experiences require the user to land at an exact location (and sometimes ONLY at exact locations). The teleportation snap-to feature allows you to define spots where the user can land and where the teleportation ray will snap (with a specific threshold).</p>
+<p>To enable snap-to points you can use one of the two:</p>
+<ul>
+<li>provide an array of hotspots (Vector3) to the options when enabling the feature:</li>
+</ul>
+<pre><code class="lang-javascript">const interestingSpot = new BABYLON.Vector3(-4, 0, 4);
+const interestingSpot2 = new BABYLON.Vector3(4, 0, 4);
+const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    snapPositions: [interestingSpot, interestingSpot2]
+});
+</code></pre>
+<ul>
+<li>Add points after the feature is enabled:</li>
+</ul>
+<pre><code class="lang-javascript">teleportation.addSnapPoint(new BABYLON.Vector3(0, 0, 6));
+</code></pre>
+<p>Note that it is always expected that the snap-to points will be on a mesh that is defined as a floor mesh. Babylon will not check that! If you put the hotspot too far away from a floor mesh, the results will be unexpected (for example, the user might hover).</p>
+<p>To change the snap-to radius, use the <code>snapToPositionRadius</code> parameter. Default is 0.8 units or 80 cm and it cannot be 0:</p>
+<pre><code class="lang-javascript">const interestingSpot = new BABYLON.Vector3(-4, 0, 4);
+const interestingSpot2 = new BABYLON.Vector3(4, 0, 4);
+const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    snapPositions: [interestingSpot, interestingSpot2],
+    snapToPositionRadius: 1.2
+});
+</code></pre>
+<p>Now any position of target zone within a 1.2 units (meters) radius of one of the snap-to points will change the target zoné location to be the close point. You can test it in this playground:</p>
+<ul>
+<li><a href="https://playground.babylonjs.com/pg/DGS0NV/revision/1">Snap to point with movement freedom</a> - <i class="fa fa-eye" onclick="createIframe('DGS0NV#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>If you want to disable the user&#39;s free movements and only let the user land on snap-to points, set the <code>snapPointsOnly</code> , either during construction:</p>
+<pre><code class="lang-javascript">const interestingSpot = new BABYLON.Vector3(-4, 0, 4);
+const interestingSpot2 = new BABYLON.Vector3(4, 0, 4);
+const teleportation = featuresManager.enableFeature(WebXRFeatureName.TELEPORTATION, &#39;stable&#39;, {
+    xrInput: xr.input,
+    floorMeshes: [ground],
+    snapPositions: [interestingSpot, interestingSpot2],
+    snapToPositionRadius: 1.2,
+    snapPointsOnly: true
+});
+</code></pre>
+<p>or afterwards:</p>
+<pre><code class="lang-javascript">teleportation.snapPointsOnly = true
+</code></pre>
+<p>The feature will look like this:</p>
+<p><img src="/img/how_to/xr/xr-snap-to-teleportation.gif" alt="Rendering group for target zone"></p>
+<p>You can play around in this playground:</p>
+<p>*<a href="https://playground.babylonjs.com/pg/DGS0NV/revision/3">Snap-to only</a> - <i class="fa fa-eye" onclick="createIframe('DGS0NV#3', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

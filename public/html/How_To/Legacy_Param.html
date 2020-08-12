@@ -1,0 +1,188 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Parametric Shapes - Legacy - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Parametric Shapes - Legacy</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#ribbon">Ribbon</a></li>
+<li><a href="#tube">Tube</a></li>
+<li><a href="#non-regular-polygon">Non Regular Polygon</a></li>
+<li><a href="#extrusion-of-a-non-regular-polygon">Extrusion of a Non Regular Polygon</a></li>
+<li><a href="#lines">Lines</a></li>
+<li><a href="#dashed-lines">Dashed Lines</a></li>
+<li><a href="#extruded-shape">Extruded Shape</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-create-parametric-shapes-using-legacy-method" class="anchor" href="#how-to-create-parametric-shapes-using-legacy-method"></a>How To Create Parametric Shapes using Legacy Method</h1><h2><a name="ribbon" class="anchor" href="#ribbon"></a>Ribbon</h2><p>For details on what it is and how it is constructed you might want to read the <a href="/How_To/Ribbon_Tutorial">Ribbon Tutorial</a></p>
+<pre><code class="lang-javascript">var ribbon = BABYLON.Mesh.CreateRibbon(&quot;ribbon&quot;, [path1, path2, ..., pathn], false, false, 0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, pathArray, closeArray, closePath, offset, scene, updatable? (if the mesh must be modified later)  and the optional side orientation (see below).</p>
+<ul>
+<li>name : a string, the name you want to give to your shape,</li>
+<li>pathArray : an array populated with paths. Paths are also arrays, populated with series of successive <em>Vector3</em>. You need at least one path to construct a ribbon and each path must contain at least four <em>Vector3</em>,</li>
+<li>closeArray : boolean, if true an extra set of triangles is constructed between the last path and the first path of <em>pathArray</em>,</li>
+<li>closePath : boolean, if true the last point of each path of <em>pathArray</em> is joined to the first point of this path,</li>
+<li>offset : integer (default half the <em>path</em> size) mandatory only if the <em>pathArray</em> contents only one path. The ribbon will be constructed joining each i-th point of the single path to the i+offset-th point. It is ignored if <em>pathArray</em> has more than one path,</li>
+<li>scene : the current scene object,</li>
+<li>updatable : boolean, if the ribbon should allow updating later,</li>
+<li>sideOrientation : the wanted side-orientation (BABYLON.Mesh.FRONTSIDE / BACKSIDE / DOUBLESIDE / DEFAULT).</li>
+</ul>
+<p>The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var ribbon = BABYLON.Mesh.CreateRibbon(&quot;ribbon&quot;, [path1, path2, ..., pathn], false, false, 0, scene);
+</code></pre>
+<h2><a name="tube" class="anchor" href="#tube"></a>Tube</h2><pre><code class="lang-javascript">var tube = BABYLON.Mesh.CreateTube(&quot;tube&quot;, [V1, V2, ..., Vn], radius, tesselation, radiusFunction, cap, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+
+</code></pre>
+<p>Parameters are : name, path, radius, tesselation, optional radiusFunction, cap, scene, updatable, sideOrientation.</p>
+<ul>
+<li>name : string, the name of the tube mesh,</li>
+<li>path : an array of successive Vector3, at least two Vector3,</li>
+<li>radius : nuumber, the tube radius, used when <em>radiusFunction</em> parameter set to <em>null</em>,</li>
+<li>tesselation : the number of radial segments,</li>
+<li>radiusFunction : <em>optional</em>, a javascript function returns a radius value. This can be set to <em>null</em>,</li>
+<li>cap : BABYLON.Mesh.NO_CAP, BABYLON.Mesh.CAP_START, BABYLON.Mesh.CAP_END, BABYLON.Mesh.CAP_ALL,  </li>
+<li>updatable : boolean, if the tube should allow updating later,</li>
+<li>sideOrientation : the wanted side orientation (front, back or double side).</li>
+</ul>
+<p>The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var tube = BABYLON.Mesh.CreateTube(&quot;tube&quot;, [V1, V2, ..., Vn], radius, tesselation, radiusFunction, cap, scene);
+</code></pre>
+<p>While a tube can just be a cyclinder it can be far more than that</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#LG3GS#8">Playground Example with a simple cos/sin path</a> - <i class="fa fa-eye" onclick="createIframe('LG3GS#8', this)"></i><div class="iframeContainer"></div>   </li>
+</ul>
+<p>Your function must just return a radius value.<br>Example :</p>
+<pre><code class="lang-javascript">var myFunction = function(i, distance) {
+  var radius = 3 * Math.cos(distance / 5);
+  return radius;
+};
+var tube = BABYLON.Mesh.CreateTube(&quot;lumps&quot;, path, null, 20, myFunction, scene);
+</code></pre>
+<p>Here is an example with both an _i_ sinusoidal radius function and _x_ sinusoidal incrementing path :
+<a href="https://www.babylonjs-playground.com/#LG3GS#9">https://www.babylonjs-playground.com/#LG3GS#9</a> - <i class="fa fa-eye" onclick="createIframe('LG3GS#9', this)"></i><div class="iframeContainer"></div><br>Here&#39;s another example with a circular path and varying radius : <a href="https://www.babylonjs-playground.com/#LG3GS#10">https://www.babylonjs-playground.com/#LG3GS#10</a> - <i class="fa fa-eye" onclick="createIframe('LG3GS#10', this)"></i><div class="iframeContainer"></div>  </p>
+<h2><a name="non-regular-polygon" class="anchor" href="#non-regular-polygon"></a>Non Regular Polygon</h2><p><strong>Please note that CreatePolygon uses Earcut, so, in non playground projects, you will have to add a reference to their <a href="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js">cdn</a> or download their <a href="https://github.com/mapbox/earcut#install">npm package</a></strong></p>
+<pre><code class="lang-javascript">var polygon = BABYLON.Mesh.CreatePolygon(&quot;polygon&quot;, [V1, V2, ..., Vn], scene, [[V1, V2, ..., Vn], [V1, V2, ..., Vn], ....[V1, V2, ..., Vn]], false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, polygon shape as an array of comma-separated vectors,  scene, optional holes as an array of an array of comma-separated vectors, optional updatable and the optional side orientation. The last three parameters can be omitted if you just need the default behavior :</p>
+<p>NOTE all vectors are Vector3 and should be in the XoZ plane, ie of the form BABYLON.Vector3(x, 0, z);</p>
+<pre><code class="lang-javascript">var polygon = BABYLON.Mesh.CreatePolygon(&quot;cylinder&quot;, [V1, V2, ..., Vn], scene);
+</code></pre>
+<p>Uses <a href="/How_To/polygonmeshbuilder">PolygonMeshBuilder</a></p>
+<h2><a name="extrusion-of-a-non-regular-polygon" class="anchor" href="#extrusion-of-a-non-regular-polygon"></a>Extrusion of a Non Regular Polygon</h2><p><strong>Please note that ExtrudePolygon uses Earcut, so, in non playground projects, you will have to add a reference to their <a href="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js">cdn</a> or download their <a href="https://github.com/mapbox/earcut#install">npm package</a></strong></p>
+<pre><code class="lang-javascript">var polygon = BABYLON.Mesh.ExtrudePolygon(&quot;polygon&quot;, [V1, V2, ..., Vn], 2, scene, [[V1, V2, ..., Vn], [V1, V2, ..., Vn], ....[V1, V2, ..., Vn]], false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, polygon shape as an array of comma-separated vectors, depth, scene, optional holes as an array of an array of comma-separated vectors, optional updatable and the optional side orientation. The last three parameters can be omitted if you just need the default behavior :</p>
+<p>NOTE all vectors are Vector3 and should be in the XoZ plane, ie of the form BABYLON.Vector3(x, 0, z) and in counter clockwise order;</p>
+<pre><code class="lang-javascript">var polygon = BABYLON.Mesh.CreatePolygon(&quot;polygon&quot;, [V1, V2, ..., Vn], 2, scene);
+</code></pre>
+<p>Uses <a href="/How_To/polygonmeshbuilder">PolygonMeshBuilder</a></p>
+<h2><a name="lines" class="anchor" href="#lines"></a>Lines</h2><pre><code class="lang-javascript">var lines = BABYLON.Mesh.CreateLines(&quot;lines&quot;, [
+    new BABYLON.Vector3(-10, 0, 0),
+    new BABYLON.Vector3(10, 0, 0),
+    new BABYLON.Vector3(0, 0, -10),
+    new BABYLON.Vector3(0, 0, 10)
+], scene);
+</code></pre>
+<p>Parameters are: name, [array of comma-separated vectors], scene. </p>
+<p>I could explain how the Lines Mesh constructor works, but I think you can see how it works just by looking at the demo code above.  Notice the [ and ].  Those are the enclosing tokens for an array, yet another kind of Javascript value.  The first vector3 of the array is the starting location for drawing lines.  After that, a comma, and then the next vector3 location... indicating where the line is drawing-to next.  Then, another comma, and another vector3 to a new location.  You can add as many vectors as you wish, but notice that the LAST vector3 does not have a comma following it.  Please make your array of vectors be formatted similarly.    </p>
+<h2><a name="dashed-lines" class="anchor" href="#dashed-lines"></a>Dashed Lines</h2><pre><code class="lang-javascript">var dashedlines = BABYLON.Mesh.CreateDashedLines(&quot;dashedLines&quot;, [v1, v2, ... vn], dashSize, gapSize, dashNb, scene);
+</code></pre>
+<p>Parameters are : name, [array of Vectors3], dashSize, gapSize, dashNumber, scene.<br>As for Lines, a line along the vectors3 will be displayed in space. It will try to set <em>dashNumber</em> strokes on this line depending on the length of each segment between two successive vectors3.<br><em>dashSize</em> and <em>gapSize</em> are relative to each other dash and gap sizes within these strokes.    </p>
+<h2><a name="extruded-shape" class="anchor" href="#extruded-shape"></a>Extruded Shape</h2><p>What is extrusion ?<br>Extrusion is the way to transform a 2D shape into a volumic shape.<br>Let&#39;s imagine that you define a star shape by filling an array with successive <em>Vector3</em>. In order to have a 2D shape, you only set these points in the xOy plane, so every z coordinate is zero.<br>ex : <a href="https://www.babylonjs-playground.com/#RF9W9">https://www.babylonjs-playground.com/#RF9W9</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#', this)"></i><div class="iframeContainer"></div><br>Let&#39;s show the World axis so it is clearer : <a href="https://www.babylonjs-playground.com/#RF9W9#1">https://www.babylonjs-playground.com/#RF9W9#1</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#1', this)"></i><div class="iframeContainer"></div><br>Let&#39;s now imagine you could stretch this 2D shape along the Z-axis to give it some volume... this is extrusion :  <a href="https://www.babylonjs-playground.com/#RF9W9#30">https://www.babylonjs-playground.com/#RF9W9#30</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#30', this)"></i><div class="iframeContainer"></div>    </p>
+<p>Let&#39;s now imagine you can extrude your star along a 3D path in space, a sinus curve for example, and not only along the z-axis.<br><a href="https://www.babylonjs-playground.com/#RF9W9#31">https://www.babylonjs-playground.com/#RF9W9#31</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#31', this)"></i><div class="iframeContainer"></div>    </p>
+<p>Extrusion can be accomplished with two different methods. A basic one and an advanced or custom one.  </p>
+<p>BASIC METHOD  </p>
+<pre><code class="lang-javascript">BABYLON.Mesh.ExtrudeShape(name, shape, path, scale, rotation, cap, scene, updatable?, sideOrientation)
+</code></pre>
+<ul>
+<li>name : the extruded mesh name.</li>
+<li>shape : the shape to be extruded, an array of successive Vector3.</li>
+<li>path : the path to extrude the shape along, an array of successive Vector3.</li>
+<li>scale : <em>default 1</em>, the value to scale the initial shape.</li>
+<li>rotation : <em>default 0</em>, the step value to rotate the shape at each path point.</li>
+<li>cap : BABYLON.Mesh.NO_CAP, BABYLON.Mesh.CAP_START, BABYLON.Mesh.CAP_END, BABYLON.Mesh.CAP_ALL.  </li>
+<li>scene : the current scene.</li>
+<li>updatable? : if the mesh is updatable.</li>
+<li>sideOrientation : the side orientation - <em>front, back</em> or <em>double</em>.  </li>
+</ul>
+<p>If we change the <em>scale</em> value from 1 to 3 for example (line 84), the initial star is scaled to 3 along the curve : <a href="https://www.babylonjs-playground.com/#RF9W9#526">https://www.babylonjs-playground.com/#RF9W9#526</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#526', this)"></i><div class="iframeContainer"></div> 
+If we now change the <em>rotation</em> step value from 0 to <em>PI / 24</em> for example, the curve is twisted this angle at each curve point : <a href="https://www.babylonjs-playground.com/#RF9W9#218">https://www.babylonjs-playground.com/#RF9W9#218</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#218', this)"></i><div class="iframeContainer"></div>  </p>
+<p>Of course, even if you define your 2D shape in the xOy plane as described, the extrusion still works along any path direction : <a href="https://www.babylonjs-playground.com/#RF9W9#32">https://www.babylonjs-playground.com/#RF9W9#32</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#32', this)"></i><div class="iframeContainer"></div>    </p>
+<p>Moreover, the shape doesn&#39;t need to be closed. You can have a simple (or complex) open shape : <a href="https://www.babylonjs-playground.com/#RF9W9#7">https://www.babylonjs-playground.com/#RF9W9#7</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#7', this)"></i><div class="iframeContainer"></div><br>Extrusion : <a href="https://www.babylonjs-playground.com/#RF9W9#33">https://www.babylonjs-playground.com/#RF9W9#33</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#33', this)"></i><div class="iframeContainer"></div><br>Extrusion with rotation : <a href="https://www.babylonjs-playground.com/#RF9W9#34">https://www.babylonjs-playground.com/#RF9W9#34</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#34', this)"></i><div class="iframeContainer"></div>    </p>
+<p>Remember that your shape doesn&#39;t need to be centered on the coordinate system either. Here is an offset simple shape : <a href="https://www.babylonjs-playground.com/#RF9W9#10">https://www.babylonjs-playground.com/#RF9W9#10</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#10', this)"></i><div class="iframeContainer"></div><br>Extrusion (the extrusion path is shown in magenta so the offset is visible) : <a href="https://www.babylonjs-playground.com/#RF9W9#35">https://www.babylonjs-playground.com/#RF9W9#35</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#35', this)"></i><div class="iframeContainer"></div><br>Now rotation... around the path axis : <a href="https://www.babylonjs-playground.com/#RF9W9#36">https://www.babylonjs-playground.com/#RF9W9#36</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#36', this)"></i><div class="iframeContainer"></div><br>As you can see, this is a way to build complex curved helix meshes without handling maths or simpler ones : <a href="https://www.babylonjs-playground.com/#RF9W9#37">https://www.babylonjs-playground.com/#RF9W9#37</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#37', this)"></i><div class="iframeContainer"></div><br>As the shape to be extruded is unpredictable, it is assumed that the cap, if want to add it one or two to your extruded mesh, is computed with its center set to the shape barycenter.  </p>
+<p>ADVANCED METHOD  </p>
+<pre><code class="lang-javascript">BABYLON.Mesh.ExtrudeShapeCustom(name, shape, path, scaleFunction, rotateFunction, ribbonCloseArray, ribbonClosePath, cap, scene)
+</code></pre>
+<ul>
+<li>name : the extruded mesh name,</li>
+<li>shape : the shape to be extruded, an array of successive Vector3.</li>
+<li>path : the path to extrude the shape along, an array of successive Vector3.</li>
+<li>scaleFunction : a custom javascript function. This function is called on each path point and is given the _i_ position of the point in the path and its <em>distance</em> from the begining of the path. It must return a <em>scale</em> numeric value. This value will be the scaling applied to the shape drawn at the <em>i-th</em>  point.</li>
+<li>rotationFunction : a custom javascript function. This function is called on each path point and is given the _i_ position of the point in the path and its <em>distance</em> from the begining of the path. It must return a <em>rotation</em> numeric value. This value will be the rotation applied to the shape drawn at the <em>i-th</em>  point.</li>
+<li>ribbonCloseArray : <em>default false</em>, boolean. The underlying ribbon <em>closeArray</em>  parameter. This can be used to automatically close a path with right normals computation.</li>
+<li>ribbonClosePath : <em>default false</em>, boolean. The underlying ribbon <em>closePath</em>  parameter. This can be used to automatically close a shape with right normals computation.  </li>
+<li>cap : BABYLON.Mesh.NO_CAP, BABYLON.Mesh.CAP_START, BABYLON.Mesh.CAP_END, BABYLON.Mesh.CAP_ALL.  </li>
+<li>scene : the current scene.</li>
+<li>updatable? : if the mesh is updatable.</li>
+<li>sideOrientation : the side orientation - <em>front, back</em> or <em>double</em>.</li>
+</ul>
+<p>In this advanced method, the <em>scale</em> and <em>rotation</em> parameters are replaced by custom functions.  </p>
+<p>  <em>scaleFunction</em><br>This javascript function will be called on each path point iteration when extruding. It will be passed two parameters : _i_ and <em>distance</em>.  </p>
+<ul>
+<li>i is the point position in the path, starting from zero for the first point.</li>
+<li>distance is the current point distance from the begining of the path.  </li>
+</ul>
+<p>This custom function must return a <em>scale</em> numeric value which will be applied to the shape on the <em>i-th</em> point.<br>Example :</p>
+<pre><code class="lang-javascript">var myScale = function(i, distance) {
+  var scale = 2 * Math.sin(i / 5);
+  return scale;
+};
+</code></pre>
+<p>Here is an example with an unclosed un-centered simple shape whose scale evolves linearly along the path : <a href="https://www.babylonjs-playground.com/#RF9W9#38">https://www.babylonjs-playground.com/#RF9W9#38</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#38', this)"></i><div class="iframeContainer"></div><br>Now if we use a sinus scaling function instead and as the shape isn&#39;t centered, we get interesting results : <a href="https://www.babylonjs-playground.com/#RF9W9#39">https://www.babylonjs-playground.com/#RF9W9#39</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#39', this)"></i><div class="iframeContainer"></div><br>We can even emulate rotation by alternately scaling positive/negative : <a href="https://www.babylonjs-playground.com/#RF9W9#40">https://www.babylonjs-playground.com/#RF9W9#40</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#40', this)"></i><div class="iframeContainer"></div>    </p>
+<p>  <em>rotateFunction</em><br>This javascript function will be called on each path point iteration when extruding. It will be passed two parameters : _i_ and <em>distance</em>.  </p>
+<ul>
+<li>i is the point position in the path, starting from zero for the first point.</li>
+<li>distance is the current point distance from the begining of the path. </li>
+</ul>
+<p>This custom function must return a <em>rotation</em> numeric value which will be applied to the shape on the <em>i-th</em> point.<br>Example :</p>
+<pre><code class="lang-javascript">var myRotation = function(i, distance) {
+  var rotation = distance / 20;
+  return rotation;
+};
+</code></pre>
+<p>Here is an example of constant scale and rotation evolving with the distance : <a href="https://www.babylonjs-playground.com/#RF9W9#41">https://www.babylonjs-playground.com/#RF9W9#41</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#41', this)"></i><div class="iframeContainer"></div><br>You can set a non-linear rotation function of course, sinus here : <a href="https://www.babylonjs-playground.com/#RF9W9#42">https://www.babylonjs-playground.com/#RF9W9#42</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#42', this)"></i><div class="iframeContainer"></div>    </p>
+<p>  Fixed values</p>
+<p>This advanced method needs two custom functions. But you may want to use a custom scale function with a fixed (or no) rotation function, for example. In this case, just pass a custom rotation function returning a fixed value :<br>Example :  </p>
+<pre><code class="lang-javascript">var noRotation = function(i, distance) {
+  return 0;
+};
+</code></pre>
+<p>If you carefully read the code of this previous example, you can see in line 41 that the <em>scaleFunction</em> returns the constant 1 value : <a href="https://www.babylonjs-playground.com/#RF9W9#41">https://www.babylonjs-playground.com/#RF9W9#41</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#41', this)"></i><div class="iframeContainer"></div>      </p>
+<p>  <em>ribbonCloseXXX</em> parameters</p>
+<p>The extruded mesh is based on an underlying ribbon. When you extrude a shape, you actually make a particular ribbon.<br>This means you can also set this ribbon <em>closeArray</em> and <em>closePath</em> parameter if you need to automatically close the extruded shape.<br>NOTE : the <em>closeXXX</em> names are the ribbon ones. Not the extruded shape ones.<br>So it may be confusing because :  </p>
+<ul>
+<li><em>ribbonCloseArray</em> set to true will close your shape extrusion path,</li>
+<li><em>ribbonClosePath</em> set to true will close your shape itself (if unclosed).  </li>
+</ul>
+<p>Let&#39;s now do this unclosed, un-centered extruded shape : <a href="https://www.babylonjs-playground.com/#RF9W9#20">https://www.babylonjs-playground.com/#RF9W9#20</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#20', this)"></i><div class="iframeContainer"></div><br>And this almost circular path : <a href="https://www.babylonjs-playground.com/#RF9W9#21">https://www.babylonjs-playground.com/#RF9W9#21</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#21', this)"></i><div class="iframeContainer"></div><br>Extrusion with constant scale and no rotation : <a href="https://www.babylonjs-playground.com/#RF9W9#43">https://www.babylonjs-playground.com/#RF9W9#43</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#43', this)"></i><div class="iframeContainer"></div><br>Now let&#39;s set the <em>ribbonCloseArray</em> to true :<a href="https://www.babylonjs-playground.com/#RF9W9#44">https://www.babylonjs-playground.com/#RF9W9#44</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#44', this)"></i><div class="iframeContainer"></div><br>As you can see, it closes the extrusion path. Let&#39;s set it back to false and let&#39;s set the <em>ribbonClosePath</em> to true instead : <a href="https://www.babylonjs-playground.com/#RF9W9#45">https://www.babylonjs-playground.com/#RF9W9#45</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#45', this)"></i><div class="iframeContainer"></div><br>Now the shape is closed.<br>Both together : <a href="https://www.babylonjs-playground.com/#RF9W9#46">https://www.babylonjs-playground.com/#RF9W9#46</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#46', this)"></i><div class="iframeContainer"></div>    </p>
+<p> Summary<br>At last, the extrude custom function call would be, for example:  </p>
+<pre><code class="lang-javascript">BABYLON.Mesh.ExtrudeShapeCustom(&quot;extruded&quot;, shape, path, myScale, myRotation, false, true, scene)
+</code></pre>
+<p>A shape is an array of successive Vector3. This means 2D or 3D shapes can be extruded as well.<br>The shape is to be designed in the local coordinate system knowing that the z-axis will be the extrusion path axis.<br>Finally, shapes don&#39;t have to be centered in the local coordinate system.<br>A centered shape will be extruded symmetrically centered along the path axis. An un-centered shape will be extruded offset from the path axis.  </p>
+<p>Easy way to generate strange shapes : <a href="https://www.babylonjs-playground.com/#RF9W9#47">https://www.babylonjs-playground.com/#RF9W9#47</a> - <i class="fa fa-eye" onclick="createIframe('RF9W9#47', this)"></i><div class="iframeContainer"></div>   </p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/features/Shapes">Mesh Overview</a><br><a href="/babylon101/Discover_Basic_Elements">Set Shapes 101</a><br><a href="/babylon101/Parametric_Shapes">Parametric Shapes 101</a><br><a href="/How_To/Set_Shapes">Set Shapes</a><br><a href="/How_To/Parametric_Shapes">Parametric Shapes</a><br><a href="/How_To/Polyhedra_Shapes">Polyhedra Shapes</a><br><a href="/How_To/Tiled">Tiled Planes and Boxes</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

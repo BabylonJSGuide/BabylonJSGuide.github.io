@@ -1,0 +1,166 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>First Steps - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>First Steps</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#the-playground">The Playground</a></li>
+<li><a href="#your-own-html">Your Own HTML</a><ul>
+<li><a href="#html-template">HTML template</a></li>
+</ul>
+</li>
+<li><a href="#notes">Notes</a><ul>
+<li><a href="#next-step">Next Step</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+<li><a href="#further-reading-external">Further Reading External</a></li>
+<li><a href="#useful-links-external">Useful Links External</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="first-steps" class="anchor" href="#first-steps"></a>First Steps</h1><p>Babylon.JS is a great way to code a 3D environment on the web using the HTML5 canvas element.</p>
+<h2><a name="the-playground" class="anchor" href="#the-playground"></a>The Playground</h2><p>This is the quickest and easiest way to make your own scene. Creating a 3D scene is easy, simply add a camera, lights and 3D shapes (meshes) and you are away.</p>
+<p>The <a href="https://babylonjs-playground.com">Playground</a> is a web site which has everything you need to create
+your own scene or edit an existing one. <a href="/features/Playground">More on the Playground</a>.</p>
+<p>A template for creating a scene within the playground is:</p>
+<pre><code class="lang-javascript">var createScene = function() {
+  // Create the scene space
+  var scene = new BABYLON.Scene(engine);
+
+  // Add a camera to the scene and attach it to the canvas
+  var camera = new BABYLON.ArcRotateCamera(
+    &quot;Camera&quot;,
+    Math.PI / 2,
+    Math.PI / 2,
+    2,
+    BABYLON.Vector3.Zero(),
+    scene
+  );
+  camera.attachControl(canvas, true);
+
+  // Add lights to the scene
+  var light1 = new BABYLON.HemisphericLight(
+    &quot;light1&quot;,
+    new BABYLON.Vector3(1, 1, 0),
+    scene
+  );
+  var light2 = new BABYLON.PointLight(
+    &quot;light2&quot;,
+    new BABYLON.Vector3(0, 1, -1),
+    scene
+  );
+
+  // This is where you create and manipulate meshes
+  var sphere = BABYLON.MeshBuilder.CreateSphere(
+    &quot;sphere&quot;,
+    { diameter: 2 },
+    scene
+  );
+
+  return scene;
+};
+</code></pre>
+<p>Everything else you need is taken care of within the Playground.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#WG9OY#1">Playground example of above code</a> - <i class="fa fa-eye" onclick="createIframe('WG9OY#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="your-own-html" class="anchor" href="#your-own-html"></a>Your Own HTML</h2><p>When writing your own HTML you just need to embed the createScene function into an HTML page structure with a &lt; script &gt; tag along with a few other items. You will need to load the BabylonJS JavaScript code. Also for use on tablets and mobiles BabylonJS uses pointer events rather than mouse events and so the PEP event system needs to be loaded as well.</p>
+<p>In addition a canvas element will have to be added to the body as this is where the 3D scene will be rendered and a reference variable <em>canvas</em> added to it in the code. You also need to generate the BabylonJS engine before the function for creating the scene.</p>
+<p>Finally, add code to call the scene. This enables the engine to continually render the scene in a loop and to resize it if the browser is ever resized.</p>
+<h3><a name="html-template" class="anchor" href="#html-template"></a>HTML template</h3><pre><code class="lang-javascript">&lt;!DOCTYPE html&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
+        &lt;title&gt;Babylon Template&lt;/title&gt;
+
+        &lt;style&gt;
+            html, body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+        &lt;/style&gt;
+
+        &lt;script src=&quot;https://preview.babylonjs.com/babylon.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;https://code.jquery.com/pep/0.4.3/pep.js&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+
+   &lt;body&gt;
+
+    &lt;canvas id=&quot;renderCanvas&quot; touch-action=&quot;none&quot;&gt;&lt;/canvas&gt; &lt;!-- touch-action=&quot;none&quot; for best results from PEP --&gt;
+
+    &lt;script&gt;
+        var canvas = document.getElementById(&quot;renderCanvas&quot;); // Get the canvas element
+        var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+
+        /******* Add the create scene function ******/
+        var createScene = function () {
+
+            // Create the scene space
+            var scene = new BABYLON.Scene(engine);
+
+            // Add a camera to the scene and attach it to the canvas
+            var camera = new BABYLON.ArcRotateCamera(&quot;Camera&quot;, Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0,0,5), scene);
+            camera.attachControl(canvas, true);
+
+            // Add lights to the scene
+            var light1 = new BABYLON.HemisphericLight(&quot;light1&quot;, new BABYLON.Vector3(1, 1, 0), scene);
+            var light2 = new BABYLON.PointLight(&quot;light2&quot;, new BABYLON.Vector3(0, 1, -1), scene);
+
+            // Add and manipulate meshes in the scene
+            var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter:2}, scene);
+
+            return scene;
+        };
+        /******* End of the create scene function ******/
+
+        var scene = createScene(); //Call the createScene function
+
+        // Register a render loop to repeatedly render the scene
+        engine.runRenderLoop(function () {
+                scene.render();
+        });
+
+        // Watch for browser/canvas resize events
+        window.addEventListener(&quot;resize&quot;, function () {
+                engine.resize();
+        });
+    &lt;/script&gt;
+
+   &lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<h2><a name="notes" class="anchor" href="#notes"></a>Notes</h2><ol>
+<li><p>The examples above uses the newer MeshBuilder method for creating shapes where variables for the shape are set within the options object parameter and has some advantages over the older form of BABYLON.Mesh.Create.... which uses a parameter list for the shape variables. The majority of Playgrounds use the older method as many were created before MeshBuilder existed.</p>
+</li>
+<li><p>The use of PEP for pointer events is more recent advice, older advice was to use a system called hand.js. Both work, although hand.js is no longer maintained. You may still find references to hand.js in the documentation.</p>
+</li>
+<li><p>If you want to define your own engine in a Playground, define a function <code>createEngine</code> that returns the engine. This is useful when using your <a href="https://doc.babylonjs.com/how_to/using_the_physics_engine">physics engine</a> of choice with a customized engine in a Playground. Example: <a href="https://www.babylonjs-playground.com/#WG9OY#1833">https://www.babylonjs-playground.com/#WG9OY#1833</a> - <i class="fa fa-eye" onclick="createIframe('WG9OY#1833', this)"></i><div class="iframeContainer"></div>.</p>
+</li>
+</ol>
+<h1><a name="next-step" class="anchor" href="#next-step"></a>Next Step</h1><p>Now you are ready to go further and learn how to create more shapes like spheres, cylinders, boxes, etc. by visiting <a href="/babylon101/Discover_Basic_Elements">Set Shapes</a></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/babylon101/how_to_get">How To Get Babylon.js</a></p>
+<h1><a name="further-reading-external" class="anchor" href="#further-reading-external"></a>Further Reading External</h1><p><a href="https://forum.babylonjs.com">BabylonJS Forum</a><br><a href="http://www.html5gamedevs.com/topic/22474-how-does-babylonjs-get-pointer-events-working/#comment-127993">PEP and hand.js</a></p>
+<h1><a name="useful-links-external" class="anchor" href="#useful-links-external"></a>Useful Links External</h1><p><a href="http://www.babylonjs.com/">BabylonJS Main Website</a><br><a href="https://babylonjs-playground.com">BabylonJS Playground</a><br><a href="https://github.com/jquery/PEP">PEP Github</a><br><a href="https://github.com/Deltakosh/handjs">hand.js Github</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

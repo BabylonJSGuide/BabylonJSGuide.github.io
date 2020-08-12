@@ -1,0 +1,72 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Getting Started (Unity exporter) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Getting Started (Unity exporter)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#create-new-project">Create New Project</a><ul>
+<li><a href="#set-compiler-options">Set Compiler Options</a></li>
+<li><a href="#save-export-settings">Save Export Settings</a></li>
+</ul>
+</li>
+<li><a href="#scene-configuration">Scene Configuration</a><ul>
+<li><a href="#set-project-settings">Set Project Settings</a></li>
+<li><a href="#add-scene-content">Add Scene Content</a></li>
+<li><a href="#build-and-preview">Build And Preview</a></li>
+</ul>
+</li>
+<li><a href="#how-to-get-started">How To Get Started</a></li>
+</ul>
+</div></div><div id="staticContent"><p>Download the <a href="https://github.com/BabylonJS/UnityExporter/tree/master/Redist">Babylon Editor Toolkit</a> and use <strong>Import Package</strong> to install into current project. Once installed, unity will detect the plugin, compile it and add the toolkit <a href="Exporter">Export Inspector</a> window to your project.</p>
+<h1><a name="create-new-project" class="anchor" href="#create-new-project"></a>Create New Project</h1><p><img src="/img/exporters/unity/newproject.jpg" alt="New Unity Project"></p>
+<p>Create a new unity game project then add the <strong>Babylon Editor Toolkit</strong> to your project. You can download and import the toolkit unity package <a href="https://github.com/BabylonJS/UnityExporter/tree/master/Redist">distribution</a> file.</p>
+<h2><a name="set-compiler-options" class="anchor" href="#set-compiler-options"></a>Set Compiler Options</h2><p><img src="/img/exporters/unity/compilers.jpg" alt="Node Runtime Compilers"></p>
+<p>Configure optional <strong>Runtime Script Compiler</strong> locations. You can download and install or update the current <a href="https://nodejs.org/en/">Node Runtime</a> to the default location. Then use node package manager to install or update the latest <a href="https://www.typescriptlang.org/">TypeScript Compiler</a> to the default location.</p>
+<p><strong>Install TypeScript Command</strong></p>
+<pre><code>Mac OSX: sudo npm install -g typescript
+
+Windows: npm install -g typescript
+</code></pre><p><strong>Default TypeScript Location</strong></p>
+<pre><code>Mac OSX: /usr/local/bin/tsc
+
+Windows: C:\Users\&lt;YourName&gt;\AppData\Roaming\npm\node_modules\typescript\bin\tsc
+</code></pre><p><strong>Default Node Runtime Location</strong></p>
+<pre><code>Mac OSX: /usr/local/bin/node
+
+Windows: C:\Program Files\nodejs\node.exe
+</code></pre><h2><a name="save-export-settings" class="anchor" href="#save-export-settings"></a>Save Export Settings</h2><p>On the Scene Exporter panel, press the <strong>Save Export Settings</strong> button to save the project export settings to disk. Export settings will also detect changes and save on each build.</p>
+<h1><a name="scene-configuration" class="anchor" href="#scene-configuration"></a>Scene Configuration</h1><ul>
+<li><p><strong>File &gt; New Scene</strong> - To create a new empty scene. Unity will create a main camera and a directional light by default.</p>
+</li>
+<li><p><strong>File &gt; Save Scene As</strong> - To name and save your current scene to a folder in your project assets. The toolkit will use this scene name for exporting content. </p>
+</li>
+</ul>
+<h2><a name="set-project-settings" class="anchor" href="#set-project-settings"></a>Set Project Settings</h2><ul>
+<li><p><strong>Edit &gt; Project Settings &gt; Player</strong> - To set the default color space setting to <strong>Linear</strong>. Unity will set color space to <strong>Gamma</strong> by default.</p>
+</li>
+<li><p><strong>Lighting &gt; Global Illumination</strong> - To disable <strong>Realtime Global Illumination</strong> and set the <strong>Baked Global Illumination</strong> to the desired lighting mode.</p>
+</li>
+</ul>
+<h2><a name="add-scene-content" class="anchor" href="#add-scene-content"></a>Add Scene Content</h2><ul>
+<li><p><strong>Global Startup Scripts</strong> - If defined, the global startup script is the main entry point for every scene. You can use the global startup script to attach the SceneManager.ExecuteWhenReady handler that will get called first for each and every scene.</p>
+</li>
+<li><p><strong>Default Scene Controllers</strong> - Any scene options for your project can be set using any script components you see fit. You can optionally add an empty game object and attach a default scene controller script component to easily setup built in options for your scene.</p>
+</li>
+<li><p><strong>Cameras, Lights And Meshes</strong> - Add any supported camera, light and mesh content to your scene. You can attach script components, assign materials, create particle systems, setup animations, optimize geometry and utilize any unity editor tools to manage scene content.</p>
+</li>
+</ul>
+<h2><a name="build-and-preview" class="anchor" href="#build-and-preview"></a>Build And Preview</h2><p>To build and preview the current scene, press the <strong>Play</strong> button or the <strong>Build And Preview</strong> button on the Scene Exporter panel. Select the <strong>Export Scene File</strong> to simply export the current scene content without a full build and preview. This is very useful for creating <strong>Import Mesh</strong> only scenes. All project output will be saved to the <strong>Export</strong> folder of your unity game project folder.</p>
+<h1><a name="how-to-get-started" class="anchor" href="#how-to-get-started"></a>How To Get Started</h1><p>Check out the <a href="http://www.babylontoolkit.com/videos/GettingStarted.mp4">Getting Started Video</a> to get started with <strong>Babylon Toolkit</strong> style game development.</p>
+<p>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

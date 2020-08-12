@@ -1,0 +1,67 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Grid - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Grid</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#playground-example">Playground example</a></li>
+<li><a href="#using-the-grid-material">Using the Grid material</a></li>
+<li><a href="#customize-the-grid-material">Customize the grid material</a><ul>
+<li><a href="#few-clarifications">Few clarifications</a><ul>
+<li><a href="#gridratio">gridRatio</a></li>
+<li><a href="#majorunitfrequency">majorUnitFrequency</a></li>
+<li><a href="#minorunitvisibility">minorUnitVisibility</a></li>
+<li><a href="#gridoffset">gridOffset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="grid-material" class="anchor" href="#grid-material"></a>Grid material</h1><p><img src="/img/extensions/materials/grid.png" alt="Grid Material"></p>
+<h2><a name="playground-example" class="anchor" href="#playground-example"></a>Playground example</h2><p>A full playground example can be found here: <a href="https://www.babylonjs-playground.com/#1UFGZH#12">Grid Playground</a> - <i class="fa fa-eye" onclick="createIframe('1UFGZH#12', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="using-the-grid-material" class="anchor" href="#using-the-grid-material"></a>Using the Grid material</h2><p>As the grid material is a babylonJS extension, it is not included in the main <em>babylon.js</em> file. In order to use the material, please download and reference the extension from the <a href="https://github.com/BabylonJS/Babylon.js/tree/master/dist/preview%20release/materialsLibrary">github repo</a> using <a href="https://raw.githubusercontent.com/BabylonJS/Babylon.js/master/dist/preview%20release/materialsLibrary/babylon.gridMaterial.js">babylon.gridMaterial.js</a> or its minified version <a href="https://raw.githubusercontent.com/BabylonJS/Babylon.js/master/dist/preview%20release/materialsLibrary/babylon.gridMaterial.min.js">babylon.gridMaterial.min.js</a>.</p>
+<p>The default grid behaviour does not require any setup and displays a black and white grid on your meshes:</p>
+<p><img src="/img/extensions/materials/gridDefault.png" alt="gridDefault"></p>
+<p>You can access the live example in this <a href="https://www.babylonjs-playground.com/#2KKVBH">playground</a> - <i class="fa fa-eye" onclick="createIframe('2KKVBH#', this)"></i><div class="iframeContainer"></div></p>
+<p>The grid is using the local position to outline any of the axis fitting with one unit in black. Only one on ten lines will be fully black, the other lines will be in lighter grey. You can imagine it as a ruler with bigger marks for centimeters and smaller for millimeters.</p>
+<pre><code>var ground = BABYLON.Mesh.CreateGroundFromHeightMap(&quot;ground&quot;, &quot;textures/heightMap.png&quot;, 100, 100, 100, 0, 10, scene, false);
+ground.material = new BABYLON.GridMaterial(&quot;groundMaterial&quot;, scene);
+</code></pre><h2><a name="customize-the-grid-material" class="anchor" href="#customize-the-grid-material"></a>Customize the grid material</h2><p>In order to help you making the grid fit in your scenes, a few controls are available:</p>
+<ul>
+<li><code>mainColor</code>: the main color pilots the color of the empty area</li>
+<li><code>lineColor</code>: the line color drives the line color... What an amazing surprise !!!</li>
+<li><code>opacity</code>: the opacity helps changing the lines opacity. In transparent mode (opacity &lt; 1.0), the empty area will always be at an opacity level of <code>0.08</code></li>
+<li><code>gridRatio</code>: subdivide the object size in order to fit with it</li>
+<li><code>majorUnitFrequency</code>: frequency of strong lines</li>
+<li><code>minorUnitVisibility</code>: level of minor lines compared to the major ones</li>
+<li><code>gridOffset</code>: the offset vector3 will shift the cells of the grid by a set amount</li>
+</ul>
+<h3><a name="few-clarifications" class="anchor" href="#few-clarifications"></a>Few clarifications</h3><h4><a name="gridratio" class="anchor" href="#gridratio"></a>gridRatio</h4><p>The grid will be projected on objects according to their size. If an object has a size of 1, you&#39;ll only see one line on it.
+For instance a 1 size cube will by default only have one line:</p>
+<p><img src="/img/extensions/materials/gridRatio1.png" alt="Grid Ratio 1"></p>
+<p><a href="https://www.babylonjs-playground.com/#5S6MD">Playground</a> - <i class="fa fa-eye" onclick="createIframe('5S6MD#', this)"></i><div class="iframeContainer"></div></p>
+<p>Using a gridRatio of 0.1, will then make appear ten lines on it:</p>
+<p><img src="/img/extensions/materials/gridRatio2.png" alt="Grid Ratio 2"></p>
+<p><a href="https://www.babylonjs-playground.com/#5S6MD#1">Playground</a> - <i class="fa fa-eye" onclick="createIframe('5S6MD#1', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="majorunitfrequency" class="anchor" href="#majorunitfrequency"></a>majorUnitFrequency</h4><p>You have now noticed on the gridRatio examples above that only one on ten lines is stronger. This is control by the parameter named <code>majorUnitFrequency</code> which gets its default value to 10.</p>
+<p>Setting it to 2, will make appear one strong line each 2 lines. This is only a scary parameter name for something simple:</p>
+<p><img src="/img/extensions/materials/gridMUF.png" alt="Grid MUF"></p>
+<p><a href="https://www.babylonjs-playground.com/#5S6MD#2">Playground</a> - <i class="fa fa-eye" onclick="createIframe('5S6MD#2', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="minorunitvisibility" class="anchor" href="#minorunitvisibility"></a>minorUnitVisibility</h4><p>After sorting out the frequency of stronger lines, you could wonder how to control the strength of the minor ones. The parameter <code>minorUnitVisibility</code> will help you to control this. This value should be smaller than 1 which is the value applied to the main lines. The default value is 0.33 which corresponds to 33% of the <code>lineColor</code>.</p>
+<p>Setting it to 0.1 will then reinforce the effect of the main lines (by dropping the value of the minor ones):</p>
+<p><img src="/img/extensions/materials/gridMUV.png" alt="Grid MUV"></p>
+<p><a href="https://www.babylonjs-playground.com/#5S6MD#3">Playground</a> - <i class="fa fa-eye" onclick="createIframe('5S6MD#3', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="gridoffset" class="anchor" href="#gridoffset"></a>gridOffset</h4><p>Note that the shift for each axys allows a loop: using a <code>gridOffset</code> of <code>(0, 0, 0)</code> will give you the same visual result than <code>(1, 0, 0)</code>.</p>
+<p><a href="https://playground.babylonjs.com/#URSDPL#1">Playground</a> - <i class="fa fa-eye" onclick="createIframe('URSDPL#1', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

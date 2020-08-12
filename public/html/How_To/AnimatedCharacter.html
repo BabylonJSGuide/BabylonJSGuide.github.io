@@ -1,0 +1,151 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create an Animated Character and Control it via Keyboard (Blender -> Mixamo -> GLB -> Babylon.js) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create an Animated Character and Control it via Keyboard (Blender -> Mixamo -> GLB -> Babylon.js)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#detailed-workflow">Detailed workflow</a></li>
+<li><a href="#create-a-character-with-animation">Create a character with animation</a></li>
+<li><a href="#add-and-combine-several-animations-into-a-character">Add and combine several animations into a character</a></li>
+<li><a href="#control-the-movement-of-the-animated-character-with-the-keyboard">Control the movement of the animated character with the keyboard</a><ul>
+<li><a href="#import-the-model-and-play-animation">Import the model and play animation</a></li>
+<li><a href="#control-animations-via-keyboard">Control animations via keyboard</a></li>
+</ul>
+</li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#basic">Basic</a></li>
+<li><a href="#advanced">Advanced</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><p>This &quot;How To&quot; goes over an end to end workflow from creating a character in Blender, adding animations to it with <a href="http://www.mixamo.com"><strong>Mixamo</strong></a> and combining them into a single model, to controlling the movement of the animated character with the keyboard.</p>
+<h2><a name="detailed-workflow" class="anchor" href="#detailed-workflow"></a>Detailed workflow</h2><p>There are of course different tools and possible workflows to create an animated model that can be used in a Babylon.js project. Below is the detailed workflow of this How To:</p>
+<ul>
+<li>Use Blender to create the model</li>
+<li>Export the model as .FBX</li>
+<li>Load the model in Mixamo to rig it and add animations</li>
+<li>Download animated models as .FBX files</li>
+<li>Use Blender to combine the animated models into one</li>
+<li>Export as .GLB (animation as Animation Group)</li>
+<li>Load the .GLB in a Babylon.js Playground and control the model movement via keyboard</li>
+</ul>
+<h2><a name="create-a-character-with-animation" class="anchor" href="#create-a-character-with-animation"></a>Create a character with animation</h2><p>The first step is to create a character (a low poly character in this example). It usually involves starting from the 2D drawing of a character and then model it in 3D from head to toes. This is a quite long but fun experience. <a href="https://www.blender.org"><strong>Blender</strong></a> can be used to model a low poly character such as in Grant Abbitt&#39;s Tutorial <a href="https://www.youtube.com/playlist?list=PLn3ukorJv4vuOi2Ar-Xt46VFbDFP3c_RE"><strong>Low poly anime Girl</strong></a>.</p>
+<p><img src="/img/how_to/animatedCharact/createCharact.jpg" alt="Create Character in Blender"></p>
+<p>Once done with the creation of the model, the next step is to bring it to life by adding animations. The easy way to animate a character is with <a href="https://www.mixamo.com"><strong>Mixamo</strong></a>. Grant Abbit goes over it in details in his <a href="https://youtu.be/k-ZeLNV4zPw"><strong>Animate &amp; Rig Characters the Easy Way</strong></a> video. It involves going through the following:</p>
+<ul>
+<li>In Blender, export the model as an .FBX file and upload it on Mixamo</li>
+<li>In Mixamo, start with auto-rigging the model: after mapping key points of the model (e.g. chin, wrist, elbows etc… ), a rigging algorithm creates the skeleton onto which the animations will be applied</li>
+</ul>
+<p><img src="/img/how_to/animatedCharact/rigCharact.jpg" alt="Rig Character in Mixamo"></p>
+<ul>
+<li>Then pick an animation, &quot;Walk&quot; for instance,  and download the result as a .FBX file</li>
+</ul>
+<p><img src="/img/how_to/animatedCharact/animCharact.jpg" alt="Anim Character in Mixamo"></p>
+<h2><a name="add-and-combine-several-animations-into-a-character" class="anchor" href="#add-and-combine-several-animations-into-a-character"></a>Add and combine several animations into a character</h2><p>As several animations are needed for a character (e.g. Idle, Walk, Walk backwards, etc…), the previous step of exporting an animation into a FBX file must be done for each animation (animation packs, such as &quot;Basic Locomotion Pack&quot;, are available but they are just a zip with many .FBX files). </p>
+<p>The key step to finish the character is to combine the animations, each contained in a .FBX file, into a unique model with several animations. Ben Rigby has a very simple tutorial for it: <a href="https://youtu.be/9EWJhqPafpk"><strong>Combining Mixamo animations in Blender 2.8 for BabylonJS</strong></a>. It involves importing all the FBX files into an empty Blender project making sure to rename the loaded animations,  displaying the Non-linear Animation tool, deleting the duplicate objects and adding an actions strip for each animation.  </p>
+<p>The result is exported as a .GLB file and the animation information can be seen by drag and dropping the file in the <a href="https://sandbox.babylonjs.com/"><strong>Sandbox</strong></a> as Animation Groups (the .GLB file example is available <a href="https://assets.babylonjs.com/meshes/HVGirl.glb"><strong>here</strong></a>).</p>
+<p><img src="/img/how_to/animatedCharact/viewCharact.jpg" alt="View Character in Sandbox"></p>
+<h2><a name="control-the-movement-of-the-animated-character-with-the-keyboard" class="anchor" href="#control-the-movement-of-the-animated-character-with-the-keyboard"></a>Control the movement of the animated character with the keyboard</h2><h3><a name="import-the-model-and-play-animation" class="anchor" href="#import-the-model-and-play-animation"></a>Import the model and play animation</h3><p>The model can be loaded using the <a href="https://doc.babylonjs.com/api/classes/babylon.sceneloader#importmesh"><strong>ImportMesh</strong></a> method of the SceneLoader class and making sure to add the animationGroups parameter as it is used to get and play the animations.</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;https://assets.babylonjs.com/meshes/&quot;, &quot;HVGirl.glb&quot;, scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
+    var hero = newMeshes[0];
+
+    //Scale the model down        
+    hero.scaling.scaleInPlace(0.1);
+
+    //Lock camera on the character 
+    camera1.target = hero;
+
+    //Get the Samba animation Group
+    const sambaAnim = scene.getAnimationGroupByName(&quot;Samba&quot;);
+
+    //Play the Samba animation  
+    sambaAnim.start(true, 1.0, sambaAnim.from, sambaAnim.to, false);
+
+});
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#Z6SWJU#5">Playground Example Loading model and playing animation group</a> - <i class="fa fa-eye" onclick="createIframe('Z6SWJU#5', this)"></i><div class="iframeContainer"></div></p>
+<p>The names of the AnimationGroups can be found in the Sandbox via the Inspector, by loading the model and selecting the Animation Group in the Scene Explorer.</p>
+<p><img src="/img/how_to/animatedCharact/viewAnim.jpg" alt="View animation info"></p>
+<p>By default the animationGroups[0] is played when loading a model with an animation Group. To stop it: </p>
+<pre><code class="lang-javascript">animationGroups[0].stop();
+</code></pre>
+<h3><a name="control-animations-via-keyboard" class="anchor" href="#control-animations-via-keyboard"></a>Control animations via keyboard</h3><p>The <a href="https://doc.babylonjs.com/how_to/how_to_use_actions"><strong>Action Manager</strong></a> can be used to capture the keys pressed on the keyboard:</p>
+<pre><code class="lang-javascript">var inputMap = {};
+scene.actionManager = new BABYLON.ActionManager(scene);
+scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {
+    inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == &quot;keydown&quot;;
+}));
+scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+    inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == &quot;keydown&quot;;
+}));
+</code></pre>
+<p>Then in the rendering loop, which is executed every frame, the position and direction of the hero character are updated:</p>
+<pre><code class="lang-javascript">if (inputMap[&quot;w&quot;]) {
+    hero.moveWithCollisions(hero.forward.scaleInPlace(heroSpeed));
+    keydown = true;
+}
+if (inputMap[&quot;s&quot;]) {
+    hero.moveWithCollisions(hero.forward.scaleInPlace(-heroSpeedBackwards));
+    keydown = true;
+}
+if (inputMap[&quot;a&quot;]) {
+    hero.rotate(BABYLON.Vector3.Up(), -heroRotationSpeed);
+    keydown = true;
+}
+if (inputMap[&quot;d&quot;]) {
+    hero.rotate(BABYLON.Vector3.Up(), heroRotationSpeed);
+    keydown = true;
+}
+if (inputMap[&quot;b&quot;]) {
+    keydown = true;
+}
+</code></pre>
+<p>And also the relevant animation are played:</p>
+<pre><code class="lang-javascript">if (keydown) {
+    if (!animating) {
+        animating = true;
+        if (inputMap[&quot;s&quot;]) {
+            //Walk backwards
+            walkBackAnim.start(true, 1.0, walkBackAnim.from, walkBackAnim.to, false);
+        }
+        else if
+            (inputMap[&quot;b&quot;]) {
+            //Samba!
+            sambaAnim.start(true, 1.0, sambaAnim.from, sambaAnim.to, false);
+        }
+        else {
+            //Walk
+            walkAnim.start(true, 1.0, walkAnim.from, walkAnim.to, false);
+        }
+    }
+}
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#AHQEIB#17">Final Playground Example Load a Character and Control it via Keyboard: </a> - <i class="fa fa-eye" onclick="createIframe('AHQEIB#17', this)"></i><div class="iframeContainer"></div></p>
+<p>This simple example can be enhanced:</p>
+<ul>
+<li>By adding a more robust logic to manage the details of selecting multiple keys and combining them</li>
+<li>By using the <a href="https://doc.babylonjs.com/how_to/how_to_use_devicesourcemanager"><strong>Device Source Manager</strong></a> instead of the Action Manager for key presses</li>
+<li>With <a href="https://doc.babylonjs.com/babylon101/animations#animation-blending"><strong>animation blending</strong></a> to ensure much more natural transitions between animations</li>
+</ul>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h3><a name="basic" class="anchor" href="#basic"></a>Basic</h3><ul>
+<li><a href="/babylon101/animations">Introduction to Animating</a>  </li>
+<li><a href="/How_To/Group">Grouping Animations</a></li>
+<li>Video: <a href="https://youtu.be/3D6BtdMnnQI">Using External Assets</a></li>
+<li>Video: <a href="https://youtu.be/BSqxoQ-at24">Demystifying Animation Groups</a></li>
+</ul>
+<h3><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h3><ul>
+<li><a href="/How_to/combine">Combining Animations</a></li>
+<li><a href="/How_To/sequence">A Sequence of Animations</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

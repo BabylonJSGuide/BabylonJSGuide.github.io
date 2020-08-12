@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>MorphTargetManager - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.morphtargetmanager.html">MorphTargetManager</a>
+					</li>
+				</ul>
+				<h1>MorphTargetManager</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This class is used to deform meshes using morphing between different targets</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/how_to/how_to_use_morphtargets">https://doc.babylonjs.com/how_to/how_to_use_morphtargets</a></p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">MorphTargetManager</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Constructors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#enablenormalmorphing" class="tsd-kind-icon">enable<wbr>Normal<wbr>Morphing</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#enabletangentmorphing" class="tsd-kind-icon">enable<wbr>Tangent<wbr>Morphing</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#enableuvmorphing" class="tsd-kind-icon">enableUVMorphing</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Accessors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#influences" class="tsd-kind-icon">influences</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#numinfluencers" class="tsd-kind-icon">num<wbr>Influencers</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#numtargets" class="tsd-kind-icon">num<wbr>Targets</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#supportsnormals" class="tsd-kind-icon">supports<wbr>Normals</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#supportstangents" class="tsd-kind-icon">supports<wbr>Tangents</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#supportsuvs" class="tsd-kind-icon">supportsUVs</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#uniqueid" class="tsd-kind-icon">unique<wbr>Id</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#vertexcount" class="tsd-kind-icon">vertex<wbr>Count</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#addtarget" class="tsd-kind-icon">add<wbr>Target</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#clone" class="tsd-kind-icon">clone</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#getactivetarget" class="tsd-kind-icon">get<wbr>Active<wbr>Target</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#gettarget" class="tsd-kind-icon">get<wbr>Target</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#removetarget" class="tsd-kind-icon">remove<wbr>Target</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#serialize" class="tsd-kind-icon">serialize</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.morphtargetmanager.html#synchronize" class="tsd-kind-icon">synchronize</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.morphtargetmanager.html#parse" class="tsd-kind-icon">Parse</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Constructors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+						<a name="constructor" class="tsd-anchor"></a>
+						<h3>constructor</h3>
+						<a href="/playground/?code=constructor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">new <wbr>Morph<wbr>Target<wbr>Manager<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">?: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.scene.html" class="tsd-signature-type">Scene</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.morphtargetmanager.html" class="tsd-signature-type">MorphTargetManager</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a new MorphTargetManager</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> scene: <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.scene.html" class="tsd-signature-type">Scene</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>defines the current scene</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.morphtargetmanager.html" class="tsd-signature-type">MorphTargetManager</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="enablenormalmorphing" class="tsd-anchor"></a>
+						<h3>enable<wbr>Normal<wbr>Morphing</h3>
+						<a href="/playground/?code=enableNormalMorphing" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">enable<wbr>Normal<wbr>Morphing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets or sets a boolean indicating if normals must be morphed</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="enabletangentmorphing" class="tsd-anchor"></a>
+						<h3>enable<wbr>Tangent<wbr>Morphing</h3>
+						<a href="/playground/?code=enableTangentMorphing" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">enable<wbr>Tangent<wbr>Morphing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets or sets a boolean indicating if tangents must be morphed</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="enableuvmorphing" class="tsd-anchor"></a>
+						<h3>enableUVMorphing</h3>
+						<a href="/playground/?code=enableUVMorphing" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">enableUVMorphing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets or sets a boolean indicating if UV must be morphed</p>
+							</div>
+						</div>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Accessors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="influences" class="tsd-anchor"></a>
+						<h3>influences</h3>
+						<a href="/playground/?code=influences" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> influences<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Float32Array</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the list of influences (one per target)</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Float32Array</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="numinfluencers" class="tsd-anchor"></a>
+						<h3>num<wbr>Influencers</h3>
+						<a href="/playground/?code=numInfluencers" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> numInfluencers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the number of influencers (ie. the number of targets with influences &gt; 0)</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="numtargets" class="tsd-anchor"></a>
+						<h3>num<wbr>Targets</h3>
+						<a href="/playground/?code=numTargets" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> numTargets<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the number of targets stored in this manager</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="supportsnormals" class="tsd-anchor"></a>
+						<h3>supports<wbr>Normals</h3>
+						<a href="/playground/?code=supportsNormals" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> supportsNormals<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets a boolean indicating if this manager supports morphing of normals</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="supportstangents" class="tsd-anchor"></a>
+						<h3>supports<wbr>Tangents</h3>
+						<a href="/playground/?code=supportsTangents" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> supportsTangents<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets a boolean indicating if this manager supports morphing of tangents</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="supportsuvs" class="tsd-anchor"></a>
+						<h3>supportsUVs</h3>
+						<a href="/playground/?code=supportsUVs" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> supportsUVs<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets a boolean indicating if this manager supports morphing of texture coordinates</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="uniqueid" class="tsd-anchor"></a>
+						<h3>unique<wbr>Id</h3>
+						<a href="/playground/?code=uniqueId" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> uniqueId<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the unique ID of this manager</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="vertexcount" class="tsd-anchor"></a>
+						<h3>vertex<wbr>Count</h3>
+						<a href="/playground/?code=vertexCount" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> vertexCount<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the number of vertices handled by this manager</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="addtarget" class="tsd-anchor"></a>
+						<h3>add<wbr>Target</h3>
+						<a href="/playground/?code=addTarget" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">add<wbr>Target<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="babylon.morphtarget.html" class="tsd-signature-type">MorphTarget</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Add a new target to this manager</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>target: <a href="babylon.morphtarget.html" class="tsd-signature-type">MorphTarget</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the target to add</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="clone" class="tsd-anchor"></a>
+						<h3>clone</h3>
+						<a href="/playground/?code=clone" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.morphtargetmanager.html" class="tsd-signature-type">MorphTargetManager</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Clone the current manager</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.morphtargetmanager.html" class="tsd-signature-type">MorphTargetManager</a></h4>
+								<p>a new MorphTargetManager</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="getactivetarget" class="tsd-anchor"></a>
+						<h3>get<wbr>Active<wbr>Target</h3>
+						<a href="/playground/?code=getActiveTarget" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">get<wbr>Active<wbr>Target<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.morphtarget.html" class="tsd-signature-type">MorphTarget</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the active target at specified index. An active target is a target with an influence &gt; 0</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>index: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the index to check</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.morphtarget.html" class="tsd-signature-type">MorphTarget</a></h4>
+								<p>the requested target</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="gettarget" class="tsd-anchor"></a>
+						<h3>get<wbr>Target</h3>
+						<a href="/playground/?code=getTarget" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">get<wbr>Target<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.morphtarget.html" class="tsd-signature-type">MorphTarget</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the target at specified index</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>index: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the index to check</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.morphtarget.html" class="tsd-signature-type">MorphTarget</a></h4>
+								<p>the requested target</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="removetarget" class="tsd-anchor"></a>
+						<h3>remove<wbr>Target</h3>
+						<a href="/playground/?code=removeTarget" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">remove<wbr>Target<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="babylon.morphtarget.html" class="tsd-signature-type">MorphTarget</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Removes a target from the manager</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>target: <a href="babylon.morphtarget.html" class="tsd-signature-type">MorphTarget</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the target to remove</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="serialize" class="tsd-anchor"></a>
+						<h3>serialize</h3>
+						<a href="/playground/?code=serialize" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">serialize<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Serializes the current manager into a Serialization object</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+								<p>the serialized object</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="synchronize" class="tsd-anchor"></a>
+						<h3>synchronize</h3>
+						<a href="/playground/?code=synchronize" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">synchronize<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Syncrhonize the targets with all the meshes using this morph target manager</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="parse" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Parse</h3>
+						<a href="/playground/?code=Parse" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Parse<span class="tsd-signature-symbol">(</span>serializationObject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, scene<span class="tsd-signature-symbol">: </span><a href="babylon.scene.html" class="tsd-signature-type">Scene</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.morphtargetmanager.html" class="tsd-signature-type">MorphTargetManager</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a new MorphTargetManager from serialized data</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>serializationObject: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the serialized data</p>
+										</div>
+									</li>
+									<li>
+										<h5>scene: <a href="babylon.scene.html" class="tsd-signature-type">Scene</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the hosting scene</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.morphtargetmanager.html" class="tsd-signature-type">MorphTargetManager</a></h4>
+								<p>the new MorphTargetManager</p>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace">
+							<a href="babylon.morphtargetmanager.html" class="tsd-kind-icon">Morph<wbr>Target<wbr>Manager</a>
+							<ul>
+								<li class=" tsd-kind-constructor tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#constructor" class="tsd-kind-icon">constructor</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#enablenormalmorphing" class="tsd-kind-icon">enable<wbr>Normal<wbr>Morphing</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#enabletangentmorphing" class="tsd-kind-icon">enable<wbr>Tangent<wbr>Morphing</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#enableuvmorphing" class="tsd-kind-icon">enableUVMorphing</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#influences" class="tsd-kind-icon">influences</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#numinfluencers" class="tsd-kind-icon">num<wbr>Influencers</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#numtargets" class="tsd-kind-icon">num<wbr>Targets</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#supportsnormals" class="tsd-kind-icon">supports<wbr>Normals</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#supportstangents" class="tsd-kind-icon">supports<wbr>Tangents</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#supportsuvs" class="tsd-kind-icon">supportsUVs</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#uniqueid" class="tsd-kind-icon">unique<wbr>Id</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#vertexcount" class="tsd-kind-icon">vertex<wbr>Count</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#addtarget" class="tsd-kind-icon">add<wbr>Target</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#clone" class="tsd-kind-icon">clone</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#getactivetarget" class="tsd-kind-icon">get<wbr>Active<wbr>Target</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#gettarget" class="tsd-kind-icon">get<wbr>Target</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#removetarget" class="tsd-kind-icon">remove<wbr>Target</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#serialize" class="tsd-kind-icon">serialize</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.morphtargetmanager.html#synchronize" class="tsd-kind-icon">synchronize</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.morphtargetmanager.html#parse" class="tsd-kind-icon">Parse</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

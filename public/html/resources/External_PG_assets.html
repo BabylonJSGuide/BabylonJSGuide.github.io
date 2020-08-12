@@ -1,0 +1,145 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Using External Assets - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Using External Assets</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#from-githubcom">From github.com</a><ul>
+<li><a href="#using-rawgithubusercontentcom">using raw.githubusercontent.com</a></li>
+<li><a href="#using-rawgitcom">using rawgit.com</a></li>
+<li><a href="#using-jsdelivrcom">using jsdelivr.com</a></li>
+</ul>
+</li>
+<li><a href="#from-gitlabcom">From Gitlab.com</a><ul>
+<li><a href="#using-gitlab-pages">using GitLab pages</a></li>
+</ul>
+</li>
+<li><a href="#from-dropboxcom">From dropbox.com</a></li>
+<li><a href="#from-imgurcom">From imgur.com</a></li>
+<li><a href="#embedded-assets">Embedded assets</a></li>
+<li><a href="#javascript-files">Javascript files</a></li>
+<li><a href="#going-further">Going further</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="using-external-assets-in-the-playground" class="anchor" href="#using-external-assets-in-the-playground"></a>Using External Assets in the Playground</h1><p>Sometimes you might want to load you own assets into the playground. Should the reason for doing so be to get help with a feature please think carefully before doing so.</p>
+<p>It is very likely that the issue you are struggling with can be isolated and presented in a simplified and more focused form using basic meshes and existing <a href="/resources/playground_textures">textures</a> and <a href="/resources/meshes_to_load">models</a>.</p>
+<p>Doing this will lead to quicker answers as your question will be more understandable, since few people want to work through long sections of code.  Using the existing assets will also ensure that they remain reachable and the playgrounds you create will still be a useful resource in the future.  However should you still wish to use your own assets then this page describes ways of doing so.</p>
+<p> Any site hosting you assets must be <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS compliant</a> and use the secure <a href="https://en.wikipedia.org/wiki/HTTPS">https</a> protocol.</p>
+<h2><a name="from-githubcom" class="anchor" href="#from-githubcom"></a>From github.com</h2><h3><a name="using-rawgithubusercontentcom" class="anchor" href="#using-rawgithubusercontentcom"></a>using raw.githubusercontent.com</h3><ul>
+<li>ensure that your git repo is set to <strong>public</strong></li>
+<li>navigate to your file. We&#39;ll take as example <a href="https://github.com/BabylonJS/MeshesLibrary/blob/master/PBR_Spheres.glb">https://github.com/BabylonJS/MeshesLibrary/blob/master/PBR_Spheres.glb</a></li>
+<li>remove <code>/blob/</code> part</li>
+<li>replace <code>https://github.com</code> by <code>https://raw.githubusercontent.com</code></li>
+<li>you now have raw access to your file <code>https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/PBR_Spheres.glb</code></li>
+</ul>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/&quot;, &quot;PBR_Spheres.glb&quot;, scene);
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#YIU90M">Playground example</a> - <i class="fa fa-eye" onclick="createIframe('YIU90M#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="using-rawgitcom" class="anchor" href="#using-rawgitcom"></a>using rawgit.com</h3><p>You were able to use <a href="https://github.com/">GitHub</a> with a link generated by the <strong><a href="https://rawgit.com/">RawGit</a></strong> site to ensure correct MIME type. Unfortunately this site has now closed.</p>
+<p>Any existing links to files using <strong>RawGit</strong> can be updated using <strong><a href="https://www.jsdelivr.com/rawgit">Raw Git to jsDelivr</a></strong>. Changes should be made to <strong>RawGit</strong> links before October 2019.</p>
+<h3><a name="using-jsdelivrcom" class="anchor" href="#using-jsdelivrcom"></a>using jsdelivr.com</h3><p> To use <strong><a href="https://www.jsdelivr.com">jsDelivr</a></strong> with a file: </p>
+<ul>
+<li>ensure that your git repo is set to <strong>public</strong></li>
+<li>let&#39;s say you have a file named <em>myFile.babylon</em> on  <strong>github</strong>, go to that file in your repository and click on the commit number. </li>
+<li><p>then in the address bar copy the part after <code>https://github.com/</code>, for example</p>
+<pre><code class="lang-javascript">myGithubUserName/myRepository/commit/2bd79648e08709145cd9575e6679b2ea360f12f6
+</code></pre>
+</li>
+<li><p>replace <code>/commit/</code> with <code>@</code></p>
+<pre><code class="lang-javascript">myGithubUserName/myRepository@2bd79648e08709145cd9575e6679b2ea360f12f6
+</code></pre>
+</li>
+<li><p>add at the front <code>https://cdn.jsdelivr.net/gh/</code></p>
+<pre><code class="lang-javascript">https://cdn.jsdelivr.net/gh/myGithubUserName/myRepository@2bd79648e08709145cd9575e6679b2ea360f12f6
+</code></pre>
+</li>
+</ul>
+<ul>
+<li><p><em>(optionnal)</em> by adding the filename to the end, you now have direct download access</p>
+<pre><code class="lang-javascript">https://cdn.jsdelivr.net/gh/myGithubUserName/myRepository@2bd79648e08709145cd9575e6679b2ea360f12f6/myFile.babylon
+</code></pre>
+</li>
+</ul>
+<p>You now have all necessary data to load your meshes.</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;https://cdn.jsdelivr.net/gh/myGithubUserName/myRepository@2bd79648e08709145cd9575e6679b2ea360f12f6&quot;, &quot;myFile.babylon&quot;, scene);
+</code></pre>
+<p>From our MeshesLibrary repo, <a href="https://github.com/BabylonJS/MeshesLibrary/commit/fa494961cbe0b8d44854b3cf8aa8268ba211741a">using PBR_Spheres.glb</a>:</p>
+<p><a href="https://www.babylonjs-playground.com/#IX12S2">Playground example</a> - <i class="fa fa-eye" onclick="createIframe('IX12S2#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="from-gitlabcom" class="anchor" href="#from-gitlabcom"></a>From Gitlab.com</h2><h3><a name="using-gitlab-pages" class="anchor" href="#using-gitlab-pages"></a>using GitLab pages</h3><p>You have to configure your own <a href="https://docs.gitlab.com/ee/user/project/pages/">Gitlab pages</a>.</p>
+<p>When done, just use the direct link in the loader:</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;https://yourpages.gitlab.io/yourScene/&quot;, &quot;myFile.babylon&quot;, scene);
+</code></pre>
+<h2><a name="from-dropboxcom" class="anchor" href="#from-dropboxcom"></a>From dropbox.com</h2><p><a href="https://dropbox.com">Dropbox</a> could be use both for playground debugging and easily sharing assets.</p>
+<ul>
+<li>upload your file</li>
+<li>click on <code>Share</code> button</li>
+<li>generate a public download link, here our example: <code>https://www.dropbox.com/s/rANdoMGeneR4tedLink/my-file.glb?dl=0</code></li>
+<li>replace <code>www</code> in url by <code>dl</code>, also remove <code>?dl=0</code> at the end</li>
+<li>you now have a direct access url: <code>https://dl.dropbox.com/s/rANdoMGeneR4tedLink/my-file.glb</code></li>
+</ul>
+<p>It can be used in this way:</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;https://dl.dropbox.com/s/rANdoMGeneR4tedLink/&quot;, &quot;my-file.glb&quot;, scene);
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#8LFTCH#14">Playground example</a> - <i class="fa fa-eye" onclick="createIframe('8LFTCH#14', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="from-imgurcom" class="anchor" href="#from-imgurcom"></a>From imgur.com</h2><p><a href="https://imgur.com">Imgur</a> could be useful to quickly use custom textures.</p>
+<ul>
+<li>upload your image, here our example: <a href="https://imgur.com/a/KhuCTFr">https://imgur.com/a/KhuCTFr</a></li>
+<li>copy the direct link, here <a href="https://imgur.com/yn98ktz">https://imgur.com/yn98ktz</a></li>
+<li>do a <code>right-click &gt; View image</code> or add <code>i.</code> in front of <code>imgur.com</code> and image extension to the end of url, here <a href="https://i.imgur.com/yn98ktz.png">https://i.imgur.com/yn98ktz.png</a></li>
+<li>use this direct access url in your playground</li>
+</ul>
+<pre><code class="lang-javascript">var texture = new BABYLON.Texture(&quot;https://i.imgur.com/yn98ktz.png&quot;, scene);
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#UNEWTE">Playground example</a> - <i class="fa fa-eye" onclick="createIframe('UNEWTE#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="embedded-assets" class="anchor" href="#embedded-assets"></a>Embedded assets</h2><p>You can make a raw text copy-paste of your assets, like the content of a .gltf file.</p>
+<p>Note that you need to use <code>Append</code> so you can define the plugin to use as there is no more file extension.</p>
+<pre><code class="lang-javascript">    var mymodel = {
+        [...]
+    };
+
+    var json = JSON.stringify(mymodel);
+    var blob = new Blob([json]);
+    var url = URL.createObjectURL(blob);
+
+    BABYLON.SceneLoader.Append(url, &quot;&quot;, scene, function(scene) {
+        scene.createDefaultCameraOrLight(true, true, true),
+        scene.createDefaultEnvironment();
+    }, null, null, &quot;.gltf&quot;);
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#KEY4S4">Playground example</a> - <i class="fa fa-eye" onclick="createIframe('KEY4S4#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="javascript-files" class="anchor" href="#javascript-files"></a>Javascript files</h2><p>For Javascript files you need to wait for the file to be loaded before attempting to access it.</p>
+<pre><code class="lang-javascript">var url = &quot;LINK ADDRESS&quot;;
+var s = document.createElement(&quot;script&quot;);
+s.src = url;
+document.head.appendChild(s);
+
+var createScene = function() {
+
+    //Scene set up code
+
+    s.onload = function() {
+        //any code calling on loaded file code
+    }
+
+    return scene;
+}
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#WF3VKZ">Playground example</a> - <i class="fa fa-eye" onclick="createIframe('WF3VKZ#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="going-further" class="anchor" href="#going-further"></a>Going further</h2><ul>
+<li>Video tutorial about how to load external assets: <a href="https://youtu.be/3D6BtdMnnQI">https://youtu.be/3D6BtdMnnQI</a></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/resources/Playground_Textures.html">Textures Directly Available to the Playground</a><br><a href="/resources/meshes_to_load">Meshes Available to Import into the Playground</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

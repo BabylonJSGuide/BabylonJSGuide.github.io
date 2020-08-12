@@ -1,0 +1,1990 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>How To use the Node Material - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>How To use the Node Material</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#creating-a-node-material-using-code">Creating a Node Material using code</a><ul>
+<li><a href="#initial-steps">Initial steps</a></li>
+<li><a href="#adding-blocks">Adding blocks</a></li>
+<li><a href="#connecting-blocks">Connecting blocks</a></li>
+<li><a href="#gettings-blocks">Gettings blocks</a></li>
+<li><a href="#list-of-available-blocks">List of available blocks</a></li>
+<li><a href="#building-the-node-material">Building the Node Material</a></li>
+<li><a href="#example">Example</a></li>
+</ul>
+</li>
+<li><a href="#using-the-node-material-editor">Using the Node Material Editor</a></li>
+<li><a href="#recreating-the-standardmaterial">Recreating the StandardMaterial</a><ul>
+<li><a href="#main-building-frames">Main building frames</a></li>
+<li><a href="#additional-building-frames">Additional building frames</a></li>
+<li><a href="#construction-notes">Construction notes</a><ul>
+<li><a href="#working-without-a-if-statement">Working without a <code>if</code> statement</a></li>
+<li><a href="#discarding-the-fragment-based-on-alpha-cutoff-value">Discarding the fragment based on alpha cutoff value</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#creating-pbr-materials">Creating PBR materials</a></li>
+<li><a href="#creating-post-processes">Creating Post Processes</a></li>
+<li><a href="#creating-particle-shaders">Creating Particle shaders</a></li>
+<li><a href="#loading-from-a-file-saved-from-the-node-material-editor">Loading from a file saved from the Node Material Editor</a></li>
+<li><a href="#sharing-unique-urls">Sharing unique URLs</a></li>
+<li><a href="#loading-from-a-snippet-unique-url">Loading from a snippet (unique URL)</a></li>
+<li><a href="#node-material-examples">Node material examples</a></li>
+<li><a href="#going-further">Going further</a></li>
+</ul>
+</div></div><div id="staticContent"><p>The Node Material is a new material introduced with Babylon.js v4.1. It lets you create a material based on custom shaders but without having to deal with shader code.
+All the shader creation will be done using either an UI (the Node Material Editor) or by creating and connecting nodes (the Node Material blocks).</p>
+<h2><a name="creating-a-node-material-using-code" class="anchor" href="#creating-a-node-material-using-code"></a>Creating a Node Material using code</h2><h3><a name="initial-steps" class="anchor" href="#initial-steps"></a>Initial steps</h3><p>To start using the Node Material, you just need to instantiating one:</p>
+<pre><code>var nodeMaterial = new BABYLON.NodeMaterial(&quot;node material&quot;, scene, { emitComments: true });
+</code></pre><p>Please note that the third parameter will contain optional values that will let you configure how the material will build its shader:</p>
+<ul>
+<li><code>emitComments</code>: Set this value to true if you want the blocks to emit comments in the shader code</li>
+</ul>
+<h3><a name="adding-blocks" class="anchor" href="#adding-blocks"></a>Adding blocks</h3><p>Blocks can be added by just instantiating them:</p>
+<pre><code>var morphTargets = new BABYLON.MorphTargetsBlock(&quot;morphTargets&quot;);
+</code></pre><p>For input blocks, you can then define either their value or the source of the value:</p>
+<pre><code>var timeInput = new BABYLON.InputBlock(&quot;time&quot;);
+timeInput.value = 0;
+</code></pre><p>or </p>
+<pre><code>var viewProjectionInput = new BABYLON.InputBlock(&quot;viewProjection&quot;);
+viewProjectionInput.setAsSystemValue(BABYLON.NodeMaterialSystemValues.ViewProjection);
+</code></pre><p>System values can be:</p>
+<ul>
+<li>BABYLON.NodeMaterialSystemValues.World</li>
+<li>BABYLON.NodeMaterialSystemValues.View</li>
+<li>BABYLON.NodeMaterialSystemValues.WorldView</li>
+<li>BABYLON.NodeMaterialSystemValues.Projection</li>
+<li>BABYLON.NodeMaterialSystemValues.ViewProjection</li>
+<li>BABYLON.NodeMaterialSystemValues.WorldViewProjection</li>
+<li>BABYLON.NodeMaterialSystemValues.CameraPosition</li>
+<li>BABYLON.NodeMaterialSystemValues.FogColor</li>
+<li>BABYLON.NodeMaterialSystemValues.DeltaTime</li>
+</ul>
+<p>Input blocks can also take their value from a mesh attribute:</p>
+<pre><code>let positionInput = new BABYLON.InputBlock(&quot;position&quot;);
+positionInput.setAsAttribute(&quot;position&quot;);
+</code></pre><p>Attributes can be:</p>
+<ul>
+<li>position</li>
+<li>normal</li>
+<li>tangent</li>
+<li>uv</li>
+<li>uv2</li>
+<li>matricesIndices</li>
+<li>matricesWeights</li>
+<li>matricesIndicesExtra</li>
+<li>matricesWeightsExtra</li>
+</ul>
+<p>When you manually set the value of an InputNode, you can flag it as <code>node.isConstant</code> to indicate that the value will not be dynamically updated and thus the node material will be able to optimize the block by not generating an uniform for this value.</p>
+<p>The following functions will let you get information about your InputNode:</p>
+<ul>
+<li><code>isSystemValue</code></li>
+<li><code>isAttribute</code></li>
+<li><code>isUniform</code></li>
+<li><code>isConstant</code></li>
+</ul>
+<p>When an InputNode is an uniform (eg. a manual value that will be sent to the shader) and not a constant, you can set <code>inputNode.visibleInInspector</code> to true so users will be able to visually control the value of the node using Babylon.js Inspector.</p>
+<p>You can even csutomize the look and feel of the Inspector UI by defining <code>inputNode.min</code> and <code>inputNode.max</code> to get a slider instead of an input text box.</p>
+<h3><a name="connecting-blocks" class="anchor" href="#connecting-blocks"></a>Connecting blocks</h3><p>By default calling <code>block.connectTo(otherBlock)</code> will try to establish a connection by picking an output from the first block and connect it to an available input in the second one:</p>
+<pre><code>var positionInput = new BABYLON.InputBlock(&quot;position&quot;);
+positionInput.setAsAttribute(&quot;position&quot;);
+
+var worldInput = new BABYLON.InputBlock(&quot;world&quot;);
+worldInput.setAsSystemValue(BABYLON.NodeMaterialSystemValues.World);
+
+var worldPos = new BABYLON.TransformBlock(&quot;worldPos&quot;);
+positionInput.connectTo(worldPos);
+worldInput.connectTo(worldPos);
+</code></pre><p>If you do not want to use the automatic connection you can then pick the output and the input you want to connect directly:</p>
+<pre><code>worldInput.output.connectTo(boneBlock.world);
+</code></pre><p>You can check if two connection points can connect with </p>
+<pre><code>if (worldInput.output.canConnectTo(boneBlock.world)) {
+    ...
+}
+</code></pre><p>The system will throw an exception if you try to connect two incompatible connection points.</p>
+<p>When connected, two connection points can be disconnected with:</p>
+<pre><code>worldInput.output.disconnectFrom(boneBlock.world);
+</code></pre><h3><a name="gettings-blocks" class="anchor" href="#gettings-blocks"></a>Gettings blocks</h3><p>Once a graph is built inside a NodeMaterial, you can use the following API to get a specific node by name:</p>
+<pre><code>let block = nodeMaterial.getBlockByName(&quot;MyBlock&quot;);
+</code></pre><p>You can also get a block using a predicate:</p>
+<pre><code>let block = nodeMaterial.getBlockByPredicate((b) =&gt; b.getClassName() === &quot;AddBlock&quot; &amp;&amp; b.name === &quot;foo&quot;);
+</code></pre><p>Or you can also use this API to get an InputNode and use it to setup its value if the node is set manual value:</p>
+<pre><code>let block = nodeMaterial.getInputBlockByPredicate((b) =&gt; b.name === &quot;foo&quot;);
+block.value = 10;
+</code></pre><p>Note that while this API generically works for all input blocks, not all input blocks have a &quot;value&quot; attribute. For example texture blocks would have block.texture instead of block.value. Be sure to check the <a href="https://doc.babylonjs.com/api/classes/babylon.nodematerial">API documentation</a> for detail.</p>
+<p>You can access the list of InputBlocks with:</p>
+<pre><code>nodeMaterial.getInputBlocks();
+</code></pre><p>Or you can get all blocks registered with a node material with:</p>
+<pre><code>nodeMaterial.attachedBlocks
+</code></pre><p>Be sure to also check out the full <a href="https://doc.babylonjs.com/api/classes/babylon.nodematerial">API documentation.</a></p>
+<h3><a name="list-of-available-blocks" class="anchor" href="#list-of-available-blocks"></a>List of available blocks</h3><p>By default, the node material provides the following blocks:</p>
+<ul>
+<li><p>Animation:</p>
+<ul>
+<li><p><code>Bones</code>: Provides a world matrix for each vertex, based on skeletal (bone/joint) animation.</p>
+<ul>
+<li>Inputs: <ul>
+<li>matricesIndices: Vector4</li>
+<li>matricesWeights: Vector4</li>
+<li>matricesIndicesExtra: Vector4</li>
+<li>matricesWeightsExtra: Vector4</li>
+<li>world: Matrix</li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>MorphTargets</code>: Provides the final positions, normals, tangents, and uvs based on morph targets in a mesh.</p>
+<ul>
+<li>Inputs: <ul>
+<li>position: Vector3</li>
+<li>normal: Vector3</li>
+<li>tangent: Vector3</li>
+<li>uv: Vector2</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>positionOutput: Vector3</li>
+<li>normalOutput: Vector3</li>
+<li>tangentOutput: Vetor3</li>
+<li>uvOutput: Vector2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Color Management:</p>
+<ul>
+<li><p><code>Desaturate</code>: Convert a color input into a grayscale representation.</p>
+<ul>
+<li>Inputs: <ul>
+<li>color: Color3</li>
+<li>level: Float </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Color3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Gradient</code>: Returns the color in the gradient represented by the target value of the input.</p>
+<ul>
+<li>Inputs: <ul>
+<li>value: Float. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Color3.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Posterize</code>: Reduces the number of values in each channel to the number in the corresponding channel of steps.</p>
+<ul>
+<li>Inputs: <ul>
+<li>value: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>steps: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ReplaceColor</code>: Replaces a reference color in value with the color in replacement blended by distance.</p>
+<ul>
+<li>Inputs: <ul>
+<li>value: Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>reference: Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>distance: Float</li>
+<li>replacement: Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Conversion:</p>
+<ul>
+<li><p><code>ColorMerger</code>: Combines float input channels into a color.</p>
+<ul>
+<li>Inputs: <ul>
+<li>r: Float</li>
+<li>g: Float</li>
+<li>b: Float</li>
+<li>a: Float</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>rgba: Color4</li>
+<li>rgb: Color3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ColorSplitter</code>: Separates color input channels into individual floats.</p>
+<ul>
+<li>Inputs:<ul>
+<li>rgba: Color4</li>
+<li>rgb: Color3</li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>rgb: Color3</li>
+<li>r: Float</li>
+<li>g: Float</li>
+<li>b: Float</li>
+<li>a: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>VectorMerger</code>: Combines up to four input floats into a vector.</p>
+<ul>
+<li>Inputs: <ul>
+<li>x: Float</li>
+<li>y: Float</li>
+<li>z: Float</li>
+<li>w: Float</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>xyzw: Vector4</li>
+<li>xyz: Vector3</li>
+<li>xy: Vector2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>VectorSplitter</code>: Separates vectors input channels into individual floats.</p>
+<ul>
+<li>Inputs:<ul>
+<li>xyzw: Vector4</li>
+<li>xyz: Vector3</li>
+<li>xy: Vector2</li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>xyz: Vector3</li>
+<li>xy: Vector2</li>
+<li>x: Float</li>
+<li>y: Float</li>
+<li>z: Float</li>
+<li>w: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Inputs:</p>
+<ul>
+<li><p><code>Color3</code>: A color made up of red, green, and blue channel values.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Color3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Color4</code>: A color made up of red, green, blue, and alpha channel values.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Color4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>DeltaTime</code>: A float representing the time that has passed since the last frame was rendered.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Float</code>: A floating point number representing a value with a fractional component.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>FragCoord</code>: The gl_FragCoord predefined variable (window relative coordinates (x,y,z,1/w))</p>
+<ul>
+<li>Output:<ul>
+<li>xy: Vector2</li>
+<li>xyz: Vector3</li>
+<li>xyzw: Vector4</li>
+<li>x: Float</li>
+<li>y: Float</li>
+<li>z: Float</li>
+<li>w: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ReflectionTexture</code>: Creates a reflection from the input texture.</p>
+<ul>
+<li>Input: <ul>
+<li>position: Vector3</li>
+<li>worldPosition: Vector4</li>
+<li>worldNormal: Vector4</li>
+<li>world: Matrix</li>
+<li>cameraPosition: Vector3</li>
+<li>view: Matrix</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>rgb: Color3</li>
+<li>r: Float</li>
+<li>g: Float</li>
+<li>b: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ScreenSize</code>: The size of the screen window</p>
+<ul>
+<li>Output:<ul>
+<li>xy: Vector2</li>
+<li>x: Float</li>
+<li>y: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Texture</code>: A node for reading a linked or embedded texture file.</p>
+<ul>
+<li>Inputs: <ul>
+<li>uv: Vector2 (mesh.uv automatically attached). </li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>rgba: Vector4</li>
+<li>rgb: Vector3</li>
+<li>r: Float</li>
+<li>g: Float</li>
+<li>b: Float</li>
+<li>a: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Time</code>: A float value that represents the time that has passed since the scene was loaded.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Vector2</code>: a vector composed of X and Y channels.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Vector3</code>: a vector composed of X, Y, and Z channels.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Vector4</code>: a vector composed of X, Y, Z, and W channels.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector4</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Interpolation: </p>
+<ul>
+<li><p><code>Lerp</code>: Outputs a value that is a mix of the left and right inputs based on the target value.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4.</li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4</li>
+<li>gradient: Float </li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on left and right input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>NLerp</code>: Outputs a value that is a mix of the left and right inputs based on the target&#39;s normalized value.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4.</li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4</li>
+<li>gradient: Float </li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on left and right input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>SmoothStep</code>: Outputs a value based on a the input value&#39;s position on a curve between the two edge values.</p>
+<ul>
+<li>Inputs: <ul>
+<li>value: Float</li>
+<li>edge0: Float </li>
+<li>edge1: Float </li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Step</code>: Outputs 1 for any input value above the edge input, outputs 0 for any input value below the edge input.</p>
+<ul>
+<li>Input: <ul>
+<li>value: Float</li>
+<li>edge: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Math: Standard:</p>
+<ul>
+<li><p><code>Add</code>: Adds the left and right inputs of the same type together.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Divide</code>: Divides the left input by the right input of the same type.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Max</code>: Outputs the largest value between the left and right inputs of the same type.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Min</code>: Outputs the smallest value between the left and right inputs of the same type.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Mod</code>: Outputs the value of the left input modulo the right input</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Multiply</code>: Multiplies the left and right inputs of the same type together. </p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Negate</code>: Multiplies the input by -1.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>OneMinus</code>: Subtracts each channel of the input value from 1 (1 - input).</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Reciprocal</code>: Quotient of 1 divided by the input.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Scale</code>: Multiplies the input channels by a float factor. </p>
+<ul>
+<li>Inputs: <ul>
+<li>Input: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>Factor: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Sign</code>: Returns 1 if the input is positive, 0 if input is equal to 0, or -1 if the input is negative.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Sqrt</code>: Outputs the the square root of the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Subtract</code>: Subtracts the right input from the left input of the same type.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Float, Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Math: Scientific:</p>
+<ul>
+<li><p><code>Abs</code>: Outputs the absolute value of the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ArcCos</code>: Outputs the inverse of the cosine value based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ArcSin</code>: Outputs the inverse of the sine value based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ArcTan</code>: Outputs the inverse of the tangent value based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ArcTan2</code>: Outputs the inverse of the tangent value based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Cos</code>: Outputs the cosine value based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>DegreesToRadians</code>: Converts the input degrees value to radians.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Exp</code>: Outputs the input value multiplied by itself 9 time. (Exponent of 10)</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Exp2</code>: Outputs the input value multiplied by itself 1 time. (Exponent of 2)</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Fract</code>: Outputs only the fractional value of a floating point number.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Log</code>: The logarithmic value based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Pow</code>: Outputs the input value multiplied by itself the number of times equal to the power input (Exponent of power)</p>
+<ul>
+<li>Input: <ul>
+<li>value: Float</li>
+<li>power: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>RadiansToDegrees</code>: Converts the input radians value to degrees.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>SawToothWave</code>: Outputs a sawtooth pattern value between -1 and 1 based on the input value. </p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Sin</code>: Outputs the the sine value based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>SquareWave</code>: Outputs a stepped pattern value between -1 and 1 based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Tan</code>: Outputs the the tangent value based on the input value.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>TriangleWave</code>: Outputs a sawtooth pattern value between 0 and 1 based on the input value. </p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Math: Vector:</p>
+<ul>
+<li><p><code>Cross</code>: Outputs a vector that is perpendicular to two input vectors.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Vector2, Vector3, Vector4, Color3, or Color4.</li>
+<li>right: Vector2, Vector3, Vector4, Color3, or Color4.</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on left and right input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Derivative</code>: FRAGMENT SHADER ONLY. Provides the rate of change for an input on a given axis (x,y).</p>
+<ul>
+<li>Inputs: <ul>
+<li>input: Float, Vector2, Vector3, Vector4, Color3, or Color4.</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>dx: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on left and right input types.</li>
+<li>dy: Float, Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on left and right input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Distance</code>: Provides a distance vector based on the left and right input vectors. </p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Dot</code>: Outputs the cos of the angle between two vectors.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Vector2, Vector3, Vector4, Color3, or Color4.</li>
+<li>right: Vector2, Vector3, Vector4, Color3, or Color4.</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Fresnel</code>: Outputs the grazing angle of the surface of the mesh, relative to a camera influenced by the bias and power inputs.</p>
+<ul>
+<li>Input: <ul>
+<li>worldNormal: Vector4</li>
+<li>viewDirection: Vector3</li>
+<li>bias: Float</li>
+<li>power: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>fresnel: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Length</code>: Outputs the length of an input vector.</p>
+<ul>
+<li>Inputs: <ul>
+<li>left: Vector2, Vector3, Vector4, Color3, or Color4. </li>
+<li>right: Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Reflect</code>: Outputs the direction of the input vector reflected across the surface normal.</p>
+<ul>
+<li>Inputs: <ul>
+<li>incident: Vector3</li>
+<li>normal: Vector3</li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Refract</code>: Outputs a direction simulating a deflection of the input vector.</p>
+<ul>
+<li>Inputs: <ul>
+<li>incident: Vector3</li>
+<li>normal: Vector3</li>
+<li>ior: Float</li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Rotate2D</code>: Rotates UV coordinates around the W axis.</p>
+<ul>
+<li>Inputs: <ul>
+<li>input: Vector2</li>
+<li>angle: Float </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Vector2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Transform</code>: Transforms a input vector based on the input matrix.</p>
+<ul>
+<li>Inputs: <ul>
+<li>vector: Vector2, Vector3, Vector4, Color3, or Color4</li>
+<li>transform: Matrix</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Vector4</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Matrices:</p>
+<ul>
+<li><p><code>Matrix</code>: A 4x4 table of related values.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ProjectionMatrix</code>: A matrix to remap points in 3D space to 2D plane relative to the screen.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ViewMatrix</code>: A matrix to remap points in 3D space to 2D plane relative to the view of the scene camera.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ViewProjectionMatrix</code>: A matrix to remap points in 3D space to 2D view space before remapping to 2D screen space.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>WorldMatrix</code>: A matrix to remap points in 3D local space to 3D world space.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>WorldViewMatrix</code>: A matrix to remap points in 3D local space to 3D world space, and ending in 2D camera space.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>WorldViewProjectionMatrix</code>: A matrix to remap points in 3D local space to 3D world space, then to 2D camera space, and ending in 2D screen space.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Mesh:</p>
+<ul>
+<li><p><code>Color</code>: Outputs the RGBA color of each vertex in the mesh.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Color4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>FrontFacing</code>: Returns 1 if a mesh triangle faces the normal direction and 0 if it does not.</p>
+<ul>
+<li>Outputs: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Instances</code>: Provides the world matrix for each instance to apply this material to all instances.</p>
+<ul>
+<li>Inputs: <ul>
+<li>world0: Vector4</li>
+<li>world1: Vector4</li>
+<li>world2: Vector4</li>
+<li>world3: Vector4 </li>
+<li>world: worldMatrix </li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Matrix</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>MatricesIndices</code>: A Vector4 representing the vertex to bone skinning assignments.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>MatricesWeights</code>: A Vector4 representing the vertex to bone skinning weights.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Normal</code>: A Vector3 representing the normal of each vertex of the attached mesh.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>NormalBlend</code>: Outputs the result of blending two normal maps together using a per-channel screen.</p>
+<ul>
+<li>Input: <ul>
+<li>normalMap0: Vector3</li>
+<li>normalMap1: Vector3</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Vector3 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>PerturbNormal</code>: Creates high-frequency detail normal vectors based on a normal map, the world position, and world normal.</p>
+<ul>
+<li>Input: <ul>
+<li>worldPosition: Vector4</li>
+<li>worldNormal: Vector4</li>
+<li>uv: Vector2</li>
+<li>normalMap: Color3</li>
+<li>strength: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Vector4 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Position</code>: A Vector3 representing the position of each vertex of the attached mesh.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Tangent</code>: A Vector3 representing the tangent of each vertex of the attached mesh.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>UV</code>: A Vector2 representing the UV coordinates of each vertex of the attached mesh.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>WorldNormal</code>: A Vector4 representing the normal of each vertex of the attached mesh transformed into world space.</p>
+<ul>
+<li>Input: <ul>
+<li>vector: Vector3</li>
+<li>transform: Matrix</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Vector4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>WorldPosition</code>: A Vector4 representing the position of each vertex of the attached mesh transformed into world space.</p>
+<ul>
+<li>Input: <ul>
+<li>vector: Vector3</li>
+<li>transform: Matrix</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Vector4</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Noises:</p>
+<ul>
+<li><p><code>RandomNumber</code>: Provides a random number based on an input seed.</p>
+<ul>
+<li>Inputs: <ul>
+<li>seed: Vector2</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>SimplexPerlin3D</code>: Creates a type of gradient noise with few directional artifacts. </p>
+<ul>
+<li>Inputs: <ul>
+<li>seed: Vector3</li>
+</ul>
+</li>
+<li>Output:<ul>
+<li>output: Float </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>WorleyNoise3D</code>: Creates a random pattern resembling cells. </p>
+<ul>
+<li>Inputs: <ul>
+<li>seed: Vector3</li>
+<li>jitter: Float</li>
+</ul>
+</li>
+<li>Output:<ul>
+<li>output: Vector2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Outputs:</p>
+<ul>
+<li><p><code>Discard</code>: A final node that will not output a pixel below the cutoff value.</p>
+<ul>
+<li>Inputs: <ul>
+<li>value: Float</li>
+<li>cutoff: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>FragmentOutput</code>: A mandatory final node for outputing the color of each pixel.</p>
+<ul>
+<li>Inputs: <ul>
+<li>rgba: Vector4</li>
+<li>rgb: Vector3</li>
+<li>a: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>VertexOutput</code>: A mandatory final node for outputing the position of each vertex.</p>
+<ul>
+<li>Inputs: <ul>
+<li>vector: Vector4 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Particle:</p>
+<ul>
+<li><p><code>ParticleBlendMultiply</code>: The &quot;blend/multiply&quot; module of the particle shader</p>
+<ul>
+<li>Inputs:<ul>
+<li>color: Color4</li>
+<li>alphaTexture: Float</li>
+<li>alphaColor: Float</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>blendColor: Color4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ParticleColor</code>: The color of the particle</p>
+<ul>
+<li>Outputs:<ul>
+<li>output: Color4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ParticlePositionWorld</code>: The world position of the particle</p>
+<ul>
+<li>Outputs:<ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ParticleRampGradient</code>: The &quot;ramp gradient&quot; module of the particle shader</p>
+<ul>
+<li>Inputs:<ul>
+<li>color: Color4</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>rampColor: Color4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ParticleTexture</code>: The texture of the particle</p>
+<ul>
+<li>Inputs:<ul>
+<li>uv: Vector2</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>rgba: Color4</li>
+<li>rgb: Color3</li>
+<li>r: Float</li>
+<li>g: Float</li>
+<li>b: Float</li>
+<li>a: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ParticleTextureMask</code>: The textureMask property of the particle</p>
+<ul>
+<li>Outputs:<ul>
+<li>output: Color4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ParticleUV</code>: the uv coordinates of the particle</p>
+<ul>
+<li>Outputs:<ul>
+<li>output: Vector2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>PBR: (since 4.2)</p>
+<ul>
+<li><p><code>AmbientOcclusion</code>: The ambient occlusion module of the PBR material</p>
+<ul>
+<li>Inputs:<ul>
+<li>texture: Color3</li>
+<li>intensity: Float</li>
+<li>directLightIntensity: Float</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>ambientOcclusion: can only be used as input of the <code>PBRMetallicRoughness</code> block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Anisotropy</code>: The anisotropy module of the PBR material</p>
+<ul>
+<li>Inputs:<ul>
+<li>intensity: Float</li>
+<li>direction: Vector2</li>
+<li>texture: Color3</li>
+<li>uv: Vector2</li>
+<li>worldTangent: Vector4</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>anisotropy: can only be used as input of the <code>PBRMetallicRoughness</code> block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ClearCoat</code>: The clear coat module of the PBR material</p>
+<ul>
+<li>Inputs:<ul>
+<li>intensity: Float</li>
+<li>roughness: Float</li>
+<li>ior: Float</li>
+<li>texture: Color3</li>
+<li>bumpTexture: Color4</li>
+<li>uv: Vector2</li>
+<li>tintColor: Color3</li>
+<li>tintAtDistance: Float</li>
+<li>tintThickness: Float</li>
+<li>tintTexture: Color4</li>
+<li>worldTangent: Vector4</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>clearcoat: can only be used as input of the <code>PBRMetallicRoughness</code> block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>PBRMetallicRoughness</code>: The PBR material implementing the metallic/roughness model</p>
+<ul>
+<li>Inputs:<ul>
+<li>worldPosition: Vector4</li>
+<li>worldNormal: Vector4</li>
+<li>perturbedNormal: Vector4</li>
+<li>cameraPosition: Vector3</li>
+<li>baseColor: Color4</li>
+<li>baseTexture: Color4</li>
+<li>opacityTexture: Color4</li>
+<li>ambientColor: Color3</li>
+<li>reflectivity: output of the <code>Reflectivity</code> block</li>
+<li>ambientOcclusion: output of the <code>AmbientOcclusion</code> block</li>
+<li>reflection: output of the <code>Reflection</code> block</li>
+<li>sheen: output of the <code>Sheen</code> block</li>
+<li>clearcoat: output of the <code>ClearCoat</code> block</li>
+<li>subsurface: output of the <code>SubSurface</code> block</li>
+<li>anisotropy: output of the <code>Anisotropy</code> block</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>ambient: Color3</li>
+<li>diffuse: Color3</li>
+<li>specular: Color3</li>
+<li>sheenDir: Color3</li>
+<li>clearcoatDir: Color3</li>
+<li>diffuseInd: Color3</li>
+<li>specularInd: Color3</li>
+<li>sheenInd: Color3</li>
+<li>clearcoatInd: Color3</li>
+<li>refraction: Color3</li>
+<li>lighting: Color3</li>
+<li>shadow: Float</li>
+<li>alpha: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Reflection</code>: The reflection module of the PBR material</p>
+<ul>
+<li>Inputs:<ul>
+<li>position: Vector3</li>
+<li>world: Matrix</li>
+<li>view: Matrix</li>
+<li>color: Color3</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>reflection: can only be used as input of the <code>PBRMetallicRoughness</code> block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Reflectivity</code>: The reflectivity module of the PBR material</p>
+<ul>
+<li>Inputs:<ul>
+<li>metallic: Float</li>
+<li>roughness: Float</li>
+<li>texture: Color4</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>reflectivity: can only be used as input of the <code>PBRMetallicRoughness</code> block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Refraction</code>: The refraction module of the PBR material (used by the <code>SubSurface</code> block)</p>
+<ul>
+<li>Inputs:<ul>
+<li>intensity: Float</li>
+<li>indexOfRefraction: Float</li>
+<li>tintAtDistance: Float</li>
+<li>view: Matrix</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>refraction: can only be used as input of the <code>SubSurface</code> block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Sheen</code>: The sheen module of the PBR material</p>
+<ul>
+<li>Inputs:<ul>
+<li>intensity: Float</li>
+<li>color: Color3</li>
+<li>roughness: Float</li>
+<li>texture: Color4</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>sheen: can only be used as input of the <code>PBRMetallicRoughness</code> block</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>SubSurface</code>: The sub surface module of the PBR material</p>
+<ul>
+<li>Inputs:<ul>
+<li>minThickness: Float</li>
+<li>maxThickness: Float</li>
+<li>thicknessTexture: Color4</li>
+<li>tintColor: Color3</li>
+<li>translucencyIntensity: Float</li>
+<li>translucencyDiffusionDistance: Color3</li>
+<li>refraction: output of the <code>Refraction</code> block</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>subsurface: can only be used as input of the <code>PBRMetallicRoughness</code> block</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>PostProcess:</p>
+<ul>
+<li><p><code>CurrentScreen</code>: The current screen (texture) used to render the post process</p>
+<ul>
+<li>Inputs:<ul>
+<li>uv: Vector2</li>
+</ul>
+</li>
+<li>Outputs:<ul>
+<li>rgba: Color4</li>
+<li>rgb: Color3</li>
+<li>r: Float</li>
+<li>g: Float</li>
+<li>b: Float</li>
+<li>a: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Position2D</code>: The 2D clip coordinates (values between -1 and 1 for both x and y)</p>
+<ul>
+<li>Outputs:<ul>
+<li>output: Vector2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Range:</p>
+<ul>
+<li><p><code>Clamp</code>: Outputs values above the maximum or below minimum as maximum or minimum values respectively.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output:<ul>
+<li>input: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Normalize</code>: Remaps the length of a vector or color to 1.</p>
+<ul>
+<li>Inputs: <ul>
+<li>input: Vector2, Vector3, Vector4, Color3, or Color4. </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Vector2, Vector3, Vector4, Color3, or Color4. Output varies based on input types.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Remap</code>: Remaps input value between sourceMin and sourceMax to a new range between targetMin and targetMax.</p>
+<ul>
+<li>Inputs: <ul>
+<li>input: Float, Vector2, Vector3, Vector4, Color3, Color4.</li>
+<li>sourceMin: Float</li>
+<li>sourceMax: Float</li>
+<li>targetMin: Float</li>
+<li>targetMax: Float </li>
+</ul>
+</li>
+<li>Outputs: <ul>
+<li>output: Float, Vector2, Vector3, Vector4, Color3, Color4. Output varies based on input type.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Round:</p>
+<ul>
+<li><p><code>Ceiling</code>: Outputs fractional values as the next higher whole number.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Floor</code>: Outputs fractional values as the next lower whole number.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Round</code>: Outputs fractional values rounded to the nearest whole number.</p>
+<ul>
+<li>Input: <ul>
+<li>input: Float</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Scene Attributes:</p>
+<ul>
+<li><p><code>CameraPosition</code>: Outputs a Vector3 position of the active scene camera.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Fog</code>: Applies fog to the scene with an increasing opacity based on distance from the camera.</p>
+<ul>
+<li>Input: <ul>
+<li>worldPosition: Vector4</li>
+<li>view: viewMatrix (Matrix)</li>
+<li>input: Vector3</li>
+<li>fogColor: Color3</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Color3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>FogColor</code>: The system value for fog color pulled from the scene.</p>
+<ul>
+<li>Output: <ul>
+<li>output: Color3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ImageProcessing</code>: Provides access to all of the Babylon image processing properties <a href="https://doc.babylonjs.com/how_to/how_to_use_postprocesses">https://doc.babylonjs.com/how_to/how_to_use_postprocesses</a></p>
+<ul>
+<li>Input:<ul>
+<li>color: Color4</li>
+</ul>
+</li>
+<li>Output:<ul>
+<li>output: Color4</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Light</code>: Outputs diffuse and specular contributions from one or more scene lights.</p>
+<ul>
+<li>Input: <ul>
+<li>worldPosition: Vector4</li>
+<li>worldNormal: Vector4</li>
+<li>cameraPosition: Vector3</li>
+<li>glossiness: Float</li>
+<li>glossPower: Float</li>
+<li>diffuseColor: Color3</li>
+<li>specularColor: Color3</li>
+</ul>
+</li>
+<li>Output:<ul>
+<li>diffuseOutput: Color3</li>
+<li>specularOutput: Color3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>LightInformation</code>:  Provides the direction, color and intensity of a selected light based on its world position.</p>
+<ul>
+<li>Input: <ul>
+<li>worldPosition: Vector4</li>
+</ul>
+</li>
+<li>Output:<ul>
+<li>direction: Vector3</li>
+<li>color: Color3</li>
+<li>intensity: Float</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ViewDirection</code>: Outputs the direction vector of where the camera is aimed.</p>
+<ul>
+<li>Input: <ul>
+<li>worldPosition: Vector4</li>
+<li>cameraPosition: Vector3</li>
+</ul>
+</li>
+<li>Output: <ul>
+<li>output: Vector3</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3><a name="building-the-node-material" class="anchor" href="#building-the-node-material"></a>Building the Node Material</h3><p>Once setup, you can ask the Node Material to build its internal shaders (vertex and fragment) by calling <code>nodeMaterial.build(true)</code>. You can set the boolean parameter to true to get a log of the final shaders on the console.</p>
+<p>The build function will throw an exception if the shaders cannot be compiled:</p>
+<pre><code>try {
+    nodeMaterial.build(true);
+} catch (err) {
+    console.log(&quot;Unable to compile because &quot; + err);
+}
+
+</code></pre><p>Once successfully built, you can use the Node Material like any other materials:</p>
+<pre><code>myMesh.material = nodeMaterial;
+</code></pre><h3><a name="example" class="anchor" href="#example"></a>Example</h3><p>Here is one of the simplest code using the Node Material:</p>
+<pre><code>var nodeMaterial = new BABYLON.NodeMaterial(&quot;node material&quot;, scene, { emitComments: true });
+var positionInput = new BABYLON.InputBlock(&quot;position&quot;);
+positionInput.setAsAttribute(&quot;position&quot;);
+
+var worldInput = new BABYLON.InputBlock(&quot;world&quot;);
+worldInput.setAsSystemValue(BABYLON.NodeMaterialSystemValues.World);
+
+var worldPos = new BABYLON.TransformBlock(&quot;worldPos&quot;);
+positionInput.connectTo(worldPos);
+worldInput.connectTo(worldPos);
+
+var viewProjectionInput = new BABYLON.InputBlock(&quot;viewProjection&quot;);
+viewProjectionInput.setAsSystemValue(BABYLON.NodeMaterialSystemValues.ViewProjection);
+
+var worldPosdMultipliedByViewProjection = new BABYLON.TransformBlock(&quot;worldPos * viewProjectionTransform&quot;);
+worldPos.connectTo(worldPosdMultipliedByViewProjection);
+viewProjectionInput.connectTo(worldPosdMultipliedByViewProjection);
+
+var vertexOutput = new BABYLON.VertexOutputBlock(&quot;vertexOutput&quot;);
+worldPosdMultipliedByViewProjection.connectTo(vertexOutput);
+
+// Pixel
+var pixelColor = new BABYLON.InputBlock(&quot;color&quot;);
+pixelColor.value = new BABYLON.Color4(0.8, 0.8, 0.8, 1);
+
+var fragmentOutput = new BABYLON.FragmentOutputBlock(&quot;fragmentOutput&quot;);
+pixelColor.connectTo(fragmentOutput);
+
+// Add to nodes
+nodeMaterial.addOutputNode(vertexOutput);
+nodeMaterial.addOutputNode(fragmentOutput);
+</code></pre><p>Please note that this code is equivalent to:</p>
+<pre><code>var nodeMaterial = new BABYLON.NodeMaterial(&quot;node material&quot;, scene, { emitComments: true });
+nodeMaterial.setToDefault();
+</code></pre><h2><a name="using-the-node-material-editor" class="anchor" href="#using-the-node-material-editor"></a>Using the Node Material Editor</h2><p>The Node Material Editor can be used to visually edit / build your Node Material.</p>
+<p><img src="/img/how_to/Materials/nme.jpg" alt="NME"></p>
+<p>To invoke the editor you can call <code>nodematerial.edit()</code> but this code must be called inside a user interaction (like a click event). You can also call it through the Inspector:</p>
+<pre><code>scene.debugLayer.show();
+scene.debugLayer.select(nodeMaterial);
+</code></pre><p>When selected in the Inspector, you can find an edit button in the Node Material property pane.</p>
+<p>You can also use a standalone version of the editor on <a href="https://nme.babylonjs.com">https://nme.babylonjs.com</a></p>
+<h2><a name="recreating-the-standardmaterial" class="anchor" href="#recreating-the-standardmaterial"></a>Recreating the StandardMaterial</h2><p>As a training exercise and to show what is possible to do with the Node Material Editor, the <code>StandardMaterial</code> has been recreated in the NME:</p>
+<ul>
+<li>Material: <a href="http://nme.babylonjs.com/?#AT7YY5#6">http://nme.babylonjs.com/?#AT7YY5#6</a></li>
+<li>Material without alpha support: <a href="http://nme.babylonjs.com/?#AT7YY5#7">http://nme.babylonjs.com/?#AT7YY5#7</a></li>
+<li>Playground to compare the existing <code>StandardMaterial</code> and the corresponding Node Material: <a href="https://playground.babylonjs.com/#M5VQE9#19">https://playground.babylonjs.com/#M5VQE9#19</a> - <i class="fa fa-eye" onclick="createIframe('M5VQE9#19', this)"></i><div class="iframeContainer"></div>.</li>
+</ul>
+<p>Note that the only difference between the full material and the material without alpha support is that nothing is wire to the <code>fragmentOutput.a</code> input. If you don&#39;t need alpha support, you should use the &quot;non alpha&quot; node material as alpha-based materials have some constraints:</p>
+<ul>
+<li>they don&#39;t write to the zbuffer and are only sorted among themselves, so some sorting rendering artifacts can arise</li>
+<li>they need the <code>transparencyShadow</code> property to be <code>true</code> for shadow rendering</li>
+</ul>
+<p>Let&#39;s see how the material has been created and how to use it.</p>
+<h3><a name="main-building-frames" class="anchor" href="#main-building-frames"></a>Main building frames</h3><p>The material is divided into several frames, mirroring the main features of the standard material:</p>
+<ul>
+<li>Instances</li>
+<li>Morphs and bones</li>
+<li>Ambient</li>
+<li>Diffuse</li>
+<li>Specular</li>
+<li>Reflection</li>
+<li>Emissive</li>
+<li>Bump (normal map)</li>
+<li>Opacity</li>
+<li>Lightmap</li>
+<li>Vertex color</li>
+<li>Fog</li>
+</ul>
+<p>In each of these frames, you generally find a boolean float node that enable/disable the feature, and possibly some other properties to fine-tune the feature. Most of these properties are <strong>Constant</strong> properties, meaning they won&#39;t consume a <em>uniform</em> in the shaders and won&#39;t be visible in the Inspector / be updatable in javascript: you must change their value directly in the material (they correspond to the <code>#define</code> you can find in the standard material shader code).</p>
+<p>Note that you won&#39;t find this enable/disable property in the <strong>Instances</strong>, <strong>Morphs and bones</strong> and <strong>Fog</strong> frames: they are always enabled. That&#39;s because they depend on the mesh geometry / settings (or on a scene setting for <strong>Fog</strong>): those frames will be a simple &quot;pass-through&quot; if the corresponding feature doesn&#39;t exist on the mesh / scene, so no need to explicitly disable it in that case.</p>
+<h3><a name="additional-building-frames" class="anchor" href="#additional-building-frames"></a>Additional building frames</h3><p>There are a number of additional frames that help organizing the graph more cleanly:</p>
+<ul>
+<li>Final normal. This frame takes the output from the <strong>Bump</strong> frame and builds the final world normal used in subsequent computations (<strong>Reflection</strong> and <strong>Lights</strong>). You can change the <code>TWOSIDEDLIGHTING</code> boolean if you want the lighting to be applied whatever the triangle side facing are.</li>
+<li>Final diffuse computation. It is the frame responsible for computing the final diffuse component, taking into account the ambient, emissive and vertex color components. Here you can modify the <code>LINKEMISSIVEWITHDIFFUSE</code> and <code>EMISSIVEASILLUMINATION</code> booleans to change the way the diffuse value is computed.</li>
+<li>Final color computation. Everything is brought together to compute the final rgb color: ambient (texture), specular, reflection and emissive.</li>
+<li>Final alpha computation. After the opacity (alpha) is generated from the <strong>Opacity</strong> frame, a number of additional computation is performed to produce the final alpha value. You can step in this computation by mean of two booleans, <code>REFLECTIONOVERALPHA</code> and <code>SPECULAROVERALPHA</code>.</li>
+<li>Premultiply alpha to color. This one does what its title says and is enabled by the <code>PREMULTIPLYALPHA</code> boolean.</li>
+</ul>
+<h3><a name="construction-notes" class="anchor" href="#construction-notes"></a>Construction notes</h3><p>The material itself is not so complicated as each feature is generally restricted to its own frame and has few connections with other frames. That helps to keep each building block manageable and easily understandable.</p>
+<p>Below are a few things of note.</p>
+<h4><a name="working-without-a-codeifcode-statement" class="anchor" href="#working-without-a-if-statement"></a>Working without a <code>if</code> statement</h4><p>As you may know, there&#39;s no <code>if</code> statement / block in the node material editor, so one must be creative to overcome this. Luckily, the standard material does not use this statement heavily (as it&#39;s better to avoid it for performance sake), so it is easy enough to deal with it. Most of the time, it is something like <code>if boolean is true, use this value in subsequent computation, else use that other value instead</code>. A <strong>Lerp</strong> block is the tool to use:</p>
+<pre><code class="lang-c">Lerp(a, b, gradient)
+</code></pre>
+<p><code>gradient</code> is the boolean: if it is 0, <code>a</code> is the output, if it is 1, <code>b</code> is the output. Then use the output in subsequent computation.</p>
+<p>Example:</p>
+<p><img src="/img/how_to/Materials/nme_lerp.png" alt="Emissive"></p>
+<p>If <code>EMISSIVE</code> is set to 0, the output is <code>vEmissiveColor</code>, else it is the color from the emissive map. In effect, the <code>EMISSIVE</code> boolean lets you choose to use either the constant <code>vEmissiveColor</code> color or the color from the texture map as the emissive color.</p>
+<h4><a name="discarding-the-fragment-based-on-alpha-cutoff-value" class="anchor" href="#discarding-the-fragment-based-on-alpha-cutoff-value"></a>Discarding the fragment based on alpha cutoff value</h4><p>This construct is meant to discard the fragment if alpha testing is enabled and if the alpha value is below some threshold value (cutoff value). It looks like this:</p>
+<p><img src="/img/how_to/Materials/nme_discard.png" alt="Discard"></p>
+<p>As you can see, the <code>alphaCutOff</code> node is not directly connected to the <code>cutoff</code> input of <strong>Discard</strong> (the <strong>Discard</strong> block will discard the fragment if the <code>value</code> input is lower than the <code>cutoff</code> input). That&#39;s because we need to let the user enable or disable this feature.</p>
+<p>What it does instead is comparing the alpha value from the diffuse texture to <code>ALPHATEST - 1 + alphaCutOff</code>, <code>ALPHATEST</code> being the boolean value that lets the user enable (1) or disable (0) the feature.</p>
+<p>If <code>ALPHATEST = 1</code>, the computed value is <code>alphaCutOff</code>, which is the expected input for <code>Discard.cutoff</code> in that case (alpha testing is enabled).</p>
+<p>If <code>ALPHATEST = 0</code>, the computed value is <code>-1 + alphaCutOff</code>. As <code>alphaCutOff</code> is a value between 0 and 1, <code>-1 + alphaCutOff</code> will always be lower or equal to 0. So, <code>Discard.cutoff</code> &lt;= 0 in that case, meaning the fragment will never be discarded (which is the expected result when alpha testing is disabled).</p>
+<p>You could also have used <code>Lerp(0, alphaCutOff, ALPHATEST)</code> as the input for <code>Discard.cutoff</code>, but it&#39;s likely that the addition + subtraction used above is faster than a <code>Lerp</code> on GPUs (would need some benchmarking to be sure), even if it&#39;s by a small (negligible) margin.</p>
+<h2><a name="creating-pbr-materials" class="anchor" href="#creating-pbr-materials"></a>Creating PBR materials</h2><p>You can use those playgrounds and materials as starting points for your own experiments to create PBR materials in the NME (note that the node material may take some time to load in the PG - the mesh will stay black until the material is loaded):</p>
+<ul>
+<li>Full use of all PBR blocks:<ul>
+<li>PG: <a href="https://playground.babylonjs.com/#D8AK3Z#8">https://playground.babylonjs.com/#D8AK3Z#8</a> - <i class="fa fa-eye" onclick="createIframe('D8AK3Z#8', this)"></i><div class="iframeContainer"></div></li>
+<li>Material: <a href="https://nme.babylonjs.com/#IFJ86Q#9">https://nme.babylonjs.com/#IFJ86Q#9</a></li>
+</ul>
+</li>
+<li>PBR material with sheen only:<ul>
+<li>PG: <a href="https://playground.babylonjs.com/#MUX769#3">https://playground.babylonjs.com/#MUX769#3</a> - <i class="fa fa-eye" onclick="createIframe('MUX769#3', this)"></i><div class="iframeContainer"></div></li>
+<li>Material: <a href="https://nme.babylonjs.com/#IFJ86Q#10">https://nme.babylonjs.com/#IFJ86Q#10</a></li>
+</ul>
+</li>
+<li>PBR material with clear coat only:<ul>
+<li>PG: <a href="https://playground.babylonjs.com/#0XSPF6#2">https://playground.babylonjs.com/#0XSPF6#2</a> - <i class="fa fa-eye" onclick="createIframe('0XSPF6#2', this)"></i><div class="iframeContainer"></div></li>
+<li>Material: <a href="https://nme.babylonjs.com/#IFJ86Q#11">https://nme.babylonjs.com/#IFJ86Q#11</a></li>
+</ul>
+</li>
+<li>PBR material with sub surface only:<ul>
+<li>PG: <a href="https://playground.babylonjs.com/#7QAN2T">https://playground.babylonjs.com/#7QAN2T</a> - <i class="fa fa-eye" onclick="createIframe('7QAN2T#', this)"></i><div class="iframeContainer"></div></li>
+<li>Material: <a href="https://nme.babylonjs.com/#IFJ86Q#3">https://nme.babylonjs.com/#IFJ86Q#3</a></li>
+</ul>
+</li>
+</ul>
+<p>The inputs of the different PBR blocks are using the same names as in the <code>PBRMetallicRoughnessMaterial</code> class, so you can refer to <a href="https://doc.babylonjs.com/api/classes/babylon.pbrmetallicroughnessmaterial">this doc</a> for explanations about them.</p>
+<p>Some of the parameters are available as properties when clicking on the block in the NME.</p>
+<p>For eg, for <code>Reflection</code>:</p>
+<p><img src="/img/how_to/Materials/nme_reflection_prop.png" alt="Reflection properties"></p>
+<p>Or for <code>PBRMetallicRoughness</code>:</p>
+<p><img src="/img/how_to/Materials/nme_pbr_prop.png" alt="PBR properties"></p>
+<p>As for the standard <code>PBRMaterial</code>, if no texture is provided for the <strong>Reflection</strong> / <strong>Refraction</strong> texture, the one declared at the scene level (<code>scene.environmentTexture</code>) is used instead.</p>
+<p>By default, if something is connected to the <code>a</code> input of the <code>FragmentOutput</code> block, alpha blending is enabled. If you don&#39;t need alpha blending, don&#39;t connect this input.</p>
+<p>Regarding the <code>PBRMetallicRoughness</code> block, you have access to each output component separately (<code>ambient</code>, <code>diffuse</code>, <code>specular</code>, ...) if you want or you can directly use <code>lighting</code> to get the composite output. In the names of the separate outputs, <code>dir</code> means <code>direct</code> (component from direct lights) and <code>Ind</code> means <code>Indirect</code> (component from indirect lighting, meaning the environment).</p>
+<h2><a name="creating-post-processes" class="anchor" href="#creating-post-processes"></a>Creating Post Processes</h2><p>Starting with Babylon.js v4.2, you can now create post processes with the node material editor.</p>
+<p>You need simply to change the mode to <em>Post Process</em>:</p>
+<p><img src="/img/how_to/Materials/postprocessMenu.png" alt="PostProcess choice"></p>
+<p>In this mode, the special block <strong>CurrentScreen</strong> corresponds to the frame buffer that will be passed to your post process when you use this material as a post process in a real scenario. You can load any texture you want, it&#39;s simply an helper for you to see how your post process will render in the end.</p>
+<p>Some blocks are made unavailable in this mode (they are hidden from the block list), as they have no meaning: the mesh, particle and animation blocks.</p>
+<p>When you have created your post process material in the NME, you can create a regular <code>BABYLON.PostProcess</code> instance by calling the <code>NodeMaterial.createPostProcess</code> method:</p>
+<pre><code class="lang-javascript">const postProcess = nodeMaterial.createPostProcess(camera);
+</code></pre>
+<p>You can also update an existing post process:</p>
+<pre><code class="lang-javascript">const myPostProcess = new BABYLON.PostProcess(...);
+...
+nodeMaterial.createEffectForPostProcess(myPostProcess);
+</code></pre>
+<p>PG: <a href="https://playground.babylonjs.com/#WB27SW#1">https://playground.babylonjs.com/#WB27SW#1</a> - <i class="fa fa-eye" onclick="createIframe('WB27SW#1', this)"></i><div class="iframeContainer"></div></p>
+<p>As for regular node materials, you can access the blocks programmatically and change their values:</p>
+<p>Base material: <a href="https://playground.babylonjs.com/#WB27SW#4">https://playground.babylonjs.com/#WB27SW#4</a> - <i class="fa fa-eye" onclick="createIframe('WB27SW#4', this)"></i><div class="iframeContainer"></div></p>
+<p>Programmatically updated material: <a href="https://playground.babylonjs.com/#WB27SW#3">https://playground.babylonjs.com/#WB27SW#3</a> - <i class="fa fa-eye" onclick="createIframe('WB27SW#3', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="creating-particle-shaders" class="anchor" href="#creating-particle-shaders"></a>Creating Particle shaders</h2><p>Starting with Babylon.js v4.2, you can now create particle shaders (to be used with a particle system) with the node material editor.</p>
+<p>You need simply to change the mode to <em>Particle</em>:</p>
+<p><img src="/img/how_to/Materials/particleMenu.png" alt="Particle choice"></p>
+<p>Some blocks are made unavailable in this mode (they are hidden from the block list), as they have no meaning: the mesh, post process and animation blocks.</p>
+<p>Also, in this mode, you can&#39;t create a vertex shader, only a fragment shader: the vertex shader is fixed and not updatable.</p>
+<p>Note that everything is driven by the parameters of the particle system instance. For eg, if the current particle system displayed in the preview area does not use &quot;ramp gradients&quot;, the <code>ParticleRampGradient</code> block does nothing (it does not add ramp gradients to the shader), it&#39;s just a pass-through. Same thing for the <code>ParticleBlendMultiply</code> block. The exception is the <code>ParticleTexture</code> block, and only in the preview area of the node editor: if you provide a texture for this block it will be used as the particle texture in the preview area, else the texture defined in the current particle system will be used. In any case, when using the material in a live program, the texture will always be the one defined by the <code>ParticleSystem.particleTexture</code> property.</p>
+<p>The materials you create in the <strong>Particle</strong> mode can also be used for GPU particle systems, save for these restrictions:</p>
+<ul>
+<li>GPU particle systems don&#39;t support ramp gradients, so the <code>RampGradientBlock</code> won&#39;t do anything (you can still use it in your material, it will simply do nothing)</li>
+<li>GPU particle systems don&#39;t support the <code>textureMask</code> property, so you should not use the <code>ParticleTextureMask</code> block in your materials targeted for GPU particle systems, else display artifacts will appear</li>
+</ul>
+<p>When you have created your particle shader in the NME, you can link the material to a particle system instance by calling the <code>NodeMaterial.createEffectForParticles</code> method:</p>
+<pre><code class="lang-javascript">nodeMaterial.createEffectForParticles(particleSystem);
+</code></pre>
+<p>PG: <a href="https://playground.babylonjs.com/#J9J6CG#1">https://playground.babylonjs.com/#J9J6CG#1</a> - <i class="fa fa-eye" onclick="createIframe('J9J6CG#1', this)"></i><div class="iframeContainer"></div></p>
+<p>The full fragment shader used by default by the particle system can be recreated in the NME: <a href="https://nme.babylonjs.com/#X3PJMQ#1">https://nme.babylonjs.com/#X3PJMQ#1</a></p>
+<p>As explained above, if you want to use this material for GPU particle systems, you should remove the use of the <code>ParticleTextureMask</code> block: <a href="https://nme.babylonjs.com/#X3PJMQ#2">https://nme.babylonjs.com/#X3PJMQ#2</a></p>
+<h2><a name="loading-from-a-file-saved-from-the-node-material-editor" class="anchor" href="#loading-from-a-file-saved-from-the-node-material-editor"></a>Loading from a file saved from the Node Material Editor</h2><p>You can directly setup a Node Material from a file saved from the Node Material Editor.</p>
+<p>Here is the code to use:</p>
+<pre><code>nodeMaterial.loadAsync(&quot;file-url.json&quot;).then(() =&gt; {
+    nodeMaterial.build(true);
+});
+</code></pre><h2><a name="sharing-unique-urls" class="anchor" href="#sharing-unique-urls"></a>Sharing unique URLs</h2><p>When using <a href="https://nme.babylonjs.com">https://nme.babylonjs.com</a>, you can have an additional option to save your work using a unique URL (like the Playground for instance). You can then share these urls (which are immutable).</p>
+<p>Example: <a href="https://nme.babylonjs.com/#2F999G">https://nme.babylonjs.com/#2F999G</a></p>
+<h2><a name="loading-from-a-snippet-unique-url" class="anchor" href="#loading-from-a-snippet-unique-url"></a>Loading from a snippet (unique URL)</h2><p>You can use the following code to load a saved node material from a unique URL:</p>
+<pre><code>BABYLON.NodeMaterial.ParseFromSnippetAsync(&quot;2F999G&quot;, scene).then(nodeMaterial =&gt; {
+    sphere.material = nodeMaterial;
+});
+</code></pre><h2><a name="node-material-examples" class="anchor" href="#node-material-examples"></a>Node material examples</h2><p>Here are some node material examples that you can use &quot;as is&quot; or extend with the NME:</p>
+<ul>
+<li>Standard material with alpha support: <a href="http://nme.babylonjs.com/?#AT7YY5#6">http://nme.babylonjs.com/?#AT7YY5#6</a></li>
+<li>Standard material without alpha support: <a href="http://nme.babylonjs.com/?#AT7YY5#7">http://nme.babylonjs.com/?#AT7YY5#7</a></li>
+<li>Full use of all PBR blocks: <a href="https://nme.babylonjs.com/#IFJ86Q">https://nme.babylonjs.com/#IFJ86Q</a></li>
+<li>PBR material with sheen only: <a href="https://nme.babylonjs.com/#IFJ86Q#1">https://nme.babylonjs.com/#IFJ86Q#1</a></li>
+<li>PBR material with clear coat only: <a href="https://nme.babylonjs.com/#IFJ86Q#2">https://nme.babylonjs.com/#IFJ86Q#2</a></li>
+<li>PBR material with sub surface only: <a href="https://nme.babylonjs.com/#IFJ86Q#3">https://nme.babylonjs.com/#IFJ86Q#3</a></li>
+<li><code>GridMaterial</code> recreated as a node material: <a href="https://nme.babylonjs.com/#I4DJ9Z">https://nme.babylonjs.com/#I4DJ9Z</a></li>
+<li>&quot;mist&quot; post process: <a href="https://nme.babylonjs.com/#YDGZCJ">https://nme.babylonjs.com/#YDGZCJ</a></li>
+<li>&quot;dissolve&quot; post process: <a href="https://nme.babylonjs.com/#D0USYC">https://nme.babylonjs.com/#D0USYC</a></li>
+<li>Default particle shader: <a href="https://nme.babylonjs.com/#X3PJMQ#1">https://nme.babylonjs.com/#X3PJMQ#1</a></li>
+<li>Default particle shader (GPU particle systems): <a href="https://nme.babylonjs.com/#X3PJMQ#2">https://nme.babylonjs.com/#X3PJMQ#2</a></li>
+</ul>
+<h2><a name="going-further" class="anchor" href="#going-further"></a>Going further</h2><p>Here is a list of tutorials and informational videos about Node Material:</p>
+<ul>
+<li>Frames and Collapsible Nodes: <a href="https://youtu.be/uHjAoHnMwDo">https://youtu.be/uHjAoHnMwDo</a></li>
+</ul>
+<p><a href="https://youtu.be/uHjAoHnMwDo"><img src="https://img.youtube.com/vi/uHjAoHnMwDo/0.jpg" alt="Frames and Collapsible Nodes"></a></p>
+<ul>
+<li>Adding Light Texture: <a href="https://youtu.be/n2DLnMa21K0">https://youtu.be/n2DLnMa21K0</a></li>
+</ul>
+<p><a href="https://youtu.be/n2DLnMa21K0"><img src="https://img.youtube.com/vi/n2DLnMa21K0/0.jpg" alt="Add Light Texture"></a></p>
+<ul>
+<li>Adding basic lighting: <a href="https://youtu.be/BU9BTUkdYDY">https://youtu.be/BU9BTUkdYDY</a></li>
+</ul>
+<p><a href="https://youtu.be/BU9BTUkdYDY"><img src="https://img.youtube.com/vi/BU9BTUkdYDY/0.jpg" alt="Add basic lighting"></a></p>
+<ul>
+<li>Toon Shader Part 1: <a href="https://youtu.be/K0PXzE1hJXg">https://youtu.be/K0PXzE1hJXg</a></li>
+</ul>
+<p><a href="https://youtu.be/K0PXzE1hJXg"><img src="https://img.youtube.com/vi/K0PXzE1hJXg/0.jpg" alt="Toon Shader Part 1"></a></p>
+<ul>
+<li>Toon Shader Part 2: <a href="https://youtu.be/wtrIbGmuJ2o">https://youtu.be/wtrIbGmuJ2o</a></li>
+</ul>
+<p><a href="https://youtu.be/wtrIbGmuJ2o"><img src="https://img.youtube.com/vi/wtrIbGmuJ2o/0.jpg" alt="Toon Shader Part 2"></a></p>
+<ul>
+<li>Toon Shader Part 3: <a href="https://youtu.be/YmcZ69xlOjM">https://youtu.be/YmcZ69xlOjM</a></li>
+</ul>
+<p><a href="https://youtu.be/YmcZ69xlOjM"><img src="https://img.youtube.com/vi/YmcZ69xlOjM/0.jpg" alt="Toon Shader Part 3"></a></p>
+<ul>
+<li>Ink Shader: <a href="https://youtu.be/0re82mEd1n8">https://youtu.be/0re82mEd1n8</a></li>
+</ul>
+<p><a href="https://youtu.be/0re82mEd1n8"><img src="https://img.youtube.com/vi/0re82mEd1n8/0.jpg" alt="Ink Shader"></a></p>
+<ul>
+<li>Step Node Switches: <a href="https://youtu.be/FwtFroNMmxw">https://youtu.be/FwtFroNMmxw</a></li>
+</ul>
+<p><a href="https://youtu.be/FwtFroNMmxw"><img src="https://img.youtube.com/vi/FwtFroNMmxw/0.jpg" alt="Step Node Switches"></a></p>
+<ul>
+<li>Use Your Node Material in your code: <a href="https://youtu.be/F0Lh73I_6Z8">https://youtu.be/F0Lh73I_6Z8</a></li>
+</ul>
+<p><a href="https://youtu.be/F0Lh73I_6Z8"><img src="https://img.youtube.com/vi/F0Lh73I_6Z8/0.jpg" alt="Use Your Node Material in your code"></a></p>
+<ul>
+<li>Vertex shader: <a href="https://www.youtube.com/watch?v=B5BO3nFc55s">https://www.youtube.com/watch?v=B5BO3nFc55s</a></li>
+</ul>
+<p><a href="https://youtu.be/B5BO3nFc55s"><img src="https://img.youtube.com/vi/B5BO3nFc55s/0.jpg" alt="Vertex Shader"></a></p>
+<ul>
+<li>Lights and textures: <a href="https://www.youtube.com/watch?v=fLXYhGhCejc">https://www.youtube.com/watch?v=fLXYhGhCejc</a></li>
+</ul>
+<p><a href="https://youtu.be/fLXYhGhCejc"><img src="https://img.youtube.com/vi/fLXYhGhCejc/0.jpg" alt="Lights and textures"></a></p>
+<p>You can also visit the dedicated forum topic: <a href="https://forum.babylonjs.com/t/node-materials-examples/6048">https://forum.babylonjs.com/t/node-materials-examples/6048</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

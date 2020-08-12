@@ -1,0 +1,153 @@
+// Banner height
+$bh : 50px;
+// Font size
+$bfs : 1em;
+// The width of title
+$title_width : 300px;
+
+.v-align {
+  position : relative;
+  top : 50%;
+  @include transform(translateY(-50%));
+}
+
+.nav-main{
+  font-family: $font-title;
+
+  /* Remove mobile menu by default*/
+  #mobilemenu {
+    display   : none;
+    position  : absolute;
+    z-index   : 2;
+    color     : white;
+    font-size : 1.4em;
+    left      : 5px;
+    padding   : 12px;
+
+    &:hover{
+      cursor  : pointer;
+    }
+  }
+
+  #goBackToClassList {
+    display   : none;
+    position  : absolute;
+    z-index   : 2;
+    color     : white;
+    font-size : 1.4em;
+    left      : 45px;
+    padding   : 12px;
+
+    &:hover{
+      cursor  : pointer;
+    }
+  }
+
+  .banner {
+    @include display(flex);
+    background-color: $dark;
+    height: $bh;
+
+    // The left menu (title + tabs)
+    .menu {
+      @include display(flex);
+      width : 80%;
+      height : $bh;
+      @include user-select(none);
+
+      // All items : title and tabs
+      > div {
+        height: $bh;
+        line-height: $bh;
+        font-size: $bfs;
+
+        &.active{
+          background-color: $dark;
+        }
+
+        &:hover:not(.do-not-hover) {
+          background-color: $dark;
+          @include transition(all .2s ease-in);
+        }
+
+        a {
+          white-space: nowrap;
+          @include transition(color .2s ease-in);
+          padding: 0 10px;
+          text-transform: uppercase;
+          color: white;
+
+          &:hover,
+          &:focus {
+            color: #E0694B;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
+    // Searchbar and forward
+    .more {
+      @include display(flex);
+      @include justify-content(flex-end);
+      @include align-items(center);
+      width : 20%;
+      height : $bh;
+
+      // Searchbar
+      .searchbar {
+        height : 50px;
+        background-color: white;
+        border: 10px solid $dark;
+
+        form {
+          display: inline-flex;
+        }
+
+        @include display(flex);
+        @include align-items(center);
+        
+        input {
+          border: none;
+          background-color: transparent;
+          padding: 5px 10px;
+          font-size: smaller;
+
+          &:focus {
+            border:none;
+            outline: 0;
+          }
+
+          &:invalid{
+            border: solid 3px black;
+          }
+        }
+
+        // Search icon
+        button {
+          font-size: 1.3em;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+        }
+      }
+
+      .forward {
+        cursor: pointer;
+        @include display(flex);
+        @include align-items(center);
+        @include justify-content(space-between);
+        padding: 0 15px 0 15px;
+        a {
+          color:black;
+        }
+        // Icon forward
+        i {
+          margin-left: 15px;
+          color:white;
+        }
+      }
+
+    }
+  }
+}

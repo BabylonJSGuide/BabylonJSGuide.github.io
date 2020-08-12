@@ -1,0 +1,55 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Editing Prefabs - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Editing Prefabs</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#opening-the-prefab-editor">Opening the prefab editor</a></li>
+<li><a href="#editing-a-prefab-object-in-the-scene">Editing a prefab object in the scene</a></li>
+<li><a href="#editing-the-source-prefab-object">Editing the source prefab object</a></li>
+<li><a href="#demo">Demo</a></li>
+<li><a href="#future">Future</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="editing-prefabs" class="anchor" href="#editing-prefabs"></a>Editing Prefabs</h1><p>Once you created a prefab source and drag&#39;n&#39;dropped some prefabs in your scene, you are able to edit:</p>
+<ul>
+<li>A prefab object in the scene</li>
+<li>The source prefab object</li>
+</ul>
+<h2><a name="opening-the-prefab-editor" class="anchor" href="#opening-the-prefab-editor"></a>Opening the prefab editor</h2><p>To edit prefabs, you can open the tool via <strong>Tools -&gt; Prefab Editor</strong>.
+This tool has 2 parts:</p>
+<ul>
+<li>Prefab hierarchy (on the left)</li>
+<li>Prefab live preview (on the right)</li>
+</ul>
+<p><strong>Note:</strong> Undo/redo is not yet supported and will be available in future version.</p>
+<h2><a name="editing-a-prefab-object-in-the-scene" class="anchor" href="#editing-a-prefab-object-in-the-scene"></a>Editing a prefab object in the scene</h2><p>Once you have opened the prefab editor and selected a prefab in the scene graph, the tool will be updated and show you the selected prefab hierarchy and the live preview.
+In the prefab hierarchy, you can delete the unwanted nodes (right click -&gt; Remove).</p>
+<p>Once you removed a node, <strong>ONLY the selected prefab</strong> will have its node removed from the scene. If you want to globally remove a node from all prefabs, you have to edit the source prefab object.</p>
+<h2><a name="editing-the-source-prefab-object" class="anchor" href="#editing-the-source-prefab-object"></a>Editing the source prefab object</h2><p>In some cases, you would like to remove a node from the source prefab and apply the hierarchy modification on all already instantiated prefabs in the scene. To do that, just select the prefab asset in the assets panel.
+Once selected, the prefab editor will be updated.</p>
+<p>From now, you are editing the source prefab object. Once you remove a node from the prefab hierarchy, <strong>ALL the instantiated prefab</strong> in the scene will have their related node being removed from the scene.</p>
+<h2><a name="demo" class="anchor" href="#demo"></a>Demo</h2><ul>
+<li>1 - Add some prefabs in scene</li>
+<li>2 - Modify a prefab object in the scene</li>
+<li>3 - Modify the source prefab object</li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tVMI2cUC2lU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2><a name="future" class="anchor" href="#future"></a>Future</h2><p>This tool is the first version of the prefab editor and some features are incoming:</p>
+<ul>
+<li>Re-arrange hierarchy on the fly</li>
+<li>Add new nodes on the fly</li>
+<li>Instantiate a prefab via the code</li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

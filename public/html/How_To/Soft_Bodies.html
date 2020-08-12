@@ -1,0 +1,218 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Soft Bodies - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Soft Bodies</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#options-for-soft-bodies">Options for Soft Bodies</a></li>
+<li><a href="#the-softbody-soft-body">The Softbody Soft Body</a><ul>
+<li><a href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a href="#the-cloth-soft-body">The Cloth Soft Body</a><ul>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#fixed-points">Fixed Points</a></li>
+<li><a href="#anchors">Anchors</a></li>
+</ul>
+</li>
+<li><a href="#the-rope-soft-body">The Rope Soft Body</a><ul>
+<li><a href="#using-lines">Using Lines</a></li>
+<li><a href="#using-an-extruded-shape">Using an Extruded Shape</a></li>
+<li><a href="#fixed-points">Fixed Points</a></li>
+<li><a href="#hooks">Hooks</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="soft-bodies" class="anchor" href="#soft-bodies"></a>Soft Bodies</h1><p>In terms of physics&#39; engines a soft body is a body that can have its shape deformed by interactions with other bodies or forces within the physics world. Out of the three plugins available with Babylon.js soft bodies are only available using Ammo.js. There are three soft bodies you can create, the three dimensional <code>softbody</code>, the two dimensional <code>cloth</code> and the one dimensional rope. First a number of limitations need to be considered, followed by some aspects particular to soft bodies and then some examples.</p>
+<p>See <a href="/how_to/using_the_physics_engine">How to Use The Physics&#39; Engines</a> for an overall view of setting up and using the three plugins.</p>
+<h2><a name="limitations" class="anchor" href="#limitations"></a>Limitations</h2><p>A deformation of a body can only be shown if there are sufficient vertices to produce the deformation. The number of vertices used and the need to check their positions and velocities each time step means that the number of soft bodies can be restricted to one, two or possibly three. </p>
+<p>Any triangular facet belonging to a mesh used as the basis for a soft body must share its vertices with any adjacent facet. If not the soft body will rip apart along unshared vertices. As an example look at the triangular facets in the diagram below</p>
+<p><img src="/img/how_to/physics/share.jpg" alt="Shared Facets"></p>
+<p>In Mesh A the positions have new indices for each of the facets 0, 1, 2 and 3, 4, 5. This happens, for instance, in a sphere and also when a mesh is converted to a flat shaded mesh. In this case a soft body would tear along the lines 0,2 and 3,4.</p>
+<p>In Mesh B the positions share indices for each of the facets 0, 1, 2 and 0, 2, 3. The soft body will then hold together.</p>
+<p>To force a mesh to share vertices use</p>
+<pre><code class="lang-javascript">mesh.forceSharedVertices();
+</code></pre>
+<p>One benefit of this is to reduce the number of vertices in the mesh. Of course there may not be enough vertices in the mesh to make a properly functioning soft body, in this case use</p>
+<pre><code class="lang-javascript">mesh.increaseVertices(n);
+</code></pre>
+<p>where n is the number of extra vertices to be added to each side of a triangular facet. The number of facets is increased by a factor (n + 1)<sup>2</sup>. This method forces repeated vertex positions to share indices. The order to use the above two methods is always share then increase.</p>
+<pre><code class="lang-javascript">mesh.forceSharedVertices();
+mesh.increaseVertices(4);
+</code></pre>
+<p><strong>Note</strong></p>
+<ol>
+<li>The position and rotation of the mesh must be set before its soft impostor is created;</li>
+<li>A mesh used for a soft body cannot be a parent or child of another mesh.</li>
+</ol>
+<h2><a name="options-for-soft-bodies" class="anchor" href="#options-for-soft-bodies"></a>Options for Soft Bodies</h2><p>As well as the usual optional parameters of mass, friction and restitution that can be set when creating a physics impostor there are a number peculiar to soft bodies. These come in two sets. </p>
+<p>Those that can be set during or after the impostor creation</p>
+<ul>
+<li>velocityIterations, positive integer, the maximum iterations used when solving for vertex velocities, default 20; </li>
+<li>positionIterations, positive integer, the maximum iterations used when solving for vertex positions, default 20;</li>
+<li>stiffness, a float from 0 to 1, 0 very elastic, the distance between vertices is not constrained; 1 in-elastic, the distance between vertices is invariant, default 1;</li>
+<li>pressure, softbody only, a positive number; the higher it is the less likely the softbody will collapse onto itself, default 200; cloth and rope pressure is maintained at 0; </li>
+</ul>
+<p>and those that can only be set during creation</p>
+<ul>
+<li>margin, the collision margin around the soft body, set it around about 1/100 of the lengths of the body when needed, useful particularly to stop a cloth passing through a body, default 0;</li>
+<li>damping, slows down the changes in vertex positions, useful if it looks like parts of the body are vibrating, start from around 0.01;</li>
+<li>fixedPoints, cloth only, can be 0, 1, 2, 4, 8 or sums of these; 0 no fixed points, 1 back left corner fixed, 2, back right corner, 4 front left corner, 8 front right corner and sum to fix more than one corner, default 0.</li>
+</ul>
+<p>You may have to do a trial and error on the above parameters to get the effect you want.</p>
+<h2><a name="the-softbody-soft-body" class="anchor" href="#the-softbody-soft-body"></a>The Softbody Soft Body</h2><p>A softbody is a 3D soft body. To ensure that the body is not pulled apart the mesh used has to have <a href="/snippets/minimise_vertices">shared vertices</a>. This is achieved using</p>
+<pre><code class="lang-javascript">mesh.forceSharedVertices()
+</code></pre>
+<p>It also has to have sufficient vertices to simulate the body. Where the mesh used cannot <a href="/snippets/increasing_facets">increase the number of vertices</a> in its construction, a box for example, you use </p>
+<pre><code class="lang-javascript">mesh.increaseVertices(n);
+</code></pre>
+<p> where n is the extra number of vertices to add to one side of a triangular facet. The number of facets is increased by a factor of (n + 1)<sup>2</sup></p>
+<p>A softbody is constructed using</p>
+<pre><code class="lang-javascript">var options = {
+    mass: 15,
+    friction: 0.2,
+    restitution: 0.3,
+    pressure: 3500,
+    velocityIterations: 10, 
+    positionIterations: 10,
+    stiffness: 1,
+    margin: 0.1;
+    damping: 0.05
+}
+
+new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.SoftbodyImpostor, options, scene);
+</code></pre>
+<p>or possibly</p>
+<pre><code class="lang-javascript">mesh.physicsImpostor =  new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.SoftbodyImpostor, { mass: 1, friction: 0.1}, scene);
+mesh.physicsImpostor.velocityIterations = 10; 
+mesh.physicsImpostor.positionIterations = 10;
+mesh.physicsImpostor.stiffness = 0.9;
+</code></pre>
+<h3><a name="examples" class="anchor" href="#examples"></a>Examples</h3><ul>
+<li><a href="https://www.babylonjs-playground.com/#480ZBN#1">Playground Example - Softbody</a> - <i class="fa fa-eye" onclick="createIframe('480ZBN#1', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#480ZBN#2">Playground Example - Softbody and Rigid Sphere</a> - <i class="fa fa-eye" onclick="createIframe('480ZBN#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="the-cloth-soft-body" class="anchor" href="#the-cloth-soft-body"></a>The Cloth Soft Body</h2><p>A 2D soft body. All cloth soft bodies are created from a <a href="/how_to/set_shapes#ground">ground mesh</a> as this is already two dimensional, has shared vertices and the number of vertices can be increased by setting the subdivisions used. The usual <a href="#options-for-soft-bodies">options</a> are available.</p>
+<p>The clothImpostor is created by, for example,</p>
+<pre><code class="lang-javascript">cloth.physicsImpostor =  new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.ClothImpostor, {margin: 0.25, damping: 0.01}, scene);
+cloth.physicsImpostor.velocityIterations = 10; 
+cloth.physicsImpostor.positionIterations = 10;
+cloth.physicsImpostor.stiffness = 1;
+</code></pre>
+<p><strong>Note</strong> Using the <code>increaseVertices</code> method on a plane mesh will not provide a suitable mesh for a clothImpostor as the algorithm used to increase the vertices does not place them in the correct row by row order.</p>
+<p>To see both sides of a cloth set <code>backFaceCulling = false</code> on the material to be applied to the ground mesh.</p>
+<h3><a name="examples" class="anchor" href="#examples"></a>Examples</h3><ul>
+<li><a href="https://www.babylonjs-playground.com/#480ZBN#3">Playground Example - Cloth Over Softbody</a> - <i class="fa fa-eye" onclick="createIframe('480ZBN#3', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#480ZBN#4">Playground Example - Cloth Over Rigid Box</a> - <i class="fa fa-eye" onclick="createIframe('480ZBN#4', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#480ZBN#5">Playground Example - Cloth Over Rigid Box with Fixed Corners</a> - <i class="fa fa-eye" onclick="createIframe('480ZBN#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="fixed-points" class="anchor" href="#fixed-points"></a>Fixed Points</h3><p><img src="/img/how_to/physics/cloth.jpg" alt="Cloth Points"></p>
+<p>To fix corner points of the cloth so that those points do not move use the numbers (or their sum) as shown in the diagram above.</p>
+<p>Set the fixedPoints parameter during the construction of the cloth.</p>
+<pre><code class="lang-javascript">cloth.physicsImpostor =  new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.ClothImpostor, {margin, 0.2, fixedPoints: 3}, scene);
+cloth.physicsImpostor.velocityIterations = 10; 
+cloth.physicsImpostor.positionIterations = 10;
+cloth.physicsImpostor.stiffness = 1;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#480ZBN#6">Playground Example - Cloth Over Rigid Box Fixed at 1 + 2 = 3</a> - <i class="fa fa-eye" onclick="createIframe('480ZBN#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="anchors" class="anchor" href="#anchors"></a>Anchors</h3><p>As well as being able to fix the corners of a cloth in space it is also possible to anchor points on a cloth to a rigid body.</p>
+<p><img src="/img/how_to/physics/cloth2.jpg" alt="Horizontal Cloth"></p>
+<p>Anchor points are given as a fraction across the width and height of the ground forming the cloth as shown in the diagram above.</p>
+<p>Rotating the cloth mesh to a vertical position using</p>
+<pre><code class="lang-javascript">cloth.rotate.x = -Math.PI /2
+</code></pre>
+<p>will place (0, 0) as the bottom left corner and (1, 1) as the top right corner.</p>
+<p>Using </p>
+<pre><code class="lang-javascript">cloth.rotate.x = Math.PI /2
+</code></pre>
+<p>will place (0, 1) as the bottom left corner and (1, 0) as the top right corner.</p>
+<p>Setting an anchor needs three required parameter plus two optional ones, as in</p>
+<pre><code>clothImpostor.addAnchor(rigidImpostor, fraction of width, fraction of height, influence, noCollisionBetweenLinkedBodies);
+</code></pre><ul>
+<li>rigidImpostor, to which the anchor points are attached. The attachments are calculated automatically by Ammo.js and depend on the position of the softImpostor and the anchor points used.</li>
+<li>fraction of width, from 0 to 1, fraction across width of ground mesh</li>
+<li>fraction of height, from 0 to 1, fraction up height of ground mesh</li>
+<li>influence, from 0 to 1, defaults to 1. A value of 1 fixes the distance of the anchor from the rigid body, the closer to 0 the more elastic the distance</li>
+<li>noCollisionBetweenLinkedBodies, default false. When true the soft body and the rigid body, it is attached to, will not detect collisions to each other.</li>
+</ul>
+<p>The width and height fraction coordinates are used to determine the closest vertex within the ground mesh to those fractional coordinates.</p>
+<p>You are able to add multiple anchors, for example </p>
+<pre><code class="lang-javascript">cloth.physicsImpostor.addAnchor(box.physicsImpostor, 0, 1);
+cloth.physicsImpostor.addAnchor(box.physicsImpostor, 1, 1, 0.8);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#480ZBN#8">Playground Example - Anchoring a Cloth</a> - <i class="fa fa-eye" onclick="createIframe('480ZBN#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="the-rope-soft-body" class="anchor" href="#the-rope-soft-body"></a>The Rope Soft Body</h2><p>A rope is a 1D soft body. This can be constructed using a <a href="/how_to/parametric_shapes#lines">lines mesh</a> or an <a href="parametric_shapes#extruded-shapes">extruded shape</a> mesh. The usual <a href="#options-for-soft-bodies">options</a> available for both, however the use of an extruded shape requires extra parameters in the options.</p>
+<h3><a name="using-lines" class="anchor" href="#using-lines"></a>Using Lines</h3><p>A lines mesh should be constructed in a straight line and an imposter constructed in the same way as for a softbody or a cloth.</p>
+<pre><code class="lang-javascript">var rope = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: myPoints}, scene); 
+rope.color = BABYLON.Color3.Black();
+
+rope.physicsImpostor = new BABYLON.PhysicsImpostor(rope, BABYLON.PhysicsImpostor.RopeImpostor, {mass: 2}, scene);
+rope.physicsImpostor.velocityIterations = 20; 
+rope.physicsImpostor.positionIterations = 20;
+rope.physicsImpostor.stiffness = 0.8;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8WC6ZN">Playground Example - Rope with fixed ends</a> - <i class="fa fa-eye" onclick="createIframe('8WC6ZN#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>In the following playground note the use of the margin for the rope impostor to prevent the rope cutting into the soft box.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8WC6ZN#1">Playground Example - Rope with fixed ends over Soft Box</a> - <i class="fa fa-eye" onclick="createIframe('8WC6ZN#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="using-an-extruded-shape" class="anchor" href="#using-an-extruded-shape"></a>Using an Extruded Shape</h3><p>The path for the extruded shape should be in a straight line and the shape and path parameters used in constructing the shape should be copied and pasted into the options for the impostor. Currently shape and path are the only two parameters that can be used when an extruded shape is used to construct a rope.</p>
+<pre><code class="lang-javascript">var rope = BABYLON.MeshBuilder.ExtrudeShape(&quot;ext&quot;, {shape: myShape, path: myPoints}, scene);
+rope.material = ropeMat;
+
+rope.physicsImpostor = new BABYLON.PhysicsImpostor(rope, BABYLON.PhysicsImpostor.RopeImpostor, {mass: 2, shape: myShape, path: myPoints}, scene);
+rope.physicsImpostor.velocityIterations = 20; 
+rope.physicsImpostor.positionIterations = 20;
+rope.physicsImpostor.stiffness = 1;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8WC6ZN#2">Playground Example - Rope with fixed ends</a> - <i class="fa fa-eye" onclick="createIframe('8WC6ZN#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>In the following playground remember that the extruded shape does not have an impostor, that it lies on the surface of the box is because the margin for the rope is set to the radius of the extruded shape.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8WC6ZN#3">Playground Example - Rope one fixed end over a Soft Box</a> - <i class="fa fa-eye" onclick="createIframe('8WC6ZN#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="fixed-points" class="anchor" href="#fixed-points"></a>Fixed Points</h3><p>Fixing the end points for a rope is the same whichever of the two meshes are used and must be set during construction. A 1 fixes the starting point of the rope, a 2 fixes the end point of the rope and 3 fixes both.</p>
+<h3><a name="hooks" class="anchor" href="#hooks"></a>Hooks</h3><p>A hook can be added anywhere along the length of the rope using a number from 0 (start) to 1 (end) and is attached to a rigid body using</p>
+<pre><code>ropeImpostor.addHook(rigidImpostor, fraction of length, influence, noCollisionBetweenLinkedBodies);
+</code></pre><p>where</p>
+<ul>
+<li>rigidImpostor, to which hook attached. The attachments are calculated automatically by Ammo.js and depend on the position of the ropeImpostor and the hook used.</li>
+<li>fraction of length, from 0 to 1, fraction across length of rope</li>
+<li>influence, from 0 to 1, defaults to 1. A value of 1 fixes the distance of the hook from the rigid body, the closer to 0 the more elastic the distance</li>
+<li>noCollisionBetweenLinkedBodies, default false. When true the rope and the rigid body, it is attached to, will not detect collisions to each other.</li>
+</ul>
+<p>For example attaching a ball to the end of a rope and an crossbar to the start of a rope with influence 1,</p>
+<pre><code class="lang-javascript">rope.physicsImpostor.addHook(crossbar.physicsImpostor, 0, 1);
+rope.physicsImpostor.addHook(ball.physicsImpostor, 1, 1);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8WC6ZN#4">Playground Example - Swinging Ball (Lines Mesh)</a> - <i class="fa fa-eye" onclick="createIframe('8WC6ZN#4', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#8WC6ZN#5">Playground Example - Swinging Ball (Extruded Shape Mesh)</a> - <i class="fa fa-eye" onclick="createIframe('8WC6ZN#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/how_to/using_the_physics_engine">How To Use The Physics&#39; Engines</a><br><a href="/how_to/forces">How To Use Forces</a><br><a href="/how_to/joints">How to use Joints</a><br><a href="/how_to/joint_pivots">How To Use Pivots and Axes</a><br><a href="/how_to/compounds">How To Create Compound Bodies</a> </p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/how_to/Using_Advanced_Physics_Features">How To Use Advanced Features</a></p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/how_to/Adding_Your_Own_Physics_Engine_Plugin_to_Babylon.js">How To Add Your Own Physics Engine</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

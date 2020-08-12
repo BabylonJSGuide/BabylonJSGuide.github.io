@@ -1,0 +1,108 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>How to use VRM Humanoid in Babylon.js - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>How to use VRM Humanoid in Babylon.js</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#what-is-vrm">What is VRM?</a></li>
+<li><a href="#how-to-load-vrm-file-in-babylonjs">How to load VRM file in BabylonJS?</a></li>
+<li><a href="#a-brief-example">A brief example</a></li>
+<li><a href="#what-can-do">What can do?</a></li>
+<li><a href="#how-to-use">How to use?</a></li>
+<li><a href="#external">External</a></li>
+</ul>
+</div></div><div id="staticContent"><p><img src="/img/resources/babylonjs_and_vrm/vrm_topheader.png" alt="VRM top header"></p>
+<h2><a name="what-is-vrm" class="anchor" href="#what-is-vrm"></a>What is VRM?</h2><blockquote>
+<p>“VRM” is <strong>a file format for handling 3D humanoid avatar (3D model) data for VR applications</strong>. It is based on glTF2.0. Anyone is free to use it.</p>
+<p>In addition, a standard implementation (<a href="https://github.com/vrm-c/UniVRM">UniVRM</a>) in c# that can import and export VRM file in <a href="https://unity3d.com/">Unity</a> is released as open source.</p>
+</blockquote>
+<p>Additional informations can view at <a href="https://vrm.dev/en/">vrm.dev</a>.</p>
+<h2><a name="how-to-load-vrm-file-in-babylonjs" class="anchor" href="#how-to-load-vrm-file-in-babylonjs"></a>How to load VRM file in BabylonJS?</h2><p>You can load VRM file in BabylonJS that uses <a href="https://github.com/virtual-cast/babylon-vrm-loader">babylon-vrm-loader</a>, which is community-made BabylonJS glTF Loader Extension for <code>VRM</code>.</p>
+<p>It supports <code>.vrm</code> and <code>.vci</code> file loading.</p>
+<h2><a name="a-brief-example" class="anchor" href="#a-brief-example"></a>A brief example</h2><p><a href="https://playground.babylonjs.com/#K5W35Y">https://playground.babylonjs.com/#K5W35Y</a> - <i class="fa fa-eye" onclick="createIframe('K5W35Y#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="what-can-do" class="anchor" href="#what-can-do"></a>What can do?</h2><p>For example, once write some animation code, all VRM models can animate it!</p>
+<p><img src="/img/resources/babylonjs_and_vrm/vrm-samecode-animation.gif" alt="VRM Same Code Animation"></p>
+<pre><code class="lang-javascript">// example code
+vrmManager.humanoidBone.leftShoulder.rotationQuaternion = Quaternion.FromEulerAngles(
+    Math.sin(Math.PI / 4 * (elapsedTime / 200)),
+    0,
+    Math.PI / 3.5,
+);
+vrmManager.humanoidBone.rightShoulder.rotationQuaternion = Quaternion.FromEulerAngles(
+    Math.sin(Math.PI + (Math.PI / 4 * (elapsedTime / 200))),
+    0,
+    -Math.PI / 3.5,
+);
+vrmManager.humanoidBone.leftUpperLeg.rotationQuaternion = Quaternion.FromEulerAngles(
+    Math.sin(Math.PI / 4 * (elapsedTime / 200)),
+    0,
+    0,
+);
+vrmManager.humanoidBone.rightUpperLeg.rotationQuaternion = Quaternion.FromEulerAngles(
+    Math.sin(Math.PI + (Math.PI / 4 * (elapsedTime / 200))),
+    0,
+    0,
+);
+vrmManager.humanoidBone.leftLowerLeg.rotationQuaternion = Quaternion.FromEulerAngles(
+    -Math.PI / 6,
+    0,
+    0,
+);
+vrmManager.humanoidBone.rightLowerLeg.rotationQuaternion = Quaternion.FromEulerAngles(
+    -Math.PI / 6,
+    0,
+    0,
+);
+</code></pre>
+<p>BabylonJS <a href="/babylon101/animations">standard animation mechanism</a> also can be used.</p>
+<p>For instance, you can make pose to any VRM.</p>
+<p><a href="https://playground.babylonjs.com/#K5W35Y#8">https://playground.babylonjs.com/#K5W35Y#8</a> - <i class="fa fa-eye" onclick="createIframe('K5W35Y#8', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="how-to-use" class="anchor" href="#how-to-use"></a>How to use?</h2><p>On browser example is <a href="https://codepen.io/anon/pen/zQXyxL?editors=1010">here</a>.</p>
+<p>On BabylonJS Playground example is <a href="https://playground.babylonjs.com/#K5W35Y">https://playground.babylonjs.com/#K5W35Y</a> - <i class="fa fa-eye" onclick="createIframe('K5W35Y#', this)"></i><div class="iframeContainer"></div></p>
+<p>On npm/yarn with webpack...</p>
+<pre><code class="lang-bash">$ npm install --save @babylonjs/core @babylonjs/loaders babylon-vrm-loader
+# or
+$ yarn add @babylonjs/core @babylonjs/loaders babylon-vrm-loader
+</code></pre>
+<pre><code class="lang-javascript">import * as BABYLON from &#39;@babylonjs/core&#39;
+
+// has side-effect
+// ref. https://webpack.js.org/guides/tree-shaking#mark-the-file-as-side-effect-free
+import &#39;babylon-vrm-loader&#39;
+
+// vrmFile is File object retrieved by &lt;input type=&quot;file&quot;&gt;.
+const scene = await BABYLON.SceneLoader.LoadAsync(&#39;file:&#39;, vrmFile, engine);
+const vrmManager = scene.metadata.vrmManagers[0];
+
+// Update secondary animation
+scene.onBeforeRenderObservable.add(() =&gt; {
+    vrmManager.update(scene.getEngine().getDeltaTime());
+});
+
+// Model Transformation
+vrmManager.rootMesh.translate(new BABYLON.Vector3(1, 0, 0), 1);
+
+// Work with HumanoidBone
+vrmManager.humanoidBone.leftUpperArm.addRotation(0, 1, 0);
+
+// Work with BlendShape(MorphTarget)
+vrmManager.morphing(&#39;Joy&#39;, 1.0);
+</code></pre>
+<h2><a name="external" class="anchor" href="#external"></a>External</h2><ul>
+<li><a href="https://vrm.dev/en/">vrm.dev</a></li>
+<li><a href="https://github.com/virtual-cast/babylon-vrm-loader">virtual-cast/babylon-vrm-loader: GitHub</a></li>
+<li><a href="https://github.com/vrm-c/UniVRM">vrm-c/UniVRM: GitHub</a></li>
+<li><a href="https://forum.babylonjs.com/t/loading-vrm-humanoid-based-model/4980/8">Loading VRM Humanoid-based model - Demos and projects - Babylon.js Forums</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

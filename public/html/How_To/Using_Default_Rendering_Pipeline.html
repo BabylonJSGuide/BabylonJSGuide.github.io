@@ -1,0 +1,257 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the default rendering pipeline - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the default rendering pipeline</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#creating-the-rendering-pipeline">Creating the rendering pipeline</a></li>
+<li><a href="#customizing">Customizing</a><ul>
+<li><a href="#antialiasing">Antialiasing</a></li>
+<li><a href="#sharpening">Sharpening</a></li>
+<li><a href="#depth-of-field">Depth of field</a></li>
+<li><a href="#bloom">Bloom</a></li>
+<li><a href="#image-processing-effect">Image processing effect</a></li>
+<li><a href="#chromatic-aberration">Chromatic Aberration</a></li>
+<li><a href="#grain">Grain</a></li>
+</ul>
+</li>
+<li><a href="#example">Example</a></li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#how-to">How To</a></li>
+<li><a href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p>You can find a complete example of this pipeline in our playground:</p>
+<p><a href="https://www.babylonjs-playground.com/#Y3C0HQ#146">https://www.babylonjs-playground.com/#Y3C0HQ#146</a> - <i class="fa fa-eye" onclick="createIframe('Y3C0HQ#146', this)"></i><div class="iframeContainer"></div></p>
+<p><img src="/img/how_to/defaultRenderingPipeline/defaultRenderingPipeline.jpg" alt="default rendering pipeline example"></p>
+<p>The default rendering pipeline provides visual improvements to enhance the output of your scene:</p>
+<ul>
+<li>Antialiasing (MSAA and FXAA)</li>
+<li>Bloom</li>
+<li>Chromatic Aberration</li>
+<li>Depth of field</li>
+<li>Image processing including:<ul>
+<li>Color curves</li>
+<li>Color grading</li>
+<li>Contrast</li>
+<li>Exposure</li>
+<li>Tone mapping</li>
+<li>Vignette effect</li>
+</ul>
+</li>
+<li>Glow</li>
+<li>Grain</li>
+<li>Sharpening</li>
+</ul>
+<h1><a name="creating-the-rendering-pipeline" class="anchor" href="#creating-the-rendering-pipeline"></a>Creating the rendering pipeline</h1><p>You just have to create an instance of <code>BABYLON.DefaultRenderingPipeline</code>:</p>
+<pre><code class="lang-javascript">var pipeline = new BABYLON.DefaultRenderingPipeline(
+    &quot;defaultPipeline&quot;, // The name of the pipeline
+    true, // Do you want the pipeline to use HDR texture?
+    scene, // The scene instance
+    [camera] // The list of cameras to be attached to
+);
+</code></pre>
+<p>This will actually create a fullscreen post-process texture.</p>
+<p>Notes:</p>
+<ol>
+<li><p>The HDR value should be <code>true</code> as long as possible, unless you&#39;re targetting cheap fallback for low end devices. This value allow one of the half float or float texture type, depending on the GPU. Also, some effects (like bloom) will be more accurate.</p>
+</li>
+<li><p>When enabling a pipeline, you may notice that your scene clearColor will not match the color you have set. This can be fixed using <code>.toLinearSpace()</code>, as in this <a href="https://www.babylonjs-playground.com/#08A2BS#15">example</a> - <i class="fa fa-eye" onclick="createIframe('08A2BS#15', this)"></i><div class="iframeContainer"></div></p>
+</li>
+</ol>
+<h1><a name="customizing" class="anchor" href="#customizing"></a>Customizing</h1><h2><a name="antialiasing" class="anchor" href="#antialiasing"></a>Antialiasing</h2><p>The MSAA antialiasing (only supported in webGL 2.0 browsers) effect is off by default (set to 1) but can be increased using:</p>
+<pre><code class="lang-javascript">pipeline.samples = 4;
+</code></pre>
+<p>Your value will be clamped by the maxed values allowed by the hardware (queried from the webgl context).</p>
+<p>The FXAA antialiasing effect can be set using:</p>
+<pre><code class="lang-javascript">pipeline.fxaaEnabled = true;
+</code></pre>
+<p>Note: without using the pipeline, your scene already use a MSAA antialiasing, which is webGL native. As said above, pipeline is running on a post-process texture: unfortunatly, webGL 1.0 devices will not be able to apply MSAA outside of render buffers. Still, FXAA is available but not as powerfull as MSAA.</p>
+<h2><a name="sharpening" class="anchor" href="#sharpening"></a>Sharpening</h2><p>Sharpening can be enabled with:</p>
+<pre><code class="lang-javascript">pipeline.sharpenEnabled = true;
+</code></pre>
+<p>To increase the intensity of the effect modify:</p>
+<pre><code class="lang-javascript">pipeline.sharpen.edgeAmount = 0.9;
+</code></pre>
+<p>The amount of the original image in the output can be set with (setting this to 0 will produce edge detection output):</p>
+<pre><code class="lang-javascript">pipeline.sharpen.colorAmount = 0.0;
+</code></pre>
+<h2><a name="depth-of-field" class="anchor" href="#depth-of-field"></a>Depth of field</h2><p>You can turn the depth of field effect on and off with:</p>
+<pre><code class="lang-javascript">pipeline.depthOfFieldEnabled = true;
+</code></pre>
+<p>Set the strength of blur with (higher may affect performance):</p>
+<pre><code class="lang-javascript">pipeline.depthOfFieldBlurLevel = BABYLON.DepthOfFieldEffectBlurLevel.Low;
+</code></pre>
+<p>Furthermore, you can control the settings of the effect with the following parameters:</p>
+<pre><code class="lang-javascript">pipeline.depthOfField.focusDistance  = 2000; // distance of the current focus point from the camera in millimeters considering 1 scene unit is 1 meter
+pipeline.depthOfField.focalLength  = 50; // focal length of the camera in millimeters
+pipeline.depthOfField.fStop  = 1.4; // aka F number of the camera defined in stops as it would be on a physical device
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#8F5HYV#9">Demo</a> - <i class="fa fa-eye" onclick="createIframe('8F5HYV#9', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="bloom" class="anchor" href="#bloom"></a>Bloom</h2><p>You can turn the bloom effect on and off with:</p>
+<pre><code class="lang-javascript">pipeline.bloomEnabled = true;
+</code></pre>
+<p>The bloom luminance threshold, impact of the bloom, kernel size and scale can be controlled with the following:</p>
+<pre><code class="lang-javascript">pipeline.bloomThreshold = 0.8;
+pipeline.bloomWeight = 0.3;
+pipeline.bloomKernel = 64;
+pipeline.bloomScale = 0.5;
+</code></pre>
+<h2><a name="image-processing-effect" class="anchor" href="#image-processing-effect"></a>Image processing effect</h2><p>You can turn the image processing effect on and off with:</p>
+<pre><code class="lang-javascript">pipeline.imageProcessingEnabled = true;
+</code></pre>
+<p>You can also control individual image processing subeffects. To get more info about the ImageProcessing postprocess, please read the following <a href="/How_To/how_to_use_postprocesses#imageprocessing">tutorial</a>.</p>
+<h2><a name="chromatic-aberration" class="anchor" href="#chromatic-aberration"></a>Chromatic Aberration</h2><p>You can turn the effect on and off with:</p>
+<pre><code class="lang-javascript">pipeline.chromaticAberrationEnabled = true;
+</code></pre>
+<p>Furthermore, you can control the distance of color channel separation with:</p>
+<pre><code class="lang-javascript">pipeline.chromaticAberration.aberrationAmount = 300;
+</code></pre>
+<p>To modify the strength of the effect based on the distance from the center of the screen:</p>
+<pre><code class="lang-javascript">pipeline.chromaticAberration.radialIntensity = 3;
+</code></pre>
+<p>To modify the direction the aberration the direction can be set:</p>
+<pre><code class="lang-javascript">var rotation = Math.PI;
+pipeline.chromaticAberration.direction.x = Math.sin(rotation)
+pipeline.chromaticAberration.direction.y = Math.cos(rotation)
+</code></pre>
+<p>Note: If both these values are set to 0 the direction will be towards the center of the screen.</p>
+<h2><a name="grain" class="anchor" href="#grain"></a>Grain</h2><p>You can turn the effect on and off with:</p>
+<pre><code class="lang-javascript">pipeline.grainEnabled = true;
+</code></pre>
+<p>Furthermore, you can control intensity of the grain with:</p>
+<pre><code class="lang-javascript">pipeline.grain.intensity = 10;
+</code></pre>
+<p>To set grain to animate on every frame set:</p>
+<pre><code class="lang-javascript">pipeline.grain.animated = value;
+</code></pre>
+<h1><a name="example" class="anchor" href="#example"></a>Example</h1><p>You may be interested by this code example using default values, ready to be copy-pasted into your application:</p>
+<pre><code class="lang-javascript">    // https://doc.babylonjs.com/api/classes/babylon.defaultrenderingpipeline
+    var defaultPipeline = new BABYLON.DefaultRenderingPipeline(
+        &quot;DefaultRenderingPipeline&quot;,
+        true, // is HDR?
+        scene,
+        scene.cameras
+    );
+    if (defaultPipeline.isSupported) {
+        /* MSAA */
+        defaultPipeline.samples = 1; // 1 by default
+        /* imageProcessing */
+        defaultPipeline.imageProcessingEnabled = true; //true by default
+        if (defaultPipeline.imageProcessingEnabled) {
+            defaultPipeline.imageProcessing.contrast = 1; // 1 by default
+            defaultPipeline.imageProcessing.exposure = 1; // 1 by default
+            /* color grading */
+            defaultPipeline.imageProcessing.colorGradingEnabled = false; // false by default
+            if (defaultPipeline.imageProcessing.colorGradingEnabled) {
+                // using .3dl (best) :
+                defaultPipeline.imageProcessing.colorGradingTexture = new BABYLON.ColorGradingTexture(&quot;textures/LateSunset.3dl&quot;, scene);
+                // using .png :
+                /*
+                var colorGradingTexture = new BABYLON.Texture(&quot;textures/colorGrade-highContrast.png&quot;, scene, true, false);
+                colorGradingTexture.wrapU = BABYLON.Texture.CLAMP_ADDRESSMODE;
+                colorGradingTexture.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;                
+                defaultPipeline.imageProcessing.colorGradingTexture = colorGradingTexture;
+                defaultPipeline.imageProcessing.colorGradingWithGreenDepth = false;
+                */
+            }
+            /* color curves */
+            defaultPipeline.imageProcessing.colorCurvesEnabled = false; // false by default
+            if (defaultPipeline.imageProcessing.colorCurvesEnabled) {
+                var curve = new BABYLON.ColorCurves();
+                curve.globalDensity = 0; // 0 by default
+                curve.globalExposure = 0; // 0 by default
+                curve.globalHue = 30; // 30 by default
+                curve.globalSaturation = 0; // 0 by default
+                curve.highlightsDensity = 0; // 0 by default
+                curve.highlightsExposure = 0; // 0 by default
+                curve.highlightsHue = 30; // 30 by default
+                curve.highlightsSaturation = 0; // 0 by default
+                curve.midtonesDensity = 0; // 0 by default
+                curve.midtonesExposure = 0; // 0 by default
+                curve.midtonesHue = 30; // 30 by default
+                curve.midtonesSaturation = 0; // 0 by default
+                curve.shadowsDensity = 0; // 0 by default
+                curve.shadowsExposure = 0; // 0 by default
+                curve.shadowsHue = 30; // 30 by default
+                curve.shadowsDensity = 80;
+                curve.shadowsSaturation = 0; // 0 by default;
+                defaultPipeline.imageProcessing.colorCurves = curve;
+            }
+        }
+        /* bloom */
+        defaultPipeline.bloomEnabled = false; // false by default
+        if (defaultPipeline.bloomEnabled) {
+            defaultPipeline.bloomKernel = 64; // 64 by default
+            defaultPipeline.bloomScale = 0.5; // 0.5 by default
+            defaultPipeline.bloomThreshold = 0.9; // 0.9 by default
+            defaultPipeline.bloomWeight = 0.15; // 0.15 by default
+        }
+        /* chromatic abberation */
+        defaultPipeline.chromaticAberrationEnabled = false; // false by default
+        if (defaultPipeline.chromaticAberrationEnabled) {
+            defaultPipeline.chromaticAberration.aberrationAmount = 30; // 30 by default
+            defaultPipeline.chromaticAberration.adaptScaleToCurrentViewport = false; // false by default
+            defaultPipeline.chromaticAberration.alphaMode = 0; // 0 by default
+            defaultPipeline.chromaticAberration.alwaysForcePOT = false; // false by default
+            defaultPipeline.chromaticAberration.enablePixelPerfectMode = false; // false by default
+            defaultPipeline.chromaticAberration.forceFullscreenViewport = true; // true by default
+        }
+        /* DOF */
+        defaultPipeline.depthOfFieldEnabled = false; // false by default
+        if (defaultPipeline.depthOfFieldEnabled &amp;&amp; defaultPipeline.depthOfField.isSupported) {
+            defaultPipeline.depthOfFieldBlurLevel = 0; // 0 by default
+            defaultPipeline.depthOfField.fStop = 1.4; // 1.4 by default
+            defaultPipeline.depthOfField.focalLength = 50; // 50 by default, mm
+            defaultPipeline.depthOfField.focusDistance = 2000; // 2000 by default, mm
+            defaultPipeline.depthOfField.lensSize = 50; // 50 by default
+        }
+        /* FXAA */
+        defaultPipeline.fxaaEnabled = false; // false by default
+        if (defaultPipeline.fxaaEnabled) {
+            defaultPipeline.fxaa.samples = 1; // 1 by default
+            defaultPipeline.fxaa.adaptScaleToCurrentViewport = false; // false by default
+        }
+        /* glowLayer */
+        defaultPipeline.glowLayerEnabled = false;
+        if (defaultPipeline.glowLayerEnabled) {
+            defaultPipeline.glowLayer.blurKernelSize = 16; // 16 by default
+            defaultPipeline.glowLayer.intensity = 1; // 1 by default
+        }
+        /* grain */
+        defaultPipeline.grainEnabled = false;
+        if (defaultPipeline.grainEnabled) {
+            defaultPipeline.grain.adaptScaleToCurrentViewport = false; // false by default
+            defaultPipeline.grain.animated = false; // false by default
+            defaultPipeline.grain.intensity = 30; // 30 by default
+        }
+        /* sharpen */
+        defaultPipeline.sharpenEnabled = false;
+        if (defaultPipeline.sharpenEnabled) {
+            defaultPipeline.sharpen.adaptScaleToCurrentViewport = false; // false by default
+            defaultPipeline.sharpen.edgeAmount = 0.3; // 0.3 by default
+            defaultPipeline.sharpen.colorAmount = 1; // 1 by default
+        }
+    }
+</code></pre>
+<p>As usual, a <a href="https://www.babylonjs-playground.com/#ECI2Q0#5">playground is available</a> - <i class="fa fa-eye" onclick="createIframe('ECI2Q0#5', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="how-to" class="anchor" href="#how-to"></a>How To</h2><ul>
+<li><a href="/how_to/How_to_use_PostProcesses">How To Use PostProcess</a></li>
+</ul>
+<h2><a name="api" class="anchor" href="#api"></a>API</h2><ul>
+<li><a href="/api/classes/babylon.defaultrenderingpipeline.html">Babylon.DefaultRenderingPipeline</a></li>
+<li><a href="/api/classes/babylon.imageprocessingpostprocess.html">Babylon.ImageProcessingPostProcess</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

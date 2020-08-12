@@ -1,0 +1,69 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Collision Meshes (Unity exporter) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Collision Meshes (Unity exporter)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#managed-runtime-collision-events">Managed Runtime Collision Events</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="physics-collider-components" class="anchor" href="#physics-collider-components"></a>Physics Collider Components</h1><p>Collider components define the shape of an object for the purposes of physical collisions. A collider, which is invisible, need not be the exact same shape as the object’s mesh and in fact, a rough approximation is often more efficient and indistinguishable in gameplay.</p>
+<p>The simplest (and least processor-intensive) colliders are the so-called primitive collider types. In 3D, these are the Box Collider, Sphere Collider and Capsule Collider. Any number of these can be added to a single object to create compound colliders.</p>
+<p>With careful positioning and sizing, compound colliders can often approximate the shape of an object quite well while keeping a low processor overhead. Further flexibility can be gained by having additional colliders on child objects (eg, boxes can be rotated relative to the local axes of the parent object). When creating a compound collider like this, there should only be one <strong>Physics State</strong> component, placed on the root object in the hierarchy.</p>
+<p>There are some cases, however, where even compound colliders are not accurate enough. In 3D, you can use Mesh Colliders to match the shape of the object’s mesh exactly.</p>
+<p>Colliders can be added to an object component to create floors, walls and other motionless elements of a scene. These are referred to as static colliders. Colliders on an object that does have a <strong>Physics State</strong> are known as dynamic colliders. Static colliders can interact with dynamic colliders but since they don’t have a <strong>Physics State</strong>, they will not move in response to collisions.</p>
+<p>Please refer to the <a href="https://docs.unity3d.com/Manual/CollidersOverview.html">Unity Collision</a> documentation for details.</p>
+<h1><a name="managed-runtime-collision-events" class="anchor" href="#managed-runtime-collision-events"></a>Managed Runtime Collision Events</h1><p>Example <strong>Collision Event</strong> script component:</p>
+<pre><code>module PROJECT {
+    export class ShotController extends BABYLON.MeshComponent {
+        protected start() :void {
+            // Physcis collision
+            this.onCollisionEvent((collider:BABYLON.AbstractMesh, tag:string) =&gt; {
+                if (tag === &quot;Asteroid&quot; || tag === &quot;Enemy&quot; || tag === &quot;Player&quot;) {
+                    var metadata: BABYLON.ObjectMetadata = this.manager.findSceneMetadata(collider); 
+                    if (metadata.getProperty&lt;boolean&gt;(&quot;destroyed&quot;, false) === false) {
+                        metadata.setProperty(&quot;destroyed&quot;, true);
+                        if (this.shotType === 0) {
+                            // Player shot
+                            if (tag === &quot;Asteroid&quot; || tag === &quot;Enemy&quot;) {
+                                var points:number = 0;
+                                if (tag === &quot;Asteroid&quot;) {
+                                    points = SpaceController.AsteroidPoints;
+                                    this.manager.instantiatePrefab(&quot;Asteroid_Explosion&quot;, &quot;Asteroid_Explode_&quot; + this.shotName, collider.position.clone(), collider.rotation.clone());
+                                } else if (tag === &quot;Enemy&quot;) {
+                                    points = SpaceController.EnemyPoints;
+                                    this.manager.instantiatePrefab(&quot;Enemy_Explosion&quot;, &quot;Enemy_Explode_&quot; + this.shotName, collider.position.clone(), collider.rotation.clone());
+                                }
+
+                                // Safely destroy game objects
+                                this.manager.safeDestroy(this.mesh);
+                                this.manager.safeDestroy(collider);
+                                SpaceController.Instance.addScore(points);
+                            }
+                        } else if (this.shotType === 1) {
+                            if (tag === &quot;Player&quot;) {
+                                this.manager.instantiatePrefab(&quot;Player_Explosion&quot;, &quot;Player_Explode_&quot; + this.shotName, collider.position.clone(), collider.rotation.clone());
+                                // Safely destroy game objects
+                                this.manager.safeDestroy(this.mesh);
+                                this.manager.safeDestroy(collider);
+                                SpaceController.Instance.gameOver(false);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+}
+</code></pre><p>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

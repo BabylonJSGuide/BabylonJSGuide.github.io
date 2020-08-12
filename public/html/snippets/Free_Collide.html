@@ -1,0 +1,107 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Freely Moving Particle Collisions - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Freely Moving Particle Collisions</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#colliding-with-a-wall">Colliding with a Wall</a></li>
+<li><a href="#colliding-particles">Colliding Particles</a><ul>
+<li><a href="#reaction">Reaction</a></li>
+</ul>
+</li>
+<li><a href="#a-multitude-of-particles">A Multitude of Particles</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="free-particles" class="anchor" href="#free-particles"></a>Free Particles</h1><p>After considering the <a href="/samples/Issues.html">issues</a> involved and slow <a href="/samples/Slow_Collide.html">slow particles</a> we are now ready to consider <strong>free particles</strong>, ones that move with no restriction to their start position or velocity.</p>
+<p>The velocity of a particle is its displacement per frame.</p>
+<h2><a name="colliding-with-a-wall" class="anchor" href="#colliding-with-a-wall"></a>Colliding with a Wall</h2><p>Given a particle of radius r, at position p and velocity v in <em>frame n</em>, the particle will collide with a wall when it is travelling towards the wall in <em>frame n</em> and in <em>frame n+1</em> the centre of the particle, at p + v,  is within a distance r from the wall or is moving away from the wall.</p>
+<p>For example consider a left hand wall, with plane parallel to the YZ plane, and a particle travelling towards it with velocity (dx, dy, dz), dx &lt; 0.</p>
+<p>In <em>frame n</em>, the position of the particle is (x, y, z) and during the time between <em>frame n</em> and <em>frame n+1</em> it overlapped the wall. At <em>frame n+1</em>, the particle may still be overlapping the wall and its centre may be to the right or left of the wall or, the particle may have gone beyond the wall completely. The 2D diagrams show the latter case but the calculations apply in all cases. Fig 16 indicates the particle passing through the wall.</p>
+<p><img src="/img/samples/collide18.jpg" alt="Fig 16"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 16. </p>
+<p>The particle at <em>frame n+1</em>, is at position (x + dx, y + dy, z + dz)</p>
+<p>Sometime between <em>frame n</em> and <em>frame n+1</em> the particle would just touch the wall as in Fig 17.</p>
+<p><img src="/img/samples/collide19.jpg" alt="Fig 17"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 17. </p>
+<p>At this position let the displacement of the particle from its position in <em>frame n</em> be (dx<sub>1</sub>, dy<sub>1</sub>, dz<sub>1</sub>) and its displacement from this position to its position in <em>frame n+1</em> be (dx<sub>2</sub>, dy<sub>2</sub>, dz<sub>2</sub>). It follows that (dx, dy, dz) = (dx<sub>1</sub>, dy<sub>1</sub>, dz<sub>1</sub>) + (dx<sub>2</sub>, dy<sub>2</sub>, dz<sub>2</sub>), see Fig 18.</p>
+<p><img src="/img/samples/collide20.jpg" alt="Fig 18"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 18. </p>
+<p>At the point of contact with this wall the component of velocity in the x direction would reverse and so the remaining x axis displacement before <em>frame n+1</em> would be -dx<sub>2</sub>, see Fig 19.</p>
+<p><img src="/img/samples/collide21.jpg" alt="Fig 19"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 19. </p>
+<p>The particle velocity, after the collision is now (-dx, dy, dz). For <em>frame n+1</em>, we need the position of the particle to be at (x + dx<sub>1</sub> - dx<sub>2</sub> , y + dy, z + dz). Since before <em>frame n+1</em>, is displayed the velocity (-dx, dy, dz) will be added and so we need it position before this is done to be (x + dx<sub>1</sub> - dx<sub>2</sub> , y + dy, z + dz) - (-dx, dy, dz), see Fig 20.</p>
+<p><img src="/img/samples/collide22.jpg" alt="Fig 20"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 20.</p>
+<p>(x + dx<sub>1</sub> - dx<sub>2</sub> , y + dy, z + dz) - (-dx, dy, dz)</p>
+<p>= (x + dx<sub>1</sub> - dx<sub>2</sub> + dx, y, z)</p>
+<p>= (x + dx<sub>1</sub> - dx<sub>2</sub> + dx<sub>1</sub> + dx<sub>2</sub>, y, z) </p>
+<p>= (x + 2dx<sub>1</sub>, y, z)</p>
+<p>Which is the reflection of the particle at <em>frame n</em> in the plane parallel to the YZ plane through the centre of the particle, see Fig 21.</p>
+<p><img src="/img/samples/collide23.jpg" alt="Fig 21"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 21.</p>
+<p>This means after <em>frame n</em> is displayed the particle&#39;s position has to be reset as indicated.</p>
+<h2><a name="colliding-particles" class="anchor" href="#colliding-particles"></a>Colliding Particles</h2><p>Given a two particles P and Q of radius r, at positions p and q with velocities v and u repectively travelling towards each other in <em>frame n</em>. In <em>frame n+1</em> the centres of the particle are at p + v and q + u. Between <em>frame n</em> and frame n+1* the two particles would collide when there is a time t &lt;= 1 when the distance between the positions of the particles is 2r. See Fig 22.</p>
+<p><img src="/img/samples/collide25.jpg" alt="Fig 22"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 22.</p>
+<p>At time t, P is at p + vt and Q is at p + ut and P an Q will collide if there is a solution for t to the equation </p>
+<p>(p + vt - (q + ut)).(p + vt - (q + ut)) = 4r<sup>2</sup></p>
+<p>with 0 &lt; t &lt;= 1</p>
+<p>This equation is a quadratic equation in t of the form at<sup>2</sup> + bt + c = 0</p>
+<p>(p + vt - (q + ut)).(p + vt - (q + ut)) = 4r<sup>2</sup></p>
+<p>(p - q +(v - u)t).(p - q +(v - u)t)  = 4r<sup>2</sup></p>
+<p>(p - q).(p - q) + 2(p - q).(v - u)t + (v -u).(v - u)t<sup>2</sup> = 4r<sup>2</sup></p>
+<p>(v -u).(v - u)t<sup>2</sup> + 2(p - q).(v - u)t + (p - q).(p - q) - 4r<sup>2</sup></p>
+<p>so a = (v -u).(v - u), b = 2(p - q).(v - u), c = (p - q).(p - q) - 4r<sup>2</sup></p>
+<p>There will be a collision between <em>frame n</em> and <em>frame n+1</em> provided b<sup>2</sup> - 4ac &gt; 0. In this case there will be two solutions for t the smallest value being where the particles first touch and the other at the end of the overlap.</p>
+<p>Based on the above the following Playground shows two spheres and their paths. Should they collide their positions at first touch are shown. Their start positions and velocities may be set at lines 35 to 38.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#A4HZTV">Playground Example - First Contact</a> - <i class="fa fa-eye" onclick="createIframe('A4HZTV#', this)"></i><div class="iframeContainer"></div>.</li>
+</ul>
+<h3><a name="reaction" class="anchor" href="#reaction"></a>Reaction</h3><p>Since only the velocities along the line joining the centres of the particles are affected during the collision we need to consider axes along this radial line and a tangential line. The particles are at first contact at time t, with P at p + vt and Q at q + ut</p>
+<p>Let m = p + vt - (q + ut) and n = m/|m| a unit vector.</p>
+<p>Then v<sub>r</sub> = (v.n)n is the component of v along n, and u<sub>r</sub> = (u.n)n the component of u along n and after collision these components are swapped. The tangential components for P and Q before collision are v<sub>t</sub> = v - (v.n)n and u<sub>t</sub> = u - (u.n)n respectively.<br>After collision the velocity of<br>P is v<sub>a</sub> = u<sub>r</sub> + v<sub>t</sub> = (u.n)n + v - (v.n)n = v + ((u - v).n)n and that of<br>Q is u<sub>a</sub> = v<sub>r</sub> + u<sub>t</sub> = (v.n)n + u - (u.n)n = u + ((v - u).n)n</p>
+<p>Given that the particles collide between <em>frame n</em> and <em>frame n+1</em> what will the positions of P and Q be during <em>frame n+1</em>?</p>
+<p>In <em>frame n</em>, the position of particle P is (px, py, pz) and the position of Q is (qx, qy, qz). For some time t &lt;= 1 the particles will make first contact. Fig 23 shows the positions of P and Q for <em>frame n</em>, their positions at time t, and their positions for <em>frame n+1</em> when the collision is not detected. The radial and tangential components of their displacements (= velocities) are also shown upto and after first contact.</p>
+<p><img src="/img/samples/collide16.jpg" alt="Fig 23"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 23.</p>
+<p>The displacement v can be split in vt and v(1 - t) and u can be split into u and u(1 - t) which take the particles to the point of contact and after the first contact. During the frame transition it is at the point of contact the displacements along the line of centres are exchanged.</p>
+<p>Fig 24 shows the rearrangement of the component displacements and positions of the spheres when the collision is detected and component velocities along the line joining the centres are exchanged. Just before <em>frame n+1</em> this gives</p>
+<p>particle P at  p + v<sub>r</sub>t + v<sub>t</sub>t + u<sub>r</sub>(1 - t) + v<sub>t</sub>(1 - t) = p + v<sub>r</sub>t + u<sub>r</sub>(1 - t) + v<sub>t</sub>
+and particle Q at q + u<sub>r</sub>t + u<sub>t</sub>t + v<sub>r</sub>(1 - t) + u<sub>t</sub>(1 - t) = q + u<sub>r</sub>t + v<sub>r</sub>(1 - t) + u<sub>t</sub><br>as in Fig 24</p>
+<p><img src="/img/samples/collide17.jpg" alt="Fig 24"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 24.</p>
+<p>However, since before <em>frame n+1</em>, is displayed the velocities of P and Q will be added to the positions of P and Q and so we need these positions to have their velocities subtracted so that the correct positions are displayed during <em>frame n+1</em>. See Fig 25 </p>
+<p><img src="/img/samples/collide24.jpg" alt="Fig 25"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 25.</p>
+<p>P<br>p + v<sub>r</sub>t + u<sub>r</sub>(1 - t) + v<sub>t</sub> - (u<sub>r</sub> + v<sub>t</sub>)</p>
+<p>= p + v<sub>r</sub>t + u<sub>r</sub>(1 - t) - u<sub>r</sub></p>
+<p>= p + v<sub>r</sub>t + u<sub>r</sub>(1 - t) - u<sub>r</sub>t - u<sub>r</sub>(1 - t)</p>
+<p>= p + v<sub>r</sub>t - u<sub>r</sub>t</p>
+<p>= p + (v<sub>r</sub> - u<sub>r</sub>)t</p>
+<p>Q<br>q + u<sub>r</sub>t + v<sub>r</sub>(1 - t) + u<sub>t</sub> - (v<sub>r</sub> + u<sub>t</sub>)</p>
+<p>= q + u<sub>r</sub>t + v<sub>r</sub>(1 - t) - v<sub>r</sub></p>
+<p>= q + u<sub>r</sub>t + v<sub>r</sub>(1 - t) - v<sub>r</sub>t - v<sub>r</sub>(1 - t)</p>
+<p>= q + u<sub>r</sub>t - v<sub>r</sub>t</p>
+<p>= q + (u<sub>r</sub> - v<sub>r</sub>)t</p>
+<p>After a collision these values are used to recalculate the  positions of particles before <em>frame n+1</em>.</p>
+<p>The following Playground shows the first contact position of two particles and their paths before and after collision. Start position and velocities may be set on lines 36 to 39.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#A4HZTV#1">Playground Example - First Contact Rebound</a> - <i class="fa fa-eye" onclick="createIframe('A4HZTV#1', this)"></i><div class="iframeContainer"></div>.</li>
+</ul>
+<p>This Playground fires particles randomly towards each other to see the effect when they collide.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#A4HZTV#2">Playground Example - Colliding Particles</a> - <i class="fa fa-eye" onclick="createIframe('A4HZTV#2', this)"></i><div class="iframeContainer"></div>.</li>
+</ul>
+<h2><a name="a-multitude-of-particles" class="anchor" href="#a-multitude-of-particles"></a>A Multitude of Particles</h2><p>Combining all of the above the following Playgrounds put many particles inside a box and have them collide with the box and each other.</p>
+<ul>
+<li><p><a href="https://www.babylonjs-playground.com/#HIM0WS">Playground Example - Slow Moving Particles</a> - <i class="fa fa-eye" onclick="createIframe('HIM0WS#', this)"></i><div class="iframeContainer"></div></p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#HIM0WS#1">Playground Example - Fast Moving Particles</a> - <i class="fa fa-eye" onclick="createIframe('HIM0WS#1', this)"></i><div class="iframeContainer"></div></p>
+</li>
+</ul>
+<p>Maximum speeds, for both,  can be changed on lines 21 to 23.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/samples/Slow_Collide.html">Slow Particles</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

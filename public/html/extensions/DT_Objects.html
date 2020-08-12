@@ -1,0 +1,144 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Adding Objects to a Dynamic Terrain - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Adding Objects to a Dynamic Terrain</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#the-spmap">The SPMap</a></li>
+<li><a href="#the-sps">The SPS</a></li>
+<li><a href="#the-dynamic-terrain-with-the-spmap">The Dynamic Terrain with the SPMap</a></li>
+<li><a href="#playground-example">Playground Example</a></li>
+<li><a href="#cautionary-note">Cautionary Note</a><ul>
+<li><a href="#object-colors-and-textures">Object Colors and Textures</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="adding-objects-to-a-dynamic-terrain" class="anchor" href="#adding-objects-to-a-dynamic-terrain"></a>Adding Objects to a Dynamic Terrain</h1><p>Having a map depicting the relief is sometimes not enough.<br>We may want to render repetitive objects referenced in the map into the landscape like buildings, trees, etc.<br>The Dynamic Terrain can manage these objects when used with a dedicated Solid Particle System (SPS).<br>The objects are defined in a specific map, besides the ground map, called the Solid Particle Map or SPMap.  </p>
+<p>How does it work ?<br>As we know now, the terrain renders only the current visible part of the map what can be much bigger and what can have millions coordinates.<br>The dedicated SPS works the same way : it renders the only visible objects from the SPMap in the current terrain by recycling automatically a set pool of solid particles.  </p>
+<p>Both the SPMap and the SPS are then passed to the terrain constructor as parameters.  </p>
+<h2><a name="the-spmap" class="anchor" href="#the-spmap"></a>The SPMap</h2><p>The SPMap is simply an array of arrays.<br>Each object type in the map (example: house, tree) is given an array.  </p>
+<pre><code class="lang-javascript">var SPMap = [];
+SPMap[0] = [dataHouse1, dataHouse2, ..., dataHouseN];
+SPMap[1] = [dataTree1, dataTree2, ..., dataTreeN];
+...
+SPMap[t] = [dataObject1, dataObject2, ..., dataObjectN];
+</code></pre>
+<p>There can be as many object types as we need, but it&#39;s required there is at least one <code>SPMap[0]</code>.<br>There can be as many objects in each type array as we need too and their number can be different from a type to another. When a type is declared, then there must be at least one object in this type.<br>So when passing a SPMap, there&#39;s at least one type and one object in this type.  </p>
+<p>The data defining each object is a set of nine successive floats : the object position (x, y, z), the object rotation (x, y, z) and the object scaling (x, y, z).<br>This means that the type array contains simply a long series of successive floats :  </p>
+<pre><code class="lang-javascript">SPMap[0] = [
+    house1Posx, house1Posy, house1Posz, house1Rotx, house1Roty, house1Rotz, house1Sclx, house1Scly, house1Sclz,
+    house2Posx, house2Posy, house2Posz, house2Rotx, house2Roty, house2Rotz, house2Sclx, house2Scly, house2Sclz,
+    ...
+]
+</code></pre>
+<p>Then the same thing for every other object type.<br>So at least a SPMap is an array containing an array of 9 floats.  </p>
+<p>The single rule to meet is to set every object within the map range.<br>Assuming that <em>(Xmin, Zmin)</em> and <em>(Xmax, Zmax)</em> are respectively the minimum and maximum x and z coordinates of the map, then every object must be set at its (x, z) coordinates this way :<br>                      <code>Xmin &lt;= x &lt;= Xmax and Zmin &lt;= z &lt;= Zmax</code>   </p>
+<p>Note : the object coordinates can be different from the map vertex coordinates : the objects don&#39;t need to be on map vertex locations. They even don&#39;t need to be on the ground, they can be in the air (clouds) or inside or through the ground surface (tunnels).  </p>
+<h2><a name="the-sps" class="anchor" href="#the-sps"></a>The SPS</h2><p>The SPS passed to the Dynamic Terrain will animate and recycle its solid particles on the terrain according to the SPMap data.<br>The SPS doesn&#39;t need to hold as many particles as the object number in the map. There can be dozens thousands objects in the SPMap and only hundreds or few thousands particles in the SPS because it re-uses the invisible objects in order to render only the visible ones.<br>The needed particle number then only depends on the object number in the SPMap and on their density on the terrain.<br>If the SPS has not enough particles to render some objects, it won&#39;t crash, but won&#39;t just render them (note : objects are rendered from the minimum to the maximum <em>x,z</em> coordinates, or from the western South to the eastern North, not from the distance to the camera for performance reasons).  </p>
+<p>When building the SPS, each particle type (<em>shapeId</em>) will match an object type.<br>Let&#39;s imagine that we want to depict houses from the map by boxes and trees by cones.<br>We could obviously choose any 3D (or 2D) shape to assign to every object type from the map. This a voluntary loose coupling design : the map knows only about object locations in the landscape and nothing about how they will be rendered in the terrain, the SPS knows only about the way to render particles and nothing about how many objects and where they are in the map until the terrain tells it.<br>So from the same map, we can easily provide different ways to render the objects and we can adjust to the logic needs or the performance constraints.  </p>
+<p>Back to our boxes and cones :  </p>
+<pre><code class="lang-javascript">var modelBox = BABYLON.MeshBuilder.CreateBox(&quot;mb&quot;, {}, scene);
+var modelCone = BABYLON.MeshBuilder.CreateCylinder(&quot;mc&quot;, {diameterTop: 0}, scene);
+var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene);
+
+// The declaration order matters from here
+// first shape = first object type
+// second shape = second object type, etc
+sps.addShape(modelBox, 200);    // 200 houses maximum visible in the terrain
+sps.addShape(modelCone, 300);   // 300 trees maximum visible in the terrain
+sps.buildMesh();
+modelBox.dispose();
+modelCone.dispose();
+</code></pre>
+<p>And that&#39;s all.  </p>
+<p>If we created more object types than the particle types, they will simply be ignored.<br>If we create less particle types than the declared object types in the map, they will also be ignored.  </p>
+<h2><a name="the-dynamic-terrain-with-the-spmap" class="anchor" href="#the-dynamic-terrain-with-the-spmap"></a>The Dynamic Terrain with the SPMap</h2><p>Now we have built a SPS and a SPMap, we can just pass them to the DynamicTerrain constructor besides the usual data map.<br>We use the parameter <code>SPmapData</code> and <code>sps</code> :</p>
+<pre><code class="lang-javascript">        var terrainSub = 100;               // 100 terrain subdivisions
+        var params = {
+            mapData: mapData,               // data map declaration : what data to use ?
+            mapSubX: mapSubX,               // how are these data stored by rows and columns
+            mapSubZ: mapSubZ,
+            terrainSub: terrainSub,         // how many terrain subdivisions wanted
+            SPmapData: SPMap,               // the object data in the map
+            sps: sps                        // the SPS used to render the objects
+        }
+        var terrain = new BABYLON.DynamicTerrain(&quot;t&quot;, params, scene);
+</code></pre>
+<p>Now, each time that the terrain is updated and that it covers a part of map containing objects, the SPS is updated and the objects are rendered by solid particles.     </p>
+<h2><a name="playground-example" class="anchor" href="#playground-example"></a>Playground Example</h2><p>Using only the solid particle system 3000 particles are used to render dozens of thousands objects from the map. A free camera is used.   </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#FJNR5#264">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('FJNR5#264', this)"></i><div class="iframeContainer"></div> </li>
+</ul>
+<h2><a name="cautionary-note" class="anchor" href="#cautionary-note"></a>Cautionary Note</h2><p>The SPMap feature seems to not work correctly with the LOD in some cases.</p>
+<h1><a name="object-colors-and-textures" class="anchor" href="#object-colors-and-textures"></a>Object Colors and Textures</h1><p>So far, we&#39;ve declared object settings (positions, rotations, scalings) in the map.<br>We can also pass the terrain two other optional maps about objects : the object colors and the object UVs.  </p>
+<p>Exactly the same way we used for the SPMap, the object colors and UVs are stored in arrays of arrays : one array per object type.<br>Each array for a given type then holds series of successive floats related to the colors (r, g, b, a) of each object of this type, or series of successive floats related to the UVs (x, y, z, w) of each object this type.<br>The UVs are simply the bottom left and up right coordinates of the quad to be cropped within the texture as it&#39;s used in the SPS for the per particle texture feature.   </p>
+<p>The UVs will then be applied to the <strong>SPS material</strong>, not to the terrain one.  </p>
+<pre><code class="lang-javascript">// Object Colors
+var SPColors = [];
+SPColors[0] = [colorHouse1, colorHouse2, ..., colorHouseN];
+SPColors[1] = [colorTree1, colorTree2, ..., colorTreeN];
+...
+SPColors[t] = [colorObject1, colorObject2, ..., colorObjectN];
+
+// Object UVs
+var SPUVs = [];
+SPUVs[0] = [UVHouse1, UVHouse2, ..., UVHouseN];
+SPUVs[1] = [UVTree1, UVTree2, ..., UVTreeN];
+...
+SPUVs[t] = [UVObject1, UVObject2, ..., UVObjectN];
+</code></pre>
+<p>The data defining each object color or UV is a set of four successive floats : the object color (r, g, b, a) or the object UVs (x, y, z, w).<br>This means that the type array contains simply a long series of successive floats :  </p>
+<pre><code class="lang-javascript">// Color example, first object type
+SPColor[0] = [
+    house1Col_r, house1Col_g, house1Col_b, house1Col_a,
+    house2Col_r, house2Col_g, house2Col_b, house2Col_a,
+    ...
+]
+// UV example, first object type
+SPUV[0] = [
+    house1UV_x, house1UV_y, house1UV_z, house1UV_w,
+    house2UV_x, house2UV_y, house2UV_z, house2UV_w,
+    ...
+]
+</code></pre>
+<p>We then pass the object colors and UVs to the DynamicTerrain constructor besides the object map and the sps.<br>We use the parameter <code>SPcolorData</code> and <code>SPuvData</code>.  </p>
+<pre><code class="lang-javascript">    var terrainSub = 100;        // terrain subdivisions
+    var terrainOptions = {
+        terrainSub: terrainSub, 
+        mapData: mapData, mapSubX: mapSubX, mapSubZ: mapSubZ, 
+        mapColors: mapColors, 
+        SPmapData: SPmapData,         // object map
+        sps: sps,                     // SPS to render the objects on the terrain
+        SPcolorData: SPcolorData,     // object colors
+        SPuvData: SPuvData            // object UVs to apply to the SPS material
+    };
+    var terrain = new BABYLON.DynamicTerrain(&quot;dt&quot;, terrainOptions, scene);
+    terrain.mesh.material = terrainMaterial;    // terrain material
+
+    sps.mesh.material = objectMaterial;         // object material !
+
+</code></pre>
+<p>The objects get more green or more red according to the map areas (north, south, east, west) and more blue when in altitude. </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#FJNR5#267">Playground Example  Color Objects</a> - <i class="fa fa-eye" onclick="createIframe('FJNR5#267', this)"></i><div class="iframeContainer"></div>  </li>
+</ul>
+<p>Each object is given a part of the image file.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#FJNR5#268">Playground Example using UV with Objects</a> - <i class="fa fa-eye" onclick="createIframe('FJNR5#268', this)"></i><div class="iframeContainer"></div>  </li>
+</ul>
+<p><strong>Note :</strong>
+The object map (SPMap) requires a terrain data map to work.<br>The object color map or the object UV map both require an object map (SPMap) to work.<br>Both are optional.<br>Each one (color or UV) can work independently from the other.  </p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/extensions/Dynamic_Terrain">Dynamic Terrain</a><br><a href="/extensions/DT_Examples">Dynamic Terrain Examples</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

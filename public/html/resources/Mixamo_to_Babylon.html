@@ -1,0 +1,62 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Mixamo - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Mixamo</h1><br><div id="staticContent"><h1><a name="mixamo-gt-blender-gt-babylon-workflow" class="anchor" href="#mixamo-blender-babylon-workflow"></a>Mixamo --&gt; Blender --&gt; Babylon Workflow</h1><p>Interested in getting Adobe Mixamo characters into Babylon.js? Here&#39;s a handy guide to do just that!</p>
+<p>Start by downloading and installing the <a href="https://github.com/BabylonJS/BlenderExporter">Blender to Babylon.js exporter</a>. Here are the <a href="https://doc.babylonjs.com/resources/blender#installation">Installation instructions</a>.</p>
+<p>From <a href="https://www.mixamo.com">Mixamo</a>, under Characters, select Y Bot. Download Y Bot with the following settings:</p>
+<p><img src="/img/exporters/mixamo/1.png" alt="image1"></p>
+<p>Rename this file to ybot.fbx</p>
+<p>In Mixamo, under Animations, choose the animations that you want to export (for this guide I chose punch and kick). Download the animations with the following settings:</p>
+<p><img src="/img/exporters/mixamo/2.png" alt="image2"></p>
+<p>Rename these files to <a href="mailto:ybot@animation.fbx">ybot@animation.fbx</a>, e.g. <a href="mailto:ybot@punch.fbx">ybot@punch.fbx</a> and <a href="mailto:ybot@kick.fbx">ybot@kick.fbx</a>.</p>
+<p>Open a new Blender 2.8+ scene, and delete all 3 default objects (cube, camera, and light).</p>
+<p>In the Blender top menu, click File → Import → FBX (.fbx). In Operator Presets on the right, check Manual Orientation and Automatic Bone Orientation. Select ybot.fbx and then click Import FBX.</p>
+<p><img src="/img/exporters/mixamo/3.png" alt="image3"></p>
+<p>Import <a href="mailto:ybot@punch.fbx">ybot@punch.fbx</a> and <a href="mailto:ybot@kick.fbx">ybot@kick.fbx</a> into Blender the same way you did ybot.fbx.</p>
+<p><img src="/img/exporters/mixamo/4.png" alt="image4"></p>
+<p>Rename Armature to Character, and rename all animations, as shown in the image below (bordered red):</p>
+<p><img src="/img/exporters/mixamo/5.png" alt="image5"></p>
+<p>Delete Armature.001 and Armature.002.</p>
+<p>As shown in the image below (bordered red), select Character (top right), click in the center of the circle (bottom right) and drag up to create a new sub-window. Select Dope Sheet (bottom left) and Action Editor (next to it), and select an animation (middle), e.g. Kick. Click play (bottom middle) to play animation. If your character is not animating, maybe you didn&#39;t select Character (top right bordered in red). Also, make sure you&#39;re in Object Mode.</p>
+<p><img src="/img/exporters/mixamo/6a.png" alt="image6"></p>
+<p>Change animation back to TPose from Kick. In Blender, press N, which opens the Transform tab. Note that Rotation is not all 0° and Scale is all 0.010 instead of 1.</p>
+<p><img src="/img/exporters/mixamo/7a.png" alt="image7"></p>
+<p>As shown in the image below (bordered red), in Object Mode, press A to select all. Press S to scale. Type 100 to scale from 0.010 to 1.</p>
+<p><img src="/img/exporters/mixamo/8.png" alt="image8"></p>
+<p>As shown in the image below (bordered red), press Ctrl + A to open the Apply menu. Click All Transforms. Location should all be set to 0, Rotation all to 0, and Scale all to 1.</p>
+<p><img src="/img/exporters/mixamo/9.png" alt="image9"></p>
+<p><a href="https://blender.stackexchange.com/questions/24839/how-do-i-resize-an-armature-without-ruining-its-poses">Possibly useful resource</a></p>
+<p>We need to change the two materials, as shown in the image below. Something about them is incompatible with .babylon format.</p>
+<p><img src="/img/exporters/mixamo/10.png" alt="image10"></p>
+<p>Click Alpha_Joints_MAT. As shown in the image below (bordered red), click Material Properties (bottom most), Browse Materials (slightly above), and select Material (slightly above). Do the same for Alpha_Body_MAT.</p>
+<p><img src="/img/exporters/mixamo/11.png" alt="image11"></p>
+<p>You should be able to add custom colors and other material properties to Material.</p>
+<p>In Blender top menu, click File → Export → Babylon.js ver 6.2.3. Click Export Babylon.js scene.</p>
+<p><img src="/img/exporters/mixamo/11b.png" alt="image11b"></p>
+<p>Open your .babylon file in Notepad. Scroll to bottom, and paste the following text:</p>
+<pre><code>&quot;autoAnimate&quot;: true,&quot;autoAnimateFrom&quot;: 1,&quot;autoAnimateTo&quot;: 152,&quot;autoAnimateLoop&quot;: true,
+</code></pre><p>before &quot;instances&quot;:[]. Save your .babylon file.</p>
+<p><img src="/img/exporters/mixamo/12.png" alt="image12"></p>
+<p>Go to <a href="https://sandbox.babylonjs.com/">Babylon.js Sandbox</a>. Drag your .babylon file into the browser.</p>
+<p>autoAnimate lets your model animate automatically when dragged into the Babylon.js Sandbox. Why autoAnimateTo frame 152? According to the Sandbox animation and the image of the .babylon file below, all 3 animations (Kick, Punch, and TPose) take a total of 152 frames.</p>
+<p><img src="/img/exporters/mixamo/12a.png" alt="image12a"></p>
+<p>So how do you trigger these animations in Babylon.js code? Check out this Babylon.js playground: <a href="https://www.babylonjs-playground.com/#BCU1XR#0">Animation blending</a> - <i class="fa fa-eye" onclick="createIframe('BCU1XR#0', this)"></i><div class="iframeContainer"></div>.</p>
+<p><img src="/img/exporters/mixamo/12c.png" alt="image12c"></p>
+<p>Click the image below to see the final result!</p>
+<p><a href="https://www.youtube.com/watch?v=_f4z--WKsU4"><img src="https://img.youtube.com/vi/_f4z--WKsU4/0.jpg" alt="finalVideo"></a></p>
+<p>Check out this Babylon.js Demo: <a href="https://www.babylonjs.com/demos/dancers/">Dancers</a>. In this demo, a .babylon model of the dancer is loaded just once! Its mesh and skeleton are cloned many times. The dance animation can be applied to each cloned skeleton separately whenever we choose!</p>
+<p>All .fbx, .blend, and .babylon files are included in files/.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

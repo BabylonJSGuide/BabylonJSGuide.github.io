@@ -1,0 +1,95 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Set Shapes - Legacy - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Set Shapes - Legacy</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#box">Box</a></li>
+<li><a href="#sphere">Sphere</a></li>
+<li><a href="#plane">Plane</a></li>
+<li><a href="#disc-or-regular-polygon">Disc or Regular Polygon</a></li>
+<li><a href="#cylinder">Cylinder</a></li>
+<li><a href="#torus">Torus</a></li>
+<li><a href="#knot">Knot</a></li>
+<li><a href="#ground">Ground</a></li>
+<li><a href="#ground-from-heightmap">Ground From HeightMap</a></li>
+<li><a href="#tiled-ground">Tiled Ground</a></li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#basic-l1">Basic - L1</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-create-set-shapes-using-legacy-method" class="anchor" href="#how-to-create-set-shapes-using-legacy-method"></a>How To Create Set Shapes using Legacy Method</h1><h1><a name="box" class="anchor" href="#box"></a>Box</h1><pre><code class="lang-javascript">var box = BABYLON.Mesh.CreateBox(&quot;box&quot;, 6.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, size of the box, the scene to attach the mesh, updatable? (if the mesh must be modified later) and the optional side orientation (see below). The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var box = BABYLON.Mesh.CreateBox(&quot;box&quot;, 6.0, scene);
+</code></pre>
+<h1><a name="sphere" class="anchor" href="#sphere"></a>Sphere</h1><pre><code class="lang-javascript">var sphere = BABYLON.Mesh.CreateSphere(&quot;sphere&quot;, 10.0, 10.0, scene, false,  BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh, updatable? (if the mesh must be modified later) and the optional side orientation (see below). The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var sphere = BABYLON.Mesh.CreateSphere(&quot;sphere&quot;, 10.0, 10.0, scene);
+</code></pre>
+<p>Beware to adapt the number of segments to the size of your mesh ;)</p>
+<h1><a name="plane" class="anchor" href="#plane"></a>Plane</h1><pre><code class="lang-javascript">var plane = BABYLON.Mesh.CreatePlane(&quot;plane&quot;, 10.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, size, and scene to attach the mesh, updatable? (if the mesh must be modified later) and the optional side orientation (see below). The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var plane = BABYLON.Mesh.CreatePlane(&quot;plane&quot;, 10.0, scene);
+</code></pre>
+<h1><a name="disc-or-regular-polygon" class="anchor" href="#disc-or-regular-polygon"></a>Disc or Regular Polygon</h1><pre><code class="lang-javascript">var disc = BABYLON.Mesh.CreateDisc(&quot;disc&quot;, 5, 30, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, radius, tessellation, scene, updatable and the optional side orientation (see below). The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var disc = BABYLON.Mesh.CreateDisc(&quot;disc&quot;, 5, 30, scene);
+</code></pre>
+<p>With the  <em>tessellation</em> value, you can get a regular polygon :<br>3 gives a triangle,<br>4 a square,<br>5 a pentagon,<br>6 a hexagon, 7 a heptagon, 8 an octogon, and so on.</p>
+<h1><a name="cylinder" class="anchor" href="#cylinder"></a>Cylinder</h1><pre><code class="lang-javascript">var cylinder = BABYLON.Mesh.CreateCylinder(&quot;cylinder&quot;, 3, 3, 3, 6, 1, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, height, diamTop, diamBottom, tessellation, heightSubdivs, scene, updatable and the optional side orientation (see below). The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var cylinder = BABYLON.Mesh.CreateCylinder(&quot;cylinder&quot;, 3, 3, 3, 6, 1, scene);
+</code></pre>
+<h1><a name="torus" class="anchor" href="#torus"></a>Torus</h1><pre><code class="lang-javascript">var torus = BABYLON.Mesh.CreateTorus(&quot;torus&quot;, 5, 1, 10, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, diameter, thickness, tessellation (highly detailed or not), scene, updatable and the optional side orientation (see below). The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var torus = BABYLON.Mesh.CreateTorus(&quot;torus&quot;, 5, 1, 10, scene);
+</code></pre>
+<h1><a name="knot" class="anchor" href="#knot"></a>Knot</h1><pre><code class="lang-javascript">var knot = BABYLON.Mesh.CreateTorusKnot(&quot;knot&quot;, 2, 0.5, 128, 64, 2, 3, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+</code></pre>
+<p>Parameters are: name, radius, tube, radialSegments, tubularSegments, p, q, scene, updatable and the optional side orientation (see below). The last two parameters can be omitted if you just need the default behavior :</p>
+<pre><code class="lang-javascript">var knot = BABYLON.Mesh.CreateTorusKnot(&quot;knot&quot;, 2, 0.5, 128, 64, 2, 3, scene);
+</code></pre>
+<p>You can learn more about torus knots... <a href="http://en.wikipedia.org/wiki/Torus_knot">RIGHT HERE</a>.</p>
+<h1><a name="ground" class="anchor" href="#ground"></a>Ground</h1><pre><code class="lang-javascript">var ground = BABYLON.Mesh.CreateGround(&quot;ground&quot;, 6, 6, 2, scene);
+</code></pre>
+<p>Parameters are: name, width, depth, subdivs, scene</p>
+<p>Our <em>Playground Demo Scene 01</em> uses a CreateGround constructor... so you can see one in action by using the link below:</p>
+<p><a href="https://www.babylonjs-playground.com/#TAZ2CB">https://www.babylonjs-playground.com/#TAZ2CB</a> - <i class="fa fa-eye" onclick="createIframe('TAZ2CB#', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="ground-from-heightmap" class="anchor" href="#ground-from-heightmap"></a>Ground From HeightMap</h1><pre><code class="lang-javascript">var ground = BABYLON.Mesh.CreateGroundFromHeightMap(&quot;ground&quot;, &quot;heightmap.jpg&quot;, 200, 200, 250, 0, 10, scene, false, successCallback);
+</code></pre>
+<p>Parameters are: name, heightmapPath, width, depth, subdivs, minheight, maxheight, scene, updatable, successCallback</p>
+<p>HeightMap grounds are easy, but we decided to create a separate tutorial so we could say more about this important Babylon.js feature. Please see our <a href="/babylon101/Height_Map">HeightMap Tutorial</a> to learn all about heightMap grounds.</p>
+<h1><a name="tiled-ground" class="anchor" href="#tiled-ground"></a>Tiled Ground</h1><p>Thanks to forum user Kostar111 for this handy Tiled Ground constructor. Here is the basic code needed to create a tiled ground.</p>
+<pre><code class="lang-javascript">
+var precision = {
+    &quot;w&quot; : 2,
+    &quot;h&quot; : 2
+};
+var subdivisions = {
+    &#39;h&#39; : 8,
+    &#39;w&#39; : 8
+};
+var tiledGround = BABYLON.Mesh.CreateTiledGround(&quot;Tiled Ground&quot;, -3, -3, 3, 3, subdivisions, precision, scene, false);
+</code></pre>
+<p>Parameters are: name, xmin, zmin, xmax, zmax, subdivisions = the number of tiles. (subdivisions.w : in width; subdivisions.h: in height), precision = the number of subdivisions inside a tile. (precision.w : in width; precision.h: in height), scene, updatable.</p>
+<p>Kostar111 was also kind enough to give us a fine tutorial about how to use tiled grounds. <a href="http://makina-corpus.com/blog/metier/how-to-use-multimaterials-with-a-tiled-ground-in-babylonjs">Click right here</a> to view it. At that link, Kostar111 thoroughly explains how the tiled ground works, and also provides some Babylon.js Playground scenes that nicely demonstrate some of its many uses.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/features/Shapes">Mesh Overview</a><br><a href="/babylon101/Discover_Basic_Elements">Set Shapes 101</a><br><a href="/babylon101/Parametric_Shapes">Parametric Shapes 101</a><br><a href="/How_To/Set_Shapes">Set Shapes</a><br><a href="/How_To/Parametric_Shapes">Parametric Shapes</a><br><a href="/How_To/Polyhedra_Shapes">Polyhedra Shapes</a><br><a href="/How_To/Tiled">Tiled Planes and Boxes</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

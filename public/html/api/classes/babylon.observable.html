@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>Observable - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.observable.html">Observable</a>
+					</li>
+				</ul>
+				<h1>Observable&lt;T&gt;</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The Observable class is a simple implementation of the Observable pattern.</p>
+						</div>
+						<p>There&#39;s one slight particularity though: a given Observable can notify its observer using a particular mask value, only the Observers registered with this mask value will be notified.
+							This enable a more fine grained execution without having to rely on multiple different Observable objects.
+							For instance you may have a given Observable that have four different types of notifications: Move (mask = 0x01), Stop (mask = 0x02), Turn Right (mask = 0X04), Turn Left (mask = 0X08).
+						A given observer can register itself with only Move and Stop (mask = 0x03), then it will only be notified when one of these two occurs and will never be for Turn Left/Right.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-type-parameters">
+					<h3>Type parameters</h3>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">Observable</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Constructors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="babylon.observable.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Accessors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.observable.html#observers" class="tsd-kind-icon">observers</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#add" class="tsd-kind-icon">add</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#addonce" class="tsd-kind-icon">add<wbr>Once</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#clear" class="tsd-kind-icon">clear</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#clone" class="tsd-kind-icon">clone</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#hasobservers" class="tsd-kind-icon">has<wbr>Observers</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#hasspecificmask" class="tsd-kind-icon">has<wbr>Specific<wbr>Mask</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#makeobserverbottompriority" class="tsd-kind-icon">make<wbr>Observer<wbr>Bottom<wbr>Priority</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#makeobservertoppriority" class="tsd-kind-icon">make<wbr>Observer<wbr>Top<wbr>Priority</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#notifyobserver" class="tsd-kind-icon">notify<wbr>Observer</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#notifyobservers" class="tsd-kind-icon">notify<wbr>Observers</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#notifyobserverswithpromise" class="tsd-kind-icon">notify<wbr>Observers<wbr>With<wbr>Promise</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#remove" class="tsd-kind-icon">remove</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.observable.html#removecallback" class="tsd-kind-icon">remove<wbr>Callback</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Constructors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+						<a name="constructor" class="tsd-anchor"></a>
+						<h3>constructor</h3>
+						<a href="/playground/?code=constructor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">new <wbr>Observable<span class="tsd-signature-symbol">(</span>onObserverAdded<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.observable.html" class="tsd-signature-type">Observable</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a new observable</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> onObserverAdded: <span class="tsd-signature-type">function</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>defines a callback to call when a new observer is added</p>
+											</div>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>observer<span class="tsd-signature-symbol">: </span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>observer: <a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.observable.html" class="tsd-signature-type">Observable</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Accessors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="observers" class="tsd-anchor"></a>
+						<h3>observers</h3>
+						<a href="/playground/?code=observers" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> observers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the list of observers</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="add" class="tsd-anchor"></a>
+						<h3>add</h3>
+						<a href="/playground/?code=add" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, mask<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, insertFirst<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, unregisterOnFirstCall<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Create a new Observer with the specified callback</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the callback that will be executed for that Observer</p>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>eventData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, eventState<span class="tsd-signature-symbol">: </span><a href="babylon.eventstate.html" class="tsd-signature-type">EventState</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>eventData: <span class="tsd-signature-type">T</span></h5>
+															</li>
+															<li>
+																<h5>eventState: <a href="babylon.eventstate.html" class="tsd-signature-type">EventState</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> mask: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the mask used to filter observers</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> insertFirst: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>if true the callback will be inserted at the first position, hence executed before the others ones. If false (default behavior) the callback will be inserted at the last position, executed after all the others already present.</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> scope: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>optional scope for the callback to be called from</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> unregisterOnFirstCall: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines if the observer as to be unregistered after the next notification</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>the new observer created for the callback</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="addonce" class="tsd-anchor"></a>
+						<h3>add<wbr>Once</h3>
+						<a href="/playground/?code=addOnce" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">add<wbr>Once<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Create a new Observer with the specified callback and unregisters after the next notification</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the callback that will be executed for that Observer</p>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>eventData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, eventState<span class="tsd-signature-symbol">: </span><a href="babylon.eventstate.html" class="tsd-signature-type">EventState</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>eventData: <span class="tsd-signature-type">T</span></h5>
+															</li>
+															<li>
+																<h5>eventState: <a href="babylon.eventstate.html" class="tsd-signature-type">EventState</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>the new observer created for the callback</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="clear" class="tsd-anchor"></a>
+						<h3>clear</h3>
+						<a href="/playground/?code=clear" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">clear<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Clear the list of observers</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="clone" class="tsd-anchor"></a>
+						<h3>clone</h3>
+						<a href="/playground/?code=clone" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Clone the current observable</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>a new observable</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="hasobservers" class="tsd-anchor"></a>
+						<h3>has<wbr>Observers</h3>
+						<a href="/playground/?code=hasObservers" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">has<wbr>Observers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets a boolean indicating if the observable has at least one observer</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>true is the Observable has at least one Observer registered</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="hasspecificmask" class="tsd-anchor"></a>
+						<h3>has<wbr>Specific<wbr>Mask</h3>
+						<a href="/playground/?code=hasSpecificMask" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">has<wbr>Specific<wbr>Mask<span class="tsd-signature-symbol">(</span>mask<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Does this observable handles observer registered with a given mask</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> mask: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the mask to be tested</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>whether or not one observer registered with the given mask is handeled</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="makeobserverbottompriority" class="tsd-anchor"></a>
+						<h3>make<wbr>Observer<wbr>Bottom<wbr>Priority</h3>
+						<a href="/playground/?code=makeObserverBottomPriority" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">make<wbr>Observer<wbr>Bottom<wbr>Priority<span class="tsd-signature-symbol">(</span>observer<span class="tsd-signature-symbol">: </span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Moves the observable to the bottom of the observer list making it get called last when notified</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>observer: <a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the observer to move</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="makeobservertoppriority" class="tsd-anchor"></a>
+						<h3>make<wbr>Observer<wbr>Top<wbr>Priority</h3>
+						<a href="/playground/?code=makeObserverTopPriority" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">make<wbr>Observer<wbr>Top<wbr>Priority<span class="tsd-signature-symbol">(</span>observer<span class="tsd-signature-symbol">: </span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Moves the observable to the top of the observer list making it get called first when notified</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>observer: <a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the observer to move</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="notifyobserver" class="tsd-anchor"></a>
+						<h3>notify<wbr>Observer</h3>
+						<a href="/playground/?code=notifyObserver" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">notify<wbr>Observer<span class="tsd-signature-symbol">(</span>observer<span class="tsd-signature-symbol">: </span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, eventData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, mask<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Notify a specific observer</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>observer: <a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the observer to notify</p>
+										</div>
+									</li>
+									<li>
+										<h5>eventData: <span class="tsd-signature-type">T</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the data to be sent to each callback</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> mask: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>is used to filter observers defaults to -1</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="notifyobservers" class="tsd-anchor"></a>
+						<h3>notify<wbr>Observers</h3>
+						<a href="/playground/?code=notifyObservers" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">notify<wbr>Observers<span class="tsd-signature-symbol">(</span>eventData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, mask<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, target<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, currentTarget<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Notify all Observers by calling their respective callback with the given data
+										Will return true if all observers were executed, false if an observer set skipNextObservers to true, then prevent the subsequent ones to execute</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>eventData: <span class="tsd-signature-type">T</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the data to send to all observers</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> mask: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the mask of the current notification (observers with incompatible mask (ie mask &amp; observer.mask === 0) will not be notified)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the original target of the state</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> currentTarget: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the current target of the state</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>false if the complete observer chain was not processed (because one observer set the skipNextObservers to true)</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="notifyobserverswithpromise" class="tsd-anchor"></a>
+						<h3>notify<wbr>Observers<wbr>With<wbr>Promise</h3>
+						<a href="/playground/?code=notifyObserversWithPromise" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">notify<wbr>Observers<wbr>With<wbr>Promise<span class="tsd-signature-symbol">(</span>eventData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, mask<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, target<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, currentTarget<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Calling this will execute each callback, expecting it to be a promise or return a value.
+											If at any point in the chain one function fails, the promise will fail and the execution will not continue.
+											This is useful when a chain of events (sometimes async events) is needed to initialize a certain object
+											and it is crucial that all callbacks will be executed.
+										The order of the callbacks is kept, callbacks are not executed parallel.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>eventData: <span class="tsd-signature-type">T</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>The data to be sent to each callback</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> mask: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>is used to filter observers defaults to -1</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> target: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the callback target (see EventState)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> currentTarget: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines he current object in the bubbling phase</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>will return a Promise than resolves when all callbacks executed successfully.</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="remove" class="tsd-anchor"></a>
+						<h3>remove</h3>
+						<a href="/playground/?code=remove" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">remove<span class="tsd-signature-symbol">(</span>observer<span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Remove an Observer from the Observable object</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>observer: <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.observer.html" class="tsd-signature-type">Observer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the instance of the Observer to remove</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>false if it doesn&#39;t belong to this Observable</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="removecallback" class="tsd-anchor"></a>
+						<h3>remove<wbr>Callback</h3>
+						<a href="/playground/?code=removeCallback" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">remove<wbr>Callback<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Remove a callback from the Observable object</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>callback: <span class="tsd-signature-type">function</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the callback to remove</p>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter-siganture">
+												<ul class="tsd-signatures tsd-kind-type-literal">
+													<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>eventData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, eventState<span class="tsd-signature-symbol">: </span><a href="babylon.eventstate.html" class="tsd-signature-type">EventState</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												</ul>
+												<ul class="tsd-descriptions">
+													<li class="tsd-description">
+														<h4 class="tsd-parameters-title">Parameters</h4>
+														<ul class="tsd-parameters">
+															<li>
+																<h5>eventData: <span class="tsd-signature-type">T</span></h5>
+															</li>
+															<li>
+																<h5>eventState: <a href="babylon.eventstate.html" class="tsd-signature-type">EventState</a></h5>
+															</li>
+														</ul>
+														<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> scope: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>optional scope. If used only the callbacks with this scope will be removed</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>false if it doesn&#39;t belong to this Observable</p>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace tsd-has-type-parameter">
+							<a href="babylon.observable.html" class="tsd-kind-icon">Observable</a>
+							<ul>
+								<li class=" tsd-kind-constructor tsd-parent-kind-class">
+									<a href="babylon.observable.html#constructor" class="tsd-kind-icon">constructor</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.observable.html#observers" class="tsd-kind-icon">observers</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#add" class="tsd-kind-icon">add</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#addonce" class="tsd-kind-icon">add<wbr>Once</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#clear" class="tsd-kind-icon">clear</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#clone" class="tsd-kind-icon">clone</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#hasobservers" class="tsd-kind-icon">has<wbr>Observers</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#hasspecificmask" class="tsd-kind-icon">has<wbr>Specific<wbr>Mask</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#makeobserverbottompriority" class="tsd-kind-icon">make<wbr>Observer<wbr>Bottom<wbr>Priority</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#makeobservertoppriority" class="tsd-kind-icon">make<wbr>Observer<wbr>Top<wbr>Priority</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#notifyobserver" class="tsd-kind-icon">notify<wbr>Observer</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#notifyobservers" class="tsd-kind-icon">notify<wbr>Observers</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#notifyobserverswithpromise" class="tsd-kind-icon">notify<wbr>Observers<wbr>With<wbr>Promise</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#remove" class="tsd-kind-icon">remove</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.observable.html#removecallback" class="tsd-kind-icon">remove<wbr>Callback</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

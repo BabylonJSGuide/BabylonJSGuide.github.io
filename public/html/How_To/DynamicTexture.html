@@ -1,0 +1,184 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Dynamic Texture - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Dynamic Texture</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#creating-and-applying-a-dynamic-texture">Creating and Applying a Dynamic Texture</a></li>
+<li><a href="#writing-text">Writing Text</a></li>
+<li><a href="#canvas-methods">Canvas Methods</a><ul>
+<li><a href="#drawing">Drawing</a></li>
+<li><a href="#images">Images</a></li>
+</ul>
+</li>
+<li><a href="#playground-combination">Playground Combination</a></li>
+<li><a href="#text-and-area-matching">Text and Area Matching</a><ul>
+<li><a href="#fit-text-into-an-area">Fit Text Into an Area.</a></li>
+<li><a href="#fit-an-area-to-text">Fit an Area to Text</a></li>
+</ul>
+</li>
+<li><a href="#serialization">Serialization</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="dynamic-textures" class="anchor" href="#dynamic-textures"></a>Dynamic Textures</h1><p>A dynamic texture works by creating a canvas onto which you can draw using all the facilities of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API">HTML5 Canvas</a>. </p>
+<p><img src="/img/how_to/dyntext.png" alt="dynamic texture"></p>
+<h2><a name="creating-and-applying-a-dynamic-texture" class="anchor" href="#creating-and-applying-a-dynamic-texture"></a>Creating and Applying a Dynamic Texture</h2><p>This is simply achieved using the <code>dynamicTexture</code> function with just three parameters,</p>
+<pre><code class="lang-javascript">var myDynamicTexture = new BABYLON.DynamicTexture(name, option, scene);   
+</code></pre>
+<p>though the existing default values of <code>minmaps</code>, <code>sampling mode</code> and <code>texture format</code> can be overwritten by their addition.</p>
+<p>Whereas the name and scene parameters are obvious, the <code>option</code> parameter, which determines the width and height of the dynamic texture, can be one of three values:</p>
+<ol>
+<li>An already created canvas, in which case <code>canvas.width</code> and <code>canvas.height</code> are used;</li>
+<li>An object having the properties <code>width</code> and <code>height</code>;</li>
+<li>A number, in which case both width and height are set to this number.</li>
+</ol>
+<p>Once created, the dynamic texture is used as the <code>diffuseTexture</code> for a material in the usual way:</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;Mat&quot;, scene);                    
+myMaterial.diffuseTexture = myDynamicTexture;
+mesh.material = myMaterial;
+</code></pre>
+<h2><a name="writing-text" class="anchor" href="#writing-text"></a>Writing Text</h2><p>A <code>drawText</code> method is available so that text can be written directly onto the dynamic texture.</p>
+<pre><code class="lang-javascript">myDynamicTexture.drawText(text, x, y, font, color, canvas color, invertY, update);
+</code></pre>
+<p>Here are the parameters:</p>
+<ul>
+<li>text: string, the words to be written;</li>
+<li>x: number, distance from the left-hand edge;</li>
+<li>y: number, distance from the top or bottom edge, depending on invertY;</li>
+<li>font: string, font definition in the form font-style, font-size, font_name;</li>
+<li>invertY: boolean, true by default in which case y is the distance from the top, when false, y is distance from the bottom and the letters reversed;</li>
+<li><p>update: boolean, true by default, the dynamic texture will immediately be updated.</p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#5ZCGRM#2">Playground Example DrawText</a> - <i class="fa fa-eye" onclick="createIframe('5ZCGRM#2', this)"></i><div class="iframeContainer"></div></p>
+</li>
+</ul>
+<h2><a name="canvas-methods" class="anchor" href="#canvas-methods"></a>Canvas Methods</h2><p>You can obtain the canvas context using</p>
+<pre><code class="lang-javascript">var ctx = myDynamicTexture.getContext();
+</code></pre>
+<p>exposing all the possibilities of the HTML5 canvas element. </p>
+<h3><a name="drawing" class="anchor" href="#drawing"></a>Drawing</h3><p>As an example, drawing using a quadratic curve</p>
+<pre><code class="lang-javascript">ctx.beginPath();
+ctx.moveTo(75, 25);
+ctx.quadraticCurveTo(25, 25, 25, 62.5);
+ctx.quadraticCurveTo(25, 100, 50, 100);
+ctx.quadraticCurveTo(50, 120, 30, 125);
+ctx.quadraticCurveTo(60, 120, 65, 100);
+ctx.quadraticCurveTo(125, 100, 125, 62.5);
+ctx.quadraticCurveTo(125, 25, 75, 25);
+ctx.stroke();
+</code></pre>
+<p>To apply the drawing, the dynamic texture needs updating</p>
+<pre><code class="lang-javascript">myDynamicTexture.update();
+</code></pre>
+<p><strong>Note:</strong> use <code>update(false)</code> if you do not want to use <code>invertY</code>.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#5ZCGRM#3">Playground Example Drawing</a> - <i class="fa fa-eye" onclick="createIframe('5ZCGRM#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="images" class="anchor" href="#images"></a>Images</h3><p>Images can be added to fill part or the whole of the canvas using the <code>drawImage</code> method. Remember that you will have to wait for the image to load before assigning it to the canvas and update the dynamic texture afterwards.</p>
+<p>For whole image  </p>
+<pre><code class="lang-javascript">var img = new Image();
+img.src = &#39;PATH TO IMAGE&#39;;
+img.onload = function() {
+
+ctx.drawImage(this, 0, 0);
+myDynamicTexture.update();
+</code></pre>
+<p>For part of the image scaled onto part of the canvas  </p>
+<pre><code class="lang-javascript">var img = new Image();
+img.src = &#39;PATH TO IMAGE&#39;;
+img.onload = function() {
+
+ctx.drawImage(this, image start x, image start y, image width, image height, canvas to x, canvas to y, destination width, destination height);
+myDynamicTexture.update();
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#5ZCGRM#4">Playground Example Image</a> - <i class="fa fa-eye" onclick="createIframe('5ZCGRM#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="playground-combination" class="anchor" href="#playground-combination"></a>Playground Combination</h2><p>This playground combines all the above techniques.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#5ZCGRM#1">Playground Example Dynamic Texture</a> - <i class="fa fa-eye" onclick="createIframe('5ZCGRM#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="text-and-area-matching" class="anchor" href="#text-and-area-matching"></a>Text and Area Matching</h2><p>For a single line of text it is possible to fit the text into a specified area or to fit an area to a specified text.</p>
+<h3><a name="fit-text-into-an-area" class="anchor" href="#fit-text-into-an-area"></a>Fit Text Into an Area.</h3><p>You have a plane with width and height, <code>planeWidth</code> and <code>planeHeight</code>, to form the width and height of the dynamic texture multiply both the plane width and height by the same number to maintain aspect ratio. The number to multiply by defines the sharpness of the text, low numbers produce blurred text. Now you can create the dynamic texture.</p>
+<pre><code class="lang-javascript">var DTWidth = planeWidth * 60;
+var DTHeight = planeHeight * 60;
+var dynamicTexture = new BABYLON.DynamicTexture(&quot;DynamicTexture&quot;, {width:DTWidth, height:DTHeight}, scene);
+</code></pre>
+<p>For the next stage using any size of font write and measure the width of text on the dynamic texture. </p>
+<pre><code class="lang-javascript">var ctx = dynamicTexture.getContext();
+var size = 12; //any value will work
+ctx.font = size + &quot;px &quot; + font_type;
+var textWidth = ctx.measureText(text).width;
+</code></pre>
+<p>The ratio of text width to size of font applied can be applied to the dynamic texture width to determine the font size that will fit the plane. </p>
+<pre><code class="lang-javascript">var ratio = textWidth/size;
+
+var font_size = Math.floor(DTWidth / ratio); 
+</code></pre>
+<p>If you wish you can apply a multiplier to the ratio, the larger the multiplier the smaller the text and bigger margins.</p>
+<pre><code class="lang-javascript">var font_size = Math.floor(DTWidth / (ratio * 1.1)); 
+</code></pre>
+<p>Now set the font and draw the text</p>
+<pre><code class="lang-javascript">var font = font_size + &quot;px &quot; + font_type;
+dynamicTexture.drawText(text, null, null, font, &quot;#000000&quot;, &quot;#ffffff&quot;, true);
+</code></pre>
+<p>Finally set and apply the material for the plane.</p>
+<pre><code class="lang-javascript">var mat = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+mat.diffuseTexture = dynamicTexture;
+plane.material = mat;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TMHF80#1">Playground Example - Fit Text to Plane</a> - <i class="fa fa-eye" onclick="createIframe('TMHF80#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="fit-an-area-to-text" class="anchor" href="#fit-an-area-to-text"></a>Fit an Area to Text</h3><p>Take a plane mesh of fixed height, <strong>planeHeight</strong> and text with a set font size you can then calculate how wide the plane must be for the text to fit in. In order to do this you need to know the width the text will take up on a dynamic texture. This is calculated using a temporary dynamic texture and measuring the text.</p>
+<pre><code class="lang-javascript">var temp = new BABYLON.DynamicTexture(&quot;DynamicTexture&quot;, 64, scene);
+var tmpctx = temp.getContext();
+tmpctx.font = font;
+var DTWidth = tmpctx.measureText(text).width;
+</code></pre>
+<p>Choose a height for the dynamic texture, <strong>DTHeight</strong> and to maintain the aspect ratio of the plane to the dynamic texture:</p>
+<ol>
+<li>calculate the <code>ratio</code> planeHeight:DTHeight;</li>
+<li>use the ratio to calculate the width of the <code>planeWidth</code> = DTWidth * ratio;</li>
+<li>create the dynamic texture to use as material with width and height, DTWidth and DTHeight;</li>
+<li>draw text on dynamic texture;</li>
+<li>create the plane with width and height planeWidth and planeHeight.</li>
+</ol>
+<pre><code class="lang-javascript">var planeHeight = 3;
+var DTHeight = 256; //or set as wished
+var ratio = planeHeight/DTHeight;
+var planeWidth = DTWidth * ratio;
+
+var dynamicTexture = new BABYLON.DynamicTexture(&quot;DynamicTexture&quot;, {width:DTWidth, height:DTHeight}, scene, false);
+var mat = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+mat.diffuseTexture = dynamicTexture;
+dynamicTexture.drawText(text, null, null, font, &quot;#000000&quot;, &quot;#ffffff&quot;, true); //use of null, null centers the text
+
+var plane = BABYLON.MeshBuilder.CreatePlane(&quot;plane&quot;, {width:planeWidth, height:planeHeight}, scene);
+plane.material = mat;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TMHF80">Playground Example - Fit Plane to Text</a> - <i class="fa fa-eye" onclick="createIframe('TMHF80#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="serialization" class="anchor" href="#serialization"></a>Serialization</h2><p>The dynamic texture can be serialized with the scene using <code>SceneSerializer.Serialize()</code> or a mesh using <code>SceneSerializer.SerializeMesh()</code>.  </p>
+<p><strong>Note:</strong> Be sure that the scene is ready before serialization.</p>
+<p>This playground demonstrates serializing a dynamic texture associated with a material on a mesh:</p>
+<ul>
+<li><a href="https://playground.babylonjs.com/#FU0ES5">Playground Example Dynamic Texture Serialized Mesh</a> - <i class="fa fa-eye" onclick="createIframe('FU0ES5#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/babylon101/Materials">Materials 101</a><br><a href="/features/Materials">Materials Overview</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Sub Emitters - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Sub Emitters</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-to-use-sub-emitters">How To Use Sub Emitters</a></li>
+<li><a href="#end-sub-emitter-type">END sub emitter type</a></li>
+<li><a href="#attached-sub-emitter-type">ATTACHED sub emitter type</a></li>
+<li><a href="#active-sub-systems">Active Sub Systems</a></li>
+<li><a href="#demos">Demos</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#intermediate-l2">Intermediate - L2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="sub-emitters" class="anchor" href="#sub-emitters"></a>Sub Emitters</h1><p>Starting from Babylon.js v3.2, you can create sub emitters which let you spawn a new particle from an existing particle. Each one of these spawned sub particle systems is totally independent from the parent.</p>
+<p><strong>Note:</strong> Sub emitters are NOT supported in GPU particles.</p>
+<h2><a name="how-to-use-sub-emitters" class="anchor" href="#how-to-use-sub-emitters"></a>How To Use Sub Emitters</h2><p>The list of sub particle systems to be used as sub emitters is kept in an array and assigned top the new property <code>subEmitters</code> of the appropriate system. </p>
+<pre><code class="lang-javascript">// Create sub emitter
+var subEmitter = new BABYLON.SubEmitter(subParticleSystem);
+// Have the sub emitter spawn the particle system when the particle dies
+subEmitter.type = BABYLON.SubEmitterType.END;
+// Set the +Y direction of the sub emitter equal to the direction the particle is/was heading
+subEmitter.inheritDirection = true;
+// How much of the existing particles speed should be added to the emitter particles
+subEmitter.inheritedVelocityAmount = 1;
+
+particleSystem.subEmitters = [subEmitter];
+</code></pre>
+<p>Specifying an array of arrays of sub emitters will choose a random array and all the sub emitters in the chose array will be attached to the spawned particle.</p>
+<pre><code class="lang-javascript">particleSystem.subEmitters = [[subEmitter],[subEmitter, subEmitter2, subEmitter3], [subEmitter4]];
+</code></pre>
+<h2><a name="end-sub-emitter-type" class="anchor" href="#end-sub-emitter-type"></a>END sub emitter type</h2><p>When a particle dies one of the particle systems in the array is selected at random as the one to be spawned. It is then cloned and rendered. Any element of the array can itself have <code>subEmitters</code> and hence a chain of sub emitters can be formed. In this case the property <code>manualEmitCount</code> could be used to avoid an infinite loop of creating and spawning new systems.</p>
+<h2><a name="attached-sub-emitter-type" class="anchor" href="#attached-sub-emitter-type"></a>ATTACHED sub emitter type</h2><p>When a particle is spawned this emitter will be cloned and attached to the new particle. This can be used to create a trailing particle effect on new particles.</p>
+<p>To support attached sub emitter&#39;s to have their orientation accounted for when emitting particles, their emitter must be a mesh type:</p>
+<pre><code class="lang-javascript">subEmitter.particleSystem.emitter = new BABYLON.Mesh(&quot;&quot;, scene);
+</code></pre>
+<h2><a name="active-sub-systems" class="anchor" href="#active-sub-systems"></a>Active Sub Systems</h2><p>Each particle system with that has sub emitters also has a property <code>activeSubSystems</code> which is an array containing all currently active sub particle systems.</p>
+<p>You can stop the root <code>ParticleSystem</code> and all <code>activeSubSystems</code> by calling the stop function on the root system:</p>
+<pre><code class="lang-javascript">particleSystem.stop(); 
+</code></pre>
+<p>When you want to stop the root system without affecting the <code>activeSubSystems</code>, you pass false to the Stop function:</p>
+<pre><code class="lang-javascript">particleSystem.stop(false);
+</code></pre>
+<h2><a name="demos" class="anchor" href="#demos"></a>Demos</h2><ul>
+<li><a href="https://www.babylonjs-playground.com/#T0L01N#47">Sub Emitters</a> - <i class="fa fa-eye" onclick="createIframe('T0L01N#47', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#9NHBCC#1">On death only - Sub Emitters</a> - <i class="fa fa-eye" onclick="createIframe('9NHBCC#1', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://playground.babylonjs.com/#7HH1UH">Complete example (hit Space to launch a barrel)</a> - <i class="fa fa-eye" onclick="createIframe('7HH1UH#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/features/Particles">Particles Overview</a>  </p>
+<p><a href="/babylon101/particles">Particles 101</a></p>
+<p><a href="/how_to/Animate">How to Create Animated Particles</a>  </p>
+<p><a href="/How_To/Solid_Particles">Solid Particle System</a></p>
+<h2><a name="intermediate-l2" class="anchor" href="#intermediate-l2"></a>Intermediate - L2</h2><p><a href="/how_to/Customise">How to Customize the Particle System</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

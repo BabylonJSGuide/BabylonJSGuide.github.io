@@ -1,0 +1,87 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Collision Issues - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Collision Issues</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#checking-for-an-intersect">Checking for an Intersect</a></li>
+<li><a href="#size-and-speed-matter">Size and Speed Matter.</a></li>
+<li><a href="#playground-example">Playground Example</a></li>
+<li><a href="#hypotheses">Hypotheses</a></li>
+<li><a href="#stroboscopic-issues">Stroboscopic Issues</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="collision-issues" class="anchor" href="#collision-issues"></a>Collision Issues</h1><h2><a name="checking-for-an-intersect" class="anchor" href="#checking-for-an-intersect"></a>Checking for an Intersect</h2><p>One way to check in BabylonJS whether two meshes are colliding is to use the <em>intersectsMesh</em> method. So for Fig 1 </p>
+<pre><code class="lang-javascript">sphere.intersectsMesh(wall)
+</code></pre>
+<p>would give the result <em>true</em></p>
+<p><img src="/img/samples/collide4.jpg" alt="Fig 1"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 1</p>
+<p>You may think that where the sphere in Fig 2 is travelling towards the wall that you could use</p>
+<pre><code class="lang-javascript">if(sphere.intersectsMesh(wall)) {
+    //bounce sphere off wall
+}
+else {
+    //move sphere left
+}
+</code></pre>
+<p><img src="/img/samples/collide2.jpg" alt="Fig 2"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 2</p>
+<p>However consider the sphere as having unit diameter and is moving towards the ball with a speed of 5 units per frame. The check for collision has to be 
+considered for each frame. The first frame is as in Fig 3 and the next frame as in Fig 4</p>
+<p><img src="/img/samples/collide2.jpg" alt="Fig 3"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 3</p>
+<p>The sphere will have gone past the wall and is not intersecting it and so no collision will be detected</p>
+<p><img src="/img/samples/collide3.jpg" alt="Fig 4"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 4</p>
+<h2><a name="size-and-speed-matter" class="anchor" href="#size-and-speed-matter"></a>Size and Speed Matter.</h2><p>Consider a sphere of radius r travelling towards a wall with speed v, at a position just out of contact with the wall. To be able definitely to use of the <em>intersectsMesh</em> method the sphere must be in contact with the wall during the next frame. The maximum distance the sphere can travel between frames must be less than twice the radius, as in Fig 5. </p>
+<p><img src="/img/samples/collide5.jpg" alt="Fig 5"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 5</p>
+<p>So for the sphere to start in any random position and travel directly towards the wall and for an intersection with the wall definitely to take place during a frame v &lt;= 2r</p>
+<p>Now consider two spheres travelling towards each other, each sphere having a speed v. The relative velocity is 2v. Take one sphere as stationary and the other moving with speed v at a position just out of contact with each other. To be able to use the <em>intersectsMesh</em> method the spheres must be in contact with each other during the next frame. The maximum distance the moving sphere can travel between frames must be less than four times the radius, as in Fig 6. </p>
+<p><img src="/img/samples/collide6.jpg" alt="Fig 6"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 6</p>
+<p>So for two spheres to start in any random positions and travel directly towards each other and for an intersection with the wall definitely to take place during a frame 2v &lt;= 4r, which is again v &lt;= 2r.</p>
+<p>To generalise , should one sphere have radius r<sub>1</sub> and speed v<sub>1</sub> and the other radius r<sub>2</sub> and speed v<sub>2</sub> 
+intersections from random positions will definitely take place<br>when v<sub>1</sub> + v<sub>2</sub> &lt; 2(r<sub>1</sub> + r<sub>2</sub>)</p>
+<p>What is the situation when v &gt; 2r?</p>
+<p>Consider that the front of the sphere is a distance d from the wall in a frame, F, and in the next frame, N, the sphere intersects the wall or has moved passed it, then 0 &lt;= d &lt;= v. If d &gt; v then d - v &gt; 0 and so in the next frame the sphere is still a distance d - v &gt; 0 from the wall. In fact when the sphere is any distance p away from the wall, p &gt; 0, then for frame F,  d = p modulo v. Fig 7 shows that for the sphere to intersect the wall v - 2r &lt; d V v.</p>
+<p><img src="/img/samples/collide7.jpg" alt="Fig 7"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 7</p>
+<p>The sphere just touches the wall when d = 0 and so for a display where the sphere does not penetrate the wall p modulo v is 0.</p>
+<p>Expressing this in quotient and remainder form p = qv, q &gt;= 0 </p>
+<p>Since p is the distance from the front of the wall the centre of the sphere will be at qv + r.</p>
+<h2><a name="playground-example" class="anchor" href="#playground-example"></a>Playground Example</h2><p>In the following playground the three spheres are positioned so that for sphere1, d &lt; v - r and so will pass through the wall; for sphere2 
+d = 0 and for sphere3  v - 2r &lt; d &lt; v. The radius and speed for each sphere have been set at the same values but can be changed easily should you wish to.
+Sphere1 is at the top, sphere2 the middle and sphere3 at the bottom.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1LOEWK#1">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('1LOEWK#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="hypotheses" class="anchor" href="#hypotheses"></a>Hypotheses</h2><p>Given a multitude of equally sized spheres, all initially inside a box and given random velocities and using Newtonian physics to inform the results of collisions </p>
+<ol>
+<li><p>By setting the initial speed of each sphere to be twice the radius and contraining their initial positions to be within a grid system of cubes with size matching the diameter of the spheres then it is possible to create a system whereby all collisions and rebounds between a sphere and a wall and between two spheres take place when they just touch.</p>
+</li>
+<li><p>By setting the initial speed of each sphere to below twice the radius of a sphere then it is possible to form a system whereby all collisions and rebounds between a sphere and a wall and between two spheres can be detected by checking if the meshes intersect.</p>
+</li>
+</ol>
+<p>Both hypotheses turn out to be false. This can be seen by reading the following</p>
+<ol>
+<li><a href="/samples/Grid_Moves.html">Simple Particle Collisions on a Grid</a>  </li>
+<li><a href="/samples/Slow_Collide.html">Slow Particles</a></li>
+</ol>
+<p>This being the case we turn to issues arising when the speed of a sphere is greater than twice the radius.</p>
+<h2><a name="stroboscopic-issues" class="anchor" href="#stroboscopic-issues"></a>Stroboscopic Issues</h2><p>What happens when the speed of a sphere is greater than twice the radius and you need to calculate its position following what should be a collision with the wall?</p>
+<p>In Fig 8 the red arrow shows the movement of the sphere, between two frames, when the collision with the wall is not detected and the green arrow the required movement. The required position is a reflection, with the wall as reflector, of the through position.</p>
+<p><img src="/img/samples/collide15.jpg" alt="Fig 8"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 8.</p>
+<p>As usual r is the radius of the sphere.</p>
+<p>Should a sphere be moving at right angles to a wall a distance 8r units from the wall and the speed of the sphere be 16r units then its reflected position will be its start position and the sphere will apper not to have moved. This is the stroboscopic effect.</p>
+<p>The following Playground shows spheres all starting from a distance of 8r units from two walls, all moving at right angles to the walls with speeds ranging from 20r to 12r units.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1LOEWK#2">Playground Example - Strobing</a> - <i class="fa fa-eye" onclick="createIframe('1LOEWK#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="conclusion" class="anchor" href="#conclusion"></a>Conclusion</h2><p>Depending on the effect required it is probably better to start with speeds 2r or below per frame but even so it is not sufficient to use intersection of meshes to check for collisions and mathematical techniques will be needed. These techniques will both determine if collisions take place and the repositioning of the spheres.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

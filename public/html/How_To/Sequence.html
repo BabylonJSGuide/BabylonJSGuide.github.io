@@ -1,0 +1,211 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Sequence Animations - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Sequence Animations</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#design">Design</a><ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#performers">Performers</a></li>
+<li><a href="#sequence-timetable">Sequence Timetable</a></li>
+<li><a href="#animations">Animations</a></li>
+</ul>
+</li>
+<li><a href="#cartoon">Cartoon</a></li>
+<li><a href="#the-finished-sequence">The Finished Sequence</a></li>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#basic">Basic</a></li>
+<li><a href="#advanced">Advanced</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><p>One straight forward method of combining a number of clips to form a cartoon is to give start times to each animation clip.</p>
+<h2><a name="design" class="anchor" href="#design"></a>Design</h2><h3><a name="overview" class="anchor" href="#overview"></a>Overview</h3><p>The camera shows a building with a door. The camera moves closer to the door and stops. The door swings open and the camera enters the room. As the camera enters the room
+lights come on in the room. The door closes and the camera sweeps around the room.</p>
+<p>Since the aim is to show how the movie clip is made the room and door will be simply made with meshes with no textures.</p>
+<h3><a name="performers" class="anchor" href="#performers"></a>Performers</h3><p>Camera - Universal<br>Door - Hinged on right hand side, opening inwards<br>Spot Lights - with spheres to show position</p>
+<h3><a name="sequence-timetable" class="anchor" href="#sequence-timetable"></a>Sequence Timetable</h3><p><img src="/img/how_to/Animations/seq1.jpg" alt="Time Table"></p>
+<p>For each performer you create an animation with key points for each timed event.</p>
+<h3><a name="animations" class="anchor" href="#animations"></a>Animations</h3><p><em>For the Camera</em><br>Moving the camera changes the position (a vector3) of the camera. Sweeping the camera around is a rotation around the y axis (a float).</p>
+<p>Since an animation can only change one property two animations are needed for the camera.</p>
+<p>Moving the camera the key points will be at time 0 the camera will start away from the building and move towards and down until it is just outside the door at time 3 seconds.<br>The camera will hold its position for 2 seconds as the door opens then at time 5 seconds will move forward into the room at an angle away from the door, stopping at time 8 seconds.</p>
+<p>There will be no rotation of the camera for 9 seconds then camera will take until time 14 seconds to rotate 180 degrees to face the door.</p>
+<p>Key values for the camera will be its positions at frames 0, 3, 5 and 8 seconds and its rotation at 0, 9 and 14 seconds.</p>
+<pre><code class="lang-javascript">//for camera move forward
+var movein = new BABYLON.Animation(
+  &quot;movein&quot;,
+  &quot;position&quot;,
+  frameRate,
+  BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
+  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+);
+
+var movein_keys = [];
+
+movein_keys.push({
+  frame: 0,
+  value: new BABYLON.Vector3(0, 5, -30)
+});
+
+movein_keys.push({
+  frame: 3 * frameRate,
+  value: new BABYLON.Vector3(0, 2, -10)
+});
+
+movein_keys.push({
+  frame: 5 * frameRate,
+  value: new BABYLON.Vector3(0, 2, -10)
+});
+
+movein_keys.push({
+  frame: 8 * frameRate,
+  value: new BABYLON.Vector3(-2, 2, 3)
+});
+
+movein.setKeys(movein_keys);
+
+//for camera to sweep round
+var rotate = new BABYLON.Animation(
+  &quot;rotate&quot;,
+  &quot;rotation.y&quot;,
+  frameRate,
+  BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+);
+
+var rotate_keys = [];
+
+rotate_keys.push({
+  frame: 0,
+  value: 0
+});
+
+rotate_keys.push({
+  frame: 9 * frameRate,
+  value: 0
+});
+
+rotate_keys.push({
+  frame: 14 * frameRate,
+  value: Math.PI
+});
+
+rotate.setKeys(rotate_keys);
+</code></pre>
+<p><em>For the door</em><br>The door will sweep around a hinge about the y axis a floatin point rotation. The opening and closing rotations will each take 2 seconds.</p>
+<p>Key points will be a times 0, 3, 5, and 13 and 15 seconds.</p>
+<p>Key values for the sweep will be its rotation about the y axis at frames.</p>
+<pre><code class="lang-javascript">//for door to open and close
+var sweep = new BABYLON.Animation(
+  &quot;sweep&quot;,
+  &quot;rotation.y&quot;,
+  frameRate,
+  BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+);
+
+var sweep_keys = [];
+
+sweep_keys.push({
+  frame: 0,
+  value: 0
+});
+
+sweep_keys.push({
+  frame: 3 * frameRate,
+  value: 0
+});
+
+sweep_keys.push({
+  frame: 5 * frameRate,
+  value: Math.PI / 3
+});
+
+sweep_keys.push({
+  frame: 13 * frameRate,
+  value: Math.PI / 3
+});
+
+sweep_keys.push({
+  frame: 15 * frameRate,
+  value: 0
+});
+
+sweep.setKeys(sweep_keys);
+</code></pre>
+<p><em>For Lights</em>
+The lights will vary in intensity (float). These will be an array of spot lights.</p>
+<p>Key points for lights are remaining off for 7 seconds, coming to full intensity at 10 seconds which stays until going off at 14 seconds.</p>
+<pre><code class="lang-javascript">//for light to brighten and dim
+var lightDimmer = new BABYLON.Animation(
+  &quot;dimmer&quot;,
+  &quot;intensity&quot;,
+  frameRate,
+  BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+);
+
+var light_keys = [];
+
+light_keys.push({
+  frame: 0,
+  value: 0
+});
+
+light_keys.push({
+  frame: 7 * frameRate,
+  value: 0
+});
+
+light_keys.push({
+  frame: 10 * frameRate,
+  value: 1
+});
+
+light_keys.push({
+  frame: 14 * frameRate,
+  value: 1
+});
+
+light_keys.push({
+  frame: 15 * frameRate,
+  value: 0
+});
+
+lightDimmer.setKeys(light_keys);
+</code></pre>
+<h2><a name="cartoon" class="anchor" href="#cartoon"></a>Cartoon</h2><p>Now just run all the clips simulaneously</p>
+<pre><code class="lang-javascript">scene.beginDirectAnimation(camera, [movein, rotate], 0, 25 * frameRate, false);
+scene.beginDirectAnimation(hinge, [sweep], 0, 25 * frameRate, false);
+scene.beginDirectAnimation(
+  spotLights[0],
+  [lightDimmer],
+  0,
+  25 * frameRate,
+  false
+);
+scene.beginDirectAnimation(
+  spotLights[1],
+  [lightDimmer.clone()],
+  0,
+  25 * frameRate,
+  false
+);
+</code></pre>
+<h2><a name="the-finished-sequence" class="anchor" href="#the-finished-sequence"></a>The Finished Sequence</h2><ul>
+<li><a href="https://www.babylonjs-playground.com/#2L26P1#8">Playground Example of the Cartoon</a> - <i class="fa fa-eye" onclick="createIframe('2L26P1#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><h3><a name="basic" class="anchor" href="#basic"></a>Basic</h3><p><a href="/babylon101/animations">Introduction to Animating</a><br><a href="/How_To/Group">Grouping Animations</a></p>
+<h3><a name="advanced" class="anchor" href="#advanced"></a>Advanced</h3><p><a href="/How_To/combine">Combining Animations</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

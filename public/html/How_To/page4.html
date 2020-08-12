@@ -1,0 +1,129 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Character Movement Part 2 - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Character Movement Part 2</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#input-controller">Input Controller</a></li>
+<li><a href="#jumping">Jumping</a><ul>
+<li><a href="#input">Input</a></li>
+<li><a href="#grounded-check">Grounded Check</a></li>
+</ul>
+</li>
+<li><a href="#slopes">Slopes</a></li>
+<li><a href="#dashing">Dashing</a><ul>
+<li><a href="#input">Input</a></li>
+<li><a href="#duration">Duration</a></li>
+<li><a href="#reset">Reset</a></li>
+<li><a href="#modifying-movement">Modifying Movement</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><p>Now that we have our character moving around, let&#39;s give them the ability to navigate platforms!</p>
+<h2><a name="input-controller" class="anchor" href="#input-controller"></a>Input Controller</h2><p>First we&#39;ll start by adding in inputs for our jumping and dashing to the <a href="">InputController.ts</a> file!
+Inside of [updateFromKeyboard] we just need to add:</p>
+<pre><code class="lang-javascript">//dash
+if ((this.inputMap[&quot;Shift&quot;] || this._mobileDash)) {
+    this.dashing = true;
+} else {
+    this.dashing = false;
+}
+
+//Jump Checks (SPACE)
+if (this.inputMap[&quot; &quot;] || this._mobileJump) {
+    this.jumpKeyDown = true;
+} else {
+    this.jumpKeyDown = false;
+}
+</code></pre>
+<p><em>this.dashing</em> and <em>this.jumpKeyDown</em> will be used to control the actions based off of conditions being met.</p>
+<h2><a name="jumping" class="anchor" href="#jumping"></a>Jumping</h2><p>Here we&#39;ll be focusing on <a href="">_updateFromGroundDetection</a>. We&#39;ll be adding to what we coded in <a href="/how_to/page3#raycasts">part 1&#39;s gravity</a>.</p>
+<h3><a name="input" class="anchor" href="#input"></a>Input</h3><pre><code class="lang-javascript">//Jump detection
+if (this._input.jumpKeyDown &amp;&amp; this._jumpCount &gt; 0) {
+    this._gravity.y = Player.JUMP_FORCE;
+    this._jumpCount--;
+}
+</code></pre>
+<p>Here we&#39;re checking whether our jumpKeyDown is true and the jumpCount is &gt; 0. If these are true, then we add to our gravity a jump force (which is defined as a negative number) to propel a force upwards so that the character jumps. This is where you could potentially allow for double jumps, but I chose to stick to a single jump mechanic.</p>
+<h3><a name="grounded-check" class="anchor" href="#grounded-check"></a>Grounded Check</h3><pre><code class="lang-javascript">if (this._isGrounded()) {
+    this._gravity.y = 0;
+    this._grounded = true;
+    this._lastGroundPos.copyFrom(this.mesh.position);
+
+    this._jumpCount = 1; //allow for jumping
+}
+</code></pre>
+<p>We want to reset the jumpCount back to 1.</p>
+<h2><a name="slopes" class="anchor" href="#slopes"></a>Slopes</h2><p>I specifically added the implementation because I wanted there to be stairs in the game. This served to be a challenge because meshes use their actual geometry, so in order to accomplish a smooth walking movement along stairs, I needed to create invisible colliders. These were just box meshes that were rotated to have the flat side along where the stairs would be (essentially a slope). Then I had to differentiate between stairs and non-stairs. The way I did this was by comparing the angles between the normal of the mesh and the up vector (this took some testing to find a good range).</p>
+<p>The <a href="">_checkSlope</a> function can be broken down as follows:</p>
+<ol>
+<li>The predicate is a function that defines what types of meshes are eligible for being picked by a raycast. We define the mesh that we&#39;re looking for as being pickable and enabled since we want to include meshes that are not visible.</li>
+<li>We send 4 raycasts down from the character, making a kind of circle of raycasts.</li>
+<li>For each raycast, we&#39;re checking if there&#39;s a hit and whether the normal of the hit is not equal to the up vector.</li>
+<li>We calculate the angle between the normal of the picked mesh and the up vector.</li>
+<li>If this calculated angle is within a range, it is considered a slope</li>
+</ol>
+<p>This range may be hardcoded and based specifically on the meshes used, so there&#39;s definitely a better way to do this. One potential way is to use tags to signify the specific meshes that are stairs and check for whether the raycasts are hitting those.</p>
+<p>We want to update our if not grounded check to take into account slopes:</p>
+<pre><code class="lang-javascript">if (!this._isGrounded()) {
+    //if the body isnt grounded, check if it&#39;s on a slope and was either falling or walking onto it
+    if (this._checkSlope() &amp;&amp; this._gravity.y &lt;= 0) {
+        //if you are considered on a slope, you&#39;re able to jump and gravity wont affect you
+        this._gravity.y = 0;
+        this._jumpCount = 1;
+        this._grounded = true;
+    } else {
+        //keep applying gravity
+        this._gravity = this._gravity.addInPlace(Vector3.Up().scale(this._deltaTime * Player.GRAVITY));
+        this._grounded = false;
+    }
+}
+</code></pre>
+<p>We are checking for slopes here because as the character walks along the slope, they&#39;re actually considered not grounded based off of the single center raycast that we&#39;re doing in the _isGrounded function. Thus, the player has gravity continuously acting on them, pushing them down the slope. This is why we check for whether we&#39;re on a slope, and then remove gravity, and fake being grounded. We also only check if our gravity tells us that we&#39;re walking up the stairs and not down, so essentially as our character &quot;walks&quot; down the stairs, gravity is acting on them (kind of like in real life!)</p>
+<h2><a name="dashing" class="anchor" href="#dashing"></a>Dashing</h2><p>Dashing was another mechanic that I thought would be useful for a platformer. Since this game is based on time, I wanted to add a limitation on the dash mechanic so that it wouldn&#39;t become the main mode of transportation. Thus, the dash move became an air-dash that&#39;s limited to being used once until you touch a ground again.</p>
+<p>For the dashing implementation, we return to <a href="">_updateFromControls</a>.</p>
+<h3><a name="input" class="anchor" href="#input"></a>Input</h3><pre><code class="lang-javascript">if (this._input.dashing &amp;&amp; !this._dashPressed &amp;&amp; this._canDash &amp;&amp; !this._grounded) {
+    this._canDash = false; //we&#39;ve started a dash, do not allow another
+    this._dashPressed = true; //start the dash sequence
+}
+</code></pre>
+<p>This seems like a lot of conditions, and that&#39;s because we&#39;re limiting the dash to a single instance if we&#39;re in the air. </p>
+<h3><a name="duration" class="anchor" href="#duration"></a>Duration</h3><pre><code class="lang-javascript">let dashFactor = 1;
+//if you&#39;re dashing, scale movement
+if (this._dashPressed) {
+    if (this.dashTime &gt; Player.DASH_TIME) {
+        this.dashTime = 0;
+        this._dashPressed = false;
+    } else {
+        dashFactor = Player.DASH_FACTOR;
+    }
+    this.dashTime++;
+}
+</code></pre>
+<p>If we&#39;ve begun our dash sequence, we want to increment our timer every frame. If we are in the dashing sequence, we set our dashFactor. If we&#39;ve completed our dash, we reset our timer and set <em>_dashPressed</em> to false to exit the sequence.</p>
+<h3><a name="reset" class="anchor" href="#reset"></a>Reset</h3><p>Returning to <a href="#grounded-check">the grounded check</a>, this is where we want to reset our dashing ability.</p>
+<pre><code class="lang-javascript">//dashing reset
+this._canDash = true; //the ability to dash
+//reset sequence(needed if we collide with the ground BEFORE actually completing the dash duration)
+this.dashTime = 0;
+this._dashPressed = false; 
+</code></pre>
+<h3><a name="modifying-movement" class="anchor" href="#modifying-movement"></a>Modifying Movement</h3><p>We want to update our <a href="">_updateFromControls</a> to now take into account our dashing.</p>
+<pre><code class="lang-javascript">//clear y so that the character doesnt fly up, normalize for next step, taking into account whether we&#39;ve DASHED or not
+this._moveDirection = new Vector3((move).normalize().x * dashFactor, 0, (move).normalize().z * dashFactor);
+</code></pre>
+<p>Previously where we just normalized our move vector, we want to multiply by the dashFactor to give it that extra bit of movement in the direction we&#39;re currently moving.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/how_to/page6">Importing Meshes</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

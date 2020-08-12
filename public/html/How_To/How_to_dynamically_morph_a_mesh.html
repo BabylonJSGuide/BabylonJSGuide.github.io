@@ -1,0 +1,258 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Dynamically morph a mesh - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Dynamically morph a mesh</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#ribbon">Ribbon</a><ul>
+<li><a href="#ribbon-updatable-parameter-patharray"><em>ribbon updatable parameter : pathArray</em></a></li>
+</ul>
+</li>
+<li><a href="#lines-and-dashedlines">Lines and DashedLines</a><ul>
+<li><a href="#lines-and-dashed-lines-updatable-parameter-points"><em>lines and dashed lines updatable parameter : points</em></a></li>
+<li><a href="#lines-optional-updatable-parameter-colors"><em>lines optional updatable parameter : colors</em></a></li>
+</ul>
+</li>
+<li><a href="#tube">Tube</a><ul>
+<li><a href="#tube-updatable-parameters-path-radius-radiusfunction"><em>tube updatable parameters : path, radius, radiusFunction</em></a></li>
+</ul>
+</li>
+<li><a href="#extruded-shape">Extruded shape</a><ul>
+<li><a href="#extrusion-updatable-parameters-for-extrudeshape-shape-path-scale-rotation"><em>extrusion updatable parameters for ExtrudeShape(): shape, path, scale, rotation</em></a></li>
+<li><a href="#extrusion-updatable-parameters-for-extrudeshapecustom-shape-path-scalefunction-rotatefunction"><em>extrusion updatable parameters for ExtrudeShapeCustom(): shape, path, scaleFunction, rotateFunction</em></a></li>
+</ul>
+</li>
+<li><a href="#other-shapes-updatemeshpositions">Other shapes : updateMeshPositions</a></li>
+<li><a href="#more-speed-freezenormals">More speed : freezeNormals !</a><ul>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="what-is-morphing" class="anchor" href="#what-is-morphing"></a>What is morphing ?</h1><p>This part is about the way to morph some kind of meshes.<br>For now, it concerns only ribbons, tubes, extruded shapes and lines.   </p>
+<p>When talking about morphing, we mean here changing the vertices positions of an existing mesh. Indices remain unchanged. This means the mesh keeps the same number of vertices, the same faces between vertices and it remains the same object in your code.
+Only its vertices change their coordinates.   </p>
+<p>If you handle a box or another fixed basic shape, it&#39;s quite easy to access to vertices positions because your mesh has an expected shape. For example, you can guess a box has 4 vertices per face.<br>But when handling parametric shapes like ribbons, tubes, etc, it becomes very difficult to guess how and where vertices were positioned by the mesh constructor algorithm. For a tube, for instance, you only know the axis path you gave to build it (and radius, tessellation, of course).   </p>
+<p>So you will learn here how to update the shape of an existing mesh and how to morph it in the render loop.   </p>
+<h2><a name="ribbon" class="anchor" href="#ribbon"></a>Ribbon</h2><h3><a name="emribbon-updatable-parameter-patharrayem" class="anchor" href="#ribbon-updatable-parameter-patharray"></a><em>ribbon updatable parameter : pathArray</em></h3><p><em>(reminder : only points positions can change in the path array, not the number of points. Please see the summary at the bottom of this page for more details)</em> </p>
+<p>Let&#39;s create a ribbon.<br>As explained in the Ribbon tutorial part, a good way to create a ribbon is to fill many arrays with <em>Vector3</em> with two <em>for</em> loops : one for each path, another one for the array of paths : the <em>pathArray</em>.   </p>
+<p>Here we create a simple plane ribbon in the xOz plane   </p>
+<pre><code class="lang-javascript">// path function
+var pathFunction = function(k) {
+  var path = [];
+  for (var i = 0; i &lt; 60; i++) {
+    var x = i - 30;
+    var y = 0;
+    var z = k;
+    path.push(new BABYLON.Vector3(x, y, z));
+  }
+  return path;
+};
+// ribbon creation
+var sideO = BABYLON.Mesh.BACKSIDE;
+var pathArray = [];
+for(var i = -20; i &lt; 20; i++) {
+  pathArray.push(pathFunction(i * 2));
+}
+var mesh = BABYLON.Mesh.CreateRibbon(&quot;ribbon&quot;, pathArray, false, false, 0, scene, true, sideO);
+</code></pre>
+<p>example :  <a href="https://www.babylonjs-playground.com/#1MSEBT">https://www.babylonjs-playground.com/#1MSEBT</a> - <i class="fa fa-eye" onclick="createIframe('1MSEBT#', this)"></i><div class="iframeContainer"></div>  <em>(please rotate the cam to see it)</em></p>
+<p>The important key to notice is that we set the <strong><em>updatable</em></strong> parameter to <strong><em>true</em></strong> in the <em>CreateRibbon()</em> method : the one just between the <em>scene</em> and the <em>sideO</em> parameters.   </p>
+<p>We can now imagine we want to change this existing ribbon _y_ coordinates according to a sinus function. So for each path in the existing <em>pathArray</em> array we just change <em>Vector3</em> coordinates.<br>Note we don&#39;t create new paths or a new <em>pathArray</em> array. We just access with indexes to every element and just change values.   </p>
+<pre><code class="lang-javascript">var updatePath = function(path) {
+  for (var i = 0; i &lt; path.length; i++) {
+    var x = path[i].x;
+    var z = path[i].z;
+    var y = 20 * Math.sin(i/ 10);
+    path[i].x = x;
+    path[i].y = y;
+    path[i].z = z;
+  }
+};
+
+// update pathArray
+for(var p = 0; p &lt; pathArray.length; p++) {
+  updatePath(pathArray[p]);
+}
+</code></pre>
+<p>The way to update then our existing mesh is quite simple : let&#39;s just re-use the <em>CreateRibbon()</em> method and give it this mesh as last parameter with our modified <em>pathArray</em>.   </p>
+<pre><code class="lang-javascript">mesh = BABYLON.Mesh.CreateRibbon(null, pathArray, null, null, null, null, null, null, mesh);
+</code></pre>
+<p>The other parameters than <em>pathArray</em> and <em>mesh</em> are just ignored when updating, so they can be set to <em>null</em> for better understanding.<br>The <em>CreateRibbon()</em> method thus updates the given ribbon and returns it.<br>You can also use the other call signature :  </p>
+<pre><code class="lang-javascript">mesh = BABYLON.MeshBuilder.CreateRibbon(null, {pathArray: pathArray, instance: mesh});
+</code></pre>
+<p>example :  <a href="https://www.babylonjs-playground.com/#1MSEBT#1">https://www.babylonjs-playground.com/#1MSEBT#1</a> - <i class="fa fa-eye" onclick="createIframe('1MSEBT#1', this)"></i><div class="iframeContainer"></div></p>
+<p>Well, we just updated our ribbon&#39;s shape once for now.   </p>
+<p>If we now want its shape to evolve dynamically, we just have to set the <em>pathArray</em> computation (fixed to change with an extra _k_ parameter) and the <em>CreateRibbon()</em> call inside the render loop.   </p>
+<pre><code class="lang-javascript">var updatePath = function(path, k) {
+  for (var i = 0; i &lt; path.length; i++) {
+    var x = path[i].x;
+    var z = path[i].z;
+    var y = 20 * Math.sin(i/ 10) * Math.sin(k + z / 40);
+    path[i].x = x;
+    path[i].y = y;
+    path[i].z = z;
+  }
+};
+
+// path array population ...
+var mesh = BABYLON.Mesh.CreateRibbon(&quot;ribbon&quot;, pathArray, false, false, 0, scene, true);
+
+// morphing
+var k = 0;
+scene.registerBeforeRender(function() {
+  // path array update
+  for(var p = 0; p &lt; pathArray.length; p++) {
+    updatePath(pathArray[p], k);
+  }
+  // ribbon update
+  mesh = BABYLON.Mesh.CreateRibbon(null, pathArray, null, null, null, null, null, null, mesh);
+  // or also :
+  // mesh = BABYLON.MeshBuilder.CreateRibbon(null, {pathArray: pathArray, instance: mesh});
+  k += 0.05;
+});
+</code></pre>
+<p>example :  <a href="https://www.babylonjs-playground.com/#1MSEBT#3">https://www.babylonjs-playground.com/#1MSEBT#3</a> - <i class="fa fa-eye" onclick="createIframe('1MSEBT#3', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="lines-and-dashedlines" class="anchor" href="#lines-and-dashedlines"></a>Lines and DashedLines</h2><h3><a name="emlines-and-dashed-lines-updatable-parameter-pointsem" class="anchor" href="#lines-and-dashed-lines-updatable-parameter-points"></a><em>lines and dashed lines updatable parameter : points</em></h3><h3><a name="emlines-optional-updatable-parameter-colorsem" class="anchor" href="#lines-optional-updatable-parameter-colors"></a><em>lines optional updatable parameter : colors</em></h3><p><em>(reminder : only points positions can change, not the number of points. Please see the summary at the bottom of this page for more details)</em></p>
+<p>Once we got the understanding for ribbons, we can apply it to Lines or DashedLines.
+It&#39;s even easier as Lines just require a path of points as parameter.</p>
+<pre><code class="lang-javascript">var points1 = [v1, v2, ..., vN]; // vector3 array
+var lines = BABYLON.Mesh.CreateLines(&quot;lines&quot;, points1, scene, true);
+var dashedlines = BABYLON.Mesh.CreateDashedLines(&quot;lines&quot;, points1, dashSize, gapSize, nb, scene, true);
+
+var points2 = [u1, u2, ..., uN]; // another vector3 array
+lines = BABYLON.Mesh.CreateLines(null, points2, null, null, lines);
+dashedlines = BABYLON.Mesh.CreateDashedLines(null, points2, null, null, null, null, null, dashedlines);
+// or
+lines = BABYLON.MeshBuilder.CreateLines(null, {points: points2, instance: lines});
+dashedlines = BABYLON.MeshBuilder.CreateDashedLines(null, {points: points2, instance: dashedlines});
+</code></pre>
+<p>We can, of course, set the update method within the render loop.</p>
+<p>example lines :  <a href="https://www.babylonjs-playground.com/#24PQRQ">https://www.babylonjs-playground.com/#24PQRQ</a> - <i class="fa fa-eye" onclick="createIframe('24PQRQ#', this)"></i><div class="iframeContainer"></div>
+dashed lines :  <a href="https://www.babylonjs-playground.com/#XKYAE#3">https://www.babylonjs-playground.com/#XKYAE#3</a> - <i class="fa fa-eye" onclick="createIframe('XKYAE#3', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="tube" class="anchor" href="#tube"></a>Tube</h2><h3><a name="emtube-updatable-parameters-path-radius-radiusfunctionem" class="anchor" href="#tube-updatable-parameters-path-radius-radiusfunction"></a><em>tube updatable parameters : path, radius, radiusFunction</em></h3><p><em>(reminder : only points positions can change in the path, not the number of points. Please see the summary at the bottom of this page for more details)</em></p>
+<p>Nothing differs for tubes. Let&#39;s create a tube and then update it according to new <em>path</em>, <em>radius</em> or <em>radiusFunction</em> values :</p>
+<pre><code class="lang-javascript">var path1 = [v1, ..., vN]; //vector3 array : tube axis1
+var radius1 = 5;
+var path2 = [u1, ..., uN]; // another vector3 array : tube axis2
+var radius2 = 8;
+var tube = BABYLON.Mesh.CreateTube(&quot;tube&quot;, path1, radius1, 12, null, cap, scene, true);
+tube = BABYLON.Mesh.CreateTube(null, path2, radius2, null, null, null, null, null, tube);
+// or
+tube = BABYLON.MeshBuilder.CreateTube(null, {path: path2, radius: radius2, instance: tube});
+</code></pre>
+<p>Of course, it also works with the <em>radiusFunction</em> parameter :</p>
+<pre><code class="lang-javascript">var radiusFunction1 = function(i, distance) { ... };
+var radiusFunction2 = function(i, distance) { ... };
+var tube = BABYLON.Mesh.CreateTube(&quot;tube&quot;, path1, null, 12, radiusFunction1, cap, scene, true);
+tube = BABYLON.Mesh.CreateTube(null, path2, null, null, radiusFunction2, null, null, null, tube);
+// or
+tube = BABYLON.MeshBuilder.CreateTube(null, {path: path2, radiusFunction: radiusFunction2, instance: tube});
+</code></pre>
+<p>Example :  <a href="https://www.babylonjs-playground.com/#ACKC2#1">https://www.babylonjs-playground.com/#ACKC2#1</a> - <i class="fa fa-eye" onclick="createIframe('ACKC2#1', this)"></i><div class="iframeContainer"></div>
+As you can read at line 53, the <em>radiusFunction</em> is redefined here at each iteration in the <em>registerBeforeRender</em> loop because it uses the value of the incrementing parameter _k_ : the radius changes according to each path point position and according to k varying in the time.</p>
+<h2><a name="extruded-shape" class="anchor" href="#extruded-shape"></a>Extruded shape</h2><h3><a name="emextrusion-updatable-parameters-for-extrudeshape-shape-path-scale-rotationem" class="anchor" href="#extrusion-updatable-parameters-for-extrudeshape-shape-path-scale-rotation"></a><em>extrusion updatable parameters for ExtrudeShape(): shape, path, scale, rotation</em></h3><h3><a name="emextrusion-updatable-parameters-for-extrudeshapecustom-shape-path-scalefunction-rotatefunctionem" class="anchor" href="#extrusion-updatable-parameters-for-extrudeshapecustom-shape-path-scalefunction-rotatefunction"></a><em>extrusion updatable parameters for ExtrudeShapeCustom(): shape, path, scaleFunction, rotateFunction</em></h3><p><em>(reminder : only points positions can change in the path, not the number of points. Please see the summary at the bottom of this page for more details)</em>   </p>
+<p>We can see extrusion as some tube generalization : a tube would be a circle <em>shape</em> extruded along a path.<br>So we have here the same update capabilities than for a tube (<em>path</em> or shape <em>scale</em> which would be the equivalent to tube <em>radius</em>) and some extra parameters : the <em>rotation</em> step can be updated and the <em>shape</em> itself also !<br>It is mandatory that the new <em>shape</em> array has the same number of Vector3 than the <em>shape</em> used to build the original instance. A good way to assure this is simply to keep the original <em>shape</em> instance and to modify it instead of creating a new one (or to modify a copy of it).   </p>
+<pre><code class="lang-javascript">var shape1 = [s1, s2, ...sN]; // Vector3 array
+var shape2 = [t1, t2, ...tN]; // another Vector3 array
+var path1 = [p1, p2, ...pN]; // Vector3 array
+var path2 = [q1, q2, ...qN]; // another Vector3 array
+var scale1 = 1;
+var scale2 = 3;
+var rotation1 = 0;
+var rotation2 = 0.2;
+// extrusion
+var extruded = BABYLON.Mesh.ExtrudeShape(&quot;ext&quot;, shape1, path1, scale1, rotation1, cap, scene, true);
+// mesh update
+extruded = BABYLON.Mesh.ExtrudeShape(null, shape2, path2, scale2, rotation2, null, null, null, null, extruded);
+// or
+extruded = BABYLON.MeshBuilder.ExtrudeShape(null, {shape: shape2, path: path2, scale: scale2, rotation: rotation2, instance: extruded});
+</code></pre>
+<p>Idem for <em>ExtrudeShapeCustom()</em> accepting <em>scaleFunction</em> and <em>rotationFunction</em> parameters :   </p>
+<pre><code class="lang-javascript">// path and shape var declared before ...
+var myScale1 = function(i, distance) { ... };
+var myScale2 = function(i, distance) { ... };
+var myRotation1 = function(i, distance) { ... };
+var myRotation2 = function(i, distance) { ... };
+// extrusion
+var ext = BABYLON.Mesh.ExtrudeShapeCustom(&quot;ext&quot;, shape1, path1, myScale1, myRotation1, false, false, cap, scene, true);
+// mesh update
+ext = BABYLON.Mesh.ExtrudeShapeCustom(null, shape2, path2, myScale2, myRotation2, null, null, null, null, null, null, ext);
+// or 
+ext = BABYLON.MeshBuilder.ExtrudeShapeCustom(null,{shape: shape2, path: path2, scaleFunction: myScale2, rotationFunction: myRotation2, instance: ext});
+</code></pre>
+<p>Both new functions can be used in the render loop.      </p>
+<p>The funny part is, as <em>ExtrudeShape()</em> and <em>ExtrudedShapeCustom()</em> build the same mesh (only parameters change), you can create a simple extruded shape with <em>ExtrudeShape()</em> and then morph it with <em>ExtrudeShapeCustom()</em> if you need more complexity.   </p>
+<pre><code class="lang-javascript">var ext = BABYLON.Mesh.ExtrudeShape(&quot;ext&quot;, shape1, path1, scale1, rotation1, cap, scene, true);
+// mesh update
+ext = BABYLON.Mesh.ExtrudeShapeCustom(null, shape2, path2, myScale2, myRotation2, null, null, null, null, null, null, ext);
+</code></pre>
+<p>Example :  <a href="https://www.babylonjs-playground.com/#20IBWW#14">https://www.babylonjs-playground.com/#20IBWW#14</a> - <i class="fa fa-eye" onclick="createIframe('20IBWW#14', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="other-shapes-updatemeshpositions" class="anchor" href="#other-shapes-updatemeshpositions"></a>Other shapes : updateMeshPositions</h2><p>For now, we just talked about parametric shapes which can be updated with their own <em>CreateXXX()</em> initial method. 
+But what about the other mesh types : boxes, spheres, cylinders, etc ? </p>
+<p>There is no mean to update them with their initial <em>CreateXXX()</em> because a box remains a box, a sphere remains a sphere whether you change their size, radius, etc. 
+So usually, the right way to change these basic shapes is to play with their <code>mesh.scale</code> property. </p>
+<p>Nevertheleless, if you create your basic shape with its <em>updatable</em> parameter set to true, you can access another way to morph/change the shape afterwards : the <em>updateMeshPositions()</em> method. </p>
+<p>This method needs two parameters :</p>
+<ul>
+<li>a <em>positionFunction</em> which is js function which will modify the mesh <em>positions</em> array,</li>
+<li>a <em>computeNormals</em> boolean (default = true) to skip/unskip the normals re-computation after the mesh update .</li>
+</ul>
+<pre><code class="lang-javascript">var box = BABYLON.Mesh.CreateBox(&quot;box&quot;, 5.0, scene, true);
+var positionFunction = function(positions) {
+ // modify positions array values here
+};
+box.updateMeshPositions(positionFunction, true);
+</code></pre>
+<p>Example :  <a href="https://www.babylonjs-playground.com/#1UZIZC#6">https://www.babylonjs-playground.com/#1UZIZC#6</a> - <i class="fa fa-eye" onclick="createIframe('1UZIZC#6', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="more-speed-freezenormals" class="anchor" href="#more-speed-freezenormals"></a>More speed : freezeNormals !</h2><p>The former <em>CreateXXX()</em> update functions try to be as much optimized as possible to run fast in the render loop.<br>However, you may need some more speed for any reason (huge mesh with dozens of thousands of vertices for instance).<br>So, if your mesh doesn&#39;t need to reflect the light (emissive color only for instance), you can skip the normals re-computation which is a CPU consuming process.<br>Use then the <em>freezeNormals()</em> method just after your mesh is created :   </p>
+<pre><code class="lang-javascript">var tube = BABYLON.Mesh.CreateTube(&quot;tube&quot;, path, 3, 12, null, BABYLON.Mesh.NO_CAP, scene, true);
+tube.freezeNormals();
+// path update here ...
+tube = BABYLON.Mesh.CreateTube(null, path, 3, null, null, null, null, null, null, tube);
+</code></pre>
+<p>If you need to reset the normals computation process on, use then once the <em>unfreezeNormals()</em> method.</p>
+<pre><code class="lang-javascript">tube.unfreezeNormals();
+</code></pre>
+<p>The normals will then be recomputed and re-applied on the next <em>CreateXXX()</em> update call.   </p>
+<h1><a name="summary" class="anchor" href="#summary"></a>Summary</h1><ul>
+<li>To create an updatable mesh, it is mandatory to set its <em>updatable</em> parameter to <em>true</em> when calling <em>CreateXXX()</em> method.   </li>
+<li>To update then an existing parametric shape, we just have to use the same <em>CreateXXX</em> method as we used to construct it. </li>
+<li>Only the existing mesh and the data relative to new positions (path, pathArray, array of points) must be passed to this method, the other parameters are ignored.    </li>
+<li>If we want to morph the mesh, we then use the <em>CreateXXX()</em> method within the render loop.<br>In this case, it is important not to allocate new memory each frame : we access our arrays by indexes and just change values instead of creating new arrays, we access existing objects instead of instantiating new ones, etc. We also take care about the weight of each object (number of sides, number of vertices, etc).    </li>
+</ul>
+<p>example : if we need to update a Lines mesh in the render loop, it is to say to update the <em>points</em> array each frame, it is better to change each array element values (<em>points[i].x = newXValue; points[i].y = newYValue; points[i].z = newZValue;</em>) in a <em>for</em> loop instead of instantiating a new <em>points</em> array.   </p>
+<p>Use case with a <em>path</em> parameter as all parametric shapes have one :    </p>
+<pre><code class="lang-javascript">var path = [v1, v2, ..., vN]; // your own array, created once
+var mesh = CreateXXX(&quot;mesh&quot;, path, etc, ..., scene, true); // updatable = true : creates your initial mesh
+var computeValue = function(val1, val2) { ... }; // your update logic : returns a value in function of val1 and val2
+var getParam = function() { ... }; // returns a param value evolving in the render loop
+var updatePath = function(path, k) { // updates the existing path array elements
+  for (var i = 0; i &lt; path.length; i++) {
+    var x = computeValue(path[i].x, k);
+    var y = computeValue(path[i].y, k);
+    var z = computeValue(path[i].z, k);
+    path[i].x = x;
+    path[i].y = y;
+    path[i].z = z;
+  }
+};
+
+scene.registerBeforeRender(function() {
+  var k = getParam();
+  updatePath(path, k);
+  mesh = CreateXXX(null, path, null, ..., null, mesh);
+});
+
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Extrude Shape with Mitred Corners - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Extrude Shape with Mitred Corners</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#using-mitre-extrude">Using Mitre Extrude</a></li>
+<li><a href="#playground-examples">Playground Examples</a></li>
+<li><a href="#the-code">The Code</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="extrude-shape-with-mitred-corners" class="anchor" href="#extrude-shape-with-mitred-corners"></a>Extrude Shape with Mitred Corners</h1><p>Neither <a href="/how_to/parametric_shapes#tube">CreateTube</a> nor <a href="/how_to/parametric_shapes#extruded-shapes">ExtrudeShape</a> were designed to handle sharp corners but to perform well over smooth curves. This can be seen by the tube and extruded shapes narrowing at the corner in the following</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#PDRDFA">Playground Example - 90<sup>o</sup> Bend in Tube</a> - <i class="fa fa-eye" onclick="createIframe('PDRDFA#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#PDRDFA#1">Playground Example - 90<sup>o</sup> Bend in Extruded Tube</a> - <i class="fa fa-eye" onclick="createIframe('PDRDFA#1', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#PDRDFA#2">Playground Example - 90<sup>o</sup> Bend in Extruded Shape</a> - <i class="fa fa-eye" onclick="createIframe('PDRDFA#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Whereas they are very good for smooth curves giving a bend as you would get in a physically bent tube</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#PDRDFA#6">Playground Example - Slow Bend in Tube</a> - <i class="fa fa-eye" onclick="createIframe('PDRDFA#6', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#PDRDFA#2">Playground Example - Slow Bend in Extruded Shape</a> - <i class="fa fa-eye" onclick="createIframe('PDRDFA#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The function <code>mitredExtrude</code> allows an extrusion path with sharp corners such as you would get by cutting and forming a mitre join.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#PDRDFA#4">Playground Example - 90<sup>o</sup> in Extruded Tube with Mitre</a> - <i class="fa fa-eye" onclick="createIframe('PDRDFA#4', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#PDRDFA#5">Playground Example - 90<sup>o</sup> in Extruded Shape</a> - <i class="fa fa-eye" onclick="createIframe('PDRDFA#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="using-mitre-extrude" class="anchor" href="#using-mitre-extrude"></a>Using Mitre Extrude</h2><p>The function has the form</p>
+<pre><code class="lang-javascript">var extrude = mitredExtrude(&quot;name&quot;, options, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td><em>(Vector3[])</em>  array of Vector3 points forming the extrusion path</td>
+<td><strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>shape</td>
+<td><em>(Vector3[])</em>  array of Vector3 points (x, y, 0) forming the shape to be extruded in the XY plane</td>
+<td><strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>close</td>
+<td><em>(boolean)</em> true if the first and last points are to be joined to form a closed extrusion</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="playground-examples" class="anchor" href="#playground-examples"></a>Playground Examples</h2><p>To form a mitre the bend must take place along a line that is in the plane of one of the extruded faces (ie one formed by the edges of the shape to be extruded) and that line must be perpendicular to the edges of that face. For a closed extrusion to have a proper mitre when joining the first and last point the path for the extrusion must have a series of turns that allows the bend line to meet this requirement. When the requirement is not met the final join will be twisted.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#376T60#2">Playground Example - Open</a> - <i class="fa fa-eye" onclick="createIframe('376T60#2', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#376T60#3">Playground Example - Closed With Twist</a> - <i class="fa fa-eye" onclick="createIframe('376T60#3', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#376T60#4">Playground Example - Closed Meeting Requirements</a> - <i class="fa fa-eye" onclick="createIframe('376T60#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="the-code" class="anchor" href="#the-code"></a>The Code</h2><pre><code class="lang-javascript">var mitredExtrude = function(name, options, scene) {
+    var shape = options.shape;
+    var path = options.path;
+    var closed = options.close || false;        
+
+    var nbPoints = path.length;
+    var line = BABYLON.Vector3.Zero();
+    var nextLine = BABYLON.Vector3.Zero();
+    var axisX = BABYLON.Vector3.Zero();
+    var axisY = BABYLON.Vector3.Zero();
+    var axisZ = BABYLON.Vector3.Zero();
+    var nextAxisX = BABYLON.Vector3.Zero();
+    var nextAxisY = BABYLON.Vector3.Zero();
+    var nextAxisZ = BABYLON.Vector3.Zero();
+    var startPoint = BABYLON.Vector3.Zero();
+    var nextStartPoint = BABYLON.Vector3.Zero();
+    var bisector = BABYLON.Vector3.Zero();
+    var point = BABYLON.Vector3.Zero();
+    var prjctZ = 0;
+    var distance = 0;
+    var ray;
+
+    var allPaths = [];
+
+    for (var s = 0; s &lt; shape.length; s++) {
+        path[1].subtractToRef(path[0], line);
+        axisZ = line.clone().normalize();
+        axisX = BABYLON.Vector3.Cross(scene.activeCamera.position, axisZ).normalize();
+        axisY = BABYLON.Vector3.Cross(axisZ, axisX);
+        startPoint = path[0].add(axisX.scale(shape[s].x)).add(axisY.scale(shape[s].y));
+        var ribbonPath = [startPoint.clone()];
+        for(var p = 0; p &lt; nbPoints - 2; p++) {
+            path[p + 2].subtractToRef(path[p + 1], nextLine);
+            nextAxisZ = nextLine.clone().normalize();
+            nextAxisX = BABYLON.Vector3.Cross(scene.activeCamera.position, nextAxisZ).normalize();
+            nextAxisY = BABYLON.Vector3.Cross(nextAxisZ, nextAxisX);
+            nextAxisZ.subtractToRef(axisZ, bisector);
+            planeParallel = BABYLON.Vector3.Cross(nextAxisZ, axisZ);
+            planeNormal = BABYLON.Vector3.Cross(planeParallel, bisector);
+            plane = BABYLON.Plane.FromPositionAndNormal(path[p + 1], planeNormal);
+            ray = new BABYLON.Ray(startPoint, axisZ);
+            distance = ray.intersectsPlane(plane);
+            startPoint.addToRef(axisZ.scale(distance), nextStartPoint);
+            ribbonPath.push(nextStartPoint.clone());
+
+            axisX = nextAxisX.clone();
+            axisY = nextAxisY.clone();
+            axisZ = nextAxisZ.clone();
+            startPoint = nextStartPoint.clone();
+        }
+        // Last Point
+        if (closed) {
+            path[0].subtractToRef(path[nbPoints - 1], nextLine);
+            nextAxisZ = nextLine.clone().normalize();
+            nextAxisX = BABYLON.Vector3.Cross(scene.activeCamera.position, nextAxisZ).normalize();
+            nextAxisY = BABYLON.Vector3.Cross(nextAxisZ, nextAxisX);
+            nextAxisZ.subtractToRef(axisZ, bisector);
+            planeParallel = BABYLON.Vector3.Cross(nextAxisZ, axisZ);
+            planeNormal = BABYLON.Vector3.Cross(planeParallel, bisector);
+            plane = BABYLON.Plane.FromPositionAndNormal(path[nbPoints - 1], planeNormal);
+            ray = new BABYLON.Ray(startPoint, axisZ);
+            distance = ray.intersectsPlane(plane);
+            startPoint.addToRef(axisZ.scale(distance), nextStartPoint);
+            ribbonPath.push(nextStartPoint.clone());
+
+            axisX = nextAxisX.clone();
+            axisY = nextAxisY.clone();
+            axisZ = nextAxisZ.clone();
+            startPoint = nextStartPoint.clone();
+
+            path[1].subtractToRef(path[0], nextLine);
+            nextAxisZ = nextLine.clone().normalize();
+            nextAxisX = BABYLON.Vector3.Cross(scene.activeCamera.position, nextAxisZ).normalize();
+            nextAxisY = BABYLON.Vector3.Cross(nextAxisZ, nextAxisX);
+            nextAxisZ.subtractToRef(axisZ, bisector);
+            planeParallel = BABYLON.Vector3.Cross(nextAxisZ, axisZ);
+            planeNormal = BABYLON.Vector3.Cross(planeParallel, bisector);
+            plane = BABYLON.Plane.FromPositionAndNormal(path[0], planeNormal);
+            ray = new BABYLON.Ray(startPoint, axisZ);
+            distance = ray.intersectsPlane(plane);
+            startPoint.addToRef(axisZ.scale(distance), nextStartPoint);
+            ribbonPath.shift();
+            ribbonPath.unshift(nextStartPoint.clone());
+
+        }
+        else {
+            planeNormal = axisZ;
+            plane = BABYLON.Plane.FromPositionAndNormal(path[nbPoints - 1], planeNormal);
+            ray = new BABYLON.Ray(startPoint, axisZ);
+            distance = ray.intersectsPlane(plane);
+            startPoint.addToRef(axisZ.scale(distance), nextStartPoint);
+            ribbonPath.push(nextStartPoint.clone());
+
+        }
+        allPaths.push(ribbonPath);
+
+    }
+    var ribbon = BABYLON.MeshBuilder.CreateRibbon(&quot;ribbon&quot;, {pathArray: allPaths, sideOrientation: BABYLON.Mesh.DOUBLESIDE, closeArray: true, closePath: closed}, scene);
+
+        return ribbon;
+} 
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

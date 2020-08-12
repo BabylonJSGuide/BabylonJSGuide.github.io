@@ -1,0 +1,130 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Gizmos (eg. Drag arrow, Bounding box) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Gizmos (eg. Drag arrow, Bounding box)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#gizmomanager">GizmoManager</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#position-scale-and-rotation-gizmos">Position, scale and rotation gizmos</a></li>
+<li><a href="#bounding-box-gizmo">Bounding box Gizmo</a></li>
+<li><a href="#gizmo-customization">Gizmo customization</a></li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>Gizmo&#39;s are objects that can be attached to a node (mesh, bone, transform) to provide interaction. The GizmoManager and BoundingBox gizmo work with mesh. Whereas Position, scale and rotation gizmos are also usable with TransformNodes and Bones.</p>
+<p><img src="/img/how_to/gui/gizmos.png" alt=""></p>
+<p>Note: Gizmos will set/modify the <a href="/features/Position,_Rotation,_Scaling">rotationQuaternion</a> of the attached node. After attaching, any rotation of the mesh should be done with the rotationQuaternion property instead of rotation.</p>
+<h2><a name="gizmomanager" class="anchor" href="#gizmomanager"></a>GizmoManager</h2><p>To get a default gizmo setup, the GizmoManager class can be used.</p>
+<pre><code>var gizmoManager = new BABYLON.GizmoManager(scene);
+</code></pre><p>The gizmo manager will attach the enabled gizmo to whatever object in the scene that is selected by a pointer. To enable a gizmo, any of the following can be used:</p>
+<pre><code>gizmoManager.positionGizmoEnabled = true;
+gizmoManager.rotationGizmoEnabled = true;
+gizmoManager.scaleGizmoEnabled = true;
+gizmoManager.boundingBoxGizmoEnabled = true;
+</code></pre><p>To specify the meshes which can have the gizmo attached, the attachableMeshes field can be set.</p>
+<pre><code>gizmoManager.attachableMeshes = [mesh1, mesh2, mesh3];
+</code></pre><p>To manually change the selected mesh, the gizmo manager&#39;s <em>attachToMesh</em> method can be called and the usePointerToAttachGizmos field can be used to disable the manager&#39;s default pointer behavior.</p>
+<pre><code>gizmoManager.usePointerToAttachGizmos = false;
+gizmoManager.attachToMesh(mesh);
+</code></pre><p>All the internal gizmo&#39;s are accessible through the manager to support scenarios such as listening to drag events.</p>
+<pre><code>gizmoManager.gizmos.scaleGizmo;
+gizmoManager.gizmos.rotationGizmo;
+gizmoManager.gizmos.positionGizmo;
+
+gizmoManager.gizmos.positionGizmo.xGizmo.dragBehavior.onDragStartObservable.add(()=&gt;{
+    console.log(&quot;Position gizmo&#39;s x axis started to be dragged&quot;);
+})
+gizmoManager.gizmos.positionGizmo.xGizmo.dragBehavior.onDragEndObservable.add(()=&gt;{
+    console.log(&quot;Position gizmo&#39;s x axis drag was ended&quot;);
+})
+</code></pre><p>By default gizmo orientation is in local space so it will be rotated to match the rotation of the object that it is attached to. To change to world orientation, the updateGizmoRotationToMatchAttachedMesh property can be set to false:</p>
+<pre><code>gizmoManager.gizmos.positionGizmo.updateGizmoRotationToMatchAttachedMesh = false;
+</code></pre><p>Note: This is not supported on the scale gizmo</p>
+<p><a href="https://www.babylonjs-playground.com/#4TBMBR#33"><strong>Example</strong></a> - <i class="fa fa-eye" onclick="createIframe('4TBMBR#33', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="setup" class="anchor" href="#setup"></a>Setup</h2><p>Gizmos are displayed by a <a href="/How_To/UtilityLayerRenderer">UtilityLayerRenderer</a> to not disrupt the existing scene state. If not specified, the default utility layer will be used.</p>
+<p>The utility layers are independent of the scene or engine. After creating a gizmo it is exposed off of gizmo.gizmoLayer. If creating a gizmo without specifying a utility layer it will use the default utility layer’s UtilityLayerRenderer.DefaultUtilityLayer (for overlay gizmos like position/scale) and UtilityLayerRenderer.DefaultKeepDepthUtilityLayer (for occluded gizmos like bounding box) It is recommended to use these layers and reuse layers for most cases as every new utility layer comes with additional overhead.</p>
+<pre><code>var utilLayer = new BABYLON.UtilityLayerRenderer(scene);
+var gizmo = new BABYLON.AxisDragGizmo(new BABYLON.Vector3(1,0,0), BABYLON.Color3.FromHexString(&quot;#00b894&quot;), utilLayer);
+</code></pre><p>When created, the gizmo will not be attached to a node and will not be visible so the gizmo can be attached to a node to become active. Setting this to null will disable/hide the gizmo once again.</p>
+<pre><code>gizmo.attachedMesh = sphere;
+</code></pre><p>By default, the gizmo will be updated to match the attached node&#39;s rotation and position but these can be modified with the following</p>
+<pre><code>// Keep the gizmo fixed to world rotation
+gizmo.updateGizmoRotationToMatchAttachedMesh = false;
+gizmo.updateGizmoPositionToMatchAttachedMesh = true;
+</code></pre><p><a href="https://playground.babylonjs.com/#8GY6J8#20">GLTF example</a> - <i class="fa fa-eye" onclick="createIframe('8GY6J8#20', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="position-scale-and-rotation-gizmos" class="anchor" href="#position-scale-and-rotation-gizmos"></a>Position, scale and rotation gizmos</h2><p>Default gizmos for position, rotation and scale on a single axis are supported</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#31M2AP#9">AxisDragGizmo</a> - <i class="fa fa-eye" onclick="createIframe('31M2AP#9', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#31M2AP#10">AxisScaleGizmo</a> - <i class="fa fa-eye" onclick="createIframe('31M2AP#10', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#31M2AP#11">PlaneRotationGizmo</a> - <i class="fa fa-eye" onclick="createIframe('31M2AP#11', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Snapping can be enabled on any of the single axis gizmos</p>
+<pre><code>gizmo.snapDistance = 0.3;
+gizmo.onSnapObservable.add((event)=&gt;{
+    console.log(event);
+})
+</code></pre><p>A sensitivity factor can be customized for AxisScaleGizmo and ScaleGizmo. Default is 1, a higher value means more stretch for the same drag.</p>
+<pre><code>gizmoScale.sensitivity = 3;
+</code></pre><p>These gizmo&#39;s internally use a <a href="/How_To/MeshBehavior">pointerDragBehavior</a>, this is exposed and can be used perform tasks before/during/after dragging a gizmo</p>
+<pre><code>gizmo.dragBehavior.onDragObservable.add(()=&gt;{
+    console.log(&quot;drag&quot;);
+})
+</code></pre><p>Classes for 3 axis gizmos are also provided which contain 3 of the single axis gizmos within </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#31M2AP#6">PositionGizmo</a> - <i class="fa fa-eye" onclick="createIframe('31M2AP#6', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#31M2AP#8">ScaleGizmo</a> - <i class="fa fa-eye" onclick="createIframe('31M2AP#8', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#31M2AP#7">RotationGizmo</a> - <i class="fa fa-eye" onclick="createIframe('31M2AP#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The single axis gizmos within these are exposed via the xGizmo, yGizmo and zGizmo properties. The scale gizmo also has a uniformScaleGizmo property which references center gizmo used to uniformly scale.</p>
+<h2><a name="bounding-box-gizmo" class="anchor" href="#bounding-box-gizmo"></a>Bounding box Gizmo</h2><p>The BoundingBoxGizmo displays a bounding box around an object as well as controls to rotate and scale the object.</p>
+<p>The enabled rotation axis can be customized with the following:</p>
+<pre><code>// only enable rotation on x and y axis
+gizmo.setEnabledRotationAxis(&quot;xy&quot;);
+</code></pre><p>The size of rotation and scale controls on the gizmo can be adjusted by using the following controls:</p>
+<pre><code>// The size of the rotation spheres attached to the bounding box (Default: 0.1)
+gizmo.rotationSphereSize = 0.1;
+// The size of the scale boxes attached to the bounding box (Default: 0.1)
+gizmo.scaleBoxSize = 0.1;
+// If set, the rotation spheres and scale boxes will increase in size based on the distance away from the camera to have a consistent screen size (Default: false)
+gizmo.rotationSphereSize = false;
+</code></pre><p>The following events are fired when dragging occurs on either the scale or rotation meshes of the bounding box.</p>
+<pre><code>gizmo.onScaleBoxDragObservable.add(()=&gt;{
+    console.log(&quot;scaleDrag&quot;);
+});
+gizmo.onScaleBoxDragEndObservable.add(()=&gt;{
+    console.log(&quot;scaleEnd&quot;);
+});
+gizmo.onRotationSphereDragObservable.add(()=&gt;{
+    console.log(&quot;rotDrag&quot;);
+});
+gizmo.onRotationSphereDragEndObservable.add(()=&gt;{
+    console.log(&quot;rotEnd&quot;);
+});
+</code></pre><p>To drag around objects contained inside a bounding box, <a href="/How_To/MeshBehavior">Mesh Behaviors</a> can be attached.
+When using with models with complex geometry such as a custom GLTF file, the complex model should be set to not be pickable by pointers and wrapped in a pickable bounding box mesh to save on performance. A helper method to do this is provided.</p>
+<pre><code>var boundingBox = BABYLON.BoundingBoxGizmo.MakeNotPickableAndWrapInBoundingBox(gltfMesh);
+</code></pre><p>Additionally, the bounding box can ignore children of the attached mesh to add additional performance gain when needed.</p>
+<pre><code>gizmo.ignoreChildren = true;
+</code></pre><p>To only ignore certain children when computing the bounding box, the includeChildPredicate can be set.</p>
+<pre><code>gizmo.includeChildPredicate = (m)=&gt;{return m == sphere2};
+</code></pre><p><a href="https://www.babylonjs-playground.com/#SG9ZZB">Example</a> - <i class="fa fa-eye" onclick="createIframe('SG9ZZB#', this)"></i><div class="iframeContainer"></div></p>
+<p>UI can be attached to the bounding box using the <a href="/How_To/MeshBehavior">AttachToBoxBehavior</a></p>
+<p><a href="https://playground.babylonjs.com/#8GY6J8#20">GLTF example</a> - <i class="fa fa-eye" onclick="createIframe('8GY6J8#20', this)"></i><div class="iframeContainer"></div>
+<a href="https://playground.babylonjs.com/#6E4LSB#15">Animated GLTF example</a> - <i class="fa fa-eye" onclick="createIframe('6E4LSB#15', this)"></i><div class="iframeContainer"></div>
+<a href="https://www.babylonjs-playground.com/#DEYAQ5#47">Example</a> - <i class="fa fa-eye" onclick="createIframe('DEYAQ5#47', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="gizmo-customization" class="anchor" href="#gizmo-customization"></a>Gizmo customization</h2><p>To customize the visual appearance of an existing gizmo, create a mesh on the same utility layer and then setCustomMesh on the gizmo. Utility layers do not contain lights by default so it is recommended use a material with an emissive texture.</p>
+<pre><code>var customMesh = BABYLON.MeshBuilder.CreateBox(&quot;&quot;, {size: 0.1}, gizmo.gizmoLayer.utilityLayerScene)
+customMesh.material = material
+gizmo.setCustomMesh(customMesh)
+</code></pre><p><a href="https://playground.babylonjs.com/#7KX2R8#133">Example</a> - <i class="fa fa-eye" onclick="createIframe('7KX2R8#133', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

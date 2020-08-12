@@ -1,0 +1,149 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Translations and Rotations - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Translations and Rotations</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#frames-of-reference">Frames of Reference</a></li>
+<li><a href="#the-pilot">The Pilot</a></li>
+<li><a href="#rotate">Rotate</a></li>
+<li><a href="#translate">Translate</a></li>
+<li><a href="#add-rotations">Add Rotations</a></li>
+<li><a href="#how-to-generate-a-rotation-from-a-target-system">How To Generate a Rotation from a Target System</a><ul>
+<li><a href="#using-euler-angles">Using Euler Angles</a></li>
+<li><a href="#using-quaternions">Using Quaternions</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+<li><a href="#gamelet">Gamelet</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-translations-and-rotations" class="anchor" href="#how-to-use-translations-and-rotations"></a>How To Use Translations and Rotations</h1><p>All <a href="/features/Position,_Rotation,_Scaling">positioning, rotating and scaling</a> take place within a frame of reference determined by the <a href="/resources/Frame_Of_Reference">world matrix</a>. </p>
+<h2><a name="frames-of-reference" class="anchor" href="#frames-of-reference"></a>Frames of Reference</h2><p>In Babylon.js two frames of reference are used <strong>world space</strong> using <strong>world axes</strong> and <strong>local space</strong> using <strong>local axes</strong>. <a href="/babylon101/position#position">Position</a> uses the <strong>world space</strong>  and <a href="#add-rotations">addRotation</a> uses the <strong>local space</strong>. </p>
+<p>Unlike <a href="/babylon101/position#rotation">rotation</a> which determines the order of rotations and sets the mesh at the given angles <a href="#rotate">rotate</a> allows you to set the order of rotations, adds the angle to the current rotation and the frame of reference to use.</p>
+<p>Unlike <a href="/babylon101/position#position">position</a> which sets the mesh to the values give <a href="#translate">translate</a> moves the mesh in the given direction by the distance give and frame of reference used.</p>
+<p>For <em>translate</em> and <em>rotate</em> the space used is handled by the <code>BABYLON.Space.WORLD</code> and <code>BABYLON.Space.LOCAL</code> constants respectively. </p>
+<p>Unless <a href="/features/Position,_Rotation,_Scaling#change-of-origin">reset</a>, the center of transformation is at the local origin of the mesh at the time of its creation.</p>
+<h2><a name="the-pilot" class="anchor" href="#the-pilot"></a>The Pilot</h2><p><img src="/img/how_to/Mesh/pilot.jpg" alt="The Pilot">
+The Pilot</p>
+<p>This asymmetric mesh will be used in the playgrounds to illustrate translations and rotations along with local and world axes, both of which have a red X axis, a green Y axis and a blue Z axis. The local axes are smaller.</p>
+<h2><a name="rotate" class="anchor" href="#rotate"></a>Rotate</h2><p>The general form for <em>rotate</em> is</p>
+<pre><code class="lang-javascript">mesh.rotate(axis, angle, frame of reference)
+</code></pre>
+<p>where axis is a vector giving the axis of rotation, angle is in radians and frame of reference is either <code>BABYLON.Space.WORLD</code> or <code>BABYLON.Space.LOCAL</code></p>
+<p>The constants <code>BABYLON.Axis.X</code>, <code>BABYLON.Axis.Y</code> and BABYLON.Axis.Z` may be used as an axis.</p>
+<p>For example</p>
+<pre><code class="lang-javascript">mesh.rotate(BABYLON.Axis.X, Math.PI/4, BABYLON.Space.WORLD);
+mesh.rotate(BABYLON.Axis.Y, 3 * Math.PI/2, BABYLON.Space.WORLD);
+mesh.rotate(BABYLON.Axis.Z, 0.025, BABYLON.Space.WORLD);
+mesh.rotate(BABYLON.Axis.X, Math.PI/2, BABYLON.Space.LOCAL);
+mesh.rotate(BABYLON.Axis.Y, 0.01, BABYLON.Space.LOCAL);
+mesh.rotate(BABYLON.Axis.Z, 1.45, BABYLON.Space.LOCAL);
+</code></pre>
+<p>In the following playground shows a rotation of &pi;/4 first about the Y world axis then about the X world axis. You can have a go at changing WORLD to LOCAL for one or both and changing the order of X and Y to see what happens.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#Z3W74Y#1">Playground Animation - Rotate about Two Axes</a> - <i class="fa fa-eye" onclick="createIframe('Z3W74Y#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>You do not have to use the X, Y and Z axes. Any vector will determine an axis.</p>
+<p>One way to determine an axis is to choose where on a sphere the axis would pass through. The corrdinates of that point will give the axis vector. </p>
+<p>For example the Earth tilts about 23 degrees from the vertical which gives a point on the surface with coordinates (sin(23 <em> &pi;/180), cos(23 </em> &pi;/180), 0). To rotate about this angle use</p>
+<pre><code class="lang-javascript">earth.rotate(new BABYLON.Vector3(Math.sin(23 * Math.PI/180), Math.cos(23 * Math.PI/180), 0), angle, BABYLON.Space.WORLD);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TLIAXS">Playground Animation - Earth Rotate</a> - <i class="fa fa-eye" onclick="createIframe('TLIAXS#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The following playground shows the difference between using rotate with <strong>world space</strong> and <strong>local space</strong>. An axis is defined as (2, 0.2, 0) in yellow in world space and white in local space. To see the affect two pilots are first rotated about the Y axis so that their local axes are no longer in alignment. The purple one is rotated about the given axis in <strong>world space</strong> and the orange one in <strong>local space</strong>.</p>
+<p><a href="https://www.babylonjs-playground.com/#LLNE9E#1">Playgound Animation - World and Local Different</a> - <i class="fa fa-eye" onclick="createIframe('LLNE9E#1', this)"></i><div class="iframeContainer"></div></p>
+<p><strong>Note:</strong>  <code>mesh.rotate()</code> generates a new <a href="/resources/Rotation_Conventions#quaternions">quaternion</a> and then uses <code>mesh.rotationQuaternion</code> while <code>mesh.rotation</code> is set to (0, 0, 0).  </p>
+<h2><a name="translate" class="anchor" href="#translate"></a>Translate</h2><p>If the mesh has not been rotated then using translate in the <strong>world space</strong> or the <strong>local space</strong> makes no difference. Once rotated the local axes will also be rotated and their direction will be used in <strong>local space</strong>.</p>
+<p>To translate a mesh a vector, distance and space need to be specified. The vector is the direction of translation, the distance * vector length gives how far to move in the given direction.<br>Use mesh.translate(vector, distance, space) to move the mesh in either the world or local space.<br>It is often useful for the vector to be a unit vector so the distance moved is precisely the distance given.</p>
+<pre><code class="lang-javascript">//BABYLON.Axis.Y is already a unit vector. 
+//As world space is specified the mesh will move a distance of 2 from its current position in the direction (0, 1, 0).
+mesh.translate(BABYLON.Axis.Y, 2, BABYLON.Space.WORLD);
+
+//Given vector has length sqrt(14). 
+//As local space is specified the mesh will move a distance sqrt(14)*3 from its current position in direction (-1, 3, -2)
+mesh.translate(new BABYLON.Vector3(-1, 3, -2), 3, BABYLON.Space.LOCAL);
+
+//Since the vector is normalized and local space is specified 
+//the mesh will move a distance 6 from its current position in direction (3, 5, -2)
+var direction = new BABYLON.Vector3(3, 5, -2);
+direction.normalize(); // direction now a unit vector
+pilot.translate(direction, 6, BABYLON.Space.LOCAL);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1ZMJQV#39">Playground Animation - Translate No Rotation</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#39', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#1ZMJQV#40">Playground Animation - Translate After Rotation</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#40', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#1ZMJQV#41">Playground Example - Translate-Rotate and Rotate-Translate</a> - <i class="fa fa-eye" onclick="createIframe('1ZMJQV#41', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="add-rotations" class="anchor" href="#add-rotations"></a>Add Rotations</h2><p><a href="/babylon101/position#rotation">Rotation</a> imposes the rotation order YXZ in <strong>local space</strong> using <a href="/resources/Rotation_Conventions">Euler angles</a>. This constraint can quickly make it complicated to calculate the required Euler angles to achieve a given final mesh orientation. This is especially so since rotations aren&#39;t commutative operations. This means that rotating a mesh first around X, then around Z will lead to a different orientation than rotating it first around Z and then around X with the same values.  </p>
+<p>As an example if you create a mesh and rotate it &pi;/3 about the X axis, then rotate it &pi;/4 about the local Y axis the Euler angles needed to use with <em>rotation</em> are<br>x: 0.6590580358264089, y: 1.1071487177940904, z: 0.8860771237926136</p>
+<p>Checking the console in the following playground will give you these value. The leftmost mesh is the start position, the middle after using rotation with Euler Angles x: &pi;/3, y: &pi;/4, z: 0 and the right most after applying the rotations in order &pi;/3 about the X axis, about the local Y axis.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#HPKH80">Playground Example - Rotation and addRotation</a> - <i class="fa fa-eye" onclick="createIframe('HPKH80#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>This playground uses a method from <a href="/babylon101/position#sequencing-rotations">101 addRotation</a> to add a rotation to any current rotation.</p>
+<p>The general form is </p>
+<pre><code class="lang-javascript">mesh.addRotation(alpha, beta, gamma)`.  
+</code></pre>
+<p>This adds the rotation given by the Euler angles x: alpha, Y: beta, z: gamma in the order YXZ around the <strong>local axes</strong> to any existing rotation. However since it is much easier to think in terms of one angle around one axis in order two of the angles should be set to 0.</p>
+<p>The intended use is that starting from an unrotated mesh or one that has been rotated with Euler angles or by a quaternion <em>addRotation</em> can be applied as many times as you want. When you call it, it will accumulate the passed rotation values onto the mesh.<br>This means you can decompose your whole rotation in several steps to be done in your own order, not necesseraly the imposed YXZ one, to achieve your final wanted orientation.   </p>
+<pre><code class="lang-javascript">mesh.rotation.x = Math.PI / 4;        // initial rotation around x
+mesh.addRotation(0, Math.PI / 3, 0);  // the mesh is first rotated around X, then only around Y for PI/3
+</code></pre>
+<pre><code class="lang-javascript">// you can even link all the rotation steps
+// here X first, then Z, finally Y
+mesh.addRotation(Math.PI / 2, 0, 0).addRotation(0, 0, Math.PI / 4).addRotation(0, Math.PI / 6, 0);
+</code></pre>
+<p><strong>Note:</strong> The use of <em>addRotation</em> with ONLY <em>rotation</em> does not set the mesh&#39;s <em>rotationQuaternion</em> value which stays as undefined and it is the Euler angles for <em>rotation</em> that are updated. When <em>rotate</em> is used or the <em>rotationQuaternion</em> set directly then <em>addRotation</em> will accumlate on the <em>rotationQuaternion</em> value.</p>
+<h2><a name="how-to-generate-a-rotation-from-a-target-system" class="anchor" href="#how-to-generate-a-rotation-from-a-target-system"></a>How To Generate a Rotation from a Target System</h2><h3><a name="using-euler-angles" class="anchor" href="#using-euler-angles"></a>Using Euler Angles</h3><p>Given a quaternion it is possible to find the <a href="/resources/Rotation_Conventions">Euler angles</a>. Sometimes however all you might know is a set of axes you want to align to. There is a feature of Babylon.js that allows you to <a href="/features/Position,_Rotation,_Scaling#align-axes">align axes</a> by finding the particular rotation you need. </p>
+<p>The way to compute an Euler rotation from a set of axes is to use <em>RotationFromAxis</em>.</p>
+<pre><code class="lang-javascript">var orientation = BABYLON.Vector3.RotationFromAxis(axis1, axis2, axis3);
+mesh.rotation = orientation;
+</code></pre>
+<p>In the following playgrounds the stationary purple plane and red, green and blue axes show how the view changes as the camera moves. The red and green spheres are fixed relative to these axes. The 2D plane with an arrow drawn on it has a length the same as the distance between the red and green spheres. </p>
+<p>In the initialising playground the arrow plane is also stationary.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VYM1E#32">Playground Example - Initialising</a> - <i class="fa fa-eye" onclick="createIframe('VYM1E#32', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The requirement is for the arrow plane to rotate such that </p>
+<ul>
+<li>one of its orthogonal axes that lies on the plane is along the line joining the two spheres;</li>
+<li>the axis normal to the plane is along the line joining the middle of the arrow to the camera </li>
+</ul>
+<p>keeping its third axis, which lies on the plane, perpendicular to the camera lens.</p>
+<p>In this way the camera always faces the arrow plane as can be seen in the next playground.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VYM1E#32">Playground Example - Aligning Axes</a> - <i class="fa fa-eye" onclick="createIframe('VYM1E#32', this)"></i><div class="iframeContainer"></div> </li>
+</ul>
+<p>This is achieved by forming axis 1 to join the spheres</p>
+<pre><code class="lang-javascript">axis1 = (sphere1.position).subtract(sphere2.position);
+axis3 = BABYLON.Vector3.Cross(camera.position, axis1);
+axis2 = BABYLON.Vector3.Cross(axis3, axis1);  
+</code></pre>
+<p>axis 3 to be perpendicular axis 1 and to the axis through the camera position and axis 2 from the camera to the arrow plane.</p>
+<p>The mesh is rotated to face the camera using</p>
+<pre><code class="lang-javascript">mesh.rotation = BABYLON.Vector3.RotationFromAxis(axis1, axis2, axis3);
+</code></pre>
+<p>The <code>toRef()</code> method is also available.</p>
+<pre><code class="lang-javascript">BABYLON.Vector3.RotationFromAxisToRef(axis1, axis2, axis3, mesh.rotation);
+</code></pre>
+<h3><a name="using-quaternions" class="anchor" href="#using-quaternions"></a>Using Quaternions</h3><p>If you prefer using quaternions instead of Euler angles, then <code>RotationQuaternionFromAxis()</code> computes the required rotation value (Quaternion) to assign to the mesh property <code>.rotationQuaternion</code> in order to rotate it along the passed axes.</p>
+<p>The <code>toRef()</code> method is also available.</p>
+<p><code>Quaternion.RotationQuaternionFromAxis()</code><br><code>Quaternion.RotationQuaternionFromAxisToRef()</code>  </p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/babylon101/Position">Positions, rotations, scaling 101</a>  </p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/How_To/Rotate">How To Use Translations and Rotations</a><br><a href="/How_To/Pivots">How To Set and Use a Pivot</a><br><a href="/How_To/Pivot">How To Rotate Around an Axis About a Point</a><br><a href="/How_To/How_to_use_Path3D">How To Use Path3D</a><br><a href="/How_To/Parenting">How To Use a Parent</a><br><a href="/How_To/Transform_Coordinates">How To Transform Coordinates</a><br><a href="/resources/Rotation_Conventions">Euler Angles and Quaternions</a><br><a href="/How_To/rotate#how-to-generate-a-rotation-from-a-target-system">Aligning Rotation to Target</a><br><a href="/resources/Frame_Of_Reference">Frame of Reference</a><br><a href="/resources/Baking_Transformations">Baking Transformations</a><br><a href="/How_To/In-Browser_Mesh_Simplification">In-Browser Mesh Simplification (Auto-LOD)</a>  </p>
+<h2><a name="gamelet" class="anchor" href="#gamelet"></a>Gamelet</h2><p><a href="/samples/Car_Path">A Simple Car Following a Path</a><br><a href="/samples/Car_Driven">Making A Simple Driven Car using Translate and Rotate</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

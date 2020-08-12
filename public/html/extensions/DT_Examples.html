@@ -1,0 +1,86 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Examples - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Examples</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#freecamera-on-the-ground">FreeCamera on the Ground</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="dynamic-terrain-examples" class="anchor" href="#dynamic-terrain-examples"></a>Dynamic Terrain Examples</h1><h2><a name="freecamera-on-the-ground" class="anchor" href="#freecamera-on-the-ground"></a>FreeCamera on the Ground</h2><p>In this example, our player moves on the ground : a character walking, a car driving or anything like we can find in a FPS game.<br>The used camera is a FreeCamera. It will keeps on the ground while moving onward, backward, to the right or to the left.  </p>
+<p>Let&#39;s create a simple data map with a sinus/cosinus function :</p>
+<pre><code class="lang-javascript">        // map creation
+        var mapSubX = 100;
+        var mapSubZ = 100;
+        var mapData = new Float32Array(mapSubX * mapSubZ * 3);   
+        for (var l = 0; l &lt; mapSubZ; l++) {           
+            for (var w = 0; w &lt; mapSubX; w++) {                
+                mapData[3 *(l * mapSubX + w)] = (w - mapSubX * 0.5) * 2.0;
+                mapData[3 * (l * mapSubX + w) + 1] = w / (l +1) * Math.sin(l / 2) * Math.cos(w / 2) * 2.0;
+                mapData[3 * (l * mapSubX + w) + 2] = (l - mapSubZ * 0.5) * 2.0;
+           }            
+        }
+
+</code></pre>
+<p>The hills have a different height depending on their positions on the map.  </p>
+<p>Let&#39;s create then a dynamic terrain from this map :</p>
+<pre><code class="lang-javascript">        // terrain creation
+        var terrainSub = 50;
+        var params = {
+            mapData: mapData,
+            mapSubX: mapSubX,
+            mapSubZ: mapSubZ,
+            terrainSub: terrainSub
+        };
+        terrain = new BABYLON.DynamicTerrain(&quot;terrain&quot;, params, scene);
+</code></pre>
+<p>Now we can set the camera altitude on each frame at a fixed elevation above the terrain.  For this, we use the method <code>getHeightFromMap(x, z)</code> what returns the height (y coordinate) of the terrain at the passed location <em>(x, z)</em>.  </p>
+<pre><code class="lang-javascript">    var camElevation = 2.0;
+    var camAltitude = 0.0;
+    scene.registerBeforeRender(function() {
+        camAltitude = terrain.getHeightFromMap(camera.position.x, camera.position.z) + camElevation;
+        camera.position.y = camAltitude;
+    });
+</code></pre>
+<p>If we move the camera with the keyboard arrow keys, it will follow the terrain ground.   </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#J6FMJ#6">Playground Example Follow Terrain</a> - <i class="fa fa-eye" onclick="createIframe('J6FMJ#6', this)"></i><div class="iframeContainer"></div>  </li>
+</ul>
+<p>We could also make a bigger map and a bigger terrain : </p>
+<pre><code class="lang-javascript">    var mapSubX = 500;
+    var mapSubZ = 300;
+    var terrainSub = 100;
+</code></pre>
+<p>As the player keeps on the ground, he/she can&#39;t see very far in the distance, so we can choose to update the terrain only after 8 map quads crossed over either on the X axis, either on the Z axis :</p>
+<pre><code class="lang-javascript">    terrain.subToleranceX = 8;
+    terrain.subToleranceZ = 8;
+</code></pre>
+<p>The terrain is then updated less often, this lets more CPU to manage the player behavior and all what can happen or move in the close area around him.  </p>
+<p>Finally, we could also choose to extend the terrain visible size by setting some LOD in the distance.<br>By example, <code>LODLimits = [4, 3, 2, 1, 1]</code> would mean that :  </p>
+<ul>
+<li>the initial LOD factor (default 1, the one at the camera location) is incremented for all the terrain quads under the 4-th perimetric rows and columns, so it&#39;s 1 + 1 = 2 for them, </li>
+<li>it&#39;s incremented once again for all the terrain quads under the 3-th perimetric rows and columns, so it&#39;s 2 + 1 = 3 for them,</li>
+<li>it&#39;s incremented once again for the ones under the 2-nd rows and columns, so it&#39;s 4 for them</li>
+<li>it&#39;s incremented finally twice, because there are two <code>1</code> in the array, for the quads under the first rows and columns, so 3 + 2 x 1 = 5 for those last ones.  </li>
+</ul>
+<pre><code class="lang-javascript">terrain.LODLimits = [4, 3, 2, 1, 1];
+</code></pre>
+<p>Let&#39;s don&#39;t worry if this feature seems complex to understand and let&#39;s just remember that it extends the terrain visible size on its perimeter and reduces the rendered map details in the same time.  </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#J6FMJ#7">Playground Example</a> - <i class="fa fa-eye" onclick="createIframe('J6FMJ#7', this)"></i><div class="iframeContainer"></div>  </li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/extensions/Dynamic_Terrain">Dynamic Terrain</a><br><a href="/extensions/DT_Objects">Dynamic Terrain with Objects</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

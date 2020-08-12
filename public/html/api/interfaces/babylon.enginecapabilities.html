@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>EngineCapabilities - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.enginecapabilities.html">EngineCapabilities</a>
+					</li>
+				</ul>
+				<h1>EngineCapabilities</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Interface used to describe the capabilities of the engine relatively to the current browser</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">EngineCapabilities</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#astc" class="tsd-kind-icon">astc</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#blendminmax" class="tsd-kind-icon">blend<wbr>Min<wbr>Max</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#canusetimestampfortimerquery" class="tsd-kind-icon">can<wbr>Use<wbr>Timestamp<wbr>For<wbr>Timer<wbr>Query</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#colorbufferfloat" class="tsd-kind-icon">color<wbr>Buffer<wbr>Float</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#depthtextureextension" class="tsd-kind-icon">depth<wbr>Texture<wbr>Extension</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#drawbuffersextension" class="tsd-kind-icon">draw<wbr>Buffers<wbr>Extension</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#etc1" class="tsd-kind-icon">etc1</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#etc2" class="tsd-kind-icon">etc2</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#fragmentdepthsupported" class="tsd-kind-icon">fragment<wbr>Depth<wbr>Supported</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#highprecisionshadersupported" class="tsd-kind-icon">high<wbr>Precision<wbr>Shader<wbr>Supported</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#instancedarrays" class="tsd-kind-icon">instanced<wbr>Arrays</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxanisotropy" class="tsd-kind-icon">max<wbr>Anisotropy</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxcombinedtexturesimageunits" class="tsd-kind-icon">max<wbr>Combined<wbr>Textures<wbr>Image<wbr>Units</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxcubemaptexturesize" class="tsd-kind-icon">max<wbr>Cubemap<wbr>Texture<wbr>Size</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxfragmentuniformvectors" class="tsd-kind-icon">max<wbr>Fragment<wbr>Uniform<wbr>Vectors</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxmsaasamples" class="tsd-kind-icon">maxMSAASamples</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxrendertexturesize" class="tsd-kind-icon">max<wbr>Render<wbr>Texture<wbr>Size</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxsamples" class="tsd-kind-icon">max<wbr>Samples</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxtexturesize" class="tsd-kind-icon">max<wbr>Texture<wbr>Size</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxtexturesimageunits" class="tsd-kind-icon">max<wbr>Textures<wbr>Image<wbr>Units</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxvaryingvectors" class="tsd-kind-icon">max<wbr>Varying<wbr>Vectors</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxvertexattribs" class="tsd-kind-icon">max<wbr>Vertex<wbr>Attribs</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxvertextextureimageunits" class="tsd-kind-icon">max<wbr>Vertex<wbr>Texture<wbr>Image<wbr>Units</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#maxvertexuniformvectors" class="tsd-kind-icon">max<wbr>Vertex<wbr>Uniform<wbr>Vectors</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#multiview" class="tsd-kind-icon">multiview</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#oculusmultiview" class="tsd-kind-icon">oculus<wbr>Multiview</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#parallelshadercompile" class="tsd-kind-icon">parallel<wbr>Shader<wbr>Compile</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#pvrtc" class="tsd-kind-icon">pvrtc</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#s3tc" class="tsd-kind-icon">s3tc</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#standardderivatives" class="tsd-kind-icon">standard<wbr>Derivatives</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#textureanisotropicfilterextension" class="tsd-kind-icon">texture<wbr>Anisotropic<wbr>Filter<wbr>Extension</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#texturefloat" class="tsd-kind-icon">texture<wbr>Float</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#texturefloatlinearfiltering" class="tsd-kind-icon">texture<wbr>Float<wbr>Linear<wbr>Filtering</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#texturefloatrender" class="tsd-kind-icon">texture<wbr>Float<wbr>Render</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#texturehalffloat" class="tsd-kind-icon">texture<wbr>Half<wbr>Float</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#texturehalffloatlinearfiltering" class="tsd-kind-icon">texture<wbr>Half<wbr>Float<wbr>Linear<wbr>Filtering</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#texturehalffloatrender" class="tsd-kind-icon">texture<wbr>Half<wbr>Float<wbr>Render</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#texturelod" class="tsd-kind-icon">textureLOD</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#timerquery" class="tsd-kind-icon">timer<wbr>Query</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#uintindices" class="tsd-kind-icon">uint<wbr>Indices</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface"><a href="babylon.enginecapabilities.html#vertexarrayobject" class="tsd-kind-icon">vertex<wbr>Array<wbr>Object</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="astc" class="tsd-anchor"></a>
+						<h3>astc</h3>
+						<a href="/playground/?code=astc" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">astc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if astc texture compression is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="blendminmax" class="tsd-anchor"></a>
+						<h3>blend<wbr>Min<wbr>Max</h3>
+						<a href="/playground/?code=blendMinMax" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">blend<wbr>Min<wbr>Max<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if the blend min max extension is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="canusetimestampfortimerquery" class="tsd-anchor"></a>
+						<h3>can<wbr>Use<wbr>Timestamp<wbr>For<wbr>Timer<wbr>Query</h3>
+						<a href="/playground/?code=canUseTimestampForTimerQuery" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">can<wbr>Use<wbr>Timestamp<wbr>For<wbr>Timer<wbr>Query<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if timestamp can be used with timer query</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="colorbufferfloat" class="tsd-anchor"></a>
+						<h3>color<wbr>Buffer<wbr>Float</h3>
+						<a href="/playground/?code=colorBufferFloat" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">color<wbr>Buffer<wbr>Float<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if float color buffer are supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="depthtextureextension" class="tsd-anchor"></a>
+						<h3>depth<wbr>Texture<wbr>Extension</h3>
+						<a href="/playground/?code=depthTextureExtension" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">depth<wbr>Texture<wbr>Extension<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if depth textures are supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="drawbuffersextension" class="tsd-anchor"></a>
+						<h3>draw<wbr>Buffers<wbr>Extension</h3>
+						<a href="/playground/?code=drawBuffersExtension" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">draw<wbr>Buffers<wbr>Extension<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if draw buffers extension is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="etc1" class="tsd-anchor"></a>
+						<h3>etc1</h3>
+						<a href="/playground/?code=etc1" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">etc1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if etc1 texture compression is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="etc2" class="tsd-anchor"></a>
+						<h3>etc2</h3>
+						<a href="/playground/?code=etc2" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">etc2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if etc2 texture compression is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="fragmentdepthsupported" class="tsd-anchor"></a>
+						<h3>fragment<wbr>Depth<wbr>Supported</h3>
+						<a href="/playground/?code=fragmentDepthSupported" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">fragment<wbr>Depth<wbr>Supported<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if depth reading in the fragment shader is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="highprecisionshadersupported" class="tsd-anchor"></a>
+						<h3>high<wbr>Precision<wbr>Shader<wbr>Supported</h3>
+						<a href="/playground/?code=highPrecisionShaderSupported" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">high<wbr>Precision<wbr>Shader<wbr>Supported<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if high precision shaders are supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="instancedarrays" class="tsd-anchor"></a>
+						<h3>instanced<wbr>Arrays</h3>
+						<a href="/playground/?code=instancedArrays" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">instanced<wbr>Arrays<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if instancing is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxanisotropy" class="tsd-anchor"></a>
+						<h3>max<wbr>Anisotropy</h3>
+						<a href="/playground/?code=maxAnisotropy" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Anisotropy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets the maximum level of anisotropy supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxcombinedtexturesimageunits" class="tsd-anchor"></a>
+						<h3>max<wbr>Combined<wbr>Textures<wbr>Image<wbr>Units</h3>
+						<a href="/playground/?code=maxCombinedTexturesImageUnits" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Combined<wbr>Textures<wbr>Image<wbr>Units<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum textures units in the entire pipeline</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxcubemaptexturesize" class="tsd-anchor"></a>
+						<h3>max<wbr>Cubemap<wbr>Texture<wbr>Size</h3>
+						<a href="/playground/?code=maxCubemapTextureSize" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Cubemap<wbr>Texture<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum cube texture size</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxfragmentuniformvectors" class="tsd-anchor"></a>
+						<h3>max<wbr>Fragment<wbr>Uniform<wbr>Vectors</h3>
+						<a href="/playground/?code=maxFragmentUniformVectors" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Fragment<wbr>Uniform<wbr>Vectors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum number of uniforms per fragment shader</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxmsaasamples" class="tsd-anchor"></a>
+						<h3>maxMSAASamples</h3>
+						<a href="/playground/?code=maxMSAASamples" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">maxMSAASamples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Max number of texture samples for MSAA</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxrendertexturesize" class="tsd-anchor"></a>
+						<h3>max<wbr>Render<wbr>Texture<wbr>Size</h3>
+						<a href="/playground/?code=maxRenderTextureSize" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Render<wbr>Texture<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum render texture size</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxsamples" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> max<wbr>Samples</h3>
+						<a href="/playground/?code=maxSamples" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Samples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum texture samples</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxtexturesize" class="tsd-anchor"></a>
+						<h3>max<wbr>Texture<wbr>Size</h3>
+						<a href="/playground/?code=maxTextureSize" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Texture<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum texture size</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxtexturesimageunits" class="tsd-anchor"></a>
+						<h3>max<wbr>Textures<wbr>Image<wbr>Units</h3>
+						<a href="/playground/?code=maxTexturesImageUnits" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Textures<wbr>Image<wbr>Units<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum textures units per fragment shader</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxvaryingvectors" class="tsd-anchor"></a>
+						<h3>max<wbr>Varying<wbr>Vectors</h3>
+						<a href="/playground/?code=maxVaryingVectors" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Varying<wbr>Vectors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum number of varyings</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxvertexattribs" class="tsd-anchor"></a>
+						<h3>max<wbr>Vertex<wbr>Attribs</h3>
+						<a href="/playground/?code=maxVertexAttribs" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Vertex<wbr>Attribs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum number of vertex attributes</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxvertextextureimageunits" class="tsd-anchor"></a>
+						<h3>max<wbr>Vertex<wbr>Texture<wbr>Image<wbr>Units</h3>
+						<a href="/playground/?code=maxVertexTextureImageUnits" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Vertex<wbr>Texture<wbr>Image<wbr>Units<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum texture units per vertex shader</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="maxvertexuniformvectors" class="tsd-anchor"></a>
+						<h3>max<wbr>Vertex<wbr>Uniform<wbr>Vectors</h3>
+						<a href="/playground/?code=maxVertexUniformVectors" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<wbr>Vertex<wbr>Uniform<wbr>Vectors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum number of uniforms per vertex shader</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="multiview" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> multiview</h3>
+						<a href="/playground/?code=multiview" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">multiview<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if multiview is supported (<a href="https://www.khronos.org/registry/webgl/extensions/WEBGL_multiview/">https://www.khronos.org/registry/webgl/extensions/WEBGL_multiview/</a>)</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="oculusmultiview" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> oculus<wbr>Multiview</h3>
+						<a href="/playground/?code=oculusMultiview" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">oculus<wbr>Multiview<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if oculus multiview is supported (<a href="https://developer.oculus.com/documentation/oculus-browser/latest/concepts/browser-multiview/">https://developer.oculus.com/documentation/oculus-browser/latest/concepts/browser-multiview/</a>)</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="parallelshadercompile" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> parallel<wbr>Shader<wbr>Compile</h3>
+						<a href="/playground/?code=parallelShaderCompile" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">parallel<wbr>Shader<wbr>Compile<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function used to let the system compiles shaders in background</p>
+							</div>
+						</div>
+						<div class="tsd-type-declaration">
+							<h4>Type declaration</h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>COMPLETION_<wbr>STATUS_<wbr>KHR<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="pvrtc" class="tsd-anchor"></a>
+						<h3>pvrtc</h3>
+						<a href="/playground/?code=pvrtc" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">pvrtc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if pvrtc texture compression is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="s3tc" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> s3tc</h3>
+						<a href="/playground/?code=s3tc" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">s3tc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WEBGL_compressed_texture_s3tc</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if s3tc texture compression is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="standardderivatives" class="tsd-anchor"></a>
+						<h3>standard<wbr>Derivatives</h3>
+						<a href="/playground/?code=standardDerivatives" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">standard<wbr>Derivatives<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if standard derivates (dx/dy) are supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="textureanisotropicfilterextension" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> texture<wbr>Anisotropic<wbr>Filter<wbr>Extension</h3>
+						<a href="/playground/?code=textureAnisotropicFilterExtension" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">texture<wbr>Anisotropic<wbr>Filter<wbr>Extension<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EXT_texture_filter_anisotropic</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets the webgl extension for anisotropic filtering (null if not supported)</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="texturefloat" class="tsd-anchor"></a>
+						<h3>texture<wbr>Float</h3>
+						<a href="/playground/?code=textureFloat" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">texture<wbr>Float<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if float textures are supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="texturefloatlinearfiltering" class="tsd-anchor"></a>
+						<h3>texture<wbr>Float<wbr>Linear<wbr>Filtering</h3>
+						<a href="/playground/?code=textureFloatLinearFiltering" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">texture<wbr>Float<wbr>Linear<wbr>Filtering<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if float texture linear filtering is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="texturefloatrender" class="tsd-anchor"></a>
+						<h3>texture<wbr>Float<wbr>Render</h3>
+						<a href="/playground/?code=textureFloatRender" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">texture<wbr>Float<wbr>Render<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if rendering to float textures is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="texturehalffloat" class="tsd-anchor"></a>
+						<h3>texture<wbr>Half<wbr>Float</h3>
+						<a href="/playground/?code=textureHalfFloat" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">texture<wbr>Half<wbr>Float<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if half float textures are supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="texturehalffloatlinearfiltering" class="tsd-anchor"></a>
+						<h3>texture<wbr>Half<wbr>Float<wbr>Linear<wbr>Filtering</h3>
+						<a href="/playground/?code=textureHalfFloatLinearFiltering" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">texture<wbr>Half<wbr>Float<wbr>Linear<wbr>Filtering<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if half float texture linear filtering is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="texturehalffloatrender" class="tsd-anchor"></a>
+						<h3>texture<wbr>Half<wbr>Float<wbr>Render</h3>
+						<a href="/playground/?code=textureHalfFloatRender" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">texture<wbr>Half<wbr>Float<wbr>Render<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if rendering to half float textures is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="texturelod" class="tsd-anchor"></a>
+						<h3>textureLOD</h3>
+						<a href="/playground/?code=textureLOD" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">textureLOD<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if textureLOD shader command is supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="timerquery" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> timer<wbr>Query</h3>
+						<a href="/playground/?code=timerQuery" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">timer<wbr>Query<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">EXT_disjoint_timer_query</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets disjoint timer query extension (null if not supported)</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="uintindices" class="tsd-anchor"></a>
+						<h3>uint<wbr>Indices</h3>
+						<a href="/playground/?code=uintIndices" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">uint<wbr>Indices<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if 32 bits indices are supported</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+						<a name="vertexarrayobject" class="tsd-anchor"></a>
+						<h3>vertex<wbr>Array<wbr>Object</h3>
+						<a href="/playground/?code=vertexArrayObject" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">vertex<wbr>Array<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Defines if vertex array objects are supported</p>
+							</div>
+						</div>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.enginecapabilities.html" class="tsd-kind-icon">Engine<wbr>Capabilities</a>
+							<ul>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#astc" class="tsd-kind-icon">astc</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#blendminmax" class="tsd-kind-icon">blend<wbr>Min<wbr>Max</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#canusetimestampfortimerquery" class="tsd-kind-icon">can<wbr>Use<wbr>Timestamp<wbr>For<wbr>Timer<wbr>Query</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#colorbufferfloat" class="tsd-kind-icon">color<wbr>Buffer<wbr>Float</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#depthtextureextension" class="tsd-kind-icon">depth<wbr>Texture<wbr>Extension</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#drawbuffersextension" class="tsd-kind-icon">draw<wbr>Buffers<wbr>Extension</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#etc1" class="tsd-kind-icon">etc1</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#etc2" class="tsd-kind-icon">etc2</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#fragmentdepthsupported" class="tsd-kind-icon">fragment<wbr>Depth<wbr>Supported</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#highprecisionshadersupported" class="tsd-kind-icon">high<wbr>Precision<wbr>Shader<wbr>Supported</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#instancedarrays" class="tsd-kind-icon">instanced<wbr>Arrays</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxanisotropy" class="tsd-kind-icon">max<wbr>Anisotropy</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxcombinedtexturesimageunits" class="tsd-kind-icon">max<wbr>Combined<wbr>Textures<wbr>Image<wbr>Units</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxcubemaptexturesize" class="tsd-kind-icon">max<wbr>Cubemap<wbr>Texture<wbr>Size</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxfragmentuniformvectors" class="tsd-kind-icon">max<wbr>Fragment<wbr>Uniform<wbr>Vectors</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxmsaasamples" class="tsd-kind-icon">maxMSAASamples</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxrendertexturesize" class="tsd-kind-icon">max<wbr>Render<wbr>Texture<wbr>Size</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxsamples" class="tsd-kind-icon">max<wbr>Samples</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxtexturesize" class="tsd-kind-icon">max<wbr>Texture<wbr>Size</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxtexturesimageunits" class="tsd-kind-icon">max<wbr>Textures<wbr>Image<wbr>Units</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxvaryingvectors" class="tsd-kind-icon">max<wbr>Varying<wbr>Vectors</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxvertexattribs" class="tsd-kind-icon">max<wbr>Vertex<wbr>Attribs</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxvertextextureimageunits" class="tsd-kind-icon">max<wbr>Vertex<wbr>Texture<wbr>Image<wbr>Units</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#maxvertexuniformvectors" class="tsd-kind-icon">max<wbr>Vertex<wbr>Uniform<wbr>Vectors</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#multiview" class="tsd-kind-icon">multiview</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#oculusmultiview" class="tsd-kind-icon">oculus<wbr>Multiview</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#parallelshadercompile" class="tsd-kind-icon">parallel<wbr>Shader<wbr>Compile</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#pvrtc" class="tsd-kind-icon">pvrtc</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#s3tc" class="tsd-kind-icon">s3tc</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#standardderivatives" class="tsd-kind-icon">standard<wbr>Derivatives</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#textureanisotropicfilterextension" class="tsd-kind-icon">texture<wbr>Anisotropic<wbr>Filter<wbr>Extension</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#texturefloat" class="tsd-kind-icon">texture<wbr>Float</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#texturefloatlinearfiltering" class="tsd-kind-icon">texture<wbr>Float<wbr>Linear<wbr>Filtering</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#texturefloatrender" class="tsd-kind-icon">texture<wbr>Float<wbr>Render</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#texturehalffloat" class="tsd-kind-icon">texture<wbr>Half<wbr>Float</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#texturehalffloatlinearfiltering" class="tsd-kind-icon">texture<wbr>Half<wbr>Float<wbr>Linear<wbr>Filtering</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#texturehalffloatrender" class="tsd-kind-icon">texture<wbr>Half<wbr>Float<wbr>Render</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#texturelod" class="tsd-kind-icon">textureLOD</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#timerquery" class="tsd-kind-icon">timer<wbr>Query</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#uintindices" class="tsd-kind-icon">uint<wbr>Indices</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface">
+									<a href="babylon.enginecapabilities.html#vertexarrayobject" class="tsd-kind-icon">vertex<wbr>Array<wbr>Object</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

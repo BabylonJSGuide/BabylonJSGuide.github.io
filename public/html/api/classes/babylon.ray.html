@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>Ray - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.ray.html">Ray</a>
+					</li>
+				</ul>
+				<h1>Ray</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Class representing a ray with position and direction</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">Ray</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Constructors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="babylon.ray.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.ray.html#direction" class="tsd-kind-icon">direction</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.ray.html#length" class="tsd-kind-icon">length</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.ray.html#origin" class="tsd-kind-icon">origin</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectionsegment" class="tsd-kind-icon">intersection<wbr>Segment</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectsaxis" class="tsd-kind-icon">intersects<wbr>Axis</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectsbox" class="tsd-kind-icon">intersects<wbr>Box</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectsboxminmax" class="tsd-kind-icon">intersects<wbr>Box<wbr>Min<wbr>Max</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectsmesh" class="tsd-kind-icon">intersects<wbr>Mesh</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectsmeshes" class="tsd-kind-icon">intersects<wbr>Meshes</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectsplane" class="tsd-kind-icon">intersects<wbr>Plane</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectssphere" class="tsd-kind-icon">intersects<wbr>Sphere</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#intersectstriangle" class="tsd-kind-icon">intersects<wbr>Triangle</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#unprojectraytoref" class="tsd-kind-icon">unproject<wbr>Ray<wbr>ToRef</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.ray.html#update" class="tsd-kind-icon">update</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.ray.html#createnew" class="tsd-kind-icon">Create<wbr>New</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.ray.html#createnewfromto" class="tsd-kind-icon">Create<wbr>New<wbr>From<wbr>To</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.ray.html#transform" class="tsd-kind-icon">Transform</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.ray.html#transformtoref" class="tsd-kind-icon">Transform<wbr>ToRef</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.ray.html#zero" class="tsd-kind-icon">Zero</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Constructors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+						<a name="constructor" class="tsd-anchor"></a>
+						<h3>constructor</h3>
+						<a href="/playground/?code=constructor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">new <wbr>Ray<span class="tsd-signature-symbol">(</span>origin<span class="tsd-signature-symbol">: </span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a>, direction<span class="tsd-signature-symbol">: </span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a>, length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a new ray</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>origin: <a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>origin point</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<h5>direction: <a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>direction</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> length: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>length of the ray</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.ray.html" class="tsd-signature-type">Ray</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="direction" class="tsd-anchor"></a>
+						<h3>direction</h3>
+						<a href="/playground/?code=direction" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>direction</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="length" class="tsd-anchor"></a>
+						<h3>length</h3>
+						<a href="/playground/?code=length" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>length of the ray</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="origin" class="tsd-anchor"></a>
+						<h3>origin</h3>
+						<a href="/playground/?code=origin" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">origin<span class="tsd-signature-symbol">:</span> <a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>origin point</p>
+							</div>
+						</div>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectionsegment" class="tsd-anchor"></a>
+						<h3>intersection<wbr>Segment</h3>
+						<a href="/playground/?code=intersectionSegment" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersection<wbr>Segment<span class="tsd-signature-symbol">(</span>sega<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span>, segb<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span>, threshold<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Intersection test between the ray and a given segment whithin a given tolerance (threshold)</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>sega: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the first point of the segment to test the intersection against</p>
+										</div>
+									</li>
+									<li>
+										<h5>segb: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the second point of the segment to test the intersection against</p>
+										</div>
+									</li>
+									<li>
+										<h5>threshold: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the tolerance margin, if the ray doesn&#39;t intersect the segment but is close to the given threshold, the intersection is successful</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+								<p>the distance from the ray origin to the intersection point if there&#39;s intersection, or -1 if there&#39;s no intersection</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectsaxis" class="tsd-anchor"></a>
+						<h3>intersects<wbr>Axis</h3>
+						<a href="/playground/?code=intersectsAxis" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersects<wbr>Axis<span class="tsd-signature-symbol">(</span>axis<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, offset<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Calculate the intercept of a ray on a given axis</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>axis: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>to check &#39;x&#39; | &#39;y&#39; | &#39;z&#39;</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> offset: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>from axis interception (i.e. an offset of 1y is intercepted above ground)</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>a vector containing the coordinates where &#39;axis&#39; is equal to zero (else offset), or null if there is no intercept.</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectsbox" class="tsd-anchor"></a>
+						<h3>intersects<wbr>Box</h3>
+						<a href="/playground/?code=intersectsBox" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersects<wbr>Box<span class="tsd-signature-symbol">(</span>box<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.boundingbox.html" class="tsd-signature-type">BoundingBox</a><span class="tsd-signature-symbol">&gt;</span>, intersectionTreshold<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Checks if the ray intersects a box
+										This does not account for the ray lenght by design to improve perfs.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>box: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.boundingbox.html" class="tsd-signature-type">BoundingBox</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the bounding box to check</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> intersectionTreshold: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>extra extend to be added to the BoundingBox in all direction</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>if the box was hit</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectsboxminmax" class="tsd-anchor"></a>
+						<h3>intersects<wbr>Box<wbr>Min<wbr>Max</h3>
+						<a href="/playground/?code=intersectsBoxMinMax" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersects<wbr>Box<wbr>Min<wbr>Max<span class="tsd-signature-symbol">(</span>minimum<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span>, maximum<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span>, intersectionTreshold<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Checks if the ray intersects a box
+										This does not account for the ray lenght by design to improve perfs.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>minimum: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>bound of the box</p>
+										</div>
+									</li>
+									<li>
+										<h5>maximum: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>bound of the box</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> intersectionTreshold: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>extra extend to be added to the box in all direction</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>if the box was hit</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectsmesh" class="tsd-anchor"></a>
+						<h3>intersects<wbr>Mesh</h3>
+						<a href="/playground/?code=intersectsMesh" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersects<wbr>Mesh<span class="tsd-signature-symbol">(</span>mesh<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.abstractmesh.html" class="tsd-signature-type">AbstractMesh</a><span class="tsd-signature-symbol">&gt;</span>, fastCheck<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.pickinginfo.html" class="tsd-signature-type">PickingInfo</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Checks if ray intersects a mesh</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>mesh: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.abstractmesh.html" class="tsd-signature-type">AbstractMesh</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the mesh to check</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> fastCheck: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines if the first intersection will be used (and not the closest)</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.pickinginfo.html" class="tsd-signature-type">PickingInfo</a></h4>
+								<p>picking info of the intersecton</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectsmeshes" class="tsd-anchor"></a>
+						<h3>intersects<wbr>Meshes</h3>
+						<a href="/playground/?code=intersectsMeshes" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersects<wbr>Meshes<span class="tsd-signature-symbol">(</span>meshes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.abstractmesh.html" class="tsd-signature-type">AbstractMesh</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span>, fastCheck<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, results<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.pickinginfo.html" class="tsd-signature-type">PickingInfo</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.pickinginfo.html" class="tsd-signature-type">PickingInfo</a><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Checks if ray intersects a mesh</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>meshes: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.abstractmesh.html" class="tsd-signature-type">AbstractMesh</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the meshes to check</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> fastCheck: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines if the first intersection will be used (and not the closest)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> results: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.pickinginfo.html" class="tsd-signature-type">PickingInfo</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>array to store result in</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="babylon.pickinginfo.html" class="tsd-signature-type">PickingInfo</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>Array of picking infos</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectsplane" class="tsd-anchor"></a>
+						<h3>intersects<wbr>Plane</h3>
+						<a href="/playground/?code=intersectsPlane" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersects<wbr>Plane<span class="tsd-signature-symbol">(</span>plane<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.plane.html" class="tsd-signature-type">Plane</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Checks if ray intersects a plane</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>plane: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.plane.html" class="tsd-signature-type">Plane</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the plane to check</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>the distance away it was hit</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectssphere" class="tsd-anchor"></a>
+						<h3>intersects<wbr>Sphere</h3>
+						<a href="/playground/?code=intersectsSphere" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersects<wbr>Sphere<span class="tsd-signature-symbol">(</span>sphere<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.boundingsphere.html" class="tsd-signature-type">BoundingSphere</a><span class="tsd-signature-symbol">&gt;</span>, intersectionTreshold<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>If the ray hits a sphere</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>sphere: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.boundingsphere.html" class="tsd-signature-type">BoundingSphere</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the bounding sphere to check</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> intersectionTreshold: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>extra extend to be added to the BoundingSphere in all direction</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>true if it hits the sphere</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="intersectstriangle" class="tsd-anchor"></a>
+						<h3>intersects<wbr>Triangle</h3>
+						<a href="/playground/?code=intersectsTriangle" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">intersects<wbr>Triangle<span class="tsd-signature-symbol">(</span>vertex0<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span>, vertex1<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span>, vertex2<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IntersectionInfo</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>If the ray hits a triange</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>vertex0: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>triangle vertex</p>
+										</div>
+									</li>
+									<li>
+										<h5>vertex1: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>triangle vertex</p>
+										</div>
+									</li>
+									<li>
+										<h5>vertex2: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>triangle vertex</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IntersectionInfo</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>intersection information if hit</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="unprojectraytoref" class="tsd-anchor"></a>
+						<h3>unproject<wbr>Ray<wbr>ToRef</h3>
+						<a href="/playground/?code=unprojectRayToRef" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">unproject<wbr>Ray<wbr>ToRef<span class="tsd-signature-symbol">(</span>sourceX<span class="tsd-signature-symbol">: </span><a href="../globals.html#float" class="tsd-signature-type">float</a>, sourceY<span class="tsd-signature-symbol">: </span><a href="../globals.html#float" class="tsd-signature-type">float</a>, viewportWidth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, viewportHeight<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span>, view<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span>, projection<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Unproject a ray from screen space to object space</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>sourceX: <a href="../globals.html#float" class="tsd-signature-type">float</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the screen space x coordinate to use</p>
+										</div>
+									</li>
+									<li>
+										<h5>sourceY: <a href="../globals.html#float" class="tsd-signature-type">float</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the screen space y coordinate to use</p>
+										</div>
+									</li>
+									<li>
+										<h5>viewportWidth: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the current width of the viewport</p>
+										</div>
+									</li>
+									<li>
+										<h5>viewportHeight: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the current height of the viewport</p>
+										</div>
+									</li>
+									<li>
+										<h5>world: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the world matrix to use (can be set to Identity to go to world space)</p>
+										</div>
+									</li>
+									<li>
+										<h5>view: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the view matrix to use</p>
+										</div>
+									</li>
+									<li>
+										<h5>projection: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>defines the projection matrix to use</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="update" class="tsd-anchor"></a>
+						<h3>update</h3>
+						<a href="/playground/?code=update" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, viewportWidth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, viewportHeight<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span>, view<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span>, projection<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Update the ray from viewport position</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>x: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>position</p>
+										</div>
+									</li>
+									<li>
+										<h5>y: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>y position</p>
+										</div>
+									</li>
+									<li>
+										<h5>viewportWidth: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>viewport width</p>
+										</div>
+									</li>
+									<li>
+										<h5>viewportHeight: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>viewport height</p>
+										</div>
+									</li>
+									<li>
+										<h5>world: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>world matrix</p>
+										</div>
+									</li>
+									<li>
+										<h5>view: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>view matrix</p>
+										</div>
+									</li>
+									<li>
+										<h5>projection: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>projection matrix</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.ray.html" class="tsd-signature-type">Ray</a></h4>
+								<p>this ray updated</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="createnew" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Create<wbr>New</h3>
+						<a href="/playground/?code=CreateNew" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Create<wbr>New<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, viewportWidth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, viewportHeight<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, world<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span>, view<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span>, projection<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a new ray from screen space and viewport</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>x: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>position</p>
+										</div>
+									</li>
+									<li>
+										<h5>y: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>y position</p>
+										</div>
+									</li>
+									<li>
+										<h5>viewportWidth: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>viewport width</p>
+										</div>
+									</li>
+									<li>
+										<h5>viewportHeight: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>viewport height</p>
+										</div>
+									</li>
+									<li>
+										<h5>world: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>world matrix</p>
+										</div>
+									</li>
+									<li>
+										<h5>view: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>view matrix</p>
+										</div>
+									</li>
+									<li>
+										<h5>projection: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>projection matrix</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.ray.html" class="tsd-signature-type">Ray</a></h4>
+								<p>new ray</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="createnewfromto" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Create<wbr>New<wbr>From<wbr>To</h3>
+						<a href="/playground/?code=CreateNewFromTo" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Create<wbr>New<wbr>From<wbr>To<span class="tsd-signature-symbol">(</span>origin<span class="tsd-signature-symbol">: </span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a>, end<span class="tsd-signature-symbol">: </span><a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a>, world<span class="tsd-signature-symbol">?: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Function will create a new transformed ray starting from origin and ending at the end point. Ray&#39;s length will be set, and ray will be
+										transformed to the given world matrix.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>origin: <a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>The origin point</p>
+										</div>
+									</li>
+									<li>
+										<h5>end: <a href="babylon.vector3.html" class="tsd-signature-type">Vector3</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>The end point</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> world: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>a matrix to transform the ray to. Default is the identity matrix.</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.ray.html" class="tsd-signature-type">Ray</a></h4>
+								<p>the new ray</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="transform" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Transform</h3>
+						<a href="/playground/?code=Transform" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Transform<span class="tsd-signature-symbol">(</span>ray<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a><span class="tsd-signature-symbol">&gt;</span>, matrix<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Transforms a ray by a matrix</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>ray: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>ray to transform</p>
+										</div>
+									</li>
+									<li>
+										<h5>matrix: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>matrix to apply</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.ray.html" class="tsd-signature-type">Ray</a></h4>
+								<p>the resulting new ray</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="transformtoref" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Transform<wbr>ToRef</h3>
+						<a href="/playground/?code=TransformToRef" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Transform<wbr>ToRef<span class="tsd-signature-symbol">(</span>ray<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a><span class="tsd-signature-symbol">&gt;</span>, matrix<span class="tsd-signature-symbol">: </span><a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span>, result<span class="tsd-signature-symbol">: </span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Transforms a ray by a matrix</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>ray: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>ray to transform</p>
+										</div>
+									</li>
+									<li>
+										<h5>matrix: <a href="../globals.html#deepimmutable" class="tsd-signature-type">DeepImmutable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.matrix.html" class="tsd-signature-type">Matrix</a><span class="tsd-signature-symbol">&gt;</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>matrix to apply</p>
+										</div>
+									</li>
+									<li>
+										<h5>result: <a href="babylon.ray.html" class="tsd-signature-type">Ray</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>ray to store result in</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="zero" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Zero</h3>
+						<a href="/playground/?code=Zero" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Zero<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.ray.html" class="tsd-signature-type">Ray</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a ray with origin and direction of 0,0,0</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.ray.html" class="tsd-signature-type">Ray</a></h4>
+								<p>the new ray</p>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace">
+							<a href="babylon.ray.html" class="tsd-kind-icon">Ray</a>
+							<ul>
+								<li class=" tsd-kind-constructor tsd-parent-kind-class">
+									<a href="babylon.ray.html#constructor" class="tsd-kind-icon">constructor</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.ray.html#direction" class="tsd-kind-icon">direction</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.ray.html#length" class="tsd-kind-icon">length</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.ray.html#origin" class="tsd-kind-icon">origin</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectionsegment" class="tsd-kind-icon">intersection<wbr>Segment</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectsaxis" class="tsd-kind-icon">intersects<wbr>Axis</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectsbox" class="tsd-kind-icon">intersects<wbr>Box</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectsboxminmax" class="tsd-kind-icon">intersects<wbr>Box<wbr>Min<wbr>Max</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectsmesh" class="tsd-kind-icon">intersects<wbr>Mesh</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectsmeshes" class="tsd-kind-icon">intersects<wbr>Meshes</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectsplane" class="tsd-kind-icon">intersects<wbr>Plane</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectssphere" class="tsd-kind-icon">intersects<wbr>Sphere</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#intersectstriangle" class="tsd-kind-icon">intersects<wbr>Triangle</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#unprojectraytoref" class="tsd-kind-icon">unproject<wbr>Ray<wbr>ToRef</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.ray.html#update" class="tsd-kind-icon">update</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.ray.html#createnew" class="tsd-kind-icon">Create<wbr>New</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.ray.html#createnewfromto" class="tsd-kind-icon">Create<wbr>New<wbr>From<wbr>To</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.ray.html#transform" class="tsd-kind-icon">Transform</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.ray.html#transformtoref" class="tsd-kind-icon">Transform<wbr>ToRef</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.ray.html#zero" class="tsd-kind-icon">Zero</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

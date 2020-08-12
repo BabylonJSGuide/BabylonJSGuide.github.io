@@ -1,0 +1,441 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Blender - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Blender</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#features">Features:</a><ul>
+<li><a href="#scene">Scene</a></li>
+<li><a href="#world">World</a><ul>
+<li><a href="#blender-render">Blender Render</a></li>
+</ul>
+</li>
+<li><a href="#object">Object</a></li>
+<li><a href="#constraints">Constraints</a></li>
+<li><a href="#cameras">Cameras</a></li>
+<li><a href="#lights">Lights</a></li>
+<li><a href="#meshes">Meshes</a></li>
+<li><a href="#materials">Materials</a><ul>
+<li><a href="#general">General</a></li>
+<li><a href="#blender-render">Blender Render</a></li>
+<li><a href="#cycles-render">Cycles Render</a></li>
+</ul>
+</li>
+<li><a href="#textures">Textures</a><ul>
+<li><a href="#general">General</a></li>
+<li><a href="#blender-render">Blender Render</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#animation">Animation</a><ul>
+<li><a href="#commons-good-practices">Commons &amp; Good practices</a></li>
+<li><a href="#classic-animations">Classic Animations</a></li>
+<li><a href="#armatures">Armatures</a></li>
+</ul>
+</li>
+<li><a href="#try-it-out">Try it out!</a><ul>
+<li><a href="#example">Example</a><ul>
+<li><a href="#simple-scene">Simple scene</a></li>
+<li><a href="#animated-object">Animated object</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="blender-to-babylonjs-exporter" class="anchor" href="#blender-to-babylonjs-exporter"></a>Blender to Babylon.js exporter</h1><p>The Blender export plugin can be found on <a href="https://github.com/BabylonJS/BlenderExporter">github repository</a>. We assume your using the last version.</p>
+<p>Note that v6 is for Blender 2.8 (currently in beta), v5 for Blender 2.79b or below can be found in the <code>deprecated</code> folder.</p>
+<p>An extension named <a href="https://github.com/BabylonJS/Extensions/tree/master/QueuedInterpolation/Blender">Tower of Babel</a> can also be used as exporter. It exports JavaScript modules with in-line geometry and simplifies the loading process. See its readme or that of the <a href="https://github.com/BabylonJS/Extensions/tree/master/QueuedInterpolation">QueuedInterpolation</a> extension, which it is part of, to know more about its functionalities, and access its proper documentation.</p>
+<h2><a name="installation" class="anchor" href="#installation"></a>Installation</h2><p>This add-on use the standard Blender installation procedure:</p>
+<ul>
+<li>Download the <a href="https://github.com/BabylonJS/BlenderExporter">last version from github</a> (<em>Blender2Babylon-X.X.zip</em>, you don&#39;t need to unzip).</li>
+<li>In Blender, go to <code>File</code> menu &gt; <code>User Preferences</code>.</li>
+<li>Switch to the <code>Add-ons</code> tab.</li>
+<li>(optionnal) If you already have an old version installed, search for <em>Babylon.js</em> into the filter, expand infos of BabylonJS add-on and click <code>Remove</code> button.</li>
+<li>Click the <code>Install from File...</code> button at the bottom.</li>
+<li>Select the zip file and click the <code>Install Add-on from File...</code> button.</li>
+<li>Check the box to enable it.</li>
+<li>Click <code>Save User Settings</code> to enable it at every Blender launch.</li>
+</ul>
+<p><img src="img/exporters/blender/Blender2BabylonJS-installation.png" alt="blender user preferences"></p>
+<h2><a name="features" class="anchor" href="#features"></a>Features:</h2><h3><a name="scene" class="anchor" href="#scene"></a>Scene</h3><p><img src="img/exporters/blender/scene/scene-properties-panel.png" alt="Blender scene properties panel"></p>
+<table>
+<thead>
+<tr>
+<th>Blender</th>
+<th><a href="/api/classes/babylon.scene">BJS equivalent</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scene</br><img src="img/exporters/blender/scene/scene.png" alt="scene"></td>
+<td><ul><li>Camera: set scene activeCamera</li></ul></td>
+</tr>
+<tr>
+<td>Exporter panel</br><img src="img/exporters/blender/scene/exporter-scene-options.png" alt="exporter-scene-options"></td>
+<td><ul><li><code>Export</code>: <ul><li><code>All</code>: all the file will be exported</li><li><code>Selected</code>: only selection will be exported</li><li><code>Layers</code>: hidden layers will not be exported</li></ul></li><li><code>Max Decimal Precision</code>: how values are rounded during export</li></ul></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><a name="world" class="anchor" href="#world"></a>World</h3><p><img src="img/exporters/blender/world/world-properties-panel.png" alt="Blender world properties panel"></p>
+<h4><a name="blender-render" class="anchor" href="#blender-render"></a>Blender Render</h4><table>
+<thead>
+<tr>
+<th>Blender</th>
+<th><a href="/api/classes/babylon.scene">BJS equivalent</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>World</br><img src="img/exporters/blender/world/blender-render/world.png" alt="world-br"></td>
+<td><ul><li>Horizon Color: scene clearColor</li><li>Ambient Color: scene ambientColor</li></ul></td>
+</tr>
+<tr>
+<td>Exporter panel</br><img src="img/exporters/blender/world/blender-render/mist.png" alt="mist"></td>
+<td><ul><li>Mist: when Blender Render Mist is enabled, you have access to Fog Mode &amp; Fog Density parameters</li></ul></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><a name="object" class="anchor" href="#object"></a>Object</h3><p><img src="img/exporters/blender/object/object-properties-panel.png" alt="Blender object properties panel"></p>
+<table>
+<thead>
+<tr>
+<th>Blender</th>
+<th>BJS equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="img/exporters/blender/object/header.png" alt="header"></td>
+<td><ul><li>object name will be exported as it is</li></ul></td>
+</tr>
+<tr>
+<td>Transform</br><img src="img/exporters/blender/object/transform.png" alt="transform"></td>
+<td><ul><li>Position</li><li>Rotation<ul><li>XYZ Euler</li><li>Quaternion</li></ul></li><li>Scale<ul><li>do not forget to apply Scale before exporting: &#39;Ctrl&#39; + &#39;A&#39; &gt; &#39;Scale&#39;</li></ul></li></ul></td>
+</tr>
+<tr>
+<td>Relations</br><img src="img/exporters/blender/object/relations.png" alt="relations"></td>
+<td><ul><li>parenting is supported</li></ul></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><a name="constraints" class="anchor" href="#constraints"></a>Constraints</h3><p><img src="img/exporters/blender/constraints/constraints-properties-panel.png" alt="Blender constraints properties panel"></p>
+<table>
+<thead>
+<tr>
+<th>Blender</th>
+<th>BJS equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="img/exporters/blender/constraints/constraints.png" alt="constraints"></td>
+<td><ul><li>Track To: useful when using ArcRotate camera <a href="//doc.babylonjs.com/exporters/blender_tips#arcrotate">(tip)</a></li></ul></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><a name="cameras" class="anchor" href="#cameras"></a>Cameras</h3><p><img src="img/exporters/blender/cameras/cameras-properties-panel.png" alt="Blender cameras properties panel"></p>
+<table>
+<thead>
+<tr>
+<th>Blender</th>
+<th><a href="/api/classes/babylon.camera">BJS equivalent</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lens</br><img src="img/exporters/blender/cameras/lens.png" alt="lens"></td>
+<td><ul><li>Field of View: fov</li><li>Clipping: minZ &amp; maxZ</li></td>
+</tr>
+<tr>
+<td>Exporter panel</br><img src="img/exporters/blender/cameras/exporter-cameras-options.png" alt="exporter-cameras-options"></td>
+<td><ul><li>Camera Type, choose between:<ul><li>Arc Rotate <a href="//doc.babylonjs.com/exporters/blender_tips#arcrotate">(tip)</a></li><li>Device Orientation</li><li>Follow</li><li>Gamepad</li><li>Touch</li><li>Universal</li><li>Virtual Joysticks</li><li>VR Dev Orientation Free</li><li>Web VR Free</li></ul></li></ul></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><a name="lights" class="anchor" href="#lights"></a>Lights</h3><p><img src="img/exporters/blender/lights/lights-properties-panel.png" alt="Blender lights properties panel"></p>
+<table>
+<thead>
+<tr>
+<th>Blender</th>
+<th><a href="/api/classes/babylon.light">BJS equivalent</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lamp</br><img src="img/exporters/blender/lights/lamp.png" alt="lamp"></td>
+<td><ul><li>Sun as Directionnal, Area as Point, other named like in BJS</li><li>This Layer Only: <a href="/api/classes/babylon.light#includedonlymeshes-abstractmesh-classes-3-0-abstractmesh-">includedOnlyMeshes</a></li><li>when Sphere is checked, Distance value is exported as range</li></ul></td>
+</tr>
+<tr>
+<td>Spot Shape</br>(only available when light type is Spot)</br><img src="img/exporters/blender/lights/spot-shape.png" alt="spot-shape"></td>
+<td><ul><li>Size: Angle</li><li>Blend: value &#42; 2 = exponent</li></ul></td>
+</tr>
+<tr>
+<td>Exporter panel</br><img src="img/exporters/blender/lights/exporter-lights-options.png" alt="exporter-lights-options"></td>
+<td><ul><li>Shadow Map (only for directional lights):<ul><li>None</li><li>Standard</li><li>Poisson</li><li>ESM</li><li>Blur ESM</li></ul></li></ul></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="meshes" class="anchor" href="#meshes"></a>Meshes</h3><p><img src="img/exporters/blender/meshes/meshes-properties-panel.png" alt="Blender meshes properties panel"></p>
+<table>
+<thead>
+<tr>
+<th>Blender</th>
+<th><a href="/api/classes/babylon.mesh">BJS equivalent</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normals</br><img src="img/exporters/blender/meshes/normals.png" alt="normals"></td>
+<td>Auto Smooth is often use by Blender users, but is not supported.</br> Use an edge split modifier instead, see <a href="//doc.babylonjs.com/exporters/blender_tips#smooth-shading">tip</a>.</td>
+</tr>
+<tr>
+<td>UV Maps</br><img src="img/exporters/blender/meshes/uv-maps.png" alt="uv-maps"></td>
+<td><ul><li>UVMap: coordinatesIndex</li><li>limited to 2 channels</li></ul></td>
+</tr>
+<tr>
+<td>Vertex Colors</br><img src="img/exporters/blender/meshes/vertex-colors.png" alt="vertex-colors"></td>
+<td><ul><li>if multiples layers exist, they will be merge</li></ul></td>
+</tr>
+<tr>
+<td>Exporter panel</br><img src="img/exporters/blender/meshes/exporter-meshes-options.png" alt="exporter-meshes-options"></td>
+<td><ul><li><strong>Tags</strong>: allow using <a href="//doc.babylonjs.com/api/classes/babylon.scene#getmeshesbytags">scene.getMeshesByTags()</a></li><li><strong>Materials</strong>:<ul><li><strong>Name Space</strong>: automatically add a suffix to the mesh materials. Default is Blender filename.</li></ul></li><li><strong>Procedural Textures / Cycles Baking</strong>: texture baking settings when using procedural textures (Blender Render) or Cycles</li></ul></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><a name="materials" class="anchor" href="#materials"></a>Materials</h3><p><img src="img/exporters/blender/materials/materials-properties-panel.png" alt="Blender materials properties panel"></p>
+<h4><a name="general" class="anchor" href="#general"></a>General</h4><ul>
+<li>as you can notice in BJS mesh panel, materials will be suffixed by <em>.babylon</em> filename,</li>
+<li>other options can be found on this mesh panel, like max simultaneous lights, texture size for baking, etc,</li>
+<li>texture baking will be automatic when:<ul>
+<li>cycles render is the current render engine,</li>
+<li>procedural textures are used.</li>
+</ul>
+</li>
+</ul>
+<h4><a name="blender-render" class="anchor" href="#blender-render"></a>Blender Render</h4><table>
+<thead>
+<tr>
+<th>Blender</th>
+<th><a href="/api/classes/babylon.standardmaterial">BJS equivalent</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="img/exporters/blender/materials/header.png" alt="header"></td>
+<td><ul><li>multi-materials are supported</li></ul></td>
+</tr>
+<tr>
+<td>Diffuse</br><img src="img/exporters/blender/materials/diffuse.png" alt="diffuse"></td>
+<td><ul><li>color intensity is multiplied by intensity value</li></ul></td>
+</tr>
+<tr>
+<td>Specular</br><img src="img/exporters/blender/materials/specular.png" alt="specular"></td>
+<td><ul><li>color intensity is multiplied by intensity value</li><li>Hardness: specularPower</li></ul></td>
+</tr>
+<tr>
+<td>Shading</br><img src="img/exporters/blender/materials/shading.png" alt="shading"></td>
+<td><ul><li>Emit: diffuse color * value</li><li>Ambient: diffuse color * value</li></ul></td>
+</tr>
+<tr>
+<td>Transparency</br><img src="img/exporters/blender/materials/transparency.png" alt="transparency"></td>
+<td><ul><li>when enabled, set alpha value under <em>Z Transparency</em></li></ul></td>
+</tr>
+</tbody>
+</table>
+<h5><a name="specials" class="anchor" href="#specials"></a>Specials</h5><ul>
+<li>you can temporary switch to Blender Game to gain access to some materials settings:</li>
+</ul>
+<p><img src="img/exporters/blender/materials/blender-game.png" alt="blender-game"></p>
+<table>
+<thead>
+<tr>
+<th>Blender</th>
+<th><a href="/api/classes/babylon.standardmaterial">BJS equivalent</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Game Settings</br><img src="img/exporters/blender/materials/game-settings.png" alt="game-settings"></td>
+<td><ul><li>Backface culling: true by default</li><li>Face Orientation:<ul><li>Normal</li><li>Billboard</li></ul></li></ul></td>
+</tr>
+</tbody>
+</table>
+<h4><a name="cycles-render" class="anchor" href="#cycles-render"></a>Cycles Render</h4><table>
+<thead>
+<tr>
+<th>Blender</th>
+<th>BJS equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node Editor</br><img src="img/exporters/blender/materials/cycles-node01.png" alt="cycles node"></td>
+<td>Exporter will do automatic baking, and try to detect some nodes:</br> <ul><li>Diffuse BSDF</li><li>Ambient Occlusion</li></ul></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><a name="textures" class="anchor" href="#textures"></a>Textures</h3><p><img src="img/exporters/blender/textures/textures-properties-panel.png" alt="Blender textures properties panel"></p>
+<h4><a name="general" class="anchor" href="#general"></a>General</h4><ul>
+<li>Blender can handle packed images, even if their isn&#39;t source file on disk, but you have to unpack all before export,</li>
+<li>about automatic baking, see <a href="//doc.babylonjs.com/exporters/blender#materials">Materials</a>.</li>
+</ul>
+<h4><a name="blender-render" class="anchor" href="#blender-render"></a>Blender Render</h4><table>
+<thead>
+<tr>
+<th>Blender</th>
+<th>BJS equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="img/exporters/blender/textures/header.png" alt="header"></td>
+<td><ul><li>multiple textures can be assigned<ul><li>if two textures are assigned to the same Influence (see below), automatic baking will be used</li></ul></li><li>this name is only used in Blender</li></ul></td>
+</tr>
+<tr>
+<td>Texture Type</br><img src="img/exporters/blender/textures/type-image.png" alt="type-image"></td>
+<td><ul><li>as seen above, this name is only used in Blender<li><li>texture type:<ul><li>for image file, choose <em>Image or Movie</em></li><li>for procedural textures, choose any one but <em>voxel data</em>, <em>point density</em>, <em>ocean</em></li></ul></li></ul></td>
+</tr>
+<tr>
+<td>Image</br><img src="img/exporters/blender/textures/image.png" alt="image"></td>
+<td><ul><li>texture filename will be texture name in BJS</li></ul></td>
+</tr>
+<tr>
+<td>Image Sampling</br><img src="img/exporters/blender/textures/image-sampling.png" alt="image-sampling"></td>
+<td><ul><li>Use Alpha: hasAlpha</li></ul></td>
+</tr>
+<tr>
+<td>Image Mapping</br><img src="img/exporters/blender/textures/image-mapping.png" alt="image-mapping"></td>
+<td><ul><li>Extension: choosing <em>Clip</em> will set Wrap value to 0</li></ul></td>
+</tr>
+<tr>
+<td>Mapping</br><img src="img/exporters/blender/textures/mapping.png" alt="mapping"></td>
+<td><ul><li>Coordinates: choosing between <ul><li>UV: <a href="/api/classes/babylon.texture#static-explicit_mode-number">EXPLICIT_MODE</a></li><li>Reflection: by setting <em>Projection</em> to <em>Sphere</em>, you gain access to spheremaps through <a href="/api/classes/babylon.texture#static-spherical_mode-number">SPHERICAL_MODE</a></li></ul></li><li>Offset X and Y: <a href="/api/classes/babylon.texture#uoffset-number">uOffset</a> and <a href="/api/classes/babylon.texture#voffset-number">vOffset</a></li><li>Size X and Y: <a href="/api/classes/babylon.texture#uscale-number">uScale</a> and <a href="/api/classes/babylon.texture#vscale-number">vScale</a></li></ul></td>
+</tr>
+<tr>
+<td>Influence</br><img src="img/exporters/blender/textures/influence.png" alt="influence"></td>
+<td>Be sure to enable only one influence by texture, to avoid automatic baking.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><a name="animation" class="anchor" href="#animation"></a>Animation</h2><p>(<em>Note: this part is under construction. You can also check <a href="http://www.html5gamedevs.com/topic/36596-blender-exporter-doc-needs-feedback/">this forum thread</a> where some informations are centralised before it is written here.</em>)</p>
+<h3><a name="commons-amp-good-practices" class="anchor" href="#commons-good-practices"></a>Commons &amp; Good practices</h3><ul>
+<li>you should export one <em>.babylon</em> file per animated object to make your life easier (once in BJS, but also to handle the timeline in Blender). See <a href="//doc.babylonjs.com/exporters/blender_tips#Animation">tip</a> for a basic workflow.</li>
+<li>be sure, before starting animation in Blender, that your objects have their transformations applied! (3DView &gt; Object &gt; Apply)</li>
+</ul>
+<h3><a name="classic-animations" class="anchor" href="#classic-animations"></a>Classic Animations</h3><p>You will find an example on this <a href="//doc.babylonjs.com/examples/blender/animations/babylon-format.zip">.zip archive</a>. 3D sources files are on <code>sources</code> folder, BJS app is on <code>BJS</code> folder.</p>
+<p>In <code>sources</code>, we have our master scene, with only static objects (on the layer 1), and just for us to see it, we have the logo linked on the layer 6. When exporting, take care to have only layer 1 active, as we have checked in the <a href="//doc.babylonjs.com/resources/blender#scene">scene panel</a> <em>Export only selected layers</em>.</p>
+<p>Once exported, you can see in <code>BJS/index.html</code> that we create our main scene using this <code>.babylon</code>: line 36</p>
+<pre><code class="lang-html">BABYLON.SceneLoader.Load(&quot;&quot;, &quot;01.master-static-scene.babylon&quot;, engine, function (scene) {
+
+});
+</code></pre>
+<p>Same way for out animated object in <code>sources/02.classic-animation.blend</code>: layer 1 is for our object, layer 6 is just for us to see the main scene in our <em>.blend</em>. <em>Export only selected layers</em> is used to help us exporting only the first layer to babylon.</p>
+<p>Once exported, we can import our meshes inside the onSuccess of our Loader above. Check on <code>BJS/index.html</code>, line 64:</p>
+<pre><code class="lang-html">BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;&quot;, &quot;02.classic-animation.babylon&quot;, scene, function (importedMeshes){
+
+});
+</code></pre>
+<p>Now, you already have a basic scene with animations autoplaying in it.</p>
+<h3><a name="armatures" class="anchor" href="#armatures"></a>Armatures</h3><ul>
+<li>you can use any Blender rotation mode you want, the animation will be kind of baked during the export</li>
+</ul>
+<hr>
+<h2><a name="try-it-out" class="anchor" href="#try-it-out"></a>Try it out!</h2><p>Once your scene is exported, you have multiple solutions to test it:</p>
+<ul>
+<li>quick check it into the <a href="http://sandbox.babylonjs.com/">sandbox</a></li>
+<li>edit the file through the <a href="http://editor.babylonjs.com/">editor</a></li>
+<li>use the <a href="//doc.babylonjs.com/extensions/the_babylon_viewer">viewer</a></li>
+<li>script your own app using the <a href="/how_to/load_from_any_file_type">loader</a></li>
+</ul>
+<h3><a name="example" class="anchor" href="#example"></a>Example</h3><h4><a name="simple-scene" class="anchor" href="#simple-scene"></a>Simple scene</h4><p>Let&#39;s say you have exported your first scene. In this example we will use <a href="https://github.com/BabylonJS/MeshesLibrary/tree/master/BabylonJS-logo/v3">blend files of the BJS logo</a>:</p>
+<ul>
+<li>export the babylon into a folder</li>
+<li>create a file named <em>index.html</em>, and copy the code above:</li>
+</ul>
+<pre><code class="lang-html">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Default .babylon loading scene&lt;/title&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;!-- this link to the preview online version of BJS --&gt;
+    &lt;script src=&quot;https://preview.babylonjs.com/babylon.js&quot;&gt;&lt;/script&gt;
+    &lt;!-- this is needed for BJS to load scene files --&gt;
+    &lt;script src=&quot;https://preview.babylonjs.com/loaders/babylonjs.loaders.js&quot;&gt;&lt;/script&gt;
+    &lt;style&gt;
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: OpenSans, tahoma, arial, sans-serif;
+            color:white;
+        }
+
+        #canvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;canvas id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        var canvas = document.getElementById(&quot;canvas&quot;);
+        var engine = new BABYLON.Engine(canvas, true);
+
+        // here the doc for Load function: //doc.babylonjs.com/api/classes/babylon.sceneloader#load
+        BABYLON.SceneLoader.Load(&quot;&quot;, &quot;babylonJS_logo_v3.babylon&quot;, engine, function (scene) {
+
+            //as this .babylon example hasn&#39;t camera in it, we have to create one
+            var camera = new BABYLON.ArcRotateCamera(&quot;Camera&quot;, 1, 1, 4, BABYLON.Vector3.Zero(), scene);
+            camera.attachControl(canvas, false);
+
+            scene.clearColor = new BABYLON.Color3(1, 1, 1);
+            scene.ambientColor = new BABYLON.Color3.White;
+
+            engine.runRenderLoop(function() {
+                scene.render();
+            });
+
+            window.addEventListener(&quot;resize&quot;, function () {
+                engine.resize();
+            });
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+<p><img src="img/exporters/blender/babylon/babylon-BJS-default-folder-structure.png" alt="babylon default folder example"></p>
+<ul>
+<li>double-click on the <em>index.html</em> file... profit!<ul>
+<li>some browsers may not want loading the scene, for some security issues (e.g.: Chrome). In this case, you have to open the html file through a webserver (local or not), or try into another browser (e.g.: Firefox, Edge).</li>
+</ul>
+</li>
+</ul>
+<p><img src="img/exporters/blender/babylon/babylon-loaded.png" alt="blender babylon scene loaded in BJS"></p>
+<h4><a name="animated-object" class="anchor" href="#animated-object"></a>Animated object</h4></div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

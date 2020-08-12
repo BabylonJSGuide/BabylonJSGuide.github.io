@@ -1,0 +1,305 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Introduction to WebXR - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Introduction to WebXR</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#current-state">Current state</a></li>
+<li><a href="#device-and-browser-support">Device and browser support</a><ul>
+<li><a href="#pc">PC</a></li>
+<li><a href="#mobile-and-quest">Mobile and Quest</a></li>
+<li><a href="#polyfill">Polyfill</a></li>
+<li><a href="#the-webxr-emulator">The WebXR Emulator</a></li>
+</ul>
+</li>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#migrating-from-webvr">Migrating from WebVR</a><ul>
+<li><a href="#migrating-from-the-vr-experience-helper">Migrating from the VR Experience helper</a></li>
+<li><a href="#migrating-controller-support">Migrating controller support</a></li>
+<li><a href="#legacy-support">Legacy support</a></li>
+</ul>
+</li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div></div><div id="staticContent"><p>The WebXR API enables developers to create VR and AR experiences for the web. XR (Extended reality) has unified both Augmented Reality features and Virtual Reality features into a single API that works across all supported devices.</p>
+<h2><a name="current-state" class="anchor" href="#current-state"></a>Current state</h2><p>The <a href="https://immersive-web.github.io/webxr/">WebXR W3C Proposal</a> is currently in its draft phase. It is, however, already implemented in Chrome (check <a href="https://caniuse.com/#feat=webxr">caniuse.com</a> to know about others browsers). Starting with version 79, WebVR has been deprecated and WebXR is enabled by default. Earlier browser versions had WebXR behind a configuration flag. </p>
+<p>As the API continuously changes, it is difficult to keep up with feature changes. The latest chrome canary is notably the most XR-feature-complete browser and Google continuously updates the browser with new features. This is the main reason we introduced the <a href="./WebXR_Features_Manager">Features Manager</a>, which allows us to implement the newest version of official features with internal versioning without breaking backwards compatibility.</p>
+<p>Note that most of the time when we say WebXR, we actually mean WebXR <strong>in VR immersive mode</strong>. This is currently the most used mode of WebXR.</p>
+<h2><a name="device-and-browser-support" class="anchor" href="#device-and-browser-support"></a>Device and browser support</h2><h3><a name="pc" class="anchor" href="#pc"></a>PC</h3><p>Chrome 79 on windows officially supports WebXR with all <a href="https://en.wikipedia.org/wiki/Windows_Mixed_Reality">Microsoft Mixed Reality</a> Devices. Unofficially, WebXR is working well with the oculus SDK (Rift, Rift S, and Quest with Link). As of this writing, Oculus support is still behind a flag.</p>
+<h3><a name="mobile-and-quest" class="anchor" href="#mobile-and-quest"></a>Mobile and Quest</h3><p>WebXR is supported on Google Daydream using Chrome.</p>
+<p>WebXR AR features on Android&#39;s Chrome Browser (Stable and Canary) can be enabled behind a flag at <a href="chrome://flags">chrome://flags</a>, including AR features such as plane detection, hit-tests and anchors. Note that the AR features&#39; architecture is constantly changing, so expect different results from version to version.</p>
+<p>Oculus Quest supports WebXR (in VR mode) in the latest oculus browser. Babylon&#39;s specs implementation works well with the quest.</p>
+<p>No official iOS/iPhone support is planed at the moment. Mozilla has built the <a href="https://apps.apple.com/us/app/webxr-viewer/id1295998056">WebXR iOS Viewer</a> which is a (very) limited AR-oriented browser.</p>
+<h3><a name="polyfill" class="anchor" href="#polyfill"></a>Polyfill</h3><p>For older browsers that support WebVR but not WebXR you can use the <a href="https://github.com/immersive-web/webxr-polyfill">WebXR Polyfill</a> which is the WebXR API implementation using WebVR features. Some functions will not work (or will simply return without changes) but the basic functionality works well.</p>
+<p>Babylon does not intend on integrating the polyfill in the framework itself or in the playground. We encourage the developer to offer the polyfill to users not using a WebXR-Supported browser.</p>
+<p>To use the polyfill in the playground, please add the following to your playground (before &#39;createScene&#39;):</p>
+<pre><code class="lang-javascript">const xrPolyfillPromise = new Promise((resolve) =&gt; {
+    if (navigator.xr) {
+        return resolve();
+    }
+    define(&#39;polyfill&#39;, [&#39;https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js&#39;], (polyfill) =&gt; { new polyfill(); resolve(); });
+});
+</code></pre>
+<p>afterwards, make sure to <code>await</code> it before initializing WebXR:</p>
+<pre><code class="lang-javascript">const xrPolyfillPromise = new Promise((resolve) =&gt; {
+    if (navigator.xr) {
+        return resolve();
+    }
+    define(&#39;polyfill&#39;, [&#39;https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js&#39;], (polyfill) =&gt; { new polyfill(); resolve(); });
+});
+
+var createScene = async function () {
+    // wait for the polyfill to kick in
+    await xrPolyfillPromise;
+    console.log(navigator.xr); // should be there!
+    console.log(await BABYLON.WebXRSessionManager.IsSessionSupportedAsync(&#39;immersive-vr&#39;)) // should be true
+    // create your scene
+    var scene = new BABYLON.Scene(engine);
+    var camera = new BABYLON.DeviceOrientationCamera(&quot;DevOr_camera&quot;, new BABYLON.Vector3(-30, -30, -30), scene);
+    camera.setTarget(BABYLON.Vector3.Zero());
+    camera.attachControl(canvas, true);
+    var light = new BABYLON.HemisphericLight(&quot;light&quot;, new BABYLON.Vector3(0, 0, 0), scene);
+    scale = 100;
+    // initialize XR
+    var xr = await scene.createDefaultXRExperienceAsync();
+
+    return scene;
+};
+</code></pre>
+<p>If you experience low-resolution when using the polyfill, make sure to resize the canvas to a higher resolution. This is a limitation of WebVR (that required resizing the canvas) which we didn&#39;t integrate for WebXR.</p>
+<h3><a name="the-webxr-emulator" class="anchor" href="#the-webxr-emulator"></a>The WebXR Emulator</h3><p>If you are developing and don&#39;t want to constantly test on a real device, use mozilla&#39;s <a href="https://blog.mozvr.com/webxr-emulator-extension/">WebXR Emulator</a> which is available for <a href="https://chrome.google.com/webstore/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje">chrome</a> and <a href="https://addons.mozilla.org/firefox/addon/webxr-api-emulator">firefox</a>. We support it and actually use it during development. Highly recommended.</p>
+<h2><a name="getting-started" class="anchor" href="#getting-started"></a>Getting started</h2><p>The simplest way to get started is using a WebXR-enabled browser and add a single line of code to your scene:</p>
+<pre><code class="lang-javascript">const xr = scene.createDefaultXRExperienceAsync();
+</code></pre>
+<p>This will enable WebXR <strong>in VR immersive mode</strong>, including session init, input sources, the camera, teleportation and scene interactions. All using our <a href="./WebXR_Experience_Helpers#the-webxr-default-experience-helper">WebXR Default Experience Helper</a>.</p>
+<p>Note that the <code>xr</code> variable is a Promise. Using the async/await pattern will be simpler and more intuitive. It will also make sense to define floor meshes so we can define our ground and move on it. Here is a sphere in XR:</p>
+<pre><code class="lang-javascript">var createScene = async function() {
+
+    var scene = new BABYLON.Scene(engine);
+    var camera = new BABYLON.FreeCamera(&quot;camera1&quot;, new BABYLON.Vector3(0, 5, -10), scene);
+    camera.setTarget(BABYLON.Vector3.Zero());
+    camera.attachControl(canvas, true);
+    var light = new BABYLON.HemisphericLight(&quot;light1&quot;, new BABYLON.Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+    var sphere = BABYLON.Mesh.CreateSphere(&quot;sphere1&quot;, 16, 2, scene);
+    sphere.position.y = 1;
+
+    const env = scene.createDefaultEnvironment();
+
+    // here we add XR support
+    const xr = await scene.createDefaultXRExperienceAsync({
+        floorMeshes: [env.ground]
+    });
+
+    return scene;
+};
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#F41V6N">Sphere in WebXR using Babylon.js</a> - <i class="fa fa-eye" onclick="createIframe('F41V6N#', this)"></i><div class="iframeContainer"></div> playground link</p>
+<p>And that&#39;s it!</p>
+<p>Make sure to read more on the <a href="./WebXR_Experience_Helpers">WebXR Experience Helper</a> for further tips and tricks, and take a look at our <a href="./WebXR_Demos_and_Examples">Demos and examples</a> page.</p>
+<h2><a name="migrating-from-webvr" class="anchor" href="#migrating-from-webvr"></a>Migrating from WebVR</h2><p>WebVR is deprecated and will soon end its life in most if not all browsers. It is highly recommended to port all WebVR implementations to WebXR.</p>
+<h3><a name="migrating-from-the-vr-experience-helper" class="anchor" href="#migrating-from-the-vr-experience-helper"></a>Migrating from the VR Experience helper</h3><p>If you used our <a href="./WebVR_Helper">VR experience helper</a> remove the VR initializer and add the XR experience helper. So this:</p>
+<pre><code class="lang-javascript">var scene = new BABYLON.Scene(engine);
+var vrHelper = scene.createDefaultVRExperience();
+</code></pre>
+<p>turns to this:</p>
+<pre><code class="lang-javascript">var scene = new BABYLON.Scene(engine);
+var xrHelper = scene.createDefaultXRExperienceAsync();
+</code></pre>
+<p>The XR helper has full controller support per default, including interactions with the scene meshes, pointer events and more. Read more about the <a href="./WebXR_Experience_Helpers">XR Experience helper</a>.</p>
+<h3><a name="migrating-controller-support" class="anchor" href="#migrating-controller-support"></a>Migrating controller support</h3><p>Since WebXR controllers are no longer considered to be Gamepads the architecture is a bit different.</p>
+<p>The most important feature that was added is the full pointer events support for the controllers. The controllers support all pointer events, so you can use <a href="https://doc.babylonjs.com/how_to/interactions#pointer-interactions">Pointer interactions</a> just like you use to controller mouse interactions in your scene.</p>
+<p>It is also important to note that it is now possible to query what features the controller has and act accordingly.</p>
+<p>Here are the <strong>VR</strong> controllers&#39; most used functions, and how to get them to work in <strong>XR</strong>:</p>
+<pre><code class="lang-javascript">// On new controller attached:
+
+// WebVR:
+webvrCamera.onControllersAttached = (vrController) =&gt; {
+    // fun with the new controller, which is a gamepad!
+}
+
+// WebXR:
+const webXRInput = xr.input; // if using the experience helper, otherwise, an instance of WebXRInput
+input.onControllerAddedObservable.add((xrController /* WebXRInputSource instance */ ) =&gt; {
+    // more fun with the new controller, since we are in XR!
+    inputSource.onMotionControllerInitObservable.add((motionController) =&gt; {
+        // get the motionController, which is similar to but NOT a gamepad:
+
+    });
+    // xr supports all types of inputs, so some won&#39;t have a motion controller
+    if (!xrController.gamepad) {
+        // using touch, hands, gaze, something else?
+    }
+});
+
+// From this point we assume we have two variables: vrController and xrController.
+// We also assume motionController is present!
+
+// main button
+
+// WebVR:
+controller.onMainButtonStateChangedObservable.add((newState /* ExtendedGamepadButton */ ) =&gt; {
+    // is the button pressed?
+    if (newState.pressed) {
+        // Do something
+    }
+});
+
+// WebXR:
+// get the main component (decided by the controller&#39;s vendor!)
+const mainComponent = xrController.motionController.getMainComponent();
+// or get the trigger component, if present:
+const mainTrigger = xrController.motionController.getComponent(WebXRControllerComponent.TRIGGER);
+mainComponent.onButtonStateChanged.add((component /* WebXRControllerComponent */ ) =&gt; {
+    // check for changes:
+    // pressed changed?
+    if (component.changes.pressed) {
+        // is it pressed?
+        if (component.changes.pressed.current === true) {
+            // pressed
+        }
+        // or a different way:
+        if (component.pressed) {
+            // component is pressed.
+        }
+    }
+})
+
+// thumbpad / touchpad
+
+// in WebVR - you had to check what controller is being used, but in general this would work:
+vrController.onPadValuesChangedObservable.add(function(stateObject) {
+    console.log(stateObject); // {x: 0.1, y: -0.3}
+});
+
+// in webXR you can check if it is present and work accordingly:
+const thumbstick = xrController.motionController.getComponent(WebXRControllerComponent.THUMBSTICK);
+if (thumbstick) {
+    // Huzza! we have a thumbstick:
+    thumbstick.onButtonStateChanged // will trigger when the thumbstick is PRESSED or touched!
+
+    thumbstick.onAxisValueChanged // will trigger when axes of the thumbstick changed
+}
+
+// touchpad
+
+// in WebVR we had &quot;pad&quot; concept which was for both thumbstick and touchpad
+controller.onPadValuesChangedObservable.add(function(stateObject) {
+    console.log(stateObject); // {x: 0.1, y: -0.3}
+});
+
+// in WebXR, it is much much better:
+const touchpad = xrController.motionController.getComponent(WebXRControllerComponent.TOUCHPAD);
+if (touchpad) {
+    // Finally, a controller with a touchpad
+    touchpad.onButtonStateChanged // will trigger when the touchpad is touched or pressed
+
+    touchpad.onAxisValueChanged // will trigger when axes of the touchpad changed
+}
+</code></pre>
+<p>Read more about the <a href="./WebXR_Controllers_Support">XR Controllers system</a>.</p>
+<h3><a name="legacy-support" class="anchor" href="#legacy-support"></a>Legacy support</h3><p>Thou we always encourage backwards compatibility <strong>We recommend using WebXR directly</strong> and stop using the WebVR experience helper. However:</p>
+<p>The latest WebVR Experience helper has a new flag in its init options - <code>useXR</code> . This will check for XR support and will launch the VR session in WebXR, if possible. A working example can be found in <a href="https://www.babylonjs-playground.com/#TAFSN0#323">the WebVR color-picker demo</a> - <i class="fa fa-eye" onclick="createIframe('TAFSN0#323', this)"></i><div class="iframeContainer"></div>:</p>
+<pre><code class="lang-javascript">var createScene = function() {
+    // Create scene
+    var scene = new BABYLON.Scene(engine);
+
+    // Create simple sphere
+    var sphere = BABYLON.Mesh.CreateIcoSphere(&quot;sphere&quot;, {
+        radius: 0.2,
+        flat: true,
+        subdivisions: 1
+    }, scene);
+    sphere.position.y = 3;
+    sphere.material = new BABYLON.StandardMaterial(&quot;sphere material&quot;, scene)
+
+    // Lights and camera
+    var light = new BABYLON.DirectionalLight(&quot;light&quot;, new BABYLON.Vector3(0, -0.5, 1.0), scene);
+    light.position = new BABYLON.Vector3(0, 5, -2);
+    var camera = new BABYLON.ArcRotateCamera(&quot;camera&quot;, -Math.PI / 2, Math.PI / 4, 3, new BABYLON.Vector3(0, 3, 0), scene);
+    camera.attachControl(canvas, true);
+    scene.activeCamera.beta += 0.8;
+
+    // Default Environment
+    var environment = scene.createDefaultEnvironment({
+        enableGroundShadow: true,
+        groundYBias: 2.8
+    });
+    environment.setMainColor(BABYLON.Color3.FromHexString(&quot;#74b9ff&quot;))
+
+    // Shadows
+    var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
+    shadowGenerator.useBlurExponentialShadowMap = true;
+    shadowGenerator.blurKernel = 32;
+    shadowGenerator.addShadowCaster(sphere, true);
+
+    // Enable VR, use XR when possible
+    var vrHelper = scene.createDefaultVRExperience({
+        createDeviceOrientationCamera: false,
+        useXR: true, // This will enable XR if supported
+        floorMeshes: [environment.ground]
+    });
+
+    // Runs every frame to rotate the sphere
+    scene.onBeforeRenderObservable.add(() =&gt; {
+        sphere.rotation.y += 0.0001 * scene.getEngine().getDeltaTime();
+        sphere.rotation.x += 0.0001 * scene.getEngine().getDeltaTime();
+    })
+
+    // GUI
+    var plane = BABYLON.Mesh.CreatePlane(&quot;plane&quot;, 1);
+    plane.position = new BABYLON.Vector3(0.4, 4, 0.4)
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
+    var panel = new BABYLON.GUI.StackPanel();
+    advancedTexture.addControl(panel);
+    var header = new BABYLON.GUI.TextBlock();
+    header.text = &quot;Color GUI&quot;;
+    header.height = &quot;100px&quot;;
+    header.color = &quot;white&quot;;
+    header.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+    header.fontSize = &quot;120&quot;
+    panel.addControl(header);
+    var picker = new BABYLON.GUI.ColorPicker();
+    picker.value = sphere.material.diffuseColor;
+    picker.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+    picker.height = &quot;350px&quot;;
+    picker.width = &quot;350px&quot;;
+    // This will work in XR, since we are using native pointer events!
+    picker.onValueChangedObservable.add(function(value) {
+        sphere.material.diffuseColor.copyFrom(value);
+    });
+    panel.addControl(picker);
+
+    vrHelper.onAfterEnteringVRObservable.add(() =&gt; {
+        // This callback will still work! Would be better to use the XR native observables.
+    })
+
+    return scene;
+};
+</code></pre>
+<p>The color picker works since it is using the pointer architecture. If XR is present, XR will be used. Otherwise, it will use WebVR as a fallback.</p>
+<p>Note that some features will not work correctly or will not work at all. For example, camera gaze will not work at all. Controller will work, but since the interaction architecture is different, it is highly likely you will need to adjust a few observers in order to get it to work, especially if there are VR-specific callbacks.</p>
+<p>We recommend using the WebXR polyfill instead.</p>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further reading</h2><ol>
+<li><a href="./WebXR_Demos_and_Examples">Demos and Examples</a></li>
+<li><a href="./WebXR_Experience_Helpers">The WebXR Experience Helper</a></li>
+<li><a href="./WebXR_Session_Manager">The Session Manager</a></li>
+<li><a href="./WebXR_Camera">The WebXR Camera</a></li>
+<li><a href="./WebXR_Controllers_Support">WebXR Input Sources and Controller support</a></li>
+<li><a href="./WebXR_Features_Manager">Features Manager and available features</a></li>
+<li><a href="./WebXR_Selected_Features">Selected WebXR Features</a></li>
+<li><a href="./WebXR_Augmented_Reality">Augmented Reality</a></li>
+<li>Advanced usage, troubleshooting, tips and tricks</li>
+</ol>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

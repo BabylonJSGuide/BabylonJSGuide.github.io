@@ -1,0 +1,151 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Multiple Scenes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Multiple Scenes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#switch-scenes">Switch Scenes</a></li>
+<li><a href="#overlay-multiple-scenes">Overlay Multiple Scenes</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-multiple-scenes" class="anchor" href="#how-to-use-multiple-scenes"></a>How to Use Multiple Scenes</h1><p>To use multiple scenes create them with </p>
+<pre><code class="lang-javascript">var scene0 = new BABYLON.Scene(engine);
+var scene1 = new BABYLON.Scene(engine);
+</code></pre>
+<p>then put the relevant camera, lights and meshes inside each scene and call them in the engine run render loop</p>
+<pre><code class="lang-javascript">engine.runRenderLoop(function () {
+  scene0.render();
+  scene1.render();
+});
+</code></pre>
+<p>When you want the meshes of both scenes to be visible at the same time then set the &#39;autoClear&#39; of scene1 (the last rendered scene(s)) to false.</p>
+<p>However there is a difference between writing multiple scenes within your own projects and trying them out in the playground.</p>
+<p>In your own project it is easy enough to set up create scene functions for each scene and call them in the engine run render loop. For example</p>
+<pre><code class="lang-javascript">var createScene0 = function () {
+    var scene0 = new BABYLON.Scene(engine);
+
+    //Add camera, light and meshes for scene0
+
+    return scene0;
+}
+
+var createScene1 = function () {
+    var scene1 = new BABYLON.Scene(engine);
+
+    //Add camera, light and meshes for scene1
+
+    return scene1;
+}
+
+//Any other code
+var scene0 = createScene0();
+var scene1 = createScene1();
+
+engine.runRenderLoop(function () {
+  scene0.render();
+  scene1.render();
+});
+</code></pre>
+<p>In the playground the create scene function is wrapped by the code running the playground and so the easiest method is just to create a new scene within the function and add a camera, light and meshes to it. Also the playground has its own engine run render loop which needs to be stopped before running your own version, the trick is to use a setTimeout. Putting these together playground code can look like this example</p>
+<pre><code class="lang-javascript">var createScene = function () {
+    var scene = new BABYLON.Scene(engine);
+
+    //Add camera, light and meshes for scene
+
+    ////////OTHER SCENE////////////////////
+    var scene1 = new BABYLON.Scene(engine);
+
+    //Add camera, light and meshes for scene
+
+    ////////CONTROL ENGINE LOOP///////////
+    setTimeout(function() {
+        engine.stopRenderLoop();
+
+        engine.runRenderLoop(function () {
+            scene.render();
+            scene1.render();
+        });
+    }, 500);
+
+    return scene;
+}
+</code></pre>
+<h2><a name="switch-scenes" class="anchor" href="#switch-scenes"></a>Switch Scenes</h2><p>You might want a user to be able to switch between scenes, remember that the Babylon GUI is a good way to set triggers for this to be possible. </p>
+<p>An example of one way to do this is</p>
+<pre><code class="lang-javascript">var clicks = 0;
+var showScene = 0;
+var advancedTexture;
+
+
+var createGUI = function(scene, showScene) {             
+    switch (showScene) {
+        case 0:            
+            advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(&quot;UI&quot;, true, scene0);
+        break
+        case 1:            
+            advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(&quot;UI&quot;, true, scene1);
+        break
+    }
+    var button = BABYLON.GUI.Button.CreateSimpleButton(&quot;but&quot;, &quot;Scene &quot; + ((clicks + 1) % 2));
+    button.width = 0.2;
+    button.height = &quot;40px&quot;;
+    button.color = &quot;white&quot;;
+    button.background = &quot;green&quot;;
+    button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP
+    advancedTexture.addControl(button);
+
+
+    button.onPointerUpObservable.add(function () {       
+        clicks++;                   
+    });
+}  
+
+createGUI(scene, showScene);
+
+engine.runRenderLoop(function () {
+    if(showScene != (clicks % 2)){
+        showScene = clicks % 2;          
+        switch (showScene) {
+            case 0:                    
+                advancedTexture.dispose();
+                createGUI(scene0, showScene);
+                scene0.render();
+            break
+            case 1:
+                advancedTexture.dispose();
+                createGUI(scene1, showScene);
+                scene1.render();
+            break
+        }
+    }
+}); 
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#MXCRPS#1">Playground Example - Switch Scenes</a> - <i class="fa fa-eye" onclick="createIframe('MXCRPS#1', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="overlay-multiple-scenes" class="anchor" href="#overlay-multiple-scenes"></a>Overlay Multiple Scenes</h2><p>Suppose you want a first person shooter type project with a 3D foreground representing the user and then a background scene representing what the user is tracking. In this case you want the meshes in both the foreground and background visible. To do this you want the foreground meshes drawn over the background, that is you do not want the render canvas cleared when rendering the foreground. In this case set &#39;autoClear&#39; to false </p>
+<pre><code class="lang-javascript">
+//other code
+
+var foregroundScene = new BABYLON.Scene(engine);
+foregroundScene.autoClear = false;
+
+//other code
+
+engine.runRenderLoop(function () {
+  backgroundScene.render();
+  foregroundScene.render();
+});
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#L0IMUD#1">Playground Example Overlay Scenes</a> - <i class="fa fa-eye" onclick="createIframe('L0IMUD#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

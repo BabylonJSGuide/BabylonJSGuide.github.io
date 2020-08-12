@@ -1,0 +1,785 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Solid Particle System - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Solid Particle System</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#basic-usage">Basic Usage</a><ul>
+<li><a href="#sps-creation">SPS Creation</a></li>
+<li><a href="#particle-management">Particle Management</a></li>
+<li><a href="#sps-management">SPS Management</a></li>
+</ul>
+</li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#advanced-features">Advanced Features</a><ul>
+<li><a href="#create-an-immutable-sps">Create an immutable SPS</a></li>
+<li><a href="#start-and-end-indexes-for-setparticles">Start and End indexes for setParticles()</a></li>
+<li><a href="#colors-and-uvs">Colors and UVs</a></li>
+<li><a href="#particle-parenting">Particle parenting</a></li>
+<li><a href="#update-each-particle-shape">Update Each Particle Shape</a></li>
+<li><a href="#pickable-particles">Pickable Particles</a></li>
+<li><a href="#digest-a-mesh">Digest a Mesh</a></li>
+<li><a href="#sps-visibility">SPS Visibility</a></li>
+<li><a href="#transparency-concerns">Transparency Concerns</a></li>
+<li><a href="#particle-intersections">Particle Intersections</a></li>
+<li><a href="#particle-in-frustum">Particle In Frustum</a></li>
+<li><a href="#create-an-expandable-sps">Create an expandable SPS</a></li>
+<li><a href="#different-materials">Different Materials</a></li>
+<li><a href="#garbage-collector-concerns">Garbage Collector Concerns</a></li>
+<li><a href="#rebuild-the-mesh">Rebuild the mesh</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#intermediate-l2">Intermediate - L2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="solid-particle-system-sps" class="anchor" href="#solid-particle-system-sps"></a>Solid Particle System (SPS)</h1><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>The SPS is a single updatable mesh. The solid particles are simply separate parts or faces for this big mesh.<br>As it is just a mesh, the SPS has all the same properties than any other BJS mesh : not more, not less. It can be scaled, rotated, translated, enlighted, textured, moved, etc.</p>
+<p>The SPS is also a particle system. It provides some methods to manage the particles.<br>However it is behavior agnostic. This means it has no emitter, no particle physics, no particle recycler. You have to implement your own behavior.</p>
+<p>The particles can be built from any BJS existing mesh as a model. Actually, each particle is a copy of some BJS mesh geometry : vertices, indices, uvs.</p>
+<p>The expected usage is this one :</p>
+<ul>
+<li>First, create your SPS with <code>new SolidParticleSystem()</code>.</li>
+<li>Then, add particles in the SPS from a mesh model with <code>addShape(model, number)</code>.</li>
+<li>Redo this as many times as needed with any model.</li>
+<li>When done, build the SPS mesh with <code>buildMesh()</code>.</li>
+</ul>
+<p>Your SPS is then ready to manage particles. So now :</p>
+<ul>
+<li>Init all your particles : set their positions, colors, uvs, age, etc with <code>initParticles()</code></li>
+<li>Call <code>setParticles()</code> to update the SPS mesh and to draw it.</li>
+<li>If your particles have to be animated, define their individual behavior in <code>updateParticle(particle)</code> and just call <code>setParticles()</code> within the render loop.</li>
+</ul>
+<h2><a name="basic-usage" class="anchor" href="#basic-usage"></a>Basic Usage</h2><h3><a name="sps-creation" class="anchor" href="#sps-creation"></a>SPS Creation</h3><p>First you create an empty SPS and you add particles to it with the <code>addShape(mesh, nb)</code> method as many times you need.<br>Its underlying mesh name will be the SPS name.</p>
+<p>Then you build the mesh.<br>Example :</p>
+<pre><code class="lang-javascript">var SPS = new SolidParticleSystem(&quot;SPS&quot;, scene);
+var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;s&quot;, {}, scene);
+var poly = BABYLON.MeshBuilder.CreatePolyhedron(&quot;p&quot;, { type: 2 }, scene);
+SPS.addShape(sphere, 20); // 20 spheres
+SPS.addShape(poly, 120); // 120 polyhedrons
+SPS.addShape(sphere, 80); // 80 other spheres
+sphere.dispose();
+poly.dispose();
+
+var mesh = SPS.buildMesh(); // finally builds and displays the real mesh
+</code></pre>
+<p>Now your SPS is visible as it is just built.<br>If just want to create immutable things (not moving, not rotating, not changing their colors, etc) set somewhere in your scene, you would probably stop here.</p>
+<p>However the SPS is ready to get a behavior.<br>Once the behavior will be given (or not), you actually display the particles at their current updated positions with current properties with :</p>
+<pre><code class="lang-javascript">SPS.billboard = true; // or false by default
+SPS.setParticles();
+</code></pre>
+<p><code>SPS.billboard</code> is a boolean (default <em>false</em>). If set to <em>true</em>, all the particles will face the cam and their _x_ and _y_ rotation values will be ignored.<br>This is rather useful if you display only plane particles. However, if you deal only with 2D particles you should consider to use the <a href="/babylon101/particles">BJS Particle System</a> or the <a href="/babylon101/sprites">Sprite Manager</a> which are more performant in 2D computation.<br>In order to display the SPS in billboard mode, you need to call <code>SPS.setParticles()</code> within the <code>scene.registerBeforeRender()</code> function.</p>
+<p>Here is an example with plane particles in billboard mode : <a href="https://www.babylonjs-playground.com/#WCDZS#7">https://www.babylonjs-playground.com/#WCDZS#7</a> - <i class="fa fa-eye" onclick="createIframe('WCDZS#7', this)"></i><div class="iframeContainer"></div><br>The same but with plane particle rotations and no billboard mode : <a href="https://www.babylonjs-playground.com/#WCDZS#1">https://www.babylonjs-playground.com/#WCDZS#1</a> - <i class="fa fa-eye" onclick="createIframe('WCDZS#1', this)"></i><div class="iframeContainer"></div><br>The same with solid particles, boxes and tetrahedrons : <a href="https://www.babylonjs-playground.com/#WCDZS#2">https://www.babylonjs-playground.com/#WCDZS#2</a> - <i class="fa fa-eye" onclick="createIframe('WCDZS#2', this)"></i><div class="iframeContainer"></div><br>Another one with colors and rotations : <a href="https://www.babylonjs-playground.com/#2FPT1A#9">https://www.babylonjs-playground.com/#2FPT1A#9</a> - <i class="fa fa-eye" onclick="createIframe('2FPT1A#9', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="particle-management" class="anchor" href="#particle-management"></a>Particle Management</h3><p>The <code>setParticles()</code> function can be used in the BJS render loop.<br>It is mandatory to use this function to update and display the mesh.</p>
+<p>You can give your SPS a behavior by setting some custom functions :</p>
+<ul>
+<li><strong><code>initParticles()</code></strong> : lets you set all the initial particle properties. You must iterate over all the particles by using the <code>SPS.nbParticles</code> property. The usage of this function is not mandatory.</li>
+<li><strong><code>recycleParticle(particle)</code></strong> : lets you set a particle to be recycled. It is called per particle. The usage of this function is not mandatory.</li>
+<li><strong><code>updateParticle(particle)</code></strong> : lets you set the particle properties. This function is called per particle by <code>SPS.setParticles()</code>. The usage of this function is not mandatory.</li>
+<li><strong><code>beforeUpdateParticles()</code></strong> : lets you make things within the call to <code>SPS.setParticles()</code> just before iterating over all the particles. The usage of this function is not mandatory.</li>
+<li><strong><code>afterUpdateParticles()</code></strong> : lets you make things within the call to <code>SPS.setParticles()</code> just after the iteration over all the particles is done. The usage of this function is not mandatory.
+-</li>
+</ul>
+<p>So to better understand how it works, here is a pseudo-code schema :</p>
+<pre><code class="lang-javascript">var particles: SolidParticles[] = [array of SolidParticle objects];
+function setParticles() {
+    beforeUpdateParticles();                 // custom function
+    for (var p = 0; p &lt; nbParticles; p++) {
+        updateParticles(particles[p]);         // custom function
+    }
+    updateTheWholeMesh();                   // does the WebGL work
+    afterUpdateParticles();                 // custom function
+}
+</code></pre>
+<p>So you could call <code>recycleParticle(particle)</code> in your own `updateParticle(particle)è function for instance :</p>
+<pre><code class="lang-javascript">SPS.updateParticle = function(particle) {
+  particle.velocity--;
+  if (particle.velocity &lt; 0) {
+    particle.alive = false;
+    SPS.recycleParticle(particle); // call to your own recycle function
+  }
+};
+</code></pre>
+<p>The particle properties that can be set are :</p>
+<ul>
+<li><strong><code>position</code></strong> : Vector3 default = (0, 0, 0)</li>
+<li><strong><code>rotation</code></strong> : Vector3 default = (0, 0, 0)</li>
+<li><strong><code>rotationQuaternion</code></strong> : Vector3 default = undefined</li>
+<li><strong><code>velocity</code></strong> : Vector3 default = (0, 0, 0)</li>
+<li><strong><code>color</code></strong> : Vector4 default = (1, 1, 1, 1)</li>
+<li><strong><code>scaling</code></strong> : Vector3 default = (1, 1, 1)</li>
+<li><strong><code>pivot</code></strong> : Vector3 default = (0, 0, 0)</li>
+<li><strong><code>uvs</code></strong> : Vector(4) default = (0,0, 1,1)</li>
+<li><strong><code>isVisible</code></strong> : boolean default = true</li>
+<li><strong><code>alive</code></strong> : boolean default = true</li>
+<li><strong><code>translateFromPivot</code></strong> : boolean default = false</li>
+<li><strong><code>parentId</code></strong> : integer, default = null  </li>
+<li><strong><code>props</code></strong>: any, default = null</li>
+</ul>
+<p>If you set a particle rotation quaternion, its rotation property will then be ignored.<br>If you set your SPS in billboard mode, you should only set a <code>rotation.z</code> value.</p>
+<p>Please note that all positions are expressed in the mesh <strong>local space</strong> and not in the World space.<br>The particle <code>pivot</code> vector is the translation applied to the particle in its local space just before it is rotated. The rotation is always computed around the local space origin. This property is used like a translation matrix that you would apply to some mesh pivot matrix. By default, the particle is translated, then rotated, then translated back to its original location unless you set the particle property <code>.translateFromPivot</code> to <code>true</code> (default <code>false</code>). In this case, it&#39;s simply translated, then rotated and left at the translated location.<br>Example : <a href="https://playground.babylonjs.com/#LXXL6Y#1">https://playground.babylonjs.com/#LXXL6Y#1</a> - <i class="fa fa-eye" onclick="createIframe('LXXL6Y#1', this)"></i><div class="iframeContainer"></div><br>1000 tetrahedron satellites orbiting around 1000 rotating boxes.<br>Please note also that, even a particle is invisible (<em>isVisible</em> set to <em>false</em>), its other property values can be updated and <code>updateParticle()</code> is called for every particle whatever it is visible or not.</p>
+<p>In JavaScript, you can obviously also create your own properties like <em>acceleration: Vector3</em> or <em>age</em>, in <code>initParticles()</code> for instance.  </p>
+<pre><code class="lang-javascript">SPS.initParticles = function() {
+  for (var p = 0; p &lt; SPS.nbParticles; p++) {
+    particles[p].age = Math.random() * 20;
+  }
+};
+</code></pre>
+<p>If you use TypeScript (or JavaScript), you can associate your own properties to each particle with the property <code>props</code> typed <code>any</code> and <code>null</code> by default :</p>
+<pre><code class="lang-javascript">particle.props = {myProp1: val1, myProp2: val2};
+</code></pre>
+<p>You may also access to some read-only properties :</p>
+<ul>
+<li><strong><code>idx</code></strong> : particle index</li>
+<li><strong><code>shapeId</code></strong> : shape model ID</li>
+</ul>
+<p>Actually each time you call the <code>SPS.addShape()</code> method, the related newly created particle set shapeID is returned.</p>
+<pre><code class="lang-javascript">var plane = BABYLON.MeshBuilder.CreatePlane(&quot;&quot;, {}, scene);
+var quadsID = SPS.addShape(plane, 20);
+</code></pre>
+<p>This is usefull if you want to apply a given behavior to some particle types only.<br><br/></p>
+<h3><a name="sps-management" class="anchor" href="#sps-management"></a>SPS Management</h3><p>You have access to some SPS properties :</p>
+<ul>
+<li><strong><code>SPS.particles</code></strong> : this is the array containing all the particles. You should iterate over this array in <code>initParticles()</code> function for instance.</li>
+<li><strong><code>SPS.nbParticles</code></strong> : this is number of particles in the SPS.</li>
+<li><strong><code>SPS.counter</code></strong> : this is a counter for your own usage. It&#39;s not set by any SPS default functions.</li>
+</ul>
+<p>Here again, you can add your own properties like <em>capacity</em> or <em>rate</em> if needed.</p>
+<p>If you don&#39;t need some given features (ex : particle colors), you can disable/enable them at any time (disabling a feature will improve the performance) :</p>
+<pre><code class="lang-javascript">SPS.computeParticleRotation = false; // prevents from computing particle.rotation
+SPS.computeParticleTexture = false; // prevents from computing particle.uvs
+SPS.computeParticleColor = false; // prevents from computing particle.color
+SPS.computeParticleVertex = false; // prevents from calling the custom updateParticleVertex() function
+</code></pre>
+<p>All these properties, except <code>SPS.computeParticleVertex</code>, are enabled set to <em>true</em> by default. These affect the <code>SPS.setParticles()</code> process only.<br>If these properties are set to <em>false</em>, they don&#39;t prevent from using the related feature (ie : the particles can still have a color even if <code>SPS.computeParticleColor</code> is set to <em>false</em>), they just prevent from updating the value of the particle property on the next <code>setParticle()</code> call.<br>Example : if your particles have colors, you can set their colors wihtin the <code>initParticles()</code> call and you can call then once the <code>setParticles()</code> method to set these colors. If you need to animate them later on and these colors don&#39;t change, just set then <code>SPS.computeParticleColor</code> to <em>false</em> once before runing the render loop which will call <code>setParticles()</code> each frame.<br>If you are familiar with how BJS works, you could compare the SPS and its mesh creation to some classical BJS mesh creation (vertex and indice settings) and the particle management to the World Matrix computation (rotation, scaling, positioning).</p>
+<p>Note you can also use the standard BJS mesh <em>freezeXXX()</em> methods if the SPS mesh is immobile or if the normals aren&#39;t needed :</p>
+<pre><code class="lang-javascript">SPS.mesh.freezeWorldMatrix(); // prevents from re-computing the World Matrix each frame
+SPS.mesh.freezeNormals(); // prevents from re-computing the normals each frame
+</code></pre>
+<p>If you don&#39;t need your SPS any longer, you can dispose it to free the memory</p>
+<pre><code class="lang-javascript">SPS.dispose();
+SPS = null; // tells the GC the reference can be cleaned up also
+</code></pre>
+<h2><a name="summary" class="anchor" href="#summary"></a>Summary</h2><p>The SPS is behavior-agnostic. This means it doesn&#39;t know how the particles will move, rotate, if they have a mass, if there are forces, etc. You have to see it like a big mesh that you can create (<code>buildMesh</code>) from many shape models, some BJS existing meshes, (<code>addShape</code>) that will be its solid particles. It provides some methods to access then and to manage these solid particles.</p>
+<p>So the initial stuff to do is to create the SPS, then to add as many shapes you need and at last to build the SPS mesh.</p>
+<p>Once you&#39;ve done it, you need to manage your solid particles.</p>
+<p>The way to fix the particle status and then to display them at this status is to call <code>SPS.setParticles()</code>.<br>Each time you call <code>setParticles()</code> the particles are rendered at their current status. Easy, isn&#39;t it ?</p>
+<p>So three steps :</p>
+<ul>
+<li>SPS and its mesh creation</li>
+<li>compute your particle behavior</li>
+<li>call setParticles() to update the mesh and draw it</li>
+</ul>
+<p>Just remember that, once the mesh is build, only <strong><code>setParticles()</code></strong> does then the job : updates the mesh VBO and draws it.</p>
+<p>To help you to update each particle status, <code>setParticle()</code> will call for each particle <code>SPS.updateParticle(particle)</code>.<br>This function doesn&#39;t do anything by default, so it is the place were you can implement your particle behavior, with physics if you want. It is passed each particle object in turn, which you can set its initial properties (position, rotation, rotationQuaternion, scaling, color, uvs, velocity) or add and set your own if your logic needs it (age ? mass ? etc).<br>So <code>updateParticle()</code> just changes the particle data, not the mesh itself. The <code>setParticles()</code> process updates the mesh. Fortunately, <code>setParticles()</code> calls <code>updateParticle(particle)</code> for you.</p>
+<p>If you want to set an initial status, different from the live behavior that you would implement in <code>SPS.updateParticle(particle)</code>, you can use <code>SPS.initParticles()</code>.<br>This function doesn&#39;t do anything, you have to implement it.<br>It doesn&#39;t draw the mesh, it just changes the particle initial status that will be taken in account by the next <code>SPS.setParticle()</code> call.
+The same thing with <code>SPS.recycleParticle(particle)</code> what is not called automatically and that you have to implement by your own and to call when you need.</p>
+<p>Remember finally that there are also some other means to deal with particles in BJS like the <a href="/babylon101/particles">Particle System</a> or the <a href="/babylon101/sprites">Sprite Manager</a> :</p>
+<p>The Particle System is the most performant in terms of speed and of particle quantity.<br>The particles are 2D quads, have all the same texture and colour. They ever face the screen, so they can have only a z-axis rotation. They aren&#39;t z-sorted and aren&#39;t pickable.<br>This sytem provides a behavior : emitter, recycler, updater and many particle properties to manage their individual status (position, rotation, lifetime, size, etc).</p>
+<p>The Sprite Manager is intended to manage sprites. They can be used as particles if needed as the Manager is also very performant.<br>The sprites are 2D quads always facing the screen, so they have only a z-axis rotation also. You can adjust from a given texture a different image per sprite and update it at will (sprite atlas). The sprites are z-sorted and are pickable.<br>The Manager doesn&#39;t provide a behavior but you can access to many properties to set each sprite status.</p>
+<p>The SPS is a BJS mesh.<br>Its particles are just parts of this big mesh. They can be planar, from a simple triangle to any planar polygon, or/and 3D solid. They face the screen only in <code>billboard</code> mode (maybe you should use the SPS in billboard mode only if the two previous means don&#39;t yet fit your needs as they are more performant for 2D). You can merge 2D and 3D particles in the same SPS and give them rotation in the space. Each particle can have its own color (vertex color) and own image from a single common texture. They are z-sorted and alpha-blended like any other BJS mesh. They are also pickable. They even have normals and reflect the light. Actually, all the features accessible to a mesh are accessible to the SPS.<br>The SPS provides no behavior but only methods to access and to set each particle.</p>
+<p>About transparency and mesh rendering, you could read this <a href="/resources/Transparency_and_How_Meshes_Are_Rendered">documentation</a>.</p>
+<p>In order to have only one draw call to the GPU, these three systems use only one material/texture for all their particles.<br><br/>
+<br/></p>
+<h2><a name="advanced-features" class="anchor" href="#advanced-features"></a>Advanced Features</h2><h3><a name="create-an-immutable-sps" class="anchor" href="#create-an-immutable-sps"></a>Create an immutable SPS</h3><p>You may have to create many similar objects in your scene that won&#39;t change afterwards : buildings in the distance, asteroids, scraps, etc. It may thus be useful to use the SPS to set only one mesh in your scene, so one draw call for the rendering.<br>Example : <a href="https://www.babylonjs-playground.com/#2FPT1A#5">https://www.babylonjs-playground.com/#2FPT1A#5</a> - <i class="fa fa-eye" onclick="createIframe('2FPT1A#5', this)"></i><div class="iframeContainer"></div></p>
+<p>You can achieve this by two different ways.</p>
+<ul>
+<li><p>You can just build your SPS as explained before and then call just once <code>setParticles()</code>, before and outside the render loop, to set your particles where and how you need.<br>This method is quite simple. Though, in order to allow you to set the final particle locations, the SPS mesh is built as <code>updatable</code> by default. This means its vertex buffer isn&#39;t passed once for all to the GPU, but is cached, waiting for a hypothetical further change.<br>So this is a simple solution if you don&#39;t have many draw calls to handle for the other really moving or changing meshes of your scene.<br>Remember also that, if you need to display your SPS in billboard mode, this is the only way to do it and you&#39;ll have to call <code>setParticles()</code> in the render loop also even if the particles don&#39;t move.</p>
+</li>
+<li><p>Else you can build your mesh as non <em>updatable</em>.<br>Actually the SPS contructor expects a parameter <code>updatable</code> what is <em>true</em> by default.<br>So, to build a non-updatable mesh, just call explicitly :</p>
+</li>
+</ul>
+<pre><code class="lang-javascript">var SPS = new SolidParticleSystem(name, scene, { updatable: false });
+</code></pre>
+<p>As the mesh can&#39;t be updated now, <code>setParticles()</code> won&#39;t have any effect any longer : don&#39;t call it, you&#39;ll spare some CPU. Actually the <code>particles</code> array is not even populated !<br>No particle management function called <strong>after</strong> <code>SPS.buildMesh()</code> will then have any effect.<br>Note that the particles won&#39;t move but you can still move, scale or rotate the whole mesh.</p>
+<p>So how to set the initial particle positions, colors, uvs, scales, and so on if the mesh can&#39;t be updated ?</p>
+<p>To achieve this, you need to change the mesh at construction time, when adding the shapes.<br>You will have to define your own function to set these particle (what don&#39;t exist at this time) properties by modifying the way the shapes are added.<br>Actually, you can pass to <code>SPS.addShape()</code> an exra parameter which is your particle setting function.<br>This parameter is an object with the property <code>positionFunction</code> to what you will assign your custom function.</p>
+<pre><code class="lang-javascript">SPS.addShape(mesh, nb, { positionFunction: myCustomFunction });
+</code></pre>
+<p>Your own function will be called, for a given shape, as many times as the wanted number of particles for this shape. It will be passed two parameters : a <em>particle</em> object and its current position in the total number wanted for this shape.<br>So your function must have this kind of signature :</p>
+<pre><code class="lang-javascript">var myBuilder = function(particle, i, s) {
+  // particle is the current copy of the shape, the i-th one in the SPS and the s-th one in its shape
+};
+</code></pre>
+<p>This <em>particle</em> object has the following properties :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>type</th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>position</td>
+<td>Vector3</td>
+<td>(0,0,0)</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>Vector3</td>
+<td>(0,0,0)</td>
+</tr>
+<tr>
+<td>rotationQuaternion</td>
+<td>Quaternion</td>
+<td>null, if <em>rotationQuaternion</em> is set, <em>rotation</em> is ignored</td>
+</tr>
+<tr>
+<td>scaling</td>
+<td>Vector3</td>
+<td>(1,1,1)</td>
+</tr>
+<tr>
+<td>pivot</td>
+<td>Vector3</td>
+<td>(0,0,0)</td>
+</tr>
+<tr>
+<td>color</td>
+<td>Color4</td>
+<td>null</td>
+</tr>
+<tr>
+<td>uvs</td>
+<td>Vector4</td>
+<td>(0,0,1,1)</td>
+</tr>
+</tbody>
+</table>
+<p>You can also read the current particle <code>shapeId</code> value with the property</p>
+<ul>
+<li><strong><code>shapeId</code></strong> : integer<br>The expected usage is thus for instance :  </li>
+</ul>
+<pre><code class="lang-javascript">var myBuilder = function(particle, i, s) {
+  // particle is the current particle
+  // i is its global index in the SPS
+  // s is its index in its shape, so here from 0 to 149
+  particle.rotation.y = s / 150;
+  particle.position.x = s - 150;
+  particle.uvs = new BABYLON.Vector4(0, 0, 0.33, 0.33); // first image from an atlas
+  particle.scaling.y = Math.random() + 1;
+}
+var box = BABYLON.MeshBuilder.CreateBox(&#39;b&#39;, {}, scene);
+var SPS = new BABYLON.SolidParticleSystem(&#39;SPS&#39;, scene);
+SPS.addShape(box, 150, {positionFunction: myBuilder)}; // myBuilder will be called for each of the 150 boxes
+var mesh = SPS.buildMesh();
+</code></pre>
+<p>In this former example, each box particle will have its own rotation, position, scaling and uvs set once for all at construction time. As the mesh is not updatable, the particles are then not manageable with <code>setParticles()</code>.<br>You&#39;ve got here a real immutable mesh. You can still translate it, rotate it, scale it globally as any other mesh until you freeze its World Matrix.<br>Example : a town with 80 000 buildings <a href="https://www.babylonjs-playground.com/#2FPT1A#36">https://www.babylonjs-playground.com/#2FPT1A#36</a> - <i class="fa fa-eye" onclick="createIframe('2FPT1A#36', this)"></i><div class="iframeContainer"></div></p>
+<p>Note that this feature (modifying the mesh at construction time) is not directly related to the mesh <code>updatable</code> parameter. This means you can use it even with a default <em>updatable</em> mesh although it is easier to set the particles the classical war with <code>setParticles()</code>.</p>
+<p><strong>Going further in immutable SPS</strong><br>You&#39;ve just seen how to modify for ever the SPS mesh at creation time in order to set the particles to your own initial positions, rotations, colors, etc by using the <code>positionFunction</code> property with your custom function.<br>You can also modify the shape of each particle in the SPS mesh at creation time the same way.<br>You will then to use the <code>vertexPosition</code> property, just like you used the <code>positionFunction</code> property, by defining your own function to set each vertex of each particle from its original value.<br>Your function will be then be called once by <code>SPS.buildMesh()</code> for each vertex of each particle object as defined in the former part.</p>
+<pre><code class="lang-javascript">var myVertexFunction = function(particle, vertex, i) {
+  // particle : the current particle
+  // vertex : the current vertex, a Vector3
+  // i : index of the vertex in the particle shape
+  vertex.x *= Math.random() + 1;
+};
+SPS.addShape(box, 150, { vertexFunction: myVertexFunction }); // the 150 boxes will have their vertices moved randomly
+SPS.buildMesh();
+</code></pre>
+<p>Of course you can use the both properties together :</p>
+<pre><code class="lang-javascript">SPS.addShape(box, 150, {
+  vertexFunction: myVertexFunction,
+  positionFunction: myPositionFunction
+});
+</code></pre>
+<p>Example with asteroids : <a href="https://www.babylonjs-playground.com/#2FPT1A#2">https://www.babylonjs-playground.com/#2FPT1A#2</a> - <i class="fa fa-eye" onclick="createIframe('2FPT1A#2', this)"></i><div class="iframeContainer"></div></p>
+<p>Note that you can also create some immutable objects rendered with only one draw call by using either <code>MergeMesh()</code> (<a href="/How_To/How_to_Merge_Meshes">tutorial</a>), etheir <a href="/How_To/How_to_use_Instances">Instances</a>.
+<br/>
+<br/></p>
+<h3><a name="start-and-end-indexes-for-setparticles" class="anchor" href="#start-and-end-indexes-for-setparticles"></a>Start and End indexes for setParticles()</h3><p>If you manage a big SPS with dozens of thousands particles, you may want, for performance reasons, not to compute all the new status of all the particles each frame. <code>setParticles()</code> expects three optional parameters to help you to choose what to compute or not : <code>start</code>, <code>end</code>, <code>update</code></p>
+<table>
+<thead>
+<tr>
+<th>parameter</th>
+<th>definition</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td><em>(number)</em> the index from where to start to iterate in the <code>particles</code> array</td>
+<td>0</td>
+</tr>
+<tr>
+<td>stop</td>
+<td><em>(number)</em> the index (included) where to stop to iterate in the <code>particles</code> array</td>
+<td>nbParticles - 1</td>
+</tr>
+<tr>
+<td>update</td>
+<td><em>(boolean)</em> to force the SPS mesh vertex buffer to be updated</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>If you pass a <code>end</code> value greater than <code>nbParticles</code> - 1, the iteration will stop anyway at <code>nbParticles</code> - 1 to prevent you from trying to access to undefined elements.</p>
+<p>Example 1 : you may want to update your 10K particle mesh only every three frames</p>
+<ul>
+<li>frame 1 : <code>setParticles(0, 3300, false)</code> computes everything for particles from 0 to 3300 and doesn&#39;t update the mesh.</li>
+<li>frame 2 : <code>setParticles(3301, 6600, false)</code> computes everything for particles from 3301 to 6600 and doesn&#39;t update the mesh.</li>
+<li>frame 3 : <code>setParticles(6601, 9999, true)</code> computes everything for particles from 6601 to 9999 and finally updates the mesh.<br>10,000 boxes updated per bunch of 3500 here : <a href="https://www.babylonjs-playground.com/#2V1C4Z#12">https://www.babylonjs-playground.com/#2V1C4Z#12</a> - <i class="fa fa-eye" onclick="createIframe('2V1C4Z#12', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Example 2 : you could keep, say, the first 5000 particles as unused ones and compute the particle behavior only for the 5000 lasts in your global pool.</p>
+<h3><a name="colors-and-uvs" class="anchor" href="#colors-and-uvs"></a>Colors and UVs</h3><p>In the SPS, you can set a color or/and a different image per particle.</p>
+<h4><a name="colors" class="anchor" href="#colors"></a>Colors</h4><p>The colors are the Vertex colors, the color related to the vertices themselves. This means that, if you also use a colored material, the vertex colors and the material colors will mix nicely.<br>Unless you want to change the particle color, the particle will be given at creation the vertex color of their model if any. If the model has different vertex color per face (example : <a href="/How_To/CreateBox_Per_Face_Textures_And_Colors">a box with different face colors</a>), these colors are saved and all the particles built with this model will look like the model.<br>However, if you change the color of particle, the particle is then given this lone color. In other words, you can only set one single color for each particle (no more face color).<br>The particle colors are <code>BJS Color4</code> object.<br>You can set them with the <code>particle.color</code> property. Please note that if you want to set this property at SPS creation time with the <code>positionFunction</code> parameter (<code>new SolidParticleSystem(&quot;name&quot;, {positionFunction: myColorSettings}</code>), the particle colors are initially <code>null</code>, since if you want to set it within the <code>updateParticle(particle)</code> method the particle colors are either the model colors if any, either white <code>Color4(1, 1, 1, 1)</code>.<br>So, in <code>positionFunction()</code> :</p>
+<pre><code class="lang-javascript">particle.color = new BABYLON.Color4(red, green, blue, alpha);
+</code></pre>
+<p>and in <code>updateParticle()</code> :</p>
+<pre><code class="lang-javascript">// in order to not allocate new objects per particle each call
+particle.color.r = red;
+particle.color.g = green;
+particle.color.b = blue;
+particle.color.a = alpha;
+</code></pre>
+<p>If you want to set an alpha value, don&#39;t forget to enable the alpha channel for vertex colors :</p>
+<pre><code class="lang-javascript">SPS.mesh.hasVertexAlpha = true;
+</code></pre>
+<h4><a name="uvs" class="anchor" href="#uvs"></a>UVs</h4><p>The SPS uses only one material, so only one texture.<br>However you can choose, per particle, which part of the texture you want to apply to this particle with the <code>uvs</code> particle property.<br>This property is a <code>Vector4</code> and is initially set to (0, 0, 1, 1) for each particle (or to initial UVs values if the model had UVs per face), meaning the whole texture image, from its left lower corner (0, 0) to its right upper corner, is to be applied to each particle.<br>If you want apply just a portion of the texture, located at, say, 20% from the image width, 10% from its height for the left lower corner, and 60% from its width and 30% from this height for the right upper corner, you just set the <code>uvs</code> property like this :</p>
+<pre><code class="lang-javascript">particle.uvs.x = 0.2; // left lower corner : 20% image width
+particle.uvs.y = 0.1; // left lower corner : 10% image height
+particle.uvs.z = 0.6; // right upper corner : 60% image width
+particle.uvs.w = 0.3; // right upper corner : 30% image width
+</code></pre>
+<p>This can be used as well either in the <code>positionFunction</code> call at SPS creation time, either in <code>updateParticle()</code>.</p>
+<p>Unlike for the colors, the model UVs are saved whatever the model had per face UVs or not.<br>This allows to use not only a texture atlas for the particles, but also a texture atlas for the model then inside the particle atlas because you use only one texture in final.</p>
+<p>Explanation :</p>
+<p><a href="https://www.babylonjs-playground.com/#ICZEXW#82">https://www.babylonjs-playground.com/#ICZEXW#82</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#82', this)"></i><div class="iframeContainer"></div><br>This example show the standard usage of the box per face texture as described here : <a href="https://doc.babylonjs.com/how_to/createbox_per_face_textures_and_colors">https://doc.babylonjs.com/how_to/createbox_per_face_textures_and_colors</a><br>Note that, in this example, we set 4 sprites per face, not 1, just because we will use the same texture for particles then. In a real case, we would probably first use a texture for the model, then put this texture in a bigger one.<br>Now let&#39;s create a SPS, let&#39;s add particles from this box model and let&#39;s set each particle some <code>.uvs</code> values : half the widht and height size of the initial uvs value.<br><a href="https://www.babylonjs-playground.com/#ICZEXW#81">https://www.babylonjs-playground.com/#ICZEXW#81</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#81', this)"></i><div class="iframeContainer"></div><br>As we can check, each particle is still given a different texture per face.</p>
+<p>Like for any other mesh, you can also enable the texture transparency with :</p>
+<pre><code class="lang-javascript">SPS.mesh.material.diffuseTexture.hasAlpha = true;
+</code></pre>
+<p>Or even use the alpha channel of the texture image :</p>
+<pre><code class="lang-javascript">SPS.mesh.material.useAlphaFromDiffuseTexture = true;
+</code></pre>
+<p>Please read this <a href="/resources/Transparency_and_How_Meshes_Are_Rendered">documentation</a> for transparency concerns.</p>
+<p>Color and UVs example : <a href="https://www.babylonjs-playground.com/#WCDZS#8">https://www.babylonjs-playground.com/#WCDZS#8</a> - <i class="fa fa-eye" onclick="createIframe('WCDZS#8', this)"></i><div class="iframeContainer"></div><br>Texture with alpha : <a href="https://www.babylonjs-playground.com/#WCDZS#9">https://www.babylonjs-playground.com/#WCDZS#9</a> - <i class="fa fa-eye" onclick="createIframe('WCDZS#9', this)"></i><div class="iframeContainer"></div></p>
+<p><br/></p>
+<h3><a name="particle-parenting" class="anchor" href="#particle-parenting"></a>Particle parenting</h3><p>Each particle can be given another particle as a parent.<br>The parent is required to be created before the current particle, this means the parent has to have a lower index Id (<code>particle.idx</code>) than the current particle. So the first particle in the pool (<code>idx = 0</code>) can&#39;t have a parent. To give a parent to a particle, just set its property <code>.parentId</code> to the parent index Id value.</p>
+<pre><code class="lang-javascript">if (particle.idx &gt; 0) {
+  particle.parentId = particle.idx - 1; // the previous particle becomes the parent of the current one
+}
+</code></pre>
+<p>To un-parent a particle, just set <code>.parentId</code> back to <code>null</code> what is the default value.<br>When a particle has got a parent, its position and rotation are then expressed in its parent local space.</p>
+<pre><code class="lang-javascript">if (particle.idx &gt; 0) {
+  particle.parentId = particle.idx - 1; // the previous particle becomes the parent of the current one
+  // the particle position and rotation are expressed in the previous particle space, this one being already
+  // rotated and translated from the yet previous particle. Etc.
+  particle.rotation.z = 0.01;
+  particle.position.x = 1.0;
+}
+</code></pre>
+<p>Examples :<br>A green box rotating around its pivot parented to a sliding red box : <a href="https://playground.babylonjs.com/#KS9V2E">https://playground.babylonjs.com/#KS9V2E</a> - <i class="fa fa-eye" onclick="createIframe('KS9V2E#', this)"></i><div class="iframeContainer"></div><br>2000 boxes parented per 20 segment stems : <a href="https://playground.babylonjs.com/#V7V1RS">https://playground.babylonjs.com/#V7V1RS</a> - <i class="fa fa-eye" onclick="createIframe('V7V1RS#', this)"></i><div class="iframeContainer"></div></p>
+<h5><a name="note" class="anchor" href="#note"></a>Note</h5><p>In a standard SPS, the particle index <code>particle.idx</code> and the particle identifier <code>particle.id</code> have the same value.<br>In an expandable SPS (see below), when particles are removed only the particle identifier <code>particle.id</code> keeps unchanged whereas the particle index may change.<br>So, when using an expandable SPS, make sure to set a particle parent with the parent identifier and make sure that this parent still exists.</p>
+<pre><code class="lang-javascript">if (otherParticle) {
+  particle.parentId = otherParticle.id; // not otherParticle.idx
+}
+</code></pre>
+<p><br/></p>
+<h3><a name="update-each-particle-shape" class="anchor" href="#update-each-particle-shape"></a>Update Each Particle Shape</h3><ul>
+<li><code>SPS.updateParticleVertex()</code> <em>usage</em> :<br>It happens before particle scaling, rotation and translation and it allows to update the vertex coordinates, color and UV of each particle.<br>This function will be called for each vertex of each particle and it will be passed the current particle, the current vertex and its current index in the particle shape.<br>The vertex is a SolidParticleVertex object, so you can access or set its properties :<pre><code class="lang-javascript">vertex.position: Vector3 (x, y, z)
+vertex.color: Color4 (r, g, b, a)
+vertex.uv: Vector2 (x, y)
+</code></pre>
+</li>
+</ul>
+<pre><code class="lang-javascript">SPS.computeParticleVertex = true; // false by default for performance reason
+SPS.updateParticleVertex = function(particle, vertex, v) {
+  // particle : the current particle object
+  // vertex : the current vertex, a solidParticleVertex object
+  // the index of the current vertex in the particle shape
+  // example :
+  if (particle.shapeID == 1) {
+    vertex.position.x *= Math.random() + 1;
+    vertex.position.y *= Math.random() + 1;
+    vertex.position.z *= Math.random() + 1;
+    vertex.color.r = Math.abs(Math.sin(v));
+    vertex.color.g = 1 - vertex.color.r
+    vertex.uv.x = particle.idx + v;
+    vertex.uv.y = vertex.uv.x;
+  }
+
+};
+</code></pre>
+<p>Note well that this vertex update is not stored (the particle shape isn&#39;t modified) but just computed in the next call to <code>setParticles()</code>. So there is no value accumulation : the vertex coordinates, colors or UVs are always the initial ones when entering this function.<br>Note also that the shape reference for each particle is the original shape of the mesh model you passed in <code>addShape()</code>, even if you had passed also a custom <code>vertexFunction</code> (see in the part : &quot;Going furhter in immutable SPS&quot;).<br>The good news is that the very same function can be use for <code>SPS.updateParticleVertex</code> and for the custom <code>vertexFunction</code> expected by <code>addShape()</code>.<br>So to better understand how it works, here is another global pseudo-code schema :</p>
+<pre><code class="lang-javascript">var particles: SolidParticles[] = [array of SolidParticle objects];
+function setParticles() {
+    beforeUpdateParticles();                 // your custom function
+    for (var p = 0; p &lt; nbParticles; p++) {
+      var particle = particles[p];
+      updateParticles(particle);             // your custom position function
+      for(var v = 0; particle.vertices.length; v++) {
+        var vertex = particle.vertices[v];
+        updateParticleVertex(particle, vertex, v);   // your ustom vertex function
+        computeAllTheVertexStuff();
+      }
+    }
+    updateTheWholeMesh();                   // does the WebGL work
+    afterUpdateParticles();                 // your ustom function
+}
+</code></pre>
+<p>Example : <a href="https://www.babylonjs-playground.com/#1X7SUN#11">https://www.babylonjs-playground.com/#1X7SUN#11</a> - <i class="fa fa-eye" onclick="createIframe('1X7SUN#11', this)"></i><div class="iframeContainer"></div><br>or dancing glow-worms : <a href="https://www.babylonjs-playground.com/#1X7SUN#12">https://www.babylonjs-playground.com/#1X7SUN#12</a> - <i class="fa fa-eye" onclick="createIframe('1X7SUN#12', this)"></i><div class="iframeContainer"></div>  </p>
+<h3><a name="pickable-particles" class="anchor" href="#pickable-particles"></a>Pickable Particles</h3><p>You can set your particles as pickable with the parameter <code>isPickable</code> (default <em>false</em>) when creating your SPS :</p>
+<pre><code class="lang-javascript">var SPS = new BABYLON.SolidParticleSystem(&quot;SPS&quot;, scene, { isPickable: true });
+</code></pre>
+<p>This will set the underlying mesh as pickable and populate two arrays called <code>SPS.pickedParticles</code> and <code>SPS.pickebBySubMesh</code>. So, don&#39;t set your SPS as pickable if you don&#39;t need it to be, this will save much memory.<br>In order to retrieve the particle picking data from these arrays, use the method <code>SPS.pickedParticle(pickingInfo)</code> that returns an object with these properties :</p>
+<ul>
+<li><code>idx</code> : the picked particle idx</li>
+<li><code>faceId</code> : the face index of the picked particle (counted within this particle)</li>
+</ul>
+<p>Example :</p>
+<pre><code class="lang-javascript">var SPS = new BABYLON.SolidParticleSystem(&quot;SPS&quot;, scene, { isPickable: true });
+// add shapes, build the mesh, init particles, etc
+SPS.setParticles(); // initial SPS draw
+SPS.refreshVisibleSize(); // force the BBox recomputation
+scene.onPointerDown = function(evt, pickResult) {
+  var meshFaceId = pickResult.faceId; // get the mesh picked face
+  if (meshFaceId == -1) {
+    return;
+  } // return if nothing picked
+  var picked = SPS.pickedParticle(pickResult); // get the picked particle data : idx and faceId
+  var idx = picked.idx;                         
+  var p = SPS.particles[idx];                   // get the actual picked particle
+  p.color.r = 1; // turn it red
+  p.color.b = 0;
+  p.color.g = 0;
+  p.velocity.y = -1; // drop it
+  SPS.setParticles();
+};
+</code></pre>
+<p>The SPS pickability is directly related to the size of its bounding box (please read &#39;SPS Visibility&#39; part). So, in order to make sure your particles will be pickable, don&#39;t forget to force, at least once, the bounding box size recomputation once the particles are set in the space with <code>setParticles()</code>.<br>Pickable particle example (no SPS update in the render loop) : <a href="https://www.babylonjs-playground.com/#2FPT1A#351">https://www.babylonjs-playground.com/#2FPT1A#351</a> - <i class="fa fa-eye" onclick="createIframe('2FPT1A#351', this)"></i><div class="iframeContainer"></div><br>Pickable particle example (particle rotation) : <a href="https://www.babylonjs-playground.com/#2FPT1A#352">https://www.babylonjs-playground.com/#2FPT1A#352</a> - <i class="fa fa-eye" onclick="createIframe('2FPT1A#352', this)"></i><div class="iframeContainer"></div>  </p>
+<h3><a name="digest-a-mesh" class="anchor" href="#digest-a-mesh"></a>Digest a Mesh</h3><p>There is another way than adding shapes of meshes used as models to populate the SPS : you can directly &quot;digest&quot; a mesh.<br>To digest a mesh means that the SPS will decompose this mesh geometry and use all its facets to generate the particles. So, by default, a digested mesh generates as many particles as the mesh number of facets.</p>
+<pre><code class="lang-javascript">var model = BABYLON.MeshBuilder.CreateTorusKnot(
+  &quot;s&quot;,
+  { radius: 20, tube: 6, tubularSegments: 64, radialSegments: 128 },
+  scene
+);
+SPS.digest(model);
+model.dispose();
+SPS.buildMesh();
+</code></pre>
+<p>Note that in this case, all the generated particles have their property &quot;position&quot; set with some values and no more to (0, 0, 0).<br>This method is obviously compatible with <code>addShape()</code> and you can even call it several times with the same model, or different models, in the same SPS.</p>
+<pre><code class="lang-javascript">var model = BABYLON.MeshBuilder.CreateTorusKnot(
+  &quot;s&quot;,
+  { radius: 20, tube: 6, tubularSegments: 64, radialSegments: 128 },
+  scene
+);
+SPS.addShape(boxModel, 50);
+SPS.digest(model);
+SPS.addShape(sphereModel, 20);
+SPS.digest(model, { number: 10 });
+model.dispose();
+sphereModel.dispose();
+boxModel.dispose();
+SPS.buildMesh();
+</code></pre>
+<p>This method accepts three optional parameters : <code>facetNb</code>, <code>delta</code> and <code>number</code></p>
+<ul>
+<li><code>facetNb</code> is the number of the mesh facets required to build each particle. By default, the value is set to 1, this means each particle will just be a triangle (a mesh facet). Set to 2 and you&#39;ll probably get quads instead.<br>The number of generated particles depends then on the mesh initial number of facets and on the <code>faceNb</code> value.<br>This parameter is overriden if the parameter <code>number</code> is set.</li>
+<li><code>delta</code> (default 0), used with <code>facetNb</code>, allows to generate each particle with a random size between <em>facetNb</em> and <em>facetNb + delta</em> facets.</li>
+<li><code>number</code> is the wanted number of particles. <code>digest()</code> divides then the mesh into <code>number</code> particles of the same size in term of the number of facets used per particle.<br>If <code>number</code> is greater than the total number of mesh facets, then this total number is used for the value of <code>number</code>.</li>
+</ul>
+<pre><code class="lang-javascript">var model = BABYLON.MeshBuilder.CreateTorusKnot(
+  &quot;s&quot;,
+  { radius: 20, tube: 6, tubularSegments: 64, radialSegments: 128 },
+  scene
+);
+SPS.digest(model, { facetNb: 10 }); // 10 facets per particle whatever their final number
+SPS.digest(model, { number: 200 }); // 200 particles whatever their final size
+SPS.digest(model, { facetNb: 10, delta: 30 }); // between 10 and 40 facets per particle, randomly, whatever their final number
+model.dispose();
+SPS.buildMesh();
+</code></pre>
+<p>Example (click on the torus knot) : <a href="https://www.babylonjs-playground.com/#HDHQN">https://www.babylonjs-playground.com/#HDHQN</a> - <i class="fa fa-eye" onclick="createIframe('HDHQN#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="sps-visibility" class="anchor" href="#sps-visibility"></a>SPS Visibility</h3><p>To render the meshes on the screen, BJS uses their bounding box (BBox) : if the BBox is in the frustum, then the mesh is selected to be rendered on the screen. This method is really performant as it avoids to make the GPU compute things that wouldn&#39;t be visible. The BBox of each mesh is recomputed when its World Martix is updated.<br>When you create a SPS, unless you use the <code>positionFunction</code> at creation time, all its particles are set by default at the position (0, 0, 0). So the size of the SPS mesh is initially the size of its biggest particle, so it is for its BBox.<br>If you animate your particles without updating the SPS mesh World Matrix (ex : the whole SPS doesn&#39;t move, rotate or scale), its BBox may keep far more little than the current space occupied by the moving particles. So, if this little BBox gets out of the screen (cam rotation for instance), the whole SPS can then disappear at once !</p>
+<p>In order to manage the SPS visibility, you have some ways : the methods <code>SPS.refreshVisibleSize()</code> or <code>SPS.setVisibilityBox(size)</code> and the properties <code>SPS.isAlwaysVisible</code> (default <em>false</em>),<code>SPS.computeBoundingBox</code> (default <em>false</em>) or <code>SPS.isVisibilityBoxLocked</code> (default <em>false</em>)</p>
+<ul>
+<li><p><code>SPS.refreshVisibleSize()</code> : updates the SPS mesh BBox size on demand. This is an intensive computation, so it&#39;s better not to use it in the render loop each frame. You could call it once the mesh has reached its maximum size for instance. This the method to use if you have a SPS located its in own space somewhere in your scene, like a particle explosion, a fountain, etc. Remember when using this method that it iterates over each mesh vertices. So if your mesh has 20K vertices what is usual with a SPS, it needs 20K iterations.</p>
+</li>
+<li><p><code>SPS.isAlwaysVisible</code> : if <em>true</em>, forces the SPS mesh to be computed by the GPU even if its BBox is not visible. This property is to use when the player evolves inside the SPS (maze, asteroid field) or if the SPS is always bigger than the visible part on the screen. Note that setting it to <em>true</em> doesn&#39;t recompute the BBox size, so if you need for some reason (pickability, collisions, etc) to update the BBox, you have to call also at least once <code>SPS.refreshVisibleSize()</code>.</p>
+</li>
+<li><p><code>SPS.computeBoundingBox</code> (default <em>false</em>) : if set to true, the next calls to <code>setParticles()</code> will compute the mesh bounding bow within the same loop than the particle computations. This means this is much more faster than calling <code>refreshVisibleSize()</code> and you can use it in the render loop.<br>The reason <code>refreshVisibleSize()</code> and <code>SPS.computeBoundingBox</code> exist together is that <code>refreshVisibleSize()</code> can be called at any time and doesn&#39;t require to call <code>setParticles()</code> whereas <code>SPS.computeBoundingBox</code> is taken in account for the BBox computation only from a call of <code>setParticles()</code>.<br>Note that <code>SPS.computeBoundingBox</code> can be set to <em>true</em> or <em>false</em> at any time and will affect only the next calls of <code>setParticles()</code>.</p>
+</li>
+<li><p><code>SPS.setVisibilityBox(size)</code> : sets a fixed size to the SPS Mesh BBox whatever its own real size. This may be useful when you know in advance the limits that the visible particles won&#39;t overrange. Note that setting a value doesn&#39;t prevent any further BBox recomputation.</p>
+</li>
+<li><p><code>SPS.isVisibilityBoxLocked</code> : if <em>true</em>, the SPS mesh BBox won&#39;t be computed any longer until it is reset to <em>false</em>.</p>
+</li>
+</ul>
+<p>So what method to use ?<br>It depends on your needs.<br>If your SPS is ever everywhere around the camera environment like an asteroid field, you may use <code>SPS.isAlwaysVisible</code>.<br>If you need a variable visibility or the pickability, you&#39;ll need to set at least once the bounding box.<br>So if your SPS stays within some fixed bounds that you don&#39;t know the values, you may use <code>SPS.refreshVisibleSize()</code> at least once when the SPS has reached these limits and then lock the visibility box.<br>If the SPS keeps within some known limits, then it is better to use <code>SPS.setVisibilityBox(size)</code> with the right value and then to lock the visibility box.<br>At last, if you still need pickability or variable visibility, and don&#39;t know how your SPS will evolve, then you might set <code>SPS.computeBoundingBox</code> to true.</p>
+<h3><a name="transparency-concerns" class="anchor" href="#transparency-concerns"></a>Transparency Concerns</h3><p>As you know, the SPS is a standard mesh.</p>
+<p>Applying the transparency to a standard mesh leads to well-known issues, not when visualizing other opaque or transparent meshes through this current transparent mesh, but when visualizing some parts of this transparent mesh through itself.<br>Indeed, when passing the mesh geometry to the GPU, this one draws the mesh in the order the mesh facets are sorted in the <code>indices</code> array : first triangle, second one then, etc ... whatever the position of the camera.<br>The shader only respects the geometry order and this geometry is fixed.</p>
+<p>As the SPS is a standard mesh, it has the same issue when dealing with transparent particles (rotate the camera) : <a href="https://playground.babylonjs.com/#EPBTB7#3">https://playground.babylonjs.com/#EPBTB7#3</a> - <i class="fa fa-eye" onclick="createIframe('EPBTB7#3', this)"></i><div class="iframeContainer"></div></p>
+<p>A parameter allows to sort the internal mesh geometry live according to the current camera position : <a href="https://playground.babylonjs.com/#EPBTB7#2">https://playground.babylonjs.com/#EPBTB7#2</a> - <i class="fa fa-eye" onclick="createIframe('EPBTB7#2', this)"></i><div class="iframeContainer"></div></p>
+<p>It sorts the SPS particles only, not all the facets, for performance reasons.</p>
+<p>To enable it, just create your SPS with the parameter <code>enableDepthSort</code> to <code>true</code>. By default, each next call to <code>setParticles()</code> will then sort the particles according to the camera global position.</p>
+<p>If for some reasons (immobile camera and sps), you want to stop (or reactivate) the sort on the next calls to <code>setParticles()</code>, just set the property <code>sps.depthSortParticles</code> to <code>false</code> (or <code>true</code> to reactivate it) .</p>
+<p>Note well that is better to not enable the particle depth sort and the <a href="//doc.babylonjs.com/how_to/how_to_use_facetdata#facet-depth-sort">facet depth sort</a> in the same time, else the sort process wil be executed twice with no final gain.<br>So just choose what kind of sorting you need : at particle level (faster) or at facet level (more accurate).</p>
+<p>Note also that the particle sort <strong>can&#39;t work</strong> with the MultiMaterials.</p>
+<pre><code class="lang-javascript">// create a particle depth sort enabled SPS
+var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, {
+  enableDepthSort: true
+});
+
+// then later, only do ...
+sps.setParticles(); // and the particle are depth sorted each call
+
+// We can skip the sorting at any time (or reactive it) : sps and camera not moving anymore
+sps.depthSortParticles = false; // true by default when enableDepthSort is set to true
+</code></pre>
+<p><strong>Notes :</strong></p>
+<ul>
+<li>This feature is CPU intensive, so call <code>setParticles()</code> with <code>depthSortParticles</code> set to true only when needed.</li>
+<li>This feature requires the SPS to be updatable, so it can&#39;t work with an immutable SPS.</li>
+<li>This features needs to sort all the particles from the pool, so it won&#39;t lead to weird results if you call <code>setParticles(start, end)</code> on some particles only.</li>
+</ul>
+<h3><a name="particle-intersections" class="anchor" href="#particle-intersections"></a>Particle Intersections</h3><p>The SPS is physics agnostic. This means you need to implement your own particle behavior if you want to animate them.<br>For this, you may need to check if the solid particles intersect or not other ones or other meshes in the scene. Example : you would know if your particles collide against an obstacle and then make them bounce back.<br>The SPS provides a simple way to deal with particle intersections. As this feature consumes more memory and CPU, it&#39;s disabled by default.<br>Enable it explicitly with the parameter <code>particleIntersection</code> when creating your SPS :</p>
+<pre><code class="lang-javascript">var SPS = new SolidParticleSystem(&quot;sps&quot;, scene, { particleIntersection: true });
+</code></pre>
+<p>Then you can simply call the method <code>intersectsMesh(&lt;SolidParticle | AbstractMesh&gt;target)</code> of any solid particle to check if this particle intersects the <em>target</em>.<br>It just will return true or false if the particle intersects or not the target.</p>
+<pre><code class="lang-javascript">// for instance, in your SPS.updateParticle(p) function : particle / particle
+if (p.intersectsMesh(otherParticle)) { // change p velocity vector }
+</code></pre>
+<p>You can pass the method <code>intersectsMesh()</code> either a solid particle object, either a standard BJS mesh. Both work the same.</p>
+<pre><code class="lang-javascript">// for instance, in your SPS.updateParticle(p) function : particle / mesh
+if (p.intersectsMesh(anyMesh)) { // change p velocity vector }
+</code></pre>
+<p>Beware that invisible solid particles can still intersect, exactly like meshes do. So it&#39;s up to you to test the particle visibility (<code>isVisible</code>), if you want to exclude it from an intersection computation.</p>
+<p>If you prefer, you can even use the <code>AbstractMesh</code> method <code>intersectsMesh()</code> and pass it a solid particle.</p>
+<pre><code class="lang-javascript">// for instance, in your SPS.updateParticle(p) function : mesh / particle
+if (someMesh.intersectsMesh(p)) { // change p velocity vector }
+</code></pre>
+<p>Under the hood, when creating a SPS with <code>particleIntersection</code>, a bounding box and a bouding sphere are given to each solid particle.<br>For performance reasons, the particle intersections are always computed the fastest way, it is to say with Axis Aligned Bounding Boxes (AABB). <a href="/babylon101/Intersect_Collisions_-_mesh">More Details on Intersection Collisions</a></p>
+<p>If you use the <code>AbstractMesh</code> <code>intersectsMesh()</code> method, what allows to force OBB computation (precise mode), only the mesh bounding box will be rotated, not the particle one, so the intersection detection will be just a bit better than in AABB mode.<br>The precise mode has a CPU significant cost, so it&#39;s not recommended to use it with solid particles.</p>
+<pre><code class="lang-javascript">// for instance, in your SPS.updateParticle(p) function : precise mode, mesh / particle
+if (someMesh.intersectsMesh(p, true)) { // change p velocity vector }
+</code></pre>
+<p>Example : <a href="https://www.babylonjs-playground.com/#10RCC9">https://www.babylonjs-playground.com/#10RCC9</a> - <i class="fa fa-eye" onclick="createIframe('10RCC9#', this)"></i><div class="iframeContainer"></div></p>
+<p>For a SPS having thousands of particles, computing the bounding box for each particle each frame is still a heavy CPU operation. So, if you need more performance and if you don&#39;t mind about the intersection accurary, you may choose to limit the computation to the particle bounding sphere only (a bounding box requires 8 iterations per particle, one for each box vertex) by using the optional boolean parameter <code>boundingSphereOnly</code> (default <em>false</em>) at SPS creation.</p>
+<pre><code class="lang-javascript">var SPS = new SolidParticleSystem(&quot;sps&quot;, scene, {
+  particleIntersection: true,
+  boundingSphereOnly: true
+});
+</code></pre>
+<p>Example : <a href="https://www.babylonjs-playground.com/#2BXZC#2">https://www.babylonjs-playground.com/#2BXZC#2</a> - <i class="fa fa-eye" onclick="createIframe('2BXZC#2', this)"></i><div class="iframeContainer"></div></p>
+<p>As you may know, a mesh -so a solid particle- is inside its bounding box and its bounding box is inside its bounding sphere. So the bounding sphere is bigger than the bounding box, what is bigger than the mesh.<br>If your particles look like some some tiny spherical objects and if you use the <code>boundingSphereOnly</code> mode, you would probably like to tweak the bounding sphere to make it closer to the embedded particle.<br>You can then use the parameter <code>bSphereRadiusFactor</code>, a float number that is multiplied by the current bounding sphere radius.<br>Imagine that your particle is a spherical shape with a radius of R. Its bounding sphere radius is then by default : R * sqrt(3). So if you multiply the bounding sphere radius by 1 / sqrt(3), the bounding sphere will get the same radius than the particle one and both will exactly match.</p>
+<pre><code class="lang-javascript">var SPS = new SolidParticleSystem(&quot;sps&quot;, scene, {
+  particleIntersection: true,
+  boundingSphereOnly: true,
+  bSphereRadiusFactor: 1 / Math.sqrt(3)
+});
+</code></pre>
+<p>Example : <a href="https://www.babylonjs-playground.com/#29F0EG#2">https://www.babylonjs-playground.com/#29F0EG#2</a> - <i class="fa fa-eye" onclick="createIframe('29F0EG#2', this)"></i><div class="iframeContainer"></div></p>
+<p>At last, in case you are using the <code>boundingSphereOnly</code> mode, just remember that the particle bounding box isn&#39;t computed, only its bouding sphere, so don&#39;t test the intersection from a <strong>mesh</strong> object :</p>
+<pre><code class="lang-javascript">// boundingSphereOnly case :
+mesh.intersectsMesh(particle); // won&#39;t give the right result
+particle.intersectsMesh(mesh); // will give the right bounding sphere intersection
+</code></pre>
+<h3><a name="particle-in-frustum" class="anchor" href="#particle-in-frustum"></a>Particle In Frustum</h3><p>When the SPS is enabled to manage particle intersections, each particle is given a bounding box and a bouding sphere.<br>You can then check whether a particle intersects the camera frustum with the method <code>particle.isInFrustum(frustumPlanes, [cullingStrategy])</code> like you would do with meshes.</p>
+<pre><code class="lang-javascript">scene.updateTransformMatrix(); // force the plane computation once
+var frustumPlanes = scene.frustumPlanes;
+// then in some loop ...
+if (!particle.isInFrustum(frustumePlanes)) {
+  p.alive = false;
+}
+</code></pre>
+<p>Contrary to the meshes, you can&#39;t use <code>.isInFrustum()</code> to cull particles that wouldn&#39;t be rendered, because all the particles are always rendered, meaning passed to the GPU (even the invisible ones). You can only use this test to customize the process applied to the particles.<br>Example : you would want to not compute the particles outside the frustum to gain some performance.<br>The test done by <code>isInFrustum()</code> has also its own CPU cost, so it&#39;s probably not a good idea to run it on thousand particles each frame.<br>Actually, it&#39;s up to you to choose if the test is worth it for your own need.<br>Let&#39;s imagine a case where each particle computation is really intensive (example : when using <code>computeParticleVertex</code>). In this case, the frustum test could be faster than the particle computation, so it would be interesting to use it to disable the particle computation for particles outside the frustum.<br>In this following example, the computation charge is directly related to the number of vertices and shouldn&#39;t change whatever the camera direction. But, as we disable the particles outside the frustum, if you rotate the camera to isolate one or two worms in the camera field, you can check the performance gain<br><a href="https://www.babylonjs-playground.com/#BKX11Q#2">https://www.babylonjs-playground.com/#BKX11Q#2</a> - <i class="fa fa-eye" onclick="createIframe('BKX11Q#2', this)"></i><div class="iframeContainer"></div><br>Note : the default culling strategy used in the particle frustum test is the fastest (<code>BoundingSphereOnly</code>).<br>You can change it at will for each particle by using the same values than the static properties <code>CULLINGSTRATEGY_XXX</code> ones of the <code>AbstractMesh</code> class.</p>
+<h3><a name="create-an-expandable-sps" class="anchor" href="#create-an-expandable-sps"></a>Create an expandable SPS</h3><p>Until now, the SPS that you&#39;ve created has a fixed number of particles once for all because it&#39;s the most performant way to use it.<br>In some cases, it may be useful to add or to remove some particles from the SPS after its creation, because they are newly needed or not needed any longer for the rest of the time.<br>In this case, you can create an expandable SPS with the optional parameter <code>expandable: true</code> (default <code>false</code>).</p>
+<pre><code class="lang-javascript">var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, { expandable: true });
+</code></pre>
+<h4><a name="adding-particles" class="anchor" href="#adding-particles"></a>Adding particles</h4><p>If you want to add some more particles to the existing ones, then just use again the method <code>addShape()</code> as many times as necessary. Then call <code>buildMesh()</code> to rebuild the SPS geometry with these newly added particles.</p>
+<pre><code class="lang-javascript">var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, { expandable: true });
+sps.addShape(model1, 100); // adds 100 particles from model1
+sps.buildMesh();
+
+// ... further in the code, when needed
+sps.addShape(model2, 100); // adds 100 new particles from model2
+sps.addShape(model3, 200); // and 200 particles from model3
+sps.buildMesh(); // updates the SPS mesh geometry from the last particle additions
+sps.setParticles();
+</code></pre>
+<p>Example : <a href="https://playground.babylonjs.com/#X1T859">https://playground.babylonjs.com/#X1T859</a> - <i class="fa fa-eye" onclick="createIframe('X1T859#', this)"></i><div class="iframeContainer"></div><br>Each mouse click adds 20 new depth sorted particles.</p>
+<h4><a name="removing-particles" class="anchor" href="#removing-particles"></a>Removing particles</h4><p>If you want to remove some particles from the SPS, then use the method <code>removeParticles(start, end)</code> where <code>start</code> and <code>end</code> are the starting and ending indexes of the particles.<br>This method returns an array populated with the removed particles.</p>
+<pre><code class="lang-javascript">var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, { expandable: true });
+sps.addShape(model1, 1000); // adds 1000 particles from model1
+sps.buildMesh();
+
+// ... further in the code, when needed
+var removed1 = sps.removeParticles(700, 999); // removes the last 300 particles
+var removed2 = sps.removeParticles(0, 9); // removes the first 10
+sps.buildMesh(); // update the SPS mesh geometry from the last particle additions
+sps.setParticles();
+</code></pre>
+<p>Example : <a href="https://playground.babylonjs.com/#0MXVDK">https://playground.babylonjs.com/#0MXVDK</a> - <i class="fa fa-eye" onclick="createIframe('0MXVDK#', this)"></i><div class="iframeContainer"></div>
+Each click removes the 2 first and last 100 particles.<br><strong>Important note :</strong> the SPS must contain at least one particle to work, so never empty it completely !</p>
+<h4><a name="storable-particles" class="anchor" href="#storable-particles"></a>Storable particles</h4><p>You may want to create new particles and not to insert them in the SPS on its creation but later. You may also want to keep aside removed particles to put them back in the system later.<br>So when creating new particles, you can specify to store them aside from the SPS with the optional parameter <code>storage: []</code> of the method <code>addShape()</code>.</p>
+<pre><code class="lang-javascript">var stock = []; // the array to store the particles
+var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, { expandable: true });
+sps.addShape(model1, 1); // the SPS needs at least one particle
+sps.addShape(model1, 100, { storage: stock }); // stores 100 particles from model1 in the stock array
+sps.buildMesh();
+</code></pre>
+<p>This SPS contains only one particle. The 100 others are stored in an external array.</p>
+<p>If you want now to restore these particles, or some previously removed ones, just use the method <code>insertParticlesFromArray(array)</code>.</p>
+<pre><code class="lang-javascript">var stock = []; // the array to store the particles in
+var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, { expandable: true });
+sps.addShape(model1, 1000); // the SPS contains 1000 particles
+sps.addShape(model1, 100, { storage: stock }); // 100 others are stored aside
+sps.buildMesh();
+
+// ... later in the code
+var removed = sps.removeParticles(0, 99); // the 100 first particles are removed and stored in another array
+sps.buildMesh();
+
+// ... later again in the code : let&#39;s restore the misssing particles
+sps.insertParticlesFromArray(removed); // restores the previously removed particles
+sps.insertParticlesFromArray(stock); // restores the previously created particles
+sps.buildMesh();
+sps.setParticles();
+</code></pre>
+<p>Each time that you call <code>insertParticlesFromArray()</code>, the stored particle objects aren&#39;t just referenced in the SPS, they are cloned and the clones are reindexed and given a new identifier.<br>This means that you can modify or get rid of the storage array or their contained particle objects with no effect and no risk for the SPS working.<br>Example : <a href="https://playground.babylonjs.com/#HL9PPA">https://playground.babylonjs.com/#HL9PPA</a> - <i class="fa fa-eye" onclick="createIframe('HL9PPA#', this)"></i><div class="iframeContainer"></div>
+Each click removes 100 particles of a given shape and restore 100 particles of another shape in turn.<br>100 particles are stored aside at the SPS creation.</p>
+<h4><a name="notes" class="anchor" href="#notes"></a>Notes :</h4><ul>
+<li>When you remove particles, the remaining ones are reindexed, meaning that their <code>particle.idx</code> value can change. The particle identifier <code>particle.id</code> keeps unchanged. If a particle is given a parent and if this parent is removed, then the particle <code>parent</code> property value is set to <code>null</code>.</li>
+<li>Adding or removing particles will create a new VertexData object, so a new VBO buffer, each time <code>buildMesh()</code> is called.<br>This can trigger the Garbage Collector activity at some unwanted moment, so it&#39;s not a good idea to add or remove particles each frame.<br>Moreover, using an expandable SPS uses more memory than a fixed one because all the dynamic extensible arrays are saved under the hood along the SPS life.</li>
+</ul>
+<h3><a name="different-materials" class="anchor" href="#different-materials"></a>Different Materials</h3><p>The SPS renders all the particles in a single draw call because you&#39;ve used only one material, or none what means a default material under the hood, so far.<br>Sometimes yet, you may want to use several materials in order to render some glowing particles with the glow layer, some others with a bump texture and some others with a colored standard material for instance. In this case, you may accept that the draw call number is higher but you wish it keeps at its possible minimum.<br>The SPS supports the MultiMaterials and provides a mechanism to keep the draw call number to a minimum value. You can use them by different ways.</p>
+<h4><a name="simple-way" class="anchor" href="#simple-way"></a>Simple way</h4><p>The simplest way to set different materials to the particles is to set a different material to each model used to create the particles and to ask the SPS to use these materials at construction time with the optional paramater <code>useModelMaterial</code> set to <code>true</code> (default <code>false</code>).</p>
+<pre><code class="lang-javascript">// model1, model2 and model3 are meshes with already set materials at this step
+var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, {
+  useModelMaterial: true
+});
+sps.addShape(model1, 300);
+sps.addShape(model2, 300);
+sps.addShape(model3, 300);
+sps.buildMesh();
+</code></pre>
+<p>This enables the multimaterial support, then copies the model geometries and creates automatically the SPS multimaterial from the model materials, with the following rule :</p>
+<ul>
+<li>if several models share the same material, this material is used only once in the SPS : particles are sorted in this purpose to minimize the draw call numbers,</li>
+<li>if a model has no material, a standard material is created,</li>
+<li>if another following model has also no material, the first rule applies : the newly created standard material is shared among the particles depicting all the models with no material.<br>Example : <a href="https://playground.babylonjs.com/#RCUHJA">https://playground.babylonjs.com/#RCUHJA</a> - <i class="fa fa-eye" onclick="createIframe('RCUHJA#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>You can obviously notice that this method associates the model materials to the particles on the particle shape basis : all the particles of a given shape share the same material.<br>You can still change this behavior by assignig some materials on the particle basis by setting the particle property <code>.materialIndex</code> value to the wanted material index. The material index is simply the index of the shape material in the order the shape are created : 0 for the first shape, 1 for the second one, and so on. If set, it overwrites the assigned shape material index.<br>This can be done at creation time in a <code>positionFunction</code> of an immutable SPS for instance.</p>
+<pre><code class="lang-javascript">var initParticle = function(particle, i) {
+  particle.position.x = areaSize * (Math.random() - 0.5);
+  particle.position.y = areaSize * (Math.random() - 0.5);
+  particle.position.z = areaSize * (Math.random() - 0.5);
+  // above a given altitude, it&#39;s given the material 1
+  // whatever the initial shape material
+  if (particle.position.y &gt; areaSize * 0.1) {
+    particle.materialIndex = 1;
+  }
+};
+var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, {
+  useModelMaterial: true,
+  updatable: false
+});
+sps.addShape(model1, 300, { positionFunction: initFunction });
+sps.addShape(model2, 300, { positionFunction: initFunction });
+sps.addShape(model3, 300, { positionFunction: initFunction });
+sps.buildMesh();
+</code></pre>
+<p>Example : <a href="https://playground.babylonjs.com/#RCUHJA#2">https://playground.babylonjs.com/#RCUHJA#2</a> - <i class="fa fa-eye" onclick="createIframe('RCUHJA#2', this)"></i><div class="iframeContainer"></div></p>
+<p>This method can be used to build non-updatable meshes with MultiMaterials by assembling shapes of different materials even when knowing nothing about indices nor vertices as it&#39;s required to define a MultiMaterial object by hands : <a href="https://doc.babylonjs.com/how_to/multi_materials">https://doc.babylonjs.com/how_to/multi_materials</a></p>
+<h4><a name="intermediate-way" class="anchor" href="#intermediate-way"></a>Intermediate way</h4><p>When you set the SPS <code>useModelMaterial</code> property to <code>true</code>, this enables the support for MultiMaterial.<br>You can also enable this support by just setting the property <code>enableMultiMaterial</code> to <code>true</code>.<br>In this case, the difference is that the support is enabled but the model materials aren&#39;t copied at construction time.</p>
+<p>You may want then to use your own set of materials instead of the model ones.
+So, whatever the SPS is immutable or not and whatever you&#39;re using <code>enableMultiMaterial</code> or <code>useModelMaterial</code>, you can pass your own materials to the SPS once it&#39;s build with the method <code>sps.setMultiMaterials(arrayOfMaterials)</code>.</p>
+<pre><code class="lang-javascript">var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, {
+  enableMultiMaterial: true,
+  updatable: false
+});
+sps.addShape(model1, 300, { positionFunction: initFunction });
+sps.addShape(model2, 300, { positionFunction: initFunction });
+sps.addShape(model3, 300, { positionFunction: initFunction });
+sps.buildMesh();
+
+// mat0, mat1, mat2 are Material objects
+sps.setMultiMaterial([mat0, mat1, mat2]);
+
+// ... later in the code, swap mat0 and mat1
+sps.setMultiMaterial([mat1, mat0, mat2]);
+</code></pre>
+<p>This method can be called as many times as needed once the SPS mesh is built.<br>It recomputes the underlying MultiMaterial object and the SPS geometry in order to group the particles by materials, so it&#39;s probably not a good idea to call it each frame in the render loop.<br>Example : <a href="https://playground.babylonjs.com/#RCUHJA#3">https://playground.babylonjs.com/#RCUHJA#3</a> - <i class="fa fa-eye" onclick="createIframe('RCUHJA#3', this)"></i><div class="iframeContainer"></div></p>
+<h4><a name="advanced-way" class="anchor" href="#advanced-way"></a>Advanced way</h4><p>Until now, you&#39;ve essentially set the particle <code>materialIndex</code> values at construction time and they haven&#39;t changed then, only the materials themselves have changed.<br>You can still change the particle <code>materialIndex</code> values at any time, for instance in a call to <code>sps.updateParticle()</code> from <code>sps.setParticles()</code> like you would do to change the particle positions or rotations, or in a call to any other function of your own at some moment.<br>The difference with the other particle properties (positon, rotation, etc) is that <code>setParticles()</code> doesn&#39;t compute the materials at all.<br>Indeed <code>setParticles()</code> is designed to be called each frame in the render loop and to make sure to keep the garbage collector activity to its minimum by allocating nothing.<br>Applying the changes of <code>materialIndex</code> values requires to sort again all the particles, to recompute the whole SPS geometry and moreover to recreate new SubMesh objects from the SPS mesh.<br>Therefore a dedicated method is provided <code>sps.computeSubMeshes()</code>. This method is to be called manually after each change of particle <code>materialIndex</code> values for them to be taken in account at once.<br>Like <code>setMultiMaterials()</code>, it&#39;s probably not a good idea to call it each frame in the render loop.</p>
+<pre><code class="lang-javascript">// updatable SPS creation
+var sps = new BABYLON.SolidParticleSystem(&quot;sps&quot;, scene, {
+  enableMultiMaterial: true
+});
+sps.addShape(model1, 300);
+sps.addShape(model2, 300);
+sps.addShape(model3, 300);
+sps.buildMesh();
+
+// mat0, mat1, mat2 are Material objects
+sps.setMultiMaterial([mat0, mat1, mat2]);
+
+// the particle materialIndex are set in the call to updateParticle
+// while the mesh and the multimaterial are already built
+sps.updateParticle = initFunction;
+sps.setParticles(); // updates the particle positions
+sps.computeSubMeshes(); // actually computes the submeshes and materials
+</code></pre>
+<p>Examples :
+<a href="https://playground.babylonjs.com/#RCUHJA#4">https://playground.babylonjs.com/#RCUHJA#4</a> - <i class="fa fa-eye" onclick="createIframe('RCUHJA#4', this)"></i><div class="iframeContainer"></div><br>In this second example the particles above a given altitude are given the next material in turn every 15 frames.<br><a href="https://playground.babylonjs.com/#RCUHJA#7">https://playground.babylonjs.com/#RCUHJA#7</a> - <i class="fa fa-eye" onclick="createIframe('RCUHJA#7', this)"></i><div class="iframeContainer"></div></p>
+<p>If you still really want to call <code>computeSubMeshes()</code> each time you call <code>setParticles()</code> because your particle materials are updated at this same frequency, you can then set the property <code>sps.autoUpdateSubMeshes</code> to <code>true</code> (default <code>false</code>). In this case, no more need for calling <code>sps.computeSubMeshes()</code> by hands as <code>setParticles()</code> will do it for you internally.</p>
+<pre><code class="lang-javascript">sps.autoUpdateSubMeshes = true;
+sps.setParticles(); // updates the particle material indexes AND recomputes the subMeshes
+</code></pre>
+<p>Example : <a href="https://playground.babylonjs.com/#RCUHJA#8">https://playground.babylonjs.com/#RCUHJA#8</a> - <i class="fa fa-eye" onclick="createIframe('RCUHJA#8', this)"></i><div class="iframeContainer"></div></p>
+<p>In the case you want to make your own MultiMaterial object by hands, then set it to the SPS mesh material property and call <code>sps.computeSubMeshes()</code> to internally build the needed SubMesh objects.</p>
+<pre><code class="lang-javascript">var multimat = new BABYLON.MultiMaterial(&quot;multi&quot;, scene);
+multimat.subMaterials.push(material0);
+multimat.subMaterials.push(material1);
+multimat.subMaterials.push(material2);
+
+sps.mesh.material = multimat;
+sps.computeSubMeshes();
+</code></pre>
+<p><strong>Note 1 :</strong> By default, the particle <code>materialIndex</code> value is <code>null</code>.<br>When enabling the MultiMaterial in the SPS, this value is set to zero for every particle until it&#39;s overwritten by the user or automatically set to some model material index by <code>useModelMaterial</code>.<br><strong>Note 2 :</strong> The particle depth sort doesn&#39;t work with the MultiMaterial support because particles can&#39;t be sorted by their distances to the camera and by materials in the same time. So if you enable both modes, it won&#39;t crash but it will get to some weird visible results.<br><strong>Note 3 :</strong> The SPS MultiMaterial support works also with an expandable SPS, meaning you can add/store/remove particles with different materials. When calling <code>sps.buildMesh()</code> again, everything is then recomputed automatically.</p>
+<h3><a name="garbage-collector-concerns" class="anchor" href="#garbage-collector-concerns"></a>Garbage Collector Concerns</h3><p>In Javascript, the Garbage Collector is usually your friend : it takes care about cleaning up all the not any longer needed variables you could have declared and thus it sets the memory free.<br>However, it can sometimes become an awkward friend because it can start its cleaning just while you are displaying a very smooth animation, so it takes the CPU for itself and leaves to you only those nice lags on the screen.<br>In order to avoid unpredictable GC pauses, it&#39;s best to avoid allocating new objects in loops that execute often, where particles are created or updated.<br>For example, <code>updateParticle()</code> and <code>updateParticleVertex()</code> are often called each frame for each particle or each particle vertex. Now imagine that you have a SPS with 30 000 particles. Suppose you write code like this to add a particle acceleration :</p>
+<pre><code class="lang-javascript">SPS.updateParticle = function(particle) {
+  var accel = new BABYLON.Vector3(0, 0.5, 0);
+  particle.velocity = particle.velocity.add(accel);
+  // ...
+};
+</code></pre>
+<p>Code like the above would create two new <code>Vector3</code> objects each call, or 60 000 new objects over the course of the update. And although modern JS engines are quite good at cleaning up short-lived objects, it&#39;s best not to unnecessarily strain the GC this way.<br>Instead, make your update loops reuse variables that were declared outside the loop, and don&#39;t call any methods inside the loop that create new objects:</p>
+<pre><code class="lang-javascript">var accel = new BABYLON.Vector3(0, 0.5, 0);
+SPS.updateParticle = function(particle) {
+  particle.velocity.addInPlace(accel);
+  // ...
+};
+</code></pre>
+<p>SPS also has a <code>vars</code> property, which is an object that you can use to store any variables you want to reuse. Any variables you store there will share the SPS&#39; lifecycle, and get cleaned up when you dispose it:</p>
+<pre><code class="lang-javascript">SPS.vars.tempVector = new BABYLON.Vector3(0, 0, 0);
+// ...
+SPS.dispose(); // cleans explicitly all your SPS.vars !
+</code></pre>
+<p>A good JS practice for the compiler is to <strong>never</strong> change the variable type once it has been set :</p>
+<pre><code class="lang-javascript">SPS.vars.myFloat = 0.01; // just keep setting float values to myFloat afterwards
+SPS.vars.myInt = 5; // just keep setting integer values to myInt afterwards
+SPS.vars.myString = &quot;foo&quot;; // just keep setting string values to myString afterwards
+</code></pre>
+<p>Example : From this <a href="http://gamedevelopment.tutsplus.com/How_To/the-three-simple-rules-of-flocking-behaviors-alignment-cohesion-and-separation--gamedev-3444">article</a>, here is an implementation of a simple particle IA called &quot;flocking&quot; what a behavior of association, then cohesion and separation. This example uses <code>SPS.vars</code> to allocate the memory used for results only once instead of in-function temporary variables.<br> <a href="https://www.babylonjs-playground.com/#2FPT1A#35">https://www.babylonjs-playground.com/#2FPT1A#35</a> - <i class="fa fa-eye" onclick="createIframe('2FPT1A#35', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="rebuild-the-mesh" class="anchor" href="#rebuild-the-mesh"></a>Rebuild the mesh</h3><p>if a mesh, changed at creation time with <code>positionFunction</code> or <code>vertexFunction</code> has been then modified with <code>setParticles()</code>, it can be rebuild by reapplying the internally stored <code>positionFunction</code> or <code>vertexFunction</code> functions.<br>Note that only the function are stored, not their results. This means that if one of your function produces different results each call (using <code>Math.random()</code> for instance), you won&#39;t get back the same SPS mesh shape but another computed shape.</p>
+<pre><code class="lang-javascript">SPS.rebuildMesh();
+</code></pre>
+<p>Except in some very specific cases, you might not need to use this function.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/features/Particles">Particles Overview</a></p>
+<p><a href="/babylon101/particles">Particles 101</a></p>
+<p><a href="/how_to/Animate">How to Create Animated Particles</a><br><a href="/how_to/Sub_Emitters">How to Use Sub Emitters</a></p>
+<p><a href="/How_To/point_Cloud_Particles">Points Cloud Particle System</a></p>
+<h2><a name="intermediate-l2" class="anchor" href="#intermediate-l2"></a>Intermediate - L2</h2><p><a href="/how_to/Customise">How to Customize the Particle System</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

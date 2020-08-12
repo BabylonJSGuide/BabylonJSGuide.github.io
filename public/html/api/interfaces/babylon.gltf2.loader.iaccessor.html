@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>IAccessor - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="../modules/babylon.gltf2.html">GLTF2</a>
+					</li>
+					<li>
+						<a href="../modules/babylon.gltf2.loader.html">Loader</a>
+					</li>
+					<li>
+						<a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>
+					</li>
+				</ul>
+				<h1>IAccessor</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Loader interface with additional members.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<a href="babylon.gltf2.iaccessor.html" class="tsd-signature-type">IAccessor</a>
+						</li>
+						<li>
+							<a href="babylon.gltf2.loader.iarrayitem.html" class="tsd-signature-type">IArrayItem</a>
+							<ul class="tsd-hierarchy">
+								<li>
+									<span class="target">IAccessor</span>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section tsd-is-inherited">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#bufferview" class="tsd-kind-icon">buffer<wbr>View</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#byteoffset" class="tsd-kind-icon">byte<wbr>Offset</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#componenttype" class="tsd-kind-icon">component<wbr>Type</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#count" class="tsd-kind-icon">count</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#extensions" class="tsd-kind-icon">extensions</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#extras" class="tsd-kind-icon">extras</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#index" class="tsd-kind-icon">index</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#max" class="tsd-kind-icon">max</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#min" class="tsd-kind-icon">min</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#name" class="tsd-kind-icon">name</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#normalized" class="tsd-kind-icon">normalized</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#sparse" class="tsd-kind-icon">sparse</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="babylon.gltf2.loader.iaccessor.html#type" class="tsd-kind-icon">type</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="bufferview" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> buffer<wbr>View</h3>
+						<a href="/playground/?code=bufferView" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">buffer<wbr>View<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#bufferview">bufferView</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The index of the bufferview</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="byteoffset" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> byte<wbr>Offset</h3>
+						<a href="/playground/?code=byteOffset" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">byte<wbr>Offset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#byteoffset">byteOffset</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The offset relative to the start of the bufferView in bytes</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="componenttype" class="tsd-anchor"></a>
+						<h3>component<wbr>Type</h3>
+						<a href="/playground/?code=componentType" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">component<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../enums/babylon.gltf2.accessorcomponenttype.html" class="tsd-signature-type">AccessorComponentType</a></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#componenttype">componentType</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The datatype of components in the attribute</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="count" class="tsd-anchor"></a>
+						<h3>count</h3>
+						<a href="/playground/?code=count" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#count">count</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The number of attributes referenced by this accessor</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="extensions" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> extensions</h3>
+						<a href="/playground/?code=extensions" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">extensions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#extensions">extensions</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Dictionary object with extension-specific objects</p>
+							</div>
+						</div>
+						<div class="tsd-type-declaration">
+							<h4>Type declaration</h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-index-signature">
+									<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="extras" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> extras</h3>
+						<a href="/playground/?code=extras" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">extras<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#extras">extras</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Application-Specific data</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="index" class="tsd-anchor"></a>
+						<h3>index</h3>
+						<a href="/playground/?code=index" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iarrayitem.html">IArrayItem</a>.<a href="babylon.gltf2.loader.iarrayitem.html#index">index</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The index of this item in the array.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="max" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> max</h3>
+						<a href="/playground/?code=max" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">max<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#max">max</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Maximum value of each component in this attribute</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="min" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> min</h3>
+						<a href="/playground/?code=min" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">min<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#min">min</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Minimum value of each component in this attribute</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="name" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
+						<a href="/playground/?code=name" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#name">name</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The user-defined name of this object</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="normalized" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> normalized</h3>
+						<a href="/playground/?code=normalized" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">normalized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#normalized">normalized</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Specifies whether integer data values should be normalized</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="sparse" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagOptional">Optional</span> sparse</h3>
+						<a href="/playground/?code=sparse" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">sparse<span class="tsd-signature-symbol">:</span> <a href="babylon.gltf2.iaccessorsparse.html" class="tsd-signature-type">IAccessorSparse</a></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#sparse">sparse</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Sparse storage of attributes that deviate from their initialization value</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+						<a name="type" class="tsd-anchor"></a>
+						<h3>type</h3>
+						<a href="/playground/?code=type" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/babylon.gltf2.accessortype.html" class="tsd-signature-type">AccessorType</a></div>
+						<aside class="tsd-sources">
+							<p>Inherited from <a href="babylon.gltf2.loader.iaccessor.html">IAccessor</a>.<a href="babylon.gltf2.loader.iaccessor.html#type">type</a></p>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Specifies if the attribute is a scalar, vector, or matrix</p>
+							</div>
+						</div>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class=" tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class="current tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.iaccessor.html" class="tsd-kind-icon">IAccessor</a>
+							<ul>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#bufferview" class="tsd-kind-icon">buffer<wbr>View</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#byteoffset" class="tsd-kind-icon">byte<wbr>Offset</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#componenttype" class="tsd-kind-icon">component<wbr>Type</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#count" class="tsd-kind-icon">count</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#extensions" class="tsd-kind-icon">extensions</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#extras" class="tsd-kind-icon">extras</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#index" class="tsd-kind-icon">index</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#max" class="tsd-kind-icon">max</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#min" class="tsd-kind-icon">min</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#name" class="tsd-kind-icon">name</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#normalized" class="tsd-kind-icon">normalized</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#sparse" class="tsd-kind-icon">sparse</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<a href="babylon.gltf2.loader.iaccessor.html#type" class="tsd-kind-icon">type</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.ianimation.html" class="tsd-kind-icon">IAnimation</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.ianimationchannel.html" class="tsd-kind-icon">IAnimation<wbr>Channel</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.ianimationsampler.html" class="tsd-kind-icon">IAnimation<wbr>Sampler</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.iarrayitem.html" class="tsd-kind-icon">IArray<wbr>Item</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.ibuffer.html" class="tsd-kind-icon">IBuffer</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.ibufferview.html" class="tsd-kind-icon">IBuffer<wbr>View</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.icamera.html" class="tsd-kind-icon">ICamera</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.igltf.html" class="tsd-kind-icon">IGLTF</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.iimage.html" class="tsd-kind-icon">IImage</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.imaterial.html" class="tsd-kind-icon">IMaterial</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.imaterialnormaltextureinfo.html" class="tsd-kind-icon">IMaterial<wbr>Normal<wbr>Texture<wbr>Info</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.imaterialocclusiontextureinfo.html" class="tsd-kind-icon">IMaterial<wbr>Occlusion<wbr>Texture<wbr>Info</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.imaterialpbrmetallicroughness.html" class="tsd-kind-icon">IMaterial<wbr>Pbr<wbr>Metallic<wbr>Roughness</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.imesh.html" class="tsd-kind-icon">IMesh</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.imeshprimitive.html" class="tsd-kind-icon">IMesh<wbr>Primitive</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.inode.html" class="tsd-kind-icon">INode</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.isampler.html" class="tsd-kind-icon">ISampler</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.iscene.html" class="tsd-kind-icon">IScene</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.iskin.html" class="tsd-kind-icon">ISkin</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.itexture.html" class="tsd-kind-icon">ITexture</a>
+						</li>
+						<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="babylon.gltf2.loader.itextureinfo.html" class="tsd-kind-icon">ITexture<wbr>Info</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

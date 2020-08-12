@@ -1,0 +1,212 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Introduction to Shaders - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Introduction to Shaders</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#suggested-pre-reading">Suggested Pre-Reading</a></li>
+<li><a href="#an-overview">An Overview</a><ul>
+<li><a href="#basic">Basic</a></li>
+<li><a href="#custom">Custom</a></li>
+</ul>
+</li>
+<li><a href="#types-of-shader">Types of Shader</a></li>
+<li><a href="#passing-variables">Passing Variables</a></li>
+<li><a href="#variable-types">Variable types</a></li>
+<li><a href="#built-in-variables">Built In Variables</a></li>
+<li><a href="#built-in-inputs">Built In Inputs</a></li>
+<li><a href="#functions">Functions</a></li>
+<li><a href="#running-shader-code">Running Shader Code</a></li>
+<li><a href="#putting-shader-code-in-babylonjs">Putting Shader Code in BabylonJS</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#how-to">How To</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction-to-shaders-in-babylonjs" class="anchor" href="#introduction-to-shaders-in-babylonjs"></a>Introduction to Shaders in BabylonJS</h1><p>A shader is a program processed by the Graphical Processing Unit (GPU) to produce a screen image by manipulating data to 
+produce individual pixels. The GPU is optimised, through parallel processing, to deal with these thousand of operations 
+in an extremely fast way.</p>
+<h2><a name="suggested-pre-reading" class="anchor" href="#suggested-pre-reading"></a>Suggested Pre-Reading</h2><ul>
+<li>How To:<ul>
+<li><a href="/How_To/Custom.html">Custom Meshes</a></li>
+<li><a href="/How_To/Updating_Vertices.html">Updating Vertices</a></li>
+</ul>
+</li>
+<li>Resources:<ul>
+<li><a href="/resources/Normals.html">Normals in BJS</a></li>
+</ul>
+</li>
+</ul>
+<h2><a name="an-overview" class="anchor" href="#an-overview"></a>An Overview</h2><h3><a name="basic" class="anchor" href="#basic"></a>Basic</h3><p>To produce a BabylonJS scene, code is written in Javascript which the BabylonJS Engine processes and displays the result on screen. 
+The scene can alter through changes to the meshes, the lights or camera position. To show possible changes in a timely way the screen 
+display (frame) is re-drawn up to 60 frames per second. </p>
+<p>Simplifying, the process is </p>
+<ul>
+<li>Scene Code is processed in the CPU by the BJS Engine Code to produce a Virtual 3D Model </li>
+<li>Virtual 3D Model is processed in the CPU by the BJS Engine Code to produce Shader GPU Code </li>
+<li>Shader GPU Code is processed by GPU to produce screen image.</li>
+</ul>
+<p>For example the BabylonJS Engine takes this code</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {}, scene);
+</code></pre>
+<p>and turns it into vertex data including positions, colors and normals.</p>
+<p>The BabylonJS Engine creates the shader code for this data and is passed to the GPU.</p>
+<h3><a name="custom" class="anchor" href="#custom"></a>Custom</h3><p>Much more than this as well as Scene Code you can write your own user Shader Code so that 
+the process becomes:</p>
+<ul>
+<li>Scene Code is processed in the CPU by the BJS Engine Code to produce a Virtual 3D Model </li>
+<li>Virtual 3D Model and User Shader Code is processed in the CPU by the BJS Engine Code to produce the Shader GPU Code </li>
+<li>Shader GPU Code is processed by GPU to produce the screen image.</li>
+</ul>
+<h2><a name="types-of-shader" class="anchor" href="#types-of-shader"></a>Types of Shader</h2><p>Shaders are written in Graphics Library Shader Language (GLSL) and come in two parts:</p>
+<ol>
+<li><p>Vertex Shader: this takes the data for each vertex and determines where on the screen the pixel for it will be displayed and its color.</p>
+</li>
+<li><p>Fragment Shader: this uses data from the Vertex Shader to determine the position and colour of the pixels to represent each facet of the mesh.</p>
+</li>
+</ol>
+<p>Fragment Shaders are sometimes refered to as Pixel Shaders.</p>
+<p><img src="/img/how_to/Shaders/shade1.jpg" alt="Shaders"></p>
+<h2><a name="passing-variables" class="anchor" href="#passing-variables"></a>Passing Variables</h2><p>The vertex data for position, normal and uv coordinates are passed to the Vertex Shader as variables of category attribute. 
+User data can be passed to both the Vertex Shader and the Fragment Shader as variables of category uniform. 
+Data can be passed from the Vertex Shader to the Fragment Shader with variables of category varying.</p>
+<p>A vital uniform variable to declare in the Vertex Shader is <code>worldViewProjection</code> as the BabylonJS Engine uses this to 
+pass scene 3D - 2D projection data to the Vertex Shader.</p>
+<p><img src="/img/how_to/Shaders/shade2.jpg" alt="Pass Variables"></p>
+<h2><a name="variable-types" class="anchor" href="#variable-types"></a>Variable types</h2><p>All variables used in both shaders must be given a type and any numbers assigned to the variable must be consistent with its type.</p>
+<p>For example:</p>
+<pre><code>int n = 2;
+float r = 2.0;
+</code></pre><p>The following example with throw an error:</p>
+<pre><code>float r = 2;
+</code></pre><p>Some examples of types are</p>
+<ul>
+<li><code>vec2</code>: a two dimensional vector of floating-point numbers  </li>
+<li><code>vec3</code>: a three dimensional vector of floating-point numbers   </li>
+<li><code>mat4</code>: a matrix with 4 columns and 4 rows floating-point numbers  </li>
+<li><code>sampler2D</code>: a 2D texture image  </li>
+</ul>
+<p>Since vertex positions need to be as accurate as possible all floating-point numbers should be set as having high precision. 
+This is done at the start of the code for each shader using: </p>
+<pre><code>precision highp float
+</code></pre><h2><a name="built-in-variables" class="anchor" href="#built-in-variables"></a>Built In Variables</h2><p>The GLSL language has a number of built in variables. Two are vital to the operation of the two shaders and are always necessary:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gl_Position</td>
+<td>provide positional data for screen coordinates</td>
+</tr>
+<tr>
+<td>gl_FragColor</td>
+<td>provide colour data for the representation of a facet on screen</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="built-in-inputs" class="anchor" href="#built-in-inputs"></a>Built In Inputs</h2><table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>position</td>
+<td>vec3</td>
+<td>pixel: vertex position / fragment: face pixel position</td>
+</tr>
+<tr>
+<td>normal</td>
+<td>vec3</td>
+<td>pixel: vertex normal / fragment: face pixel normal</td>
+</tr>
+<tr>
+<td>uv</td>
+<td>vec2</td>
+<td>texture coordinate</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<thead>
+<tr>
+<th>Uniform</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>world</td>
+<td>mat4</td>
+<td>mesh global transforming state (move + rotate + scale)</td>
+</tr>
+<tr>
+<td>worldView</td>
+<td>mat4</td>
+<td>global view part of mesh</td>
+</tr>
+<tr>
+<td>worldViewProjection</td>
+<td>mat4</td>
+<td>global camera</td>
+</tr>
+<tr>
+<td>view</td>
+<td>mat4</td>
+<td>mesh local view part</td>
+</tr>
+<tr>
+<td>projection</td>
+<td>mat4</td>
+<td>local camera</td>
+</tr>
+<tr>
+<td>time</td>
+<td>float</td>
+<td>per each frame</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="functions" class="anchor" href="#functions"></a>Functions</h2><p>Functions needed to be typed as do their parameters and have the form:</p>
+<pre><code>float NAME(typed parameters) {
+    *code*
+}
+</code></pre><h2><a name="running-shader-code" class="anchor" href="#running-shader-code"></a>Running Shader Code</h2><p>Both the Vertex and the Fragment Shader are run from a function which must be called <code>main</code> and be of type <code>void</code> since it returns 
+no result. It must also must type the empty parameter list as void:</p>
+<pre><code>void main(void) {
+    *code*
+}
+</code></pre><p><img src="/img/how_to/Shaders/shade3.jpg" alt="Shader Code"></p>
+<h2><a name="putting-shader-code-in-babylonjs" class="anchor" href="#putting-shader-code-in-babylonjs"></a>Putting Shader Code in BabylonJS</h2><p>Here are four ways of putting shader code into your scene:</p>
+<ol>
+<li>Use <a href="http://www.babylonjs.com/cyos/">BabylonJS Create Your Own Shader (CYOS)</a> and download a zip file </li>
+<li>Write the Vertex and Fragment Shader Code into <code>&lt;script&gt;</code> tags</li>
+<li>Write, save and import a Vertex and Fragment Shader file of type <em>.fx</em> into your code</li>
+<li>Use the <a href="https://github.com/BabylonJS/Extensions/tree/master/ShaderBuilder">ShaderBuilder extension</a> of BabylonJS.</li>
+</ol>
+<p>More details on this can be found below.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="how-to" class="anchor" href="#how-to"></a>How To</h2><ul>
+<li><a href="/How_To/Putting.html">Putting Shader Code in BabylonJS</a>  </li>
+<li><a href="/How_To/Shader_Material.html">ShaderMaterial Object</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

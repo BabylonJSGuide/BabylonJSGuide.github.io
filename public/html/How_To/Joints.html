@@ -1,0 +1,497 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Joints - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Joints</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#physical-joint-types">Physical Joint Types</a></li>
+<li><a href="#native-joints-for-each-physics-engine">Native Joints for Each Physics Engine</a></li>
+<li><a href="#babylonjs-joints">Babylon.js Joints</a><ul>
+<li><a href="#hinge-joint">Hinge Joint</a></li>
+<li><a href="#ball-and-socket-joint">Ball And Socket Joint</a></li>
+<li><a href="#wheel-joint">Wheel Joint</a></li>
+<li><a href="#slider-joint">Slider Joint</a></li>
+<li><a href="#prismatic-joint">Prismatic Joint</a></li>
+<li><a href="#distance-joint">Distance Joint</a></li>
+<li><a href="#lockjoint">LockJoint</a></li>
+<li><a href="#spring">Spring</a></li>
+<li><a href="#motors">Motors</a></li>
+</ul>
+</li>
+<li><a href="#playground-examples">Playground Examples</a><ul>
+<li><a href="#hinge-motor-speed-only">Hinge Motor Speed Only</a></li>
+<li><a href="#hinge-motor-speed-and-torque-force">Hinge Motor Speed and Torque (Force)</a></li>
+<li><a href="#wheel-hinge2-motor">Wheel (Hinge2) Motor</a></li>
+<li><a href="#slider-motor">Slider Motor</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="joints" class="anchor" href="#joints"></a>Joints</h1><p>A joint in a physics engine is a constraining feature between two bodies. This area has the largest differences between the physics engine both in the joints available and the names used. Not all native joints are available in some plugins.</p>
+<p>Playgrounds are available to check out the coding. In the playgrounds the physics&#39; engine used can be changed by selecting which ones to comment out.</p>
+<p>See <a href="/how_to/using_the_physics_engine">How to Use The Physics&#39; Engines</a> for an overall view of setting up and using the three plugins.</p>
+<h2><a name="physical-joint-types" class="anchor" href="#physical-joint-types"></a>Physical Joint Types</h2><table>
+<thead>
+<tr>
+<th>Number</th>
+<th>Joint</th>
+<th>Name</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><img src="/img/how_to/physics/hinge.jpg" alt="Hinge"></td>
+<td>Hinge</td>
+<td>Single Axis Rotation</td>
+</tr>
+<tr>
+<td>2</td>
+<td><img src="/img/how_to/physics/ballnsocket.jpg" alt="Ball and Socket"></td>
+<td>Ball and Socket</td>
+<td>Multi Axis Rotation</td>
+</tr>
+<tr>
+<td>3</td>
+<td><img src="/img/how_to/physics/conetwist.jpg" alt="Cone Twist"></td>
+<td>Cone Twist</td>
+<td>Unrestricted rotation (Twist) on One Axis, Limited Rotation (in Cone) On Others</td>
+</tr>
+<tr>
+<td>4</td>
+<td><img src="/img/how_to/physics/wheel.jpg" alt="Wheel"></td>
+<td>Wheel</td>
+<td>Two Axes Rotation</td>
+</tr>
+<tr>
+<td>5</td>
+<td><img src="/img/how_to/physics/slider.jpg" alt="Slider"></td>
+<td>Slider</td>
+<td>Single Axis Translation and Rotation</td>
+</tr>
+<tr>
+<td>6</td>
+<td><img src="/img/how_to/physics/prismatic.jpg" alt="Prismatic"></td>
+<td>Prismatic</td>
+<td>Single Axis Translation Only</td>
+</tr>
+<tr>
+<td>7</td>
+<td><img src="/img/how_to/physics/distance.jpg" alt="Distance"></td>
+<td>Distance</td>
+<td>Set Bodies a Fixed Distance Apart</td>
+</tr>
+<tr>
+<td>8</td>
+<td><img src="/img/how_to/physics/locked.jpg" alt="Locked"></td>
+<td>Locked</td>
+<td>Bodies Act As One Body</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="native-joints-for-each-physics-engine" class="anchor" href="#native-joints-for-each-physics-engine"></a>Native Joints for Each Physics Engine</h2><p>The relationship between native joints and physical joints</p>
+<p><strong><em>Cannon.js</em></strong></p>
+<table>
+<thead>
+<tr>
+<th>Cannon Joint</th>
+<th>Physical Joint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HingeConstraint</td>
+<td>1 Hinge</td>
+</tr>
+<tr>
+<td>PointToPointConstraint</td>
+<td>2 Ball and Socket</td>
+</tr>
+<tr>
+<td>DistanceConstraint</td>
+<td>7 Distance</td>
+</tr>
+<tr>
+<td>Spring</td>
+<td>Not Shown</td>
+</tr>
+<tr>
+<td>LockConstraint</td>
+<td>8 Locked</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>Oimo.js</em></strong></p>
+<table>
+<thead>
+<tr>
+<th>Oimo Joint</th>
+<th>Physical Joint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HingeJoint</td>
+<td>1 Hinge</td>
+</tr>
+<tr>
+<td>BallAndSocketJoint</td>
+<td>2 Ball and Socket</td>
+</tr>
+<tr>
+<td>WheelJoint</td>
+<td>4 Wheel</td>
+</tr>
+<tr>
+<td>SliderJoint</td>
+<td>5 Slider</td>
+</tr>
+<tr>
+<td>PrismaticJoint</td>
+<td>6 Prismatic</td>
+</tr>
+<tr>
+<td>DistanceJoint</td>
+<td>7 Distance</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>Ammo.js</em></strong></p>
+<table>
+<thead>
+<tr>
+<th>Ammo Joint</th>
+<th>Physical Joint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HingeConstraint</td>
+<td>1 Hinge</td>
+</tr>
+<tr>
+<td>Point2PointConstraint</td>
+<td>2 Ball and Socket</td>
+</tr>
+<tr>
+<td>ConeTwistConstraint</td>
+<td>3 Cone Twist</td>
+</tr>
+<tr>
+<td>SliderConstraint</td>
+<td>5 Slider</td>
+</tr>
+<tr>
+<td>FixedConstraint</td>
+<td>8 Locked(?)</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="babylonjs-joints" class="anchor" href="#babylonjs-joints"></a>Babylon.js Joints</h2><p>The following table lists those joints within Babylon.js and where available their equivalence to each other and their link to the native joints</p>
+<table>
+<thead>
+<tr>
+<th>Babylon.js Joint</th>
+<th>Cannon Joint</th>
+<th>Oimo Joint</th>
+<th>Ammo Joint</th>
+<th>Helper Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HingeJoint</td>
+<td>HingeConstraint</td>
+<td>HingJoint</td>
+<td>HingeConstraint</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>BallAndSocketJoint</td>
+<td>PointToPointConstraint</td>
+<td>BallAndSocketJoint</td>
+<td>Point2PointConstraint</td>
+<td>no</td>
+</tr>
+<tr>
+<td>WheelJoint</td>
+<td>----</td>
+<td>WheelJoint</td>
+<td>Point2PointConstraint</td>
+<td>Hinge2Joint Only</td>
+</tr>
+<tr>
+<td>SliderJoint</td>
+<td>----</td>
+<td>SliderJoint</td>
+<td>----</td>
+<td>No</td>
+</tr>
+<tr>
+<td>PrismaticJoint</td>
+<td>----</td>
+<td>PrismaticJoint</td>
+<td>----</td>
+<td>No</td>
+</tr>
+<tr>
+<td>DistanceJoint</td>
+<td>DistanceConstraint</td>
+<td>DistanceJoint</td>
+<td>Point2PointConstraint with Added Constraints</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>LockJoint</td>
+<td>LockConstraint</td>
+<td>----</td>
+<td>----</td>
+<td>No</td>
+</tr>
+<tr>
+<td>SpringJoint</td>
+<td>Spring</td>
+<td>----</td>
+<td>----</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>The method to form a joint and connect one body (main) to a second body (connected) is</p>
+<pre><code class="lang-javascript">var joint = new BABYLON.PhysicsJoint(
+  BABYLON.PhysicsJoint.TYPE_OF_JOINT,
+  jointData
+);
+
+mainImpostor.addJoint(connectedImpostor, joint);
+</code></pre>
+<p>where the <code>jointData</code> object contains the properties for the joint.</p>
+<h3><a name="hinge-joint" class="anchor" href="#hinge-joint"></a>Hinge Joint</h3><p>For a hinge the only component of any force that produces movement is one perpendicular to the axis of the hinge. It is possible however that a large impulse in another direction can produce a reaction between the two bodies that does produce an impulse component in the perpendicular direction.</p>
+<p>The <code>jointData</code> object for a hinge contains the following properties</p>
+<ul>
+<li>mainAxis: Vector3; the axis for the main body.</li>
+<li>connectedAxis: Vector3; the axis for the connected body, usually the same as the main axis.</li>
+<li>mainPivot: Vector3; the pivot point for the main body.</li>
+<li>connectedPivot: vector3; the pivot point for the connected body, the negative of the connected body&#39;s position.</li>
+</ul>
+<p>A hinge joint can also be created with a helper class</p>
+<pre><code class="lang-javascript">var joint1 = new BABYLON.HingeJoint(jointData);
+</code></pre>
+<p><strong><em>PhysicsJoint Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#32">Playground Example - Hinge as Sphere - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#32', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong><em>Helper Class Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#F15U0G#55">Playground Example - Hinge as Sphere - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('F15U0G#55', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Since a hinge gives movement about only one axis it would seem to make sense to replace the representation of the hinge with a cylinder. Doing this, reshaping the box and keeping the sphere mesh imposter as a sphere does produce changes.</p>
+<p>In this case, for all the physics&#39; engines whatever the direction of impulse set it is applied in a direction perpendicular to the hinge axis.</p>
+<p><strong><em>PhysicsJoint Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#33">Playground Example - Hinge as Cylinder - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#33', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong><em>Helper Class Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#F15U0G#56">Playground Example - Hinge as Cylinder - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('F15U0G#56', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>You can, of course, use a cylinder impostor for the cylinder mesh</p>
+<p><strong><em>PhysicsJoint Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#RHBQY9#13">Playground Example - Hinge as Cylinder - Box and Cylinder Imposters</a> - <i class="fa fa-eye" onclick="createIframe('RHBQY9#13', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong><em>Helper Class Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#RHBQY9#14">Playground Example - Hinge as Cylinder - Box and Cylinder Imposters</a> - <i class="fa fa-eye" onclick="createIframe('RHBQY9#14', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="ball-and-socket-joint" class="anchor" href="#ball-and-socket-joint"></a>Ball And Socket Joint</h3><p>For a ball and socket joint a force can produce rotation about all three axes.</p>
+<p>The positioning of the connected body is determined by the connected pivot. The <code>jointData</code> object for a ball and socket contains the following properties</p>
+<ul>
+<li>mainPivot: Vector3; the pivot point for the main body.</li>
+<li>connectedPivot: vector3; the pivot point for the connected body, the negative of the connected body&#39;s position.</li>
+</ul>
+<p><strong><em>PhysicsJoint Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#RHBQY9#15">Playground Example - Ball and Socket - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('RHBQY9#15', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="wheel-joint" class="anchor" href="#wheel-joint"></a>Wheel Joint</h3><p>For a wheel the a force produces rotation about two axes.</p>
+<p>The <code>jointData</code> object for a hinge contains the following properties</p>
+<ul>
+<li>mainAxis: Vector3; the first axis.</li>
+<li>connectedAxis: Vector3; the second axis.</li>
+<li>mainPivot: Vector3; the pivot point for the main body.</li>
+<li>connectedPivot: vector3; the pivot point for the connected body, the negative of the connected body&#39;s position.</li>
+</ul>
+<p><strong>Note</strong> In the <code>Oimo.js</code> playgrounds changing the contact point of the force will not produce a spin around the axis perpendicular to the sphere&#39;s surface.</p>
+<p><strong><em>PhysicsJoint Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#7">Playground Example Oimo.js - Wheel - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The <code>PhysicsJoint</code> called <code>Hinge2Joint</code> can be used as an alternative. Note however that there is no helper call <code>WheelJoint</code> and the helper must be</p>
+<pre><code class="lang-javascript">var joint1 = new BABYLON.Hinge2Joint(jointData);
+</code></pre>
+<p>When this helper class is used with <code>Ammo.js</code> it forms a <code>BallAndSocketJoint</code> not a <code>WheelJoint</code>. So a change of contact point can produce a spin around the axis perpendicular to the sphere&#39;s surface when using <code>Ammo.js</code>.</p>
+<p><strong><em>Helper Class Playgrounds</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#F15U0G#26">Playground Example Oimo.js - Hinge2 - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('F15U0G#26', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#F15U0G#64">Playground Example Ammo.js - Hinge2 - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('F15U0G#64', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="slider-joint" class="anchor" href="#slider-joint"></a>Slider Joint</h3><p>Currently <code>Oimo.js</code> only. Any component of force in the direction of the slider axis will move the body along this axis. Any component of force perpendicular to the slider axis will rotate the body around the axis.</p>
+<p>The <code>jointData</code> object for a slider contains the following properties</p>
+<ul>
+<li>mainAxis:Vector3, slider and rotational axis</li>
+<li>collision: Boolean, true if the main and connected bodies react at collision.</li>
+</ul>
+<p><strong><em>PhysicsJoint Playgrounds</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#17">Playground Example Oimo.js - Slider - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#17', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="prismatic-joint" class="anchor" href="#prismatic-joint"></a>Prismatic Joint</h3><p>Currently <code>Oimo.js</code> only. Only the component of force in the direction of the axis will move the body and the movement will be a translation only along this axis.</p>
+<p>The <code>jointData</code> object for a slider contains the following properties</p>
+<ul>
+<li>mainAxis:Vector3, prismatic axis</li>
+<li>collision: Boolean, true if the main and connected bodies react at collision.</li>
+</ul>
+<p><strong><em>PhysicsJoint Playgrounds</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#18">Playground Example Oimo.js - Prismatic Joint - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#18', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="distance-joint" class="anchor" href="#distance-joint"></a>Distance Joint</h3><p>The <code>jointData</code> object for a distance joint contains the following properties</p>
+<ul>
+<li>maxDistance: number.</li>
+</ul>
+<p><strong><em>PhysicsJoint Playgrounds</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#34">Playground Example - Distance - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#34', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong><em>Helper Class Playgrounds</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#F15U0G#57">Playground Example - Distance - Box and Sphere Imposters</a> - <i class="fa fa-eye" onclick="createIframe('F15U0G#57', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="lockjoint" class="anchor" href="#lockjoint"></a>LockJoint</h3><p><code>Cannon.js</code> only. The two connected bodies act as one body.</p>
+<p><strong><em>PhysicsJoint Playgrounds</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#19">Playground Example Cannon.js - Lock Joint - Both Box Imposters</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#19', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="spring" class="anchor" href="#spring"></a>Spring</h3><p><code>Cannon,js</code> Only. The <code>jointData</code> object for a spring contains the following properties</p>
+<ul>
+<li>length: number.</li>
+<li>stiffness: number.</li>
+<li>damping: number.</li>
+</ul>
+<p><strong><em>PhysicsJoint Playgrounds</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#36">Playground Example Cannon.js - Spring Joint - Both Box Imposters</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#36', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="motors" class="anchor" href="#motors"></a>Motors</h1><p>A motor requires a target speed (angular velocity) and the maximum force (torque) that can be applied by the motor. It is possible to set a torque that is insufficient for it to reach the target speed. Depending on the shape and mass of the body the torque has to overcome the moment of inertia of the body. A too low value for the torque will make the body struggle and stutter to reach the target speed. Even attempting to simulate a virtual motor in zero gravity with no friction and a zero mass for the axel joint turning a cylinder can make determining an appropriate value for the torque difficult. Since moment of inertia, which determines torque, also depends on the volume of the body it is a good idea to keep linear dimensions around 10 or less though it is probably worth experimenting to get obtain what you need. Adding gravity, friction and further bodies, that the motored body has to move, makes it even more difficult. Sometimes in your project all you will want is for the motor to turn. This can be achieved by just setting the target speed (the motor will be over torqued by default), as in</p>
+<pre><code class="lang-javascript">joint.setMotor(speed);
+</code></pre>
+<p>At other times it will be important to set a value for the torque that limits the motor operation, you can do this with</p>
+<pre><code class="lang-javascript">joint.setMotor(speed, force);
+</code></pre>
+<p>The table below shows the joints that a motor can be added to.</p>
+<table>
+<thead>
+<tr>
+<th>Babylon.js Joint</th>
+<th>Cannon Motor</th>
+<th>Oimo Motor</th>
+<th>Ammo Motor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BABYLON.PhysicsJoint.HingeJoint</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>BABYLON.PhysicsJoint.WheelJoint</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>BABYLON.PhysicsJoint.Hinge2Joint</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>BABYLON.PhysicsJoint.SliderJoint</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>To add a motor to one of these joints simply replace <code>PhysicsJoint</code> with <code>MotorEnabledJoint</code> and set the motor on the joint.</p>
+<pre><code class="lang-javascript">var joint = new BABYLON.PhysicsJoint(
+  BABYLON.PhysicsJoint.TYPE_OF_JOINT,
+  jointData
+);
+
+mainImpostor.addJoint(connectedImpostor, joint);
+</code></pre>
+<p>becomes</p>
+<pre><code class="lang-javascript">var joint = new BABYLON.MotorEnabledJoint(BABYLON.PhysicsJoint.TYPE_OF_JOINT, jointData);
+
+mainImpostor.addJoint(connectedImpostor, joint);
+
+joint.setMotor(target speed, maximum torque)
+</code></pre>
+<p>The helper classes for <code>HingeJoint</code> and <code>Hinge2Joint</code> are already motorised and only <code>setMotor</code> is needed.</p>
+<h2><a name="playground-examples" class="anchor" href="#playground-examples"></a>Playground Examples</h2><h3><a name="hinge-motor-speed-only" class="anchor" href="#hinge-motor-speed-only"></a>Hinge Motor Speed Only</h3><p><strong><em>MotorEnabledJoint Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#35">Playground Example - Hinge Motor</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#35', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong><em>Helper Class Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#F15U0G#58">Playground Example - Hinge Motor</a> - <i class="fa fa-eye" onclick="createIframe('F15U0G#58', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="hinge-motor-speed-and-torque-force" class="anchor" href="#hinge-motor-speed-and-torque-force"></a>Hinge Motor Speed and Torque (Force)</h3><p>Different engines use differing scales for the torque and a little trial and error is often necessary to determine the required effect.</p>
+<ul>
+<li>For Cannon.js try starting with torque values between 1/100 to 1/10 of the total mass value;</li>
+<li>For Ammo.js try starting with torque values between 1/100 and 1/10 of total mass value;</li>
+<li>For Oimo.js try starting with torque values about 1 to 10 times the total mass value.</li>
+</ul>
+<p>In the hinge motor playgrounds below there are two wheels you can try out different torque values for each wheel to see how they vary. Note that they are in zero gravity, with zero friction and the axel has zero mass. In other situations torque values may need a larger factor than those given above.</p>
+<p><strong><em>MotorEnabledJoint Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#WWNQ10#19">Playground Example - Hinge Motor</a> - <i class="fa fa-eye" onclick="createIframe('WWNQ10#19', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong><em>Helper Class Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#WWNQ10#20">Playground Example - Hinge Motor</a> - <i class="fa fa-eye" onclick="createIframe('WWNQ10#20', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="wheel-hinge2-motor" class="anchor" href="#wheel-hinge2-motor"></a>Wheel (Hinge2) Motor</h3><p><strong><em>MotorEnabledJoint Playgrounds</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#28">Playground Example Oimo.js - Wheel Z Axis</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#28', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#29">Playground Example Oimo.js - Wheel Y Axis</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#29', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#30">Playground Example Oimo.js - Wheel X Axis</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#30', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="slider-motor" class="anchor" href="#slider-motor"></a>Slider Motor</h3><p>The motor rotates the body around the slider axis.</p>
+<p><strong><em>MotorEnabledJoint Playground</em></strong></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UFVU18#31">Playground Example Oimo.js - Slider X axis</a> - <i class="fa fa-eye" onclick="createIframe('UFVU18#31', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/how_to/using_the_physics_engine">How To Use The Physics&#39; Engines</a><br><a href="/how_to/forces">How To Use Forces</a><br><a href="/how_to/joint_pivots">How To Use Pivots and Axes</a><br><a href="/how_to/compounds">How To Create Compound Bodies</a><br><a href="/how_to/soft_bodies">How To Create Soft Bodies</a></p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/how_to/Using_Advanced_Physics_Features">How To Use Advanced Features</a></p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/how_to/Adding_Your_Own_Physics_Engine_Plugin_to_Babylon.js">How To Add Your Own Physics Engine</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

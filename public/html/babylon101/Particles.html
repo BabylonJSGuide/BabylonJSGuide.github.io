@@ -1,0 +1,593 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Particles - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Particles</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#creating-the-particles">Creating the Particles</a><ul>
+<li><a href="#particle-system">Particle System</a></li>
+<li><a href="#pre-warming">Pre-warming</a></li>
+<li><a href="#particle-texture">Particle Texture</a></li>
+<li><a href="#particle-emitter">Particle Emitter</a></li>
+<li><a href="#local-space">Local space</a></li>
+<li><a href="#world-offset">World offset</a></li>
+<li><a href="#location-and-spread">Location and Spread</a></li>
+</ul>
+</li>
+<li><a href="#basic-playground-example">Basic Playground Example</a></li>
+<li><a href="#fine-tune-particle-system">Fine Tune Particle System</a><ul>
+<li><a href="#lifetime">Lifetime</a></li>
+<li><a href="#size">Size</a></li>
+<li><a href="#particle-colors">Particle Colors</a></li>
+<li><a href="#particle-blending">Particle blending</a></li>
+<li><a href="#rates">Rates</a></li>
+<li><a href="#direction">Direction</a></li>
+<li><a href="#gravity">Gravity</a></li>
+<li><a href="#rotation">Rotation</a></li>
+<li><a href="#speed">Speed</a></li>
+<li><a href="#velocity-over-time">Velocity over time</a></li>
+<li><a href="#limit-velocity-over-time">Limit velocity over time</a></li>
+<li><a href="#drag-factor">Drag factor</a></li>
+<li><a href="#emit-rate-over-time">Emit rate over time</a></li>
+<li><a href="#start-size-over-time">Start size over time</a></li>
+<li><a href="#ramp-gradients">Ramp gradients</a></li>
+<li><a href="#alignment">Alignment</a></li>
+</ul>
+</li>
+<li><a href="#adjustable-playground-examples">Adjustable Playground Examples</a></li>
+<li><a href="#shape-emitters">Shape Emitters</a><ul>
+<li><a href="#point-emitter">Point Emitter</a></li>
+<li><a href="#box-emitter">Box Emitter</a></li>
+<li><a href="#sphere-emitter">Sphere Emitter</a></li>
+<li><a href="#hemispheric-emitter">Hemispheric Emitter</a></li>
+<li><a href="#cylinder-emitter">Cylinder Emitter</a></li>
+<li><a href="#cone-emitter">Cone Emitter</a></li>
+<li><a href="#mesh-emitter">Mesh Emitter</a></li>
+<li><a href="#custom-emitter">Custom Emitter</a></li>
+</ul>
+</li>
+<li><a href="#noise-texture">Noise texture</a></li>
+<li><a href="#gpu-particles">GPU Particles</a><ul>
+<li><a href="#random-texture">Random Texture</a></li>
+<li><a href="#fallback">Fallback</a></li>
+<li><a href="#stopping-a-gpu-particle-system">Stopping a GPU Particle System</a></li>
+<li><a href="#unsupported-features">Unsupported Features</a></li>
+<li><a href="#playground">Playground</a></li>
+</ul>
+</li>
+<li><a href="#snippet-server">Snippet server</a></li>
+<li><a href="#next-step">Next step</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#intermediate-l2">Intermediate - L2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="particles" class="anchor" href="#particles"></a>Particles</h1><p>This tutorial is going to talk about the particle system in BabylonJS. Particles are often small sprites used to simulate hard-to-reproduce phenomena like fire, smoke, water, or abstract visual effects like magic glitter and faery dust. This is done by emitting a cloud of very many particles from a region. From version 3.2 there are specific emitters to constrain this region in the shape of a box, sphere or cone. You can also write your own custom functions to control the cloud and region.</p>
+<p>GPU particles are the latest addition to the particles family and can be used, with an appropriate browser, to boost performance.</p>
+<p><img src="/img/how_to/Particles/12.png" alt="Particles"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Particles. </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#WBQ8EM">Playground Example - Particle System</a> - <i class="fa fa-eye" onclick="createIframe('WBQ8EM#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="creating-the-particles" class="anchor" href="#creating-the-particles"></a>Creating the Particles</h2><h3><a name="particle-system" class="anchor" href="#particle-system"></a>Particle System</h3><p>To perform this magic trick you first need to create a <code>ParticleSystem</code> object. </p>
+<pre><code class="lang-javascript">var particleSystem = new BABYLON.ParticleSystem(&quot;particles&quot;, 2000, scene);
+</code></pre>
+<p>This sets the number of particles in the system (capacity). The particle system also requires a texture so that the particles can be seen and an emitter which sets the location and spread of the particles from a starting point. </p>
+<p>Please note that you can use the ParticleHelper to create a default configured system with: <code>BABYLON.ParticleHelper.CreateDefault(emitter)</code>.</p>
+<p>Once completed you set the particle system in motion using</p>
+<pre><code class="lang-javascript">particleSystem.start();
+</code></pre>
+<p>and stop it with</p>
+<pre><code class="lang-javascript">particleSystem.stop();
+</code></pre>
+<p>To delay a particle systems start, <code>particleSystem.startDelay = 3000;</code> can be set. This value defines the delay in milliseconds.</p>
+<p>You can also delay start the particle system with <code>particleSystem.start(3000);</code>. This value with override the particleSystem.startDelay field if set.</p>
+<p><strong>Note:</strong> that stopping a particle system will prevent the creation of new particles but the existing ones will continue. If you want to reset a system to an empty state, you will also have to call <code>particleSystem.reset()</code></p>
+<p>You can also set the amount of time the particle system is running though live particles may continue after that time.</p>
+<pre><code class="lang-javascript">particleSystem.targetStopDuration = 5;
+</code></pre>
+<p>Once stopped you can dispose of the particle system. Very useful if you want to create a one shot particle system with a specific targetStopDuration.</p>
+<pre><code class="lang-javascript">particleSystem.disposeOnStop = true;
+</code></pre>
+<h3><a name="pre-warming" class="anchor" href="#pre-warming"></a>Pre-warming</h3><p>Starting with Babylon.js v3.3, you can now specify a pre-warming period to make sure your system is in a correct state before rendering.</p>
+<p>To do so, you need to setup two properties:</p>
+<ul>
+<li><code>system.preWarmCycles</code>: Gets or sets a value indicating how many cycles (or frames) must be executed before first rendering (this value has to be set before starting the system). Default is 0 (ie. no pre-warming)</li>
+<li><code>system.preWarmStepOffset</code>: Gets or sets a value indicating the time step multiplier to use in pre-warm mode (default is 1)</li>
+</ul>
+<p>So if you set your system like this:</p>
+<pre><code>system.preWarmCycles = 100;
+system.preWarmStepOffset = 5;
+system.start();
+</code></pre><p>It will execute the particle animation loop 100 times with a time step set to 5 times faster than realtime. The more cycles you want, the slower the system will be to start. So it could be interesting to increase the time step to have less cycles to run. But keep in mind that a too big time step will introduce issues if the life spam of a particle is smaller than the time step.</p>
+<p>Here is an example of pre-warming: <a href="https://www.babylonjs-playground.com/#MX2Z99#8">https://www.babylonjs-playground.com/#MX2Z99#8</a> - <i class="fa fa-eye" onclick="createIframe('MX2Z99#8', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="particle-texture" class="anchor" href="#particle-texture"></a>Particle Texture</h3><p>To apply a texture to the particles, such as<br><img src="/img/how_to/Particles/Flare.png" alt="Flare"></p>
+<p>set the <code>particleTexture</code></p>
+<pre><code class="lang-javascript">particleSystem.particleTexture = new BABYLON.Texture(&quot;PATH TO IMAGE&quot;, scene);
+</code></pre>
+<p>You can also apply a mask to a texture to filter some colors, or filter a part of the alpha channel.</p>
+<pre><code class="lang-javascript">particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
+</code></pre>
+<p>This example produces the following<br><img src="/img/how_to/Particles/12-1.png" alt="TextureMask"></p>
+<p>To use multiple textures in the scene use multiple particle systems all of which can use the same emitter object. </p>
+<h3><a name="particle-emitter" class="anchor" href="#particle-emitter"></a>Particle Emitter</h3><p>The emitter can be located either with a vector3 or a mesh, in which case the position of the mesh is used as the location. </p>
+<pre><code class="lang-javascript">particleSystem.emitter = new BABYLON.Vector3(-1, 2, 3);
+</code></pre>
+<pre><code class="lang-javascript">var source = BABYLON.Mesh.CreateBox(&quot;source&quot;, 1.0, scene);
+particleSystem.emitter = source;
+</code></pre>
+<h3><a name="local-space" class="anchor" href="#local-space"></a>Local space</h3><p>If the emitter is a mesh and you set <code>particleSystem.isLocal = true</code> then all particles will be generated into the mesh local space (so rotation or transforming the mesh will transform the entire particle system).</p>
+<p>Demo: <a href="https://www.babylonjs-playground.com/#LNRAI3">https://www.babylonjs-playground.com/#LNRAI3</a> - <i class="fa fa-eye" onclick="createIframe('LNRAI3#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="world-offset" class="anchor" href="#world-offset"></a>World offset</h3><p>Starting with Babylon.js v4.0, you can set up a world offset to your particles with:</p>
+<pre><code>particleSystem.worldOffset = new BABYLON.Vector3(100, 20, -453);
+</code></pre><p>This command will shift the particles using the offset (Mostly used when you need to keep the camera at the center of the world to increase precision and then move the world instead).</p>
+<h3><a name="location-and-spread" class="anchor" href="#location-and-spread"></a>Location and Spread</h3><p>The spread of the particles from the emitter is from within a box the size of which is determined by setting the lower, left, front corner and upper, right, back corner of the box relative to the location of the emitter. This is done using <code>minEmitBox</code> and <code>maxEmitBox</code></p>
+<pre><code class="lang-javascript">particleSystem.minEmitBox = new BABYLON.Vector3(-2, -3, 4); 
+particleSystem.maxEmitBox = new BABYLON.Vector3(4, 2, 3); 
+</code></pre>
+<p>The box can be collapsed to a line in the direction of an axis, for example the X-axis</p>
+<p><img src="/img/how_to/Particles/12-2.png" alt="EmitBox"></p>
+<pre><code class="lang-javascript">particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); 
+particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); 
+</code></pre>
+<h2><a name="basic-playground-example" class="anchor" href="#basic-playground-example"></a>Basic Playground Example</h2><p> At his point you can now create a particle system though it is very uninspiring. Just a few particles appearing in the spread space, drifting around and disappearing. </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TUNZFH">Playground Example - Basic Creation Small Spread</a> - <i class="fa fa-eye" onclick="createIframe('TUNZFH#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#TUNZFH#1">Playground Example - Basic Creation Larger Spread</a> - <i class="fa fa-eye" onclick="createIframe('TUNZFH#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Fortunately things can be made more interesting very soon with the setting of more properties. Read on.  </p>
+<h2><a name="fine-tune-particle-system" class="anchor" href="#fine-tune-particle-system"></a>Fine Tune Particle System</h2><p>See how to change the lifetime, size, and color of the particles, their rates of emission, direction of travel (optionally affected by gravity). You can also affect their rotation, speed and cloud shape. Below you can find <a href="">playground examples</a> where you can alter some of these parameters.</p>
+<h3><a name="lifetime" class="anchor" href="#lifetime"></a>Lifetime</h3><p>The time taken for particles to disappear (or die) after being emitted can be varied. Once a particle dies, the particle is then recycled for reemission. Their lifetime is given as a random range between a low and high value as in </p>
+<pre><code class="lang-javascript">// Life time of each particle (random between...)
+particleSystem.minLifeTime = 0.3;
+particleSystem.maxLifeTime = 1.5;
+</code></pre>
+<p>Starting with Babylon.js v3.3, you can also define the lifetime respectively to the particle system duration.
+For instance, if your call <code>system.targetStopDuration = 0.5</code> then you can define particle life time with a gradient like this:</p>
+<pre><code>particleSystem.addLifeTimeGradient(0, 0.5);
+particleSystem.addLifeTimeGradient(1, 0);
+</code></pre><p>The first parameter defines the gradient (0 means at the particle system start and 1 means at particle system end). The second parameter is the particle life time. This means that at the beginning of the particle system, particles will receive a life time set to 0.5. And when the system will be close to the <code>targetStopDuration</code> the particles will receive a life time close to 0.</p>
+<p>It is recommended to at least define a gradient for 0 and 1.</p>
+<p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two values per gradient:</p>
+<pre><code>particleSystem.addLifeTimeGradient(0, 0.5, 0.8);
+particleSystem.addLifeTimeGradient(1.0, 0, 0.1);
+</code></pre><p>In this case the life time of the particle will be randomly picked between the two values when the gradient will be reached.</p>
+<p>To remove a gradient you can call <code>particleSystem.removeLifeTimeGradient(0.5)</code>.</p>
+<h3><a name="size" class="anchor" href="#size"></a>Size</h3><p>The size of the particles can also be varied randomly within a given range.</p>
+<pre><code class="lang-javascript">// Size of each particle (random between...)
+particleSystem.minSize = 0.1;
+particleSystem.maxSize = 0.5;
+</code></pre>
+<p>If you want to change the particle size to not be a square you can then use the min/max for ScaleX/Y:</p>
+<pre><code class="lang-javascript">// Scale of each particle (random between...)
+particleSystem.minScaleX = 0.1;
+particleSystem.maxScaleX = 0.5;
+
+particleSystem.minScaleY = 0.2;
+particleSystem.maxScaleY = 0.4;
+</code></pre>
+<p>Starting with Babylon.js v3.3, you can also define size factor gradients.</p>
+<p>To add a size gradient just call the following code:</p>
+<pre><code>particleSystem.addSizeGradient(0, 0.5);
+</code></pre><p>The first parameter defines the gradient (0 means at the particle birth and 1 means at particle death). The second parameter is the size. In this case the particle will be born with size 0.5 and will end its life with size 3.
+It is recommended to at least define a gradient for 0 and 1:</p>
+<pre><code>particleSystem.addSizeGradient(0, 0.5);
+particleSystem.addSizeGradient(1.0, 3);
+</code></pre><p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two values per gradient:</p>
+<pre><code>particleSystem.addSizeGradient(0, 0.5, 0.8);
+particleSystem.addSizeGradient(1.0, 3, 4);
+</code></pre><p>In this case the size of the particle will be randomly picked between the two values when the gradient will be reached.</p>
+<p>To remove a gradient you can call <code>particleSystem.removeSizeGradient(0.5)</code>.</p>
+<p>When dealing with particle size, you may need to move the pivot (aka the center of the transform). By default the scale will come from the center of the particle but you may want to scale it from the top or the bottom. To change the pivot position, just call:</p>
+<pre><code>particleSystem.translationPivot = new BABYLON.Vector2(0, -0.5); // In this case the scale will come from the bottom of the particle
+</code></pre><p>Here is an example with size gradients and a pivot set to bottom: <a href="https://www.babylonjs-playground.com/#L9QWZB#0">https://www.babylonjs-playground.com/#L9QWZB#0</a> - <i class="fa fa-eye" onclick="createIframe('L9QWZB#0', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="particle-colors" class="anchor" href="#particle-colors"></a>Particle Colors</h3><p>There are three colors that can be set for the particle system, two which are combined (or blended) during the lifetime of the particle and a third that it takes on just before it disappears. </p>
+<pre><code class="lang-javascript">particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
+particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+</code></pre>
+<p>Starting with Babylon.js v3.3, you can also define color gradients. If you define color gradients the color1, color2 and colorDead properties will be ignore.</p>
+<p>To add a color gradient just call the following code:</p>
+<pre><code>particleSystem.addColorGradient(0, new BABYLON.Color4(1, 1, 1, 0));
+</code></pre><p>The first parameter defines the gradient (0 means at the particle birth and 1 means at particle death).
+It is recommended to at least define a gradient for 0 and 1:</p>
+<pre><code>particleSystem.addColorGradient(0, new BABYLON.Color4(1, 1, 1, 0));
+particleSystem.addColorGradient(1.0, new BABYLON.Color4(1, 1, 1, 1));
+</code></pre><p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two colors per gradient:</p>
+<pre><code>particleSystem.addColorGradient(0, new BABYLON.Color4(1, 1, 1, 0), new BABYLON.Color4(1, 0, 1, 0));
+particleSystem.addColorGradient(1.0, new BABYLON.Color4(1, 1, 1, 1), new BABYLON.Color4(1, 0, 1, 1));
+</code></pre><p>In this case the color of the particle will be randomly picked between the two colors when the gradient will be reached.</p>
+<p>To remove a gradient you can call <code>particleSystem.removeColorGradient(0.5)</code>.</p>
+<p>Here is an example of color gradients: <a href="https://www.babylonjs-playground.com/#MX2Z99#8">https://www.babylonjs-playground.com/#MX2Z99#8</a> - <i class="fa fa-eye" onclick="createIframe('MX2Z99#8', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="particle-blending" class="anchor" href="#particle-blending"></a>Particle blending</h3><p>There are different ways that particles are blended with the scene and these are set with <code>blendMode</code>.</p>
+<pre><code class="lang-javascript">particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+</code></pre>
+<pre><code class="lang-javascript">particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
+</code></pre>
+<p><code>BLENDMODE_ONEONE</code> is the default and will be used if <code>blendMode</code> is not specified.</p>
+<ul>
+<li><code>BLENDMODE_ONEONE</code> - colors are added without alpha affecting the result;</li>
+<li><code>BLENDMODE_STANDARD</code> - colors are added using particle’s alpha (ie. color <em> (1 - alpha) + particleColor </em> alpha).</li>
+<li><code>BLENDMODE_ADD</code> - colors are added but only particle color uses particle’s alpha (ie. color + particleColor * alpha).</li>
+<li><code>BLENDMODE_MULTIPLY</code> - colors are multiplied and added to (1 - alpha) (ie. color * particleColor +  1 - alpha). <a href="https://playground.babylonjs.com/#KUDH9F#1">Demo here</a> - <i class="fa fa-eye" onclick="createIframe('KUDH9F#1', this)"></i><div class="iframeContainer"></div></li>
+<li><code>BLENDMODE_MULTIPLYADD</code> - two passes rendering with <code>BLENDMODE_MULTIPLY</code> and then <code>BLENDMODE_ADD</code>. <a href="https://www.babylonjs-playground.com/#VS5XS7#0">Demo here</a> - <i class="fa fa-eye" onclick="createIframe('VS5XS7#0', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="rates" class="anchor" href="#rates"></a>Rates</h3><p>The <code>emitRate</code> determines the number of particles emitted per second. The larger the number the more dense appears the emitted cloud of particles. As particles die they are recycled to be emitted again. If their lifetime is long enough and their emission rate fast enough it is possible for there to be a gap in the emission of particles. </p>
+<p><img src="/img/how_to/Particles/12-3.png" alt="emitRate"></p>
+<pre><code class="lang-javascript">particleSystem.emitRate = 1000;
+</code></pre>
+<p>You can stop the continuous emission of particles by setting a manual emit count.</p>
+<pre><code class="lang-javascript">particleSystem.manualEmitCount = 300;
+</code></pre>
+<p>In this case the number of particles given by the count are emitted and there are no further emissions of particles.</p>
+<h3><a name="direction" class="anchor" href="#direction"></a>Direction</h3><p>Two directions can be specified. If you specify just one direction the particles will travel randomly in the general direction given. When both directions are given the particles will generally travel inside the two directions.</p>
+<pre><code class="lang-javascript">particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+</code></pre>
+<p>Direction can also be affected by gravity.</p>
+<h3><a name="gravity" class="anchor" href="#gravity"></a>Gravity</h3><p>A value for gravity can be applied. For example if negative in the Y direction the particles will slowly be pulled downwards.</p>
+<pre><code class="lang-javascript">//Set the gravity of all particles (not necessarily down)
+particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+</code></pre>
+<h3><a name="rotation" class="anchor" href="#rotation"></a>Rotation</h3><p>You can define a range of angular speeds for the particles about the Z-axis for the particles in radians per second:</p>
+<pre><code class="lang-javascript">particleSystem.minAngularSpeed = 0;
+particleSystem.maxAngularSpeed = Math.PI;
+</code></pre>
+<p>You can also define the initial rotation angle with:</p>
+<pre><code>particleSystem.minInitialRotation = 0;
+particleSystem.maxInitialRotation = Math.PI;
+</code></pre><p>Starting with Babylon.js v3.3, you can also define angular speed factor gradients.</p>
+<p>To add a angular speed gradient just call the following code:</p>
+<pre><code>particleSystem.addAngularSpeedGradient(0, 0.5);
+</code></pre><p>The first parameter defines the gradient (0 means at the particle birth and 1 means at particle death). The second parameter is the angular speed to use. In this case the particle will born with an angular speed set to 0.5 radians per frame.
+It is recommended to at least define a gradient for 0 and 1:</p>
+<pre><code>particleSystem.addAngularSpeedGradient(0, 0.5);
+particleSystem.addAngularSpeedGradient(1.0, 3);
+</code></pre><p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two values per gradient:</p>
+<pre><code>particleSystem.addAngularSpeedGradient(0, 0.5, 0.8);
+particleSystem.addAngularSpeedGradient(1.0, 3, 4);
+</code></pre><p>In this case the angular speed of the particle will randomly be picked between the two values when the gradient will be reached.</p>
+<p>To remove a gradient you can call <code>particleSystem.removeAngularSpeedGradient(0.5)</code>.</p>
+<h3><a name="speed" class="anchor" href="#speed"></a>Speed</h3><p>You can define a range for the power of the emitting particles, and the overall motion speed (0.01 is default update speed, faster updates = faster animation).</p>
+<pre><code class="lang-javascript">  particleSystem.minEmitPower = 1;
+  particleSystem.maxEmitPower = 3;
+  particleSystem.updateSpeed = 0.005;
+</code></pre>
+<h3><a name="velocity-over-time" class="anchor" href="#velocity-over-time"></a>Velocity over time</h3><p>You can define velocity over time with gradients. The velocity over time is the energy (or the factor) applied to direction of the particle. A value of 2 will multiply the direction size by two hence multiplying the particle speed by 2.</p>
+<p>To add a velocity gradient just call the following code:</p>
+<pre><code>particleSystem.addVelocityGradient(0, 0.5);
+</code></pre><p>The first parameter defines the gradient (0 means at the particle birth and 1 means at particle death). The second parameter is the velocity to use. In this case the particle will born with velocity set to 0.5.
+It is recommended to at least define a gradient for 0 and 1:</p>
+<pre><code>particleSystem.addVelocityGradient(0, 0.5);
+particleSystem.addVelocityGradient(1.0, 3);
+</code></pre><p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two values per gradient:</p>
+<pre><code>particleSystem.addVelocityGradient(0, 0.5, 0.8);
+particleSystem.addVelocityGradient(1.0, 3, 4);
+</code></pre><p>In this case the velocity of the particle will randomly be picked between the two values when the gradient will be reached.</p>
+<p>Here is an example of velocity applied to a particle system: <a href="https://www.babylonjs-playground.com/#3W04PW#0">https://www.babylonjs-playground.com/#3W04PW#0</a> - <i class="fa fa-eye" onclick="createIframe('3W04PW#0', this)"></i><div class="iframeContainer"></div></p>
+<p>To remove a gradient you can call <code>particleSystem.removeVelocityGradient(0.5)</code>. </p>
+<h3><a name="limit-velocity-over-time" class="anchor" href="#limit-velocity-over-time"></a>Limit velocity over time</h3><p>You can define a limit for velocity over time with gradients. This limit will be used to check the current speed of the particle and if the limit is reached then a factor will be applied to the speed.
+You can define this factor with <code>particleSystem.limitVelocityDamping</code>. </p>
+<p>To add a limit velocity gradient just call the following code:</p>
+<pre><code>particleSystem.addLimitVelocityGradient(0, 0.5);
+</code></pre><p>The first parameter defines the gradient (0 means at the particle birth and 1 means at particle death). The second parameter is the limit velocity to use. In this case, the particle speed will be check directly after birth and if it is bigger than 0.5 then the damping parameter will be applied (so velocity will be code velocity * damping).</p>
+<p>It is recommended to at least define a gradient for 0 and 1:</p>
+<pre><code>particleSystem.addLimitVelocityGradient(0, 0.5);
+particleSystem.addLimitVelocityGradient(1.0, 3);
+</code></pre><p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two values per gradient:</p>
+<pre><code>particleSystem.addLimitVelocityGradient(0, 0.5, 0.8);
+particleSystem.addLimitVelocityGradient(1.0, 3, 4);
+</code></pre><p>In this case the limit velocity of the particle will randomly be picked between the two values when the gradient will be reached.</p>
+<p>Here is an example of limit velocity applied to a particle system: <a href="https://www.babylonjs-playground.com/#9GBBPM#2">https://www.babylonjs-playground.com/#9GBBPM#2</a> - <i class="fa fa-eye" onclick="createIframe('9GBBPM#2', this)"></i><div class="iframeContainer"></div></p>
+<p>To remove a gradient you can call <code>particleSystem.removeLimitVelocityGradient(0.5)</code>.</p>
+<h3><a name="drag-factor" class="anchor" href="#drag-factor"></a>Drag factor</h3><p>You can define a drag factor over time with gradients. This factor will be used to simulate air friction by applying a drag factor to the particle direction. For instance, if your drag factor is set to 0.8 then only 20% of the particle direction will be added to particle position.</p>
+<p>To add a drag gradient just call the following code:</p>
+<pre><code>particleSystem.addDragGradient(0, 0.5);
+</code></pre><p>The first parameter defines the gradient (0 means at the particle birth and 1 means at particle death). The second parameter is the drag factor to use. In this case, the particle position will be <code>particle.position = particle.direction * (1.0 - 0.5)</code>.</p>
+<p>It is recommended to at least define a gradient for 0 and 1:</p>
+<pre><code>particleSystem.addDragGradient(0, 0.5);
+particleSystem.addDragGradient(1.0, 3);
+</code></pre><p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two values per gradient:</p>
+<pre><code>particleSystem.addDragGradient(0, 0.5, 0.8);
+particleSystem.addDragGradient(1.0, 0, 0.1);
+</code></pre><p>In this case the drag factor of the particle will randomly be picked between the two values when the gradient will be reached.</p>
+<p>Here is an example of drag factor applied to a particle system: <a href="https://www.babylonjs-playground.com/#BDW3BF#0">https://www.babylonjs-playground.com/#BDW3BF#0</a> - <i class="fa fa-eye" onclick="createIframe('BDW3BF#0', this)"></i><div class="iframeContainer"></div></p>
+<p>To remove a gradient you can call <code>particleSystem.removeDragGradient(0.5)</code>.</p>
+<h3><a name="emit-rate-over-time" class="anchor" href="#emit-rate-over-time"></a>Emit rate over time</h3><p>You can define particle emit rate with gradients. The emit rate over time will overwrite the value of <code>system.emitRate</code> property.</p>
+<p>To add an emit rate gradient just call the following code:</p>
+<pre><code>particleSystem.addEmitRateGradient(0, 10);
+</code></pre><p><strong>Please note that emit rate gradient will only work if the system has a determined life time meaning that you must define the <code>system.targetStopDuration</code> property</strong></p>
+<p>The first parameter defines the gradient (0 means at system start and 1 means at system end). The second parameter is the emit rate to use. In this case the system will start by emitting 10 particles per frame.
+It is recommended to at least define a gradient for 0 and 1:</p>
+<pre><code>particleSystem.addEmitRateGradient(0, 10);
+particleSystem.addEmitRateGradient(1.0, 500);
+</code></pre><p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two values per gradient:</p>
+<pre><code>particleSystem.addEmitRateGradient(0, 5, 10);
+particleSystem.addEmitRateGradient(1.0, 800, 1000);
+</code></pre><p>In this case the emit rate will randomly be picked between the two values when the gradient will be reached.</p>
+<p>Here is an example of emit rate gradients applied to a particle system: <a href="https://www.babylonjs-playground.com/#3NM14X#0">https://www.babylonjs-playground.com/#3NM14X#0</a> - <i class="fa fa-eye" onclick="createIframe('3NM14X#0', this)"></i><div class="iframeContainer"></div></p>
+<p>To remove a gradient you can call <code>particleSystem.removeEmitRateGradient(0.5)</code>. </p>
+<h3><a name="start-size-over-time" class="anchor" href="#start-size-over-time"></a>Start size over time</h3><p>To add an start size gradient just call the following code:</p>
+<pre><code>particleSystem.addStartSizeGradient(0, 2);
+</code></pre><p><strong>Please note that start size gradient will only work if the system has a determined life time meaning that you must define the <code>system.targetStopDuration</code> property</strong></p>
+<p>The first parameter defines the gradient (0 means at system start and 1 means at system end). The second parameter is the start size scale to use. In this case the system will start by emitting particles of size 2 times the original size. (eg. if size is set to 2 and start size is set to 3 the resulting output size will be 6)
+It is recommended to at least define a gradient for 0 and 1:</p>
+<pre><code>particleSystem.addStartSizeGradient(0, 10);
+particleSystem.addStartSizeGradient(1.0, 500);
+</code></pre><p>You can add as much gradients as you want as long as the gradient value is between 0 and 1.</p>
+<p>You can also define a more complex construct by providing two values per gradient:</p>
+<pre><code>particleSystem.addStartSizeGradient(0, 5, 10);
+particleSystem.addStartSizeGradient(1.0, 800, 1000);
+</code></pre><p>In this case the start size will randomly be picked between the two values when the gradient will be reached.</p>
+<p>Here is an example of start size gradients applied to a particle system: <a href="https://www.babylonjs-playground.com/#3NM14X#14">https://www.babylonjs-playground.com/#3NM14X#14</a> - <i class="fa fa-eye" onclick="createIframe('3NM14X#14', this)"></i><div class="iframeContainer"></div></p>
+<p>To remove a gradient you can call <code>particleSystem.removeStartSizeGradient(0.5)</code>. </p>
+<h3><a name="ramp-gradients" class="anchor" href="#ramp-gradients"></a>Ramp gradients</h3><p>You can use ramp gradients to change the color of the particle based on alpha.</p>
+<p>Ramp gradients are pretty powerful but require a bit of setup.</p>
+<p>First you need to declare your ramp gradients:</p>
+<pre><code>system.addRampGradient(0.0, new BABYLON.Color3(1, 1, 1));
+system.addRampGradient(0.09, new BABYLON.Color3(209/255, 204/255, 15/255));
+system.addRampGradient(0.18, new BABYLON.Color3(221/255, 120/255, 14/255));
+system.addRampGradient(0.28, new BABYLON.Color3(200/255, 43/255, 18/255));
+system.addRampGradient(0.47, new BABYLON.Color3(115/255, 22/255, 15/255));
+system.addRampGradient(0.88, new BABYLON.Color3(14/255, 14/255, 14/255));
+system.addRampGradient(1.0, new BABYLON.Color3(14/255, 14/255, 14/255));
+</code></pre><p>These gradients will be use to build a ramp color texture.</p>
+<p>Then you need to turn them on:</p>
+<pre><code>system.useRampGradients = true;
+</code></pre><p>By defaut the alpha value of the particle (built from <code>textureAlpha * particleColorAlpha</code>) is used to get the ramp color (Alpha is the index in the ramp gradients list) using this formula: <code>finalColor = textureColor * particleColor * rampColor[alphaIndex]</code>.</p>
+<p>But to give you more control you can use a remap function to change remap this alpha index:</p>
+<pre><code>system.addColorRemapGradient(0, 0, 0.1);
+system.addColorRemapGradient(0.2, 0.1, 0.8);
+system.addColorRemapGradient(0.3, 0.2, 0.85);
+system.addColorRemapGradient(0.35, 0.4, 0.85);
+system.addColorRemapGradient(0.4, 0.5, 0.9);
+system.addColorRemapGradient(0.5, 0.95, 1.0);
+system.addColorRemapGradient(1.0, 0.95, 1.0);
+</code></pre><p>The color remap gradients define a min and max that will vary over time (depending on hoe many gradients you add). The alpha index is then remap from [min, max] to [0, 1] with this formula: <code>finalAlphaIndex = clamp((alphaIndex - min) / (max - min), 0.0, 1.0)</code>.</p>
+<p>Ultimately you can also remap the alpha value generated per pixel with:</p>
+<pre><code>system.addAlphaRemapGradient(0, 0, 0.1);
+system.addAlphaRemapGradient(1.0, 0.1, 0.8);
+</code></pre><p>The alpha remap will compute the final alpha value using this formula: <code>finalAlpha = clamp((textureAlpha * particleColorAlpha * rampColor.a - min) / (max - min), 0.0, 1.0)</code>.</p>
+<p>You can find a demo of the here: <a href="https://www.babylonjs-playground.com/#VS5XS7#0">https://www.babylonjs-playground.com/#VS5XS7#0</a> - <i class="fa fa-eye" onclick="createIframe('VS5XS7#0', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="alignment" class="anchor" href="#alignment"></a>Alignment</h3><p>By default all particles are rendered as billboards. But you can decide to instead align them with particle direction with <code>system.isBillboardBased = false</code>.</p>
+<p>You can find a demo <a href="https://www.babylonjs-playground.com/#EV0SEQ">here</a> - <i class="fa fa-eye" onclick="createIframe('EV0SEQ#', this)"></i><div class="iframeContainer"></div></p>
+<p>When billboard is enabled you can decide to either have a full billboard (on all axes) or only on Y axis with this code:</p>
+<pre><code>system.billboardMode = BABYLON.ParticleSystem.BILLBOARDMODE_Y;
+</code></pre><p>You can also use stretched billboard which will be like a full billboard mode but with an additionnal rotation to align particles with their direction.</p>
+<p>A demo can explain this billboard mode better than words: <a href="https://www.babylonjs-playground.com/#B9HKG0#0">https://www.babylonjs-playground.com/#B9HKG0#0</a> - <i class="fa fa-eye" onclick="createIframe('B9HKG0#0', this)"></i><div class="iframeContainer"></div></p>
+<p>You can also find a demo of stretched billboard particles: <a href="https://www.babylonjs-playground.com/#5A4TP5">https://www.babylonjs-playground.com/#5A4TP5</a> - <i class="fa fa-eye" onclick="createIframe('5A4TP5#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="adjustable-playground-examples" class="anchor" href="#adjustable-playground-examples"></a>Adjustable Playground Examples</h2><ul>
+<li><a href="https://www.babylonjs-playground.com/#LMG759">Playground Example - Adjust Min &amp; Max of EmitBox</a> - <i class="fa fa-eye" onclick="createIframe('LMG759#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#63PJFT">Playground Example - Adjust Emit Life Time, Rate, Power and Update Speed</a> - <i class="fa fa-eye" onclick="createIframe('63PJFT#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="shape-emitters" class="anchor" href="#shape-emitters"></a>Shape Emitters</h2><p>Starting from Babylonjs 3.2 you can shape the region the particles are emitted from as a</p>
+<ul>
+<li>Point</li>
+<li>Box</li>
+<li>Sphere</li>
+<li>Hemisphere</li>
+<li>Cylinder</li>
+<li>Cone</li>
+<li>Mesh</li>
+<li>Custom</li>
+</ul>
+<p>by the addition of specific emitter function.</p>
+<h3><a name="point-emitter" class="anchor" href="#point-emitter"></a>Point Emitter</h3><p>To create a point emitter, you can run this code:</p>
+<pre><code class="lang-javascript">var pointEmitter = particleSystem.createPointEmitter(new BABYLON.Vector3(-7, 8, 3), new BABYLON.Vector3(7, 8, -3));
+</code></pre>
+<p>The <code>createPointEmitter</code> method takes four parameters in the following order</p>
+<ul>
+<li>direction1: Vector3, </li>
+<li>direction2: Vector3</li>
+</ul>
+<p>The returned <code>pointEmitter</code> object can be used to change the values of these properties.</p>
+<pre><code class="lang-javascript">pointEmitter.direction1 = new BABYLON.Vector3(-5, 2, 1); 
+pointEmitter.direction2 = new BABYLON.Vector3(5, 2, 1);  
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#08YT34">Playground Example - Point Emitter</a> - <i class="fa fa-eye" onclick="createIframe('08YT34#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="box-emitter" class="anchor" href="#box-emitter"></a>Box Emitter</h3><p>To create a box emitter you use, for example</p>
+<pre><code class="lang-javascript">var boxEmitter = particleSystem.createBoxEmitter(new BABYLON.Vector3(-7, 8, 3), new BABYLON.Vector3(7, 8, -3), new BABYLON.Vector3(-1, 0, 0), new BABYLON.Vector3(1, 0, 0));
+</code></pre>
+<p>The <code>createBoxEmitter</code> method takes four parameters in the following order</p>
+<ul>
+<li>direction1: Vector3, </li>
+<li>direction2: Vector3, </li>
+<li>minEmitBox: Vector3, </li>
+<li>maxEmitBox: Vector3</li>
+</ul>
+<p>The returned <code>boxEmitter</code> object can be used to change the values of these properties.</p>
+<pre><code class="lang-javascript">boxEmitter.direction1 = new BABYLON.Vector3(-5, 2, 1); 
+boxEmitter.direction2 = new BABYLON.Vector3(5, 2, 1);  
+boxEmitter.minEmitBox = new BABYLON.Vector3(-2, -3, -4);  
+boxEmitter.maxEmitBox = new BABYLON.Vector3(2, 3, 4); 
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MRRGXL#1">Playground Example - Box Emitter</a> - <i class="fa fa-eye" onclick="createIframe('MRRGXL#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="sphere-emitter" class="anchor" href="#sphere-emitter"></a>Sphere Emitter</h3><p>You can create a sphere emitter with a given radius, 1.2 for example,  using</p>
+<pre><code class="lang-javascript">var sphereEmitter = particleSystem.createSphereEmitter(1.2);
+</code></pre>
+<p>The returned <code>sphereEmitter</code> object can be used to change the value of the radius.</p>
+<p>The particles are emitted in the direction of the surface normals, ie the lines from the center of the sphere through a surface point.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MRRGXL#2">Playground Example - Sphere Emitter</a> - <i class="fa fa-eye" onclick="createIframe('MRRGXL#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>With <code>sphereEmitter.radiusRange</code> you can define where along the radius the particles should be emitted. A value of 0 means only on the surface while a value of 1 means all along the radius.</p>
+<p>If you prefer to chose the emission direction, you can create a directed sphere emitter</p>
+<pre><code class="lang-javascript">var sphereEmitter = particleSystem.createDirectedSphereEmitter(1.2, new BABYLON.Vector3(1, 1, 1), new BABYLON.Vector3(2, 8, 2));
+</code></pre>
+<p>The <code>createDirectedSphereEmitter</code> method takes three parameters in the following order</p>
+<ul>
+<li>radius: Number,</li>
+<li>direction1: Vector3, </li>
+<li>direction2: Vector3, </li>
+</ul>
+<p>The returned <code>sphereEmitter</code> object can be used to change the values of these properties.</p>
+<pre><code class="lang-javascript">sphereEmitter.radius = 3.4;
+sphereEmitter.direction1 = new BABYLON.Vector3(-5, 2, 1); 
+sphereEmitter.direction2 = new BABYLON.Vector3(5, 2, -1);    
+</code></pre>
+<p>The first parameter is the radius the second is direction1 and third is direction2. (The direction will be generated randomly between direction1 and direction2)</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MRRGXL#3">Playground Example - Sphere Emitter with Directions</a> - <i class="fa fa-eye" onclick="createIframe('MRRGXL#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="hemispheric-emitter" class="anchor" href="#hemispheric-emitter"></a>Hemispheric Emitter</h3><p>You can create a hemispheric emitter with a given radius, 1.2 for example,  using</p>
+<pre><code class="lang-javascript">var hemisphericEmitter = particleSystem.createHemisphericEmitter(1.2);
+</code></pre>
+<p>The returned <code>hemisphericEmitter</code> object can be used to change the value of the radius.</p>
+<p>The particles are emitted in the direction of the surface normals, ie the lines from the center of the hemisphere through a surface point.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#FHIQYC">Playground Example - Hemispheric Emitter</a> - <i class="fa fa-eye" onclick="createIframe('FHIQYC#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>With <code>hemisphericEmitter.radiusRange</code> you can define where along the radius the particles should be emitted. A value of 0 means only on the surface while a value of 1 means all along the radius.</p>
+<h3><a name="cylinder-emitter" class="anchor" href="#cylinder-emitter"></a>Cylinder Emitter</h3><p>You can create a cylinder emitter with a given radius, height, radiusRange, directionRandomizer with the following:</p>
+<pre><code class="lang-javascript">var cylinderEmitter = particleSystem.createCylinderEmitter(1,1,0,0);
+</code></pre>
+<p>The returned <code>cylinderEmitter</code> object can be used to change the value of the radius, height, etc.</p>
+<p>The particles are emitted in the direction of the surface normals, ie outward from the cylinder</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UL4WC0">Playground Example - Cylinder Emitter</a> - <i class="fa fa-eye" onclick="createIframe('UL4WC0#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>With <code>cylinderEmitter.radiusRange</code> you can define where along the radius the particles should be emitted. A value of 0 means only on the surface while a value of 1 means all along the radius.
+With <code>cylinderEmitter.directionRandomizer</code> can change how much to randomize the particles direction.</p>
+<p>The <code>createDirectedCylinderEmitter</code> method takes three parameters in the following order</p>
+<ul>
+<li>radius: Number,</li>
+<li>height: Number,</li>
+<li>radiusRange: Number,</li>
+<li>direction1: Vector3, </li>
+<li>direction2: Vector3, </li>
+</ul>
+<p>The returned <code>cylinderEmitter</code> object can be used to change the values of these properties.</p>
+<pre><code class="lang-javascript">cylinderEmitter.radius = 3.4;
+cylinderEmitter.direction1 = new BABYLON.Vector3(-5, 2, 1); 
+cylinderEmitter.direction2 = new BABYLON.Vector3(5, 2, -1);    
+</code></pre>
+<p>The first parameter is the radius the second is direction1 and third is direction2. (The direction will be generated randomly between direction1 and direction2)</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UL4WC0#5">Playground Example - Cylinder Emitter with Directions</a> - <i class="fa fa-eye" onclick="createIframe('UL4WC0#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="cone-emitter" class="anchor" href="#cone-emitter"></a>Cone Emitter</h3><p>To create a cone emitter you use, for example</p>
+<pre><code class="lang-javascript">var coneEmitter = particleSystem.createConeEmitter(2, Math.PI / 3);
+</code></pre>
+<p>The <code>createConeEmitter</code> method takes two parameters in the following order</p>
+<ul>
+<li>radius: Number;</li>
+<li>angle: Number, measured in radians, the vertex angle of the cone.</li>
+</ul>
+<p>The cone is created with its axis along the Y-axis and its vertex at the bottom.</p>
+<p>With <code>coneEmitter.radiusRange</code> you can define where along the radius the particles should be emitted. A value of 0 means only on the surface while a value of 1 means all along the radius.</p>
+<p>The same applies to <code>coneEmitter.heightRange</code>: you can define where along the height the particles should be emitted. A value of 0 means only on the top surface while a value of 1 means all along the height.</p>
+<p>Here is an example of a particle system emitted only from the outside of a flat cone: <a href="https://www.babylonjs-playground.com/#B9HKG0#1">https://www.babylonjs-playground.com/#B9HKG0#1</a> - <i class="fa fa-eye" onclick="createIframe('B9HKG0#1', this)"></i><div class="iframeContainer"></div></p>
+<p>The returned <code>coneEmitter</code> object can be used to change the values of these properties.</p>
+<pre><code class="lang-javascript">coneEmitter.radius = 3.4;
+coneEmitter.angle = Math.PI / 2;    
+</code></pre>
+<p>With <code>coneEmitter.emitFromSpawnPointOnly = true</code> you can force the emitter to only emit particles from the spawn point (the start of the cone).</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MRRGXL#4">Playground Example - Cone Emitter</a> - <i class="fa fa-eye" onclick="createIframe('MRRGXL#4', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#MRRGXL#5">Playground Example - Cone Emitter Rotating</a> - <i class="fa fa-eye" onclick="createIframe('MRRGXL#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="mesh-emitter" class="anchor" href="#mesh-emitter"></a>Mesh Emitter</h3><p>You can use the MeshParticleEmitter to emit your particles from the surface of a mesh:</p>
+<pre><code class="lang-javascript"> var meshEmitter = new BABYLON.MeshParticleEmitter(sphere);
+</code></pre>
+<p>By default the direction of the particles will be the normal of the surface of the mesh but you can turn it off and then use a custom direction:</p>
+<pre><code>meshEmitter.useMeshNormalsForDirection = false;
+meshEmitter.direction1 = new BABYLON.Vector3(0, 1, 0);
+meshEmitter.direction2 = new BABYLON.Vector3(0, -1, 0);
+</code></pre><p><strong>Please note that the MeshParticleEmitter is not supported by GPU Particle</strong></p>
+<p>Here is an example of a mesh particle emitter: <a href="https://www.babylonjs-playground.com/#N775HF">https://www.babylonjs-playground.com/#N775HF</a> - <i class="fa fa-eye" onclick="createIframe('N775HF#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="custom-emitter" class="anchor" href="#custom-emitter"></a>Custom Emitter</h3><p>To create a custom emitter you need to provide 2 functions:</p>
+<pre><code class="lang-javascript"> var customEmitter = new BABYLON.CustomParticleEmitter();
+
+ var id = 0;
+ customEmitter.particlePositionGenerator = (index, particle, out) =&gt; {
+     out.x = Math.cos(id) * 5;
+     out.y = Math.sin(id) * 5;
+     out.z = 0;
+     id += 0.01;
+ }
+
+ customEmitter.particleDestinationGenerator = (index, particle, out) =&gt; {
+     out.x = 0;
+     out.y = 0;
+     out.z = 0;
+ }
+</code></pre>
+<p>A custom emitter will let you define the position and the destination of each particle.</p>
+<p>When used with a GPU Particle system the generators(<code>particlePositionGenerator</code> and <code>particleDestinationGenerator</code>) will provide a particle index whereas when used with a CPU Particle system they will provide the actual particle to update.</p>
+<p>Here is an example of a custom particle emitter: <a href="https://www.babylonjs-playground.com/#77BKY4">https://www.babylonjs-playground.com/#77BKY4</a> - <i class="fa fa-eye" onclick="createIframe('77BKY4#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="noise-texture" class="anchor" href="#noise-texture"></a>Noise texture</h2><p>Starting with Babylon.js v3.3, you can now use noise texture to &quot;perturbate&quot; the position of particles. The noise texture is technically used to apply change to the direction of the particles:</p>
+<pre><code>var noiseTexture = new BABYLON.NoiseProceduralTexture(&quot;perlin&quot;, 256, scene);
+noiseTexture.animationSpeedFactor = 5;
+noiseTexture.persistence = 2;
+noiseTexture.brightness = 0.5;
+noiseTexture.octaves = 2;
+
+particleSystem.noiseTexture = noiseTexture;
+particleSystem.noiseStrength = new BABYLON.Vector3(100, 100, 100);
+</code></pre><p>Alongside setting the noiseTexture you can also control the strength applied on each axis with <code>particleSystem.noiseStrength</code>.</p>
+<p>Demo can be found here: <a href="https://www.babylonjs-playground.com/#R1JWLA#3">https://www.babylonjs-playground.com/#R1JWLA#3</a> - <i class="fa fa-eye" onclick="createIframe('R1JWLA#3', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="gpu-particles" class="anchor" href="#gpu-particles"></a>GPU Particles</h2><p>Starting from Babylon.js v3.2, you can leverage a new WebGL2 feature, the transform feedback buffer, to drastically boost the performance of particles. Whereas regular particles use the CPU for animation and the GPU for rendering the new WebGL2 API allows Babylon.js to use the GPU for both animation and rendering. With GPU particles, everything is offloaded to the GPU.</p>
+<p>Unfortunately this feature is only available when WebGL2 is available. You can use <code>BABYLON.GPUParticleSystem.IsSupported</code> to detect if GPU particles can be used. When they are supported, GPU particles can almost be used like regular particles:</p>
+<pre><code class="lang-javascript">var particleSystem = new BABYLON.GPUParticleSystem(&quot;particles&quot;, { capacity:1000000 }, scene);
+</code></pre>
+<p>As CPU is no longer involved, you can go crazy with active particles (1000000 in this example). Also, you can use <code>particleSystem.activeParticleCount</code> to define the number of active particle count if you want to limit the GPU usage.</p>
+<p><strong>Note:</strong> Sub emitters are not supported in GPU particles.</p>
+<h3><a name="random-texture" class="anchor" href="#random-texture"></a>Random Texture</h3><p>It is a shame but there is no good way to get random numbers when running on the GPU. To fill this gap, Babylon.js will create a texture filled with thousands of random values. These values will be read by the particle update shader to animate the particles.
+By default the biggest supported texture size is used (16K). You may want to reduce the size of this texture by initializing the system like this:</p>
+<pre><code class="lang-javascript">var particleSystem = new BABYLON.GPUParticleSystem(&quot;particles&quot;, { capacity:1000000, randomTextureSize: 4096 }, scene);
+</code></pre>
+<h3><a name="fallback" class="anchor" href="#fallback"></a>Fallback</h3><p>As the GPUParticleSystem and the ParticleSystem share almost all their API, it is easy to switch from one to another when WebGL2 is not supported. Keep in mind that the CPU cannot animate as many particles as the GPU can. So you will probably have to reduce the capacity of your system when not using the GPUParticleSystem.</p>
+<h3><a name="stopping-a-gpu-particle-system" class="anchor" href="#stopping-a-gpu-particle-system"></a>Stopping a GPU Particle System</h3><p>When calling <code>system.stop()</code> on a <code>GPUParticleSystem</code> object, you will force the system to stop generating new particles. But particles will still be rendered even if not visible.</p>
+<p>To completely stop a <code>GPUParticleSystem</code>, you have to call <code>dispose()</code> on it.</p>
+<h3><a name="unsupported-features" class="anchor" href="#unsupported-features"></a>Unsupported Features</h3><p>The following features are not supported by GPU particles due to their inner nature:</p>
+<ul>
+<li>ManualEmitCount</li>
+<li>Custom effects</li>
+<li>disposeOnStop</li>
+<li>Dual values per gradient (only one value is supported)</li>
+<li>Emit rate gradients are not supported</li>
+<li>Start size gradients are not supported</li>
+<li>Mesh emitter</li>
+</ul>
+<h3><a name="playground" class="anchor" href="#playground"></a>Playground</h3><ul>
+<li><a href="https://www.babylonjs-playground.com/#PU4WYI#4">Playground Example - GPU Particles</a> - <i class="fa fa-eye" onclick="createIframe('PU4WYI#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="snippet-server" class="anchor" href="#snippet-server"></a>Snippet server</h2><p>Starting with Babylon.js v4.2, you can edit particle systems using the Inspector. You can then save them on Babylon.js snippet server.
+When you have a snippet Id, you can easily load the particle system using the following code:</p>
+<pre><code>var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter: 0.2, segments: 32}, scene);
+BABYLON.ParticleHelper.CreateFromSnippetAsync(&quot;T54JV7&quot;, scene, false).then(system =&gt; {
+    system.emitter = sphere;
+});
+</code></pre><p>You can also specify &quot;_BLANK&quot; for the snippet Id, in this case the system will create an empty one for you to work on:</p>
+<pre><code>BABYLON.ParticleHelper.CreateFromSnippetAsync(&quot;_BLANK&quot;, scene, false);
+</code></pre><h2><a name="next-step" class="anchor" href="#next-step"></a>Next step</h2><p>ParticleSystems are very powerful and versatile tools that can help bring realness and movement to your scenes. Don’t hesitate to use them as they are not resource-intensive.</p>
+<p>Stay with us, because we are going to learn a new, very interesting thing: <a href="/babylon101/Environment">Configuring your environment</a>.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/features/Particles">Particles Overview</a><br><a href="/How_To/ParticleHelper">Particle Helper</a><br><a href="/features/Shapes">Mesh Overview</a></p>
+<p><a href="/how_to/Animate">How to Create Animated Particles</a><br><a href="/how_to/Sub_Emitters">How to Use Sub Emitters</a></p>
+<p><a href="/How_To/Solid_Particles">Solid Particle System</a><br><a href="/How_To/point_Cloud_Particles">Points Cloud Particle System</a></p>
+<h2><a name="intermediate-l2" class="anchor" href="#intermediate-l2"></a>Intermediate - L2</h2><p><a href="/how_to/Customise">How to Customize the Particle System</a><br><a href="/how_To/animate">How to Create animated particles</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

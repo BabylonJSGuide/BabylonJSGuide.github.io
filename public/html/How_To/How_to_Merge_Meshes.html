@@ -1,0 +1,161 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Merge Meshes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Merge Meshes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#use-your-own-merge-function">Use your own merge function</a></li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="native-babylonjs-function" class="anchor" href="#native-babylonjs-function"></a>Native Babylon.js function</h2><p>To easily merge a number of meshes to a single mesh use the static <code>MergeMeshes</code> of the <code>Mesh</code> class:</p>
+<pre><code class="lang-javascript">var newMesh = BABYLON.Mesh.MergeMeshes(arrayOfMeshes, disposeSource, allow32BitsIndices, meshSubclass, subdivideWithSubMeshes, multiMultiMaterials);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>variable</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arrayOfMeshes</td>
+<td>An array of Meshes.  They should all be of the same material.</td>
+</tr>
+<tr>
+<td>disposeSource (optional)</td>
+<td>When true (default), the source meshes will be disposed upon completion.</td>
+</tr>
+<tr>
+<td>allow32BitsIndices (optional)</td>
+<td>When the sum of the vertices &gt; 64k, this must be set to true.</td>
+</tr>
+<tr>
+<td>meshSubclass (optional)</td>
+<td>When set, vertices inserted into this Mesh.  Meshes can then be merged into a Mesh sub-class.</td>
+</tr>
+<tr>
+<td>subdivideWithSubMeshes (optional)</td>
+<td>When true (false default), subdivide mesh to his subMesh array with meshes source.</td>
+</tr>
+<tr>
+<td>multiMultiMaterials (optional)</td>
+<td>When true (false default), subdivide mesh and accept multiple multi materials, ignores subdivideWithSubMeshes.</td>
+</tr>
+</tbody>
+</table>
+<p>Since <code>multiMultiMaterials</code> defaults to false, the resulting merged mesh will have only one material applied to it (taken from the first mesh):</p>
+<ul>
+<li><a href="https://playground.babylonjs.com/#INZ0Z0#5">Playground Example - Merged Meshes</a> - <i class="fa fa-eye" onclick="createIframe('INZ0Z0#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Compare with the following example which sets <code>multiMultiMaterials</code> to true:</p>
+<ul>
+<li><a href="https://playground.babylonjs.com/#INZ0Z0#59">Playground Example - Merged Meshes multiMultiMaterials true</a> - <i class="fa fa-eye" onclick="createIframe('INZ0Z0#59', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>See <a href="/how_to/multi_materials#with-merged-meshes">this page</a> for more details on usage of merged meshes.</p>
+<h2><a name="use-your-own-merge-function" class="anchor" href="#use-your-own-merge-function"></a>Use your own merge function</h2><p>If you want to merge meshes into a new one using a self implemented function, you can use the following code as basis and improve it to your needs:</p>
+<p>Note: Careful, when you merge cloned mesh, you need to update the world matrix of the mesh with computeWorldMatrix before calling the function.</p>
+<p><strong>Note: This article covers the internal merging process. You can also use <code>BABYLON.VertexData</code> object and its <code>merge()</code> function for a simpler solution.</strong></p>
+<pre><code class="lang-javascript">var mergeMeshes = function (meshName, arrayObj, scene) {
+    var arrayPos = [];
+    var arrayNormal = [];
+    var arrayUv = [];
+    var arrayUv2 = [];
+    var arrayColor = [];
+    var arrayMatricesIndices = [];
+    var arrayMatricesWeights = [];
+    var arrayIndice = [];
+    var savedPosition = [];
+    var savedNormal = [];
+    var newMesh = new BABYLON.Mesh(meshName, scene);
+    var UVKind = true;
+    var UV2Kind = true;
+    var ColorKind = true;
+    var MatricesIndicesKind = true;
+    var MatricesWeightsKind = true;
+
+    for (var i = 0; i != arrayObj.length ; i++) {
+        if (!arrayObj[i].isVerticesDataPresent([BABYLON.VertexBuffer.UVKind]))
+            UVKind = false;
+        if (!arrayObj[i].isVerticesDataPresent([BABYLON.VertexBuffer.UV2Kind]))
+            UV2Kind = false;
+        if (!arrayObj[i].isVerticesDataPresent([BABYLON.VertexBuffer.ColorKind]))
+            ColorKind = false;
+        if (!arrayObj[i].isVerticesDataPresent([BABYLON.VertexBuffer.MatricesIndicesKind]))
+            MatricesIndicesKind = false;
+        if (!arrayObj[i].isVerticesDataPresent([BABYLON.VertexBuffer.MatricesWeightsKind]))
+            MatricesWeightsKind = false;
+    }
+
+    for (i = 0; i != arrayObj.length ; i++) {
+        var ite = 0;
+        var iter = 0;
+        arrayPos[i] = arrayObj[i].getVerticesData(BABYLON.VertexBuffer.PositionKind);
+        arrayNormal[i] = arrayObj[i].getVerticesData(BABYLON.VertexBuffer.NormalKind);
+        if (UVKind)
+            arrayUv = arrayUv.concat(arrayObj[i].getVerticesData(BABYLON.VertexBuffer.UVKind));
+        if (UV2Kind)
+            arrayUv2 = arrayUv2.concat(arrayObj[i].getVerticesData(BABYLON.VertexBuffer.UV2Kind));
+        if (ColorKind)
+            arrayColor = arrayColor.concat(arrayObj[i].getVerticesData(BABYLON.VertexBuffer.ColorKind));
+        if (MatricesIndicesKind)
+            arrayMatricesIndices = arrayMatricesIndices.concat(arrayObj[i].getVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind));
+        if (MatricesWeightsKind)
+            arrayMatricesWeights = arrayMatricesWeights.concat(arrayObj[i].getVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind));
+
+        var maxValue = savedPosition.length / 3;
+
+        arrayObj[i].computeWorldMatrix(true);
+        var worldMatrix = arrayObj[i].getWorldMatrix();
+
+        for (var ite = 0 ; ite != arrayPos[i].length; ite += 3) {
+            var vertex = new BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(arrayPos[i][ite], arrayPos[i][ite + 1], arrayPos[i][ite + 2]), worldMatrix);
+            savedPosition.push(vertex.x);
+            savedPosition.push(vertex.y);
+            savedPosition.push(vertex.z);
+        }
+
+        for (var iter = 0 ; iter != arrayNormal[i].length; iter += 3) {
+            var vertex = new BABYLON.Vector3.TransformNormal(new BABYLON.Vector3(arrayNormal[i][iter], arrayNormal[i][iter + 1], arrayNormal[i][iter + 2]), worldMatrix);
+            savedNormal.push(vertex.x);
+            savedNormal.push(vertex.y);
+            savedNormal.push(vertex.z);
+        }
+
+        var tmp = arrayObj[i].getIndices();
+        for (it = 0 ; it != tmp.length; it++) {
+            arrayIndice.push(tmp[it] + maxValue);
+        }
+        arrayIndice = arrayIndice.concat(tmp);
+
+        arrayObj[i].dispose(false);
+    }
+
+    newMesh.setVerticesData(BABYLON.VertexBuffer.PositionKind, savedPosition, false);
+    newMesh.setVerticesData(BABYLON.VertexBuffer.NormalKind, savedNormal, false);
+    if (arrayUv.length &gt; 0)
+        newMesh.setVerticesData(BABYLON.VertexBuffer.UVKind, arrayUv, false);
+    if (arrayUv2.length &gt; 0)
+        newMesh.setVerticesData(BABYLON.VertexBuffer.UV2Kind, arrayUv, false);
+    if (arrayColor.length &gt; 0)
+        newMesh.setVerticesData(BABYLON.VertexBuffer.ColorKind, arrayUv, false);
+    if (arrayMatricesIndices.length &gt; 0)
+        newMesh.setVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind, arrayUv, false);
+    if (arrayMatricesWeights.length &gt; 0)
+        newMesh.setVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind, arrayUv, false);
+
+    newMesh.setIndices(arrayIndice);
+    return newMesh;
+};
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

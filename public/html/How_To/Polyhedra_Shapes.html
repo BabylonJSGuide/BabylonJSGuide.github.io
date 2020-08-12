@@ -1,0 +1,257 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Polyhedra - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Polyhedra</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#polyhedron">Polyhedron</a><ul>
+<li><a href="#provided-polyhedron-types">Provided Polyhedron Types :</a></li>
+</ul>
+</li>
+<li><a href="#custom-polyhedra">Custom Polyhedra</a></li>
+<li><a href="#icosphere">IcoSphere</a></li>
+<li><a href="#updatable">Updatable</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-create-polyhedra" class="anchor" href="#how-to-create-polyhedra"></a>How To Create Polyhedra</h1><p>There are fifteen polyhedra that can be created simply by setting its type number from 0 to 14, and one, the icosphere that is created by name to which more variations can be applied. 
+However there are plenty more to choose from, just follow the instructions under <a href="#custom-polyhedra">Custom Polyhedra</a>.</p>
+<h2><a name="polyhedron" class="anchor" href="#polyhedron"></a>Polyhedron</h2><p>Example :</p>
+<pre><code class="lang-javascript">var octahedron = BABYLON.MeshBuilder.CreatePolyhedron(&quot;oct&quot;, {type: 1, size: 3}, scene);
+</code></pre>
+<p>Properties, all optional :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td><em>(number)</em> polyhedron type in the range [0,14]</td>
+<td>0</td>
+</tr>
+<tr>
+<td>size</td>
+<td><em>(number)</em> polyhedron size</td>
+<td>1</td>
+</tr>
+<tr>
+<td>sizeX</td>
+<td><em>(number)</em> X polyhedron size, overwrites the <em>size</em> property</td>
+<td>1</td>
+</tr>
+<tr>
+<td>sizeY</td>
+<td><em>(number)</em> Y polyhedron size, overwrites the <em>size</em> property</td>
+<td>1</td>
+</tr>
+<tr>
+<td>sizeZ</td>
+<td><em>(number)</em> Z polyhedron size, overwrites the <em>size</em> property</td>
+<td>1</td>
+</tr>
+<tr>
+<td>custom</td>
+<td><em>(polygonObjectReference)</em> a polyhedron object, overwrites the <em>type</em> property</td>
+<td>null</td>
+</tr>
+<tr>
+<td>faceColors</td>
+<td><em>(Color4[])</em> array of <em>Color4</em>, one per face</td>
+<td>Color4(1, 1, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>faceUV</td>
+<td><em>(Vector4[])</em> array of <em>Vector4</em>, one per face</td>
+<td>UVs(0, 0, 1, 1) for each side</td>
+</tr>
+<tr>
+<td>flat</td>
+<td><em>(boolean)</em> if false, a polyhedron has a single global face, <em>faceUV</em> and <em>faceColors</em> are ignored</td>
+<td>true</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+</tbody>
+</table>
+<p>To understand how to set <em>faceUV</em> or <em>faceColors</em>, please read about <a href="/How_To/CreateBox_Per_Face_Textures_And_Colors">Face Colors and Textures for a Box</a> taking into account the right number of faces of your polyhedron, instead of only 6 for a box. </p>
+<h3><a name="provided-polyhedron-types" class="anchor" href="#provided-polyhedron-types"></a>Provided Polyhedron Types :</h3><table>
+<thead>
+<tr>
+<th>type</th>
+<th>name</th>
+<th>side number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Tetrahedron</td>
+<td>4</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Octahedron</td>
+<td>8</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Dodecahedron</td>
+<td>12</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Icosahedron</td>
+<td>20</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Rhombicuboctahedron</td>
+<td>26</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Triangular Prism</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Pentagonal Prism</td>
+<td>7</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Hexagonal Prism</td>
+<td>8</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Square Pyramid (J1)</td>
+<td>5</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Pentagonal Pyramid (J2)</td>
+<td>6</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Triangular Dipyramid (J12)</td>
+<td>6</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Pentagonal Dipyramid (J13)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Elongated Square Dipyramid (J15)</td>
+<td>12</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Elongated Pentagonal Dipyramid (J16)</td>
+<td>15</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Elongated Pentagonal Cupola (J20)</td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="custom-polyhedra" class="anchor" href="#custom-polyhedra"></a>Custom Polyhedra</h2><p>If you need to use a custom polyhedron visit <a href="https://www.babylonjs-playground.com/#21QRSK#15">https://www.babylonjs-playground.com/#21QRSK#15</a> - <i class="fa fa-eye" onclick="createIframe('21QRSK#15', this)"></i><div class="iframeContainer"></div> : minimize the code editor by unchecking box by Editor under Settings and note the polyhedron names under the mouse pointer. 
+The data for each name can be found in the polyhedra.js file here <a href="https://github.com/BabylonJS/Extensions/tree/master/Polyhedron">https://github.com/BabylonJS/Extensions/tree/master/Polyhedron</a>
+Find the name and copy/paste the wanted polyhedron object in your code like this :</p>
+<pre><code class="lang-javascript">var heptagonalPrism = { &quot;name&quot;:&quot;Heptagonal Prism&quot;, &quot;category&quot;:[&quot;Prism&quot;], &quot;vertex&quot;:[[0,0,1.090071],[0.796065,0,0.7446715],[-0.1498633,0.7818315,0.7446715],[-0.7396399,-0.2943675,0.7446715],[0.6462017,0.7818315,0.3992718],[1.049102,-0.2943675,-0.03143449],[-0.8895032,0.487464,0.3992718],[-0.8658909,-0.6614378,-0.03143449],[0.8992386,0.487464,-0.3768342],[0.5685687,-0.6614378,-0.6538232],[-1.015754,0.1203937,-0.3768342],[-0.2836832,-0.8247995,-0.6538232],[0.4187054,0.1203937,-0.9992228],[-0.4335465,-0.042968,-0.9992228]],
+&quot;face&quot;:[[0,1,4,2],[0,2,6,3],[1,5,8,4],[3,6,10,7],[5,9,12,8],[7,10,13,11],[9,11,13,12],[0,3,7,11,9,5,1],[2,4,8,12,13,10,6]]};
+
+var mesh = BABYLON.MeshBuilder.CreatePolyhedron(&quot;h&quot;, {custom: heptagonalPrism}, scene);
+</code></pre>
+<h2><a name="icosphere" class="anchor" href="#icosphere"></a>IcoSphere</h2><p>This a sphere based upon an icosahedron with 20 triangular faces which can be subdivided.</p>
+<pre><code class="lang-javascript">var icosphere = BABYLON.MeshBuilder.CreateIcoSphere(&quot;ico&quot;, {radius: 5, radiusY: 8, subdivisions: 6}, scene);
+</code></pre>
+<p>Properties, all optional :</p>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>radius</td>
+<td><em>(number)</em> radius</td>
+<td>1</td>
+</tr>
+<tr>
+<td>radiusX</td>
+<td><em>(number)</em>  the X radius, overwrites the radius value</td>
+<td>radius</td>
+</tr>
+<tr>
+<td>radiusY</td>
+<td><em>(Vector3)</em>  the Y radius, overwrites the radius value</td>
+<td>radius</td>
+</tr>
+<tr>
+<td>radiusZ</td>
+<td><em>(number)</em> the Z radius, overwrites the radius value</td>
+<td>radius</td>
+</tr>
+<tr>
+<td>subdivisions</td>
+<td><em>(number)</em> the number of subdivisions</td>
+<td>4</td>
+</tr>
+<tr>
+<td>flat</td>
+<td><em>(boolean)</em> if true, the mesh faces have their own normals</td>
+<td>true</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>sideOrientation</td>
+<td><em>(number)</em> side orientation</td>
+<td>DEFAULTSIDE</td>
+</tr>
+</tbody>
+</table>
+<p>An example of an IcoSphere: <a href="https://www.babylonjs-playground.com/#24DUYD#1">https://www.babylonjs-playground.com/#24DUYD#1</a> - <i class="fa fa-eye" onclick="createIframe('24DUYD#1', this)"></i><div class="iframeContainer"></div></p>
+<p>and one with animation: <a href="https://www.babylonjs-playground.com/#E3TVT#1">https://www.babylonjs-playground.com/#E3TVT#1</a> - <i class="fa fa-eye" onclick="createIframe('E3TVT#1', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="updatable" class="anchor" href="#updatable"></a>Updatable</h2><p>Where a polyhedral shape has an updatable parameter in its options it means that it is possible to alter the data associated 
+with each vertex of the mesh and so alter the shape of the mesh. For more information see <a href="/How_To/Updating_Vertices.html">Updating Vertices</a></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/babylon101/Discover_Basic_Elements">Set Shapes</a><br><a href="/babylon101/Parametric_Shapes">Parametric Shapes</a><br><a href="/How_To/Ribbon_Tutorial">Ribbons In Detail</a><br><a href="/resources/Maths_Make_Ribbons">Maths Makes Ribbons</a><br><a href="/How_To/Decals">Decals</a> </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

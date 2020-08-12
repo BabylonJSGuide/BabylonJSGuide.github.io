@@ -1,0 +1,814 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Explaining the Workflow - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Explaining the Workflow</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#1-create-your-first-scene">1. Create Your First Scene</a><ul>
+<li><a href="#your-first-clicks">Your First Clicks</a></li>
+<li><a href="#set-up-folders">Set Up Folders</a></li>
+<li><a href="#small-change-in-the-mesh-inspector">Small Change in the Mesh Inspector</a></li>
+<li><a href="#checking-your-work">Checking Your Work</a></li>
+<li><a href="#sidequest-make-a-movie">SideQuest: Make a Movie</a></li>
+<li><a href="#save-it">Save It!</a></li>
+</ul>
+</li>
+<li><a href="#2-iterate-on-that-scene">2. Iterate on that Scene.</a><ul>
+<li><a href="#remove-documentation-plane-and-the-graph-tab">Remove Documentation Plane and The Graph Tab</a></li>
+<li><a href="#manipulate-orbs-with-the-preview-controls">Manipulate Orbs with the <code>Preview</code> Controls</a></li>
+<li><a href="#resave">Resave.</a></li>
+</ul>
+</li>
+<li><a href="#3-make-another-new-scene">3. Make another new scene.</a><ul>
+<li><a href="#add-skybox">Add Skybox</a></li>
+<li><a href="#save-your-work-thusfar">Save Your Work Thusfar</a></li>
+<li><a href="#put-a-bird-on-it-adding-a-mesh">Put a Bird on it (adding a mesh)</a></li>
+<li><a href="#verify-work-thus-far">Verify Work Thus Far.</a></li>
+</ul>
+</li>
+<li><a href="#4-scaffold-and-provision-a-web-project">4. Scaffold and provision a web project</a><ul>
+<li><a href="#scaffold-basic-project">Scaffold basic project</a></li>
+<li><a href="#verify-basic-project-scaffold">Verify basic project scaffold</a></li>
+<li><a href="#provision-multiscene-project">Provision Multiscene Project</a></li>
+</ul>
+</li>
+<li><a href="#5-the-final-workflow">5. The Final Workflow</a><ul>
+<li><a href="#workflow-tips">Workflow Tips</a></li>
+<li><a href="#for-next-time-what-wasnt-covered-but-might-come-in-the-future">For Next time: What wasn&#39;t covered (but might come in the future)</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="babylon-js-editor-workflow-boilerplate" class="anchor" href="#babylon-js-editor-workflow-boilerplate"></a>Babylon JS Editor Workflow Boilerplate</h1><p><img src="https://user-images.githubusercontent.com/954596/59084404-b697a280-88c0-11e9-959a-336c0b8d15e2.png" alt="image"></p>
+<blockquote>
+<hr>
+<ul>
+<li>Author: <em>Jesse Harlin</em> (info[at]simiancraft.com)</li>
+<li>Author Twitter: <a href="https://twitter.com/5imian"><em>@5imian</em></a></li>
+<li>Author Site: <a href="http://jesseharlin.net/">jesseharlin.net</a></li>
+</ul>
+<hr>
+</blockquote>
+<p>One of the most important things in working in the BabylonJs Editor system is a reliable and stable workflow. The purpose of this short guide is to jumpstart anyone with the BabylonJs Editor and adopt the recommended workflow.</p>
+<p>Over the course of the next steps, we will be creating a project that can be run on the web where multiple scenes might exist. This is the sort of setup one might encounter if they are, for instance, making a video game with multiple levels or if they are working on a team where different folks might work on the art and the assets from the folks that are working on the code. However, even if you are responsible for every aspect of a project, or if your project doesn&#39;t have multiple scenes, this is still the ideal approach to structuring a project so that you can work comfortably with an editor.</p>
+<p>In short here are our goals:</p>
+<ol>
+<li>Create a scene, and demonstrate how to modify and save that scene.</li>
+<li>Reopen that scene, make changes and resave.</li>
+<li>Add another scene, and describe the process for managing more than one scene.</li>
+<li>Use the editor to scaffold a web project and provision it to handle our scenes.</li>
+<li>Be able to make changes to the scenes, and to the web project and maintain a proper sequence of events so that no work is lost and the workflow is comfortable.</li>
+</ol>
+<p>The git repository of the boiletplate is available on GitHub here: <a href="https://github.com/simiancraft/BabylonJs-Editor-Workflow-Boilerplate">https://github.com/simiancraft/BabylonJs-Editor-Workflow-Boilerplate</a></p>
+<hr>
+<ul>
+<li><a href="#babylon-js-editor-workflow-boilerplate">Babylon JS Editor Workflow Boilerplate</a><ul>
+<li><a href="#1-create-your-first-scene">1. Create Your First Scene</a><ul>
+<li><a href="#your-first-clicks">Your First Clicks</a></li>
+<li><a href="#set-up-folders">Set Up Folders</a></li>
+<li><a href="#small-change-in-the-mesh-inspector">Small Change in the Mesh Inspector</a></li>
+<li><a href="#checking-your-work">Checking Your Work</a></li>
+<li><a href="#sidequest-make-a-movie">SideQuest: Make a Movie</a></li>
+<li><a href="#save-it">Save It!</a></li>
+</ul>
+</li>
+<li><a href="#2-iterate-on-that-scene">2. Iterate on that Scene.</a><ul>
+<li><a href="#remove-documentation-plane-and-the-graph-tab">Remove Documentation Plane and The Graph Tab</a></li>
+<li><a href="#manipulate-orbs-with-the-preview-controls">Manipulate Orbs with the <code>Preview</code> Controls</a></li>
+<li><a href="#resave">Resave.</a></li>
+</ul>
+</li>
+<li><a href="#3-make-another-new-scene">3. Make another new scene.</a><ul>
+<li><a href="#add-skybox">Add Skybox</a></li>
+<li><a href="#save-your-work-thusfar">Save Your Work Thusfar</a></li>
+<li><a href="#put-a-bird-on-it-adding-a-mesh">Put a Bird on it (adding a mesh)</a></li>
+<li><a href="#verify-work-thus-far">Verify Work Thus Far.</a></li>
+</ul>
+</li>
+<li><a href="#4-scaffold-and-provision-a-web-project">4. Scaffold and provision a web project</a><ul>
+<li><a href="#scaffold-basic-project">Scaffold basic project</a></li>
+<li><a href="#verify-basic-project-scaffold">Verify basic project scaffold</a></li>
+<li><a href="#provision-multiscene-project">Provision Multiscene Project</a></li>
+</ul>
+</li>
+<li><a href="#5-the-final-workflow">5. The Final Workflow</a><ul>
+<li><a href="#workflow-tips">Workflow Tips</a></li>
+<li><a href="#for-next-time-what-wasnt-covered-but-might-come-in-the-future">For Next time: What wasn&#39;t covered (but might come in the future)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2><a name="1-create-your-first-scene" class="anchor" href="#1-create-your-first-scene"></a>1. Create Your First Scene</h2><p>After Installing the BabylonJsEditor on your particular platform, open the editor.
+<img src="https://user-images.githubusercontent.com/954596/59078070-05364400-88a3-11e9-82d4-f05da127312c.png" alt="image"></p>
+<h4><a name="your-first-clicks" class="anchor" href="#your-first-clicks"></a>Your First Clicks</h4><p>You should see something like the image above. This is the editor in a default state. If at any point you&#39;re concerned your editor is not in a default state, a handy tool is the reset button in the <code>edit</code> menu. You can click this now, or anytime you need to reset the editor into a default, &#39;vanilla&#39; state.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59078164-7118ac80-88a3-11e9-9933-5efb71480333.png" alt="image"></p>
+<p>The first thing we will do before we go very far is clicking the button to use the <code>Dark Theme</code>, which is also in the <code>Edit</code> menu, just above the reset button.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59078304-1d5a9300-88a4-11e9-95e9-7df9f241cc5c.png" alt="image"></p>
+<p>This is just an aesthetic decision, but aren&#39;t you glad you did that? Dark Themes are awesome.</p>
+<blockquote>
+<hr>
+<p><strong>My Advice:</strong> You can always bring up the debugger in an electron app with <code>CTRL + ALT + I</code>. Sometimes things break. You can try resetting the editor, reloading the scene, and opening the debugger to see what is happening. Also, don&#39;t <a href="https://forum.babylonjs.com">forget the helpful people in the Babylon forums as well!</a></p>
+<hr>
+</blockquote>
+<h4><a name="set-up-folders" class="anchor" href="#set-up-folders"></a>Set Up Folders</h4><p>Now we want to make some changes to this project, so we can be sure we&#39;re saving and loading the project correctly. Let&#39;s prepare the working directory.</p>
+<ol>
+<li>First, make a folder in a place where you want to put your work. I made a folder called &quot;<code>my-babylonjs-workflow-demo</code>&quot;. This is where we will be saving our entire project.</li>
+<li>Inside of this folder, make another folder called <code>editor-projects</code>. This is where we are going to save the BabylonJs Editor Projects. This is the place the person or persons who work on the art and the scenes will be working iteratively.</li>
+</ol>
+<p>Your folder structure thus far will look like this.
+<img src="https://user-images.githubusercontent.com/954596/59078492-ffd9f900-88a4-11e9-9bc3-2834b8ef1d23.png" alt="image"></p>
+<h4><a name="small-change-in-the-mesh-inspector" class="anchor" href="#small-change-in-the-mesh-inspector"></a>Small Change in the Mesh Inspector</h4><p>Now let&#39;s make some trivial changes to the default project. I am going to assign new materials to each mesh in the scene for now. I can start this process by clicking the first sphere in the default project. When you do, you&#39;ll see a new menu open on the left. This is the <code>Inspector</code>. Now is a good time to briefly describe what this is.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59078641-a6be9500-88a5-11e9-830b-6abb9498f5ba.png" alt="image"></p>
+<p>Here you can see, in the properties tab all the general properties of this mesh, such as its assigned material, Position, Rotation, Scaling and so on. The other tabs, expectedly control other aspects of this mesh. In the <code>Physics</code> you can configure things, such as collisions and in this case, the third tab says <code>StandardMaterial</code>, but in any case, this is the place where you can have a way to edit the underlying material that is on this mesh. Be aware this affects this material everywhere, and not just for this specific mesh. It is here for convenience, it is no different than going into the <code>Materials Viewer</code> and selecting a material there, which will be discussed later.</p>
+<p>So for now, just click each sphere, and change the material to something. You can play with the other properties as well if you want to experiment. Here is my scene after doing this:</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59078888-c2766b00-88a6-11e9-813a-adc6a01c9ded.png" alt="image"></p>
+<p>I just changed the spheres to <code>Ground</code>. So they all look the same.</p>
+<h4><a name="checking-your-work" class="anchor" href="#checking-your-work"></a>Checking Your Work</h4><p>Let&#39;s say I wanted to do a quick test of this scene before I decide to save. No problem. Just click the <code>Play</code> Button at the top.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59078933-fe113500-88a6-11e9-8853-8ada29c50d9d.png" alt="image"></p>
+<p>When you do, you&#39;ll see a window appear that plays the current scene. This is the <code>Game</code> Tab</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59079912-96111d80-88ab-11e9-92c9-7d11897e7f06.png" alt="image"></p>
+<p>You can see your scene now without the labels, and some basic information in a window, such as the current FPS and the size of the game window. You can use <code>WASD</code> and your mouse to fly around with the camera. This is how we think the scene will look.</p>
+<h4><a name="sidequest-make-a-movie" class="anchor" href="#sidequest-make-a-movie"></a>SideQuest: Make a Movie</h4><p>The <code>Game</code> tab has a cool feature. You can record a short scene with the camera, by clicking the record button that appeared.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59079773-e176fc00-88aa-11e9-98f9-f8822c662279.gif" alt="smallest-gif"></p>
+<p>You can save this short video we made.
+Click <code>Save Record</code>, which is a new option that appears next to the <code>Record</code> button.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59079567-f901b500-88a9-11e9-8958-e30eb3b8bd0e.png" alt="image"></p>
+<p>Doing so you will output a nice quality .webm video that you can save locally.</p>
+<p><a href="https://i.imgur.com/V0H8SpK.mp4"><img src="https://user-images.githubusercontent.com/954596/59082997-2c990b00-88bb-11e9-917b-d24fd6d03371.png" alt="image"></a>
+<a href="https://i.imgur.com/V0H8SpK.mp4">You can see the output of this little example here</a> (Hosted on Imgur)</p>
+<h4><a name="save-it" class="anchor" href="#save-it"></a>Save It!</h4><p>So far we&#39;ve opened the editor. We&#39;ve made a very tiny change to the meshes by reassigning some materials and we want to save our work. Let&#39;s decide to call this scene <code>Rainy-Day</code>. I will now make a folder inside of the <code>editor-projects</code> folder called <code>Rainy-Day</code>. So far, this seems excessively nested, but the reasoning will be clear as you read.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59080066-69a9d100-88ac-11e9-8a51-19b27efe75e7.png" alt="image"></p>
+<p>Now you need to go to the Project Menu and click <code>Save Project As...</code>
+<img src="https://user-images.githubusercontent.com/954596/59080083-87773600-88ac-11e9-90e3-3f9ceff85fc1.png" alt="image"></p>
+<p>Make sure you select your newly created <code>Rainy-Day</code> folder and proceed. You should now have a folder structure like this</p>
+<pre><code class="lang-bash">📁editor-projects
+    📁Rainy-Day
+        📁scene
+        |   |📄 albedo.png
+        |   |📄 amiga.jpg
+        |   |📄 documentation.png
+        |   |📄 environment.dds
+        |   |📄 flake.bmp
+        |   |📄 flare.png
+        |   |📄 mahogfloor_ao.jpg
+        |   |📄 mahogfloor_basecolor.png
+        |   |📄 mahogfloor_normal.jpg
+        |   |📄 rain.jpg
+        |   |📄 reflectivity.png
+        |   |📄 rustediron2_basecolor.png
+        |   |📄 rustediron2_metallic.png
+        |   |📄 rustediron2_normal.png
+        |   |📄 rustediron2_roughness.png
+        |   `📜 scene.babylon
+        `📜 scene.editorproject
+
+3 directories, 17 files
+</code></pre>
+<p>Inside of the <code>Rainy-Day</code> directory, there&#39;s the <code>scene</code> folder with the art and assets, and just above that is <code>scene.editorproject</code>.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59080127-d1f8b280-88ac-11e9-8dd5-920a92263117.png" alt="image"></p>
+<p>Of special note are two files</p>
+<ol>
+<li><p>📜 <code>scene.babylon</code> - this is a simple JSON file that contains all the information about your scene, such as the meshes, cameras, lights and so on. This goes right alongside the assets, like the textures. As you manipulate the meshes and things in your scene, you&#39;re basically manipulating the contents of this file.</p>
+</li>
+<li><p>📜 <code>scene.editorproject</code> - this is also a JSON file, and it contains information used by the <em>editor itself</em>. For instance, the manifest of the materials, not just what is in your scene, but everything you&#39;ve provided to the editor thus far is in here. Similarly, the files list, global editor configurations, and the current state of the tools, such as what is open or closed, what theme you have and things like that. As you&#39;re clicking about in the editor, you&#39;re thusly manipulating the contents of this file.</p>
+</li>
+</ol>
+<p>I encourage you to open them both in your favorite editor (VS Code) and take a look.</p>
+<h2><a name="2-iterate-on-that-scene" class="anchor" href="#2-iterate-on-that-scene"></a>2. Iterate on that Scene.</h2><p>Close the editor.</p>
+<p>Imagine you&#39;re another person working on the project. Or you&#39;re you later in the day after lunch. Time passes. We iterate.</p>
+<p>Its time to reopen. Doubleclick the <code>scene.editorproject</code> file now!</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59081066-d1aee600-88b1-11e9-9d5f-eaf6cd4ee4ea.png" alt="image"></p>
+<p>The editor will reopen the scene, as expected.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59080330-c2c63480-88ad-11e9-90a5-0d17e27592f6.png" alt="image"></p>
+<p>Voila! Just like you&#39;ve left it!</p>
+<p>Now we can make more small changes. I will</p>
+<ol>
+<li>remove the documentation plane.</li>
+<li>move and scale some of the orbs</li>
+</ol>
+<h4><a name="remove-documentation-plane-and-the-graph-tab" class="anchor" href="#remove-documentation-plane-and-the-graph-tab"></a>Remove Documentation Plane and The Graph Tab</h4><p>One way you can select something is to select it in the preview pane. Another way to do it is in the <code>Graph</code> Tab as well. Select the Documentation and hit <code>Delete</code>. Boom! it is gone.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59080871-b2638900-88b0-11e9-9a06-fc554037b05f.gif" alt="graph-optimized"></p>
+<p>The graph tab seems less useful at this time with so few things, but it can be a really good way to find meshes with the search box and also to avoid any awkwardness with clicking around in the <code>Preview</code> Tab too.</p>
+<p>As your scene grows, so does the utility of this tab.</p>
+<h4><a name="manipulate-orbs-with-the-codepreviewcode-controls" class="anchor" href="#manipulate-orbs-with-the-preview-controls"></a>Manipulate Orbs with the <code>Preview</code> Controls</h4><p>One way to manipulate the qualities, such as position, scale. and rotation of assets in the scene is to select the item by clicking in it, or in the <code>Graph</code> Tab and then go to the corresponding property in the <code>Inspector</code> and just type in or select what you like. This is how we changed the Material on these spheres. There&#39;s another way to do it with the controls atop the preview.</p>
+<p>I don&#39;t think there&#39;s much to say here, except this is exactly how any other 3d program behaves, such as Unity or Blender. Go ahead and modify these meshes and also notice the values change in the <code>Inspector</code> Tab as you do.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59081276-dcb64600-88b2-11e9-889e-2c6de7da65ef.gif" alt="preview-controls-optimized"></p>
+<h4><a name="resave" class="anchor" href="#resave"></a>Resave.</h4><p>You can, in this case, just click <code>Save Project</code> or CTRL+ S. However, when we begin to export to the web project as well as work in these scenes it might be a good idea to always use the <code>Save Project As ...</code> Option, so that you always explicitly target the correct folder and never accidentally stomp over the wrong project accidentally.</p>
+<p>Great. This is the core iterative loop for working on a single scene. We took some time to look at some aspects of the editor in this part of the workflow tutorial because; thus far, the workflow is very simple. It only consists of our one single project.</p>
+<ol>
+<li>Open Project: Double click the <code>scene.editorproject</code> file.</li>
+<li>Do stuff: Make Changes.</li>
+<li>Save: Project &gt; <code>Save Project As ...</code>, in your named folder.</li>
+<li>Repeat</li>
+</ol>
+<p>Next, we will add another scene, before we explore how the process will be modified in the context of a web application that relies on this editor.</p>
+<h2><a name="3-make-another-new-scene" class="anchor" href="#3-make-another-new-scene"></a>3. Make another new scene.</h2><p>To make the pattern for scene management in a larger project more clear, it makes sense to also make a second scene, we can also cover some simple editor features.</p>
+<p>This time we&#39;ll start with a totally new scene.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59134808-2ef27800-8942-11e9-8fbb-35f47ca6ee69.png" alt="image"></p>
+<p>Select &#39;Yes&#39;</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59134825-429dde80-8942-11e9-9f3c-6c21abe97b95.png" alt="image"></p>
+<p>The editor is in a completely blank state now, and looks like this:</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59134856-5fd2ad00-8942-11e9-9a25-b93d6f2ced38.png" alt="image"></p>
+<p>Let us add some stuff. Since we are in a completely &quot;blank state&quot;, it might be useful to cover the ground and the sky, since many scenes use that.</p>
+<h4><a name="add-skybox" class="anchor" href="#add-skybox"></a>Add Skybox</h4><p>If you looked in the default scene beforehand, you might have noticed that the skybox was a special sort of Material and the file used has a <code>.dds</code> extension. The type of material is based on Physically Based Rendering (PBR), which is a really cool and powerful feature of BabylonJs. The full scope of this is outside the scope of this editor and workflow tutorial, but</p>
+<p>You can also see a demo of the underlying material PBR Material type <a href="[![image](https://user-images.githubusercontent.com/954596/59141279-63c8f400-896f-11e9-9f2a-177b451f069f.png">here.</a>](<a href="https://www.babylonjs.com/demos/pbrglossy/)&gt;">https://www.babylonjs.com/demos/pbrglossy/)&gt;</a>)
+<a href="https://www.babylonjs.com/demos/pbrglossy/"><img src="https://user-images.githubusercontent.com/954596/59141279-63c8f400-896f-11e9-9f2a-177b451f069f.png" alt="image"></a></p>
+<p>Also, you can read more in the documentation here: <a href="https://doc.babylonjs.com/how_to/physically_based_rendering">https://doc.babylonjs.com/how_to/physically_based_rendering</a></p>
+<p>Do you see all the reflections in the helmet and the materials and the added sense of realism? This is the power of PBR. In addition to that fancy helmet mesh, physical based modelling is great for Skyboxes.</p>
+<p>I won&#39;t go into great detail about how to make or generate this file, but the short version is that you need a skybox and then you need a way to convert that skybox to the <code>.dds</code> format for consumption by BabylonJs. Skyboxes are plentiful on the internet, and one great tool that I used for this tutorial is the Spacescape software by Alex Peterson. Its basically a really cool (and free) piece of software specifically for making space-themed skyboxes.</p>
+<p><a href="http://alexcpeterson.com/spacescape/"><img src="https://user-images.githubusercontent.com/954596/59141452-de474300-8972-11e9-9655-8dc7d3ef5700.gif" alt="space-thing"></a></p>
+<p>You can download this <a href="http://alexcpeterson.com/spacescape/">here if you&#39;d like to try it for yourself</a>, or just get a skybox yourself somehow. Spacescape exports directly to .dds format, so it is great for testing out this workflow. The mode you need to pick on this particular tool is:</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59141888-7e549a80-897a-11e9-9cc7-3381cc2bc4d0.png" alt="image"></p>
+<ol>
+<li>pick a name</li>
+<li>Single DDs Cube Map (*.dds)</li>
+<li>512 is perfectly fine for this to demo, and 1024 looks even nicer!</li>
+<li>pick SOURCE, the other formats seem to rearrange the faces of the skybox.</li>
+</ol>
+<blockquote>
+<hr>
+<p><strong>My Advice:</strong> For now, avoid those really high-resolution texture outputs. The raw skybox is a big file, and we&#39;re just covering the workflow. Optimizing this asset, such as converting to a .env file is outside the scope of this tutorial. If you&#39;re still wanting to know this right now, read more here in the documentation:</p>
+<p><a href="https://doc.babylonjs.com/how_to/use_hdr_environment">Use a HDR environment (for PBR)</a>,
+in particular the section <a href="https://doc.babylonjs.com/how_to/use_hdr_environment#what-is-a-env-tech-deep-dive">What is a .env (Tech Deep Dive)</a></p>
+<hr>
+</blockquote>
+<p>Now we need to get this up and running. in your new scene, drag the file (mine is <code>space.dds</code>) into the <code>Texture Viewer</code> tab. When it appears in the list, you&#39;ll want to change the Texture &#39;Coordinates Mode&#39; to <code>SKYBOX_MODE</code></p>
+<p><img src="https://user-images.githubusercontent.com/954596/59141965-c4f6c480-897b-11e9-8b00-fd77b03f1a49.png" alt="image"></p>
+<p>Now you will see your skybox projected onto a sphere in the editor. It should be seamless</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59141974-f96a8080-897b-11e9-96e9-70a3698d9f44.gif" alt="texture-viewer"></p>
+<p>Now we want to put this texture onto a Material. We will go to the Materials Viewer Tab and click the <code>+ Add...</code> Button that is right under the tab name.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59142002-7dbd0380-897c-11e9-80a8-5bc81f92dd43.png" alt="image"></p>
+<p>When you do this a windows pops up and make sure to select PBRMaterial.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59141995-6da52400-897c-11e9-83f1-64810e293129.png" alt="image"></p>
+<p>When you have the Material, change a couple of properties. Click the new Material and the Inspector Window will be open.</p>
+<ol>
+<li><p>Rename the Material to something useful, like <code>SpaceBox</code></p>
+<p><img src="https://user-images.githubusercontent.com/954596/59149092-d1f4d180-89d6-11e9-9b37-10d3630bc798.png" alt="image">
+You need this to be readable, so you can find it in other places, like when assigning it to a Mesh.</p>
+</li>
+<li><p>We need to Turn Off <code>Back Face Culling</code>.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59149117-25671f80-89d7-11e9-8930-2c1881bed257.png" alt="image">
+This is what makes the material visible on the inside of the cube, when its surrounding you, so its a very important thing. At the very bottom of the Inspector, there&#39;s a checkbox in the Options accordion menu</p>
+</li>
+<li><p>Assign the actual texture!</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59149120-3879ef80-89d7-11e9-892e-eac22e6d26f0.png" alt="image">
+Just select the <code>.dds</code> file you added in the <code>Reflection Texture</code> property in the <code>Reflection</code> accordion menu of the <code>Inspector</code>.</p>
+</li>
+</ol>
+<p>Now, Just as it was with the <code>Texture Viewer</code>, you should see your sphere in the <code>Materials Viewer</code> showing the right texture.</p>
+<p>Congratulations. This is basically the process for making materials in the editor.</p>
+<ol>
+<li>Import Textures</li>
+<li>Add a Material</li>
+<li>Configure both; especially assign the right texture to the material.</li>
+</ol>
+<p>We&#39;re almost done with a skybox. We need to add a new Cube to the scene. Click <code>+ Add</code> in the top menu and when the flyout menu appears, select <code>Cube Mesh</code>.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59149014-a32a2b80-89d5-11e9-9762-2d9725e02888.png" alt="image"></p>
+<p>At this point, you now should see a small gray cube in the scene and two materials in the <code>Materials Viewer</code>. The material called <code>default material</code> was added alongside the cube.</p>
+<p>Next, we need to make this cube much larger to house the scene. In the Inspector window for the cube, look in the Properties tab. Inside there you want to change the scaling to something large, like 500 x 500 x500.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59149061-7296c180-89d6-11e9-8891-97bc9da77cf7.png" alt="image"></p>
+<p>At this point, you will simply have a large gray cube all around you. We need to take small additional steps to make it look like a Skybox. Select the Cube in either the <code>Graph</code> tab or just in your <code>Preview</code> tab. Now in its inspector:</p>
+<ol>
+<li>give it a sensible name. I named mine <code>SkyboxSpacescape</code></li>
+<li>Assign the <code>SpaceBox</code> Material to the cube.</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/954596/59150535-d1fecc80-89ea-11e9-9edb-1cb40a5b2ecf.png" alt="image"></p>
+<p>Now you should see the skybox all around you! run the game preview tab and take a look! It looks nice!</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59150588-7bde5900-89eb-11e9-8006-6c1eb931087a.gif" alt="space-scape"></p>
+<h4><a name="save-your-work-thusfar" class="anchor" href="#save-your-work-thusfar"></a>Save Your Work Thusfar</h4><p>We have a simple scene with only one skybox, and its a good time to save this scene. Just as before, Save this into its own folder, with a sensible name in the folder called <code>editor-projects</code>. I just called mine <code>Space-Scene</code>. Your entire project directory structure thus far will look (probably) like this:</p>
+<pre><code class="lang-bash">
+`📁 editor-projects
+    📁 Rainy-Day
+    |   📁 scene
+    |   |   |📄 albedo.png
+    |   |   |📄 amiga.jpg
+    |   |   |📄 documentation.png
+    |   |   |📄 environment.dds
+    |   |   |📄 flake.bmp
+    |   |   |📄 flare.png
+    |   |   |📄 mahogfloor_ao.jpg
+    |   |   |📄 mahogfloor_basecolor.png
+    |   |   |📄 mahogfloor_normal.jpg
+    |   |   |📄  rain.jpg
+    |   |   |📄 reflectivity.png
+    |   |   |📄 rustediron2_basecolor.png
+    |   |   |📄 rustediron2_metallic.png
+    |   |   |📄 rustediron2_normal.png
+    |   |   |📄 rustediron2_roughness.png
+    |   |   `📜 scene.babylon
+    |   `📜 scene.editorproject
+    📁 Space-Scene
+        |-- scene
+        |   |📜 scene.babylon
+        |   `📄 space.dds
+        `📜 scene.editorproject
+
+</code></pre>
+<p>As you add more projects, they file in just like this in this editor-projects directory. You can just double click the <code>scene.editorprojet</code> icons here to flip-flop back and forth between the scene you&#39;re working on.</p>
+<blockquote>
+<hr>
+<p><strong>My Advice:</strong> As you are switching between these projects, at the time of writing this tutorial I want to remind you to pay special attention to always use the <code>Export Project As ...</code> option. Be very careful not to write over the wrong project. This will be even more important when we start exporting our scenes for the web application to consume. Just be explicit each time, and no tears will be shed.</p>
+<hr>
+</blockquote>
+<h4><a name="put-a-bird-on-it-adding-a-mesh" class="anchor" href="#put-a-bird-on-it-adding-a-mesh"></a>Put a Bird on it (adding a mesh)</h4><p>Since our second scene is literally only a skybox, I think its probably a good idea to add just one more thing into the scene before we start to go into the workflow related to managing scenes in the context of a web project you plan to publish.</p>
+<p>The folks working on Babylon have provided some really nice meshes that are basically ready-to-go that we can experiment with. Since this tutorial is more about workflow and less about making your own custom meshes, we can just use one of these.</p>
+<p>The easiest way to get the meshes is to look at the CDN and just download it. That CDN is <code>https://models.babylonjs.com/</code>, and it holds meshes in a variety of formats (including .babylon). You can read more about Mesh type support <a href="https://doc.babylonjs.com/how_to/load_from_any_file_type">here</a> when you feel like you need to know more. There is a page that lists every mesh that&#39;s available to work with</p>
+<ul>
+<li><a href="https://doc.babylonjs.com/resources/meshes_to_load">https://doc.babylonjs.com/resources/meshes_to_load</a></li>
+</ul>
+<p>Also, if you already work in a program for mesh creation, such as Blender, 3ds Max, Cheetah 3d and so on, there&#39;s probably an exporter you can install to make this very easy for you. There&#39;s a bunch of articles on this in the <a href="https://doc.babylonjs.com/resources/">Resources</a> section of the BabylonJs Docs.</p>
+<p><a href="https://github.com/BabylonJS/Exporters"><img src="https://user-images.githubusercontent.com/954596/59151226-12fbde80-89f5-11e9-8e12-fd25c8d7b032.png" alt="image"></a>
+The short version is, look in <a href="https://github.com/BabylonJS/Exporters">this repo</a> to see if there&#39;s an exporter for your favorite mesh editor. It is probably supported.</p>
+<blockquote>
+<hr>
+<p><strong>My Advice:</strong> The editor supports many types of textures, but after working with it for some time, the only format I am recommending you use (in the short term) is the <code>.babylon</code> format. You can see more <a href="https://forum.babylonjs.com/t/babylonjs-editor-importing-meshes-working-lifecycle/3770">in this thread</a>. This is fine if you are going to be using <code>.babylon</code> exporters in your mesh editor of choice</p>
+<hr>
+</blockquote>
+<p>We have a space-scene, so let us add a space-dude. In order to do this, you will need the <code>.babylon</code> file, which is a JSON file describing the mesh as well as all the textures. Here is an example of this mesh in a Babylon playground.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#NA2WKW">Babylon.js Playground</a> - <i class="fa fa-eye" onclick="createIframe('NA2WKW#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Here are all the assets you need, download them all somewhere.</p>
+<p><strong>Dude.babylon</strong></p>
+<ul>
+<li>Mesh: <a href="https://www.babylonjs-playground.com/scenes/Dude/Dude.babylon">https://www.babylonjs-playground.com/scenes/Dude/Dude.babylon</a></li>
+<li>Asset: <a href="https://www.babylonjs-playground.com/scenes/Dude/0.jpg">https://www.babylonjs-playground.com/scenes/Dude/0.jpg</a></li>
+<li>Asset: <a href="https://www.babylonjs-playground.com/scenes/Dude/1.jpg">https://www.babylonjs-playground.com/scenes/Dude/1.jpg</a></li>
+<li>Asset: <a href="https://www.babylonjs-playground.com/scenes/Dude/2.jpg">https://www.babylonjs-playground.com/scenes/Dude/2.jpg</a></li>
+<li>Asset: <a href="https://www.babylonjs-playground.com/scenes/Dude/3.jpg">https://www.babylonjs-playground.com/scenes/Dude/3.jpg</a></li>
+</ul>
+<p>I would put them all in a folder called &#39;Dude&#39; on your computer. Like this:
+<img src="https://user-images.githubusercontent.com/954596/59163223-b6b3c000-8ac3-11e9-875c-96f5e788eec0.png" alt="image"></p>
+<p>Here comes the hard part. After you download the file and the assets.. you drag them all into the editor and click <code>yes</code> on the prompt.
+<img src="https://user-images.githubusercontent.com/954596/59163281-69841e00-8ac4-11e9-9046-abe766eef6f2.gif" alt="dragdude-2"></p>
+<ul>
+<li>There are a lot more Textures in the <code>Texture viewer</code>!
+<img src="https://user-images.githubusercontent.com/954596/59163440-f4feae80-8ac6-11e9-9489-ca185c3facd9.png" alt="image"></li>
+<li>Same with the <code>Material Viewer</code>
+<img src="https://user-images.githubusercontent.com/954596/59163433-d26c9580-8ac6-11e9-9a9c-a3873da9c43b.png" alt="image"></li>
+<li>There&#39;s a new node in the <code>Graph</code></li>
+<li>They might be extra cameras in the <code>Graph</code>, you can delete them. You want something like this:
+<img src="https://user-images.githubusercontent.com/954596/59163410-79046680-8ac6-11e9-8fdb-f2aecacfd21f.png" alt="image"></li>
+<li>There&#39;s a Mesh in the <code>Preview</code> tab.</li>
+</ul>
+<p>Test this with the <code>play</code> button, and save it as we have been.
+<img src="https://user-images.githubusercontent.com/954596/59163473-5888dc00-8ac7-11e9-8b6b-00a103e9bd71.gif" alt="fly-dude"></p>
+<h4><a name="verify-work-thus-far" class="anchor" href="#verify-work-thus-far"></a>Verify Work Thus Far.</h4><ul>
+<li>Open and close both projects</li>
+<li>Review your folder structure, it should be like this</li>
+</ul>
+<pre><code class="lang-bash">📁 editor-projects
+    📁 Rainy-Day
+    |   📁 scene
+    |   |   |-- albedo.png
+    |   |   |-- amiga.jpg
+    |   |   |-- documentation.png
+    |   |   |-- environment.dds
+    |   |   |-- flake.bmp
+    |   |   |-- flare.png
+    |   |   |-- mahogfloor_ao.jpg
+    |   |   |-- mahogfloor_basecolor.png
+    |   |   |-- mahogfloor_normal.jpg
+    |   |   |-- rain.jpg
+    |   |   |-- reflectivity.png
+    |   |   |-- rustediron2_basecolor.png
+    |   |   |-- rustediron2_metallic.png
+    |   |   |-- rustediron2_normal.png
+    |   |   |-- rustediron2_roughness.png
+    |   |   `📜 scene.babylon
+    |   `📜 scene.editorproject
+    `📁 Space-Scene
+        📁 scene
+        |   |-- 0.jpg
+        |   |-- 1.jpg
+        |   |-- 2.jpg
+        |   |-- 3.jpg
+        |   📜  Dude.babylon
+        |   📜 scene.babylon
+        |   `-- space.dds
+        `📜 scene.editorproject
+</code></pre>
+<h2><a name="4-scaffold-and-provision-a-web-project" class="anchor" href="#4-scaffold-and-provision-a-web-project"></a>4. Scaffold and provision a web project</h2><p>Now we want to establish the other half of our project, the part that will run in the context of a web application.</p>
+<h4><a name="scaffold-basic-project" class="anchor" href="#scaffold-basic-project"></a>Scaffold basic project</h4><p>Make a folder at the root of the project called <code>web-project</code> this is where all this work will go.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59164660-a0aefb00-8ad5-11e9-9950-1c80636c0229.png" alt="image"></p>
+<p>Currently, this folder is empty. We need to scaffold the initial project that will go in here. Open the first project in the <code>Rainy-Day</code> folder. your scene should load right up as where you had left it. This time we will select a different menu option in the <code>Project</code> menu than before.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59164670-dc49c500-8ad5-11e9-92ae-c19c760e7fdc.png" alt="image"></p>
+<ol>
+<li>Click <code>Export Project Template...</code></li>
+<li>select <code>.babylon</code> format, and hit <code>Ok</code></li>
+<li>navigate to the <code>web-project</code> fold you just created</li>
+</ol>
+<p>Your folder structure will look like this now:</p>
+<pre><code class="lang-bash">.
+📁 editor-projects
+|   📁 Rainy-Day
+|   |   📁 scene
+|   |   |   | (... assets)
+|   |   |   `-- scene.babylon
+|   |   `📜 scene.editorproject
+|   `📁 Space-Scene
+|       📁 scene
+|       |   | (... assets)
+|       |   `-- space.dds
+|       `📜  scene.editorproject
+📁  web-project
+    |-- README.md
+    |-- index.html
+    |-- package.json
+    📁  scene
+    |   |-- albedo.png
+    |   |-- amiga.jpg
+    |   |-- documentation.png
+    |   |-- environment.dds
+    |   |-- flake.bmp
+    |   |-- flare.png
+    |   |-- mahogfloor_ao.jpg
+    |   |-- mahogfloor_basecolor.png
+    |   |-- mahogfloor_normal.jpg
+    |   |📜 project.editorproject
+    |   |-- rain.jpg
+    |   |-- reflectivity.png
+    |   |-- rustediron2_basecolor.png
+    |   |-- rustediron2_metallic.png
+    |   |-- rustediron2_normal.png
+    |   |-- rustediron2_roughness.png
+    |   `📜 scene.babylon
+    📁 src
+    |   `📜  game.ts
+    `📜 tsconfig.json
+</code></pre>
+<p>Do you see that there&#39;s now a lot of new material sitting in the <code>web-project</code> folder? Additionally, there is a folder called <code>scene</code> that has dumped all the files from the <code>Rainy-Day</code> scene into here. There are some things to point out</p>
+<ul>
+<li>the <code>scene.babylon</code> is the same as the one in the <code>Rainy-Day</code>.</li>
+<li>there is no <code>scene.editorproject</code> file at all! There will never be one in this part of the file structure</li>
+<li>there is a new <code>project.editorproject</code> file that is not in the <code>editor-projects</code> folder. there will always be one of these in each scene in the <code>web-project</code> section and <strong>not</strong> in the <code>editor-projects</code> section of this whole big project.</li>
+</ul>
+<p>This new <code>project.editorproject</code> holds some metadata that will be used in the web app that is not used in the editor. Its a different file for a different purpose, despite the fact the extension is the same extension.</p>
+<h4><a name="verify-basic-project-scaffold" class="anchor" href="#verify-basic-project-scaffold"></a>Verify basic project scaffold</h4><p>As it stands, this scaffold is not completely done and structured the way it will need to be structured to support multiple projects. Nonetheless, we can still run a quick test to make sure our work is correct thus far!</p>
+<p>In the root of the <code>web-project</code> is where we will open a terminal. for the purposes of this tutorial, I am assuming a few things</p>
+<ol>
+<li>you already have some familiarity with a javascript web project. You understand what a <code>package.json</code> is and what <code>node_modules</code> are. If you don&#39;t, spend some time to read up on that. The web is very full of good resources about this, and that&#39;s out of the scope of this tutorial.</li>
+<li>your environment is already provisioned to run <code>node</code> and either <code>yarn</code> or <code>npm</code>. For this tutorial I am using <code>yarn</code>, but <code>npm</code> works just as well!</li>
+</ol>
+<p>In the <code>web-project</code> directory run this command in a proper terminal:</p>
+<pre><code class="lang-bash">yarn install &amp;&amp; yarn build &amp;&amp; yarn run webserver
+</code></pre>
+<p>This command will do the following:</p>
+<ol>
+<li><code>yarn install</code> - install your dependencies into the <code>node_modules</code> directory, as you&#39;d expect</li>
+<li><code>yarn build</code> - create a distributable build of the <em>typescript files only</em> in the <code>build</code> folder. This means it does not copy assets, just makes the javascript.</li>
+<li><code>yarn run webserver</code> - start up a static webserver on port <code>1338</code>. You can now see your project running on <a href="http://localhost:1338/"><code>localhost:1338</code></a>.</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/954596/59164861-7f9bd980-8ad8-11e9-97b3-36d5cd648480.gif" alt="localhost-optimized">
+Check <a href="http://localhost:1338/"><code>localhost:1338</code></a>, you should see your scene working.</p>
+<h4><a name="provision-multiscene-project" class="anchor" href="#provision-multiscene-project"></a>Provision Multiscene Project</h4><p>We are getting close to establishing our final workflow for a web project with multiple scenes. Now we need to provision our project to support multiple scenes.</p>
+<ol>
+<li>simply delete <code>web-project/scene</code>. We are going to replace this.</li>
+<li>In its places add a new empty folder called <code>scenes</code>.</li>
+<li>Inside of scenes, make two empty folders that mirror the contents of <code>editor-projects</code> Don&#39;t just copy the folders over, we need to make two actually empty folders.<ul>
+<li>make <code>web-project/scenes/Rainy-Day</code></li>
+<li>make <code>web-project/scenes/Space-Scene</code></li>
+</ul>
+</li>
+</ol>
+<p>Now our project is basically laid out correctly, but we need to actually put the needed scene assets and files in these projects. We are going to open them and export them one at a time. Now if your editor is open, just close it so you&#39;re starting in the same state as this tutorial.</p>
+<ol>
+<li>navigate to <code>editor-project/Rainy-Day</code> and double-click the <code>scene.editorproject</code> to open this in the BabylonJs Editor as we have in the past.</li>
+<li>Visually verify you&#39;re in the right scene:</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/954596/59164964-ed94d080-8ad9-11e9-9e0b-389fe87b1c88.png" alt="image"></p>
+<ol start="3">
+<li>From the Menu click <code>Scene</code> &gt; <code>Export Final Scene And Assets ...</code></li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/954596/59164967-ff767380-8ad9-11e9-95ff-448b1eebe673.png" alt="image"></p>
+<ol start="4">
+<li><p>Select the <code>.babylon</code> format, and click <code>OK</code></p>
+</li>
+<li><p>carefully navigate into <code>web-project/scenes</code> and choose the <code>Rainy-Day</code> folder and Click <code>Select Folder</code></p>
+</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/954596/59164991-4e240d80-8ada-11e9-939e-8a51e2add9f6.png" alt="image"></p>
+<ol start="6">
+<li>Verify the scene was exported. Your <code>web-project</code> will look like this:</li>
+</ol>
+<pre><code class="lang-bash">|-- README.md
+|📁 build
+|   `-- src
+|       |-- game.js
+|       `-- game.js.map
+|-📁 declaration
+|   `-- src
+|       `-- game.d.ts
+|-- index.html
+|📁 node_modules
+|-- package.json
+|📁 scenes
+|   📁 Rainy-Day
+|   |   |-- albedo.png
+|   |   |-- amiga.jpg
+|   |   |-- documentation.png
+|   |   |-- environment.dds
+|   |   |-- flake.bmp
+|   |   |-- flare.png
+|   |   |-- mahogfloor_ao.jpg
+|   |   |-- mahogfloor_basecolor.png
+|   |   |-- mahogfloor_normal.jpg
+|   |   |📜 project.editorproject
+|   |   |-- rain.jpg
+|   |   |-- reflectivity.png
+|   |   |-- rustediron2_basecolor.png
+|   |   |-- rustediron2_metallic.png
+|   |   |-- rustediron2_normal.png
+|   |   |-- rustediron2_roughness.png
+|   |   `-📜 scene.babylon
+|   `📁 Space-Scene
+|-📁 src
+|   `-- game.ts
+|-- tsconfig.json
+`-- yarn.lock
+</code></pre>
+<p>Do this exact same process again for <code>Space-Scene</code>. Be careful to navigate to the correct directory.</p>
+<p>Notice the <code>scenes</code> folder is a little different from the ones in <code>editor-projects</code>?</p>
+<p>The nesting is a little different.
+Your project needs to resemble this:</p>
+<pre><code class="lang-bash">📁 editor-projects
+|   📂 Rainy-Day
+|   |   📂 scene
+|   |   |   |-- (assets)
+|   |   |   `-📜 scene.babylon
+|   |   `-📜 scene.editorproject
+|   `📂 Space-Scene
+|       📂 scene
+|       |   |-- (assets)
+|       |   `-📜 scene.babylon
+|       `-📜 scene.editorproject
+`📁 web-project
+    📁 build
+    📁 declaration
+    |   `-- src
+    |       `-- game.d.ts
+    |-- index.html
+    📁 node_modules
+    📁 package.json
+    📁 scenes
+    |   📂 Rainy-Day
+    |   |   |-- (assets)
+    |   |   |📜 project.editorproject
+    |   |   `📜 scene.babylon
+    |   `📂 Space-Scene
+    |       |-- (assets)
+    |       |📜 project.editorproject
+    |       `📜 scene.babylon
+    📁 src
+    |   `-- game.ts
+    |-- tsconfig.json
+    `-- yarn.lock
+</code></pre>
+<ul>
+<li>In the editor Projects: The Scenes have a <code>scene.editorproject</code> at the root, all assets in a <code>scene</code> folder.</li>
+<li>In the web project scenes: The structure is flat, and there is instead a <code>project.editorproject</code>.</li>
+</ul>
+<p>Now that this is done, we need to make changes to our <code>game.ts</code> to handle the new structure.</p>
+<p>Right, before making any changes now your <code>game.ts</code> looks like this:</p>
+<pre><code class="lang-ts">import {
+  Engine,
+  Scene,
+  SceneLoader,
+  Tools,
+  Vector3,
+  CannonJSPlugin
+} from &quot;babylonjs&quot;;
+
+import { Extensions } from &quot;babylonjs-editor&quot;;
+
+export default class Game {
+  // Public members
+  public engine: Engine;
+  public canvas: HTMLCanvasElement = &lt;HTMLCanvasElement&gt;(
+    document.getElementById(&quot;renderCanvas&quot;)
+  );
+
+  public scene: Scene = null;
+
+  /**
+   * Constructor
+   */
+  constructor() {
+    // Create engine
+    this.engine = new Engine(this.canvas, true, {
+      // Options
+    });
+
+    // Events
+    window.addEventListener(&quot;resize&quot;, () =&gt; this.engine.resize());
+  }
+
+  /**
+   * Runs the game
+   */
+  public run(): void {
+    // Load Scene
+    SceneLoader.Load(
+      &quot;./scene/&quot;,
+      &quot;scene.babylon&quot;,
+      this.engine,
+      (scene: Scene) =&gt; {
+        this.scene = scene;
+
+        // No camera?
+        if (!this.scene.activeCamera) {
+          this.scene.createDefaultCamera(false, true, true);
+        }
+
+        // Attach camera
+        this.scene.activeCamera.attachControl(this.canvas, true);
+
+        // Load extensions
+        Tools.LoadFile(&quot;./scene/project.editorproject&quot;, (data: string) =&gt; {
+          // Apply extensions (such as custom code, custom materials etc.)
+          Extensions.RoolUrl = &quot;./scene/&quot;;
+          Extensions.ApplyExtensions(this.scene, JSON.parse(data));
+
+          // Run render loop
+          this.engine.runRenderLoop(() =&gt; {
+            this.scene.render();
+          });
+        });
+      }
+    );
+  }
+}
+</code></pre>
+<p>I want to draw attention to a couple of particular spots, to understand this file a little more than the comments explain.</p>
+<pre><code class="lang-ts">  constructor() {
+    // Create engine
+    this.engine = new Engine(this.canvas, true, {
+      // Options
+    });
+
+    // Events
+    window.addEventListener(&quot;resize&quot;, () =&gt; this.engine.resize());
+  }
+</code></pre>
+<p>This is the constructor, and there&#39;s not much to it, except it creates the engine and also makes the engine work with resizing the window.</p>
+<pre><code class="lang-ts">SceneLoader.Load(
+  &quot;./scene/&quot;,
+  &quot;scene.babylon&quot;,
+  this.engine,
+  (scene: Scene) =&gt; {
+    this.scene = scene;
+  }
+
+  //..other stuff
+);
+</code></pre>
+<p>In this closure, we essentially run the scene when the Game is done with the constructor. Right now, you can see this is clearly pointing to the wrong place, its pointing to the way the folders looked before we changed things. When this works this will be responsible for things like</p>
+<ul>
+<li>meshes</li>
+<li>cameras</li>
+<li>lights</li>
+<li>scaling, positioning</li>
+<li>locations of assets, like textures, etc.</li>
+</ul>
+<pre><code class="lang-ts">// No camera?
+if (!this.scene.activeCamera) {
+  this.scene.createDefaultCamera(false, true, true);
+}
+
+// Attach camera
+this.scene.activeCamera.attachControl(this.canvas, true);
+</code></pre>
+<p>This is just some code to make sure the camera is there and works. If for some reason you saved a scene without an active camera it will make one for you.</p>
+<pre><code class="lang-ts">Tools.LoadFile(&quot;./scene/project.editorproject&quot;, (data: string) =&gt; {
+  // Apply extensions (such as custom code, custom materials etc.)
+  Extensions.RoolUrl = &quot;./scene/&quot;;
+  Extensions.ApplyExtensions(this.scene, JSON.parse(data));
+
+  // Run render loop
+  this.engine.runRenderLoop(() =&gt; {
+    this.scene.render();
+  });
+});
+</code></pre>
+<p>After the scene is loaded, this is the second async event in the boilerplate. We then need to load that <code>project.editorproject</code> file, and then it basically decorates the scene with some additional information in this file. This file is responsible for things like</p>
+<ul>
+<li>particles</li>
+<li>prefabs</li>
+<li>post processing</li>
+<li>metadata about the scene</li>
+</ul>
+<p>finally, after these two sequential file loads, we can begin to render.</p>
+<p>So basically the process is to</p>
+<ol>
+<li>initialize the engine</li>
+<li>load the scene THEN</li>
+<li>handle &#39;mistakes&#39;/ default stuff for a scene</li>
+<li>load the .editorproject meta-data</li>
+<li>decorate the scene with metadata</li>
+<li>actually begin rendering</li>
+</ol>
+<p>Replace your <code>game.ts</code> with this:</p>
+<pre><code class="lang-ts">import {
+  CannonJSPlugin,
+  Engine,
+  Scene,
+  SceneLoader,
+  Tools,
+  Vector3
+} from &quot;babylonjs&quot;;
+
+import { Extensions } from &quot;babylonjs-editor&quot;;
+
+export default class Game {
+  public engine: Engine;
+  public canvas: HTMLCanvasElement = &lt;HTMLCanvasElement&gt;(
+    document.getElementById(&quot;renderCanvas&quot;)
+  );
+
+  public scene: Scene = null;
+  constructor() {
+    this.engine = new Engine(this.canvas, true, {});
+    window.addEventListener(&quot;resize&quot;, () =&gt; this.engine.resize());
+  }
+
+  public run(): void {
+    const rainyDay = `./scenes/Rainy-Day/`;
+    const spaceScene = `./scenes/Space-Scene/`;
+    let currentScene = rainyDay;
+
+    SceneLoader.Load(
+      `${currentScene}`,
+      &quot;scene.babylon&quot;,
+      this.engine,
+      (scene: Scene) =&gt; {
+        this.scene = scene;
+
+        if (!this.scene.activeCamera) {
+          this.scene.createDefaultCamera(false, true, true);
+        }
+
+        this.scene.activeCamera.attachControl(this.canvas, true);
+
+        Tools.LoadFile(
+          `${currentScene}/project.editorproject`,
+          (data: string) =&gt; {
+            Extensions.RoolUrl = currentScene;
+            Extensions.ApplyExtensions(this.scene, JSON.parse(data));
+            this.engine.runRenderLoop(() =&gt; {
+              this.scene.render();
+            });
+          }
+        );
+      }
+    );
+  }
+}
+</code></pre>
+<p>This is quite similar to before with a small change. We added the correct path to the two scenes. If your webserver was running, end it and run <code>yarn build &amp;&amp; yarn run webserver</code> to rebuild and check the new paths.</p>
+<p>Go ahead and check, Rainy-Day should load.</p>
+<p><img src="https://user-images.githubusercontent.com/954596/59168147-2b095600-8afa-11e9-8e39-fb453339f4e8.png" alt="image"></p>
+<p>Stop the server. Now change <code>currentScene</code> to the <code>Space-Scene</code>. <code>yarn build &amp;&amp; yarn run webserver</code></p>
+<pre><code class="lang-ts">const rainyDay = `./scenes/Rainy-Day/`;
+const spaceScene = `./scenes/Space-Scene/`;
+let currentScene = spaceScene;
+</code></pre>
+<p>Check the Space Scene. Use <code>F12</code> to open the inspector. If you get the same scene from before check a few things</p>
+<ul>
+<li>make sure the build script is actually cleaning out the right folder with <code>rimraf</code></li>
+<li>make sure to disable caching in the inspector
+<img src="https://user-images.githubusercontent.com/954596/59168991-f3041200-8afd-11e9-8b0c-928b7186c8de.png" alt="image"></li>
+</ul>
+<h2><a name="5-the-final-workflow" class="anchor" href="#5-the-final-workflow"></a>5. The Final Workflow</h2><p>Now, henceforth, you should follow this workflow carefully.</p>
+<ol>
+<li>To open a scene, always double click the <code>scene.editorproject</code> in the right scene folder in the <code>editor-projects</code></li>
+<li>Also, start up the webserver from the <code>web-project</code> directory.</li>
+<li>Make whatever changes you wish in the editor. When it looks right in the editor<ul>
+<li>carefully use <code>Project</code> &gt; <code>Save Project As...</code> and navigate to the Scene folder in <code>editor-projects</code></li>
+<li>use <code>Scene</code> &gt; <code>Export Final Scene and Assets...</code> and navigate to the Scene folder in <code>web-project</code></li>
+</ul>
+</li>
+</ol>
+<h4><a name="workflow-tips" class="anchor" href="#workflow-tips"></a>Workflow Tips</h4><ul>
+<li><em>Never</em> try to load from the files in the <code>web-project</code></li>
+<li>the files in the <code>web-project</code> are effectively are <em>output only</em>. It is essentially no different than a build folder.</li>
+<li>If the artists wish to keep multiple versions of scenes, then it is their responsibility to make the right folders in the <code>editor-projects</code>.</li>
+<li>Exporting to the <code>web-project</code> will show changes in the web-app right away, but if you close the editor before you saved in <code>editor projects</code> your changes might be gone. If you like what you see, carefully export to both.</li>
+<li>Honestly? Don&#39;t use <code>CTRL + S</code> if you are switching between projects, or if you are working in the editor project and periodically exporting to the web-project. The GUI/path always remembers whatever was used last. You might stomp over a project, that or accidentally save your editor-project stuff in the web-project. Just Always use <code>Save As...</code> until this is changes.</li>
+</ul>
+<h4><a name="for-next-time-what-wasn39t-covered-but-might-come-in-the-future" class="anchor" href="#for-next-time-what-wasnt-covered-but-might-come-in-the-future"></a>For Next time: What wasn&#39;t covered (but might come in the future)</h4><ul>
+<li>How to access and manipulate things in the scene.babylon from the game.ts (code-first).</li>
+<li>How to change scenes, like in a video game.</li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

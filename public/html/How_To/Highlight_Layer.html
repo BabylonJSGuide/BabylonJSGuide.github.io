@@ -1,0 +1,140 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Highlight a Mesh - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Highlight a Mesh</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-to-use">How to use?</a><ul>
+<li><a href="#default-use-case">Default Use Case</a></li>
+<li><a href="#stop-highlighting-a-mesh">Stop highlighting a Mesh</a></li>
+<li><a href="#emissive-input">Emissive Input</a></li>
+</ul>
+</li>
+<li><a href="#going-further">Going further</a><ul>
+<li><a href="#overlapping-highlights">Overlapping Highlights</a></li>
+<li><a href="#blur-size">Blur Size</a></li>
+<li><a href="#inner-vs-outer-glow">Inner vs Outer Glow</a></li>
+<li><a href="#exclude-mesh">Exclude mesh</a></li>
+<li><a href="#multi-camera">Multi Camera</a></li>
+<li><a href="#rendering-groups">Rendering Groups</a></li>
+</ul>
+</li>
+<li><a href="#options">Options</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#how-to">How To</a></li>
+<li><a href="#api">API</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-highlight-a-mesh" class="anchor" href="#how-to-highlight-a-mesh"></a>How To Highlight a Mesh</h1><p>How often did you search to highlight some of your meshes in a scene? Sounds easy at first but quickly becomes an issue dealing with edges, blur and antialiasing.</p>
+<p>If you ever needed it, this tutorial is made for you.</p>
+<p><img src="/img/how_to/highlight-mesh/introduction.png" alt="illustration"></p>
+<h2><a name="how-to-use" class="anchor" href="#how-to-use"></a>How to use?</h2><p>Before anything else, you must ensure that your engine was created with stencil on: </p>
+<pre><code class="lang-javascript">var engine = new BABYLON.Engine(canvas, true, { stencil: true });
+</code></pre>
+<p>The HighlightLayer relies on stencil to determine which part of the image it needs to paint.</p>
+<h3><a name="default-use-case" class="anchor" href="#default-use-case"></a>Default Use Case</h3><p>In the most basic shape, you only need to instantiate one highlight layer in your scene and add the meshes you want to highlight in it.</p>
+<pre><code class="lang-javascript">// Add the highlight layer.
+var hl = new BABYLON.HighlightLayer(&quot;hl1&quot;, scene);
+hl.addMesh(sphere, BABYLON.Color3.Green());
+</code></pre>
+<p>The highlight color is driven by the second parameter of the <code>addMesh</code> method:</p>
+<p><a href="https://www.babylonjs-playground.com/#1KUJ0A#305"><strong>Playground Demo Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('1KUJ0A#305', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="stop-highlighting-a-mesh" class="anchor" href="#stop-highlighting-a-mesh"></a>Stop highlighting a Mesh</h3><p>In case one highlighted mesh do not require highlights anymore, you can simply remove it from the layer:</p>
+<pre><code class="lang-javascript">// Add the highlight layer.
+var hl = new BABYLON.HighlightLayer(&quot;hl1&quot;, scene);
+hl.addMesh(sphere, BABYLON.Color3.Green());
+hl.removeMesh(sphere);
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#1KUJ0A#102"><strong>Playground Demo Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('1KUJ0A#102', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="emissive-input" class="anchor" href="#emissive-input"></a>Emissive Input</h3><p>If you wish, you could also use the emissive texture as a source for the highlight color. Simply pass true as the third parameter of the add mesh method.</p>
+<pre><code class="lang-javascript">hl1.addMesh(sphere, BABYLON.Color3.Black(), true);
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#1KUJ0A#57"><strong>Playground Demo Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('1KUJ0A#57', this)"></i><div class="iframeContainer"></div></p>
+<p>You can notice here that one side of the sphere is glowing in yellow whereas the other one is grey. The color is not uniform.</p>
+<h2><a name="going-further" class="anchor" href="#going-further"></a>Going further</h2><h3><a name="overlapping-highlights" class="anchor" href="#overlapping-highlights"></a>Overlapping Highlights</h3><p>The first thing you will probably notice is the fact that overlapping highlighted meshes are not showing highlights in common areas.</p>
+<pre><code class="lang-javascript">// Add the highlight layer.
+var hl = new BABYLON.HighlightLayer(&quot;hl1&quot;, scene);
+hl.addMesh(sphere, BABYLON.Color3.Green());
+hl.addMesh(ground, BABYLON.Color3.Red());
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#1KUJ0A#1"><strong>Overlapping Demo Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('1KUJ0A#1', this)"></i><div class="iframeContainer"></div></p>
+<p>This is the default behavior optimized for performances. If you are running your scenes on fast enough machine, you can create several highlight layers to workaround the issue:</p>
+<pre><code class="lang-javascript">// Add the highlight layer.
+var hl1 = new BABYLON.HighlightLayer(&quot;hl1&quot;, scene);
+hl1.addMesh(sphere, BABYLON.Color3.White());
+var hl2 = new BABYLON.HighlightLayer(&quot;hl2&quot;, scene);
+hl2.addMesh(ground, BABYLON.Color3.Red());
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#1KUJ0A#2"><strong>Overlapping Demo Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('1KUJ0A#2', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="blur-size" class="anchor" href="#blur-size"></a>Blur Size</h3><p>The second ask you will probably have is the ability to animate the blur size of the highlight. You can dynamically change it at run time through the blur size property of the layer:</p>
+<pre><code class="lang-javascript">// Add the highlight layer.
+var hl2 = new BABYLON.HighlightLayer(&quot;hl2&quot;, scene);
+hl2.addMesh(ground, BABYLON.Color3.Red());
+
+var alpha = 0;
+scene.registerBeforeRender(() =&gt; {
+    alpha += 0.06;
+
+    hl2.blurHorizontalSize = 0.3 + Math.cos(alpha) * 0.6 + 0.6;        
+    hl2.blurVerticalSize = 0.3 + Math.sin(alpha / 3) * 0.6 + 0.6;
+});
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#1KUJ0A#4"><strong>Blur Size Demo Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('1KUJ0A#4', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="inner-vs-outer-glow" class="anchor" href="#inner-vs-outer-glow"></a>Inner vs Outer Glow</h3><p>Finally, you can easily enable/disable inner and outer glow on the highlight layer.</p>
+<pre><code class="lang-javascript">// Add the highlight layer.
+var hl1 = new BABYLON.HighlightLayer(&quot;hl1&quot;, scene);
+hl1.addMesh(sphere, BABYLON.Color3.White());
+hl1.outerGlow = false;
+
+var hl2 = new BABYLON.HighlightLayer(&quot;hl2&quot;, scene);
+hl2.addMesh(ground, BABYLON.Color3.Red());
+hl2.innerGlow = false;
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#1KUJ0A#3"><strong>Glow Demo Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('1KUJ0A#3', this)"></i><div class="iframeContainer"></div></p>
+<p>You can notice on the previous scene the white glowing only inside of the sphere and the red only outside of the plane.</p>
+<h3><a name="exclude-mesh" class="anchor" href="#exclude-mesh"></a>Exclude mesh</h3><p>Depending on your scene, transparent meshes may not render correctly with other highlighted meshes:</p>
+<p><a href="https://www.babylonjs-playground.com/#2FFOYQ#6"><strong>Broken transparency Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('2FFOYQ#6', this)"></i><div class="iframeContainer"></div></p>
+<p>In that case, try to exclude them from the highlight generation process in order to fix this:</p>
+<pre><code class="lang-javascript">hl.addExcludedMesh(skybox1);
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#2FFOYQ#7"><strong>Fixed transparency Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('2FFOYQ#7', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="multi-camera" class="anchor" href="#multi-camera"></a>Multi Camera</h3><p>By default, the highlight layer will apply on all active cameras but it creates extra processing on the camera it is not needed.</p>
+<p>A chance you can easily specify what camera your highlights are related too in the options:</p>
+<pre><code class="lang-javascript">var hl1 = new BABYLON.HighlightLayer(&quot;hl1&quot;, scene, {camera: camera});
+hl1.addMesh(sphere, BABYLON.Color3.Green());
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#CDHKK#7"><strong>Multi Camera Scene</strong></a> - <i class="fa fa-eye" onclick="createIframe('CDHKK#7', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="rendering-groups" class="anchor" href="#rendering-groups"></a>Rendering Groups</h3><p>If you rely on rendering groups in your application, be mindful that the highlights requires stencil and depth info of your scene to work accurately.</p>
+<p>So you could disable the clear between rendering groups with the command: <code>scene.setRenderingAutoClearDepthStencil(1, false, false)</code> where the first parameter is the rendering group id, the second to prevent automatically clearing depth between groups and the last to preven automatically clearing stencil information between groups.</p>
+<h2><a name="options" class="anchor" href="#options"></a>Options</h2><p>The available members of the option object are:</p>
+<ul>
+<li>mainTextureRatio?: number - Multiplication factor apply to the canvas size to compute the render target size used to generated the glowing objects (the smaller the faster).</li>
+<li>mainTextureFixedSize?: number - Enforces a fixed size texture to ensure resize independent blur.</li>
+<li>blurTextureSizeRatio?: number - Multiplication factor apply to the main texture size in the first step of the blur to reduce the size of the picture to blur (the smaller the faster).</li>
+<li>blurVerticalSize?: number - How big in texel of the blur texture is the vertical blur.</li>
+<li>blurHorizontalSize?: number - How big in texel of the blur texture is the horizontal blur.</li>
+<li>alphaBlendingMode?: number - Alpha blending mode used to apply the blur. Default is combine.</li>
+<li>camera?: Camera - The camera attached to the layer (only this camera can see the highlights).</li>
+</ul>
+<p>You can pass them during the construction of the highlight layer:</p>
+<pre><code class="lang-javascript">var hl1 = new BABYLON.HighlightLayer(&quot;hl1&quot;, scene, { camera: myCamera });
+</code></pre>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="how-to" class="anchor" href="#how-to"></a>How To</h2><ul>
+<li><a href="/how_to/glow_layer">How To Make a Mesh Glow</a></li>
+</ul>
+<h2><a name="api" class="anchor" href="#api"></a>API</h2><ul>
+<li><a href="/api/classes/babylon.highlightlayer">HighlightLayer</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

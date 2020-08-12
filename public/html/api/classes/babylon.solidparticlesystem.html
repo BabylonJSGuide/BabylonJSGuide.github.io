@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>SolidParticleSystem - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.solidparticlesystem.html">SolidParticleSystem</a>
+					</li>
+				</ul>
+				<h1>SolidParticleSystem</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The SPS is a single updatable mesh. The solid particles are simply separate parts or faces fo this big mesh.
+								As it is just a mesh, the SPS has all the same properties than any other BJS mesh : not more, not less. It can be scaled, rotated, translated, enlighted, textured, moved, etc.
+								The SPS is also a particle system. It provides some methods to manage the particles.
+							However it is behavior agnostic. This means it has no emitter, no particle physics, no particle recycler. You have to implement your own behavior.</p>
+						</div>
+						<p>Full documentation here : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System">https://doc.babylonjs.com/how_to/Solid_Particle_System</a></p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">SolidParticleSystem</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel">
+					<h3>Implements</h3>
+					<ul class="tsd-hierarchy">
+						<li><a href="../interfaces/babylon.idisposable.html" class="tsd-signature-type">IDisposable</a></li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Constructors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#billboard" class="tsd-kind-icon">billboard</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#counter" class="tsd-kind-icon">counter</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#depthsortedparticles" class="tsd-kind-icon">depth<wbr>Sorted<wbr>Particles</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#mesh" class="tsd-kind-icon">mesh</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#name" class="tsd-kind-icon">name</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#nbparticles" class="tsd-kind-icon">nb<wbr>Particles</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#particles" class="tsd-kind-icon">particles</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#pickedbysubmesh" class="tsd-kind-icon">picked<wbr>BySub<wbr>Mesh</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#pickedparticles" class="tsd-kind-icon">picked<wbr>Particles</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#recomputenormals" class="tsd-kind-icon">recompute<wbr>Normals</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#vars" class="tsd-kind-icon">vars</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Accessors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#autoupdatesubmeshes" class="tsd-kind-icon">auto<wbr>Update<wbr>Sub<wbr>Meshes</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#computeboundingbox" class="tsd-kind-icon">compute<wbr>Bounding<wbr>Box</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#computeparticlecolor" class="tsd-kind-icon">compute<wbr>Particle<wbr>Color</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#computeparticlerotation" class="tsd-kind-icon">compute<wbr>Particle<wbr>Rotation</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#computeparticletexture" class="tsd-kind-icon">compute<wbr>Particle<wbr>Texture</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#computeparticlevertex" class="tsd-kind-icon">compute<wbr>Particle<wbr>Vertex</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#depthsortparticles" class="tsd-kind-icon">depth<wbr>Sort<wbr>Particles</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#expandable" class="tsd-kind-icon">expandable</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#isalwaysvisible" class="tsd-kind-icon">is<wbr>Always<wbr>Visible</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#isvisibilityboxlocked" class="tsd-kind-icon">is<wbr>Visibility<wbr>Box<wbr>Locked</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#materials" class="tsd-kind-icon">materials</a></li>
+									<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#multimaterial" class="tsd-kind-icon">multimaterial</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#multimaterialenabled" class="tsd-kind-icon">multimaterial<wbr>Enabled</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#usemodelmaterial" class="tsd-kind-icon">use<wbr>Model<wbr>Material</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#addshape" class="tsd-kind-icon">add<wbr>Shape</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#afterupdateparticles" class="tsd-kind-icon">after<wbr>Update<wbr>Particles</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#beforeupdateparticles" class="tsd-kind-icon">before<wbr>Update<wbr>Particles</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#buildmesh" class="tsd-kind-icon">build<wbr>Mesh</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#computesubmeshes" class="tsd-kind-icon">compute<wbr>Sub<wbr>Meshes</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#digest" class="tsd-kind-icon">digest</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#dispose" class="tsd-kind-icon">dispose</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#getparticlebyid" class="tsd-kind-icon">get<wbr>Particle<wbr>ById</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#getparticlesbyshapeid" class="tsd-kind-icon">get<wbr>Particles<wbr>ByShape<wbr>Id</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#getparticlesbyshapeidtoref" class="tsd-kind-icon">get<wbr>Particles<wbr>ByShape<wbr>IdTo<wbr>Ref</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#initparticles" class="tsd-kind-icon">init<wbr>Particles</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#insertparticlesfromarray" class="tsd-kind-icon">insert<wbr>Particles<wbr>From<wbr>Array</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#pickedparticle" class="tsd-kind-icon">picked<wbr>Particle</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#rebuildmesh" class="tsd-kind-icon">rebuild<wbr>Mesh</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#recycleparticle" class="tsd-kind-icon">recycle<wbr>Particle</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#refreshvisiblesize" class="tsd-kind-icon">refresh<wbr>Visible<wbr>Size</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#removeparticles" class="tsd-kind-icon">remove<wbr>Particles</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#setmultimaterial" class="tsd-kind-icon">set<wbr>Multi<wbr>Material</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#setparticles" class="tsd-kind-icon">set<wbr>Particles</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#setvisibilitybox" class="tsd-kind-icon">set<wbr>Visibility<wbr>Box</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#updateparticle" class="tsd-kind-icon">update<wbr>Particle</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.solidparticlesystem.html#updateparticlevertex" class="tsd-kind-icon">update<wbr>Particle<wbr>Vertex</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Constructors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+						<a name="constructor" class="tsd-anchor"></a>
+						<h3>constructor</h3>
+						<a href="/playground/?code=constructor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">new <wbr>Solid<wbr>Particle<wbr>System<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, scene<span class="tsd-signature-symbol">: </span><a href="babylon.scene.html" class="tsd-signature-type">Scene</a>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a SPS (Solid Particle System) object.</p>
+									</div>
+									<dl class="tsd-comment-tags">
+										<dt>example</dt>
+										<dd><p>bSphereRadiusFactor = 1.0 / Math.sqrt(3.0) =&gt; the bounding sphere exactly matches a spherical mesh.</p>
+										</dd>
+									</dl>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>name: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>(String) is the SPS name, this will be the underlying mesh name.</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<h5>scene: <a href="babylon.scene.html" class="tsd-signature-type">Scene</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>(Scene) is the scene in which the SPS is added.</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">object</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>defines the options of the sps e.g.</p>
+												<ul>
+													<li>updatable (optional boolean, default true) : if the SPS must be updatable or immutable.</li>
+													<li>isPickable (optional boolean, default false) : if the solid particles must be pickable.</li>
+													<li>enableDepthSort (optional boolean, default false) : if the solid particles must be sorted in the geometry according to their distance to the camera.</li>
+													<li>useModelMaterial (optional boolean, defaut false) : if the model materials must be used to create the SPS multimaterial. This enables the multimaterial supports of the SPS.</li>
+													<li>enableMultiMaterial (optional boolean, default false) : if the solid particles can be given different materials.</li>
+													<li>expandable (optional boolean, default false) : if particles can still be added after the initial SPS mesh creation.</li>
+													<li>particleIntersection (optional boolean, default false) : if the solid particle intersections must be computed.</li>
+													<li>boundingSphereOnly (optional boolean, default false) : if the particle intersection must be computed only with the bounding sphere (no bounding box computation, so faster).</li>
+													<li>bSphereRadiusFactor (optional float, default 1.0) : a number to multiply the boundind sphere radius by in order to reduce it for instance.</li>
+												</ul>
+											</div>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> b<wbr>Sphere<wbr>Radius<wbr>Factor<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> bounding<wbr>Sphere<wbr>Only<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> enable<wbr>Depth<wbr>Sort<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> enable<wbr>Multi<wbr>Material<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> expandable<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> is<wbr>Pickable<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> particle<wbr>Intersection<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> updatable<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> use<wbr>Model<wbr>Material<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="billboard" class="tsd-anchor"></a>
+						<h3>billboard</h3>
+						<a href="/playground/?code=billboard" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">billboard<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>If the particles must ever face the camera (default false). Useful for planar particles.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="counter" class="tsd-anchor"></a>
+						<h3>counter</h3>
+						<a href="/playground/?code=counter" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">counter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This a counter ofr your own usage. It&#39;s not set by any SPS functions.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="depthsortedparticles" class="tsd-anchor"></a>
+						<h3>depth<wbr>Sorted<wbr>Particles</h3>
+						<a href="/playground/?code=depthSortedParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">depth<wbr>Sorted<wbr>Particles<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DepthSortedParticle</span><span class="tsd-signature-symbol">[]</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This array is populated when <code>enableDepthSort</code> is set to true.
+								Each element of this array is an instance of the class DepthSortedParticle.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="mesh" class="tsd-anchor"></a>
+						<h3>mesh</h3>
+						<a href="/playground/?code=mesh" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">mesh<span class="tsd-signature-symbol">:</span> <a href="babylon.mesh.html" class="tsd-signature-type">Mesh</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The SPS mesh. It&#39;s a standard BJS Mesh, so all the methods from the Mesh class are avalaible.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="name" class="tsd-anchor"></a>
+						<h3>name</h3>
+						<a href="/playground/?code=name" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The SPS name. This name is also given to the underlying mesh.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="nbparticles" class="tsd-anchor"></a>
+						<h3>nb<wbr>Particles</h3>
+						<a href="/playground/?code=nbParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">nb<wbr>Particles<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The SPS total number of particles. Read only. Use SPS.counter instead if you need to set your own value.</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="particles" class="tsd-anchor"></a>
+						<h3>particles</h3>
+						<a href="/playground/?code=particles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">particles<span class="tsd-signature-symbol">:</span> <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p> The SPS array of Solid Particle objects. Just access each particle as with any classic array.
+								Example : var p = SPS.particles[i];</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="pickedbysubmesh" class="tsd-anchor"></a>
+						<h3>picked<wbr>BySub<wbr>Mesh</h3>
+						<a href="/playground/?code=pickedBySubMesh" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">picked<wbr>BySub<wbr>Mesh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This array is populated when the SPS is set as &#39;pickable&#39;
+									Each key of this array is a submesh index.
+									Each element of this array is a second array defined like this :
+									Each key of this second array is a <code>faceId</code> value that you can get from a pickResult object.
+									Each element of this second array is an object <code>{idx: int, faceId: int}</code>.
+									<code>idx</code> is the picked particle index in the <code>SPS.particles</code> array
+									<code>faceId</code> is the picked face index counted within this particle.
+									It&#39;s better to use the method SPS.pickedParticle(pickingInfo) rather than using directly this array.
+								Please read : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#pickable-particles">https://doc.babylonjs.com/how_to/Solid_Particle_System#pickable-particles</a></p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="pickedparticles" class="tsd-anchor"></a>
+						<h3>picked<wbr>Particles</h3>
+						<a href="/playground/?code=pickedParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">picked<wbr>Particles<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This array is populated when the SPS is set as &#39;pickable&#39;.
+									Each key of this array is a <code>faceId</code> value that you can get from a pickResult object.
+									Each element of this array is an object <code>{idx: int, faceId: int}</code>.
+									<code>idx</code> is the picked particle index in the <code>SPS.particles</code> array
+									<code>faceId</code> is the picked face index counted within this particle.
+									This array is the first element of the pickedBySubMesh array : sps.pickBySubMesh[0].
+									It&#39;s not pertinent to use it when using a SPS with the support for MultiMaterial enabled.
+									Use the method SPS.pickedParticle(pickingInfo) instead.
+								Please read : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#pickable-particles">https://doc.babylonjs.com/how_to/Solid_Particle_System#pickable-particles</a></p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="recomputenormals" class="tsd-anchor"></a>
+						<h3>recompute<wbr>Normals</h3>
+						<a href="/playground/?code=recomputeNormals" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">recompute<wbr>Normals<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Recompute normals when adding a shape</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="vars" class="tsd-anchor"></a>
+						<h3>vars</h3>
+						<a href="/playground/?code=vars" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">vars<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This empty object is intended to store some SPS specific or temporary values in order to lower the Garbage Collector activity.
+								Please read : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#garbage-collector-concerns">https://doc.babylonjs.com/how_to/Solid_Particle_System#garbage-collector-concerns</a></p>
+							</div>
+						</div>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Accessors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="autoupdatesubmeshes" class="tsd-anchor"></a>
+						<h3>auto<wbr>Update<wbr>Sub<wbr>Meshes</h3>
+						<a href="/playground/?code=autoUpdateSubMeshes" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> autoUpdateSubMeshes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> autoUpdateSubMeshes<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>If the subMeshes must be updated on the next call to setParticles()</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>If the subMeshes must be updated on the next call to setParticles()</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="computeboundingbox" class="tsd-anchor"></a>
+						<h3>compute<wbr>Bounding<wbr>Box</h3>
+						<a href="/playground/?code=computeBoundingBox" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> computeBoundingBox<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> computeBoundingBox<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if <code>setParticles()</code> computes or not the mesh bounding box when computing the particle positions.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Tells to <code>setParticles()</code> to compute or not the mesh bounding box when computing the particle positions.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="computeparticlecolor" class="tsd-anchor"></a>
+						<h3>compute<wbr>Particle<wbr>Color</h3>
+						<a href="/playground/?code=computeParticleColor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> computeParticleColor<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> computeParticleColor<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if <code>setParticles()</code> computes the particle colors or not.
+											Default value : true. The SPS is faster when it&#39;s set to false.
+										Note : the particle colors are stored values, so setting <code>computeParticleColor</code> to false will keep yet the last colors set.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Tells to <code>setParticles()</code> to compute the particle colors or not.
+											Default value : true. The SPS is faster when it&#39;s set to false.
+										Note : the particle colors are stored values, so setting <code>computeParticleColor</code> to false will keep yet the last colors set.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="computeparticlerotation" class="tsd-anchor"></a>
+						<h3>compute<wbr>Particle<wbr>Rotation</h3>
+						<a href="/playground/?code=computeParticleRotation" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> computeParticleRotation<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> computeParticleRotation<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if <code>setParticles()</code> computes the particle rotations or not.
+											Default value : true. The SPS is faster when it&#39;s set to false.
+										Note : the particle rotations aren&#39;t stored values, so setting <code>computeParticleRotation</code> to false will prevents the particle to rotate.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Tells to <code>setParticles()</code> to compute the particle rotations or not.
+											Default value : true. The SPS is faster when it&#39;s set to false.
+										Note : the particle rotations aren&#39;t stored values, so setting <code>computeParticleRotation</code> to false will prevents the particle to rotate.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="computeparticletexture" class="tsd-anchor"></a>
+						<h3>compute<wbr>Particle<wbr>Texture</h3>
+						<a href="/playground/?code=computeParticleTexture" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> computeParticleTexture<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> computeParticleTexture<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if <code>setParticles()</code> computes the particle textures or not.
+											Default value : true. The SPS is faster when it&#39;s set to false.
+										Note : the particle textures are stored values, so setting <code>computeParticleTexture</code> to false will keep yet the last colors set.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if <code>setParticles()</code> computes the particle textures or not.
+											Default value : true. The SPS is faster when it&#39;s set to false.
+										Note : the particle textures are stored values, so setting <code>computeParticleTexture</code> to false will keep yet the last colors set.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="computeparticlevertex" class="tsd-anchor"></a>
+						<h3>compute<wbr>Particle<wbr>Vertex</h3>
+						<a href="/playground/?code=computeParticleVertex" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> computeParticleVertex<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> computeParticleVertex<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if <code>setParticles()</code> calls the vertex function for each vertex of each particle, or not.
+											Default value : false. The SPS is faster when it&#39;s set to false.
+										Note : the particle custom vertex positions aren&#39;t stored values.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Tells to <code>setParticles()</code> to call the vertex function for each vertex of each particle, or not.
+											Default value : false. The SPS is faster when it&#39;s set to false.
+										Note : the particle custom vertex positions aren&#39;t stored values.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="depthsortparticles" class="tsd-anchor"></a>
+						<h3>depth<wbr>Sort<wbr>Particles</h3>
+						<a href="/playground/?code=depthSortParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> depthSortParticles<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> depthSortParticles<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if <code>setParticles()</code> sorts or not the distance between each particle and the camera.
+											Skipped when <code>enableDepthSort</code> is set to <code>false</code> (default) at construction time.
+										Default : <code>true</code></p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Tells to <code>setParticles()</code> to sort or not the distance between each particle and the camera.
+											Skipped when <code>enableDepthSort</code> is set to <code>false</code> (default) at construction time.
+										Default : <code>true</code></p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="expandable" class="tsd-anchor"></a>
+						<h3>expandable</h3>
+						<a href="/playground/?code=expandable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> expandable<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if the SPS is created as expandable at construction time.
+										Default : <code>false</code></p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="isalwaysvisible" class="tsd-anchor"></a>
+						<h3>is<wbr>Always<wbr>Visible</h3>
+						<a href="/playground/?code=isAlwaysVisible" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isAlwaysVisible<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> isAlwaysVisible<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets whether the SPS as always visible or not
+										doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility">https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility</a></p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Sets the SPS as always visible or not
+										doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility">https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility</a></p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="isvisibilityboxlocked" class="tsd-anchor"></a>
+						<h3>is<wbr>Visibility<wbr>Box<wbr>Locked</h3>
+						<a href="/playground/?code=isVisibilityBoxLocked" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isVisibilityBoxLocked<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> isVisibilityBoxLocked<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if the SPS visibility box as locked or not. This enables/disables the underlying mesh bounding box updates.
+										doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility">https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility</a></p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Sets the SPS visibility box as locked or not. This enables/disables the underlying mesh bounding box updates.
+										doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility">https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility</a></p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>val: <span class="tsd-signature-type">boolean</span></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="materials" class="tsd-anchor"></a>
+						<h3>materials</h3>
+						<a href="/playground/?code=materials" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> materials<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.material.html" class="tsd-signature-type">Material</a><span class="tsd-signature-symbol">[]</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>The SPS used material array.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.material.html" class="tsd-signature-type">Material</a><span class="tsd-signature-symbol">[]</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+						<a name="multimaterial" class="tsd-anchor"></a>
+						<h3>multimaterial</h3>
+						<a href="/playground/?code=multimaterial" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> multimaterial<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.multimaterial.html" class="tsd-signature-type">MultiMaterial</a></li>
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> multimaterial<span class="tsd-signature-symbol">(</span>mm<span class="tsd-signature-symbol">: </span><a href="babylon.multimaterial.html" class="tsd-signature-type">MultiMaterial</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>The SPS computed multimaterial object</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.multimaterial.html" class="tsd-signature-type">MultiMaterial</a></h4>
+							</li>
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>The SPS computed multimaterial object</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>mm: <a href="babylon.multimaterial.html" class="tsd-signature-type">MultiMaterial</a></h5>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="multimaterialenabled" class="tsd-anchor"></a>
+						<h3>multimaterial<wbr>Enabled</h3>
+						<a href="/playground/?code=multimaterialEnabled" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> multimaterialEnabled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if the SPS supports the Multi Materials</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="usemodelmaterial" class="tsd-anchor"></a>
+						<h3>use<wbr>Model<wbr>Material</h3>
+						<a href="/playground/?code=useModelMaterial" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> useModelMaterial<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets if the SPS uses the model materials for its own multimaterial.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="addshape" class="tsd-anchor"></a>
+						<h3>add<wbr>Shape</h3>
+						<a href="/playground/?code=addShape" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">add<wbr>Shape<span class="tsd-signature-symbol">(</span>mesh<span class="tsd-signature-symbol">: </span><a href="babylon.mesh.html" class="tsd-signature-type">Mesh</a>, nb<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Adds some particles to the SPS from the model shape. Returns the shape id.
+										Please read the doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#create-an-immutable-sps">https://doc.babylonjs.com/how_to/Solid_Particle_System#create-an-immutable-sps</a></p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>mesh: <a href="babylon.mesh.html" class="tsd-signature-type">Mesh</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>is any Mesh object that will be used as a model for the solid particles.</p>
+										</div>
+									</li>
+									<li>
+										<h5>nb: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>(positive integer) the number of particles to be created from this model</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">object</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>is an optional javascript function to called for each particle on SPS creation.
+												{vertexFunction} is an optional javascript function to called for each vertex of each particle on SPS creation
+											{storage} (optional existing array) is an array where the particles will be stored for a further use instead of being inserted in the SPS.</p>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> position<wbr>Function<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> storage<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">[]</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> vertex<wbr>Function<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+								<p>the number of shapes in the system</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="afterupdateparticles" class="tsd-anchor"></a>
+						<h3>after<wbr>Update<wbr>Particles</h3>
+						<a href="/playground/?code=afterUpdateParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">after<wbr>Update<wbr>Particles<span class="tsd-signature-symbol">(</span>start<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, stop<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, update<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>This will be called  by <code>setParticles()</code> after all the other treatments and just before the actual mesh update.
+											This will be passed three parameters.
+										This does nothing and may be overwritten by the user.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> start: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the particle index in the particle array where to stop to iterate, same than the value passed to setParticle()</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> stop: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the particle index in the particle array where to stop to iterate, same than the value passed to setParticle()</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> update: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the boolean update value actually passed to setParticles()</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="beforeupdateparticles" class="tsd-anchor"></a>
+						<h3>before<wbr>Update<wbr>Particles</h3>
+						<a href="/playground/?code=beforeUpdateParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">before<wbr>Update<wbr>Particles<span class="tsd-signature-symbol">(</span>start<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, stop<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, update<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>This will be called before any other treatment by <code>setParticles()</code> and will be passed three parameters.
+										This does nothing and may be overwritten by the user.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> start: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the particle index in the particle array where to stop to iterate, same than the value passed to setParticle()</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> stop: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the particle index in the particle array where to stop to iterate, same than the value passed to setParticle()</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> update: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the boolean update value actually passed to setParticles()</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="buildmesh" class="tsd-anchor"></a>
+						<h3>build<wbr>Mesh</h3>
+						<a href="/playground/?code=buildMesh" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">build<wbr>Mesh<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.mesh.html" class="tsd-signature-type">Mesh</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Builds the SPS underlying mesh. Returns a standard Mesh.
+										If no model shape was added to the SPS, the returned mesh is just a single triangular plane.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.mesh.html" class="tsd-signature-type">Mesh</a></h4>
+								<p>the created mesh</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="computesubmeshes" class="tsd-anchor"></a>
+						<h3>compute<wbr>Sub<wbr>Meshes</h3>
+						<a href="/playground/?code=computeSubMeshes" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">compute<wbr>Sub<wbr>Meshes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Computes the required SubMeshes according the materials assigned to the particles.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+								<p>the solid particle system.
+								Does nothing if called before the SPS mesh is built.</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="digest" class="tsd-anchor"></a>
+						<h3>digest</h3>
+						<a href="/playground/?code=digest" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">digest<span class="tsd-signature-symbol">(</span>mesh<span class="tsd-signature-symbol">: </span><a href="babylon.mesh.html" class="tsd-signature-type">Mesh</a>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Digests the mesh and generates as many solid particles in the system as wanted. Returns the SPS.
+											These particles will have the same geometry than the mesh parts and will be positioned at the same localisation than the mesh original places.
+										Thus the particles generated from <code>digest()</code> have their property <code>position</code> set yet.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>mesh: <a href="babylon.mesh.html" class="tsd-signature-type">Mesh</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>( Mesh ) is the mesh to be digested</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">object</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>(optional integer, default 1) is the number of mesh facets per particle, this parameter is overriden by the parameter <code>number</code> if any
+												{delta} (optional integer, default 0) is the random extra number of facets per particle , each particle will have between <code>facetNb</code> and <code>facetNb + delta</code> facets
+												{number} (optional positive integer) is the wanted number of particles : each particle is built with <code>mesh_total_facets / number</code> facets
+											{storage} (optional existing array) is an array where the particles will be stored for a further use instead of being inserted in the SPS.</p>
+										</div>
+										<ul class="tsd-parameters">
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> delta<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> facet<wbr>Nb<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> number<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li class="tsd-parameter">
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> storage<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">[]</span></h5>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+								<p>the current SPS</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="dispose" class="tsd-anchor"></a>
+						<h3>dispose</h3>
+						<a href="/playground/?code=dispose" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+									<p>Implementation of <a href="../interfaces/babylon.idisposable.html">IDisposable</a>.<a href="../interfaces/babylon.idisposable.html#dispose">dispose</a></p>
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Disposes the SPS.</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="getparticlebyid" class="tsd-anchor"></a>
+						<h3>get<wbr>Particle<wbr>ById</h3>
+						<a href="/playground/?code=getParticleById" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">get<wbr>Particle<wbr>ById<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns a SolidParticle object from its identifier : particle.id</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>id: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>(integer) the particle Id</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>the searched particle or null if not found in the SPS.</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="getparticlesbyshapeid" class="tsd-anchor"></a>
+						<h3>get<wbr>Particles<wbr>ByShape<wbr>Id</h3>
+						<a href="/playground/?code=getParticlesByShapeId" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">get<wbr>Particles<wbr>ByShape<wbr>Id<span class="tsd-signature-symbol">(</span>shapeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns a new array populated with the particles having the passed shapeId.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>shapeId: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>(integer) the shape identifier</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span></h4>
+								<p>a new solid particle array</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="getparticlesbyshapeidtoref" class="tsd-anchor"></a>
+						<h3>get<wbr>Particles<wbr>ByShape<wbr>IdTo<wbr>Ref</h3>
+						<a href="/playground/?code=getParticlesByShapeIdToRef" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">get<wbr>Particles<wbr>ByShape<wbr>IdTo<wbr>Ref<span class="tsd-signature-symbol">(</span>shapeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, ref<span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Populates the passed array &quot;ref&quot; with the particles having the passed shapeId.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>shapeId: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the shape identifier</p>
+										</div>
+									</li>
+									<li>
+										<h5>ref: <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span></h5>
+										<div class="tsd-comment tsd-typography">
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+								<p>the SPS</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="initparticles" class="tsd-anchor"></a>
+						<h3>init<wbr>Particles</h3>
+						<a href="/playground/?code=initParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">init<wbr>Particles<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>This function does nothing. It may be overwritten to set all the particle first values.
+											The SPS doesn&#39;t call this function, you may have to call it by your own.
+										doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#particle-management">https://doc.babylonjs.com/how_to/Solid_Particle_System#particle-management</a></p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="insertparticlesfromarray" class="tsd-anchor"></a>
+						<h3>insert<wbr>Particles<wbr>From<wbr>Array</h3>
+						<a href="/playground/?code=insertParticlesFromArray" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">insert<wbr>Particles<wbr>From<wbr>Array<span class="tsd-signature-symbol">(</span>solidParticleArray<span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Inserts some pre-created particles in the solid particle system so that they can be managed by setParticles().</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>solidParticleArray: <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>an array populated with Solid Particles objects</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+								<p>the SPS</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="pickedparticle" class="tsd-anchor"></a>
+						<h3>picked<wbr>Particle</h3>
+						<a href="/playground/?code=pickedParticle" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">picked<wbr>Particle<span class="tsd-signature-symbol">(</span>pickingInfo<span class="tsd-signature-symbol">: </span><a href="babylon.pickinginfo.html" class="tsd-signature-type">PickingInfo</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns an object {idx: numbern faceId: number} for the picked particle from the passed pickingInfo object.
+											idx is the particle index in the SPS
+											faceId is the picked face index counted within this particle.
+										Returns null if the pickInfo can&#39;t identify a picked particle.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>pickingInfo: <a href="babylon.pickinginfo.html" class="tsd-signature-type">PickingInfo</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>(PickingInfo object)</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../globals.html#nullable" class="tsd-signature-type">Nullable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<p>or null</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="rebuildmesh" class="tsd-anchor"></a>
+						<h3>rebuild<wbr>Mesh</h3>
+						<a href="/playground/?code=rebuildMesh" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">rebuild<wbr>Mesh<span class="tsd-signature-symbol">(</span>reset<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Rebuilds the whole mesh and updates the VBO : custom positions and vertices are recomputed if needed.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> reset: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>boolean, default false : if the particles must be reset at position and rotation zero, scaling 1, color white, initial UVs and not parented.</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+								<p>the SPS.</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="recycleparticle" class="tsd-anchor"></a>
+						<h3>recycle<wbr>Particle</h3>
+						<a href="/playground/?code=recycleParticle" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">recycle<wbr>Particle<span class="tsd-signature-symbol">(</span>particle<span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>This function does nothing. It may be overwritten to recycle a particle.
+											The SPS doesn&#39;t call this function, you may have to call it by your own.
+										doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#particle-management">https://doc.babylonjs.com/how_to/Solid_Particle_System#particle-management</a></p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>particle: <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>The particle to recycle</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a></h4>
+								<p>the recycled particle</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="refreshvisiblesize" class="tsd-anchor"></a>
+						<h3>refresh<wbr>Visible<wbr>Size</h3>
+						<a href="/playground/?code=refreshVisibleSize" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">refresh<wbr>Visible<wbr>Size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Visibilty helper : Recomputes the visible size according to the mesh bounding box
+										doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility">https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility</a></p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+								<p>the SPS.</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="removeparticles" class="tsd-anchor"></a>
+						<h3>remove<wbr>Particles</h3>
+						<a href="/playground/?code=removeParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">remove<wbr>Particles<span class="tsd-signature-symbol">(</span>start<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, end<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Removes the particles from the start-th to the end-th included from an expandable SPS (required).
+											Returns an array with the removed particles.
+											If the number of particles to remove is lower than zero or greater than the global remaining particle number, then an empty array is returned.
+											The SPS can&#39;t be empty so at least one particle needs to remain in place.
+										Under the hood, the VertexData array, so the VBO buffer, is recreated each call.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>start: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>index of the first particle to remove</p>
+										</div>
+									</li>
+									<li>
+										<h5>end: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>index of the last particle to remove (included)</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">[]</span></h4>
+								<p>an array populated with the removed particles</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="setmultimaterial" class="tsd-anchor"></a>
+						<h3>set<wbr>Multi<wbr>Material</h3>
+						<a href="/playground/?code=setMultiMaterial" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">set<wbr>Multi<wbr>Material<span class="tsd-signature-symbol">(</span>materials<span class="tsd-signature-symbol">: </span><a href="babylon.material.html" class="tsd-signature-type">Material</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Sets the SPS MultiMaterial from the passed materials.
+										Note : the passed array is internally copied and not used then by reference.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>materials: <a href="babylon.material.html" class="tsd-signature-type">Material</a><span class="tsd-signature-symbol">[]</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>an array of material objects. This array indexes are the materialIndex values of the particles.</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="setparticles" class="tsd-anchor"></a>
+						<h3>set<wbr>Particles</h3>
+						<a href="/playground/?code=setParticles" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">set<wbr>Particles<span class="tsd-signature-symbol">(</span>start<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, end<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, update<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p> Sets all the particles : this method actually really updates the mesh according to the particle positions, rotations, colors, textures, etc.
+											This method calls <code>updateParticle()</code> for each particle of the SPS.
+											For an animated SPS, it is usually called within the render loop.
+										This methods does nothing if called on a non updatable or not yet built SPS. Example : buildMesh() not called after having added or removed particles from an expandable SPS.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> start: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>The particle index in the particle array where to start to compute the particle property values <em>(default 0)</em></p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> end: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>The particle index in the particle array where to stop to compute the particle property values <em>(default nbParticle - 1)</em></p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> update: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>If the mesh must be finally updated on this call after all the particle computations <em>(default true)</em></p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+								<p>the SPS.</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="setvisibilitybox" class="tsd-anchor"></a>
+						<h3>set<wbr>Visibility<wbr>Box</h3>
+						<a href="/playground/?code=setVisibilityBox" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">set<wbr>Visibility<wbr>Box<span class="tsd-signature-symbol">(</span>size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Visibility helper : Sets the size of a visibility box, this sets the underlying mesh bounding box.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>size: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the size (float) of the visibility box
+												note : this doesn&#39;t lock the SPS mesh bounding box.
+											doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility">https://doc.babylonjs.com/how_to/Solid_Particle_System#sps-visibility</a></p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="updateparticle" class="tsd-anchor"></a>
+						<h3>update<wbr>Particle</h3>
+						<a href="/playground/?code=updateParticle" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">update<wbr>Particle<span class="tsd-signature-symbol">(</span>particle<span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Updates a particle : this function should  be overwritten by the user.
+											It is called on each particle by <code>setParticles()</code>. This is the place to code each particle behavior.
+										doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#particle-management">https://doc.babylonjs.com/how_to/Solid_Particle_System#particle-management</a></p>
+									</div>
+									<dl class="tsd-comment-tags">
+										<dt>example</dt>
+										<dd><p>: just set a particle position or velocity and recycle conditions</p>
+										</dd>
+									</dl>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>particle: <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>The particle to update</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a></h4>
+								<p>the updated particle</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="updateparticlevertex" class="tsd-anchor"></a>
+						<h3>update<wbr>Particle<wbr>Vertex</h3>
+						<a href="/playground/?code=updateParticleVertex" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">update<wbr>Particle<wbr>Vertex<span class="tsd-signature-symbol">(</span>particle<span class="tsd-signature-symbol">: </span><a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a>, vertex<span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlevertex.html" class="tsd-signature-type">SolidParticleVertex</a>, pt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Updates a vertex of a particle : it can be overwritten by the user.
+										This will be called on each vertex particle by <code>setParticles()</code> if <code>computeParticleVertex</code> is set to true only.</p>
+									</div>
+									<dl class="tsd-comment-tags">
+										<dt>example</dt>
+										<dd><p>: just set a vertex particle position or color</p>
+										</dd>
+									</dl>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>particle: <a href="babylon.solidparticle.html" class="tsd-signature-type">SolidParticle</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the current particle</p>
+										</div>
+									</li>
+									<li>
+										<h5>vertex: <a href="babylon.solidparticlevertex.html" class="tsd-signature-type">SolidParticleVertex</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the current vertex of the current particle : a SolidParticleVertex object</p>
+										</div>
+									</li>
+									<li>
+										<h5>pt: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the index of the current vertex in the particle shape
+											doc : <a href="https://doc.babylonjs.com/how_to/Solid_Particle_System#update-each-particle-shape">https://doc.babylonjs.com/how_to/Solid_Particle_System#update-each-particle-shape</a></p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.solidparticlesystem.html" class="tsd-signature-type">SolidParticleSystem</a></h4>
+								<p>the sps</p>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace">
+							<a href="babylon.solidparticlesystem.html" class="tsd-kind-icon">Solid<wbr>Particle<wbr>System</a>
+							<ul>
+								<li class=" tsd-kind-constructor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#constructor" class="tsd-kind-icon">constructor</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#billboard" class="tsd-kind-icon">billboard</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#counter" class="tsd-kind-icon">counter</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#depthsortedparticles" class="tsd-kind-icon">depth<wbr>Sorted<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#mesh" class="tsd-kind-icon">mesh</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#name" class="tsd-kind-icon">name</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#nbparticles" class="tsd-kind-icon">nb<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#particles" class="tsd-kind-icon">particles</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#pickedbysubmesh" class="tsd-kind-icon">picked<wbr>BySub<wbr>Mesh</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#pickedparticles" class="tsd-kind-icon">picked<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#recomputenormals" class="tsd-kind-icon">recompute<wbr>Normals</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#vars" class="tsd-kind-icon">vars</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#autoupdatesubmeshes" class="tsd-kind-icon">auto<wbr>Update<wbr>Sub<wbr>Meshes</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#computeboundingbox" class="tsd-kind-icon">compute<wbr>Bounding<wbr>Box</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#computeparticlecolor" class="tsd-kind-icon">compute<wbr>Particle<wbr>Color</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#computeparticlerotation" class="tsd-kind-icon">compute<wbr>Particle<wbr>Rotation</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#computeparticletexture" class="tsd-kind-icon">compute<wbr>Particle<wbr>Texture</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#computeparticlevertex" class="tsd-kind-icon">compute<wbr>Particle<wbr>Vertex</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#depthsortparticles" class="tsd-kind-icon">depth<wbr>Sort<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#expandable" class="tsd-kind-icon">expandable</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#isalwaysvisible" class="tsd-kind-icon">is<wbr>Always<wbr>Visible</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#isvisibilityboxlocked" class="tsd-kind-icon">is<wbr>Visibility<wbr>Box<wbr>Locked</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#materials" class="tsd-kind-icon">materials</a>
+								</li>
+								<li class=" tsd-kind-accessor tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#multimaterial" class="tsd-kind-icon">multimaterial</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#multimaterialenabled" class="tsd-kind-icon">multimaterial<wbr>Enabled</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#usemodelmaterial" class="tsd-kind-icon">use<wbr>Model<wbr>Material</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#addshape" class="tsd-kind-icon">add<wbr>Shape</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#afterupdateparticles" class="tsd-kind-icon">after<wbr>Update<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#beforeupdateparticles" class="tsd-kind-icon">before<wbr>Update<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#buildmesh" class="tsd-kind-icon">build<wbr>Mesh</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#computesubmeshes" class="tsd-kind-icon">compute<wbr>Sub<wbr>Meshes</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#digest" class="tsd-kind-icon">digest</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#dispose" class="tsd-kind-icon">dispose</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#getparticlebyid" class="tsd-kind-icon">get<wbr>Particle<wbr>ById</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#getparticlesbyshapeid" class="tsd-kind-icon">get<wbr>Particles<wbr>ByShape<wbr>Id</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#getparticlesbyshapeidtoref" class="tsd-kind-icon">get<wbr>Particles<wbr>ByShape<wbr>IdTo<wbr>Ref</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#initparticles" class="tsd-kind-icon">init<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#insertparticlesfromarray" class="tsd-kind-icon">insert<wbr>Particles<wbr>From<wbr>Array</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#pickedparticle" class="tsd-kind-icon">picked<wbr>Particle</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#rebuildmesh" class="tsd-kind-icon">rebuild<wbr>Mesh</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#recycleparticle" class="tsd-kind-icon">recycle<wbr>Particle</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#refreshvisiblesize" class="tsd-kind-icon">refresh<wbr>Visible<wbr>Size</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#removeparticles" class="tsd-kind-icon">remove<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#setmultimaterial" class="tsd-kind-icon">set<wbr>Multi<wbr>Material</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#setparticles" class="tsd-kind-icon">set<wbr>Particles</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#setvisibilitybox" class="tsd-kind-icon">set<wbr>Visibility<wbr>Box</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#updateparticle" class="tsd-kind-icon">update<wbr>Particle</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.solidparticlesystem.html#updateparticlevertex" class="tsd-kind-icon">update<wbr>Particle<wbr>Vertex</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
