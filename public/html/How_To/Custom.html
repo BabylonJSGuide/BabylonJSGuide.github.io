@@ -1,4 +1,4 @@
-<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Custom Meshes - Babylon.js Documentation</title><link rel="shortcut icon" href ="/public/html/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href ="/public/html/css/libs/slideout.css"><link rel="stylesheet" href ="/public/html/css/libs/highlight/github.css"><link rel="stylesheet" href ="/public/html//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href ="/public/html/css/main.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href ="/public/html/">HOME</a></div><div class="item" id="whatsnew"><a href ="/public/html/whats-new">What's new</a></div><div class="item" id="feature"><a href ="/public/html/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href ="/public/html/examples">Examples                        </a></div><div class="item active" id="How_To"><a href ="/public/html/How_To">How To...</a></div><div class="item" id="feature"><a href ="/public/html/features">Features</a></div><div class="item" id="resources"><a href ="/public/html/resources">Resources</a></div><div class="item" id="extensions"><a href ="/public/html/extensions">Extensions</a></div><div class="item" id="samples"><a href ="/public/html/snippets">Snippets        </a></div><div class="item" id="classes"><a href ="/public/html/api">API</a></div><div class="item" id="playground"><a href ="/public/html/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href ="/public/html/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href ="/public/html/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Custom Meshes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Custom Meshes - Babylon.js Documentation</title><link rel="shortcut icon" href ="/public/html/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href ="/public/html/css/libs/slideout.css"><link rel="stylesheet" href ="/public/html/css/libs/highlight/github.css"><link rel="stylesheet" href ="/public/html//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href ="/public/html/css/main.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href ="/public/html/">HOME</a></div><div class="item" id="whatsnew"><a href ="/public/html/whats-new">What's new</a></div><div class="item" id="feature"><a href ="/public/html/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href ="/public/html/examples">Examples                        </a></div><div class="item active" id="How_To"><a href ="/public/html/How_To">How To...</a></div><div class="item" id="feature"><a href ="/public/html/features">Features</a></div><div class="item" id="resources"><a href ="/public/html/resources">Resources</a></div><div class="item" id="extensions"><a href ="/public/html/extensions">Extensions</a></div><div class="item" id="samples"><a href ="/public/html/snippets">Snippets        </a></div><div class="item" id="classes"><a href ="/public/html/api">API</a></div><div class="item" id="playground"><a href ="/public/html/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href ="/public/html/"><img src="/public/html/img/babylonjs_identity_color_dark.svg"></a><a href ="/public/html/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Custom Meshes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
 <li><a href="#positions-and-indices">Positions and Indices</a></li>
 <li><a href="#normals">Normals</a><ul>
 <li><a href="#calculating">Calculating</a></li>
@@ -18,7 +18,7 @@
 </li>
 </ul>
 </div></div><div id="staticContent"><h1><a name="how-to-create-a-mesh-from-scratch" class="anchor" href="#how-to-create-a-mesh-from-scratch"></a>How to Create a Mesh from Scratch</h1><p>Each and every shape in BabylonJS is built from a mesh of triangles or facets as shown below:</p>
-<p><img src="/img/features/scene/custom1.jpg" alt="Custom Mesh"></p>
+<p><img src="/public/html/img/features/scene/custom1.jpg" alt="Custom Mesh"></p>
 <p>Every facet is made up of three vertices each of which is assigned data that not only affects the position of the facet but also 
 its colour, texture and how it is lit. The complex process of applying a shader to turn this data into a viewable mesh 
 is all carried out by BabylonJS.</p>
@@ -144,7 +144,7 @@ and so:</p>
 </tbody>
 </table>
 <h3><a name="direction" class="anchor" href="#direction"></a>Direction</h3><p>Clearly the normals for each facet are pointing in opposite directions. They all point away from the origin. </p>
-<p><img src="/img/how_to/Mesh/normals1.jpg" alt="Normal Direction"></p>
+<p><img src="/public/html/img/how_to/Mesh/normals1.jpg" alt="Normal Direction"></p>
 <p>Looking from the origin towards facet 3, 4, 5 then the order in the indices array 3, 4, 5 around the facet is clockwise.</p>
 <p>Looking from the origin towards facet 0, 1, 2 then the order in the indices array 0, 1, 2 around the facet is also clockwise.</p>
 <ul>
@@ -161,12 +161,12 @@ This is because the addition of the normals affects the use of light on the face
 <ol>
 <li>Camera looking in positive z direction</li>
 </ol>
-<p><img src="/img/how_to/Mesh/normals3.jpg" alt="Positive Z Direction"></p>
+<p><img src="/public/html/img/how_to/Mesh/normals3.jpg" alt="Positive Z Direction"></p>
 <p>Black facet cannot be seen.</p>
 <ol start="2">
 <li>Camera looking in negative z direction</li>
 </ol>
-<p><img src="/img/how_to/Mesh/normals4.jpg" alt="Negative Z Direction"></p>
+<p><img src="/public/html/img/how_to/Mesh/normals4.jpg" alt="Negative Z Direction"></p>
 <p>White facet not seen.</p>
 <p>Why is this? There are two faces to each facet; the face that the normal is pointing away from is the front face, the other is the backface. 
 By default BabylonJS does not render the back face.</p>
@@ -174,7 +174,7 @@ By default BabylonJS does not render the back face.</p>
 <p>To draw the back face of a mesh turn <code>backFaceCulling</code> to <code>false</code> for the material being applied to the mesh.</p>
 <pre><code class="lang-javascript">mat.backFaceCulling = false;
 </code></pre>
-<p><img src="/img/how_to/Mesh/normals5.jpg" alt="Both Facets"></p>
+<p><img src="/public/html/img/how_to/Mesh/normals5.jpg" alt="Both Facets"></p>
 <p>Comment line 41 out in the following to see back face culling happening.</p>
 <ul>
 <li><a href="https://www.babylonjs-playground.com/#VKBJN#7">Playground Example Both Facets</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#7', this)"></i><div class="iframeContainer"></div></li>
@@ -257,10 +257,10 @@ However should you wish to have more control on how a texture is applied to a fa
 <p>Think of any image to be applied as a texture as having a pair of axes set at the bottom and left-hand side of the image; the u axis and the v axis respectively. 
 (u, v as x and y are used for position axes). The origin being the left-hand bottom corner of the image, the top being at v = 1 and the right hand edge at u = 1 as 
 in the diagram below.</p>
-<p><img src="/img/how_to/Mesh/uv1.jpg" alt="Image with uv axes"></p>
+<p><img src="/public/html/img/how_to/Mesh/uv1.jpg" alt="Image with uv axes"></p>
 <p>For simplication the following only uses the facet 0, 1, 2.</p>
 <p>Each vertex of the facet is assigned a uv coordinate pair from the image. </p>
-<p><img src="/img/how_to/Mesh/uv2.jpg" alt="Image with uv triangle"></p>
+<p><img src="/public/html/img/how_to/Mesh/uv2.jpg" alt="Image with uv triangle"></p>
 <table>
 <thead>
 <tr>
@@ -304,7 +304,7 @@ vertexData.uvs = uvs;
 vertexData.applyToMesh(customMesh);
 </code></pre>
 <p>results in:</p>
-<p><img src="/img/how_to/Mesh/uv3.jpg" alt="Result on Facet"></p>
+<p><img src="/public/html/img/how_to/Mesh/uv3.jpg" alt="Result on Facet"></p>
 <p>Note that the image is skewed since the shape of the triangular facet and that on the image do not match.</p>
 <p>Adding in these lines at the appropiate points:</p>
 <pre><code class="lang-javascript">var colors = [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1];
@@ -312,7 +312,7 @@ vertexData.applyToMesh(customMesh);
 var vertexData.colors = colors;
 </code></pre>
 <p>gives:</p>
-<p><img src="/img/how_to/Mesh/uv4.jpg" alt="Result on Facet with red color added"></p>
+<p><img src="/public/html/img/how_to/Mesh/uv4.jpg" alt="Result on Facet with red color added"></p>
 <p>In the playground below clicking on next will cycle you through a variety of values for the uv coordinates.</p>
 <ul>
 <li><a href="https://www.babylonjs-playground.com/#VKBJN#14">Playground Example Varying UV Values</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#14', this)"></i><div class="iframeContainer"></div> </li>
