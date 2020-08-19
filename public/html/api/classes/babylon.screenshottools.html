@@ -271,7 +271,7 @@
 						<a href="/playground/?code=CreateScreenshotUsingRenderTarget" style="float:right; margin-top:-35px" target="_blank">Find examples in
 						Playground</a>
 						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-							<li class="tsd-signature tsd-kind-icon">Create<wbr>Screenshot<wbr>Using<wbr>Render<wbr>Target<span class="tsd-signature-symbol">(</span>engine<span class="tsd-signature-symbol">: </span><a href="babylon.engine.html" class="tsd-signature-type">Engine</a>, camera<span class="tsd-signature-symbol">: </span><a href="babylon.camera.html" class="tsd-signature-type">Camera</a>, size<span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.iscreenshotsize.html" class="tsd-signature-type">IScreenshotSize</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span>, successCallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, mimeType<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, samples<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, antialiasing<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, fileName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, renderSprites<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+							<li class="tsd-signature tsd-kind-icon">Create<wbr>Screenshot<wbr>Using<wbr>Render<wbr>Target<span class="tsd-signature-symbol">(</span>engine<span class="tsd-signature-symbol">: </span><a href="babylon.engine.html" class="tsd-signature-type">Engine</a>, camera<span class="tsd-signature-symbol">: </span><a href="babylon.camera.html" class="tsd-signature-type">Camera</a>, size<span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.iscreenshotsize.html" class="tsd-signature-type">IScreenshotSize</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span>, successCallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, mimeType<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, samples<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, antialiasing<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, fileName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, renderSprites<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, enableStencilBuffer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 						</ul>
 						<ul class="tsd-descriptions">
 							<li class="tsd-description">
@@ -366,6 +366,12 @@
 										<h5><span class="tsd-flag ts-flagOptional">Optional</span> renderSprites: <span class="tsd-signature-type">boolean</span></h5>
 										<div class="tsd-comment tsd-typography">
 											<p>Whether the sprites should be rendered or not (default: false)</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> enableStencilBuffer: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>Whether the stencil buffer should be enabled or not (default: false)</p>
 										</div>
 									</li>
 								</ul>
