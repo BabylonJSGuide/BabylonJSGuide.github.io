@@ -1,0 +1,53 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Material on a Face - Babylon.js Documentation</title><link rel="shortcut icon" href ="/public/html/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href ="/public/html/css/libs/slideout.css"><link rel="stylesheet" href ="/public/html/css/libs/highlight/github.css"><link rel="stylesheet" href ="/public/html//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href ="/public/html/css/main.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href ="/public/html/">HOME</a></div><div class="item" id="whatsnew"><a href ="/public/html/whats-new">What's new</a></div><div class="item active" id="feature"><a href ="/public/html/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href ="/public/html/examples">Examples                        </a></div><div class="item" id="How_To"><a href ="/public/html/How_To">How To...</a></div><div class="item" id="feature"><a href ="/public/html/features">Features</a></div><div class="item" id="resources"><a href ="/public/html/resources">Resources</a></div><div class="item" id="extensions"><a href ="/public/html/extensions">Extensions</a></div><div class="item" id="samples"><a href ="/public/html/snippets">Snippets        </a></div><div class="item" id="classes"><a href ="/public/html/api">API</a></div><div class="item" id="playground"><a href ="/public/html/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href ="/public/html/"><img src="/public/html/img/babylonjs_identity_color_dark.svg"></a><a href ="/public/html/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Material on a Face</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#standard-material">Standard Material</a></li>
+<li><a href="#detached-house-example">Detached House Example</a></li>
+<li><a href="#semi-detached-house-example">Semi Detached House Example</a></li>
+<li><a href="#moving-on">Moving On</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="getting-started-page-5" class="anchor" href="#getting-started-page-5"></a>Getting Started Page 5</h1><h2><a name="standard-material" class="anchor" href="#standard-material"></a>Standard Material</h2><p>In the options properties for a box one is <em>faceUV</em> and array of Vector4s. We can use this to obtain a part of the area of an image to apply to one face of the box.</p>
+<p>In the <em>faceUV</em> array faces are numbered 0 for back, 1, front, 2 left, 3 right, 4 top and 5 bottom.</p>
+<h2><a name="detached-house-example" class="anchor" href="#detached-house-example"></a>Detached House Example</h2><p>We will start with this image</p>
+<p><img src="/public/html/img/campus/cubehouse.png" alt="cubehouse texture">;</p>
+<p>which contains, in order, images of the same size for the front, right, back and left sides of the house.</p>
+<p>The width of each image is 0.25 of the whole image width. To specify the part of the image to use we give two co-ordinates one for the lower left corner and one for the upper right corner. For the whole image we would use (0, 0) and (1, 1), for part images the co-ordinate values will be a fraction between 0 and 1.</p>
+<p>Rather then using two sets of co-ordinates we use a 4 dimensional<br>vector (lower left x, lower left y, upper right x, upper right y)</p>
+<p>Matching sides to part images gives<br>front, 1, (0.0, 0.0, 0.25, 1.0)<br>left, 2, (0.25, 0, 0.5, 1.0)<br>back, 0, (0.5, 0.0, 0.75, 1.0)<br>right, 3, (0.75, 0, 1.0, 1.0)<br>as the top and bottom are not seen we will just use the defaults.</p>
+<p>We set these using</p>
+<pre><code class="lang-javascript">faceUV = [];
+faceUV[0] = new BABYLON.Vector4(0.5, 0.0, 0.75, 1.0); //rear face
+faceUV[1] = new BABYLON.Vector4(0.0, 0.0, 0.25, 1.0); //front face
+faceUV[2] = new BABYLON.Vector4(0.25, 0, 0.5, 1.0); //right side
+faceUV[3] = new BABYLON.Vector4(0.75, 0, 1.0, 1.0); //left side
+</code></pre>
+<p>Unless we set another option property, <em>wrap = true</em>, some of these partial images will still be rotated. We create the box like this</p>
+<pre><code class="lang-javascript">const box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {faceUV: faceUV, wrap: true});
+</code></pre>
+<p>Of course we also need to change the image used for the diffuse texture of the box material.</p>
+<p><a href="https://www.babylonjs-playground.com/#KBS9I5#8">https://www.babylonjs-playground.com/#KBS9I5#8</a> - <i class="fa fa-eye" onclick="createIframe('KBS9I5#8', this)"></i><div class="iframeContainer"></div></p>
+<p><img src="/public/html/img/campus/house3.png" alt="house 3"></p>
+<h2><a name="semi-detached-house-example" class="anchor" href="#semi-detached-house-example"></a>Semi Detached House Example</h2><p>In this case the house is twice as wide and so are parts of the image</p>
+<p><img src="/public/html/img/campus/semihouse.png" alt="semihouse texture">;</p>
+<p>The front and back of the house (far left and right of the image) is twice the width of a side (middle image) which we can use twice.</p>
+<p><a href="https://www.babylonjs-playground.com/#KBS9I5#9">https://www.babylonjs-playground.com/#KBS9I5#9</a> - <i class="fa fa-eye" onclick="createIframe('KBS9I5#9', this)"></i><div class="iframeContainer"></div></p>
+<p><img src="/public/html/img/campus/house4.png" alt="house 4"></p>
+<h2><a name="moving-on" class="anchor" href="#moving-on"></a>Moving On</h2><p>Having created our houses we would like many copies of them to form our world. We could make, separately, copies of the boxes and the roofs but it would be easier if we could combine a box and roof into one mesh, a house. Before we do this lets tidy up the code so that we can concentrate on the new code we are adding. To this end we place the existing code into functions.</p>
+<p><a href="https://www.babylonjs-playground.com/#KBS9I5#10">https://www.babylonjs-playground.com/#KBS9I5#10</a> - <i class="fa fa-eye" onclick="createIframe('KBS9I5#10', this)"></i><div class="iframeContainer"></div></p>
+<p><a href ="/public/html/babylon101/material">Prev</a> Standard Material.<br><a href ="/public/html/babylon101/combine">Next</a> Combine Multiple Meshes into One Mesh.</p>
+<p><a href="CreateBox_Per_Face_Textures_And_Colors">Material Chapter</a> More on Per Face Material</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
