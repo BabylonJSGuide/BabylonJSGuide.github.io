@@ -1,4 +1,4 @@
-<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Joints - Babylon.js Documentation</title><link rel="shortcut icon" href ="/public/html/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href ="/public/html/css/libs/slideout.css"><link rel="stylesheet" href ="/public/html/css/libs/highlight/github.css"><link rel="stylesheet" href ="/public/html//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href ="/public/html/css/main.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href ="/public/html/">HOME</a></div><div class="item" id="whatsnew"><a href ="/public/html/whats-new">What's new</a></div><div class="item" id="feature"><a href ="/public/html/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href ="/public/html/examples">Examples                        </a></div><div class="item active" id="How_To"><a href ="/public/html/How_To">How To...</a></div><div class="item" id="feature"><a href ="/public/html/features">Features</a></div><div class="item" id="resources"><a href ="/public/html/resources">Resources</a></div><div class="item" id="extensions"><a href ="/public/html/extensions">Extensions</a></div><div class="item" id="samples"><a href ="/public/html/snippets">Snippets        </a></div><div class="item" id="classes"><a href ="/public/html/api">API</a></div><div class="item" id="playground"><a href ="/public/html/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href ="/public/html/"><img src="/public/html/img/babylonjs_identity_color_dark.svg"></a><a href ="/public/html/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Joints</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Joints - Babylon.js Documentation</title><link rel="shortcut icon" href ="/public/html/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href ="/public/html/css/libs/slideout.css"><link rel="stylesheet" href ="/public/html/css/libs/highlight/github.css"><link rel="stylesheet" href ="/public/html//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href ="/public/html/css/main.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href ="/public/html/">HOME</a></div><div class="item" id="whatsnew"><a href ="/public/html/whats-new">What's new</a></div><div class="item" id="feature"><a href ="/public/html/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href ="/public/html/examples">Examples                        </a></div><div class="item active" id="How_To"><a href ="/public/html/How_To">How To...</a></div><div class="item" id="feature"><a href ="/public/html/features">Features</a></div><div class="item" id="resources"><a href ="/public/html/resources">Resources</a></div><div class="item" id="extensions"><a href ="/public/html/extensions">Extensions</a></div><div class="item" id="samples"><a href ="/public/html/snippets">Snippets        </a></div><div class="item" id="classes"><a href ="/public/html/api">API</a></div><div class="item" id="playground"><a href ="/public/html/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href ="/public/html/"><img ="/public/html/public/html/img/babylonjs_identity_color_dark.svg"></a><a href ="/public/html/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Joints</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
 <li><a href="#physical-joint-types">Physical Joint Types</a></li>
 <li><a href="#native-joints-for-each-physics-engine">Native Joints for Each Physics Engine</a></li>
 <li><a href="#babylonjs-joints">Babylon.js Joints</a><ul>
@@ -40,49 +40,49 @@
 <tbody>
 <tr>
 <td>1</td>
-<td><img src="/public/html/img/how_to/physics/hinge.jpg" alt="Hinge"></td>
+<td><img ="/public/html/public/html/img/how_to/physics/hinge.jpg" alt="Hinge"></td>
 <td>Hinge</td>
 <td>Single Axis Rotation</td>
 </tr>
 <tr>
 <td>2</td>
-<td><img src="/public/html/img/how_to/physics/ballnsocket.jpg" alt="Ball and Socket"></td>
+<td><img ="/public/html/public/html/img/how_to/physics/ballnsocket.jpg" alt="Ball and Socket"></td>
 <td>Ball and Socket</td>
 <td>Multi Axis Rotation</td>
 </tr>
 <tr>
 <td>3</td>
-<td><img src="/public/html/img/how_to/physics/conetwist.jpg" alt="Cone Twist"></td>
+<td><img ="/public/html/public/html/img/how_to/physics/conetwist.jpg" alt="Cone Twist"></td>
 <td>Cone Twist</td>
 <td>Unrestricted rotation (Twist) on One Axis, Limited Rotation (in Cone) On Others</td>
 </tr>
 <tr>
 <td>4</td>
-<td><img src="/public/html/img/how_to/physics/wheel.jpg" alt="Wheel"></td>
+<td><img ="/public/html/public/html/img/how_to/physics/wheel.jpg" alt="Wheel"></td>
 <td>Wheel</td>
 <td>Two Axes Rotation</td>
 </tr>
 <tr>
 <td>5</td>
-<td><img src="/public/html/img/how_to/physics/slider.jpg" alt="Slider"></td>
+<td><img ="/public/html/public/html/img/how_to/physics/slider.jpg" alt="Slider"></td>
 <td>Slider</td>
 <td>Single Axis Translation and Rotation</td>
 </tr>
 <tr>
 <td>6</td>
-<td><img src="/public/html/img/how_to/physics/prismatic.jpg" alt="Prismatic"></td>
+<td><img ="/public/html/public/html/img/how_to/physics/prismatic.jpg" alt="Prismatic"></td>
 <td>Prismatic</td>
 <td>Single Axis Translation Only</td>
 </tr>
 <tr>
 <td>7</td>
-<td><img src="/public/html/img/how_to/physics/distance.jpg" alt="Distance"></td>
+<td><img ="/public/html/public/html/img/how_to/physics/distance.jpg" alt="Distance"></td>
 <td>Distance</td>
 <td>Set Bodies a Fixed Distance Apart</td>
 </tr>
 <tr>
 <td>8</td>
-<td><img src="/public/html/img/how_to/physics/locked.jpg" alt="Locked"></td>
+<td><img ="/public/html/public/html/img/how_to/physics/locked.jpg" alt="Locked"></td>
 <td>Locked</td>
 <td>Bodies Act As One Body</td>
 </tr>
