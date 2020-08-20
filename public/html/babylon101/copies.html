@@ -8,7 +8,22 @@
 <p>and for an instance it is</p>
 <pre><code class="lang-javascript">instanceHouse = house.createInstance(&quot;instanceHouse&quot;)
 </code></pre>
-<p>As at this point in our world all the houses will use the same material we will go with <em>createInstance</em></p>
+<p>As at this point in our world all the houses will use the same material we will go with <em>createInstance</em>.</p>
+<p>Before we do that we combine the building functions to produce a house of width 1 or 2.</p>
+<p><a href="https://www.babylonjs-playground.com/#KBS9I5#13">https://www.babylonjs-playground.com/#KBS9I5#13</a> - <i class="fa fa-eye" onclick="createIframe('KBS9I5#13', this)"></i><div class="iframeContainer"></div></p>
+<p>We will enlarge the ground and increase the camera radius a little to fit several house on and be able to view them.</p>
+<p>After determining the positions for the houses we will use a loop to create them.</p>
+<pre><code class="lang-javascript">const houses = [];
+
+for (let i = 0; i &lt; places.length; i++) {
+    houses[i] = buildHouse(places[i][0]);
+    houses[i].rotation.y = places[i][1];
+    houses[i].position.x = places[i][2];
+    houses[i].position.z = places[i][3];
+}
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#KBS9I5#14">https://www.babylonjs-playground.com/#KBS9I5#14</a> - <i class="fa fa-eye" onclick="createIframe('KBS9I5#14', this)"></i><div class="iframeContainer"></div></p>
+<p><img src="/public/html/img/campus/village1.png" alt="Village 1"></p>
 </div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
