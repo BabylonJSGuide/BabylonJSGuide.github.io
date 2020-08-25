@@ -1,4 +1,4 @@
-<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>WebGL2 - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>WebGL2</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>WebGL2 - Babylon.js Documentation</title><link rel="shortcut icon" href ="/public/html/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href ="/public/html/css/libs/slideout.css"><link rel="stylesheet" href ="/public/html/css/libs/highlight/github.css"><link rel="stylesheet" href ="/public/html//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href ="/public/html/css/main.css"><link rel="stylesheet" href ="/public/html//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href ="/public/html/">HOME</a></div><div class="item" id="whatsnew"><a href ="/public/html/whats-new">What's new</a></div><div class="item" id="feature"><a href ="/public/html/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href ="/public/html/examples">Examples                        </a></div><div class="item" id="How_To"><a href ="/public/html/How_To">How To...</a></div><div class="item active" id="feature"><a href ="/public/html/features">Features</a></div><div class="item" id="resources"><a href ="/public/html/resources">Resources</a></div><div class="item" id="extensions"><a href ="/public/html/extensions">Extensions</a></div><div class="item" id="samples"><a href ="/public/html/snippets">Snippets        </a></div><div class="item" id="classes"><a href ="/public/html/api">API</a></div><div class="item" id="playground"><a href ="/public/html/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href ="/public/html/"><img src="/public/html/img/babylonjs_identity_color_dark.svg"></a><a href ="/public/html/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>WebGL2</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
 <li><a href="#shaders">Shaders</a></li>
 <li><a href="#supported-features">Supported features</a></li>
 <li><a href="#multisample-render-targets">Multisample render targets</a></li>
@@ -33,49 +33,49 @@ You can obviously provide only v3.0 shaders but in this case your code will only
 <td>Used to compute logarithmic depth buffer</td>
 <td>Yes through an <a href="https://www.khronos.org/registry/webgl/extensions/EXT_frag_depth/">extension</a></td>
 <td><a href="https://www.babylonjs-playground.com/#1180R5#15">PG</a> - <i class="fa fa-eye" onclick="createIframe('1180R5#15', this)"></i><div class="iframeContainer"></div></td>
-<td><a href="//doc.babylonjs.com/How_To/using_logarithmic_depth_buffer">Documentation</a></td>
+<td><a href ="/public/html//doc.babylonjs.com/How_To/using_logarithmic_depth_buffer">Documentation</a></td>
 </tr>
 <tr>
 <td>Multisample render targets</td>
 <td>Rendertarget textures can be multisampled to get antialiasing effect</td>
 <td>No. Has no effect on WebGL1 context</td>
 <td><a href="https://www.babylonjs-playground.com/#12MKMN">PG</a> - <i class="fa fa-eye" onclick="createIframe('12MKMN#', this)"></i><div class="iframeContainer"></div></td>
-<td><a href="//doc.babylonjs.com/features/webgl2#multisample-render-targets">See below</a></td>
+<td><a href ="/public/html//doc.babylonjs.com/features/webgl2#multisample-render-targets">See below</a></td>
 </tr>
 <tr>
 <td>Standard derivatives</td>
 <td>Standard derivatites are used in Babylon.js to help compute realtime bump</td>
 <td>Yes through an <a href="https://www.khronos.org/registry/webgl/extensions/OES_standard_derivatives">extension</a></td>
 <td><a href="http://www.babylonjs.com/Demos/Bump/">Demo</a></td>
-<td><a href="//doc.babylonjs.com/How_To/more_materials">Documentation</a></td>
+<td><a href ="/public/html//doc.babylonjs.com/How_To/more_materials">Documentation</a></td>
 </tr>
 <tr>
 <td>Texture LOD</td>
 <td>Used by PRBMaterial to simulate microsurface</td>
 <td>Yes through an <a href="https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_shader_texture_lod.txt">extension</a></td>
 <td><a href="http://www.babylonjs.com/Demos/HDRMap/">Demo</a></td>
-<td><a href="//doc.babylonjs.com/how_to/physically_based_rendering">Documentation</a></td>
+<td><a href ="/public/html//doc.babylonjs.com/how_to/physically_based_rendering">Documentation</a></td>
 </tr>
 <tr>
 <td>Vertex array objects (VAO)</td>
 <td>A Vertex Array Object (or VAO) is an object that describes how the vertex attributes are stored in a Vertex Buffer Object (or VBO)</td>
 <td>Yes through an <a href="https://www.khronos.org/registry/webgl/extensions/OES_vertex_array_object/">extension</a></td>
 <td>N/A. Every rendering is done with VAO by default</td>
-<td><a href="//doc.babylonjs.com/features/webgl2#vertex-array-objects">See below</a></td>
+<td><a href ="/public/html//doc.babylonjs.com/features/webgl2#vertex-array-objects">See below</a></td>
 </tr>
 <tr>
 <td>Uniform buffer objects (UBO)</td>
 <td>An uniform buffer object (or UBO) let you specify a group of uniforms from a buffer</td>
 <td>No. Uniforms are handled independently on WebGL1 context</td>
 <td>N/A. Materials supporting UBO automatically uses them</td>
-<td><a href="//doc.babylonjs.com/features/webgl2#uniform-buffer-objects">See below</a></td>
+<td><a href ="/public/html//doc.babylonjs.com/features/webgl2#uniform-buffer-objects">See below</a></td>
 </tr>
 <tr>
 <td>Multiple Render Target (MRT)</td>
 <td>Several Render Targets can be rendered in the same draw call.</td>
 <td>Yes through an <a href="https://www.khronos.org/registry/webgl/extensions/WEBGL_draw_buffers">extension</a></td>
 <td><a href="https://www.babylonjs-playground.com/#NZ6P07">Demo</a> - <i class="fa fa-eye" onclick="createIframe('NZ6P07#', this)"></i><div class="iframeContainer"></div></td>
-<td><a href="//doc.babylonjs.com/features/webgl2#multiple-render-target">See below</a></td>
+<td><a href ="/public/html//doc.babylonjs.com/features/webgl2#multiple-render-target">See below</a></td>
 </tr>
 <tr>
 <td>Occlusion Queries</td>
@@ -110,21 +110,21 @@ You can obviously provide only v3.0 shaders but in this case your code will only
 <td>Transform feedback buffer can be used to update vertex buffers from GPU. Babylon.js uses it to implement GPU particles</td>
 <td>No. Not supported on WebGL1</td>
 <td><a href="https://www.babylonjs-playground.com/#PU4WYI">Demo</a> - <i class="fa fa-eye" onclick="createIframe('PU4WYI#', this)"></i><div class="iframeContainer"></div></td>
-<td><a href="/babylon101/particles#gpu-particles">See particles documentation</a></td>
+<td><a href ="/public/html/babylon101/particles#gpu-particles">See particles documentation</a></td>
 </tr>
 <tr>
 <td>Shadow Samplers</td>
 <td>Shadow samplers are used to enable PCF depth comparison on the hardware. Babylon.js uses it to implement PCF and PCSS shadows.</td>
 <td>No. Not supported on WebGL1 (shadows fall back to poisson sampling)</td>
 <td><a href="https://playground.babylonjs.com/#ZT8BKT#1">Demo</a> - <i class="fa fa-eye" onclick="createIframe('ZT8BKT#1', this)"></i><div class="iframeContainer"></div></td>
-<td><a href="/babylon101/shadows">See shadows documentation</a></td>
+<td><a href ="/public/html/babylon101/shadows">See shadows documentation</a></td>
 </tr>
 <tr>
 <td>More precise shadows</td>
 <td>Shadow maps can now use 32 bits depth buffers improving by a large scale the precision of the shadows.</td>
 <td>No. Not supported on WebGL1 (shadows precision will fall back to 16 bits)</td>
 <td><a href="https://playground.babylonjs.com/#ZT8BKT#1">Demo</a> - <i class="fa fa-eye" onclick="createIframe('ZT8BKT#1', this)"></i><div class="iframeContainer"></div></td>
-<td><a href="/babylon101/shadows">See shadows documentation</a></td>
+<td><a href ="/public/html/babylon101/shadows">See shadows documentation</a></td>
 </tr>
 </tbody>
 </table>
@@ -140,8 +140,8 @@ On WebGL1 context, this will do nothing. On WebGL2 context, this will enable mul
 </thead>
 <tbody>
 <tr>
-<td><img src="/img/features/nomsaa.jpg" alt="Title"></td>
-<td><img src="/img/features/msaa.jpg" alt="Title"></td>
+<td><img src="/public/html/img/features/nomsaa.jpg" alt="Title"></td>
+<td><img src="/public/html/img/features/msaa.jpg" alt="Title"></td>
 </tr>
 </tbody>
 </table>
