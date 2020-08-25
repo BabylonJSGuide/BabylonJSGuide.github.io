@@ -1,0 +1,89 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the Screen Space Reflections (SSR) post-process - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the Screen Space Reflections (SSR) post-process</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#prerequisite">Prerequisite</a></li>
+<li><a href="#creating-the-ssr-post-process">Creating the SSR post-process</a></li>
+<li><a href="#customizing">Customizing</a><ul>
+<li><a href="#strength">Strength</a></li>
+<li><a href="#falloff-exponent">Falloff Exponent</a></li>
+<li><a href="#quality">Quality</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p>Rendering reflections in real-time can be done using several methods. Each method contains its own pros and cons. For Web technologies, 2 main methods exist:</p>
+<ul>
+<li><strong>Using a Mirror Texture</strong>:<ul>
+<li>pros: renders perfect reflections on a plane.</li>
+<li>cons: limited to one reflection direction and complexity grows according to the scene&#39;s geometries.</li>
+</ul>
+</li>
+<li><strong>Using a SSR post-process</strong>:<ul>
+<li>pros: renders all possible reflections in all directions and complexity only depends on the screen&#39;s resolution (as all post-processes).</li>
+<li>cons: limited to what the camera sees.</li>
+</ul>
+</li>
+</ul>
+<p>As an exemple, with SSR enabled (look at the water-tank):
+<img src="/img/how_to/screenSpaceReflectionsPostProcess/with_ssr.png" alt="with_ssr"></p>
+<p>With SSR disabled:
+<img src="/img/how_to/screenSpaceReflectionsPostProcess/without_ssr.png" alt="with_ssr"></p>
+<p>You can find a simple example of the SSR post-process in our playground: <a href="https://playground.babylonjs.com/#PIZ1GK">https://playground.babylonjs.com/#PIZ1GK</a> - <i class="fa fa-eye" onclick="createIframe('PIZ1GK#', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="prerequisite" class="anchor" href="#prerequisite"></a>Prerequisite</h1><p>To render reflections using the SSR post-process, the device must support WebGL 2 or at least the multiple render targets extension for WebGL 1. If not supported, the post-process will just work as a pass-through.</p>
+<p>To any reflecting geometry in your scene, the post-process must know what are its &quot;reflectivity&quot; properties. To provide these informations, your reflecting meshes must contain for:</p>
+<ul>
+<li>a <strong>Standard Material</strong>: a specular texture. The specular texture will be used to know how much the object reflects for each pixel.</li>
+<li>a <strong>PBR Material</strong>: a reflectivy texture. The post-process doesn&#39;t still support the roughness/metallic properties for instance and will be available in future. That means the post-process takes the reflectivity texture as-is and doesn&#39;t compute any metallic/roughness workflow.</li>
+</ul>
+<p>In other words, don&#39;t forget to assign a specular texture or a reflectivity texture to you material if you want the reflections enabled on it.</p>
+<pre><code class="lang-javascript">// For a BABYLON.StandardMaterial
+myMaterial.specularTexture = new BABYLON.Texture(&quot;textures/specular.png&quot;, scene);
+</code></pre>
+<pre><code class="lang-javascript">// For a BABYLON.PBRMaterial
+myMaterial.reflectivityTexture = new BABYLON.Texture(&quot;textures/reflectivity.png&quot;, scene);
+</code></pre>
+<p><strong>Note: the SSR post-process is a kind of greedy post-process. It is not intended to work smoothly on low-end devices and requires an enough powerful device.</strong></p>
+<h1><a name="creating-the-ssr-post-process" class="anchor" href="#creating-the-ssr-post-process"></a>Creating the SSR post-process</h1><p>Just create an instance of BABYLON.ScreenSpaceReflectionPostProcess:</p>
+<pre><code class="lang-javascript">var ssr = new BABYLON.ScreenSpaceReflectionPostProcess(
+    &quot;ssr&quot;, // The name of the post-process
+    scene, // The scene where to add the post-process
+    1.0, // The ratio of the post-process
+    camera // To camera to attach the post-process
+); 
+</code></pre>
+<h1><a name="customizing" class="anchor" href="#customizing"></a>Customizing</h1><h2><a name="strength" class="anchor" href="#strength"></a>Strength</h2><p>The strength is applied on the overall specular/reflectivy informations in the scene and can be customized. The default value for the strength is 1.0 and should be used only if you are looking for a particular result (means that the result will not be realistic).</p>
+<pre><code class="lang-javascript">// Double specular/reflectivity strength.
+ssr.strength = 2;
+</code></pre>
+<p>Example playground: <a href="https://playground.babylonjs.com/#PIZ1GK#3">https://playground.babylonjs.com/#PIZ1GK#3</a> - <i class="fa fa-eye" onclick="createIframe('PIZ1GK#3', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="falloff-exponent" class="anchor" href="#falloff-exponent"></a>Falloff Exponent</h2><p>The falloff exponent is used to linearly reduce the reflection&#39;s intensities. The default value is &quot;3.0&quot; and works for most cases.</p>
+<pre><code class="lang-javascript">// Reduce more the reflection&#39;s intensities
+ssr.reflectionSpecularFalloffExponent = 4;
+</code></pre>
+<p>Example playground with an almost equal to 0 exponent: <a href="https://playground.babylonjs.com/#PIZ1GK#2">https://playground.babylonjs.com/#PIZ1GK#2</a> - <i class="fa fa-eye" onclick="createIframe('PIZ1GK#2', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="quality" class="anchor" href="#quality"></a>Quality</h2><p>The reflections quality can be customized to save performances and should be adjusted to each scene type. </p>
+<p>The post-process is based on ray-tracing algorithms. That means more the post-process picks samples, more the result looks good.</p>
+<p>The quality is defined as:</p>
+<ul>
+<li>Low: 25 samples.</li>
+<li>Medium: 50 samples.</li>
+<li>High: 100 samples.</li>
+</ul>
+<p>According to the nature of the scene, the post-process quality can be not necessary perceptible between the medium and high qualities as the ray-tracing algorithm stops once it finds the reflection color. In other words, the high quality will be not be always needed.</p>
+<p>High quality playground: <a href="https://playground.babylonjs.com/#PIZ1GK#7">https://playground.babylonjs.com/#PIZ1GK#7</a> - <i class="fa fa-eye" onclick="createIframe('PIZ1GK#7', this)"></i><div class="iframeContainer"></div>
+Medium quality playground: <a href="https://playground.babylonjs.com/#PIZ1GK#5">https://playground.babylonjs.com/#PIZ1GK#5</a> - <i class="fa fa-eye" onclick="createIframe('PIZ1GK#5', this)"></i><div class="iframeContainer"></div>
+Low quality playground: <a href="https://playground.babylonjs.com/#PIZ1GK#6">https://playground.babylonjs.com/#PIZ1GK#6</a> - <i class="fa fa-eye" onclick="createIframe('PIZ1GK#6', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

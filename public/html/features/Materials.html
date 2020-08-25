@@ -1,0 +1,149 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Configurable Materials - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Configurable Materials</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#properties-and-features">Properties and Features.</a><ul>
+<li><a href="#pointscloud">PointsCloud</a></li>
+<li><a href="#transparency">Transparency</a></li>
+<li><a href="#blending">Blending</a></li>
+<li><a href="#tiling">Tiling</a></li>
+<li><a href="#wireframe">Wireframe</a></li>
+<li><a href="#more-than-one-material-on-a-mesh">More Than One Material on a Mesh</a></li>
+<li><a href="#dynamic-texture">Dynamic Texture</a></li>
+<li><a href="#3d-surface-effects">3D Surface Effects</a></li>
+<li><a href="#reflection-and-refraction">Reflection and Refraction</a></li>
+<li><a href="#procedural-textures">Procedural Textures</a></li>
+<li><a href="#texture-packer">Texture Packer</a></li>
+<li><a href="#how-materials-work">How Materials Work</a></li>
+<li><a href="#compressed-texture-for-gpu">Compressed Texture for GPU</a></li>
+<li><a href="#depth-buffer">Depth Buffer</a></li>
+<li><a href="#shaders">Shaders</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+<li><a href="#more-advanced-l3">More Advanced - L3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="materials" class="anchor" href="#materials"></a>Materials</h1><p>Materials give your meshes color and texture. Materials can be opaque or have different degrees of transparency. When you form one material in Babylon.js it can be used to cover as many meshes as you wish, the only requirement is a light to be seen by. Their reaction to light can be diffuse, specular, emissive or ambient.</p>
+<p>Diffuse shows the color or texture under white light, the amount of light falling on a particular part lightening or darkening the shade. Specular highlights where the light is most intense. Emissive shows the color or texture as if the light were inside, so with no other lights the color or texture will be uniform all over. For ambient to work it must be set on both the scene and material and then the material also takes on the ambient color of the scene.</p>
+<p>An example of the creation and use of a material is </p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+
+myMaterial.diffuseTexture = new BABYLON.Texture(&quot;URL&quot;, scene);
+myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
+myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
+
+mesh.material = myMaterial;
+</code></pre>
+<h2><a name="properties-and-features" class="anchor" href="#properties-and-features"></a>Properties and Features.</h2><h3><a name="pointscloud" class="anchor" href="#pointscloud"></a>PointsCloud</h3><p>Want to render a mesh with vertex points rather than facet triangles then use the <em>pointscloud</em> option.</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+myMaterial.pointsCloud = true;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#PGY5FG">Playground Example - Points Cloud</a> - <i class="fa fa-eye" onclick="createIframe('PGY5FG#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#PGY5FG#3">Playground Example - Points Cloud with a Variety of Colors</a> - <i class="fa fa-eye" onclick="createIframe('PGY5FG#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="transparency" class="anchor" href="#transparency"></a>Transparency</h3><p>Generally set using an <em>alpha</em> value from 0, fully transparent to 1 opaque. </p>
+<pre><code class="lang-javascript">material.alpha = 0.5;
+</code></pre>
+<p>When using an image with transparent areas for a texture then you need to set the <em>hasAlpha</em> property of the diffuseTexture to true and leave the <em>alpha</em> on its default setting. In addition should you wish to place the texture around a mesh so that you can see through the front to the back then you will need to set <em>backFaceCulling</em> to false. </p>
+<pre><code class="lang-javascript">material.diffuseTexture.hasAlpha = true;
+material.backFaceCulling = false;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#2Z6EHT">Playground Example Transparent Texture</a> - <i class="fa fa-eye" onclick="createIframe('2Z6EHT#', this)"></i><div class="iframeContainer"></div>;</li>
+</ul>
+<p>Do you have an image with a transparency gradient then Babylon.js can cater for this as well, using the <em>opacityTexture</em> .</p>
+<pre><code class="lang-javascript">var material = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+mat.opacityTexture = new BABYLON.Texture(&quot;URL GRADIENT IMAGE&quot;, scene);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#32">Playground Example Opacity Texture</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#32', this)"></i><div class="iframeContainer"></div>;</li>
+</ul>
+<p>Transparency can  adversely affect the drawing of overlapping meshes. To help the correct rendering of transparent overlapping meshes Babylon.js provides access to the depth buffer by enabling the <em>DepthRenderer</em> object.</p>
+<h3><a name="blending" class="anchor" href="#blending"></a>Blending</h3><p>Blending is the method of combining colors on screen. For example when one color is (r<sub>0</sub>, g<sub>0</sub>, b<sub>0</sub>) and another (r<sub>1</sub>, g<sub>1</sub>, b<sub>1</sub>) then the second color could just replace the first, or could be (r<sub>0</sub> + r<sub>1</sub>, g<sub>0</sub> + g<sub>1</sub>, b<sub>0</sub> + b<sub>1</sub>) or perhaps (r<sub>0</sub> - r<sub>1</sub>, g<sub>0</sub> - g<sub>1</sub>, b<sub>0</sub> - b<sub>1</sub>) or other combinations. </p>
+<p>Babylon.js gives a way to set the method of blending when one mesh overlaps another through the material property <em>alphaMode</em> with five options.</p>
+<pre><code class="lang-javascript">material.alpha = 0.9999;        // when material is opaque artificially set as alpha blended
+material.alphaMode = BABYLON.Engine.ALPHA_COMBINE; //default option
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1MSIXB#7">Playground Example Blending Modes</a> - <i class="fa fa-eye" onclick="createIframe('1MSIXB#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="tiling" class="anchor" href="#tiling"></a>Tiling</h3><p>Repeat you texture as tiles across a mesh or even offset your texture on a mesh, all possible.</p>
+<pre><code class="lang-javascript">var material = new BABYLON.StandardMaterial(&quot;mat0&quot;, scene);
+material.diffuseTexture = new BABYLON.Texture(&quot;URL TEXTURE&quot;, scene);
+material.diffuseTexture.uScale = 2;
+material1.diffuseTexture.vScale = 4;
+
+material.diffuseTexture.uOffset = 0.25;
+material.diffuseTexture.vOffset = 0.5;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#25">Playground Example of Tiling and Offset</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#25', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="wireframe" class="anchor" href="#wireframe"></a>Wireframe</h3><p>There are times when you want to see the underlying structure of the mesh putting</p>
+<pre><code class="lang-javascript">material.wireframe = true;
+</code></pre>
+<p>does that.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#IUKB9V">Playground Example Wireframe</a> - <i class="fa fa-eye" onclick="createIframe('IUKB9V#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="more-than-one-material-on-a-mesh" class="anchor" href="#more-than-one-material-on-a-mesh"></a>More Than One Material on a Mesh</h3><p>Possible? Of course it is. All meshes can use the <a href="/How_To/Multi_Materials">multi-material</a> approach of dividing the mesh into submeshes and using a different color or texture on each sub-mesh.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#NZ4GG2">Playground Example Multi-Mesh with Color</a> - <i class="fa fa-eye" onclick="createIframe('NZ4GG2#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Meshes that have distinct faces or surfaces such as a box or cylinder and are built using the BABYLON.MeshBuilder.Create&lt;Mesh&gt; method can have <a href="(/How_To/CreateBox_Per_Face_Textures_And_Colors">color or texture applied to these faces individually</a>. When using texture material one image file which is composed of multiple images forms the basis for the texture. This is done using arrays  <em>faceUV</em> or <em>faceColors</em>.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VA2AC#1">Playground Example faceUV on Cylinder</a> - <i class="fa fa-eye" onclick="createIframe('VA2AC#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="dynamic-texture" class="anchor" href="#dynamic-texture"></a>Dynamic Texture</h3><p>A dynamic texture allows you to have an active material that you can draw and write on. </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1282WV#14">Playground Example Dynamic Texture</a> - <i class="fa fa-eye" onclick="createIframe('1282WV#14', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="3d-surface-effects" class="anchor" href="#3d-surface-effects"></a>3D Surface Effects</h3><p>Sometimes you want your material to appear more textured (more 3D than smooth) in which case bump mapping and parallax mapping are available.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#33">Playground Example Bump Map</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#33', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The use of parallax mapping with bump mapping enhances the apparent depth of the texture.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#JHHV3G">Playground Example Parallax Mapping</a> - <i class="fa fa-eye" onclick="createIframe('JHHV3G#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="reflection-and-refraction" class="anchor" href="#reflection-and-refraction"></a>Reflection and Refraction</h3><p>Reflection of these can be simulated in Babylon.js using a <em>reflectionTexture</em> with cube, HDR cube, spherical and mirror textures or with Fresnel parameters. Refraction uses the <em>refractionTexture</em> or again Fresnel parameters can be used.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1YAIO7#21">Playground Example Reflection Texture in Mirror</a> - <i class="fa fa-eye" onclick="createIframe('1YAIO7#21', this)"></i><div class="iframeContainer"></div>  </li>
+<li><a href="https://www.babylonjs-playground.com/#22KZUW#15">Playground Example Refraction Texture</a> - <i class="fa fa-eye" onclick="createIframe('22KZUW#15', this)"></i><div class="iframeContainer"></div>  </li>
+<li><a href="https://www.babylonjs-playground.com/#AQZJ4C">Playground Example Fresenel Parameters</a> - <i class="fa fa-eye" onclick="createIframe('AQZJ4C#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="procedural-textures" class="anchor" href="#procedural-textures"></a>Procedural Textures</h3><p>These are texture that you can have some control over by changing some parameters. Find out more from the Further Reading list.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#24C4KC#17">Playground Example Procedural Textures</a> - <i class="fa fa-eye" onclick="createIframe('24C4KC#17', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="texture-packer" class="anchor" href="#texture-packer"></a>Texture Packer</h3><p>A built in method to consolidate multiple textures into images sets.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#G5BWAD#10">Playground Example Texture Packer</a> - <i class="fa fa-eye" onclick="createIframe('G5BWAD#10', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="how-materials-work" class="anchor" href="#how-materials-work"></a>How Materials Work</h3><p>Sometimes in order to use materials more effectively it is good to know what is happening under the Babylon.js hood. Have a look at how color is applied to the vertices of the facets that make up the mesh and their effects. Find out more how materials are cached and compiled and how to improve the user experience. All available from the links in Further Reading.</p>
+<h3><a name="compressed-texture-for-gpu" class="anchor" href="#compressed-texture-for-gpu"></a>Compressed Texture for GPU</h3><p>There are special formats of textures which are optimized for access by graphics processors.  A .jpg can be very small on disk, but gets expanded by the CPU on its way to the GPU.  Retaining its compressed form is what gives these formats their advantages. These are relatively new and little known and there are issue. Please read more using the link in Further Reading.</p>
+<h3><a name="depth-buffer" class="anchor" href="#depth-buffer"></a>Depth Buffer</h3><p>When rendering meshes the depth buffer is used to determine for any screen point the pixel of which material is displayed on screen taking into account which meshes are behind which for the current camera view. How the depth buffer is used during rendering can be changed by using the <em>DepthRenderer</em> object or the logarithmic depth buffer.</p>
+<h3><a name="shaders" class="anchor" href="#shaders"></a>Shaders</h3><p>A shader is code written for the GPU and is what finally renders your material onto the screen. Babylon.js deals with the shader code for you, all you need to do is to set the material and lighting. However should you wish to do so you can write your own shader to produce the effect you want. You can edit and try out any shader code at <a href="http://cyos.babylonjs.com/">http://cyos.babylonjs.com/</a></p>
+<p>A range of shaders including fire, water, lava and fur can be found in the materials library section of <a href="/extensions">Extensions</a>.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/babylon101/Materials">Materials 101</a><br><a href="/How_To/More_Materials">Bumps, Opacity, Tiling textures</a><br><a href="/How_To/Multi_Materials">Multi Materials</a><br><a href="/How_To/DynamicTexture">Dynamic Textures</a><br><a href="/How_To/CreateBox_Per_Face_Textures_And_Colors">Individual Faces</a><br><a href="/How_To/video_texture">Video Texture</a></p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/How_To/Using_parallax_mapping">Using Parallax Mapping</a><br><a href="/How_To/Custom#calculating-uvs">Calculating UVs</a>  </p>
+<h2><a name="more-advanced-l3" class="anchor" href="#more-advanced-l3"></a>More Advanced - L3</h2><p><a href="/How_To/Reflect">Reflection and Refraction</a><br><a href="/How_To/How_to_use_FresnelParameters">Fresnel Parameters</a><br><a href="/How_To/How_to_use_Procedural_Textures">Procedural textures</a><br><a href="/resources/Transparency_and_How_Meshes_Are_Rendered">Transparency and Rendering</a><br><a href="/How_To/How_to_use_DepthRenderer_to_get_depth_values">DepthRenderer</a><br><a href="/How_To/How_to_use_Blend_Modes">Blending</a><br><a href="/resources/Facets">How Materials are Applied to Vertices</a><br><a href="/resources/How_materials_work">How Materials Work</a><br><a href="/resources/Multi-Platform_Compressed_Textures">Multi-Platform Compressed Textures</a></p>
+<p><a href="/resources/ShaderIntro">Introduction to Shaders</a><br><a href="/How_To/Putting">How To Put Shader Code in Babylon.js</a><br><a href="/How_To/Shader_Material">How To Use ShaderMaterial</a><br><a href="/samples/Writing1">Example A Vertical Wave with Shader Code</a><br><a href="/samples/Writing2">Example Fireworks with Shader Code</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

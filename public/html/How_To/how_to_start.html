@@ -1,0 +1,280 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Start Contributing to Babylon.js - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Start Contributing to Babylon.js</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#pre-requisites">Pre-Requisites</a></li>
+<li><a href="#install-git">Install Git</a></li>
+<li><a href="#install-firefox">Install Firefox</a></li>
+<li><a href="#fork-from-github">Fork from Github</a></li>
+<li><a href="#clone-to-local">Clone to Local</a></li>
+<li><a href="#keeping-the-local-version-up-to-date">Keeping The Local Version Up To Date</a></li>
+<li><a href="#editing-testing-and-guidelines">Editing, Testing and Guidelines</a><ul>
+<li><a href="#editing-with-visual-studio-code">Editing with Visual Studio Code</a></li>
+<li><a href="#adding-files">Adding files</a></li>
+<li><a href="#commit">Commit</a></li>
+<li><a href="#testing-and-dependencies">Testing and Dependencies</a><ul>
+<li><a href="#install-nodejs-and-npm">Install Node.js and NPM</a></li>
+<li><a href="#install-typescript-and-gulp">Install Typescript and Gulp</a></li>
+<li><a href="#the-build">The Build</a></li>
+<li><a href="#do-not-commit">Do Not Commit</a></li>
+<li><a href="#test-and-debug">Test and Debug</a></li>
+<li><a href="#edit-code">Edit Code</a></li>
+<li><a href="#local-dev-with-the-playground">Local Dev with the Playground</a></li>
+<li><a href="#validate-changes">Validate changes</a></li>
+<li><a href="#guidelines">Guidelines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#pull-request">Pull-Request</a><ul>
+<li><a href="#check-for-success">Check for Success</a></li>
+</ul>
+</li>
+<li><a href="#its-live">Its Live</a></li>
+<li><a href="#gulp-tasks">Gulp Tasks</a></li>
+<li><a href="#summary">Summary</a><ul>
+<li><a href="#app-install">App Install</a></li>
+<li><a href="#fork-and-clone">Fork and Clone</a></li>
+<li><a href="#name-remotes-and-pull">Name Remotes and Pull</a></li>
+<li><a href="#global-install">Global Install</a></li>
+<li><a href="#local-install">Local Install</a></li>
+<li><a href="#local-build">Local Build</a></li>
+<li><a href="#webserver">Webserver</a></li>
+<li><a href="#repeat">Repeat</a><ul>
+<li><a href="#edit">Edit</a></li>
+<li><a href="#test">Test</a></li>
+</ul>
+</li>
+<li><a href="#success">Success</a></li>
+<li><a href="#push-pull-request-check">Push Pull-Request Check</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="preface" class="anchor" href="#preface"></a>Preface</h1><p>Potential contributors to Babylon.js can come from many different backgrounds. For some of you version controllers, repositories, package managers and task runners are second nature and all you need to know are the requirements set by the Babylon.js core team for a pull-request to be accepted. For other of us, perhaps just wanting to explore the world of 3D, they can start out as a series of confusing hurdles. So this page will contain details that many of you can ignore as obvious. For others those details may be the difference between making a contribution or not.</p>
+<p>Hopefully all the steps are included that will enable all those with the appropriate coding skills to contribute.</p>
+<p><em>NOTE:</em> If you&#39;re looking to contribute to the Documentation, please use <a href="contribute_to_documentation">this guide</a>.</p>
+<h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p>Babylon.js is maintained on Github, a web-based hosting service for version control using Git. This page will introduce these and everything that is needed to make changes or additions to Babylon.js, from tools installation to testing, plus a brief description of why they are necessary. The steps are intended to be OS agnostic, allowing users to develop the same way on Windows, Mac and Linux.</p>
+<h1><a name="pre-requisites" class="anchor" href="#pre-requisites"></a>Pre-Requisites</h1><ul>
+<li>Reading the <a href="https://github.com/BabylonJS/Babylon.js/blob/master/contributing.md">contribution guidelines</a>.</li>
+<li>An ability to code in Typescript. Babylon.js is written in Typescript then compiled and distributed in Javascript.</li>
+<li>Know how to use a Command Line Interpreter (CLI). Used to issue Git commands.</li>
+</ul>
+<h1><a name="install-git" class="anchor" href="#install-git"></a>Install Git</h1><p>A quick way for Windows and Mac is from the <a href="https://git-scm.com/">Git Home Page</a> and for all three operating systems from the <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git Book</a>.</p>
+<p>You then need configure the installation to your details using a CLI. You can use the CLI built into your computer or one of many specialist ones for Git <a href="https://git-scm.com/downloads/guis/">(Git Clients)</a>. If you use Visual Studio Code then the Terminal is a built in CLI and can be opened with <em>Ctrl + &#39;</em>.</p>
+<p>In your CLI configure git globally with your user name and email:</p>
+<pre><code class="lang-bash">git config --global user.name &quot;John Doe&quot;
+git config --global user.email johndoe@example.com
+</code></pre>
+<h1><a name="install-firefox" class="anchor" href="#install-firefox"></a>Install Firefox</h1><p>In order to run the Babylon.js tests you will need to have Firefox installed.</p>
+<p>Download it from the <a href="https://www.mozilla.org/en-US/firefox/">Firefox Home Page</a>.</p>
+<h1><a name="fork-from-github" class="anchor" href="#fork-from-github"></a>Fork from Github</h1><p>If you do not have one already open a Github account with your email address and still signed in go to the <a href="https://github.com/BabylonJS/Babylon.js">Babylon.js repository</a> and fork with button at the top.</p>
+<p><img src="/img/contribute/fork.jpg" alt="Fork">;</p>
+<h1><a name="clone-to-local" class="anchor" href="#clone-to-local"></a>Clone to Local</h1><p>Now in your Babylon.js repository use the Clone or Download Button to find <strong>your</strong> repository address</p>
+<p><img src="/img/contribute/clone.jpg" alt="Clone"></p>
+<p>If the CLI you are using accepts a <code>paste</code> then use the copy icon to the right of the address. This will save a lot of typing.</p>
+<p>In the CLI enter</p>
+<pre><code class="lang-bash">git clone _**your repository address**_
+</code></pre>
+<p><img src="/img/contribute/gitclone.jpg" alt="gitclone"></p>
+<p>The cloning may take some time.</p>
+<p>Now you have a local repository and a remote repository on Github.</p>
+<p>From the folder where you cloned Babylon.js into you can simply change your directory to the local repository using</p>
+<pre><code class="lang-bash">cd babylon.js
+</code></pre>
+<p>and then find the name of your remote repository with</p>
+<pre><code class="lang-bash">git remote -v
+</code></pre>
+<p><img src="/img/contribute/remote1.jpg" alt="remote address"></p>
+<p>You should find it is called <code>origin</code> since it is the origin of the cloned local version. The local version is called the <code>master</code> since it is your master version of your Babylon.js.
+When the time comes this will allow you push changes in your local repository to your Github repository using</p>
+<pre><code class="lang-bash">git push origin master
+</code></pre>
+<h1><a name="keeping-the-local-version-up-to-date" class="anchor" href="#keeping-the-local-version-up-to-date"></a>Keeping The Local Version Up To Date</h1><p>When it comes time for you to request that your changes be pulled into the Babylon.js then the only difference between your version of Babylon.js and it should be the changes you have made. Of course other people are making changes as well so you need to keep your master, the local version, up to date with the main version. The main version, often termed the upstream version, is another remote version to your local repository that it can link to</p>
+<p>To do this you add the main version as a remote with the name upstream, making sure that your CLI is at the babylon.js directory</p>
+<pre><code class="lang-bash">git remote add upstream https://github.com/BabylonJS/Babylon.js.git
+</code></pre>
+<p>Using</p>
+<pre><code class="lang-bash">git remote -v
+</code></pre>
+<p>you can check all remotes are active.</p>
+<p><img src="/img/contribute/remote2.jpg" alt="Added Remote"></p>
+<p>Now before pushing your fully committed master to your origin you can pull the upstream (main) version into your master with</p>
+<pre><code class="lang-bash">git pull upstream master
+</code></pre>
+<p>You can pull from upstream at any time provided any changes you have made are committed.</p>
+<h1><a name="editing-testing-and-guidelines" class="anchor" href="#editing-testing-and-guidelines"></a>Editing, Testing and Guidelines</h1><p>Before embarking on editing or adding to Babylon.js please make sure you are familiar with the <a href="https://github.com/BabylonJS/Babylon.js/blob/master/contributing.md">contribution guidelines</a>.</p>
+<p>Please note that some of these are checked on submission automatically by software, including</p>
+<ul>
+<li>The addition of comments to your code as described <a href="/how_to/contribute_to_api#format-of-comments">here</a>;</li>
+<li>Adding a statement about the change in the <strong>dist/preview release/what&#39;s new.md</strong> page</li>
+</ul>
+<h2><a name="editing-with-visual-studio-code" class="anchor" href="#editing-with-visual-studio-code"></a>Editing with Visual Studio Code</h2><p>Visual Studio Code is a straight forward IDE with Git integration and is available for all three operating systems. It is worth a try though you may already have a favorite or recommended IDE.</p>
+<p>You can install VSCode from their site: <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<p>Once you are sure you have met the guidelines and have thoroughly tested all your changes you need to commit your changes.</p>
+<p><a href="/resources/vscode">More on using VSCode with babylon.js</a></p>
+<h2><a name="adding-files" class="anchor" href="#adding-files"></a>Adding files</h2><p>When in doubt about where your files should be referenced then raise an issue in the Babyon.js repository or ask on the forum.</p>
+<h2><a name="commit" class="anchor" href="#commit"></a>Commit</h2><p>This can be done in Visual Studio Code using the <em>source control icon</em> on the left toolbar or with (Ctrl + Shift + G). After testing some files other than those you have added or edited will appear in the source control section of VSCode. For example changes to files in the <code>dist</code> folder. These should not be committed. Once you are ready to push to your repository these changes should be discarded. Only files you have actually changed or added should be in the commit.</p>
+<p><img src="/img/contribute/discard.jpg" alt="Discard"></p>
+<p>When using a Git Client you should also check that you are only committing those file you have added or edited and not those produced in any testing build.</p>
+<p>When using a CLI you need to add any files you have added or editing before committing them. So only add those files you have changed. The full path to the files from the current directory has to be used.</p>
+<p>For example in the top directory</p>
+<pre><code class="lang-bash">git add path to file/file1.ts path to file/file2.ts path to file/file3.ts
+git commit path to file/file1.ts path to file/file2.ts path to file/file3.ts -m &quot;Description of Changes&quot;
+</code></pre>
+<p><img src="/img/contribute/commit1.jpg" alt="Commit top Folder"></p>
+<p>and in the directory containing file1.ts, file2.ts, file3.ts</p>
+<pre><code class="lang-bash">git add file1.ts file2.ts file3.ts
+git commit file1.ts file2.ts file3.ts -m &quot;Description of Changes&quot;
+</code></pre>
+<p><img src="/img/contribute/commit2.jpg" alt="Commit in Folder"></p>
+<p><a href="#do-not-commit">An alternative way</a> of ignoring the files changed during the testing build can also be found on this page.</p>
+<h2><a name="testing-and-dependencies" class="anchor" href="#testing-and-dependencies"></a>Testing and Dependencies</h2><p>In order to carry out the testing the distribution Javascript files have to be compiled and a server set up to carry out the tests. This requires the Typescript compiler and Gulp build tools. These are installed using npm, the package manager of Node.js. Installing Node.js also installs npm.</p>
+<h3><a name="install-nodejs-and-npm" class="anchor" href="#install-nodejs-and-npm"></a>Install Node.js and NPM</h3><p>Node.js and npm can be installed from the <a href="https://nodejs.org/en/">Node.js home page</a>.</p>
+<p>The package manager npm is updated regularly and often to test Babylon.js you will need the latest version. To update to the latest version in you CLI</p>
+<pre><code class="lang-bash">npm install -g npm@latest
+</code></pre>
+<p>the <code>g</code> installs npm globally so you can use it in any folder</p>
+<h3><a name="install-typescript-and-gulp" class="anchor" href="#install-typescript-and-gulp"></a>Install Typescript and Gulp</h3><p>Install these using your CLI</p>
+<pre><code class="lang-bash">npm install -g typescript
+npm install -g gulp@4.0.0
+</code></pre>
+<p>At the time of writing the version of Gulp needed was 4.0.0. The current <a href="//doc.babylonjs.com/whats-new">What&#39;s New</a> should indicate if there have been any changes of version. You can also look in the Babylon.js repository for <code>package.json</code> in <code>Tools/Publisher</code> which will give the version number for Gulp and Typescript.</p>
+<h3><a name="the-build" class="anchor" href="#the-build"></a>The Build</h3><p>This only needs to be done once for a current version of Babylon.js, updates to npm or Gulp in later versions of Babylon.js may require you to update npm and Gulp on your local computer. After it is done any changes you make will be picked up automatically. Installing the npm applications in the directory takes quite a while and the Gulp build even longer so while Gulp is running is a good time to get a coffee or beverage of choice.</p>
+<p>Any error messages that fail the build should be corrected.</p>
+<p>In your CLI make sure your are in the directory <code>Babylon.js/Tools/Gulp</code> and enter</p>
+<pre><code class="lang-bash">npm install
+npm run build
+</code></pre>
+<p>The <code>npm install</code> places a number of files in the current directory (This is different to <code>npm -g install</code> which makes npm available in any folder)</p>
+<p>The <code>npm run build</code> builds everything you need to test.</p>
+<h3><a name="do-not-commit" class="anchor" href="#do-not-commit"></a>Do Not Commit</h3><p>During the build the <code>dist</code> folder continuously gets updated and its files changed. These modified files should not be committed by Git so they they are not pulled during a pull request. To ignore these files you can run the following in your CLI:</p>
+<pre><code class="lang-bash">git update-index --assume-unchanged &quot;Playground/babylon.d.txt&quot;
+git update-index --assume-unchanged &quot;dist/preview release/babylon.d.ts&quot;
+git update-index --assume-unchanged &quot;dist/preview release/babylon.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/babylon.max.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/customConfigurations/minimalGLTFViewer/babylon.d.ts&quot;
+git update-index --assume-unchanged &quot;dist/preview release/customConfigurations/minimalGLTFViewer/babylon.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/customConfigurations/minimalGLTFViewer/babylon.max.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/loaders/babylon.glTF2FileLoader.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/loaders/babylon.glTF2FileLoader.min.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/loaders/babylon.glTFFileLoader.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/loaders/babylon.glTFFileLoader.min.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/loaders/babylonjs.loaders.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/loaders/babylonjs.loaders.min.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/typedocValidationBaseline.json&quot;
+git update-index --assume-unchanged &quot;dist/preview release/viewer/babylon.viewer.js&quot;
+git update-index --assume-unchanged &quot;dist/preview release/viewer/babylon.viewer.max.js&quot;
+</code></pre>
+<h3><a name="test-and-debug" class="anchor" href="#test-and-debug"></a>Test and Debug</h3><p>Should you be using VSCode then you can open the <code>Command Palette</code> either from the <code>View</code> menu or with (Ctrl + Shift + P) then begin to type <code>run</code> this takes you to the <code>Tasks:run</code> options, choose <code>Tasks:run</code> and type <code>run</code> in the box that opens up. Alternatively press (Ctrl + &#39;) to open the terminal which is a CLI.</p>
+<p>In any CLI make sure you are in the <code>Tools/Gulp</code> directory and type</p>
+<pre><code class="lang-bash">npm run start
+</code></pre>
+<p>You can kill the task with (Ctrl + C)</p>
+<p>When using VSCode you can also kill the task by opening the the <code>Command Palette</code> either from the <code>View</code> menu or with (Ctrl + Shift + P) begin to type <code>terminate</code> and choose the <code>Tasks: Terminate Task</code> option.</p>
+<p>Also using VSCode there is a <code>Debug</code> tab on the menu. To use it with Babylon.js you need to install the chrome debugger extension, find out more from <a href="https://code.visualstudio.com/blogs/2016/02/23/introducing-chrome-debugger-for-vs-code">Debugger for Chrome</a>.</p>
+<p>Once the task is run the links below provide the main entry points in Babylon.js:</p>
+<ol>
+<li><a href="&quot;http://localhost:1338/sandbox/index-local.html&quot;">Sandbox</a>: <a href="http://localhost:1338/sandbox/index-local.html">http://localhost:1338/sandbox/index-local.html</a></li>
+<li><a href="&quot;http://localhost:1338/Playground/index-local.html&quot;">Playground</a>: <a href="http://localhost:1338/Playground/index-local.html">http://localhost:1338/Playground/index-local.html</a></li>
+<li><a href="&quot;http://localhost:1338/materialsLibrary/index.html&quot;">Materials Library</a>: <a href="http://localhost:1338/materialsLibrary/index.html">http://localhost:1338/materialsLibrary/index.html</a></li>
+<li><a href="&quot;http://localhost:1338/postProcessLibrary/index.html&quot;">Post Process Library</a>: <a href="http://localhost:1338/postProcessLibrary/index.html">http://localhost:1338/postProcessLibrary/index.html</a></li>
+<li><a href="&quot;http://localhost:1338/proceduralTexturesLibrary/index.html&quot;">Procedural Textures Library</a>: <a href="http://localhost:1338/proceduralTexturesLibrary/index.html">http://localhost:1338/proceduralTexturesLibrary/index.html</a></li>
+<li><a href="&quot;http://localhost:1338/inspector/index.html&quot;">Inspector</a>: <a href="http://localhost:1338/inspector/index.html">http://localhost:1338/inspector/index.html</a></li>
+<li><a href="&quot;http://localhost:1338/localDev/index.html&quot;">Local Dev</a>: <a href="http://localhost:1338/localDev/index.html">http://localhost:1338/localDev/index.html</a></li>
+<li><a href="&quot;http://localhost:1338/tests/validation/index.html&quot;">Build validation</a>: <a href="http://localhost:1338/tests/validation/index.html">http://localhost:1338/tests/validation/index.html</a></li>
+</ol>
+<p>All of those allow debugging the source code of bjs directly from typescript.</p>
+<p><img src="/img/how_to/howToStart/debug.png" alt="debug"></p>
+<p>If you wish to test the fully compiled version instead of independent files simply append ?dist=true in the different urls.</p>
+<p>You could also test against the minified version by choosing ?dist=min. this will work on all the referenced URLs.</p>
+<h3><a name="edit-code" class="anchor" href="#edit-code"></a>Edit Code</h3><p>Once the test task (npm run start) has been launched, any saved changes in the Typescript or shader files will automatically rebuild the associated Javascript files. Simply refresh your browser to see the changes in effect and begin to debug your new code.</p>
+<p><em>Hint</em>: You may need to refresh the code before adding back a new breakpoint.</p>
+<h3><a name="local-dev-with-the-playground" class="anchor" href="#local-dev-with-the-playground"></a>Local Dev with the Playground</h3><p>A quick way to test if your code works is to open the <a href="http://localhost:1338/Playground/index-local.html">local playground</a> and write code that calls on the classes you have created.</p>
+<p>It is also possible by creating an <code>index.js</code> file in the <code>/localDev/src/</code> folder and copying and pasting playground code into this <code>index.js</code> file. The entire <code>/localDev/src</code> folder is git ignored and is meant to be your local test folder.</p>
+<p>You launch this code through: <a href="http://localhost:1338/localDev/index.html">http://localhost:1338/localDev/index.html</a></p>
+<p>From there you can easily add a breakpoint in your playground code or the Typescipt files for debugging.</p>
+<p>Adding in the url ?dist=true or ?dist=min will help testing against the built files.</p>
+<p>As using only one test file is annoying, feel free to number the files index.1.js, index.2.js... and so on. In VSCode, copy pasting the file in the same folder results in creating the next available slot in the folder e.g. copy pasting index.1.js will create index.2.js.</p>
+<p>To launch index.{number}.js simply append in the url sample={number} so for launching index.3.js against the unminified released files, use: <a href="http://localhost:1338/localDev/index.html?dist=true&amp;sample=3">http://localhost:1338/localDev/index.html?dist=true&amp;sample=3</a></p>
+<p>This should help playing and debugging locally.</p>
+<h3><a name="validate-changes" class="anchor" href="#validate-changes"></a>Validate changes</h3><p>As part of your testing process, it is highly recommended to launch the build validator: <a href="http://localhost:1338/tests/validation/index.html">http://localhost:1338/tests/validation/index.html</a>.
+It will run several scenes against a reference image to detect any visual changes.</p>
+<h3><a name="guidelines" class="anchor" href="#guidelines"></a>Guidelines</h3><p>A reminder to read the <a href="https://github.com/BabylonJS/Babylon.js/blob/master/contributing.md">contribution guidelines</a>.</p>
+<h1><a name="pull-request" class="anchor" href="#pull-request"></a>Pull-Request</h1><p>Pull Requests are automatically validated. One check is for styling and you can check that quickly with <code>gulp tsLint</code>. If you are unsure, you can validate everything with a full build:</p>
+<pre><code class="lang-bash">npm run build
+</code></pre>
+<p>When you are happy that all testing has been validated, guidelines followed, and only necessary files committed then push your local master to your origin github repository with your Git Client or from the CLI with</p>
+<pre><code class="lang-bash">git push origin master
+</code></pre>
+<p>Once this has succeeded visit your Babylon.js repository</p>
+<p>If all your commits are ahead of the upstream Babylon.js:master you can issue a pull request using the button shown below and follow the steps.</p>
+<p><img src="/img/contribute/pr1.jpg" alt="Success"></p>
+<p>If some of your commits are behind the upstream Babylon.js:master</p>
+<p><img src="/img/contribute/pr2.jpg" alt="fail"></p>
+<p>then you will need to to do a</p>
+<pre><code class="lang-bash">git pull upstream master
+</code></pre>
+<p>and then push into your repository again.</p>
+<h2><a name="check-for-success" class="anchor" href="#check-for-success"></a>Check for Success</h2><p>Once your <code>pull-request</code> has been issued then it needs to be checked, reviewed, approved and merged.</p>
+<p>Some checks are carried out automatically and this can be found in the main BabylonJS/Babylon.js repository</p>
+<p>Find your pull-request from the list and open it.</p>
+<p><img src="/img/contribute/pr3.jpg" alt="check 1"></p>
+<p>Scroll down to the review panel</p>
+<p><img src="/img/contribute/pr4.jpg" alt="check 1"></p>
+<p>Should there be any then a red cross indicates the area of failure. Click on details for more information.</p>
+<p>Scroll down to the Stage 1 section</p>
+<p><img src="/img/contribute/pr5.jpg" alt="check 2"></p>
+<p>In the above image you can see that this pull-request failed in <code>WhatsNewUpdate</code>. Probably because no entry was made in <strong>dist/preview release/what&#39;s new.md</strong>. It has passed the <code>DocumentationCheck</code> since all the comments have been entered as describe in <a href="/How_To/contribute_to_api#format-of-comments">the formatting of comments for the API</a>.</p>
+<p>For any failures re-edit your local files, commit and push to your repository. The alterations will automatically added to your pull-request and it will be re-checked.</p>
+<h1><a name="its-live" class="anchor" href="#its-live"></a>Its Live</h1><p>Once your pull-request has been merged it will become live once any changes have been deployed into the <code>Preview Release</code> usually overnight but sometimes delayed a couple of days.</p>
+<h1><a name="gulp-tasks" class="anchor" href="#gulp-tasks"></a>Gulp Tasks</h1><p>All the following tasks are available:</p>
+<ul>
+<li><code>gulp run</code> launches all the watchers and a web server.</li>
+<li><code>gulp webserver</code> launches the webserver only.</li>
+<li><code>gulp watch</code> launches the watchers only.</li>
+<li><code>gulp typescript-all</code> generates all the distribution files in the dist/preview release folder</li>
+<li><code>gulp typescript</code> generates the BJS distribution files.</li>
+<li><code>gulp typescript-libraries</code> generates all the library (materials, procedural textures...) files in the dist/preview release folder.</li>
+<li><code>gulp loaders</code> generates all the loaders files in the dist/preview release folder.</li>
+<li><code>gulp serializers</code> generates all the serializers files in the dist/preview release folder.</li>
+<li><code>gulp materialsLibrary</code> generates all the materials files in the dist/preview release folder.</li>
+<li><code>gulp proceduralTexturesLibrary</code> generates all the procedural textures files in the dist/preview release folder.</li>
+<li><code>gulp postProcessesLibrary</code> generates all the post processes files in the dist/preview release folder.</li>
+<li><code>gulp inspector</code> generates the inspector files in the dist/preview release folder.</li>
+</ul>
+<p>Most of those tasks should be launch by authorizing node to consume more memory than default by relying on the argument: <code>--max-old-space-size=8192</code></p>
+<h1><a name="summary" class="anchor" href="#summary"></a>Summary</h1><h2><a name="app-install" class="anchor" href="#app-install"></a>App Install</h2><p>Node.js and Git</p>
+<h2><a name="fork-and-clone" class="anchor" href="#fork-and-clone"></a>Fork and Clone</h2><p><img src="/img/contribute/summary1.jpg" alt="Fork and Clone"></p>
+<h2><a name="name-remotes-and-pull" class="anchor" href="#name-remotes-and-pull"></a>Name Remotes and Pull</h2><p><img src="/img/contribute/summary2.jpg" alt="Remotes"></p>
+<h2><a name="global-install" class="anchor" href="#global-install"></a>Global Install</h2><pre><code class="lang-bash">npm install -g typescript
+npm install -g gulp@4.0.0
+</code></pre>
+<h2><a name="local-install" class="anchor" href="#local-install"></a>Local Install</h2><p>Babylon.js/Tools/Gulp folder</p>
+<pre><code class="lang-bash">npm install
+</code></pre>
+<h2><a name="local-build" class="anchor" href="#local-build"></a>Local Build</h2><p>Babylon.js/Tools/Gulp folder</p>
+<pre><code class="lang-bash">npm run build
+</code></pre>
+<h2><a name="webserver" class="anchor" href="#webserver"></a>Webserver</h2><p>Babylon.js/Tools/Gulp folder</p>
+<pre><code class="lang-bash">npm run start
+</code></pre>
+<p><a href="http://localhost:1338/Playground/index-local.html">Open Playground</a></p>
+<h2><a name="repeat" class="anchor" href="#repeat"></a>Repeat</h2><h3><a name="edit" class="anchor" href="#edit"></a>Edit</h3><p>Change and save files including comments</p>
+<h3><a name="test" class="anchor" href="#test"></a>Test</h3><p>Check if your code can be used in the local playground</p>
+<h2><a name="success" class="anchor" href="#success"></a>Success</h2><p>Update <code>/dist/preview release/what&#39;s new.md</code> file.<br>Commit files you have added or edited but not those built with npm run start</p>
+<h2><a name="push-pull-request-check" class="anchor" href="#push-pull-request-check"></a>Push Pull-Request Check</h2><p><img src="/img/contribute/summary3.jpg" alt="Pull-Request"></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

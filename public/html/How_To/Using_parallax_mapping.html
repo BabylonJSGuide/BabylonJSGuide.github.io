@@ -1,0 +1,47 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Parallax Mapping - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Parallax Mapping</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#what-is-parallax-mapping">What is Parallax Mapping</a><ul>
+<li><a href="#parallax-mapping">Parallax Mapping</a></li>
+<li><a href="#parallax-occlusion-mapping-pom">Parallax Occlusion Mapping (POM)</a></li>
+</ul>
+</li>
+<li><a href="#parallax-mapping-with-babylonjs">Parallax Mapping with Babylon.js</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-parallax-mapping" class="anchor" href="#how-to-use-parallax-mapping"></a>How To Use Parallax Mapping</h1><p>Starting with Babylon.js v2.4, we introduced Parallax Mapping.</p>
+<p>You can see a demo of this technique <a href="https://www.babylonjs-playground.com/#10I31V#23">right here</a> - <i class="fa fa-eye" onclick="createIframe('10I31V#23', this)"></i><div class="iframeContainer"></div></p>
+<p><img src="/img/how_to/Materials/parallax-mapping.jpg" alt="parallax mapping example"></p>
+<h2><a name="what-is-parallax-mapping" class="anchor" href="#what-is-parallax-mapping"></a>What is Parallax Mapping</h2><p>Parallax Mapping is an algorithm which, based from a height map, apply an offset on the material&#39;s textures in order to accentuate the effect of relief in the geometry&#39;s surface.</p>
+<p>While this technique is independent from Normal Mapping (a.k.a Bump) it&#39;s often used in conjunction with it. The simple reason is that the height map needed to perform Parallax Mapping is most of the time encoded in the Alpha channel of the Normal Map texture. (A diffuse texture is required for using parallax mapping).</p>
+<p>There are many techniques that are based on the Parallax Mapping principle, Babylon.js supports two of them.</p>
+<h3><a name="parallax-mapping" class="anchor" href="#parallax-mapping"></a>Parallax Mapping</h3><p>The core algorithm which perform an offset computation for the texture UV coordinates, based on a height map. This algorithm is really quick to perform, you can almost think of it as being free if you already are using Bump.</p>
+<h3><a name="parallax-occlusion-mapping-pom" class="anchor" href="#parallax-occlusion-mapping-pom"></a>Parallax Occlusion Mapping (POM)</h3><p>While traditional Parallax mapping compute the offset based on one sample of the height map, the Occlusion version will make a loop to sample the height map many times in order to reach a more precise location of what the pixel to compute should reflect.</p>
+<p>The outcome is way more realistic than traditional Parallax but you can expect a performance hit that worthes consideration.</p>
+<p>You can learn more about all the different techniques <a href="http://sunandblackcat.com/tipFullView.php?topicid=28">here</a>.</p>
+<h2><a name="parallax-mapping-with-babylonjs" class="anchor" href="#parallax-mapping-with-babylonjs"></a>Parallax Mapping with Babylon.js</h2><p>You can use Parallax Mapping through the following materials:</p>
+<ul>
+<li><a href="/api/classes/babylon.standardmaterial">StandardMaterial</a></li>
+<li><a href="/api/classes/babylon.pbrmaterial">PBRMaterial</a></li>
+</ul>
+<p>In Babylon.js we think Parallax Mapping as an extension of Normal Mapping, hence to benefit of the former, you have to enable the later. The reason is that we support only the height map being encoded in the Alpha channel of the normal map, as explained above.</p>
+<p>You have three properties to work with Parallax:</p>
+<ul>
+<li><strong>useParallax</strong>: enables Parallax Mapping over Bump. This property won&#39;t have any effect if you didn&#39;t assigned a <strong>bumpTexture</strong>.</li>
+<li><strong>useParallaxOcclusion</strong>: enables Parallax Occlusion, when setting this property, you must also set <strong>useParallax</strong> to true.</li>
+<li><strong>parallaxScaleBias</strong>: apply a scaling factor that determine which &quot;depth&quot; the height map should reprensent. A value between 0.05 and 0.1 is reasonnable in Parallax, you can reach 0.2 using Parallax Occlusion.</li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

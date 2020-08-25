@@ -1,0 +1,77 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Creating a Texture Package - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Creating a Texture Package</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#loading-from-json">Loading From JSON</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="texture-packer" class="anchor" href="#texture-packer"></a>Texture Packer</h1><p>Create a TexturePacker by calling:</p>
+<pre><code class="lang-javascript">let pack = new BABYLON.TexturePacker( name, targetMeshes, options, scene );
+pack.processAsync().then( success ).catch( error );
+</code></pre>
+<ul>
+<li>name:string, Name of the Texture Pack.</li>
+<li>targetMeshes:Array<AbstractMesh>, Array of meshes to use as material sources.</li>
+<li>options:any, Basic object with argument parameters</li>
+<li>scene:Scene, The scene that everything is scoped to.</li>
+</ul>
+<p>The options argument has a few parameters you can use to tweak the result of the texture packing.</p>
+<ul>
+<li>map:Array<string>, An array that contains the names of the channels to pack on the materials if they exist.  <code>Default = [ &#39;ambientTexture&#39;, &#39;bumpTexture&#39;, &#39;diffuseTexture&#39;, &#39;emissiveTexture&#39;, &#39;lightmapTexture&#39;, &#39;opacityTexture&#39;, &#39;specularTexture&#39; ]</code></li>
+<li>uvsIn:number, The target UV channel to use when creating the frames. <code>Default = BABYLON.VertexBuffer.UVKind</code></li>
+<li>uvsOut:number, The target UV channel to modify on the targetMeshes. <code>Default = BABYLON.VertexBuffer.UVKind</code></li>
+<li>layout:number, Defines the layout of the packer(LAYOUT_STRIP, LAYOUT_POWER2, LAYOUT_COLNUM). <code>Default = TexturePacker.LAYOUT_STRIP;</code></li>
+<li>colnum:number, If using LAYOUT_COLNUM will define the number of columns to use. <code>Default = 8;</code></li>
+<li>frameSize:number, The base size of the frames before padding is added. <code>Default = 256;</code></li>
+<li>paddingMode:number, Defines the padding style of the packer (SUBUV_WRAP, SUBUV_EXTEND, SUBUV_COLOR). <code>Default = TexturePacker.SUBUV_WRAP;</code></li>
+<li>paddingColor:Color3|Color4, Custom color of the padding if paddingMode SUBUV_COLOR. <code>Default = new Color4(0, 0, 0, 1.0);</code></li>
+<li>paddingRatio:number, Ratio of the amount of padding to add to the frames. <code>Default = 0.0115;</code></li>
+<li>fillBlanks:boolean, Toggle to full blank cell when a material does not use that channel. <code>Default = true;</code></li>
+<li>customFillColor:string, css color string for what color to fill the blank frames. <code>Default = &#39;black&#39;;</code></li>
+<li>updateInputMeshes:boolean, Toggle to have the packer automatically update the input meshes to the new packer frames and channels. <code>Default = true;</code></li>
+<li>disposeSources:boolean, Toggle to dispose the source textures after they are packed. <code>Default = true;</code></li>
+</ul>
+<p>For PBR materials you will need to change the map to reflect the channels you want to target.  The Environment map should be handled separately.</p>
+<p>In order to ensure that the packing process does not lock your thread you will have to start the compilation process with</p>
+<pre><code class="lang-javascript">pack.processAsync().then( success ).catch( error )
+</code></pre>
+<p>Having all interactions with your pack happening in the success callback on the returned promise. See the below playgrounds for examples.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TQ408M#6">Texture Packer Example</a> - <i class="fa fa-eye" onclick="createIframe('TQ408M#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Downloading the pack is simple! When initializing the package through both a JSON load or naturally like in the above mentioned constructor, a Promise Object is created.
+In order to assure that the textures are all packed and ready to go we call any interactions with the texture pack inside the success callback of the <code>then</code> method.</p>
+<pre><code class="lang-javascript">pack.processAsync().then(
+    //Success
+    ()=&gt;{
+        pack.download( type, ?quality);
+    }
+)  
+</code></pre>
+<p>You can tell the downloaded to change between jpeg and png image types depending on if you need an alpha channel.  Due to the fact that the images are stored as base64 you should avoid using png unless absolutely necessary.  You can always download both types and then manually mix and match inside the JSON file.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TQ408M#7">Texture Packer Download Example</a> - <i class="fa fa-eye" onclick="createIframe('TQ408M#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="loading-from-json" class="anchor" href="#loading-from-json"></a>Loading From JSON</h1><p>To load from a downloaded package is easy! First create a blank Texture Package.</p>
+<pre><code class="lang-javascript">let pack = new BABYLON.TexturePacker( &#39;&#39;, [], {}, scene );
+</code></pre>
+<p>Then simply call the loadFromJSON method, with JSON file as a string and then the same success/error promise callback structure as the processAsync.</p>
+<pre><code class="lang-javascript">pack.updateFromJSON( jsonString ).then( success ).catch( error );
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#TQ408M#9">Texture Packer Load Example</a> - <i class="fa fa-eye" onclick="createIframe('TQ408M#9', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://playground.babylonjs.com/#96CDLA">PBR Texture Packer Load Example</a> - <i class="fa fa-eye" onclick="createIframe('96CDLA#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Multi-Materials - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Multi-Materials</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#with-merged-meshes">With Merged Meshes</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-multi-materials" class="anchor" href="#how-to-use-multi-materials"></a>How To use Multi Materials</h1><p>A multi-material is used to apply different materials to different parts of the same object as you can see below</p>
+<p><img src="/img/how_to/Materials/multi.png" alt="Multi Material Sphere"></p>
+<p>To be able to define a multi-materials you first have to define some standard materials:</p>
+<pre><code class="lang-javascript">var material0 = new BABYLON.StandardMaterial(&quot;mat0&quot;, scene);
+material0.diffuseColor = new BABYLON.Color3(1, 0, 0);
+material0.bumpTexture = new BABYLON.Texture(&quot;normalMap.jpg&quot;, scene);&lt;br/&gt;
+
+var material1 = new BABYLON.StandardMaterial(&quot;mat1&quot;, scene);
+material1.diffuseColor = new BABYLON.Color3(0, 0, 1);
+
+var material2 = new BABYLON.StandardMaterial(&quot;mat2&quot;, scene);
+material2.emissiveColor = new BABYLON.Color3(0.4, 0, 0.4);&lt;/pre&gt;
+</code></pre>
+<p>Then you can create a multi-material in order to gather them all:</p>
+<pre><code class="lang-javascript">var multimat = new BABYLON.MultiMaterial(&quot;multi&quot;, scene);
+multimat.subMaterials.push(material0);
+multimat.subMaterials.push(material1);
+multimat.subMaterials.push(material2);
+</code></pre>
+<p>You are now able to affect the multi-material to your mesh:</p>
+<pre><code class="lang-javascript">var sphere = BABYLON.Mesh.CreateSphere(&quot;Sphere0&quot;, 16, 3, scene);
+sphere.material = multimat;
+</code></pre>
+<p>But if you do that, you will see that the sphere will only use the first submaterial (the red bumped one). This is because by default a mesh is is designed to use only one material.</p>
+<p>You can specify which part of the mesh uses a specific material by using the <em>subMeshes</em> property. By default, every mesh comes with only one submesh that cover the entire mesh.</p>
+<p>To define multiple submeshes, you just have to use this code:</p>
+<pre><code class="lang-javascript">sphere.subMeshes = [];
+var verticesCount = sphere.getTotalVertices();
+
+new BABYLON.SubMesh(0, 0, verticesCount, 0, 900, sphere);
+new BABYLON.SubMesh(1, 0, verticesCount, 900, 900, sphere);
+new BABYLON.SubMesh(2, 0, verticesCount, 1800, 2088, sphere);
+</code></pre>
+<p>In this case, you will have 3 parts:</p>
+<ul>
+<li>One starting from index 0 to index 900</li>
+<li>One starting from index 900 to index 1800</li>
+<li>One starting from index 1800 to index 3880</li>
+</ul>
+<p>A submesh is defined with:</p>
+<ul>
+<li>The index of the material to use (this index is used to find the correct material Inside the <em>subMaterials</em> collection of a multi-material)</li>
+<li>The index of the first vertex and the count of vertices used (To optimize things for collisions for instance)</li>
+<li>Index of the first indice to use and indices count</li>
+<li>The parent mesh</li>
+</ul>
+<p>So with the code above, you can use the first material on the top part of the sphere, the second material on the middle part and the last material on the bottom part of the sphere.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#2Q4S2S#268">Playground Example - MultiMaterial</a> - <i class="fa fa-eye" onclick="createIframe('2Q4S2S#268', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="with-merged-meshes" class="anchor" href="#with-merged-meshes"></a>With Merged Meshes</h2><p>When you <a href="/how_to/How_to_Merge_Meshes">merge meshes</a> together with the final parameter (<code>multiMultiMaterial</code>) set to true the subMeshes array is automatically created with all merging meshes&#39; subMeshes. Each subMesh&#39;s material is also included in the resulting mesh&#39;s new multiMaterial. This feature ignores the parameter (<code>subdivideWithSubMeshes</code>).</p>
+<ul>
+<li><a href="https://playground.babylonjs.com/#INZ0Z0#59">Playground Example - MultiMaterial with Merged Meshes using multiMultiMaterials</a> - <i class="fa fa-eye" onclick="createIframe('INZ0Z0#59', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>When you <a href="/how_to/How_to_Merge_Meshes">merge meshes</a> together with the second to last parameter (<code>subdivideWithSubMeshes</code>) set to true, but the last parameter (<code>multiMultiMaterial</code>) left as false, the subMeshes array is automatically created with each merging mesh as a submesh of the new mesh. You must assign the correct subMesh index to the correct material index.</p>
+<p>When you form <code>mergedMesh</code> by merging meshes in this array order [mesh1, mesh2], and the multiMaterials subMaterials array contains materials in the order [mat1, mat2] then for the subMesh from <code>mesh2</code> to have material <code>mat2</code> you need to set</p>
+<pre><code class="lang-javascript">mergedMesh.subMeshes[1].materialIndex = 1;
+</code></pre>
+<ul>
+<li><a href="https://playground.babylonjs.com/#INZ0Z0#6">Playground Example - MultiMaterial with Merged Meshes</a> - <i class="fa fa-eye" onclick="createIframe('INZ0Z0#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

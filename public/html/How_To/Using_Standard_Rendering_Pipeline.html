@@ -1,0 +1,166 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the standard rendering pipeline (deprecated) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the standard rendering pipeline (deprecated)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#creating-the-rendering-pipeline">Creating the rendering pipeline</a></li>
+<li><a href="#customizing">Customizing</a><ul>
+<li><a href="#bright-threshold">Bright threshold</a></li>
+<li><a href="#change-exposure">Change exposure</a></li>
+<li><a href="#blur-width">Blur width</a></li>
+</ul>
+</li>
+<li><a href="#setting-up-the-dirty-lens-effect">Setting up the dirty lens effect</a></li>
+<li><a href="#setting-up-the-pseudo-lens-flare">Setting up the pseudo lens flare</a><ul>
+<li><a href="#setting-up-textures">Setting up textures</a></li>
+<li><a href="#setting-up-parameters">Setting up parameters</a></li>
+</ul>
+</li>
+<li><a href="#setting-up-luminance-adaptation">Setting up Luminance Adaptation</a><ul>
+<li><a href="#customizing-luminance-adaptation">Customizing luminance adaptation</a></li>
+</ul>
+</li>
+<li><a href="#setting-up-the-depth-of-field">Setting up the depth of field</a><ul>
+<li><a href="#activating-the-depth-of-field">Activating the depth of field</a></li>
+<li><a href="#customizing-depth-of-field-distance">Customizing depth of field distance</a></li>
+</ul>
+</li>
+<li><a href="#setting-up-the-motion-blur">Setting up the Motion Blur</a><ul>
+<li><a href="#customizing-motion-blur">Customizing Motion Blur</a></li>
+</ul>
+</li>
+<li><a href="#setting-up-volumetric-lights">Setting up volumetric lights</a><ul>
+<li><a href="#customizing-volumetric-lights">Customizing volumetric lights</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="the-standard-pipeline-is-no-longer-maintained" class="anchor" href="#the-standard-pipeline-is-no-longer-maintained"></a>The standard pipeline is no longer maintained.</h1><p><a href="/how_to/using_default_rendering_pipeline">Default pipeline</a> should be used going forward but the standard pipeline will be kept for backwards compatibility.</p>
+<h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p>This rendering pipeline tends to simulate a chain of famous post-process effects such as</p>
+<ul>
+<li>Lens imperfections (surexposed surfaces are highlighted)</li>
+<li>Dirty lens effect</li>
+<li>Depth of field</li>
+<li>Motion Blur</li>
+<li>Volumetric Lights</li>
+</ul>
+<p>Simple playground : <a href="https://www.babylonjs-playground.com/#FRUD8#2">https://www.babylonjs-playground.com/#FRUD8#2</a> - <i class="fa fa-eye" onclick="createIframe('FRUD8#2', this)"></i><div class="iframeContainer"></div>
+Full playground: <a href="https://www.babylonjs-playground.com/#X3XD2C#1"> https://www.babylonjs-playground.com/#X3XD2C</a> - <i class="fa fa-eye" onclick="createIframe('X3XD2C#1', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="creating-the-rendering-pipeline" class="anchor" href="#creating-the-rendering-pipeline"></a>Creating the rendering pipeline</h1><p>Just create an instance of BABYLON.StandardRenderingPipeline</p>
+<pre><code>var pipeline = new BABYLON.StandardRenderingPipeline(
+    &quot;standard&quot;, // The name of the pipeline
+    scene, // The scene instance
+    1.0, // The rendering pipeline ratio
+    null, // The original post-process that the pipeline will be based on
+    [camera] // The list of cameras to be attached to
+);
+</code></pre><h1><a name="customizing" class="anchor" href="#customizing"></a>Customizing</h1><h2><a name="bright-threshold" class="anchor" href="#bright-threshold"></a>Bright threshold</h2><p>Highlighted surfaces are following a configured threshold which is a number.
+Each pixel intensity above the given threshold is creating lens imperfections.
+Just set the &quot;.brightThreshold&quot; property:</p>
+<pre><code>pipeline.brightThreshold = 0.8;
+</code></pre><h2><a name="change-exposure" class="anchor" href="#change-exposure"></a>Change exposure</h2><p>To globally intensify the highlighted surfaces result (before it is merged with the final scene color), you can change the &quot;.exposure&quot; property:</p>
+<pre><code>pipeline.exposure = 1.0; // which multiplies the final scene color with the highlighted surfaces result
+</code></pre><h2><a name="blur-width" class="anchor" href="#blur-width"></a>Blur width</h2><p>The blur width (or kernel size) can be customized and is by default equal to 512</p>
+<pre><code>pipeline.exposure = 128; // Blur is less expansive and is less spreaded
+</code></pre><h1><a name="setting-up-the-dirty-lens-effect" class="anchor" href="#setting-up-the-dirty-lens-effect"></a>Setting up the dirty lens effect</h1><p>To add a dirty lens effect, you can set the &quot;.lensTexture&quot; mask texture (background must be black) which will be applied on the screen following the highlighted surfaces:</p>
+<pre><code>// Just create a new BABYLON.Texture containing the dirty lens mask
+pipeline.lensTexture = new BABYLON.Texture(&quot;lensdirt.jpg&quot;, scene);
+</code></pre><p>A dirty lens mask should look like:</p>
+<p><img src="/img/how_to/advanced/standardRenderingPipeline/lensdirt.jpg" alt="DirtyLensTexture"></p>
+<h1><a name="setting-up-the-pseudo-lens-flare" class="anchor" href="#setting-up-the-pseudo-lens-flare"></a>Setting up the pseudo lens flare</h1><h2><a name="setting-up-textures" class="anchor" href="#setting-up-textures"></a>Setting up textures</h2><p>First, to activate the pseudo lens flare effect, just set the &quot;.LensFlareEnabled&quot; to true:</p>
+<pre><code>// Activating pseudo lens flare effect
+pipeline.LensFlareEnabled = true;
+</code></pre><p>Now, in order to work properly with the dirty lens effect (above), you can set your own dirt texture, which can be the same as the dirty lens effect. For example:</p>
+<pre><code>pipeline.lensTexture = pipeline.lensFlareDirtTexture = new Texture(&quot;lensdirt.jpg&quot;, scene);
+
+// or
+
+pipeline.lensFlareDirtTexture = new Texture(&quot;lens_flare_dirt.jpg&quot;, scene);
+</code></pre><p>Now, you can add a &quot;starbust&quot; texture. This will disturb the final result and make it more realistic:</p>
+<pre><code>pipeline.lensStarTexture = new Texture(&quot;lensstar.jpg&quot;, scene);
+</code></pre><p><img src="/img/how_to/advanced/standardRenderingPipeline/lensstar.png" alt="StarbustTexture"></p>
+<p>which gives:</p>
+<p><img src="/img/how_to/advanced/standardRenderingPipeline/lensstarresult.png" alt="StarbustTextureResult"></p>
+<p>Finally, you can apply a palette of colors which will be used by the post-processes to disburb the lens flare colors:</p>
+<pre><code>pipeline.lensColorTexture = new Texture(&quot;lenscolor.png&quot;, scene);
+</code></pre><p>Color texture like:</p>
+<p><img src="/img/how_to/advanced/standardRenderingPipeline/lenscolor.png" alt="LensColorTexture"></p>
+<h2><a name="setting-up-parameters" class="anchor" href="#setting-up-parameters"></a>Setting up parameters</h2><p>Once you added the textures, you can customize some parameters that will allow you to customize the final result:</p>
+<p>The strength:</p>
+<pre><code>// The strength of the final result of the pseudo lens flare effect
+pipeline.lensFlareStrength = 5; // By default 1.0
+</code></pre><p>The halo width:</p>
+<pre><code>// Sets the width of the halo used to render the pseudo lens flare effect
+pipeline.lensFlareHaloWidth = 1; // By default 0.4;
+</code></pre><p><img src="/img/how_to/advanced/standardRenderingPipeline/halo_width.png" alt="HaloWidth"></p>
+<p>The distortion strength:</p>
+<pre><code>// The strength related to the lens color texture
+pipeline.lensFlareDistortionStrength = 35; // Default 4.0
+</code></pre><h1><a name="setting-up-luminance-adaptation" class="anchor" href="#setting-up-luminance-adaptation"></a>Setting up Luminance Adaptation</h1><p>The standard rendering pipeline now allows you to compute luminance adaptation. This process tends to simulate real life events:
+it means that if you focus on a higly brighted zone, the camera will adapt itself. In another words, this technique allows you to create
+glare effects and it is also linked to what we call &quot;<em>HDR</em>&quot;</p>
+<h2><a name="customizing-luminance-adaptation" class="anchor" href="#customizing-luminance-adaptation"></a>Customizing luminance adaptation</h2><p>First, let&#39;s activate the luminance adatation:</p>
+<pre><code>pipeline.HDREnabled = true;
+</code></pre><p>That&#39;s all! Now, let&#39;s customize some properties:</p>
+<pre><code>// 1.0 is the default value. In dark zones, the camera will tend to adapt luminance
+// and get the global image less dark. More the value is near 0.0, more the image will be bright
+pipeline.hdrMinimumLuminance = 1.0;
+
+// 0.5 is the default value. This simply sets the speed when the camera adapts the luminosity
+// in bright zones
+pipeline.hdrDecreaseRate = 0.5;
+
+// 0.5 is the default value. This simply sets the speed when the camera adapts the luminosity
+// in dark zones
+pipeline.hdrIncreaseRate = 0.5;
+</code></pre><h1><a name="setting-up-the-depth-of-field" class="anchor" href="#setting-up-the-depth-of-field"></a>Setting up the depth of field</h1><h2><a name="activating-the-depth-of-field" class="anchor" href="#activating-the-depth-of-field"></a>Activating the depth of field</h2><p>To active the depth of field, simply set the property &quot;.DepthOfFieldEnabled&quot; to true:</p>
+<pre><code>// Active depth of field
+pipeline.DepthOfFieldEnabled = true;
+</code></pre><h2><a name="customizing-depth-of-field-distance" class="anchor" href="#customizing-depth-of-field-distance"></a>Customizing depth of field distance</h2><p>To manipulate depth of field, you can set the distance to blur by setting the &quot;.depthOfFieldDistance&quot; property. This property represents the distance to focus on:</p>
+<pre><code>// Focus on 20 units
+pipeline.depthOfFieldDistance = 20;
+</code></pre><p>Playground example : <a href="https://www.babylonjs-playground.com/#LB63T#2">https://www.babylonjs-playground.com/#LB63T#2</a> - <i class="fa fa-eye" onclick="createIframe('LB63T#2', this)"></i><div class="iframeContainer"></div></p>
+<p><strong>note: Activating the depth of field will activate the depth renderer of Babylon.js, which can have an impact on performances</strong></p>
+<h1><a name="setting-up-the-motion-blur" class="anchor" href="#setting-up-the-motion-blur"></a>Setting up the Motion Blur</h1><p>As a demo, you have a look at <a href="https://www.youtube.com/watch?v=14Ejsj1_ywM">https://www.youtube.com/watch?v=14Ejsj1_ywM</a></p>
+<p>Motion Blur simply tries to blur the overall image when the camera moves fast.</p>
+<h2><a name="customizing-motion-blur" class="anchor" href="#customizing-motion-blur"></a>Customizing Motion Blur</h2><pre><code>// Enable motion blur in the pipeline
+pipeline.MotionBlurEnabled = true;
+
+// Default value is 1.0. More the motion strength is high, more the blur will be high
+pipeline.motionStrength = 0.5;
+
+// Default value is 64.0. This property represents the quality of the effect. More the value is high
+// more the blur will be high quality. 64.0 is enough to have a beautiful result
+pipeline.motionBlurSamples = 32.0;
+</code></pre><p><strong>note: Activating the Motion Blur will activate the depth renderer of Babylon.js, which can have an impact on performances</strong></p>
+<h1><a name="setting-up-volumetric-lights" class="anchor" href="#setting-up-volumetric-lights"></a>Setting up volumetric lights</h1><p>Volumetric Lights, as seen in the playground available in introduction can be computed with a post-process.</p>
+<p><strong>note: Volumetric Lights require to have the multiple render targets support, basically WebGL 2 support</strong></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UKdWPj7VRu0" frameborder="0" allowfullscreen></iframe>
+
+<h2><a name="customizing-volumetric-lights" class="anchor" href="#customizing-volumetric-lights"></a>Customizing volumetric lights</h2><pre><code>// Enable Volumetric Lights computation in the pipeline
+pipeline.VLSEnabled = true;
+
+// First, give the source light to the pipeline which must be a spot light or a directional light
+// The volumetric lights post-process needs a shadow map in order to work: it is used to test obstacles for the light rays
+// Then, the source light mush have a shadows generator:
+pipeline.sourceLight = &lt;SpotLight&gt; scene.getLightByName(&quot;spotLight&quot;);
+
+// This represents the intensity of fog in the air. In other words, the light rays intensity in the shadow
+pipeline.volumetricLightPower = 4;
+
+// This represents the overall quality of the volumetric lights post-process in interval [0, 100].
+// The default value is 50.0 and is enough for a good result
+pipeline.volumetricLightStepsCount = 50;
+</code></pre></div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Making a Simple Driven Car - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Making a Simple Driven Car</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#the-design">The Design</a></li>
+<li><a href="#steering">Steering</a></li>
+<li><a href="#mathematics-of-rotation-for-car">Mathematics of Rotation for Car</a></li>
+<li><a href="#applying-the-calculations">Applying the Calculations</a><ul>
+<li><a href="#turning-the-front-wheels">Turning the Front wheels</a></li>
+<li><a href="#moving-the-car">Moving the Car</a></li>
+</ul>
+</li>
+<li><a href="#playground-examples">Playground Examples</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="making-a-simple-driven-car" class="anchor" href="#making-a-simple-driven-car"></a>Making a Simple Driven Car</h1><p>This is to show a practical use of translate, rotate and  using a parent.</p>
+<h2><a name="the-design" class="anchor" href="#the-design"></a>The Design</h2><p>The car will be designed in the same way as for the <a href="/samples/Car_Path">Simple Car</a>. In this case the car will be flatter and the view will be from behind 
+the car and this will be fixed as the camera will not be attached to the canvas. The front wheels will be further away from the side of the body 
+to allow them to turn, each will have its own pivot. The car will be driven forward using the space bar as an accelerator up to a maximum speed. 
+The front wheels will be steered with A and D. The rotation of the wheels will be matched with the speed of the car. </p>
+<p>The car will be created with the origin in the middle of the centres of the two rear wheels.</p>
+<p>The ground will be covered in random boxes to give the illusion of movement. For simplicty it will be possible to drive off the ground with 
+no consequences other than perhaps the loss of the sense of motion. </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1WEZZ7">Playground - The Car</a> - <i class="fa fa-eye" onclick="createIframe('1WEZZ7#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="steering" class="anchor" href="#steering"></a>Steering</h2><p>The steering will be based on a simplified Ackerman steering system. In the true Ackerman system when turning 
+the rotation of the left and right front wheels will be different. For the purposes of this simulation they will 
+be taken to be the same.</p>
+<p><img src="/img/samples/ackerman.jpg" alt="Ackerman Steering"></p>
+<p>The front wheel pivots and the rear wheel supports form a rectangle with a distance L between thefront and rear and a distance A 
+betwen the two front wheels. When the front inside wheel is turned through an angle of theta the centre of rotation is where the 
+line through the pivot point normal to the wheel meets the line through the two real wheel supports. 
+The distance R of the centre of rotation from the inside rear wheel support can be found using R = L/tan(theta) and from the middle 
+of the to rear wheels it is A/2 + L/tan(theta).</p>
+<h2><a name="mathematics-of-rotation-for-car" class="anchor" href="#mathematics-of-rotation-for-car"></a>Mathematics of Rotation for Car</h2><p>When the BabylonJS engine is running at F frames per second the time for one frame is 1/F seconds.</p>
+<p>When the speed of the car is D units per second the distance travelled by the car is D/F units. </p>
+<p>When the car is driven forward (ie theta =0) at a speed of D units per second the distance travelled by the car in one frame is D/F units.</p>
+<p>Let the radius of each wheel be r units. In one frame a wheel travels a distance of D/F units and turns through an angle of psi radians 
+where r * psi = D/F and so psi = D/Fr.</p>
+<p>When the car is turning each wheel will rotate at different rates as they travel different distances in the same time. For simplicty the following 
+conditions are imposed for the mathematical calculations:</p>
+<ol>
+<li>The wheel pivots and supports will be taken as the centre of the wheels.</li>
+<li>The rear inside wheel travels a distance D.</li>
+<li>The angle of rotation turned by the car for one frame is phi radians.</li>
+</ol>
+<p>The rear inside wheel travels a distance R <em> phi = D/F ands so phi = D/RF.<br>For one frame let this wheel rotate through an angle of psi0 then<br>r </em> psiRI = D/F and so psiRI = D/rF</p>
+<p>The rear outside wheel travels a distance (R + A) <em> phi .<br>For one frame let this wheel rotate through an angle of psi1 then<br>r </em> psiRO = D*(R + A)/F and so psiRO = D*(R + A)/Fr</p>
+<p>The front inside wheel travels a distance sqrt(R*R + L*L) <em> phi .<br>For one frame let this wheel rotate through an angle of psi2 then<br>r </em> psiFI =  D*sqrt(R*R + L*L)/F and so psiFI = D<em>sqrt(R\</em>R + L*L)/rF</p>
+<p>The front outside wheel travels a distance sqrt((R + A)*(R + A) + L*L) <em> phi .<br>For one frame let this wheel rotate through an angle of psi3 then<br>r </em> psiFO =  D*sqrt((R + A)*(R + A) + L*L) and so psiFO = D*sqrt((R + A)*(R + A) + L*L)/rF</p>
+<p>At any point when the front wheels are turned the centre of rotation and the turning radius R need to be recalculated. 
+The following diagram indicates the procedure.</p>
+<p><img src="/img/samples/car3.jpg" alt="Centre of Rotation"></p>
+<h2><a name="applying-the-calculations" class="anchor" href="#applying-the-calculations"></a>Applying the Calculations</h2><p>The centre of rotation will be an empty mesh, the pivot, which will be the parent of the car. The pivot&#39;s position 
+will depend on the angle theta of the front wheels. The car has been created with its front pointing towards the negative x axis. 
+When the pivot rotates to turn the car its local negative x axis will always be the direction of travel and the centre of rotation 
+will always be along its local positive z axis. 
+R will be given an initial value and the pivot set at R along the local positive z axis. When theta = 0 any movement will be linear and the pivot will 
+be translated a distance of D/F along the local negative x axis per frame.</p>
+<p>When theta changes a new value NR for the radius of the circle of rotation will be calculated and the centre of rotation translated a distance 
+R - NR along the local positive z axis and the car translated NR - R along the local positive z axis. This results in the car not changing position 
+and the centre of rotation being a distance NR froom the car. R is then set to NR.</p>
+<h3><a name="turning-the-front-wheels" class="anchor" href="#turning-the-front-wheels"></a>Turning the Front wheels</h3><p>An action manager is used to register a key up and a key down event. There are three keys used A, D and Space (with or without caps lock). 
+As acceleration and turning can take place at the same time multiple key presses are required. Whenever a key down event occurs the key is added to 
+an associative array formed from a map object and the array value is set to true. It is reset to false on key up.</p>
+<pre><code class="lang-javascript">  var map ={}; //object for multiple key presses
+  scene.actionManager = new BABYLON.ActionManager(scene);
+
+  scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {                                
+        map[evt.sourceEvent.key] = evt.sourceEvent.type == &quot;keydown&quot;;
+
+    }));
+
+  scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {                                
+        map[evt.sourceEvent.key] = evt.sourceEvent.type == &quot;keydown&quot;;
+    }));
+</code></pre>
+<p>In the animation loop whenever A or D is pressed the front wheels are turned by a small amount. Since theta the angle made by the fron wheels 
+is changed the centre of rotation is repositioned. The example below is for turning left.</p>
+<pre><code class="lang-javascript">if((map[&quot;a&quot;] || map[&quot;A&quot;]) &amp;&amp; -Math.PI/6 &lt; theta) {
+    deltaTheta = -Math.PI/252;
+    theta += deltaTheta;
+    pivotFI.rotate(BABYLON.Axis.Y, deltaTheta, BABYLON.Space.LOCAL);  //turn front wheels 
+    pivotFO.rotate(BABYLON.Axis.Y, deltaTheta, BABYLON.Space.LOCAL);
+    if(Math.abs(theta) &gt; 0.00000001) { //when not near to 0 calculate new radius of rotation
+        NR = A/2 +L/Math.tan(theta);    
+    }
+    else { //when theta near 0 make it 0 and give NR some value
+        theta = 0;
+        NR = 0;
+    }
+    pivot.translate(BABYLON.Axis.Z, NR - R, BABYLON.Space.LOCAL); // translate pivot to centre of rotation from current position
+    carBody.translate(BABYLON.Axis.Z, R - NR, BABYLON.Space.LOCAL); //as this translation will move the car translate it back to where it was
+    R = NR;                            
+}; 
+</code></pre>
+<h3><a name="moving-the-car" class="anchor" href="#moving-the-car"></a>Moving the Car</h3><p>When speed greater than zero and When theta is not zero rotate the pivot and rotate each wheel depending on its position. Otherwise translate the pivot in the local negative x direction 
+and rotate wheels by same amount.</p>
+<pre><code class="lang-javascript">if(D &gt; 0) {
+    phi = D/(R * F);
+    if(Math.abs(theta)&gt;0) {     
+         pivot.rotate(BABYLON.Axis.Y, phi, BABYLON.Space.WORLD);
+        psiRI = D/(r * F);
+        psiRO = D * (R + A)/(r * F);
+        psiFI = D * Math.sqrt(R* R + L * L)/(r * F);
+        psiFO = D * Math.sqrt((R + A) * (R + A) + L * L)/(r * F);
+
+        wheelFI.rotate(BABYLON.Axis.Y, psiFI, BABYLON.Space.LOCAL); 
+        wheelFO.rotate(BABYLON.Axis.Y, psiFO, BABYLON.Space.LOCAL);
+        wheelRI.rotate(BABYLON.Axis.Y, psiRI, BABYLON.Space.LOCAL);
+        wheelRO.rotate(BABYLON.Axis.Y, psiRO, BABYLON.Space.LOCAL);
+     }
+     else {
+         pivot.translate(BABYLON.Axis.X, -distance, BABYLON.Space.LOCAL);
+        wheelFI.rotate(BABYLON.Axis.Y, psi, BABYLON.Space.LOCAL); 
+        wheelFO.rotate(BABYLON.Axis.Y, psi, BABYLON.Space.LOCAL);
+        wheelRI.rotate(BABYLON.Axis.Y, psi, BABYLON.Space.LOCAL);
+        wheelRO.rotate(BABYLON.Axis.Y, psi, BABYLON.Space.LOCAL);
+     }
+}
+</code></pre>
+<h2><a name="playground-examples" class="anchor" href="#playground-examples"></a>Playground Examples</h2><p>The first playground is the gamelet as described above.</p>
+<p>NOTE to use the keys with the playground you MUST click on the car after it loads or you use RUN.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#102TBD#31">Playground - The Car Gamelet</a> - <i class="fa fa-eye" onclick="createIframe('102TBD#31', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The second playground is similar. The pivot has been made into a sphere so you can see it and the camera position changed to give 
+an overview. The camera is now attached to the canvas so you can change viewing angles. This may help give more insight into 
+the workings of the code.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#102TBD#33">Playground - The Car Overview</a> - <i class="fa fa-eye" onclick="createIframe('102TBD#33', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

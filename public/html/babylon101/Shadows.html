@@ -1,0 +1,382 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Shadows - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Shadows</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-can-i-do-this">How can I do this?</a></li>
+<li><a href="#soft-shadows">Soft shadows</a><ul>
+<li><a href="#poisson-sampling">Poisson sampling</a></li>
+<li><a href="#exponential-shadow-map">Exponential shadow map</a></li>
+<li><a href="#blur-exponential-shadow-map">Blur exponential shadow map</a></li>
+<li><a href="#close-exponential-shadow-map">Close exponential shadow map</a></li>
+<li><a href="#percentage-closer-filtering-webgl2-only">Percentage Closer Filtering (Webgl2 only)</a></li>
+<li><a href="#contact-hardening-shadow-webgl2-only">Contact hardening shadow (Webgl2 only)</a></li>
+</ul>
+</li>
+<li><a href="#transparent-objects-shadows">Transparent objects / shadows</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#lights">Lights</a><ul>
+<li><a href="#point-lights">Point lights</a></li>
+<li><a href="#spot-lights">Spot lights</a></li>
+<li><a href="#directional-lights">Directional lights</a><ul>
+<li><a href="#in-depth-analyzing-of-directional-light-position">In-depth analyzing of Directional light position</a></li>
+</ul>
+</li>
+<li><a href="#customizing-the-projection-matrix">Customizing the projection matrix</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a><ul>
+<li><a href="#bias">Bias</a></li>
+<li><a href="#back-face-rendering">Back face rendering</a></li>
+<li><a href="#improving-the-projection-matrix-precision">Improving the projection matrix precision</a></li>
+<li><a href="#use-the-best-option-for-self-shadowing">Use the best option for self-shadowing</a></li>
+<li><a href="#frustum-edge-falloff">Frustum edge falloff</a></li>
+<li><a href="#freezing-shadows-in-static-world">Freezing shadows in static world</a></li>
+<li><a href="#cleaning-bone-matrix-weights">Cleaning bone matrix weights</a></li>
+<li><a href="#self-shadow">Self Shadow</a><ul>
+<li><a href="#bias">Bias</a></li>
+<li><a href="#normal-bias-since-32">Normal Bias (Since 3.2)</a></li>
+<li><a href="#soft-shadows">Soft Shadows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#custom-shadow-map-shaders">Custom shadow map shaders</a><ul>
+<li><a href="#global-custom-shadow-map-shader">Global custom shadow map shader</a></li>
+<li><a href="#per-material-shadow-depth-map-shader">Per-material shadow depth map shader</a><ul>
+<li><a href="#basic-usage">Basic usage</a></li>
+<li><a href="#in-depth-explanations-and-advanced-usage">In-depth explanations and advanced usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#next-step">Next step</a></li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>In this tutorial, we are going to learn how to create shadows in BabylonJS. Shadows are now becoming dynamic, and they are now dynamically generated depending upon a light.
+You might want to visit a playground example for this tutorial:</p>
+<p><a href="https://www.babylonjs-playground.com/#IFYDRS">https://www.babylonjs-playground.com/#IFYDRS</a> - <i class="fa fa-eye" onclick="createIframe('IFYDRS#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="how-can-i-do-this" class="anchor" href="#how-can-i-do-this"></a>How can I do this?</h2><p>Shadows are easy to generate using the babylon.js <code>ShadowGenerator</code>. This function uses a shadow map: a map of your scene generated from the light’s point of view.</p>
+<p>The two parameters used by the shadow generator are: the size of the shadow map, and which light is used for the shadow map&#39;s computation.</p>
+<pre><code class="lang-javascript">var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
+</code></pre>
+<p>Next, you have to define which shadows will be rendered. Here we want the shadow of our torus, but you can “push” any meshes you want:</p>
+<pre><code class="lang-javascript">shadowGenerator.getShadowMap().renderList.push(torus);
+</code></pre>
+<p>Introduced with babylon.js v3.1, there are two new helper functions to deal with shadow casters:</p>
+<ul>
+<li><code>addShadowCaster(mesh, includeDescendants)</code>: Helper function to add a mesh and its descendants to the list of shadow casters</li>
+<li><code>removeShadowCaster(mesh, includeDescendants)</code>: Helper function to remove a mesh and its descendants from the list of shadow casters</li>
+</ul>
+<p>And finally, you will have to define where the shadows will be displayed... by setting a mesh parameter to true:</p>
+<pre><code class="lang-javascript">ground.receiveShadows = true;
+</code></pre>
+<h2><a name="soft-shadows" class="anchor" href="#soft-shadows"></a>Soft shadows</h2><p>If you want to go further, you can activate shadows filtering in order to create better looking shadows by removing the hard edges.</p>
+<p>There are three filters available:</p>
+<h3><a name="poisson-sampling" class="anchor" href="#poisson-sampling"></a>Poisson sampling</h3><pre><code class="lang-javascript">shadowGenerator.usePoissonSampling = true;
+</code></pre>
+<p>If you set this one to <em>true</em>, Variance shadow maps will be disabled. This filter uses Poisson sampling to soften shadows. The result is better, but slower.</p>
+<h3><a name="exponential-shadow-map" class="anchor" href="#exponential-shadow-map"></a>Exponential shadow map</h3><pre><code class="lang-javascript">shadowGenerator.useExponentialShadowMap = true;
+</code></pre>
+<p>It is <em>true</em> by default, because it is useful to decrease the aliasing of the shadow.  But if you want to reduce computation time, feel free to turn it off.
+You can also control how the exponential shadow map scales depth values by changing the <code>shadowGenerator.depthScale</code>. By default, the value is 50.0 but you may want to change it if the depth scale of your world (the distance between MinZ and MaxZ) is small.</p>
+<h3><a name="blur-exponential-shadow-map" class="anchor" href="#blur-exponential-shadow-map"></a>Blur exponential shadow map</h3><pre><code class="lang-javascript">shadowGenerator.useBlurExponentialShadowMap = true;
+</code></pre>
+<p>This is the better soften shadow filter but the slower as well. It uses blurred exponential shadow map.</p>
+<p>The quality of the blur is defined by the following properties:</p>
+<ul>
+<li><code>shadowGenerator.blurScale</code>: Define the scale used to downscale the shadow map before applying the blur postprocess. By default, the value is 2</li>
+<li><code>shadowGenerator.blurBoxOffset</code>: Define the offset of the box&#39;s edge used to apply the blur. By default, the value is 1 (Meaning the box will go from -1 to 1 in both directions resulting in 9 values read by the blur postprocess).</li>
+<li><code>shadowGenerator.useKernelBlur</code>: You can decide to use kernel blur instead of box blur. While a bit more expensive, the quality of the shadow is far better with kernel blur. You can control the kernel size with <code>shadowGenerator.blurKernel</code>, which default value is 1.</li>
+</ul>
+<p>Here is an example of blurred shadows: <a href="https://www.babylonjs-playground.com/#IIZ9UU">https://www.babylonjs-playground.com/#IIZ9UU</a> - <i class="fa fa-eye" onclick="createIframe('IIZ9UU#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="close-exponential-shadow-map" class="anchor" href="#close-exponential-shadow-map"></a>Close exponential shadow map</h3><p>Starting with Babylon.js 3.0, we introduced a new way of doing exponential shadow map to deal with self-shadowing issues: The Close Exponential Shadow Map (CESM).
+With CESM, you can get accurate self-shadowing but you will need to define additional parameters:</p>
+<ul>
+<li>You must provide the smallest range of depth values from your light by setting <code>light.shadowMinZ</code> and <code>light.shadowMaxZ</code>. The smaller the range is, the better the shadow will be.</li>
+<li>You must ensure that the light is as close as possible to the shadow casters.</li>
+</ul>
+<p>You can enable CESM with:</p>
+<pre><code class="lang-javascript">shadowGenerator.useCloseExponentialShadowMap = true;
+</code></pre>
+<p>or if you want blurred shadows:</p>
+<pre><code class="lang-javascript">shadowGenerator.useBlurCloseExponentialShadowMap = true;
+</code></pre>
+<p>Here is an example of how CESM works: <a href="https://www.babylonjs-playground.com/#0TG0TB">https://www.babylonjs-playground.com/#0TG0TB</a> - <i class="fa fa-eye" onclick="createIframe('0TG0TB#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="percentage-closer-filtering-webgl2-only" class="anchor" href="#percentage-closer-filtering-webgl2-only"></a>Percentage Closer Filtering (Webgl2 only)</h3><p>Starting with Babylon.js 3.2, a new way of dealing with shadow maps was introduced. This greatly improves the performance and setup of shadows.</p>
+<p>PCF shadows benefit from the new hardware filtering functions available in Webgl2 and produce a smoother version of Poisson sampling. They fallback to the standard Poisson Sampling when Webgl2 is not available on the target device.</p>
+<p>You can enable PCF with:</p>
+<pre><code class="lang-javascript">shadowGenerator.usePercentageCloserFiltering = true;
+</code></pre>
+<p>Here is an example of how PCF works: <a href="https://playground.babylonjs.com/#B48X7G#1">https://playground.babylonjs.com/#B48X7G#1</a> - <i class="fa fa-eye" onclick="createIframe('B48X7G#1', this)"></i><div class="iframeContainer"></div></p>
+<p>As PCF requires more resources than can be available on small platforms, you can use the <code>filteringQuality</code> property to choose the best tradeoff between quality and performance depending on your experience (the lower the quality the better the performance).</p>
+<pre><code class="lang-javascript">shadowGenerator.filteringQuality = BABYLON.ShadowGenerator.QUALITY_LOW;
+</code></pre>
+<p>Only Point and Directional lights are currently supported by PCF.</p>
+<h3><a name="contact-hardening-shadow-webgl2-only" class="anchor" href="#contact-hardening-shadow-webgl2-only"></a>Contact hardening shadow (Webgl2 only)</h3><p>Starting with Babylon.js 3.2, contact hardening shadows based on PCSS shadows was introduced.</p>
+<p>PCSS could be seen as an improved version of PCF but despite looking better they are also more processor expensive and should be reserved for desktop applications. Like PCF, they will automatically fallback to Poisson Sampling if the code is running on a WebGL 1 platform.</p>
+<p>In PCSS, the shadows will get softer when they are further away from the object casting them, simulating what happens in real life.</p>
+<p>In order to get accurate result you will need to define additional parameters:</p>
+<ul>
+<li>You must provide the smallest range of depth values from your light by setting <code>light.shadowMinZ</code> and <code>light.shadowMaxZ</code>. The smaller the range is, the better the shadow will be.</li>
+<li>You can also play with the following parameter <code>contactHardeningLightSizeUVRatio</code> in order to change how fast the shadow softens (between 0 and 1).</li>
+</ul>
+<p>You can enable PCSS with:</p>
+<pre><code class="lang-javascript">shadowGenerator.useContactHardeningShadow = true;
+</code></pre>
+<p>Here is an example of how PCSS works: <a href="https://playground.babylonjs.com/#B48X7G#2">https://playground.babylonjs.com/#B48X7G#2</a> - <i class="fa fa-eye" onclick="createIframe('B48X7G#2', this)"></i><div class="iframeContainer"></div></p>
+<p>As PCSS requires more resources than can be available on small platform, you can use the <code>filteringQuality</code> property to choose the best tradeoff between quality and performances depending on your experience. (the lower the quality the better the performances).</p>
+<pre><code class="lang-javascript">shadowGenerator.filteringQuality = BABYLON.ShadowGenerator.QUALITY_LOW;
+</code></pre>
+<p>The following link gives you a good appreciation of the softening of shadows as the shadow caster moves further away from the object receiving the shadow: <a href="https://playground.babylonjs.com/#ZT8BKT#2">https://playground.babylonjs.com/#ZT8BKT#2</a> - <i class="fa fa-eye" onclick="createIframe('ZT8BKT#2', this)"></i><div class="iframeContainer"></div></p>
+<p>Only Point and Directional lights are currently supported by PCSS.</p>
+<h2><a name="transparent-objects-shadows" class="anchor" href="#transparent-objects-shadows"></a>Transparent objects / shadows</h2><p>For transparent objects to cast shadows, you must set the <code>transparencyShadow</code> property to <code>true</code> on the shadow generator:</p>
+<p><img src="/img/how_to/shadows/transparencyShadow.jpg" alt="Transparent objects cast shadows"></p>
+<p>Playground: <a href="https://playground.babylonjs.com/#6PITC0">https://playground.babylonjs.com/#6PITC0</a> - <i class="fa fa-eye" onclick="createIframe('6PITC0#', this)"></i><div class="iframeContainer"></div></p>
+<p>Starting with Babylonjs v4.2, you can simulate soft transparent shadows for transparent objects. To do this, you need to set the <code>enableSoftTransparentShadow</code> property to <code>true</code> on the shadow generator:</p>
+<p><img src="/img/how_to/shadows/softTransparentShadows.jpg" alt="Transparent objects cast soft transparent shadows"></p>
+<p>Playground: <a href="https://playground.babylonjs.com/#LKA8VM">https://playground.babylonjs.com/#LKA8VM</a> - <i class="fa fa-eye" onclick="createIframe('LKA8VM#', this)"></i><div class="iframeContainer"></div></p>
+<p>It works by generating some dithering patterns in the shadow map, based on the alpha value of the fragment. This pattern can be visible, depending on your objects (being zoomed or not) and/or on the filtering method used.</p>
+<p>Here&#39;s for example what it looks like when you don&#39;t set a filtering method:</p>
+<p><img src="/img/how_to/shadows/softTransparentNoFilter.jpg" alt="Transparent objects cast soft transparent shadows - no filtering"></p>
+<p>The patterns are clearly visible.</p>
+<p>Even when using a filtering method, you could still be able to see the patterns if zooming too much (filtering=PCF):</p>
+<p><img src="/img/how_to/shadows/softTransparentPCF.jpg" alt="Transparent objects cast soft transparent shadows - PCF filtering"></p>
+<p>With Blur exponential, however, you can zoom quite a lot and still get good shadows:</p>
+<p><img src="/img/how_to/shadows/softTransparentBlurExp.jpg" alt="Transparent objects cast soft transparent shadows - BlurExp filtering"></p>
+<p>So, you may need to test different filtering methods to find the best one for your case.</p>
+<p><img src="/img/how_to/shadows/softTransparentBottles.jpg" alt="Transparent objects cast soft transparent shadows - bottles"></p>
+<p>This one was generated with PCF, for eg.</p>
+<h2><a name="examples" class="anchor" href="#examples"></a>Examples</h2><p>You can find a live example here: 
+<a href="https://playground.babylonjs.com/#B48X7G">https://playground.babylonjs.com/#B48X7G</a> - <i class="fa fa-eye" onclick="createIframe('B48X7G#', this)"></i><div class="iframeContainer"></div></p>
+<p>Please find here pictures of various filters used with a spot light:</p>
+<p><img src="/img/how_to/shadows/hardshadows.jpg" alt="Hard shadows"></p>
+<p><em>No filter</em></p>
+<p><img src="/img/how_to/shadows/poisson.jpg" alt="Poisson"></p>
+<p><em>Poisson sampling</em></p>
+<p><img src="/img/how_to/shadows/esm.jpg" alt="ESM"></p>
+<p><em>Exponential Shadow Map</em></p>
+<p><img src="/img/how_to/shadows/bluresm.jpg" alt="BlurESM"></p>
+<p><em>Blur Exponential Shadow Map</em></p>
+<p><img src="/img/how_to/shadows/pcfshadows.jpg" alt="PCF"></p>
+<p><em>Percentage Closer Filtering</em></p>
+<p><img src="/img/how_to/shadows/pcssshadows.jpg" alt="PCSS"></p>
+<p><em>Contact Hardening Shadow</em></p>
+<h2><a name="lights" class="anchor" href="#lights"></a>Lights</h2><p>Keep in mind that this shadow generator can only be used with one light.  If you want to generate shadows from another light, then you will need to create another shadow generator.</p>
+<p>Only point, directional and spot lights can cast shadows.</p>
+<h3><a name="point-lights" class="anchor" href="#point-lights"></a>Point lights</h3><p>Point lights use cubemaps rendering so please be cautious when enabling them as this could lead to some performance issues.
+You can also visit the <a href="https://www.babylonjs-playground.com/#XDNVAY#0">point light shadow map playground scene</a> - <i class="fa fa-eye" onclick="createIframe('XDNVAY#0', this)"></i><div class="iframeContainer"></div></p>
+<p>Furthermore, <code>BlurExponentialShadowMap</code> and <code>CloseBlurExponentialShadowMap</code> are not supported by point lights (mostly because blurring the six faces of the cubemap would be too expensive).</p>
+<p>To optimize rendering, you can also decide to use the point light like an unlimited spot light if you are sure that all shadow casters are on the same side of the light. To do so, just specify a direction for your light and automatically Babylon.js will use a simple texture for the shadow map instead of the cubemap.</p>
+<h3><a name="spot-lights" class="anchor" href="#spot-lights"></a>Spot lights</h3><p>Spot lights use perspective projection to compute the shadow map.</p>
+<h3><a name="directional-lights" class="anchor" href="#directional-lights"></a>Directional lights</h3><p>Directional lights use orthogonal projection. Light&#39;s position is evaluated automatically for you to get the best shadow map possible. You can control this behavior by turning <code>light.autoUpdateExtends</code> off.
+You can control also the size of the projection window by modifying one of those properties:</p>
+<ul>
+<li><code>light.shadowOrthoScale</code>: 0.1 by default which means that the projection window is increase by 10% from the optimal size.</li>
+<li><code>light.shadowFrustumSize</code>: Off by default with a value of 0. You can specify a value which will be used to define the square size of the frustum to use.</li>
+</ul>
+<p>The light&#39;s position, as well as the positions of the mesh that you have pushed into the renderlist, determine where the shadows will appear. Note that your light point-of-view from this position have to view all meshes in the renderList; otherwise the shadows may not be rendered. See <a href="https://www.babylonjs-playground.com/#R1EVD0#3">this example</a> - <i class="fa fa-eye" onclick="createIframe('R1EVD0#3', this)"></i><div class="iframeContainer"></div></p>
+<p>You can also set <code>light.autoCalcShadowZBounds = true</code> to compute automatically the best <code>light.shadowMinZ</code> and <code>light.shadowMaxZ</code> values for each frame. Tightening those values to best fit your scene improve the precision of the depth map, and consequently the shadow rendering. Be warned, however, that when using this parameter with PCF and PCSS you may miss some shadows because of the way those filtering technics are implemented (if all your meshes are both shadow casters and receivers, you won&#39;t have any problems with PCF / PCSS, though). Note that <code>light.autoUpdateExtends</code> must be set to <code>true</code> for <code>light.autoCalcShadowZBounds</code> to work.</p>
+<p>Starting with Babylon.js 4.1, Cascaded Shadow Maps are now available for directional lights. Check the <a href="/babylon101/shadows_csm">dedicated page</a> for details.</p>
+<h4><a name="in-depth-analyzing-of-directional-light-position" class="anchor" href="#in-depth-analyzing-of-directional-light-position"></a>In-depth analyzing of Directional light position</h4><p>The light position is set as being <code>-light.direction</code> at creation time, and you can change it later on by accessing <code>light.position</code>.</p>
+<p>You need the light position to build the light view matrix used by the shadow generator to render the scene in the shadow map.</p>
+<p>Even if using an orthographic projection in the end (as you do for directional lights), you still need a view matrix to transform the geometry to the light coordinate system (where the &quot;look at&quot; vector corresponds to the light direction for directional lights). To build this matrix, you <strong>really</strong> need a position!</p>
+<p>Often you can read explanations about directional lights that says you don&#39;t need a position, but if you look at their code, you can see they use a <code>(0,0,0)</code> position to build their view matrix... Or in some others they don&#39;t explicitly put values in the translation part of the matrix, but it&#39;s still 0 values you get there by default.</p>
+<p>This position defines where the light frustum is positionned in the world. See <a href="https://playground.babylonjs.com/#2898XM#3">this PG</a> - <i class="fa fa-eye" onclick="createIframe('2898XM#3', this)"></i><div class="iframeContainer"></div></p>
+<p><img src="/img/how_to/shadows/directional1.png" alt="Light frustum">
+The colored box is the light frustum and you can see the light gizmo representing the light position and direction. Everything in this box (and only things in this box) will be rendered in the shadow map.</p>
+<p>It&#39;s not very obvious in the screenshot, but the light position lies on the near plane. It&#39;s because we set <code>light.shadowMinZ = 0</code> (we have also set <code>light.shadowMaxZ = 3</code>, which is the distance to the far plane of the light frustum). If we change the value, the near plane (and the light frustum) will be moved accordingly (the light position being still the same):</p>
+<p><img src="/img/how_to/shadows/directional2.png" alt="ShadowMinZ changed">
+Here <code>shadowMinZ = 0.5</code>. As you can see, a part of the sphere is now outside of the box and so is not rendered in the shadow map, making the shadow wrong. We could also have moved the light without changing the <code>shadowMinZ</code> value for the same result.</p>
+<p>You can play in the inspector by changing the position/direction of the light as well as the <code>shadowMinZ</code> / <code>shadowMaxZ</code> values of the shadow generator to better see how it works.</p>
+<p>By default, the x and y extents of the light frustum (the position of the left/right/top/bottom planes of the frustum) are automatically computed by Babylon because <code>light.autoUpdateExtends = true</code>. You can set this property to <code>false</code>, but there&#39;s currently no clean way to update the ortho left/right/top/bottom values manually because those properties are private (probably something to work on). So, if you want to set a fixed frustum, use the <code>shadowFrustumSize</code> property instead.</p>
+<p>The values for the near/far planes are stored in <code>shadowMinZ</code> and <code>shadowMaxZ</code>, properties that you can change (as in the PG). You can also let Babylon compute them automatically by setting <code>light.autoCalcShadowZBounds = true</code> (<code>false</code> by default). Note that when Babylon computes the bounds automatically, it does so by taking into account only the objects that are shadow casters! That&#39;s why if you activate it in the PG, you will see that the light frustum does not encompass the ground, which is not a shadow caster but only a receiver.</p>
+<p><strong>Important</strong>:</p>
+<p>Normally, to know if a point is in shadow, you compute its projection into the light frustum, and if it is inside you compare its depth against the depth corresponding to this position in the shadow map. So, if the point is <strong>NOT</strong> inside the light frustum, it is not considered shadowed and should be fully lit.</p>
+<p>Look at this screenshot again:</p>
+<p><img src="/img/how_to/shadows/directional3.png" alt="Light frustum">
+According to the explanations above, the points of the ground that are not inside the cube should not be shadowed! They still are because the shadowing code does not apply a rejection based on the depth, only on the x/y coordinates: if the point is inside the frustum according to the left/right/top/bottom planes it&#39;s ok, even if the point is farer than the far plane (or nearer than the near plane).</p>
+<p><strong>HOWEVER</strong>, that&#39;s not the case for the PCF/PCSS filtering methods, they do take into account the depth for the rejection test (for historical reasons probably). Same screenshot than above but with PCF this time:</p>
+<p><img src="/img/how_to/shadows/directional4.png" alt="Shadows clipped">
+As you can see, the shadows stop at the frustum boundaries. To correct the problem, you need to increase the light shadow far plane distance (<code>light.shadowMaxZ</code>).</p>
+<p>So at this point, you ask: why not setting <code>shadowMinZ</code> to a very small value (-1e10) and <code>shadowMaxZ</code> to a very big value (1e10) to get rid of those problems? One can even set the left/right/top/bottom properties to very small/big values and call it a day, no problems anymore with directional lights, our frustum is always big enough to contain all the objects of the scene.</p>
+<p>The problem is that you loose details/precision in the shadow map. The bigger your frustum (in x/y directions), the more objects will be projected to the same pixels in the shadow map, so the less details. The more stretched your frustum (in z direction), the less precision you have on the depth buffer as bigger ranges of Z values will have to be mapped to the [0, 1] range used for the final rendering.</p>
+<p>Here&#39;s a screenshot with <code>shadowMinZ=-50000</code> and <code>shadowMaxZ=50000</code> (PCF filtering):</p>
+<p><img src="/img/how_to/shadows/directional5.png" alt="Artifacts 1">
+As you can see the shadow is wrong. The object (sphere) is very simple and the artifacts are not really visible (except that the size is wrong), but with other objects you will get much stronger artifacts. Also:</p>
+<p><img src="/img/how_to/shadows/directional6.png" alt="Artifacts 2">
+It&#39;s the biggest artifact possible, the shadow disappeared! We have set <code>shadowMinZ=-100000.000</code> and <code>shadowMaxZ=5</code> without filtering methods.</p>
+<h3><a name="customizing-the-projection-matrix" class="anchor" href="#customizing-the-projection-matrix"></a>Customizing the projection matrix</h3><p>All lights need to provide a projection matrix to shadow generators in order to build the shadow map. You can define your own version by setting <code>light.customProjectionMatrixBuilder</code> value:</p>
+<pre><code>light.customProjectionMatrixBuilder = function(viewMatrix: Matrix, renderList: Array&lt;AbstractMesh&gt;) {
+    return BABYLON.Matrix.PerspectiveFovLH(angle, 1.0, activeCamera.minZ, this.shadowMaxZ);
+}
+</code></pre><h2><a name="troubleshooting" class="anchor" href="#troubleshooting"></a>Troubleshooting</h2><p>Shadow mapping is a great technique but it is not perfect. Several parameters can be tweaked to help improving final rendering.</p>
+<h3><a name="bias" class="anchor" href="#bias"></a>Bias</h3><p>You may want to reduce shadow acne resulting from not precise enough shadow map. To do so, you can define the bias (which is 0.00005 by default).:</p>
+<pre><code class="lang-javascript">shadowGenerator.bias = 0.01;
+</code></pre>
+<p>Shadow generators compare the depth of every pixel with the depth of occluders (shadow casters) seen from the light point of view. As we are dealing with low precision textures (when supported Babylon.js will use float textures but low-end devices only support int textures), you may want to boost the depth of occluders to facilitate self-shadowing (An object casting shadows on itself).</p>
+<h3><a name="back-face-rendering" class="anchor" href="#back-face-rendering"></a>Back face rendering</h3><p>You can improve self-shadowing issues by setting <code>shadowGenerator.forceBackFacesOnly</code> to true. This will force the shadow generator to render back faces of your mesh to the shadow map. This can clearly improve the overall precision and reduce the need for a bias.</p>
+<h3><a name="improving-the-projection-matrix-precision" class="anchor" href="#improving-the-projection-matrix-precision"></a>Improving the projection matrix precision</h3><p>By default, the projection matrix of a light uses the minZ and maxZ of the main camera. But you may want to control it in order to get a more precise shadow map by reducing the distance between minZ and maxZ. To do so you can set <code>light.shadowMinZ</code> and <code>light.shadowMaxZ</code>.</p>
+<h3><a name="use-the-best-option-for-self-shadowing" class="anchor" href="#use-the-best-option-for-self-shadowing"></a>Use the best option for self-shadowing</h3><p>As mentioned earlier, if you want blurred shadows on a self-shadowing object, the best option will probably to go with close exponential shadow map.</p>
+<h3><a name="frustum-edge-falloff" class="anchor" href="#frustum-edge-falloff"></a>Frustum edge falloff</h3><p>Depending on how you setup your shadow generator, you could face weird falloff when an object is near the edges of the shadow map. To elegantly fix this issue, you can set a property named <code>frustumEdgeFalloff</code>:</p>
+<pre><code class="lang-javascript"> shadowGenerator.frustumEdgeFalloff = 1.0;
+</code></pre>
+<p>You can find an example here: <a href="https://www.babylonjs-playground.com/#Y5IZCF">https://www.babylonjs-playground.com/#Y5IZCF</a> - <i class="fa fa-eye" onclick="createIframe('Y5IZCF#', this)"></i><div class="iframeContainer"></div></p>
+<p>This property controls the extent to which the shadows fade out at the edge of the frustum. It is used only by directional and spot lights. By default, the value is set to 0 (no falloff) and 1.0 (complete falloff).</p>
+<h3><a name="freezing-shadows-in-static-world" class="anchor" href="#freezing-shadows-in-static-world"></a>Freezing shadows in static world</h3><p>In case you have a static game world (objects which cast shadows) - there is no need to do the same shadow calculations 60 times per second. It could be enough to create and place a shadowMap only once. This greatly improves performance, allowing higher values of shadowMap&#39;s resolution.</p>
+<p>Shadow generators can be frozen with:</p>
+<pre><code class="lang-javascript">shadowGenerator.getShadowMap().refreshRate = BABYLON.RenderTargetTexture.REFRESHRATE_RENDER_ONCE;
+</code></pre>
+<p>Ask the light to not recompute shadow position with:</p>
+<pre><code class="lang-javascript">light.autoUpdateExtends = false;
+</code></pre>
+<h3><a name="cleaning-bone-matrix-weights" class="anchor" href="#cleaning-bone-matrix-weights"></a>Cleaning bone matrix weights</h3><p>Wrong or imprecise bone weights of an animated mesh may cause negative or weird shadows. In this case you can clean up the weights automatically when loading with the following code:</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.CleanBoneMatrixWeights = true;
+</code></pre>
+<p>(You should set this before loading a scene or meshes.)</p>
+<h3><a name="self-shadow" class="anchor" href="#self-shadow"></a>Self Shadow</h3><p>It is probably the case that Self-Shadowing requires the biggest attention during its setup. Let&#39;s try to setup self-shadowing on the following scene): <a href="https://playground.babylonjs.com/#FH3FM2#1">https://playground.babylonjs.com/#FH3FM2#1</a> - <i class="fa fa-eye" onclick="createIframe('FH3FM2#1', this)"></i><div class="iframeContainer"></div></p>
+<p>The first step consists in adding a shadow generator in the scene and defining every meshes as both casters and receivers (we also force the bias to 0 to highlight the generated artifacts): <a href="https://playground.babylonjs.com/#FH3FM2#4">https://playground.babylonjs.com/#FH3FM2#4</a> - <i class="fa fa-eye" onclick="createIframe('FH3FM2#4', this)"></i><div class="iframeContainer"></div></p>
+<p>As you can notice there are weird patterns appearing everywhere on the surface of the self-shadowed objects. This is called shadow acnea (<a href="http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/#shadow-acne">more information</a>).</p>
+<p>Fortunately, in Babylon we do have a way to solve the issue.</p>
+<h4><a name="bias" class="anchor" href="#bias"></a>Bias</h4><p>As detailed in the previous <a href="http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/#shadow-acne">opengl tutorial</a>, you can increase the value of the bias to make all the acnea disappear: <a href="https://playground.babylonjs.com/#FH3FM2#5">https://playground.babylonjs.com/#FH3FM2#5</a> - <i class="fa fa-eye" onclick="createIframe('FH3FM2#5', this)"></i><div class="iframeContainer"></div></p>
+<p>Unfortunately doing this introduces another side effect called peter panning where the shadows are not attached to their objects anymore.</p>
+<p><img src="/img/how_to/shadows/peterpanning.jpg" alt="PeterPanning"></p>
+<p>This is where you can benefit from a BabylonJS 3.2 feature called normal bias.</p>
+<h4><a name="normal-bias-since-32" class="anchor" href="#normal-bias-since-32"></a>Normal Bias (Since 3.2)</h4><p>First move back the bias to be at the limit of seeing peter panning artifacts: <a href="https://playground.babylonjs.com/#FH3FM2#6">https://playground.babylonjs.com/#FH3FM2#6</a> - <i class="fa fa-eye" onclick="createIframe('FH3FM2#6', this)"></i><div class="iframeContainer"></div></p>
+<p>As you notice, there is now a bit of acnea appearing on the object where the surface is parallel to the light direction:</p>
+<p><img src="/img/how_to/shadows/paralellacnea.jpg" alt="ParallelAcnea"></p>
+<p>This is where to add a bit of normal bias. Basically, during the generation of the shadow map, this will inset the geometry in the direction of the normal where the surface is parallel to the light: <a href="https://playground.babylonjs.com/#FH3FM2#7">https://playground.babylonjs.com/#FH3FM2#7</a> - <i class="fa fa-eye" onclick="createIframe('FH3FM2#7', this)"></i><div class="iframeContainer"></div></p>
+<p>All the artifacts are now gone and it is time to make our shadows look awesome.</p>
+<h4><a name="soft-shadows" class="anchor" href="#soft-shadows"></a>Soft Shadows</h4><p>Try to change the shadow generator to Contact hardening: <a href="https://playground.babylonjs.com/#FH3FM2#8">https://playground.babylonjs.com/#FH3FM2#8</a> - <i class="fa fa-eye" onclick="createIframe('FH3FM2#8', this)"></i><div class="iframeContainer"></div></p>
+<p>At first, you cannot see the contact hardening effect and, not only this, you can see shadow acnea again. Taking note of the section on PCSS you realize that the light min and max should be set as close as possible: <a href="https://playground.babylonjs.com/#FH3FM2#10">https://playground.babylonjs.com/#FH3FM2#10</a> - <i class="fa fa-eye" onclick="createIframe('FH3FM2#10', this)"></i><div class="iframeContainer"></div></p>
+<p>Now the contact hardening effect is present but the acnea is even stronger. Unfortunately, the bias is applied on the normalized coordinates depth (0-1) so changing the near and far value of the light impacts how big the bias should be.</p>
+<p>So, go back and change the bias to its maximum before seeing peter panning and then apply some normal bias to remove the rest of the acnea leads to the following result: <a href="https://playground.babylonjs.com/#FH3FM2#11">https://playground.babylonjs.com/#FH3FM2#11</a> - <i class="fa fa-eye" onclick="createIframe('FH3FM2#11', this)"></i><div class="iframeContainer"></div></p>
+<p>Your shadows are now soft without acnea or peter panning.</p>
+<h2><a name="custom-shadow-map-shaders" class="anchor" href="#custom-shadow-map-shaders"></a>Custom shadow map shaders</h2><h3><a name="global-custom-shadow-map-shader" class="anchor" href="#global-custom-shadow-map-shader"></a>Global custom shadow map shader</h3><p>Starting with Babylon.js v4.0, you can specify your own shader to render shadow maps. To define that shader you can use the <code>shaddowGenerator.customShaderOption</code> property:</p>
+<pre><code>shadowGenerator.customShaderOptions = {  
+  shaderName: &quot;customShadowMap&quot;,
+  uniforms: [&quot;customWorld&quot;]
+}
+</code></pre><p>The only required value is shaderName. But you can also add:</p>
+<ul>
+<li>attributes: used to specify additional attributes you need in your shader</li>
+<li>uniforms: used to specify additional uniforms you need in your shader</li>
+<li>samplers: used to specify additional samplers you need in your shader</li>
+<li>defines: used to specify additional defines you need in your shader</li>
+</ul>
+<p>The shadow map generation is a complex task and requires to take in account several defines (like the type of the shadow map between int and float, or the need for alpha test). It is recommended to check the current default shaders here:</p>
+<ul>
+<li>Vertex:<a href="https://github.com/BabylonJS/Babylon.js/blob/master/src/Shaders/shadowMap.vertex.fx">https://github.com/BabylonJS/Babylon.js/blob/master/src/Shaders/shadowMap.vertex.fx</a></li>
+<li>Fragment: <a href="https://github.com/BabylonJS/Babylon.js/blob/master/src/Shaders/shadowMap.fragment.fx">https://github.com/BabylonJS/Babylon.js/blob/master/src/Shaders/shadowMap.fragment.fx</a></li>
+</ul>
+<p>In order to update your own uniforms, you can rely on <code>shadowGenerator.onBeforeShadowMapRenderObservable</code> observable. This will be called for you everytime the shadow map will be rendered and it will give you the current compiled effect.</p>
+<p>You can find a complete example here: <a href="https://www.babylonjs-playground.com/#IJH4VG#2">https://www.babylonjs-playground.com/#IJH4VG#2</a> - <i class="fa fa-eye" onclick="createIframe('IJH4VG#2', this)"></i><div class="iframeContainer"></div></p>
+<p>Note that this shader will be used to render all the shadow caster objects pertaining to the shadow generator. If you need more fine-grained control, see next section.</p>
+<h3><a name="per-material-shadow-depth-map-shader" class="anchor" href="#per-material-shadow-depth-map-shader"></a>Per-material shadow depth map shader</h3><p>Starting with Babylon.js v4.2, you can specify for each material your own shader to render objects in the shadow maps.</p>
+<p>It can come in handy when you have distorting / warping objects (through the use of custom shaders) in different ways and need the shadows to follow the deformations.</p>
+<p>Also, you may want to implement custom ways for alpha rejection, and in this case the standard shadow map material will not be able to render your shadows correctly.</p>
+<h4><a name="basic-usage" class="anchor" href="#basic-usage"></a>Basic usage</h4><p>Take a look at this example: <a href="https://playground.babylonjs.com/#PNQRY1">https://playground.babylonjs.com/#PNQRY1</a> - <i class="fa fa-eye" onclick="createIframe('PNQRY1#', this)"></i><div class="iframeContainer"></div>
+<img src="/img/how_to/shadows/customshadowdepth1.jpg" alt="Wrong shadows"></p>
+<p>The cube is distorted thanks to a custom shader and the shadows are wrong, it should be:</p>
+<p><img src="/img/how_to/shadows/customshadowdepth2.jpg" alt="Good shadows"></p>
+<p>You can define a custom shadow map shader by using the new <code>ShadowDepthWrapper</code> class.</p>
+<p>The easiest way to do this is by doing:</p>
+<pre><code class="lang-javascript">const shadowDepthWrapper = new BABYLON.ShadowDepthWrapper(material, scene);
+</code></pre>
+<p><code>material</code> being the material (shader) for which you want to generate accurate shadows.</p>
+<p>Then assign this wrapper to the corresponding <code>Material.shadowDepthWrapper</code> property of your base material:</p>
+<pre><code class="lang-javascript">material.shadowDepthWrapper = shadowDepthWrapper;
+</code></pre>
+<p><em>Et voilà</em>! You now have proper shadows: <a href="https://playground.babylonjs.com/#PNQRY1#1">https://playground.babylonjs.com/#PNQRY1#1</a> - <i class="fa fa-eye" onclick="createIframe('PNQRY1#1', this)"></i><div class="iframeContainer"></div></p>
+<p>It works for any type of materials, being a <code>CustomMaterial</code>, <code>PBRCustomMaterial</code>, <code>ShaderMaterial</code> or <code>NodeMaterial</code> instances. There&#39;s no point of using this for <code>StandardMaterial</code> and <code>PBRMaterial</code> materials because the standard shadow map shader already handles the types of deformation / alpha rejection those materials can generate (namely morph targets / bones / alpha testing).</p>
+<p>In this demo: <a href="https://playground.babylonjs.com/#PNQRY1#10">https://playground.babylonjs.com/#PNQRY1#10</a> - <i class="fa fa-eye" onclick="createIframe('PNQRY1#10', this)"></i><div class="iframeContainer"></div></p>
+<ul>
+<li>the floating cube is using a <code>ShaderMaterial</code> for its base material</li>
+<li>the grounded cube and sphere are using a <code>CustomMaterial</code> for their base material: they are both using the same material (thanks to @Wigen for the dissolving effect!)</li>
+<li>the fire sphere is using a node material for its base material (thanks to @dannybucksch for this node material!)</li>
+<li>the small floating sphere is using the same base material (a copy in fact) than the grounded cube and sphere but a specifically crafted <code>ShaderMaterial</code> for its shadow depth wrapper: see next section for more explanations</li>
+</ul>
+<p><img src="/img/how_to/shadows/customshadowdepth3.jpg" alt="Custom Shadows"></p>
+<p>For the node materials, you need to instruct the wrapper of the variable name that holds the final world position of the vertex, as it is needed for the shadow depth computation.</p>
+<p>Here&#39;s how to do it:</p>
+<pre><code class="lang-javascript">BABYLON.NodeMaterial.ParseFromSnippetAsync(&quot;XXXXXX&quot;, scene).then((nodeMaterial) =&gt; {
+    var worldPosVarName = nodeMaterial.getBlockByName(&quot;worldPosFinal&quot;).output.associatedVariableName;
+
+    mesh.material = nodeMaterial;
+    mesh.material.shadowDepthWrapper = new BABYLON.ShadowDepthWrapper(nodeMaterial, scene, {
+        remappedVariables: [&quot;worldPos&quot;, worldPosVarName]
+    });
+});
+</code></pre>
+<p>After loading the node material, this snippet gets the variable name associated to the output of the block named <code>worldPosFinal</code> and passes it to the constructor of the wrapper.</p>
+<p>Be aware that the block that outputs the final world position may not be named <code>worldPosFinal</code> in your own node materials, pick the right name depending on your specific case!</p>
+<p><strong>One caveat</strong>: for the time being, wrapped node materials are not able to handle normal bias.</p>
+<h4><a name="in-depth-explanations-and-advanced-usage" class="anchor" href="#in-depth-explanations-and-advanced-usage"></a>In-depth explanations and advanced usage</h4><p>The <code>ShadowDepthWrapper</code> makes its magic happen by injecting some blocks of code in the vertex and fragment shaders of the material you pass when creating an instance (note it does so on a copy of the material, not on the material itself which remains unchanged).</p>
+<h5><a name="controlling-the-code-injection" class="anchor" href="#controlling-the-code-injection"></a>Controlling the code injection</h5><p>The blocks can be injected at any location in your shaders if you use these <code>#define</code> in your base material to locate the spots where the code should be injected:</p>
+<ul>
+<li><strong><code>#define SHADOWDEPTH_NORMALBIAS</code></strong> in the vertex shader</li>
+<li><strong><code>#define SHADOWDEPTH_METRIC</code></strong> in the vertex shader</li>
+<li><strong><code>#define SHADOWDEPTH_SOFTTRANSPARENTSHADOW</code></strong> in the fragment shader</li>
+<li><strong><code>#define SHADOWDEPTH_FRAGMENT</code></strong> in the fragment shader</li>
+</ul>
+<p>If not used, by default the code is injected just before the end of each shader for the <code>METRIC</code> and <code>FRAGMENT</code> blocks and:</p>
+<ul>
+<li>at the <code>#define CUSTOM_VERTEX_UPDATE_WORLDPOS</code> location for the <code>NORMALBIAS</code> block</li>
+<li>at the <code>#define CUSTOM_FRAGMENT_BEFORE_FOG</code> location for the <code>SOFTTRANSPARENTSHADOW</code> block</li>
+</ul>
+<p>for the <code>CustomMaterial</code> and <code>PBRCustomMaterial</code> materials.</p>
+<p>For custom shader written code (through a <code>ShaderMaterial</code> class), if you don&#39;t declare a <code>#define SHADOWDEPTH_NORMALBIAS</code> somewhere in your vertex shader code, the normal bias code <strong>won&#39;t</strong> be injected and so the normal bias feature won&#39;t work (it won&#39;t bug, however, it will simply do nothing). Same thing for the soft transparent shadows: if you don&#39;t declare a <code>#define SHADOWDEPTH_SOFTTRANSPARENTSHADOW</code> somewhere in your fragment code, the soft transparent shadows won&#39;t be available.</p>
+<p><strong>Note</strong>: as said above, normal bias is not supported yet for <code>NodeMaterial</code> based materials</p>
+<h5><a name="injection-in-the-vertex-shader" class="anchor" href="#injection-in-the-vertex-shader"></a>Injection in the vertex shader</h5><p>The <code>NORMALBIAS</code> block is used to implement the normal bias feature of the shadow generators.</p>
+<p>If you create a custom <code>ShaderMaterial</code> material and needs to support this functionality, you need to put <code>#define SHADOWDEPTH_NORMALBIAS</code> somewhere in your vertex code.</p>
+<p>To work correctly, this block needs the <strong>vertex final world position</strong> and the <strong>vertex final world normal</strong>. In the <code>NORMALBIAS</code> block of code, those variables are named <code>worldPos</code> and <code>vNormalW</code> respectively. If those are not the names you use in your vertex code, you can instruct <code>ShadowDepthWrapper</code> to remap them:</p>
+<pre><code class="lang-javascript">shaderMaterial.shadowDepthWrapper = new BABYLON.ShadowDepthWrapper(shaderMaterial, scene, {
+    remappedVariables: [&quot;worldPos&quot;, &quot;p&quot;, &quot;vNormalW&quot;, &quot;normalW&quot;, &quot;alpha&quot;, &quot;1.&quot;]
+});
+</code></pre>
+<p>This is the code used in the demo for the shadow depth wrapper of the floating cube. In the vertex code, the final world position is named <code>p</code> and the final world normal <code>normalW</code>, hence the remapping you can see above (the <code>alpha</code> remapping is explained below).</p>
+<p>The <code>METRIC</code> block also needs the <strong>vertex final world position</strong>, as well as the <strong>gl_Position</strong> variable being set with the right value. That&#39;s why it&#39;s injected by default at the end of the vertex code and normally should be left this way. However, if you need it to be injected somewhere else, use <code>#define SHADOWDEPTH_METRIC</code> in your vertex code and make sure to remap the vertex world position if necessary.</p>
+<h5><a name="injection-in-the-fragment-shader" class="anchor" href="#injection-in-the-fragment-shader"></a>Injection in the fragment shader</h5><p>For the fragment shader, injecting the <code>FRAGMENT</code> block at the very end can be sub-optimal because the fragment shader may execute some code that is not needed for the shadow depth rendering. Typically, the fragment shader will discard the current fragment based on some custom logic that can be done at the start of the shader.</p>
+<p>When using a <code>CustomMaterial</code> or a <code>PBRCustomMaterial</code>, a lot of code related to light and color calculation is run in the shader that is not needed for fragment discarding. So, being able to inject the block of code earlier in the process and stop the fragment shader from running after this block is executed will improve performance.</p>
+<p>You can inject the shadow depth fragment block by putting a <code>#define SHADOWDEPTH_FRAGMENT</code> anywhere in your fragment code. If this define is not found in your shader code, the block is injected at the very end of the shader, as explained above. Note that this block ends with a <code>return;</code> instruction, so it will make the processing of the shader automatically stops there.</p>
+<p>In the demo linked above, the custom material created for the grounded sphere and cube uses this possibility:</p>
+<pre><code class="lang-javascript">mat.Fragment_MainBegin(`
+    float n = texture2D( noise, vUv ).x - dissolve;
+    if (n &lt; 0.0) { discard; }
+    #define SHADOWDEPTH_SOFTTRANSPARENTSHADOW
+    #define SHADOWDEPTH_FRAGMENT
+`);
+</code></pre>
+<p>The first two lines are the code that implements the custom discard logic and the <code>#define SHADOWDEPTH_FRAGMENT</code> will make the <code>ShadowDepthWrapper</code> class inject the shadow depth fragment block of code here. As all of this is injected right at the beginning of the fragment shader (<code>Fragment_MainBegin</code>), all the code that comes afterwards won&#39;t be executed when the shader is used for shadow depth rendering.</p>
+<p>Use <code>#define SHADOWDEPTH_SOFTTRANSPARENTSHADOW</code> to indicate where to inject the code handling the soft transparent shadows. By default, the code is injected near the end of the fragment shader because it needs the <code>alpha</code> value to be able to generate the soft shadows, but you can generate it anywhere you want with this define, as shown above.</p>
+<p>For the code injected by <code>#define SHADOWDEPTH_SOFTTRANSPARENTSHADOW</code> to work, a variable named <code>alpha</code> must exist (the output transparency of the fragment). If you have this information but in a variable with another name, use the remapping possibility to remap the name of this variable. If you don&#39;t have a variable with this information (because your shader does not compute alpha values for eg), you can simply pass <code>1.</code> as the remapping value, as we did above:</p>
+<pre><code class="lang-javascript">shaderMaterial.shadowDepthWrapper = new BABYLON.ShadowDepthWrapper(shaderMaterial, scene, {
+    remappedVariables: [&quot;worldPos&quot;, &quot;p&quot;, &quot;vNormalW&quot;, &quot;normalW&quot;, &quot;alpha&quot;, &quot;1.&quot;]
+});
+</code></pre>
+<h5><a name="optimizing-further-and-standalone-shadow-depth-wrapper" class="anchor" href="#optimizing-further-and-standalone-shadow-depth-wrapper"></a>Optimizing further and standalone shadow depth wrapper</h5><p>In the example above we optimized the fragment shader used for shadow depth rendering by injecting the code early. However, the shadow depth material is still a <code>CustomMaterial</code> at its root (or a <code>PBRMaterial</code> if you used a <code>PBRCustomMaterial</code>) as it is created by wrapping such a material.</p>
+<p>It means some extra code can still be executed in the vertex/fragment shaders (depending on where you inject the blocks of code) and that all the uniforms / samplers used by the full material are still bound (even if not used) when the depth material is used for rendering. Also, on the javascript side, a fair amount of code is involved to check that a standard / PBR material is ready because it must deal with all the options provided by those materials, code that could be avoided if you used a <code>ShaderMaterial</code> material to implement the depth shader: that&#39;s what a standalone shadow depth wrapper is used for.</p>
+<p>A standalone shadow depth wrapper is created simply by passing the <code>standalone: true</code> option when you create the wrapper:</p>
+<pre><code class="lang-javascript">const shadowDepthWrapper = new BABYLON.ShadowDepthWrapper(shaderMaterial, scene, {
+    standalone: true
+});
+</code></pre>
+<p>This means that this shader will only be used for depth rendering and won&#39;t be used as a material to render regular meshes.</p>
+<p>In the demo, this is used for the small floating sphere:</p>
+<ul>
+<li>the base material of the sphere is a <code>CustomMaterial</code></li>
+<li>the wrapper bound to <code>sphereFloating.material.shadowDepthWrapper</code> is a wrapper generated around a specific <code>ShaderMaterial</code> material that only implements the logic for fragment discarding, so which is much more lightweight than the shader that would be generated were it based on the <code>CustomMaterial</code> base material</li>
+</ul>
+<h2><a name="next-step" class="anchor" href="#next-step"></a>Next step</h2><p>Now that you are becoming a real professional about Babylon.js, maybe it’s time to go deeper into the code to manipulate complex shaders, mesh, or textures. Our <a href="/">home menu for our wiki</a> is your portal to many advanced topics. You can also participate in this project by going to our Github page: <a href="https://github.com/BabylonJS/Babylon.js">https://github.com/BabylonJS/Babylon.js</a> and also by participating in our very active forum: <a href="https://forum.babylonjs.com">https://forum.babylonjs.com</a>. See you there.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

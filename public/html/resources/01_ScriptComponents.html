@@ -1,0 +1,232 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Script Components (Unity exporter) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Script Components (Unity exporter)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#babylon-script-classes">Babylon Script Classes</a></li>
+<li><a href="#creating-backing-classes">Creating Backing Classes</a></li>
+<li><a href="#anatomy-of-a-backing-class">Anatomy Of A Backing Class</a></li>
+<li><a href="#editor-script-components-c">Editor Script Components (C#)</a></li>
+<li><a href="#managed-system-components">Managed System Components</a><ul>
+<li><a href="#default-scene-controller">Default Scene Controller</a></li>
+<li><a href="#core-system-components">Core System Components</a><ul>
+<li><a href="#light-scale">Light Scale</a></li>
+<li><a href="#camera-rig">Camera Rig</a></li>
+<li><a href="#audio-track">Audio Track</a></li>
+<li><a href="#socket-mesh">Socket Mesh</a></li>
+<li><a href="#mesh-details">Mesh Details</a></li>
+<li><a href="#physics-state">Physics State</a></li>
+<li><a href="#level-of-detail">Level Of Detail</a></li>
+<li><a href="#terrain-builder">Terrain Builder</a></li>
+<li><a href="#animation-state">Animation State</a></li>
+<li><a href="#particle-systems">Particle Systems</a></li>
+<li><a href="#asset-references">Asset References</a></li>
+<li><a href="#component-tags">Component Tags</a></li>
+<li><a href="#lens-flare-systems">Lens Flare Systems</a></li>
+<li><a href="#character-controller">Character Controller</a></li>
+<li><a href="#shadow-map-generator">Shadow Map Generator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><p>Game object behavior is controlled by the components that are attached to them. Although the toolkit&#39;s built-in components can be very versatile, you will soon find you need to go beyond what they can provide to implement your own gameplay features. The toolkit allows you to create your own components using scripts. These allow you to trigger game events, modify component properties over time and respond to user input in any way you like. The toolkit requires two programming languages natively:</p>
+<ul>
+<li><p><strong>TypeScript</strong>, a language designed specifically for strong typed JavaScript development. Required for babylon toolkit development;</p>
+</li>
+<li><p><strong>C# (pronounced C-sharp)</strong>, an industry-standard language similar to Java or C++. Required for editor script components only;</p>
+</li>
+</ul>
+<p>In addition to these, many other .NET languages can be used with the Unity Editor to prepare your babylon scene content if they can compile a compatible DLL. Please refer to the <a href="https://docs.unity3d.com/Manual/Plugins.html">Unity Plugin</a> documentation for details.</p>
+<p>Learning the art of programming and the use of these particular languages is beyond the scope of this introduction. However, there are many books, tutorials and other resources for learning how to use and program <strong>Unity Editor</strong> inspector windows.</p>
+<h1><a name="babylon-script-classes" class="anchor" href="#babylon-script-classes"></a>Babylon Script Classes</h1><p>Babylon script classes are referred to as <strong>Backing Classes</strong>. The backing class is the native runtime class that gets instantiated for the owned game object. The toolkit provides a set of script file templates for use in your project.</p>
+<ul>
+<li><p><strong>JavaScript File</strong> - Empty <strong>JavaScript</strong> code file. To be used as you see fit.</p>
+</li>
+<li><p><strong>TypeScript Class</strong> - Generic <strong>TypeScript</strong> class file. To be used as you see fit.</p>
+</li>
+<li><p><strong>Scene Controller</strong> - Script component designed to be used as the <strong>Main Scene</strong> controller class.</p>
+</li>
+<li><p><strong>Mesh Component</strong> - A standard mesh component script to be used by <strong>all</strong> non <strong>Light</strong> and <strong>Camera</strong> game objects.</p>
+</li>
+<li><p><strong>Light Component</strong> - A standard light component script to be used on <strong>Light</strong> game objects <strong>only</strong>.</p>
+</li>
+<li><p><strong>Camera Component</strong> - A standard camera component script to used on <strong>Camera</strong> game objects <strong>only</strong>. </p>
+</li>
+<li><p><strong>Shader Controller</strong> - Script component designed to sub class and control <strong>Shader Material</strong> properties.</p>
+</li>
+<li><p><strong>Global Startup Script</strong> - Inline <strong>Global Application</strong> code and startup event functions.</p>
+</li>
+</ul>
+<p>Unity does not support normal html javascript (.js) files. So rename any plain (.js) file extensions to (.bjs) to be included in your game project output.</p>
+<h1><a name="creating-backing-classes" class="anchor" href="#creating-backing-classes"></a>Creating Backing Classes</h1><p>Unlike most other assets, scripts are usually created within Unity directly. You can create a new backing class script from the <strong>Create</strong> menu at the top left of the Project panel or by selecting <strong>Assets &gt; Create &gt; Babylon &gt; Babylon TypeScript</strong> and select the desired backing class script asset type from the main menu.</p>
+<p>The new backing class script will be created in whichever folder you have selected in the Project panel. The new backing class script file’s name will be selected, prompting you to enter a new name.</p>
+<p><img src="/img/exporters/unity/newscript.jpg" alt="Creating Scripts"></p>
+<p>It is a good idea to enter the name of the new backing class script at this point rather than editing it later. You must <strong>rename</strong> the class initial text inside the file with your new script name.</p>
+<h1><a name="anatomy-of-a-backing-class" class="anchor" href="#anatomy-of-a-backing-class"></a>Anatomy Of A Backing Class</h1><p>When you double-click a script Asset in Unity, it will be opened in a text editor. By default, Unity will use the default code editor, but you can select any code editor you like from the External Tools panel in Unity’s preferences (go to <strong>Unity &gt; Preferences</strong>).</p>
+<p>Example mesh component contents of the file will look something like this:</p>
+<pre><code>module PROJECT {
+    export class NewMeshComponent extends BABYLON.MeshComponent {
+        public constructor(owner: BABYLON.AbstractMesh, scene: BABYLON.Scene, tick: boolean = true, propertyBag: any = {}) {
+            super(owner, scene, tick, propertyBag);
+        }
+
+        protected start() :void {
+            // Start component function
+        }
+
+        protected update() :void {
+            // Update render loop function
+        }
+
+        protected after() :void {
+            // After render loop function
+        }
+
+        protected destroy() :void {
+            // Destroy component function
+        }
+    }
+}
+</code></pre><p>An editor script component makes its connection with the internal workings of the babylon toolkit scene manager by implementing a class which derives from the built-in class called <strong>EditorScriptComponent</strong>. You can think of a class as a kind of blueprint for creating a new component type that can be attached to game objects. Each time you attach a script component to a game object, it creates a new instance of the object defined by the blueprint. The name of the class is taken from the editor script component&#39;s <strong>Babylon Class</strong> property. The class names must be the same to enable the script component to be attached to a game object.</p>
+<p>The main things to note, however, are the four functions defined inside the class. The <strong>Update</strong> function is the place to put code that will handle the frame update for the game object. This might include movement, triggering actions and responding to user input, basically anything that needs to be handled over time during gameplay. To enable the Update function to do its work, it is often useful to be able to set up variables, read preferences and make connections with other game objects before any game action takes place. The <strong>Start</strong> function will be called by the scene manager before gameplay begins (ie, before the Update function is called for the first time) and is an ideal place to do any initialization. The <strong>After</strong> function gets called after the update (including all other component update) functions. Then finally the <strong>Destroy</strong> function gets called on game object disposal.</p>
+<p><strong>Note to beginner game developers:</strong> You may not be aware that the use of any game play logic should <strong>not</strong> be handled in the constructor function. This is because the construction of objects is handled by the scene manager parser and does not take place at the start of gameplay as you might expect. If you include <strong>game loop</strong> type logic in a constructor for a script component, it will interfere with the normal operation of the managed life cycle and can cause major problems with the project. Use construction for internal property setup only.</p>
+<h1><a name="editor-script-components-c" class="anchor" href="#editor-script-components-c"></a>Editor Script Components (C#)</h1><p>Editor script components are the primary way of attaching native babylon classes to game objects and prefabs in the editor. They represent the design time interface to your game object. You can create a new design time editor script component from the <strong>Create</strong> menu at the top left of the Project panel or by selecting <strong>Assets &gt; Create &gt; Babylon &gt; Editor Script Component (C#)</strong> from the main menu.</p>
+<p>The main purpose of the editor script component is to assign the native babylon backing class name in the component constructor and to provide desgin time component properties to
+the native backing class:</p>
+<p>Example runtime backing class script file:</p>
+<pre><code>module PROJECT {
+    export class TestMeshComponent extends BABYLON.MeshComponent {
+
+        protected start() :void {
+            // Start hello world example
+            console.log(this.getProperty&lt;string&gt;(&quot;hello&quot;));
+        }
+    }
+}
+</code></pre><p>Example design time editor script component file:</p>
+<pre><code>/* Babylon Editor Script Component (C# UnityScript) */
+
+using System;
+using UnityEditor;
+using UnityEngine;
+using Unity3D2Babylon;
+
+namespace MyProject
+{
+    public class TestScriptComponent : EditorScriptComponent
+    {
+        [Header(&quot;-Script Properties-&quot;)]
+
+        [BabylonProperty]
+        public string hello = &quot;Hello World&quot;;
+
+        protected TestScriptComponent()
+        {
+            this.babylonClass = &quot;PROJECT.TestMeshComponent&quot;;
+        }
+    }
+}
+</code></pre><p><strong>Custom Property Inspector Support</strong></p>
+<p>A key to increasing the speed of game creation is to create custom editors for commonly used components. When you create a script in Unity, by default it inherits from MonoBehaviour, and therefore is a Component which can be placed on a game object. When placed on a game object, the Inspector displays a default interface for viewing and editing all public variables that can be shown - such as integers, floats, strings, Vector3’s, etc.</p>
+<p>The code in <strong>OnInspectorGUI</strong> is executed whenever Unity displays the editor in the Inspector. You can put any GUI code in here - it works just like OnGUI does for games, but is run inside the Inspector. Editor defines the target property that you can use to access the object being inspected. Please refer to the <a href="https://docs.unity3d.com/Manual/ExtendingTheEditor.html">Unity Extending The Editor</a> documentation for details.</p>
+<p>Example custom property inspector editor script component file:</p>
+<pre><code>/* Babylon Editor Script Component (C# UnityScript) */
+
+using System;
+using UnityEditor;
+using UnityEngine;
+using Unity3D2Babylon;
+
+namespace MyProject
+{
+    [Serializable]
+    public class Person
+    {
+        public string first;
+        public string last;
+    }
+
+    public class NewScriptComponent : EditorScriptComponent
+    {
+        [Header(&quot;-Script Properties-&quot;)]
+
+        [BabylonProperty]
+        public string hello = &quot;Hello World&quot;;
+
+        protected NewScriptComponent()
+        {
+            this.babylonClass = &quot;BABYLON.SceneComponent&quot;;
+            this.OnExportProperties = this.OnExportPropertiesHandler;
+        }
+
+        public void OnExportPropertiesHandler(SceneBuilder sceneBuilder, GameObject unityGameObject, Dictionary&lt;string, object&gt; propertyBag)
+        {
+            // Add Custom Property Bag Item
+            propertyBag.Add(&quot;person&quot;, new Person { first = &quot;Mackey&quot;, last = &quot;Kinard&quot; });
+        }
+    }
+
+    [CustomEditor(typeof(NewScriptComponent)), CanEditMultipleObjects]
+    public class NewScriptComponentEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            // Draw Custom Inspector Properties
+            DrawDefaultInspector();
+            NewScriptComponent script = (NewScriptComponent)target;
+        }
+    }
+}
+</code></pre><h1><a name="managed-system-components" class="anchor" href="#managed-system-components"></a>Managed System Components</h1><p>The toolkit provides a base set of babylon toolkit managed framework script components for easy use in your projects.</p>
+<h2><a name="default-scene-controller" class="anchor" href="#default-scene-controller"></a>Default Scene Controller</h2><p>The primary component to serve as the main entry point and controller class for the scene is the <strong>Default Scene Controller</strong>. The default scene controller component should be attached to an empty game object. </p>
+<p>It is a good idea to attach all scene level script components (not required on a specific game object, like sound) to a main game object. You can attach the built-in default scene controller script component by selecting <strong>Components &gt; Babylon &gt; System Components &gt; Default Scene Controller</strong> from the main menu.</p>
+<p><img src="/img/exporters/unity/controller.jpg" alt="Default Scene Controller"></p>
+<p>The attached default scene controller provided many properties to simplfy scene configuration and the amount of required code (if any) to load and manage the life cycle of your scene.</p>
+<h2><a name="core-system-components" class="anchor" href="#core-system-components"></a>Core System Components</h2><p>The toolkit provides serveral built-in core script components. You can attach any of the toolkit&#39;s script components by selecting <strong>Components &gt; Babylon &gt; System Components</strong> from the main menu and choosing the desired component name.</p>
+<h3><a name="light-scale" class="anchor" href="#light-scale"></a>Light Scale</h3><p>The light component is for a <strong>Light</strong> only. It scales the brightness and sets the mode of the light. The Intensity of a light is multiplied with the Light color. The value can be between 0 and 10. This allows you to create over bright lights.</p>
+<p><img src="/img/exporters/unity/lightscale.jpg" alt="Light Scale Component"></p>
+<h3><a name="camera-rig" class="anchor" href="#camera-rig"></a>Camera Rig</h3><p>The camera rig component is for a <strong>Camera</strong> only. The rig enables custom render features. Cameras are the devices that capture and display the world to the player. By customizing and manipulating cameras, you can make the presentation of your game truly unique. You can have an unlimited number of cameras in a scene. They can be set to render in any order, at any place on the screen, or only certain parts of the screen.</p>
+<p><img src="/img/exporters/unity/camerarig.jpg" alt="Camera Rig Component"></p>
+<h3><a name="audio-track" class="anchor" href="#audio-track"></a>Audio Track</h3><p>The audio track components plays back an audio clip in the scene. The sound engine offers ambient sound, spatialized sound and directional sound. It can be created by code or by loading a .babylon file. It follows the simple &amp; powerful philosophy of the rest of the engine as you’re going to see. The sound format supported is the one from the browser. It’s usually at least .mp3 and .wav.</p>
+<p><img src="/img/exporters/unity/audiotrack.jpg" alt="Audio Track Component"></p>
+<h3><a name="socket-mesh" class="anchor" href="#socket-mesh"></a>Socket Mesh</h3><p>The socket mesh component attaches an empty mesh to a character. Commonly in games, you will want to attach an object to the bone of a character. This might be a weapon attached to a hand, or a hat attached to the head. For this purpose, the toolkit allows you to create <strong>Sockets</strong> which are attached to a bone of a skeleton. Socket meshes can then be translated, rotated, and scaled relative to the bone. Static Meshes and/or Skeletal Meshes can also be attached to sockets.</p>
+<p><img src="/img/exporters/unity/socketmesh.jpg" alt="Socket Mesh Component"></p>
+<h3><a name="mesh-details" class="anchor" href="#mesh-details"></a>Mesh Details</h3><p>The mesh details component enables several <strong>Runtime</strong> rendering properties to be set on a game object during the design phase. This is very useful for overriding visibilty and collision details for the specified mesh game object.</p>
+<p><img src="/img/exporters/unity/meshdetails.jpg" alt="Mesh Details Component"></p>
+<h3><a name="physics-state" class="anchor" href="#physics-state"></a>Physics State</h3><p>The physics state component activates runtime physical simualation for game objects. To have convincing physical behaviour, an object in a game must accelerate correctly and be affected by collisions, gravity and other forces. The built-in physics engines provide components that handle the physical simulation for you. With just a few parameter settings, you can create objects that behave passively in a realistic way (ie, they will be moved by collisions and falls but will not start moving by themselves). By controlling the physics from scripts, you can give an object the dynamics of a vehicle, a machine, or even a piece of fabric.</p>
+<p><img src="/img/exporters/unity/physicsstate.jpg" alt="Physics State Component"></p>
+<h3><a name="level-of-detail" class="anchor" href="#level-of-detail"></a>Level Of Detail</h3><p>The level of detail component can help improve overall game performance. When a game object in the scene is a long way from the camera, the amount of detail that can be seen on it is greatly reduced. However, the same number of triangles will be used to render the object, even though the detail will not be noticed. An optimisation technique called Level Of Detail (LOD) rendering allows you to reduce the number of triangles rendered for an object as its distance from the camera increases. As long as your objects aren’t all close to the camera at the same time, LOD will reduce the load on the hardware and improve rendering performance. The toolkit also requires the <strong>LOD Group</strong> component to set up LOD rendering for a object.</p>
+<p><img src="/img/exporters/unity/leveldetail.jpg" alt="Level Detail Component"></p>
+<h3><a name="terrain-builder" class="anchor" href="#terrain-builder"></a>Terrain Builder</h3><p>The terrain builder component is for a <strong>Terrain</strong> only. The builder allows you to add vast landscapes to your games. At runtime, terrain rendering is highly optimized for rendering efficiency while in the editor, a selection of tools is available to make terrains easy and quick to create. The toolkit also requires the <strong>Terrain</strong> component set setup terrain landscapes for your game project.</p>
+<p><img src="/img/exporters/unity/terrainbuilder.jpg" alt="Terrain Builder Component"></p>
+<h3><a name="animation-state" class="anchor" href="#animation-state"></a>Animation State</h3><p>The animation state component supports frame by frame skeletal animation posing. Animation states are the basic building blocks of an <strong>Animation State Machine</strong>. Each state contains an individual animation sequence (or blend tree) which will play while the character is in that state. When an event in the game triggers a state transition, the character will be left in a new state whose animation sequence will then take over.</p>
+<p><img src="/img/exporters/unity/animationstate.jpg" alt="Animation State Component"></p>
+<h3><a name="particle-systems" class="anchor" href="#particle-systems"></a>Particle Systems</h3><p>The particle system component provides. In a 3D game, most characters, props and scenery elements are represented as meshes. Meshes and sprites are the ideal way to depict “solid” objects with a well-defined shape. There are other entities in games, however, that are fluid and intangible in nature and consequently difficult to portray using meshes or sprites. For effects like moving liquids, smoke, clouds, flames and magic spells, a different approach to graphics known as particle systems can be used to capture the inherent fluidity and energy.</p>
+<p><img src="/img/exporters/unity/particlesystem.jpg" alt="Particle System Component"></p>
+<h3><a name="asset-references" class="anchor" href="#asset-references"></a>Asset References</h3><p>The asset references component attaches project files to the current scene for exportation. This is useful for exporting scene content that is <strong>not</strong> already associated with a script component or a shader material.</p>
+<p><img src="/img/exporters/unity/assetref.jpg" alt="Asset References Component"></p>
+<h3><a name="component-tags" class="anchor" href="#component-tags"></a>Component Tags</h3><p>The component tags support additional object tags. A Tag is a reference word which you can assign to one or more game bbjects. For example, you might define “Player” Tags for player-controlled characters and an “Enemy” Tag for non-player-controlled characters. You might define items the player can collect in a Scene with a “Collectable” Tag.</p>
+<p>Tags help you identify game objects for scripting purposes. They ensure you don’t need to manually add game objects to a script’s exposed properties using drag and drop, thereby saving time when you are using the same script code in multiple game objects. Tags are useful for triggers in Collider control scripts; they need to work out whether the player is interacting with an enemy, a prop, or a collectable, for example.</p>
+<p><img src="/img/exporters/unity/tags.jpg" alt="Object Component Tags"></p>
+<h3><a name="lens-flare-systems" class="anchor" href="#lens-flare-systems"></a>Lens Flare Systems</h3><p>The lens flare systems component simulate the effect of lights refracting inside camera lens. They are used to represent really bright lights or, more subtly, just to add a bit more atmosphere to your scene.</p>
+<p><img src="/img/exporters/unity/lensflare.jpg" alt="Lens Flare Component"></p>
+<h3><a name="character-controller" class="anchor" href="#character-controller"></a>Character Controller</h3><p>The character controller component controls game object movement. The character in a first or third person game will often need some collision based physics so that it doesn’t fall through the floor or walk through walls. Usually, though, the character’s acceleration and movement will not be physically realistic, so it may be able to accelerate, brake and change direction almost instantly without being affected by momentum.</p>
+<p>A character controller cannot walk through static colliders in a scene, and so will follow floors and be obstructed by walls. It can push physics body objects aside while moving but will not be accelerated by incoming collisions. This means that you can use the standard 3D colliders to create a scene around which the controller will walk but you are not limited by realistic physical behaviour on the character itself.</p>
+<p><img src="/img/exporters/unity/charactercontrol.jpg" alt="Character Controller Component"></p>
+<h3><a name="shadow-map-generator" class="anchor" href="#shadow-map-generator"></a>Shadow Map Generator</h3><p>The shadow map generator component is for a <strong>Light</strong> only. The generator enables dynamically generated shadows depending upon a light. This is the main object responsible of generating shadows in the framework.</p>
+<p><img src="/img/exporters/unity/shadowmap.jpg" alt="Shadow Map Component"></p>
+<p>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

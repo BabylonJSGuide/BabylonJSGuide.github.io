@@ -1,0 +1,814 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Line2D of Given Width - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Line2D of Given Width</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#line-in-xoy-plane-formed-from-central-path">Line in XoY Plane Formed from Central Path</a><ul>
+<li><a href="#playground-examples">Playground Examples</a></li>
+<li><a href="#line2d-code">Line2D Code</a></li>
+</ul>
+</li>
+<li><a href="#line-in-xoz-plane-formed-from-central-path">Line in XoZ Plane Formed from Central Path</a><ul>
+<li><a href="#playground-examples">Playground Examples</a></li>
+<li><a href="#line2d-code">Line2D Code</a></li>
+</ul>
+</li>
+<li><a href="#line-in-xoz-plane-formed-from-inner-path">Line in XoZ Plane Formed from Inner Path</a><ul>
+<li><a href="#playground-examples-including-use-as-edge-to-polygon">Playground Examples (Including Use as Edge to Polygon)</a></li>
+<li><a href="#line2d-code">Line2D Code</a></li>
+</ul>
+</li>
+<li><a href="#lines-in-3d">Lines in 3D</a></li>
+<li><a href="#parallel-lines-in-xoy-plane">Parallel Lines in XoY Plane</a><ul>
+<li><a href="#playground-example">Playground Example</a></li>
+<li><a href="#parallel-line-code">Parallel Line Code</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="draw-a-line-of-given-width" class="anchor" href="#draw-a-line-of-given-width"></a>Draw a Line of Given Width</h1><p>Three versions of <strong>Line2D</strong> are given below followed by a suggestion for drawing a line in 3D.
+In addition the code is adapted as <strong>parallelLines</strong> to produce lines parallel to a central line </p>
+<h2><a name="line-in-xoy-plane-formed-from-central-path" class="anchor" href="#line-in-xoy-plane-formed-from-central-path"></a>Line in XoY Plane Formed from Central Path</h2><pre><code class="lang-javascript">var line = line2D(&quot;line&quot;, options, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td><em>(Vector3[])</em>  array of Vector3 points forming the centre line of the line2D</td>
+<td><strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> line width</td>
+<td>1</td>
+</tr>
+<tr>
+<td>closed</td>
+<td><em>(boolean)</em> true if the first and last points are to be joined to form a polygon</td>
+<td>false</td>
+</tr>
+<tr>
+<td>standardUV</td>
+<td><em>(Color4[])</em> false squeezes a texture image onto each line segment</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>Just copy the code below if you want to use it.</p>
+<h3><a name="playground-examples" class="anchor" href="#playground-examples"></a>Playground Examples</h3><p>These examples use an orthographic camera giving a 2D view</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#FA2H7X#3">Playground Example - Open Line</a> - <i class="fa fa-eye" onclick="createIframe('FA2H7X#3', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#FA2H7X#4">Playground Example - Closed Line</a> - <i class="fa fa-eye" onclick="createIframe('FA2H7X#4', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#FA2H7X#5">Playground Example - Standard UV is True</a> - <i class="fa fa-eye" onclick="createIframe('FA2H7X#5', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#FA2H7X#6">Playground Example - Standard UV is False</a> - <i class="fa fa-eye" onclick="createIframe('FA2H7X#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="line2d-code" class="anchor" href="#line2d-code"></a>Line2D Code</h3><pre><code class="lang-javascript">var line2D = function(name, options, scene) {
+
+    //Arrays for vertex positions and indices
+    var positions = [];
+    var indices = [];
+        var normals = [];
+
+        var width = options.width / 2 || 0.5;
+        var path = options.path;
+    var closed = options.closed || false;
+    if(options.standardUV === undefined) {
+        standardUV = true;
+    }
+    else {
+        standardUV = options.standardUV;
+    }
+
+    var interiorIndex;
+
+    //Arrays to hold wall corner data 
+    var innerBaseCorners = [];
+    var outerBaseCorners = [];
+
+    var outerData = [];
+        var innerData = [];
+    var angle = 0;
+
+    var nbPoints = path.length;
+    var line = BABYLON.Vector3.Zero();
+    var nextLine = BABYLON.Vector3.Zero();
+    path[1].subtractToRef(path[0], line);
+
+    if(nbPoints &gt; 2 &amp;&amp; closed) {    
+        path[2].subtractToRef(path[1], nextLine);    
+        for(var p = 0; p &lt; nbPoints; p++) {    
+            angle = Math.PI - Math.acos(BABYLON.Vector3.Dot(line, nextLine)/(line.length() * nextLine.length()));            
+            direction = BABYLON.Vector3.Cross(line, nextLine).normalize().z;                
+            lineNormal = new BABYLON.Vector3(line.y, -1 * line.x, 0).normalize();
+            line.normalize();
+            innerData[(p + 1) % nbPoints] = path[(p + 1) % nbPoints].subtract(lineNormal.scale(width)).subtract(line.scale(direction * width/Math.tan(angle/2)));
+            outerData[(p + 1) % nbPoints] = path[(p + 1) % nbPoints].add(lineNormal.scale(width)).add(line.scale(direction * width/Math.tan(angle/2)));        
+            line = nextLine.clone();        
+            path[(p + 3) % nbPoints].subtractToRef(path[(p + 2) % nbPoints], nextLine);    
+        }
+    }
+    else {
+        lineNormal = new BABYLON.Vector3(line.y, -1 * line.x, 0).normalize();
+        line.normalize();        
+        innerData[0] = path[0].subtract(lineNormal.scale(width));
+        outerData[0] = path[0].add(lineNormal.scale(width));
+
+        for(var p = 0; p &lt; nbPoints - 2; p++) {    
+            path[p + 2].subtractToRef(path[p + 1], nextLine);
+            angle = Math.PI - Math.acos(BABYLON.Vector3.Dot(line, nextLine)/(line.length() * nextLine.length()));            
+            direction = BABYLON.Vector3.Cross(line, nextLine).normalize().z;            
+            lineNormal = new BABYLON.Vector3(line.y, -1 * line.x, 0).normalize();
+            line.normalize();
+            innerData[p + 1] = path[p + 1].subtract(lineNormal.scale(width)).subtract(line.scale(direction * width/Math.tan(angle/2)));
+            outerData[p + 1] = path[p + 1].add(lineNormal.scale(width)).add(line.scale(direction * width/Math.tan(angle/2)));        
+            line = nextLine.clone();            
+        }
+        if(nbPoints &gt; 2) {
+            path[nbPoints - 1].subtractToRef(path[nbPoints - 2], line);
+            lineNormal = new BABYLON.Vector3(line.y, -1 * line.x, 0).normalize();
+            line.normalize();        
+            innerData[nbPoints - 1] = path[nbPoints - 1].subtract(lineNormal.scale(width));
+            outerData[nbPoints - 1] = path[nbPoints - 1].add(lineNormal.scale(width));
+        }
+        else{
+            innerData[1] = path[1].subtract(lineNormal.scale(width));
+            outerData[1] = path[1].add(lineNormal.scale(width));
+        }
+    }
+
+    var maxX = Number.MIN_VALUE;
+    var minX = Number.MAX_VALUE;
+    var maxY = Number.MIN_VALUE;
+    var minY = Number.MAX_VALUE;
+
+    for(var p = 0; p &lt; nbPoints; p++) {
+        positions.push(innerData[p].x, innerData[p].y, innerData[p].z);
+        maxX = Math.max(innerData[p].x, maxX);
+        minX = Math.min(innerData[p].x, minX);
+        maxY = Math.max(innerData[p].y, maxY);
+        minY = Math.min(innerData[p].y, minY);
+    }
+
+    for(var p = 0; p &lt; nbPoints; p++) {
+        positions.push(outerData[p].x, outerData[p].y, outerData[p].z);
+        maxX = Math.max(innerData[p].x, maxX);
+        minX = Math.min(innerData[p].x, minX);
+        maxY = Math.max(innerData[p].y, maxY);
+        minY = Math.min(innerData[p].y, minY);
+    }
+
+        for(var i = 0; i &lt; nbPoints - 1; i++) {
+            indices.push(i, i + 1, nbPoints + i + 1);
+            indices.push(i, nbPoints + i + 1, nbPoints + i)
+        }
+
+    if(nbPoints &gt; 2 &amp;&amp; closed) {
+        indices.push(nbPoints - 1, 0, nbPoints);
+            indices.push(nbPoints - 1, nbPoints, 2 * nbPoints - 1)
+    }
+
+    var normals = [];
+        var uvs =[];
+
+    if(standardUV) {
+        for(var p = 0; p &lt; positions.length; p += 3) {
+            uvs.push((positions[p] - minX)/(maxX - minX), (positions[p + 1] - minY)/(maxY - minY))
+        }
+    }
+    else {
+        var flip = 0;
+        var p1 = 0;
+        var p2 = 0;
+        var p3 = 0;
+        var v0 = innerData[0];
+        var v1 = innerData[1].subtract(v0);
+        var v2 = outerData[0].subtract(v0);
+        var v3 = outerData[1].subtract(v0);
+        var axis = v1.clone();
+        axis.normalize();
+
+        p1 = BABYLON.Vector3.Dot(axis,v1);
+        p2 = BABYLON.Vector3.Dot(axis,v2);
+        p3 = BABYLON.Vector3.Dot(axis,v3);
+        var minX = Math.min(0, p1, p2, p3);
+        var maxX = Math.max(0, p1, p2, p3);
+
+        uvs[2 * indices[0]] = -minX/(maxX - minX);
+        uvs[2 * indices[0] + 1] = 1;
+        uvs[2 * indices[5]] = (p2 - minX)/(maxX - minX);
+        uvs[2 * indices[5] + 1] = 0;
+
+        uvs[2 * indices[1]] = (p1 - minX)/(maxX - minX);
+        uvs[2 * indices[1] + 1] = 1;
+        uvs[2 * indices[4]] = (p3 - minX)/(maxX - minX);
+        uvs[2 * indices[4] + 1] = 0;
+
+        for(var i = 6; i &lt; indices.length; i +=6) {
+
+            flip = (flip + 1) % 2;
+            v0 = innerData[0];
+            v1 = innerData[1].subtract(v0);
+            v2 = outerData[0].subtract(v0);
+            v3 = outerData[1].subtract(v0);
+            axis = v1.clone();
+            axis.normalize();
+
+            p1 = BABYLON.Vector3.Dot(axis,v1);
+            p2 = BABYLON.Vector3.Dot(axis,v2);
+            p3 = BABYLON.Vector3.Dot(axis,v3);
+            var minX = Math.min(0, p1, p2, p3);
+            var maxX = Math.max(0, p1, p2, p3);
+
+            uvs[2 * indices[i + 1]] = flip + Math.cos(flip * Math.PI) * (p1 - minX)/(maxX - minX);
+            uvs[2 * indices[i + 1] + 1] = 1;
+            uvs[2 * indices[i + 4]] = flip + Math.cos(flip * Math.PI) * (p3 - minX)/(maxX - minX);
+            uvs[2 * indices[i + 4] + 1] = 0;
+        }
+    }
+
+    BABYLON.VertexData.ComputeNormals(positions, indices, normals);
+    BABYLON.VertexData._ComputeSides(BABYLON.Mesh.DOUBLESIDE, positions, indices, normals, uvs);      
+    console.log(uvs)        
+    //Create a custom mesh  
+    var customMesh = new BABYLON.Mesh(name, scene);
+
+    //Create a vertexData object
+    var vertexData = new BABYLON.VertexData();
+
+    //Assign positions and indices to vertexData
+    vertexData.positions = positions;
+    vertexData.indices = indices;
+    vertexData.normals = normals;
+    vertexData.uvs = uvs;
+
+    //Apply vertexData to custom mesh
+    vertexData.applyToMesh(customMesh);
+
+    return customMesh;
+
+}
+</code></pre>
+<h2><a name="line-in-xoz-plane-formed-from-central-path" class="anchor" href="#line-in-xoz-plane-formed-from-central-path"></a>Line in XoZ Plane Formed from Central Path</h2><pre><code class="lang-javascript">var line = line2D(&quot;line&quot;, options, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td><em>(Vector3[])</em>  array of Vector3 points forming the centre line of the line2D</td>
+<td><strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> line width</td>
+<td>1</td>
+</tr>
+<tr>
+<td>closed</td>
+<td><em>(boolean)</em> true if the first and last points are to be joined to form a polygon</td>
+<td>false</td>
+</tr>
+<tr>
+<td>standardUV</td>
+<td><em>(Color4[])</em> false squeezes a texture image onto each line segment</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>Just copy the code below if you want to use it.</p>
+<h3><a name="playground-examples" class="anchor" href="#playground-examples"></a>Playground Examples</h3><ul>
+<li><a href="https://www.babylonjs-playground.com/#0RIS0M">Playground Example - Open Line</a> - <i class="fa fa-eye" onclick="createIframe('0RIS0M#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#0RIS0M#1">Playground Example - Closed Line</a> - <i class="fa fa-eye" onclick="createIframe('0RIS0M#1', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#0RIS0M#2">Playground Example - Standard UV is True</a> - <i class="fa fa-eye" onclick="createIframe('0RIS0M#2', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#0RIS0M#3">Playground Example - Standard UV is False</a> - <i class="fa fa-eye" onclick="createIframe('0RIS0M#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="line2d-code" class="anchor" href="#line2d-code"></a>Line2D Code</h3><pre><code class="lang-javascript">var line2D = function(name, options, scene) {
+
+    //Arrays for vertex positions and indices
+    var positions = [];
+    var indices = [];
+        var normals = [];
+
+        var width = options.width / 2 || 0.5;
+        var path = options.path;
+    var closed = options.closed || false;
+    if(options.standardUV === undefined) {
+        standardUV = true;
+    }
+    else {
+        standardUV = options.standardUV;
+    }
+
+    var interiorIndex;
+
+    //Arrays to hold wall corner data 
+    var innerBaseCorners = [];
+    var outerBaseCorners = [];
+
+    var outerData = [];
+        var innerData = [];
+    var angle = 0;
+
+    var nbPoints = path.length;
+    var line = BABYLON.Vector3.Zero();
+    var nextLine = BABYLON.Vector3.Zero();
+    path[1].subtractToRef(path[0], line);
+
+    if(nbPoints &gt; 2 &amp;&amp; closed) {    
+        path[2].subtractToRef(path[1], nextLine);    
+        for(var p = 0; p &lt; nbPoints; p++) {    
+            angle = Math.PI - Math.acos(BABYLON.Vector3.Dot(line, nextLine)/(line.length() * nextLine.length()));            
+            direction = BABYLON.Vector3.Cross(line, nextLine).normalize().y;                
+            lineNormal = new BABYLON.Vector3(-line.z, 0, 1 * line.x).normalize();
+            line.normalize();
+            innerData[(p + 1) % nbPoints] = path[(p + 1) % nbPoints].subtract(lineNormal.scale(width)).subtract(line.scale(direction * width/Math.tan(angle/2)));
+            outerData[(p + 1) % nbPoints] = path[(p + 1) % nbPoints].add(lineNormal.scale(width)).add(line.scale(direction * width/Math.tan(angle/2)));                        
+                line = nextLine.clone();        
+            path[(p + 3) % nbPoints].subtractToRef(path[(p + 2) % nbPoints], nextLine);    
+        }
+    }
+    else {
+        lineNormal = new BABYLON.Vector3(-line.z, 0, 1 * line.x).normalize();
+        line.normalize();        
+        innerData[0] = path[0].subtract(lineNormal.scale(width));
+        outerData[0] = path[0].add(lineNormal.scale(width));
+
+        for(var p = 0; p &lt; nbPoints - 2; p++) {    
+            path[p + 2].subtractToRef(path[p + 1], nextLine);
+            angle = Math.PI - Math.acos(BABYLON.Vector3.Dot(line, nextLine)/(line.length() * nextLine.length()));            
+            direction = BABYLON.Vector3.Cross(line, nextLine).normalize().y;            
+            lineNormal = new BABYLON.Vector3(-line.z, 0, 1 * line.x).normalize();
+            line.normalize();
+            innerData[p + 1] = path[p + 1].subtract(lineNormal.scale(width)).subtract(line.scale(direction * width/Math.tan(angle/2)));
+            outerData[p + 1] = path[p + 1].add(lineNormal.scale(width)).add(line.scale(direction * width/Math.tan(angle/2)));        
+            line = nextLine.clone();            
+        }
+        if(nbPoints &gt; 2) {
+            path[nbPoints - 1].subtractToRef(path[nbPoints - 2], line);
+            lineNormal = new BABYLON.Vector3(-line.z, 0, 1 * line.x).normalize();
+            line.normalize();        
+            innerData[nbPoints - 1] = path[nbPoints - 1].subtract(lineNormal.scale(width));
+            outerData[nbPoints - 1] = path[nbPoints - 1].add(lineNormal.scale(width));
+        }
+        else{
+            innerData[1] = path[1].subtract(lineNormal.scale(width));
+            outerData[1] = path[1].add(lineNormal.scale(width));
+        }
+    }
+
+    var maxX = Number.MIN_VALUE;
+    var minX = Number.MAX_VALUE;
+    var maxZ = Number.MIN_VALUE;
+    var minZ = Number.MAX_VALUE;
+
+    for(var p = 0; p &lt; nbPoints; p++) {
+        positions.push(innerData[p].x, innerData[p].y, innerData[p].z);
+        maxX = Math.max(innerData[p].x, maxX);
+        minX = Math.min(innerData[p].x, minX);
+        maxZ = Math.max(innerData[p].z, maxZ);
+        minZ = Math.min(innerData[p].z, minZ);
+    }
+
+    for(var p = 0; p &lt; nbPoints; p++) {
+        positions.push(outerData[p].x, outerData[p].y, outerData[p].z);
+        maxX = Math.max(innerData[p].x, maxX);
+        minX = Math.min(innerData[p].x, minX);
+        maxZ = Math.max(innerData[p].z, maxZ);
+        minZ = Math.min(innerData[p].z, minZ);
+    }
+
+        for(var i = 0; i &lt; nbPoints - 1; i++) {
+            indices.push(i, i + 1, nbPoints + i + 1);
+            indices.push(i, nbPoints + i + 1, nbPoints + i)
+        }
+
+    if(nbPoints &gt; 2 &amp;&amp; closed) {
+        indices.push(nbPoints - 1, 0, nbPoints);
+            indices.push(nbPoints - 1, nbPoints, 2 * nbPoints - 1)
+    }
+
+    var normals = [];
+        var uvs =[];
+
+    if(standardUV) {
+        for(var p = 0; p &lt; positions.length; p += 3) {
+            uvs.push((positions[p] - minX)/(maxX - minX), (positions[p + 2] - minZ)/(maxZ - minZ));               
+        }
+    }
+    else {
+        var flip = 0;
+        var p1 = 0;
+        var p2 = 0;
+        var p3 = 0;
+        var v0 = innerData[0];
+        var v1 = innerData[1].subtract(v0);
+        var v2 = outerData[0].subtract(v0);
+        var v3 = outerData[1].subtract(v0);
+        var axis = v1.clone();
+        axis.normalize();
+
+        p1 = BABYLON.Vector3.Dot(axis,v1);
+        p2 = BABYLON.Vector3.Dot(axis,v2);
+        p3 = BABYLON.Vector3.Dot(axis,v3);
+        var minX = Math.min(0, p1, p2, p3);
+        var maxX = Math.max(0, p1, p2, p3);
+
+        uvs[2 * indices[0]] = -minX/(maxX - minX);
+        uvs[2 * indices[0] + 1] = 1;
+        uvs[2 * indices[5]] = (p2 - minX)/(maxX - minX);
+        uvs[2 * indices[5] + 1] = 0;
+
+        uvs[2 * indices[1]] = (p1 - minX)/(maxX - minX);
+        uvs[2 * indices[1] + 1] = 1;
+        uvs[2 * indices[4]] = (p3 - minX)/(maxX - minX);
+        uvs[2 * indices[4] + 1] = 0;
+
+        for(var i = 6; i &lt; indices.length; i +=6) {
+
+            flip = (flip + 1) % 2;
+            v0 = innerData[0];
+            v1 = innerData[1].subtract(v0);
+            v2 = outerData[0].subtract(v0);
+            v3 = outerData[1].subtract(v0);
+            axis = v1.clone();
+            axis.normalize();
+
+            p1 = BABYLON.Vector3.Dot(axis,v1);
+            p2 = BABYLON.Vector3.Dot(axis,v2);
+            p3 = BABYLON.Vector3.Dot(axis,v3);
+            var minX = Math.min(0, p1, p2, p3);
+            var maxX = Math.max(0, p1, p2, p3);
+
+            uvs[2 * indices[i + 1]] = flip + Math.cos(flip * Math.PI) * (p1 - minX)/(maxX - minX);
+            uvs[2 * indices[i + 1] + 1] = 1;
+            uvs[2 * indices[i + 4]] = flip + Math.cos(flip * Math.PI) * (p3 - minX)/(maxX - minX);
+            uvs[2 * indices[i + 4] + 1] = 0;
+        }
+    }
+
+    BABYLON.VertexData.ComputeNormals(positions, indices, normals);
+    BABYLON.VertexData._ComputeSides(BABYLON.Mesh.DOUBLESIDE, positions, indices, normals, uvs);      
+    console.log(uvs)        
+    //Create a custom mesh  
+    var customMesh = new BABYLON.Mesh(name, scene);
+
+    //Create a vertexData object
+    var vertexData = new BABYLON.VertexData();
+
+    //Assign positions and indices to vertexData
+    vertexData.positions = positions;
+    vertexData.indices = indices;
+    vertexData.normals = normals;
+    vertexData.uvs = uvs;
+
+    //Apply vertexData to custom mesh
+    vertexData.applyToMesh(customMesh);
+
+    return customMesh;
+
+}
+</code></pre>
+<h2><a name="line-in-xoz-plane-formed-from-inner-path" class="anchor" href="#line-in-xoz-plane-formed-from-inner-path"></a>Line in XoZ Plane Formed from Inner Path</h2><p>With this version you can use it as an edge of a given width to a polygon</p>
+<pre><code class="lang-javascript">var line = line2D(&quot;line&quot;, options, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td><em>(Vector3[])</em>  array of Vector3 points forming the centre line of the line2D, <strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>(number)</em> line width</td>
+<td>1</td>
+</tr>
+<tr>
+<td>closed</td>
+<td><em>(boolean)</em> true if the first and last points are to be joined to form a polygon</td>
+<td>false</td>
+</tr>
+<tr>
+<td>standardUV</td>
+<td><em>(Color4[])</em> false squeezes a texture image onto each line segment</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>Just copy the code below if you want to use it.</p>
+<h3><a name="playground-examples-including-use-as-edge-to-polygon" class="anchor" href="#playground-examples-including-use-as-edge-to-polygon"></a>Playground Examples (Including Use as Edge to Polygon)</h3><ul>
+<li><a href="https://www.babylonjs-playground.com/#S7HM64">Playground Example - Open Line</a> - <i class="fa fa-eye" onclick="createIframe('S7HM64#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#S7HM64#1">Playground Example - Closed Line as Edge Around Polygon</a> - <i class="fa fa-eye" onclick="createIframe('S7HM64#1', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#S7HM64#2">Playground Example - Edge Around Polygon, Standard UV is True</a> - <i class="fa fa-eye" onclick="createIframe('S7HM64#2', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#S7HM64#3">Playground Example - Edge Around Polygon, Standard UV is False</a> - <i class="fa fa-eye" onclick="createIframe('S7HM64#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="line2d-code" class="anchor" href="#line2d-code"></a>Line2D Code</h3><pre><code class="lang-javascript">var line2D = function(name, options, scene) {
+
+    //Arrays for vertex positions and indices
+    var positions = [];
+    var indices = [];
+        var normals = [];
+
+        var width = options.width || 1;
+        var path = options.path;
+    var closed = options.closed || false;
+    if(options.standardUV === undefined) {
+        standardUV = true;
+    }
+    else {
+        standardUV = options.standardUV;
+    }
+
+    var interiorIndex;
+
+    //Arrays to hold wall corner data 
+    var innerBaseCorners = [];
+    var outerBaseCorners = [];
+
+    var outerData = [];
+        var innerData = [];
+    var angle = 0;
+
+    var nbPoints = path.length;
+    var line = BABYLON.Vector3.Zero();
+    var nextLine = BABYLON.Vector3.Zero();
+    path[1].subtractToRef(path[0], line);
+
+    if(nbPoints &gt; 2 &amp;&amp; closed) {    
+        path[2].subtractToRef(path[1], nextLine);    
+        for(var p = 0; p &lt; nbPoints; p++) {    
+            angle = Math.PI - Math.acos(BABYLON.Vector3.Dot(line, nextLine)/(line.length() * nextLine.length()));            
+            direction = BABYLON.Vector3.Cross(line, nextLine).normalize().y;                
+            lineNormal = new BABYLON.Vector3(-line.z, 0, 1 * line.x).normalize();
+            line.normalize();
+            innerData[(p + 1) % nbPoints] = path[(p + 1) % nbPoints];
+            outerData[(p + 1) % nbPoints] = path[(p + 1) % nbPoints].add(lineNormal.scale(width)).add(line.scale(direction * width/Math.tan(angle/2)));        
+                line = nextLine.clone();        
+            path[(p + 3) % nbPoints].subtractToRef(path[(p + 2) % nbPoints], nextLine);    
+        }
+    }
+    else {
+        lineNormal = new BABYLON.Vector3(-line.z, 0, 1 * line.x).normalize();
+        line.normalize();        
+        innerData[0] = path[0];
+        outerData[0] = path[0].add(lineNormal.scale(width));
+
+        for(var p = 0; p &lt; nbPoints - 2; p++) {    
+            path[p + 2].subtractToRef(path[p + 1], nextLine);
+            angle = Math.PI - Math.acos(BABYLON.Vector3.Dot(line, nextLine)/(line.length() * nextLine.length()));            
+            direction = BABYLON.Vector3.Cross(line, nextLine).normalize().y;            
+            lineNormal = new BABYLON.Vector3(-line.z, 0, 1 * line.x).normalize();
+            line.normalize();
+            innerData[p + 1] = path[p + 1];
+            outerData[p + 1] = path[p + 1].add(lineNormal.scale(width)).add(line.scale(direction * width/Math.tan(angle/2)));        
+            line = nextLine.clone();            
+        }
+        if(nbPoints &gt; 2) {
+            path[nbPoints - 1].subtractToRef(path[nbPoints - 2], line);
+            lineNormal = new BABYLON.Vector3(-line.z, 0, 1 * line.x).normalize();
+            line.normalize();        
+            innerData[nbPoints - 1] = path[nbPoints - 1];
+            outerData[nbPoints - 1] = path[nbPoints - 1].add(lineNormal.scale(width));
+        }
+        else{
+            innerData[1] = path[1]
+            outerData[1] = path[1].add(lineNormal.scale(width));
+        }
+    }
+
+    var maxX = Number.MIN_VALUE;
+    var minX = Number.MAX_VALUE;
+    var maxZ = Number.MIN_VALUE;
+    var minZ = Number.MAX_VALUE;
+
+    for(var p = 0; p &lt; nbPoints; p++) {
+        positions.push(innerData[p].x, innerData[p].y, innerData[p].z);
+        maxX = Math.max(innerData[p].x, maxX);
+        minX = Math.min(innerData[p].x, minX);
+        maxZ = Math.max(innerData[p].z, maxZ);
+        minZ = Math.min(innerData[p].z, minZ);
+    }
+
+    for(var p = 0; p &lt; nbPoints; p++) {
+        positions.push(outerData[p].x, outerData[p].y, outerData[p].z);
+        maxX = Math.max(innerData[p].x, maxX);
+        minX = Math.min(innerData[p].x, minX);
+        maxZ = Math.max(innerData[p].z, maxZ);
+        minZ = Math.min(innerData[p].z, minZ);
+    }
+
+        for(var i = 0; i &lt; nbPoints - 1; i++) {
+            indices.push(i, i + 1, nbPoints + i + 1);
+            indices.push(i, nbPoints + i + 1, nbPoints + i)
+        }
+
+    if(nbPoints &gt; 2 &amp;&amp; closed) {
+        indices.push(nbPoints - 1, 0, nbPoints);
+            indices.push(nbPoints - 1, nbPoints, 2 * nbPoints - 1)
+    }
+
+    var normals = [];
+        var uvs =[];
+
+    if(standardUV) {
+        for(var p = 0; p &lt; positions.length; p += 3) {
+            uvs.push((positions[p] - minX)/(maxX - minX), (positions[p + 2] - minZ)/(maxZ - minZ));                
+        }
+    }
+    else {
+        var flip = 0;
+        var p1 = 0;
+        var p2 = 0;
+        var p3 = 0;
+        var v0 = innerData[0];
+        var v1 = innerData[1].subtract(v0);
+        var v2 = outerData[0].subtract(v0);
+        var v3 = outerData[1].subtract(v0);
+        var axis = v1.clone();
+        axis.normalize();
+
+        p1 = BABYLON.Vector3.Dot(axis,v1);
+        p2 = BABYLON.Vector3.Dot(axis,v2);
+        p3 = BABYLON.Vector3.Dot(axis,v3);
+        var minX = Math.min(0, p1, p2, p3);
+        var maxX = Math.max(0, p1, p2, p3);
+
+        uvs[2 * indices[0]] = -minX/(maxX - minX);
+        uvs[2 * indices[0] + 1] = 1;
+        uvs[2 * indices[5]] = (p2 - minX)/(maxX - minX);
+        uvs[2 * indices[5] + 1] = 0;
+
+        uvs[2 * indices[1]] = (p1 - minX)/(maxX - minX);
+        uvs[2 * indices[1] + 1] = 1;
+        uvs[2 * indices[4]] = (p3 - minX)/(maxX - minX);
+        uvs[2 * indices[4] + 1] = 0;
+
+        for(var i = 6; i &lt; indices.length; i +=6) {
+
+            flip = (flip + 1) % 2;
+            v0 = innerData[0];
+            v1 = innerData[1].subtract(v0);
+            v2 = outerData[0].subtract(v0);
+            v3 = outerData[1].subtract(v0);
+            axis = v1.clone();
+            axis.normalize();
+
+            p1 = BABYLON.Vector3.Dot(axis,v1);
+            p2 = BABYLON.Vector3.Dot(axis,v2);
+            p3 = BABYLON.Vector3.Dot(axis,v3);
+            var minX = Math.min(0, p1, p2, p3);
+            var maxX = Math.max(0, p1, p2, p3);
+
+            uvs[2 * indices[i + 1]] = flip + Math.cos(flip * Math.PI) * (p1 - minX)/(maxX - minX);
+            uvs[2 * indices[i + 1] + 1] = 1;
+            uvs[2 * indices[i + 4]] = flip + Math.cos(flip * Math.PI) * (p3 - minX)/(maxX - minX);
+            uvs[2 * indices[i + 4] + 1] = 0;
+        }
+    }
+
+    BABYLON.VertexData.ComputeNormals(positions, indices, normals);
+    BABYLON.VertexData._ComputeSides(BABYLON.Mesh.DOUBLESIDE, positions, indices, normals, uvs);      
+    console.log(uvs)        
+    //Create a custom mesh  
+    var customMesh = new BABYLON.Mesh(name, scene);
+
+    //Create a vertexData object
+    var vertexData = new BABYLON.VertexData();
+
+    //Assign positions and indices to vertexData
+    vertexData.positions = positions;
+    vertexData.indices = indices;
+    vertexData.normals = normals;
+    vertexData.uvs = uvs;
+
+    //Apply vertexData to custom mesh
+    vertexData.applyToMesh(customMesh);
+
+    return customMesh;
+
+}
+</code></pre>
+<h2><a name="lines-in-3d" class="anchor" href="#lines-in-3d"></a>Lines in 3D</h2><p>The <a href="/how_to/parametric_shapes#lines">lines</a> and <a href="/how_to/parametric_shapes#line-system">line system</a> methods just produce a thin line and you cannot vary the width. The best way to simulate a line with a given width in 3D is to use a <a href="/how_to/parametric_shapes#tube">tube</a>.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MRE78Z">Playground Example - Tube as Line</a> - <i class="fa fa-eye" onclick="createIframe('MRE78Z#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="parallel-lines-in-xoy-plane" class="anchor" href="#parallel-lines-in-xoy-plane"></a>Parallel Lines in XoY Plane</h2><p>Given the path of a central line the function <strong>parallelLines</strong> with return the path points of two lines either side of this line.</p>
+<pre><code class="lang-javascript">var line = line2D(&quot;line&quot;, options, scene);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td><em>(Vector3[])</em>  array of Vector3 points forming the centre line of the line2D, <strong>REQUIRED</strong></td>
+</tr>
+<tr>
+<td>innerWidth</td>
+<td><em>(number)</em> distance from central line</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>outerWidth</td>
+<td><em>(number)</em> distance from central line</td>
+<td>0.5</td>
+</tr>
+</tbody>
+</table>
+<p>Just copy the code below if you want to use it.</p>
+<h3><a name="playground-example" class="anchor" href="#playground-example"></a>Playground Example</h3><ul>
+<li><a href="https://www.babylonjs-playground.com/#FA2H7X#18">Playground Example - Dotted Lines Parallel to Central Line</a> - <i class="fa fa-eye" onclick="createIframe('FA2H7X#18', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="parallel-line-code" class="anchor" href="#parallel-line-code"></a>Parallel Line Code</h3><pre><code class="lang-javascript">var parallelLines = function(options, scene) {
+
+    //Arrays for vertex positions and indices
+    var positions = [];
+    var indices = [];
+        var normals = [];
+
+        var innerWidth = options.innerWidth || 0.5;
+        var outerWidth = options.outerWidth || 0.5;
+        var path = options.path;
+
+    var interiorIndex;
+
+    //Arrays to hold wall corner data 
+    var innerBaseCorners = [];
+    var outerBaseCorners = [];
+
+    var outerData = [];
+        var innerData = [];
+    var angle = 0;
+
+    var nbPoints = path.length;
+    var line = BABYLON.Vector3.Zero();
+    var nextLine = BABYLON.Vector3.Zero();
+    path[1].subtractToRef(path[0], line);
+
+        lineNormal = new BABYLON.Vector3(line.y, -1 * line.x, 0).normalize();
+    line.normalize();        
+    innerData[0] = path[0].subtract(lineNormal.scale(innerWidth));
+    outerData[0] = path[0].add(lineNormal.scale(outerWidth));
+
+    for(var p = 0; p &lt; nbPoints - 2; p++) {    
+        path[p + 2].subtractToRef(path[p + 1], nextLine);
+        angle = Math.PI - Math.acos(BABYLON.Vector3.Dot(line, nextLine)/(line.length() * nextLine.length()));            
+        direction = BABYLON.Vector3.Cross(line, nextLine).normalize().z;            
+        lineNormal = new BABYLON.Vector3(line.y, -1 * line.x, 0).normalize();
+        line.normalize();
+        innerData[p + 1] = path[p + 1].subtract(lineNormal.scale(innerWidth)).subtract(line.scale(direction * innerWidth/Math.tan(angle/2)));
+        outerData[p + 1] = path[p + 1].add(lineNormal.scale(outerWidth)).add(line.scale(direction * outerWidth/Math.tan(angle/2)));        
+        line = nextLine.clone();            
+    }
+    if(nbPoints &gt; 2) {
+        path[nbPoints - 1].subtractToRef(path[nbPoints - 2], line);
+        lineNormal = new BABYLON.Vector3(line.y, -1 * line.x, 0).normalize();
+        line.normalize();        
+        innerData[nbPoints - 1] = path[nbPoints - 1].subtract(lineNormal.scale(innerWidth));
+        outerData[nbPoints - 1] = path[nbPoints - 1].add(lineNormal.scale(outerWidth));
+    }
+    else{
+        innerData[1] = path[1].subtract(lineNormal.scale(innerWidth));
+        outerData[1] = path[1].add(lineNormal.scale(outerWidth));
+    }
+
+    return {outerPoints: outerData, innerPoints: innerData};
+
+}
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

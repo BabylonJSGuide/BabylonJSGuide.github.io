@@ -1,0 +1,180 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Put Shader Code in BJS - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Put Shader Code in BJS</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#babylonjs-cyos-download">BabylonJS CYOS Download</a></li>
+<li><a href="#shader-code-in-ltscriptgt-tags">Shader Code in &lt;script&gt; Tags</a></li>
+<li><a href="#shader-code-in-fx-files">Shader Code in fx Files</a></li>
+<li><a href="#shader-includes">Shader Includes</a></li>
+<li><a href="#shader-builder">Shader Builder</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="putting-shader-code-in-babylonjs" class="anchor" href="#putting-shader-code-in-babylonjs"></a>Putting Shader Code in BabylonJS</h1><p>Here are four ways of putting shader code into your scene:</p>
+<ol>
+<li>Use <a href="http://www.babylonjs.com/cyos/">BabylonJS Create Your Own Shader (CYOS)</a> and download a zip file; </li>
+<li>Write the Vertex and Fragment Shader Code into &amp;ltscript&amp;gt tags</li>
+<li>Write, save and import a Vertex and Fragment Shader file of type .fx into your code; </li>
+<li>Use the shaderBuilder extension of BabylonJS.</li>
+</ol>
+<p>Methods 1, 2 and 3 use <a href="/how_to/Shader_Material.html">BABYLON.ShaderMaterial</a> to pass data to the shaders.</p>
+<h2><a name="babylonjs-cyos-download" class="anchor" href="#babylonjs-cyos-download"></a>BabylonJS CYOS Download</h2><p>This site allows you to write code for a Vertex Shader and a Fragment Shader and see the results on a variety of meshes. 
+Downloading a zip file produces a folder containing and index.html file and some image files for texture.</p>
+<p><img src="/img/how_to/Shaders/cyos1.jpg" alt="CYOS Screen"></p>
+<p>The <em>index.html</em> file contains the shader code in the correct format to apply as a material.</p>
+<p>Within the HTML page the shader code becomes (in Javascript)</p>
+<pre><code class="lang-javascript">BABYLON.Effect.ShadersStore[&quot;customVertexShader&quot;]= &quot;\r\n&quot;+
+    &quot;precision highp float;\r\n&quot;+
+
+   &quot;// Attributes\r\n&quot;+
+   &quot;attribute vec3 position;\r\n&quot;+
+   &quot;attribute vec2 uv;\r\n&quot;+
+
+   &quot;// Uniforms\r\n&quot;+
+   &quot;uniform mat4 worldViewProjection;\r\n&quot;+
+
+   &quot;// Varying\r\n&quot;+
+   &quot;varying vec2 vUV;\r\n&quot;+
+
+   &quot;void main(void) {\r\n&quot;+
+   &quot;    gl_Position = worldViewProjection * vec4(position, 1.0);\r\n&quot;+
+
+   &quot;    vUV = uv;\r\n&quot;+
+   &quot;}\r\n&quot;;
+
+BABYLON.Effect.ShadersStore[&quot;customFragmentShader&quot;]= &quot;\r\n&quot;+
+   &quot;precision highp float;\r\n&quot;+
+
+   &quot;varying vec2 vUV;\r\n&quot;+
+
+   &quot;uniform sampler2D textureSampler;\r\n&quot;+
+
+   &quot;void main(void) {\r\n&quot;+
+   &quot;    gl_FragColor = texture2D(textureSampler, vUV);\r\n&quot;+
+   &quot;}\r\n&quot;;
+</code></pre>
+<p>the Javascript code to use the shader as a material is</p>
+<pre><code class="lang-javascript">var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, {
+        vertex: &quot;custom&quot;,
+        fragment: &quot;custom&quot;,
+    },
+    {
+        attributes: [&quot;position&quot;, &quot;normal&quot;, &quot;uv&quot;],
+        uniforms: [&quot;world&quot;, &quot;worldView&quot;, &quot;worldViewProjection&quot;, &quot;view&quot;, &quot;projection&quot;]
+});
+</code></pre>
+<p>and the Javascript code to set a texture to the material is</p>
+<pre><code class="lang-javascript">var mainTexture = new BABYLON.Texture(&quot;amiga.jpg&quot;, scene);
+shaderMaterial.setTexture(&quot;textureSampler&quot;, mainTexture);
+</code></pre>
+<p>and to use the material on a mesh is</p>
+<pre><code class="lang-javascript">mesh.material = shaderMaterial;
+</code></pre>
+<p>Extracting the appropriate sections of Javascript code allows you to transfer them to your own scenes.</p>
+<p><a href="http://babylonjsguide.github.io/examples/cyoszip.html">Guide Example From CYOS Zip</a></p>
+<p>This method can easily be used in the Playground.</p>
+<p><a href="https://www.babylonjs-playground.com/#1OH09K#131">Playground Example From CYOS</a> - <i class="fa fa-eye" onclick="createIframe('1OH09K#131', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="shader-code-in-ltscriptgt-tags" class="anchor" href="#shader-code-in-script-tags"></a>Shader Code in &lt;script&gt; Tags</h2><p>In the <em>index.html</em> file the Javascript code for the shaders is</p>
+<pre><code class="lang-javascript">&lt;script type=&quot;application/vertexShader&quot; id=&quot;vertexShaderCode&quot;&gt;
+    #ifdef GL_ES
+        precision highp float;
+    #endif
+
+    // Attributes
+    attribute vec3 position;
+    attribute vec2 uv;
+
+    // Uniforms
+    uniform mat4 worldViewProjection;
+
+    // Normal
+    varying vec2 vUV;
+
+    void main(void) {
+    gl_Position = worldViewProjection * vec4(position, 1.0);
+
+    vUV = uv;
+    }
+&lt;/script&gt;
+
+&lt;script type=&quot;application/fragmentShader&quot; id=&quot;fragmentShaderCode&quot;&gt;
+    #ifdef GL_ES
+        precision mediump float;
+    #endif
+
+    varying vec2 vUV;
+
+    uniform sampler2D textureSampler;
+
+    void main(void) {
+        gl_FragColor = texture2D(textureSampler, vUV);
+    }
+&lt;/script&gt;
+</code></pre>
+<p>the Javascript code to use the shader as a material becomes</p>
+<pre><code class="lang-javascript">var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, {
+        vertexElement: &quot;vertexShaderCode&quot;,
+        fragmentElement: &quot;fragmentShaderCode&quot;,
+    },
+    {
+        attributes: [&quot;position&quot;, &quot;normal&quot;, &quot;uv&quot;],
+        uniforms: [&quot;world&quot;, &quot;worldView&quot;, &quot;worldViewProjection&quot;, &quot;view&quot;, &quot;projection&quot;]
+});
+</code></pre>
+<p><a href="http://babylonjsguide.github.io/examples/scriptcode.html">Guide Example From Script</a></p>
+<h2><a name="shader-code-in-fx-files" class="anchor" href="#shader-code-in-fx-files"></a>Shader Code in fx Files</h2><p>Save your code in two files, one for the Vertex Shader and one for the Fragment Shader. </p>
+<p>These files <strong>must</strong> be in the same folder as your index.html page and the names of the files <strong>must</strong> follow this format</p>
+<p>COMMON_NAME.vertex.fx</p>
+<p>COMMON_NAME.fragment.fx</p>
+<p>The Javascript code to use the shader as material becomes</p>
+<pre><code class="lang-javascript">var shaderMaterial = new BABYLON.ShaderMaterial(&quot;shader&quot;, scene, &quot;./COMMON_NAME&quot;,
+    {
+        attributes: [&quot;position&quot;, &quot;normal&quot;, &quot;uv&quot;],
+        uniforms: [&quot;world&quot;, &quot;worldView&quot;, &quot;worldViewProjection&quot;, &quot;view&quot;, &quot;projection&quot;]
+});
+</code></pre>
+<p><strong>Note</strong>: <code>./</code> is necessary before the <code>COMMON_NAME</code></p>
+<p>It is also possible to access the fx files from an URL by giving the full address of the URL, 
+provide CORS is enabled for them.</p>
+<p><a href="http://babylonjsguide.github.io/examples/importcode.html">Guide Example From Import</a></p>
+<h2><a name="shader-includes" class="anchor" href="#shader-includes"></a>Shader Includes</h2><p>When building shaders sometimes you have parts of your code that will be reused between multiple shaders.  This is usually things like reused uniforms, functions, structs etc.  A powerful method that users have at their disposal is to accomplish this task is the </p>
+<pre><code class="lang-javascript">BABYLON.Effect.IncludesShadersStore[&quot;includeName&quot;] = &quot;...&quot;
+</code></pre>
+<p>Already loaded in the includes are all the common shader elements for babylons StandardMaterial, PBR Materials, ProceduralTextures and more.  See the github <a href="https://github.com/BabylonJS/Babylon.js/tree/master/src/Shaders/ShadersInclude">https://github.com/BabylonJS/Babylon.js/tree/master/src/Shaders/ShadersInclude</a> for a complete list of shader includes packaged with BJS.</p>
+<p>Additionally you can add anything you want to the IncludesShadersStore pre or post compilation of the scene. To access these includes simply call:</p>
+<pre><code class="lang-glsl">#include&lt;includeName&gt;
+</code></pre>
+<p>In the appropriate section of your shader code to have them injected into your shader when it is compiled <a href="https://www.babylonjs-playground.com/#0MAYNY">see example</a> - <i class="fa fa-eye" onclick="createIframe('0MAYNY#', this)"></i><div class="iframeContainer"></div>.</p>
+<h2><a name="shader-builder" class="anchor" href="#shader-builder"></a>Shader Builder</h2><p>This is an extension to BabylonJS. Copy and save the <a href="https://github.com/BabylonJS/Extensions/blob/master/ShaderBuilder/Babylonx.ShaderBuilder.js">source code</a> for the extension and add as</p>
+<pre><code class="lang-javascript">&lt;script src=&quot;Babylonx.ShaderBuilder.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>The Shader Builder engine needs to be initialised</p>
+<pre><code class="lang-javascript">BABYLONX.ShaderBuilder.InitializeEngine();
+</code></pre>
+<p>The format for writing a ShaderBuilder is <strong>fluent coding</strong> and it deals with attributes and BabylonJS uniforms automatically.<br>An example for the shader code used in 1 to 3 above would be</p>
+<pre><code class="lang-javascript">mesh.material = new BABYLONX.ShaderBuilder()
+    .Map({ path: &#39;textures/amiga.jpg&#39; })
+    .BuildMaterial(scene);
+</code></pre>
+<p><a href="http://babylonjsguide.github.io/examples/basiccodeSB.html">Guide Example using ShaderBuilder</a></p>
+<p>This method can be used in the Playground. However it does require the loading of the ShaderBuilder Javascript file and an <code>onLoad</code> 
+function before it can be called.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#NCY1Q#36">Playground Example using ShaderBuilder</a> - <i class="fa fa-eye" onclick="createIframe('NCY1Q#36', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/resources/shaderintro">Introduction to Shaders in BabylonJS</a><br><a href="/how_to/shader_material">ShaderMaterial Object</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

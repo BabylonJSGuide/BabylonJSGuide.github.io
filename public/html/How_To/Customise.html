@@ -1,0 +1,237 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Customize Particle System - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Customize Particle System</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#custom-functions">Custom Functions</a><ul>
+<li><a href="#direct">Direct</a></li>
+<li><a href="#particle-emitter-type">Particle Emitter Type</a></li>
+</ul>
+</li>
+<li><a href="#custom-effects">Custom Effects</a><ul>
+<li><a href="#fragment-shader-assignment">Fragment Shader Assignment</a></li>
+<li><a href="#uniforms-assignment">Uniforms Assignment</a></li>
+<li><a href="#particle-effect-object">Particle Effect Object</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#features">Features</a></li>
+<li><a href="#babylon-101">Babylon 101</a></li>
+<li><a href="#how-to">How To</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-customize-particles" class="anchor" href="#how-to-customize-particles"></a>How To Customize Particles</h1><p>As you can find in <a href="/babylon101/particles">Babylon101</a> there are many properties of the particle system that can be tweaked to control the look of a particle system. Babylon.js allows you even more customization to obtain the system you want. These can be split into into two types custom functions and custom effects. </p>
+<h2><a name="custom-functions" class="anchor" href="#custom-functions"></a>Custom Functions</h2><p>There are three methods you can customize:  </p>
+<ul>
+<li>startDirectionFunction: specifies the direction for each new particle;</li>
+<li>startPositionFunction: specifies the start position for each new particle;</li>
+<li>updateFunction: provides an update to each particle each frame and can effect position, color, age, size etc. Try to keep it simple and fast.</li>
+</ul>
+<p>You can directly attach all these functions to the particleSystem.</p>
+<p>Since Babylon.js V3.2 you can use the first two, <code>startDirectionFunction</code> and <code>startPositionFunction</code>, in creating a new particle emitter type as was done with the <a href="/babylon101/particles/#shape-emitters">createBoxEmitter, createSphereEmitter and createConeEmitter</a>. </p>
+<h3><a name="direct" class="anchor" href="#direct"></a>Direct</h3><p>The start direction function has the default form</p>
+<pre><code class="lang-javascript">particleSystem.startDirectionFunction = (emitPower: number, worldMatrix: Matrix, directionToUpdate: Vector3, particle: Particle, isLocal: boolean) {
+    var randX = randomNumber(this.direction1.x, this.direction2.x);
+    var randY = randomNumber(this.direction1.y, this.direction2.y);
+    var randZ = randomNumber(this.direction1.z, this.direction2.z);
+
+    Vector3.TransformNormalFromFloatsToRef(randX * emitPower, randY * emitPower, randZ * emitPower, worldMatrix, directionToUpdate);
+} 
+</code></pre>
+<p>The start position function has the default form</p>
+<pre><code class="lang-javascript">particleSystem.startPositionFunction = (worldMatrix: Matrix, positionToUpdate: Vector3, particle: Particle, isLocal: boolean): void =&gt; {
+    var randX = randomNumber(this.minEmitBox.x, this.maxEmitBox.x);
+    var randY = randomNumber(this.minEmitBox.y, this.maxEmitBox.y);
+    var randZ = randomNumber(this.minEmitBox.z, this.maxEmitBox.z);
+
+    Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
+}
+</code></pre>
+<p>The update function has the default form</p>
+<pre><code class="lang-javascript">updateFunction = function(particles) {
+    for (var index = 0; index &lt; particles.length; index++) {
+        var particle = particles[index];
+        particle.age += this._scaledUpdateSpeed;
+
+        if (particle.age &gt;= particle.lifeTime) { // Recycle
+            particles.splice(index, 1);
+            this._stockParticles.push(particle);
+            index--;
+            continue;
+        }
+        else {
+            particle.colorStep.scaleToRef(this._scaledUpdateSpeed, this._scaledColorStep);
+            particle.color.addInPlace(this._scaledColorStep);
+
+            if (particle.color.a &lt; 0)
+
+                particle.color.a = 0;
+
+                particle.angle += particle.angularSpeed * this._scaledUpdateSpeed;
+
+                particle.direction.scaleToRef(this._scaledUpdateSpeed, this._scaledDirection);
+                particle.position.addInPlace(this._scaledDirection);
+
+                this.gravity.scaleToRef(this._scaledUpdateSpeed, this._scaledGravity);
+                particle.direction.addInPlace(this._scaledGravity);
+            }
+        } 
+}
+</code></pre>
+<p>Two simple examples of customising the update function</p>
+<p><strong>Randomise the Particle&#39;s Color per Frame</strong> </p>
+<p>Add the line in the <code>else</code> section</p>
+<pre><code class="lang-javascript">particle.color = new BABYLON.Color4(Math.random(), Math.random(), Math.random(), 1)
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MRRGXL#6">Playground Example - Random Colored Particles</a> - <i class="fa fa-eye" onclick="createIframe('MRRGXL#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong>Grow Particles from Size 0 to a Final Size</strong></p>
+<p>A little trickier since the particles are to start from size 0 both min and max sizes must be 0 and a new property must be added to give the final size.</p>
+<p>Add in main body of code</p>
+<pre><code class="lang-javascript">particleSystem.minSize = 0;
+particleSystem.maxSize = 0;
+
+particleSystem.finalSize = 1;
+</code></pre>
+<p>And the in the <code>else</code> section, to get the particle to final size by 35%  of life time add</p>
+<pre><code class="lang-javascript">if (particle.age &lt; particle.lifeTime * .35) {
+    particle.size = particleSystem.finalSize * particle.age / (particle.lifeTime * 0.35);
+}
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#WJBZQH#2">Playground Example - Grow Particles</a> - <i class="fa fa-eye" onclick="createIframe('WJBZQH#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="particle-emitter-type" class="anchor" href="#particle-emitter-type"></a>Particle Emitter Type</h3><p>Starting from Babylon.js V3.2 you can create a new object of type <code>IParticleEmitterType</code> into the particle system. <a href="/babylon101/particles#box-emitter">Examples</a> of this type of object are <code>sphereParticleEmitter</code> and <code>coneParticleEmitter</code> which are produced by using createSphereEmitter and createConeEmitter. </p>
+<p>These objects are assigned to a new property <code>particleEmitterType</code> of the particleSystem.</p>
+<p>You use the <code>startDirectionFunction</code> and <code>startPositionFunction</code> as methods for objects of this type to determine the region of space that the particles are emitted from and their direction of travel.</p>
+<p>You can create your own ParticleEmitterType by extending IParticleEmitterType and assigning it to <code>particleEmitterType</code>, overriding the default methods <code>startDirectionFunction</code> and <code>startPositionFunction</code>.</p>
+<p>Below is an example to create a new spray emitter which will send streams of particles out of the top, bottom and sides of a cylindrical region.</p>
+<h4><a name="create-spray-emitter" class="anchor" href="#create-spray-emitter"></a>Create Spray Emitter</h4><p>In order to determine where a particle is emitted from the cylinder is divided into two regions as in the diagram below.</p>
+<p><img src="/img/how_to/particles/cyl_particles.png" alt="cylinder emitter"></p>
+<p>Any particle with a start position inside the red region is emitted in the direction from the center to the particle. Any particle with a start position inside the blue region is emitted horizontally.</p>
+<p>The <code>createSprayEmitter</code> method sets the radius and height of the cylinder, creates a new <code>SprayParticleEmitter</code> object which is assigned to the &#39;particleEmitterType` property.</p>
+<pre><code class="lang-javascript">BABYLON.ParticleSystem.prototype.createSprayEmitter = function (radius, height) {
+    if (radius === void 0) { 
+        radius = 0.5;
+    }
+    if (height === void 0) { 
+        height = 1;
+    }
+    var particleEmitter = new BABYLON.SprayParticleEmitter(radius, height);
+    this.particleEmitterType = particleEmitter;
+    return particleEmitter;
+}
+</code></pre>
+<p>The <code>SprayParticleEmitter</code> class is formed with two methods <code>startDirectionFunction</code> and <code>startPositionFunction</code> and Babylon.js takes care of the rest. </p>
+<pre><code class="lang-javascript">var SprayParticleEmitter = (function () {
+
+    function SprayParticleEmitter(radius, height, directionRandomizer) {
+        if (radius === void 0) { radius = 0.5; }
+        if (height === void 0) { height = 1; }
+        if (directionRandomizer === void 0) { directionRandomizer = 0; }
+        this.height = height;
+        this.directionRandomizer = directionRandomizer;
+        this.radius = radius;
+    }
+
+    SprayParticleEmitter.prototype.startDirectionFunction = function (worldMatrix, directionToUpdate, particle) {    
+        var direction = particle.position.subtract(worldMatrix.getTranslation()).normalize();
+        var randX = BABYLON.Scalar.RandomRange(0, this.directionRandomizer);
+        var randY = BABYLON.Scalar.RandomRange(0, this.directionRandomizer);
+        var randZ = BABYLON.Scalar.RandomRange(0, this.directionRandomizer);
+        if(direction.x * direction.x + direction.z * direction.z &gt; 0.1 * this.radius &amp;&amp; Math.abs(direction.y) &gt; 0.1 * this.height / 2) {
+            direction.x += randX;
+            direction.y = randY;
+            direction.z += randZ;
+        }
+        else {
+            direction.x += randX;
+            direction.y += randY;
+            direction.z += randZ; 
+        }
+        direction.normalize();
+        BABYLON.Vector3.TransformNormalFromFloatsToRef(direction.x, direction.y, direction.z, worldMatrix, directionToUpdate); 
+    };
+
+    SprayParticleEmitter.prototype.startPositionFunction = function (worldMatrix, positionToUpdate, particle) {
+        var s = BABYLON.Scalar.RandomRange(0, Math.PI * 2);
+        var h = BABYLON.Scalar.RandomRange(-0.5, 0.5);             
+        var radius = BABYLON.Scalar.RandomRange(0, this.radius);
+        var randX = radius * Math.sin(s);
+        var randZ = radius * Math.cos(s);
+        var randY = h * this.height;
+        BABYLON.Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
+    };
+    return SprayParticleEmitter;
+}());
+BABYLON.SprayParticleEmitter = SprayParticleEmitter;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#V07WF8#10">Playground Example - Custom Spray Emitter Showing Container</a> - <i class="fa fa-eye" onclick="createIframe('V07WF8#10', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#V07WF8#11">Playground Example - Custom Spray Emitter Without Container</a> - <i class="fa fa-eye" onclick="createIframe('V07WF8#11', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="custom-effects" class="anchor" href="#custom-effects"></a>Custom Effects</h2><p>A custom effect is achieved via a fourth parameter when creating a new particle system</p>
+<pre><code class="lang-javascript">var particleSystem = new BABYLON.ParticleSystem(&quot;particles&quot;, 2000, scene, customEffect);
+</code></pre>
+<p>The customEffect is a type of BABYLON.Effect used to target a valid shader program and is created with the <code>createEffectForParticles</code> method of the <code>engine</code> object.</p>
+<p>This method takes three parameters</p>
+<pre><code class="lang-javascript">var customEffect = engine.createEffectForParticles(fragment, uniforms, samplers);
+</code></pre>
+<ul>
+<li>fragment: string, the name of the fragment shader which can be in the <a href="/how_to/how_to_use_procedural_textures#using-a-shaderstore-for-shader-storage">shaders store</a> or the <a href="/how_to/putting#shader-code-in-ltscriptgt-tags">id of a DOM element</a>;</li>
+<li>uniforms: [strings], array of uniforms used in the shader;</li>
+<li>samplers: [strings], array of names of samplers for additional textures!</li>
+</ul>
+<h3><a name="fragment-shader-assignment" class="anchor" href="#fragment-shader-assignment"></a>Fragment Shader Assignment</h3><p>When assigning a fragment shader to the shader store the name should have <code>FragmentShader</code> appended. So for example the creation of a custom effect using fragment name <code>myParticle</code> would require a <code>myParticleFragmentShader</code> added to the shader store</p>
+<pre><code class="lang-javascript">BABYLON.Effect.ShadersStore[&quot;myParticleFragmentShader&quot;] = [...]
+</code></pre>
+<pre><code class="lang-javascript">var customEffect = engine.createEffectForParticles(&quot;myParticle&quot;, [...]);
+</code></pre>
+<h3><a name="uniforms-assignment" class="anchor" href="#uniforms-assignment"></a>Uniforms Assignment</h3><p>By default Babylon.js will give you a vUV and a vColor varying parameter. It will also transmit you the particle texture. </p>
+<p>You can add further uniform variables, for example to pass a <code>uniform</code> variable such as time, put it into the uniforms array</p>
+<pre><code class="lang-javascript">var customEffect = engine.createEffectForParticles(&quot;myParticle&quot;, [time]);
+</code></pre>
+<p>then pass it using <code>setFloat</code> with an <code>onBind</code> method for <code>customEffect</code>.</p>
+<pre><code class="lang-javascript">    var time = 0;
+    var order = 0.1;
+
+    customEffect.onBind = function () {
+        customEffect.setFloat(&quot;time&quot;, time);
+
+        time += order;
+
+        if (time &gt; 100 || time &lt; 0) {
+            order *= -1;
+        }
+    };
+</code></pre>
+<p>you can see an example of the above in this playground  </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1ASENS#43">Playground Example - Custom Effect using Shader Store</a> - <i class="fa fa-eye" onclick="createIframe('1ASENS#43', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="particle-effect-object" class="anchor" href="#particle-effect-object"></a>Particle Effect Object</h3><p>The particle effect object is a slightly-modified <a href="/api/classes/babylon.effect">Babylon Effect Object</a>. Also notice that the ShadersStore is a namespace upon this special effect-object. </p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="features" class="anchor" href="#features"></a>Features</h2><ul>
+<li><a href="/features/Particles">Particles Overview</a></li>
+</ul>
+<h2><a name="babylon-101" class="anchor" href="#babylon-101"></a>Babylon 101</h2><ul>
+<li><a href="/babylon101/particles">Particles 101</a>  </li>
+<li><a href="/babylon101/particles#shape-emitters">Shape Emitters</a></li>
+</ul>
+<h2><a name="how-to" class="anchor" href="#how-to"></a>How To</h2><ul>
+<li><a href="/how_to/Animate">How to Create Animated Particles</a>  </li>
+<li><a href="/how_to/Sub_Emitters">How to Use Sub Emitters</a></li>
+<li><a href="/how_to/Solid_Particles">Solid Particle System</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Mesh Surface Area - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Mesh Surface Area</h1><br><div id="staticContent"><h1><a name="surface-area-of-a-mesh" class="anchor" href="#surface-area-of-a-mesh"></a>Surface Area Of a Mesh</h1><p>This functions will together find the surface area of a mesh.</p>
+<pre><code class="lang-javascript">var surfaceArea = function(mesh) {
+    if (!mesh) {
+        return 0.0;
+    }
+    var ar = 0.0;
+
+    var indices = mesh.getIndices();
+    var nbFaces = indices.length / 3;
+
+    for (var i = 0; i &lt; nbFaces; i++) {
+        ar = ar + facetArea(mesh, i);
+    }
+    return ar;
+};
+
+var facetArea = function(mesh, faceId) {
+    if(!mesh) {
+        return 0.0;
+    }
+    var indices = mesh.getIndices();
+    if(faceId &lt; 0 || faceId &gt; nbFaces) {
+        return 0.0;
+    }
+    var nbFaces = indices.length / 3;
+    var positions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+    var v1x = 0.0;
+    var v1y = 0.0;
+    var v1z = 0.0;
+    var v2x = 0.0;
+    var v2y = 0.0;
+    var v2z = 0.0;
+    var crossx = 0.0;
+    var crossy = 0.0;
+    var crossz = 0.0;
+    var ar = 0.0;
+    var i1 = 0;
+    var i2 = 0;
+    var i3 = 0;
+
+    i1 = indices[faceId * 3];
+    i2 = indices[faceId * 3 + 1];
+    i3 = indices[faceId * 3 + 2];
+    v1x = positions[i1 * 3] - positions[i2 * 3];
+    v1y = positions[i1 * 3 + 1] - positions[i2 * 3 + 1];
+    v1z = positions[i1 * 3 + 2] - positions[i2 * 3 + 2];
+    v2x = positions[i3 * 3] - positions[i2 * 3];
+    v2y = positions[i3 * 3 + 1] - positions[i2 * 3 + 1];
+    v2z = positions[i3 * 3 + 2] - positions[i2 * 3 + 2];
+    crossx = v1y * v2z - v1z * v2y;
+    crossy = v1z * v2x - v1x * v2z;
+    crossz = v1x * v2y - v1y * v2x; 
+
+    return Math.sqrt(crossx * crossx + crossy * crossy + crossz * crossz) * 0.5;
+}
+</code></pre>
+<p>The function surfaceArea has been written so that you can use the function facetArea to find the area of an individual facet should you wish to.</p>
+<p>Run the following playgrounds directly and view the results in the console.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#3VV5IV">Playground Example Surface Area of a Box</a> - <i class="fa fa-eye" onclick="createIframe('3VV5IV#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#3VV5IV#2">Playground Example Surface Area of a Sphere</a> - <i class="fa fa-eye" onclick="createIframe('3VV5IV#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><strong>NOTE</strong> For double sided meshes the surface area will be the sum of the exterior and interior areas.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>How To use the Node Material with particles - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>How To use the Node Material with particles</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#setting-up-the-scene">Setting up the scene</a></li>
+<li><a href="#invoking-the-inspector-to-create-our-particle-system">Invoking the inspector to create our particle system</a></li>
+<li><a href="#working-with-the-snippet-server">Working with the snippet server</a></li>
+<li><a href="#creating-the-node-material-for-our-particle-system">Creating the node material for our particle system</a></li>
+<li><a href="#applying-the-material">Applying the material</a></li>
+<li><a href="#automatic-updates">Automatic updates</a></li>
+<li><a href="#further-links">Further links</a></li>
+</ul>
+</div></div><div id="staticContent"><p>The Node Material Editor (aka NME) is a powerful tool that can be used to design shaders, <a href="/how_to/node_material#creating-particle-shaders">particles</a>, and <a href="/how_to/node_material#creating-post-processes">post processes</a>.</p>
+<p>This article will help you set up a simple scene that will contain only a few lines of code, because all of the work will be done using our editors.</p>
+<p>You can see the final result here: </p>
+<p><a href="https://www.babylonjs-playground.com/#RA18GJ">https://www.babylonjs-playground.com/#RA18GJ</a> - <i class="fa fa-eye" onclick="createIframe('RA18GJ#', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="setting-up-the-scene" class="anchor" href="#setting-up-the-scene"></a>Setting up the scene</h1><p>Setting up this scene is actually quite simple. We only need a scene, a camera, and a sphere to act as the particle emitter:</p>
+<pre><code>var scene = new BABYLON.Scene(engine);
+
+var camera = new BABYLON.ArcRotateCamera(&quot;Camera&quot;, 0, 0.8, 10, new BABYLON.Vector3.Zero(), scene);
+camera.attachControl(canvas, true);
+
+// Create a random emitter
+var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter: 0.01, segments: 4}, scene);
+</code></pre><h1><a name="invoking-the-inspector-to-create-our-particle-system" class="anchor" href="#invoking-the-inspector-to-create-our-particle-system"></a>Invoking the inspector to create our particle system</h1><p>If you are executing this code in the <a href="https://playground.babylonjs.com">Playground</a>, you can simply click on the Inspector button inside the header bar.</p>
+<p>If you are running the code on your own, you can call <code>scene.debugLayer.show()</code>.</p>
+<p>Once there, you can right click on the &quot;Particle Systems&quot; node to create a new particle system:</p>
+<p><img src="/img/how_to/Particles/create_new_system.jpg" alt="Create new system"></p>
+<p>The inspector will then let you play with all the parameters to define the system the way you want.</p>
+<p>When you&#39;re done setting up your system, you can go to the Snippet zone and click &quot;Save to Snippet Server&quot;:</p>
+<p><img src="/img/how_to/Particles/save_snippet.jpg" alt="Save a snippet"></p>
+<p>This will give you a snippet ID that we will use later to load the particle system from our code.</p>
+<p>You can see my setup in this playground:</p>
+<p><a href="https://www.babylonjs-playground.com/#KST50Y">https://www.babylonjs-playground.com/#KST50Y</a> - <i class="fa fa-eye" onclick="createIframe('KST50Y#', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="working-with-the-snippet-server" class="anchor" href="#working-with-the-snippet-server"></a>Working with the snippet server</h1><p>The beauty of the snippet server is that it gives you a central place to store and update your particle system without having to modify your code.</p>
+<p>We can use the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await pattern</a> in our example to load a snippet asychronously. We can flag our function as <code>async</code> and then <code>await</code> a link to our particle system using the snippet ID:</p>
+<pre><code>var createScene = async function () {
+
+    var scene = new BABYLON.Scene(engine);
+
+    var camera = new BABYLON.ArcRotateCamera(&quot;Camera&quot;, 0, 0.8, 10, new BABYLON.Vector3.Zero(), scene);
+    camera.attachControl(canvas, true);
+
+    // Create a random emitter
+    var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter: 0.01, segments: 4}, scene);
+
+    // Load the previously setup particle system (it was setup with the inspector)
+    let system = await BABYLON.ParticleHelper.CreateFromSnippetAsync(&quot;T54JV7#13&quot;, scene, false);
+    system.emitter = sphere;
+
+    return scene;
+};
+</code></pre><p>As you can see, you can simply call <code>BABYLON.ParticleHelper.CreateFromSnippetAsync</code> to download your particle system from the snippet server.</p>
+<p>If you do not want to (or cannot) use async / await, you can get the same outcome using Promises:</p>
+<pre><code>BABYLON.ParticleHelper.CreateFromSnippetAsync(&quot;T54JV7#13&quot;, scene, false).then(system =&gt; {
+    system.emitter = sphere;
+});
+</code></pre><h1><a name="creating-the-node-material-for-our-particle-system" class="anchor" href="#creating-the-node-material-for-our-particle-system"></a>Creating the node material for our particle system</h1><p>We are going to use the same approach for the node material.</p>
+<p>To setup our material, let&#39;s open the NME at <a href="https://nme.babylonjs.com/">https://nme.babylonjs.com/</a></p>
+<p>The NME can be used for materials, particles and postprocesses. We&#39;ll switch to particles mode:</p>
+<p><img src="/img/how_to/Particles/nme_particle.jpg" alt="Particle mode in NME"></p>
+<p>For this demo, I created a material where the particles are displayed with one texture when above ground (y = 0) and with another one below ground, with a smooth transition between the two. Here is the <a href="https://nme.babylonjs.com/#345ATT#4">shader I ended up with</a>:</p>
+<p><img src="/img/how_to/Particles/demo_shader.jpg" alt="Demo shader"></p>
+<p>In a nutshell, I&#39;m checking the particle position in world space and using a <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/smoothstep.xhtml">smoothstep</a> to output a value between 0 and 1, which is then used with a gradient between black and white. This color is then used to mix (lerp) between two textures.</p>
+<p>Just like the particle system, you can save your creation to the snippet server and gets a snippet Id.</p>
+<h1><a name="applying-the-material" class="anchor" href="#applying-the-material"></a>Applying the material</h1><p>The final step is to get that shader from the snippet server and use it with our particle system.</p>
+<p>To do so, we will use the exact same approach as before:</p>
+<pre><code>// Load our node material
+let nodeMaterial = await BABYLON.NodeMaterial.ParseFromSnippetAsync(&quot;#345ATT#4&quot;, scene);
+
+// Apply it to the particle system
+nodeMaterial.createEffectForParticles(system);
+</code></pre><p>As you can see the NodeMaterial class has a handy function to apply it to a particle system.</p>
+<p>And voila! 
+The final code is extremely simple (thanks to async/await in particular):</p>
+<pre><code>var createScene = async function () {
+
+    var scene = new BABYLON.Scene(engine);
+
+    var camera = new BABYLON.ArcRotateCamera(&quot;Camera&quot;, 0, 0.8, 10, new BABYLON.Vector3.Zero(), scene);
+    camera.attachControl(canvas, true);
+
+    // Create a random emitter
+    var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter: 0.01, segments: 4}, scene);
+
+    // Load the previously setup particle system (it was setup with the inspector)
+    let system = await BABYLON.ParticleHelper.CreateFromSnippetAsync(&quot;T54JV7#13&quot;, scene, false);
+    system.emitter = sphere;
+
+    // Load our node material
+    let nodeMaterial = await BABYLON.NodeMaterial.ParseFromSnippetAsync(&quot;#345ATT#4&quot;, scene);
+
+    // Apply it to the particle system
+    nodeMaterial.createEffectForParticles(system);
+
+    return scene;
+};
+</code></pre><h1><a name="automatic-updates" class="anchor" href="#automatic-updates"></a>Automatic updates</h1><p>The best part is that our Playground can evolve automagically. If you open the main Playground (referenced at the beginning of this article), you can keep editing the particle system or the material, and your code will automatically update. This happens every time open the Inspector and use one of the editors. When you click &quot;Save to Snippet Server&quot;, the system will be smart enough to work with the Playground and update the link for you:</p>
+<p><img src="/img/how_to/Particles/auto-pg.gif" alt="Automatic update"></p>
+<p>You can see in the GIF that the Snippet ID for the particle system is updated to version #14 when I hit the save button.</p>
+<p>Now that we know about that automatic update,there was another option to create the initial particle. You could have called the CreateFromSnippetAsync with a &quot;__BLANK&quot; id:</p>
+<pre><code>BABYLON.ParticleHelper.CreateFromSnippetAsync(&quot;_BLANK&quot;, scene, false).then(system =&gt; {
+    system.emitter = sphere;
+});
+</code></pre><p>And then from there you could have used the Inspector to edit it (The inspector can replace the __BLANK with the right id later on)</p>
+<h1><a name="further-links" class="anchor" href="#further-links"></a>Further links</h1><ul>
+<li><a href="/babylon101/particles">Particle 101</a></li>
+<li><a href="/how_to/node_material">Node Material</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

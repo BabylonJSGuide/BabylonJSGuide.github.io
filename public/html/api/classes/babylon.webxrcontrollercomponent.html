@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>WebXRControllerComponent - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.webxrcontrollercomponent.html">WebXRControllerComponent</a>
+					</li>
+				</ul>
+				<h1>WebXRControllerComponent</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This class represents a single component (for example button or thumbstick) of a motion controller</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">WebXRControllerComponent</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel">
+					<h3>Implements</h3>
+					<ul class="tsd-hierarchy">
+						<li><a href="../interfaces/babylon.idisposable.html" class="tsd-signature-type">IDisposable</a></li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Constructors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Properties</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#id" class="tsd-kind-icon">id</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#onaxisvaluechangedobservable" class="tsd-kind-icon">on<wbr>Axis<wbr>Value<wbr>Changed<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#onbuttonstatechangedobservable" class="tsd-kind-icon">on<wbr>Button<wbr>State<wbr>Changed<wbr>Observable</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#type" class="tsd-kind-icon">type</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrcontrollercomponent.html#button_type" class="tsd-kind-icon">BUTTON_<wbr>TYPE</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrcontrollercomponent.html#squeeze_type" class="tsd-kind-icon">SQUEEZE_<wbr>TYPE</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrcontrollercomponent.html#thumbstick_type" class="tsd-kind-icon">THUMBSTICK_<wbr>TYPE</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrcontrollercomponent.html#touchpad_type" class="tsd-kind-icon">TOUCHPAD_<wbr>TYPE</a></li>
+									<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrcontrollercomponent.html#trigger_type" class="tsd-kind-icon">TRIGGER_<wbr>TYPE</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Accessors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#axes" class="tsd-kind-icon">axes</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#changes" class="tsd-kind-icon">changes</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#haschanges" class="tsd-kind-icon">has<wbr>Changes</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#pressed" class="tsd-kind-icon">pressed</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#touched" class="tsd-kind-icon">touched</a></li>
+									<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#value" class="tsd-kind-icon">value</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#dispose" class="tsd-kind-icon">dispose</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#isaxes" class="tsd-kind-icon">is<wbr>Axes</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#isbutton" class="tsd-kind-icon">is<wbr>Button</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrcontrollercomponent.html#update" class="tsd-kind-icon">update</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Constructors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+						<a name="constructor" class="tsd-anchor"></a>
+						<h3>constructor</h3>
+						<a href="/playground/?code=constructor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">new <wbr>WebXRController<wbr>Component<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, type<span class="tsd-signature-symbol">: </span><a href="../globals.html#motioncontrollercomponenttype" class="tsd-signature-type">MotionControllerComponentType</a>, _buttonIndex<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, _axesIndices<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.webxrcontrollercomponent.html" class="tsd-signature-type">WebXRControllerComponent</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Creates a new component for a motion controller.
+										It is created by the motion controller itself</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>id: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>the id of this component</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<h5>type: <a href="../globals.html#motioncontrollercomponenttype" class="tsd-signature-type">MotionControllerComponentType</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>the type of the component</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> _buttonIndex: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>index in the buttons array of the gamepad</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> _axesIndices: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>indices of the values in the axes array of the gamepad</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.webxrcontrollercomponent.html" class="tsd-signature-type">WebXRControllerComponent</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Properties</h2>
+					<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="id" class="tsd-anchor"></a>
+						<h3>id</h3>
+						<a href="/playground/?code=id" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>the id of this component</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onaxisvaluechangedobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Axis<wbr>Value<wbr>Changed<wbr>Observable</h3>
+						<a href="/playground/?code=onAxisValueChangedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Axis<wbr>Value<wbr>Changed<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>If axes are available for this component (like a touchpad or thumbstick) the observers will be notified when
+								the axes data changes</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="onbuttonstatechangedobservable" class="tsd-anchor"></a>
+						<h3>on<wbr>Button<wbr>State<wbr>Changed<wbr>Observable</h3>
+						<a href="/playground/?code=onButtonStateChangedObservable" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">on<wbr>Button<wbr>State<wbr>Changed<wbr>Observable<span class="tsd-signature-symbol">:</span> <a href="babylon.observable.html" class="tsd-signature-type">Observable</a><span class="tsd-signature-symbol">&lt;</span><a href="babylon.webxrcontrollercomponent.html" class="tsd-signature-type">WebXRControllerComponent</a><span class="tsd-signature-symbol">&gt;</span></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Observers registered here will be triggered when the state of a button changes
+								State change is either pressed / touched / value</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+						<a name="type" class="tsd-anchor"></a>
+						<h3>type</h3>
+						<a href="/playground/?code=type" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../globals.html#motioncontrollercomponenttype" class="tsd-signature-type">MotionControllerComponentType</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>the type of the component</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+						<a name="button_type" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> BUTTON_<wbr>TYPE</h3>
+						<a href="/playground/?code=BUTTON_TYPE" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">BUTTON_<wbr>TYPE<span class="tsd-signature-symbol">:</span> <a href="../globals.html#motioncontrollercomponenttype" class="tsd-signature-type">MotionControllerComponentType</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>button component type</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+						<a name="squeeze_type" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> SQUEEZE_<wbr>TYPE</h3>
+						<a href="/playground/?code=SQUEEZE_TYPE" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">SQUEEZE_<wbr>TYPE<span class="tsd-signature-symbol">:</span> <a href="../globals.html#motioncontrollercomponenttype" class="tsd-signature-type">MotionControllerComponentType</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>squeeze component type</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+						<a name="thumbstick_type" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> THUMBSTICK_<wbr>TYPE</h3>
+						<a href="/playground/?code=THUMBSTICK_TYPE" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">THUMBSTICK_<wbr>TYPE<span class="tsd-signature-symbol">:</span> <a href="../globals.html#motioncontrollercomponenttype" class="tsd-signature-type">MotionControllerComponentType</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Thumbstick component type</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+						<a name="touchpad_type" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> TOUCHPAD_<wbr>TYPE</h3>
+						<a href="/playground/?code=TOUCHPAD_TYPE" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">TOUCHPAD_<wbr>TYPE<span class="tsd-signature-symbol">:</span> <a href="../globals.html#motioncontrollercomponenttype" class="tsd-signature-type">MotionControllerComponentType</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Touchpad component type</p>
+							</div>
+						</div>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+						<a name="trigger_type" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> TRIGGER_<wbr>TYPE</h3>
+						<a href="/playground/?code=TRIGGER_TYPE" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<div class="tsd-signature tsd-kind-icon">TRIGGER_<wbr>TYPE<span class="tsd-signature-symbol">:</span> <a href="../globals.html#motioncontrollercomponenttype" class="tsd-signature-type">MotionControllerComponentType</a></div>
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>trigger component type</p>
+							</div>
+						</div>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Accessors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="axes" class="tsd-anchor"></a>
+						<h3>axes</h3>
+						<a href="/playground/?code=axes" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> axes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.iwebxrmotioncontrolleraxesvalue.html" class="tsd-signature-type">IWebXRMotionControllerAxesValue</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>The current axes data. If this component has no axes it will still return an object { x: 0, y: 0 }</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="../interfaces/babylon.iwebxrmotioncontrolleraxesvalue.html" class="tsd-signature-type">IWebXRMotionControllerAxesValue</a></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="changes" class="tsd-anchor"></a>
+						<h3>changes</h3>
+						<a href="/playground/?code=changes" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> changes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.iwebxrmotioncontrollercomponentchanges.html" class="tsd-signature-type">IWebXRMotionControllerComponentChanges</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Get the changes. Elements will be populated only if they changed with their previous and current value</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <a href="../interfaces/babylon.iwebxrmotioncontrollercomponentchanges.html" class="tsd-signature-type">IWebXRMotionControllerComponentChanges</a></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="haschanges" class="tsd-anchor"></a>
+						<h3>has<wbr>Changes</h3>
+						<a href="/playground/?code=hasChanges" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> hasChanges<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Return whether or not the component changed the last frame</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="pressed" class="tsd-anchor"></a>
+						<h3>pressed</h3>
+						<a href="/playground/?code=pressed" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> pressed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>is the button currently pressed</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="touched" class="tsd-anchor"></a>
+						<h3>touched</h3>
+						<a href="/playground/?code=touched" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> touched<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>is the button currently touched</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+						<a name="value" class="tsd-anchor"></a>
+						<h3>value</h3>
+						<a href="/playground/?code=value" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> value<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Get the current value of this component</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="dispose" class="tsd-anchor"></a>
+						<h3>dispose</h3>
+						<a href="/playground/?code=dispose" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+									<p>Implementation of <a href="../interfaces/babylon.idisposable.html">IDisposable</a>.<a href="../interfaces/babylon.idisposable.html#dispose">dispose</a></p>
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Dispose this component</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="isaxes" class="tsd-anchor"></a>
+						<h3>is<wbr>Axes</h3>
+						<a href="/playground/?code=isAxes" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">is<wbr>Axes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Are there axes correlating to this component</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>true is axes data is available</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="isbutton" class="tsd-anchor"></a>
+						<h3>is<wbr>Button</h3>
+						<a href="/playground/?code=isButton" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">is<wbr>Button<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Is this component a button (hence - pressable)</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>true if can be pressed</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="update" class="tsd-anchor"></a>
+						<h3>update</h3>
+						<a href="/playground/?code=update" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>nativeController<span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.iminimalmotioncontrollerobject.html" class="tsd-signature-type">IMinimalMotionControllerObject</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>update this component using the gamepad object it is in. Called on every frame</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>nativeController: <a href="../interfaces/babylon.iminimalmotioncontrollerobject.html" class="tsd-signature-type">IMinimalMotionControllerObject</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the native gamepad controller object</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace">
+							<a href="babylon.webxrcontrollercomponent.html" class="tsd-kind-icon">WebXRController<wbr>Component</a>
+							<ul>
+								<li class=" tsd-kind-constructor tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#constructor" class="tsd-kind-icon">constructor</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#id" class="tsd-kind-icon">id</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#onaxisvaluechangedobservable" class="tsd-kind-icon">on<wbr>Axis<wbr>Value<wbr>Changed<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#onbuttonstatechangedobservable" class="tsd-kind-icon">on<wbr>Button<wbr>State<wbr>Changed<wbr>Observable</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#type" class="tsd-kind-icon">type</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrcontrollercomponent.html#button_type" class="tsd-kind-icon">BUTTON_<wbr>TYPE</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrcontrollercomponent.html#squeeze_type" class="tsd-kind-icon">SQUEEZE_<wbr>TYPE</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrcontrollercomponent.html#thumbstick_type" class="tsd-kind-icon">THUMBSTICK_<wbr>TYPE</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrcontrollercomponent.html#touchpad_type" class="tsd-kind-icon">TOUCHPAD_<wbr>TYPE</a>
+								</li>
+								<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrcontrollercomponent.html#trigger_type" class="tsd-kind-icon">TRIGGER_<wbr>TYPE</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#axes" class="tsd-kind-icon">axes</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#changes" class="tsd-kind-icon">changes</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#haschanges" class="tsd-kind-icon">has<wbr>Changes</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#pressed" class="tsd-kind-icon">pressed</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#touched" class="tsd-kind-icon">touched</a>
+								</li>
+								<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#value" class="tsd-kind-icon">value</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#dispose" class="tsd-kind-icon">dispose</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#isaxes" class="tsd-kind-icon">is<wbr>Axes</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#isbutton" class="tsd-kind-icon">is<wbr>Button</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrcontrollercomponent.html#update" class="tsd-kind-icon">update</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

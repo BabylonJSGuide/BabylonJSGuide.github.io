@@ -1,0 +1,224 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Load Files with Assets Manager - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Load Files with Assets Manager</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#using-assetsmanager">Using AssetsManager</a><ul>
+<li><a href="#initializing-and-creating-tasks">Initializing and creating tasks</a></li>
+<li><a href="#task-state-and-error-handling">Task state and error handling</a></li>
+<li><a href="#manager-callbacks-and-observables">Manager callbacks and observables</a></li>
+<li><a href="#executing-the-tasks">Executing the tasks</a></li>
+</ul>
+</li>
+<li><a href="#available-tasks">Available tasks</a><ul>
+<li><a href="#meshassettask">MeshAssetTask</a></li>
+<li><a href="#textfileassettask">TextFileAssetTask</a></li>
+<li><a href="#binaryfileassettask">BinaryFileAssetTask</a></li>
+<li><a href="#imageassettask">ImageAssetTask</a></li>
+<li><a href="#textureassettask">TextureAssetTask</a></li>
+<li><a href="#cubetextureassettask">CubeTextureAssetTask</a></li>
+<li><a href="#hdrcubetextureassettask">HDRCubeTextureAssetTask</a></li>
+<li><a href="#equirectangularcubetextureassettask">EquiRectangularCubeTextureAssetTask</a></li>
+</ul>
+</li>
+<li><a href="#using-a-loading-screen">Using a loading screen</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-load-files-with-assets-manager" class="anchor" href="#how-to-load-files-with-assets-manager"></a>How To Load Files with Assets Manager</h1><p>In order to help developers load multiple assets, Babylon.js (starting with version 1.14) introduced the AssetsManager class.</p>
+<p>This class can be used to import meshes into a scene or load text and binary files.</p>
+<p><strong>Note:</strong> Since meshes you import can have a <em>rotationQuaternion</em> set applying a <em>rotation</em> to one will have unforeseen consequences as detailed in this <a href="/resources/rotation_conventions#warning">warning</a>.</p>
+<h2><a name="using-assetsmanager" class="anchor" href="#using-assetsmanager"></a>Using AssetsManager</h2><h3><a name="initializing-and-creating-tasks" class="anchor" href="#initializing-and-creating-tasks"></a>Initializing and creating tasks</h3><p>To use it, you just have to instantiate it with a current scene:</p>
+<pre><code class="lang-javascript">var assetsManager = new BABYLON.AssetsManager(scene);
+</code></pre>
+<p>Then you can add tasks to the manager:</p>
+<pre><code class="lang-javascript">var meshTask = assetsManager.addMeshTask(&quot;skull task&quot;, &quot;&quot;, &quot;scenes/&quot;, &quot;skull.babylon&quot;);
+</code></pre>
+<p>Each task provides an <code>onSuccess</code> and an <code>onError</code> callback:</p>
+<pre><code class="lang-javascript">meshTask.onSuccess = function (task) {
+    task.loadedMeshes[0].position = BABYLON.Vector3.Zero();
+}
+</code></pre>
+<pre><code class="lang-javascript">meshTask.onError = function (task, message, exception) {
+    console.log(message, exception);
+}
+</code></pre>
+<p>You can do the same thing but with text and binary files:</p>
+<pre><code class="lang-javascript">var textTask = assetsManager.addTextFileTask(&quot;text task&quot;, &quot;msg.txt&quot;);
+textTask.onSuccess = function(task) {
+    console.log(task.text);
+}
+
+var binaryTask = assetsManager.addBinaryFileTask(&quot;binary task&quot;, &quot;grass.jpg&quot;);
+binaryTask.onSuccess = function (task) {
+    // Do something with task.data
+}
+</code></pre>
+<p>Images are also supported through imageTask:</p>
+<pre><code class="lang-javascript">var imageTask = assetsManager.addImageTask(&quot;image task&quot;, &quot;img.jpg&quot;);
+imageTask.onSuccess = function(task) {
+    console.log(task.image.width);
+}
+</code></pre>
+<p>Textures can also be loaded, through textureTask:</p>
+<pre><code class="lang-javascript">var textureTask = assetsManager.addTextureTask(&quot;image task&quot;, &quot;img.jpg&quot;);
+textureTask.onSuccess = function(task) {
+    material.diffuseTexture = task.texture;
+}
+</code></pre>
+<h3><a name="task-state-and-error-handling" class="anchor" href="#task-state-and-error-handling"></a>Task state and error handling</h3><p>Each task has a state object that represents the current execution state of the task. The state is represented by an enum, <code>BABYLON.AssetTaskState</code> and has 4 states:</p>
+<ul>
+<li>INIT - before the task started executing</li>
+<li>RUNNING - when the task started executing but hasn&#39;t finished yet.</li>
+<li>DONE - when the task successfully finished execution</li>
+<li>ERROR - when the task failed.</li>
+</ul>
+<p>If a task has the error state (<code>BABYLON.AssetTaskState.ERROR</code>) a new object will be added to the task: <code>task.errorObject</code> . The error object have 2 variables defined, both optional:</p>
+<ul>
+<li>message - a string explaining the error shortly (such as &quot;request returned 404&quot;)</li>
+<li>exception - in case an exception was thrown during execution, the exception object will contain the stack trace information</li>
+</ul>
+<p>This way the error is accessible also when using the assets manager observers:</p>
+<pre><code class="lang-javascript">assetsManager.onTaskErrorObservable.add(function(task) {
+    console.log(&#39;task failed&#39;, task.errorObject.message, task.errorObject.exception);
+});
+</code></pre>
+<h3><a name="manager-callbacks-and-observables" class="anchor" href="#manager-callbacks-and-observables"></a>Manager callbacks and observables</h3><p>The manager itself provides four callbacks:</p>
+<ul>
+<li>onFinish</li>
+<li>onProgress</li>
+<li>onTaskSuccess</li>
+<li>onTaskError</li>
+</ul>
+<pre><code class="lang-javascript">assetsManager.onProgress = function(remainingCount, totalCount, lastFinishedTask) {
+    engine.loadingUIText = &#39;We are loading the scene. &#39; + remainingCount + &#39; out of &#39; + totalCount + &#39; items still need to be loaded.&#39;;
+};
+
+assetsManager.onFinish = function(tasks) {
+    engine.runRenderLoop(function() {
+        scene.render();
+    });
+};
+</code></pre>
+<p>The manager also allows you to use observers in order to handle onFinish, onProgress, onTaskSuccess and onTaskError:</p>
+<ul>
+<li>onTaskSuccessObservable - registered observers will be executed when a single task finished successfully.</li>
+<li>onTaskErrorObservable - registered observers will be executed when a single task failed.</li>
+<li>onProgressObservable - registered observers will be executed when a single task finished successfully or failed.</li>
+<li>onTasksDoneObservable - registered observers will be execute when all tasks&#39; executions are done (success or failed!)</li>
+</ul>
+<pre><code class="lang-javascript">assetsManager.onTaskSuccessObservable.add(function(task) {
+    console.log(&#39;task successful&#39;, task)
+});
+</code></pre>
+<pre><code class="lang-javascript">assetsManager.onTasksDoneObservable.add(function(tasks) {
+    var errors = tasks.filter(function(task) {return task.taskState === BABYLON.AssetTaskState.ERROR});
+    var successes = tasks.filter(function(task) {return task.taskState !== BABYLON.AssetTaskState.ERROR});
+});
+</code></pre>
+<h3><a name="executing-the-tasks" class="anchor" href="#executing-the-tasks"></a>Executing the tasks</h3><p>To launch all the tasks, you have to call:</p>
+<pre><code class="lang-javascript">assetsManager.load();
+</code></pre>
+<ul>
+<li>You can see a live demo <a href="http://www.babylonjs.com/scenes/assets">here</a></li>
+<li>Playground demo <a href="https://www.babylonjs-playground.com/#ZJYNY#0">here</a> - <i class="fa fa-eye" onclick="createIframe('ZJYNY#0', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="available-tasks" class="anchor" href="#available-tasks"></a>Available tasks</h2><p>There are 7 types of tasks that can be executed using the assets manager.</p>
+<p>Each task is extending the AbstractAssetTask class (and implementing IAssetTask interface) with the following properties:</p>
+<pre><code class="lang-javascript">onSuccess: (task: IAssetTask) =&gt; void;
+onError: (task: IAssetTask, message?: string, exception?: any) =&gt; void;
+
+isCompleted: boolean = false;
+name: string;
+taskState: AssetTaskState;
+errorObject: { message?: string; exception?: any; };
+</code></pre>
+<p>Note that the properties required to initialize a task are always corresponding to the object type it creates. Foe example, the constructor signature of the CubeTextureAssetTask takes the same variables as the class BABYLON.CubeTexture . The order of the variables might vary.</p>
+<h3><a name="meshassettask" class="anchor" href="#meshassettask"></a>MeshAssetTask</h3><p>The mesh asset task is used to load a model externally (a .babylon, .obj, .gltf and so on).</p>
+<p>Constructor signature:</p>
+<pre><code class="lang-javascript">constructor(name: string, meshesNames: any, rootUrl: string, sceneFilename: string)
+</code></pre>
+<p>Extra properties:</p>
+<pre><code class="lang-javascript">public loadedMeshes: Array&lt;AbstractMesh&gt;;
+public loadedParticleSystems: Array&lt;ParticleSystem&gt;;
+public loadedSkeletons: Array&lt;Skeleton&gt;;
+</code></pre>
+<h3><a name="textfileassettask" class="anchor" href="#textfileassettask"></a>TextFileAssetTask</h3><p>Is used to async-load a (text) file.</p>
+<p>Constructor signature:</p>
+<pre><code class="lang-javascript">constructor(name: string, url: string)
+</code></pre>
+<p>Extra properties:</p>
+<pre><code class="lang-javascript">public url: string;
+public text: string;
+</code></pre>
+<h3><a name="binaryfileassettask" class="anchor" href="#binaryfileassettask"></a>BinaryFileAssetTask</h3><p>This task is used to load a binary file. The main difference between this and the TextFileAssetTask is that the data will be stored in an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">ArrayBuffer</a></p>
+<p>Constructor signature:</p>
+<pre><code class="lang-javascript">constructor(name: string, url: string)
+</code></pre>
+<p>Extra properties:</p>
+<pre><code class="lang-javascript">public url: string;
+public data: ArrayBuffer;
+</code></pre>
+<h3><a name="imageassettask" class="anchor" href="#imageassettask"></a>ImageAssetTask</h3><p>This function will load an image (.png, .jpg, .gif). It will create an <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement">HTMLImageElement</a> object</p>
+<p>Constructor signature:</p>
+<pre><code class="lang-javascript">constructor(name: string, url: string)
+</code></pre>
+<p>Extra properties:</p>
+<pre><code class="lang-javascript">public url: string;
+public image: HTMLImageElement;
+</code></pre>
+<h3><a name="textureassettask" class="anchor" href="#textureassettask"></a>TextureAssetTask</h3><p>This will create a new BABYLON.Texture from a provided single url.</p>
+<p>Constructor signature:</p>
+<pre><code class="lang-javascript">constructor(name: string, url: string, noMipmap?: boolean, invertY?: boolean, samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE)
+</code></pre>
+<p>Extra properties:</p>
+<pre><code class="lang-javascript">public texture: Texture;
+</code></pre>
+<h3><a name="cubetextureassettask" class="anchor" href="#cubetextureassettask"></a>CubeTextureAssetTask</h3><p>The same as the TextureAssetTask but for a cube texture</p>
+<p>Constructor signature:</p>
+<pre><code class="lang-javascript">constructor(name: string, url: string, extensions?: string[], noMipmap?: boolean, files?: string[])
+</code></pre>
+<p>Extra properties:</p>
+<pre><code class="lang-javascript">public texture: CubeTexture;
+</code></pre>
+<h3><a name="hdrcubetextureassettask" class="anchor" href="#hdrcubetextureassettask"></a>HDRCubeTextureAssetTask</h3><p>Same as the CubeTextureAssetTask, but for HDR cube textures</p>
+<pre><code class="lang-javascript">constructor(name: string, url: string, size?: number, noMipmap = false, generateHarmonics = true, useInGammaSpace = false, usePMREMGenerator = false)
+</code></pre>
+<p>Extra properties:</p>
+<pre><code class="lang-javascript">public texture: HDRCubeTexture;
+</code></pre>
+<h3><a name="equirectangularcubetextureassettask" class="anchor" href="#equirectangularcubetextureassettask"></a>EquiRectangularCubeTextureAssetTask</h3><p>Same as the CubeTextureAssetTask, but for Equirectangular cube textures</p>
+<pre><code class="lang-javascript">constructor(name: string, url: string, size: number, noMipmap = false, useInGammaSpace = true)
+</code></pre>
+<p>Extra properties:</p>
+<pre><code class="lang-javascript">public texture: EquiRectangularCubeTexture;
+</code></pre>
+<h2><a name="using-a-loading-screen" class="anchor" href="#using-a-loading-screen"></a>Using a loading screen</h2><p>By default, the AssetsManager will display a loading screen while loading assets:</p>
+<p><img src="http://www.babylonjs.com/Screenshots/assets.jpg" alt=""></p>
+<p>If you want to disable the loading screen, you have to set <code>useDefaultLoadingScreen</code> to false:</p>
+<pre><code class="lang-javascript">assetsManager.useDefaultLoadingScreen = false;
+</code></pre>
+<p>The loading screen will also be displayed while loading a scene using SceneLoader if <code>ShowLoadingScreen</code> is set to true (by default).</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ShowLoadingScreen = false;
+</code></pre>
+<p>In the same way, you can also display or hide the loading screen manually using these functions:</p>
+<pre><code class="lang-javascript">engine.displayLoadingUI();
+engine.hideLoadingUI();
+</code></pre>
+<p>Loading text is controlled using <code>loadingUIText</code> :</p>
+<pre><code class="lang-javascript">engine.loadingUIText = &quot;text&quot;;
+</code></pre>
+<p>Background color is controlled using <code>loadingUIBackgroundColor</code> :</p>
+<pre><code class="lang-javascript">engine.loadingUIBackgroundColor = &quot;red&quot;;
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

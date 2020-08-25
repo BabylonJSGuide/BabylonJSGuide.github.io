@@ -1,0 +1,92 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Navigation Mesh - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Navigation Mesh</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-to-use-the-navigation-mesh">How to use the navigation mesh?</a></li>
+<li><a href="#parameters">Parameters</a></li>
+<li><a href="#queries">Queries</a></li>
+<li><a href="#baking-result">Baking result</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="navigation-mesh-generator" class="anchor" href="#navigation-mesh-generator"></a>Navigation Mesh Generator</h1><p><img src="/img/extensions/navigation/NavMeshGeneration.png" alt="Generated Navmesh "></p>
+<p>A Navigation Mesh (or navmesh for short) is a surface topology describing the space where an agent can go based on constraints.
+Based on parameters like agent radius, agent climbing capability, agent height,... the navmesh generation computes a topology from source meshes (the world geometry).
+Then, this topology can have a debug display (blue mesh on screenshot above) to validate the parameters. </p>
+<p>A demo can be found at:  <a href="https://www.babylonjs-playground.com/#HFY257#4">https://www.babylonjs-playground.com/#HFY257#4</a> - <i class="fa fa-eye" onclick="createIframe('HFY257#4', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="how-to-use-the-navigation-mesh" class="anchor" href="#how-to-use-the-navigation-mesh"></a>How to use the navigation mesh?</h2><p>There are many cases to use a navigation mesh: AI and path finding, replace physics for collision detection (only allow player to go where it&#39;s possible instead of using collision detection) and many more cases the BabylonJS users will find.</p>
+<p>First, create the navigation plugin</p>
+<pre><code>let navigationPlugin = new BABYLON.RecastJSPlugin();
+</code></pre><p>Prepare some parameters for the agent constraints (described below)</p>
+<pre><code>var parameters = {
+        cs: 0.2,
+        ch: 0.2,
+        walkableSlopeAngle: 35,
+        walkableHeight: 1,
+        walkableClimb: 1,
+        walkableRadius: 1,
+        maxEdgeLen: 12.,
+        maxSimplificationError: 1.3,
+        minRegionArea: 8,
+        mergeRegionArea: 20,
+        maxVertsPerPoly: 6,
+        detailSampleDist: 6,
+        detailSampleMaxError: 1,
+        };
+</code></pre><p>Call the navigation mesh generation with the parameters and the list of meshes</p>
+<pre><code>navigationPlugin.createNavMesh([groundMesh, wallMesh1, wallMesh2, stair1, stair2], parameters);
+</code></pre><p>And that&#39;s it! you can now use the navigation mesh with the crowd system or make queries.</p>
+<p>Optionaly, you can get a display of the navmesh to ensure it corresponds to your space constraints</p>
+<pre><code>navmeshdebug = navigationPlugin.createDebugNavMesh(scene);
+var matdebug = new BABYLON.StandardMaterial(&#39;matdebug&#39;, scene);
+matdebug.diffuseColor = new BABYLON.Color3(0.1, 0.2, 1);
+matdebug.alpha = 0.2;
+navmeshdebug.material = matdebug;
+</code></pre><h2><a name="parameters" class="anchor" href="#parameters"></a>Parameters</h2><p>cs - The meshes are voxelized in order to compute walkable navmesh. This parameter in world unit define the widthand depth of 1 voxel.</p>
+<p>ch - Same as cs but for height of the voxel.</p>
+<p>walkableSlopeAngle - Angle in degree for the maximum walkable slop.</p>
+<p>walkableHeight - The height in voxel units that is allowd to walk in.</p>
+<p>walkableClimb - The delta in voxel units that can be climbed.</p>
+<p>walkableRadius - the radius in voxel units of the agents.</p>
+<p>maxEdgeLen - The maximum allowed length for contour edges along the border of the mesh. Voxel units.</p>
+<p>maxSimplificationError - The maximum distance a simplified contour&#39;s border edges should deviate  the original raw contour. Voxel units.</p>
+<p>minRegionArea -  The minimum number of cells allowed to form isolated island areas. Voxel units.</p>
+<p>mergeRegionArea - Any regions with a span count smaller than this value will, if possible, be merged with larger regions. Voxel units.</p>
+<p>maxVertsPerPoly - The maximum number of vertices allowed for polygons generated during the contour to polygon conversion process. Must be &gt; 3.</p>
+<p>detailSampleDist - Sets the sampling distance to use when generating the detail mesh. World units.</p>
+<p>detailSampleMaxError - The maximum distance the detail mesh surface should deviate from heightfield data. World Units.</p>
+<h2><a name="queries" class="anchor" href="#queries"></a>Queries</h2><p>Basically, query functions help at getting constraint point and vector by the navigation mesh.</p>
+<pre><code>getClosestPoint(position: Vector3): Vector3;
+getRandomPointAround(position: Vector3, maxRadius: number): Vector3;
+moveAlong(position: Vector3, destination: Vector3): Vector3;
+</code></pre><p>Respectively: </p>
+<ul>
+<li>get a point on the navmesh close to a world position parameter</li>
+<li>get a random world position, on the navmesh, inside a circle of maxRadius.</li>
+<li>constraint a segment by the navmesh and returns the ending world position. Like walking on the navmesh and stopping at the edge.</li>
+</ul>
+<p>When the query can&#39;t find a valid solution, the value (0,0,0) is returned.</p>
+<p>Those functions use a bounding box for querying the world. The solution returned is within that bound. To properly set the default box extent to get a finer or broader result, call:</p>
+<pre><code>setDefaultQueryExtent(extent: Vector3): void;
+</code></pre><p>If your query returns a point too far from the expected result, use a smaller extent. </p>
+<p>It&#39;s possible to get a path built for navigation as a point array. It&#39;s up to the user to use this array for drawing prediction path, trigger events,...</p>
+<pre><code>var pathPoints = navigationPlugin.computePath(crowd.getAgentPosition(agent), navigationPlugin.getClosestPoint(destinationPoint));
+pathLine = BABYLON.MeshBuilder.CreateDashedLines(&quot;ribbon&quot;, {points: pathPoints, updatable: true, instance: pathLine}, scene);
+</code></pre><h2><a name="baking-result" class="anchor" href="#baking-result"></a>Baking result</h2><p>Building a navigation mesh can take a lot of cpu and network resources. In order to lower the download size and cpu needed, it&#39;s possible to bake the result of the navigation mesh computation to a byte stream. That byte stream can later be restored to get the navigation mesh back.</p>
+<p>To retrieve the binary representation of the computed navigation mesh:</p>
+<pre><code>var binaryData = navigationPlugin.getNavmeshData();
+</code></pre><p>binaryData is an Uint8Array that you can save to a file for example.
+To restore an UInt8Array to a navigation mesh:</p>
+<pre><code>navigationPlugin.buildFromNavmeshData(uint8array);
+</code></pre></div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

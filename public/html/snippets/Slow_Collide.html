@@ -1,0 +1,57 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Slow Particle Collisions - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Slow Particle Collisions</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#the-collisions">The Collisions</a></li>
+<li><a href="#escaping-particles">Escaping Particles</a></li>
+<li><a href="#stopping-the-escapes">Stopping the Escapes</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="slow-particles" class="anchor" href="#slow-particles"></a>Slow Particles</h1><p>In the <a href="/samples/Issues.html">issues</a> we found that it is necessary to keep the speed, the distance moved per frame, of particles to below, twice the radius of a particle, to ensure they intersect with walls or each other. Slow particles are those where the initial speed meets this restriction. 
+When the resultant velocities after the collision are based on Newtonian physics for perfectly elastic particles then there are situations when the speeds of particles can increase to indefinitely.</p>
+<h2><a name="the-collisions" class="anchor" href="#the-collisions"></a>The Collisions</h2><p>For Newtonian physics - </p>
+<p>When a particle hits the wall then its velocity perpendicular to the wall will be reversed.</p>
+<p>When two particles collide their velocities along the line joining their centres are exchanged and they retain their velocities tangential to this line.</p>
+<p>Under the right circumstances it is possible for the speed of a number of particles to all be given additively to one particle.</p>
+<p>In Fig 14 the positions of the four pink particles are shown as at frame 1. Each with a radius r and speed v, their velocities shown by the blue arrows. Their positions at frame 2 are shown in grey. At frame 3 the dark grey particles have moved to the red positions, each now having a speed of 2&radic;v. By frame 4 the darker red particle has moved to the position shown in purple now with a speed of 2v. So if the particles had started with a velocity of 0.6r by the fourth frame the verticle speed of one of the particles will be 2.4r, fast enough to avoid intersection with a wall or another sphere.</p>
+<p>Given that the dark red particles reaches position (x, y, 0) when its speed reaches twice the velocity of the pink particles then the necessary positions for their start are shown in Fig 15.</p>
+<p><img src="/img/samples/collide14.jpg" alt="Fig 15">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 15</p>
+<p>The following Playgrounds use four such sets of particles, to produce four particles that combine to give one particle a speed four times that of the original particles. In each case the higher two groups are set in the XY plane and the lower two groups are in the YZ plane. </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1DJ7RH">Playground Example - Increasing Speed</a> - <i class="fa fa-eye" onclick="createIframe('1DJ7RH#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#1DJ7RH#1">Playground Example - Increasing Speed With Trail Markers per Frame </a> - <i class="fa fa-eye" onclick="createIframe('1DJ7RH#1', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#1DJ7RH#2">Playground Example - Increasing Speed, More Spacing</a> - <i class="fa fa-eye" onclick="createIframe('1DJ7RH#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="escaping-particles" class="anchor" href="#escaping-particles"></a>Escaping Particles</h2><p>In the above examples the four fold increase in speed depended on setting the particles in particular positions. In the case of randomly positioning particles, with random velocities, in a box then it is less likely that this will happen but it is possible.</p>
+<p>In the Playground below, there are occassions when particles escape the box even though there initial speeds are set to below 2r. You may need to run the code more than once to see the effect.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MYGV6#3">Playground Example - Escaping Particles</a> - <i class="fa fa-eye" onclick="createIframe('MYGV6#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The maximum speed of the particles can be changed on lines 21 to 23. Lowering the values for the speed decreases the probabilty of escape.  </p>
+<p>A single red particle is included so that its reaction can be followed.</p>
+<h2><a name="stopping-the-escapes" class="anchor" href="#stopping-the-escapes"></a>Stopping the Escapes</h2><p>The easiest way to stop the particles escaping is to rebound from a wall if the displacement of a particle is less than the radius. Any particle that is close enough to the wall will rebound, as will any particle that passes through the wall since its displacement from the wall will be negative and so must be less than the radius.</p>
+<p>Making no changes to the intersection between particles means there can be times that particles will pass through each other. A high number of particles means that this is not noticeable.</p>
+<p>The following Playground is an example that uses the above method to stop particles escaping. One downside is that particles can be seen breaching the walls.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#MYGV6#4">Playground Example - No Escaping Particles</a> - <i class="fa fa-eye" onclick="createIframe('MYGV6#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The maximum speed of the particles can be changed on lines 21 to 23. </p>
+<p>A single red particle is included so that its reaction can be followed.</p>
+<h2><a name="conclusion" class="anchor" href="#conclusion"></a>Conclusion</h2><p>To produce a system of collisions using Newtonian physics the path of a particle between frames must be determined.</p>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h2><p><a href="/samples/Free_Collide.html">Freely Moving Particles</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

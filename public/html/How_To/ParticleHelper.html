@@ -1,0 +1,103 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the Particle Helper - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the Particle Helper</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#particlesystemset">ParticleSystemSet</a></li>
+<li><a href="#available-effects">Available effects</a></li>
+<li><a href="#custom-particlesets">Custom ParticleSets</a></li>
+<li><a href="#generate-custom-particlesets">Generate Custom ParticleSets</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#intermediate-l2">Intermediate - L2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introducing-the-particle-helper" class="anchor" href="#introducing-the-particle-helper"></a>Introducing the Particle Helper</h1><p>Starting with Babylon.js v3.3, you can now use the Particle Helper to create complex particle systems without having to deal with individual properties.</p>
+<p>To use the Particle Helper, you only need to know the name of the effect and then call this code:</p>
+<pre><code>BABYLON.ParticleHelper.CreateAsync(&quot;sun&quot;, scene).then((set) =&gt; {
+    set.start();
+});
+</code></pre><p>This will create regular particle systems. If you want to use GPU particle systems instead, just call this code:</p>
+<pre><code>BABYLON.ParticleHelper.CreateAsync(&quot;sun&quot;, scene, true).then((set) =&gt; {
+    set.start();
+});
+</code></pre><p>You can find a demo here: <a href="https://www.babylonjs-playground.com/#1VGT5D#2">https://www.babylonjs-playground.com/#1VGT5D#2</a> - <i class="fa fa-eye" onclick="createIframe('1VGT5D#2', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="particlesystemset" class="anchor" href="#particlesystemset"></a>ParticleSystemSet</h2><p>When calling <code>BABYLON.ParticleHelper.CreateAsync()</code>, you will get a Promise that will resolve returning a <code>ParticleSystemSet</code>.
+This class can be used with the following properties and functions:</p>
+<ul>
+<li><code>emitterNode</code>: Use this property to get the transform node used as emitter by the particle systems</li>
+<li><code>start(emitter)</code>: Call this function to start all particle systems associated with the current set. You can use the optional parameter to overwrite the emitter</li>
+<li><code>dispose()</code>: Call this function to stop and clear all particle systems</li>
+</ul>
+<p>You can also get the list of particle systems used by the set with <code>set.systems</code>.</p>
+<h2><a name="available-effects" class="anchor" href="#available-effects"></a>Available effects</h2><p>Each effect can be described using a json file like this one: <a href="https://github.com/BabylonJS/Babylon.js/blob/master/assets/particles/systems/sun.json">https://github.com/BabylonJS/Babylon.js/blob/master/assets/particles/systems/sun.json</a></p>
+<p>List of available effects:</p>
+<table>
+<thead>
+<tr>
+<th>Effect name</th>
+<th>Image</th>
+<th>Playground  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>sun</strong></td>
+<td><img src="/img/how_to/particles/sun.jpg" alt="sun"></td>
+<td><a href="https://www.babylonjs-playground.com/#1VGT5D#2">https://www.babylonjs-playground.com/#1VGT5D#2</a> - <i class="fa fa-eye" onclick="createIframe('1VGT5D#2', this)"></i><div class="iframeContainer"></div></td>
+</tr>
+<tr>
+<td><strong>smoke</strong></td>
+<td><img src="/img/how_to/particles/smoke.jpg" alt="smoke"></td>
+<td><a href="https://playground.babylonjs.com/#HT18SF#0">https://playground.babylonjs.com/#HT18SF#0</a> - <i class="fa fa-eye" onclick="createIframe('HT18SF#0', this)"></i><div class="iframeContainer"></div></td>
+</tr>
+<tr>
+<td><strong>rain</strong></td>
+<td><img src="/img/how_to/particles/rain.jpg" alt="rain"></td>
+<td><a href="https://www.babylonjs-playground.com/#XQ8H3C#0">https://www.babylonjs-playground.com/#XQ8H3C#0</a> - <i class="fa fa-eye" onclick="createIframe('XQ8H3C#0', this)"></i><div class="iframeContainer"></div></td>
+</tr>
+<tr>
+<td><strong>fire</strong></td>
+<td><img src="/img/how_to/particles/fire.jpg" alt="fire"></td>
+<td><a href="https://www.babylonjs-playground.com/#7IM02G#0">https://www.babylonjs-playground.com/#7IM02G#0</a> - <i class="fa fa-eye" onclick="createIframe('7IM02G#0', this)"></i><div class="iframeContainer"></div></td>
+</tr>
+<tr>
+<td><strong>explosion</strong></td>
+<td><img src="/img/how_to/particles/explosion.jpg" alt="explosion"></td>
+<td><a href="https://www.babylonjs-playground.com/#X37LS1#3">https://www.babylonjs-playground.com/#X37LS1#3</a> - <i class="fa fa-eye" onclick="createIframe('X37LS1#3', this)"></i><div class="iframeContainer"></div></td>
+</tr>
+</tbody>
+</table>
+<h2><a name="custom-particlesets" class="anchor" href="#custom-particlesets"></a>Custom ParticleSets</h2><p>It is reasonably simple to create your own custom particleSet.  Each of the particleSets listed above... is stored in a BabylonJS folder currently located <a href="https://github.com/BabylonJS/Babylon.js/tree/master/assets/particles/systems"><strong>here</strong></a>. For instance, when you use “sun” as the particleSet <em>type</em>, the particleHelper will pick <a href="https://github.com/BabylonJS/Babylon.js/blob/master/assets/particles/systems/sun.json"><strong>this json</strong></a> (which defines the &#39;sun&#39; particleSet <em>type</em>).</p>
+<p>You may store these custom JSON particleSets anywhere you wish. You can set the base URL for the particleHelper with:  <code>BABYLON.ParticleHelper.BaseAssetsUrl = “https://yourBaseUrl”;</code></p>
+<p>This must be done BEFORE you execute the CreateAsync call which loads your particleSet json file:</p>
+<pre><code>var myParticleSet = new BABYLON.ParticleHelper.CreateAsync(&quot;tornado&quot;, scene).then(function(set) {
+    set.start();
+});
+</code></pre><p>In the above example, &#39;tornado&#39; is NOT the <em>name</em> of a particle system.  It is the name of a particleSet <em>TYPE</em>.  In a moment, we will see how the <em>type</em> string is used.</p>
+<p>Let&#39;s look at the code-line that loads JSON particleSets into the particleHelper:</p>
+<p><code>Tools.LoadFile(`${ParticleHelper.BaseAssetsUrl}/systems/${type}.json`, (data) =&gt; {</code></p>
+<p>Notice the <em>type</em> is used as the name of the JSON file.  Using the previous example, your complete filename would be <code>tornado.json</code>.</p>
+<p>Also notice the /systems/ subFolder heirarchy.  Your custom particleSet JSON file needs to be located in a subFolder called /systems/.  So, <code>yourDomain/systems/tornado.json</code> is where your file should be located and how it should be named (for our example).</p>
+<h2><a name="generate-custom-particlesets" class="anchor" href="#generate-custom-particlesets"></a>Generate Custom ParticleSets</h2><p>You can automatically generate a new JSON particleSet (into a variable) by creatively configuring your particles systems, and then using the ExportSet option.</p>
+<p><a href="https://doc.babylonjs.com/api/classes/babylon.particlehelper#exportset">https://doc.babylonjs.com/api/classes/babylon.particlehelper#exportset</a></p>
+<p>Usage:  <code>var mySet = BABYLON.ParticleHelper.ExportSet( [includedPS1, includedPS2, includedPS3...] );</code></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/features/Particles">Particles Overview</a>  </p>
+<p><a href="/babylon101/particles">Particles 101</a></p>
+<p><a href="/how_to/Sub_Emitters">How to Use Sub Emitters</a></p>
+<p><a href="/How_To/Solid_Particles">Solid Particle System</a></p>
+<h2><a name="intermediate-l2" class="anchor" href="#intermediate-l2"></a>Intermediate - L2</h2><p><a href="/how_to/Customise">How to Customize the Particle System</a> </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

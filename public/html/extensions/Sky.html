@@ -1,0 +1,83 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Sky - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Sky</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#playground-example">Playground example</a></li>
+<li><a href="#how-to-use">How to use?</a></li>
+<li><a href="#configuring-the-sky-material">Configuring the Sky Material</a></li>
+<li><a href="#keeping-the-horizon-relative-to-the-camera-elevation">Keeping the horizon relative to the camera elevation</a></li>
+<li><a href="#using-the-sky-material-to-create-a-reflection-texture">Using the sky material to create a reflection texture</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="sky-material" class="anchor" href="#sky-material"></a>Sky material</h1><p><img src="/img/extensions/materials/sky.png" alt="Sky Material"></p>
+<h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>The sky material allows to create dynamic and texture free effects for skyboxes.</p>
+<p>This work is based on <a href="http://www.cs.utah.edu/~shirley/papers/sunsky/sunsky.pdf">&quot;A Practical Analytic Model for Daylight&quot;</a>.
+First implemented by <a href="http://www.simonwallner.at/projects/atmospheric-scattering">Simon Wallner</a>,
+improved by <a href="http://blenderartists.org/forum/showthread.php?245954-preethams-sky-impementation-HDR">Martin Upitis</a>
+and finally implmented in Three.js by <a href="http://twitter.com/blurspline">zz85</a></p>
+<p>The challenge for skyboxes is to reproduce and configure the sky taking care of the atmosphere state.
+In other words, for example, determine how the light (from sun) is scattered by particles.</p>
+<h2><a name="playground-example" class="anchor" href="#playground-example"></a>Playground example</h2><p>A Playground example can be found here: <a href="https://www.babylonjs-playground.com/#E6OZX#221">Animate the sky</a> - <i class="fa fa-eye" onclick="createIframe('E6OZX#221', this)"></i><div class="iframeContainer"></div></p>
+<p>Just press the following keys:</p>
+<ul>
+<li>1: Set Day</li>
+<li>2: Set Evening</li>
+<li>3: Increase Luminance</li>
+<li>4: Decrease Luminance</li>
+<li>5: Increase Turbidity</li>
+<li>6: Decrease Turbidity</li>
+<li>7: Move horizon to -50</li>
+<li>8: Restore horizon to 0</li>
+</ul>
+<h2><a name="how-to-use" class="anchor" href="#how-to-use"></a>How to use?</h2><p>Simply create a skybox and assign a new instance of the Sky Material:</p>
+<pre><code>var skyMaterial = new BABYLON.SkyMaterial(&quot;skyMaterial&quot;, scene);
+skyMaterial.backFaceCulling = false;
+
+var skybox = BABYLON.Mesh.CreateBox(&quot;skyBox&quot;, 1000.0, scene);
+skybox.material = skyMaterial;
+</code></pre><p>That&#39;s all!</p>
+<h2><a name="configuring-the-sky-material" class="anchor" href="#configuring-the-sky-material"></a>Configuring the Sky Material</h2><p>The aspect of the sky can be customized, including the day/night time. The properties are:</p>
+<pre><code>skyMaterial.turbidity = 1; // Represents the amount (scattering) of haze as opposed to molecules in atmosphere
+</code></pre><p><img src="/img/extensions/materials/skyTurbidity.png" alt="skyTurbidity"></p>
+<pre><code>skyMaterial.luminance = 1; // Controls the overall luminance of sky in interval ]0, 1,190[
+</code></pre><p><img src="/img/extensions/materials/skyLuminance.png" alt="skyLuminance"></p>
+<pre><code>// Control the planet&#39;s orientation over the sun
+skyMaterial.inclination = 0.5; // The solar inclination, related to the solar azimuth in interval [0, 1]
+skyMaterial.azimuth = 0.25; // The solar azimuth in interval [0, 1]
+</code></pre><p>Otherwise, if you want to configure the sun position with a BABYLON.Vector3, you can set:</p>
+<pre><code>// Manually set the sun position
+skyMaterial.useSunPosition = true; // Do not set sun position from azimuth and inclination
+skyMaterial.sunPosition = new BABYLON.Vector3(0, 100, 0);
+</code></pre><p><img src="/img/extensions/materials/skyAzimuthInclination.png" alt="skyAzimuthInclination"></p>
+<pre><code>skyMaterial.rayleigh = 2; // Represents the sky appearance (globally)
+</code></pre><p><img src="/img/extensions/materials/skyRayleigh.png" alt="skyRayleigh"></p>
+<pre><code>// Mie scattering (from [Gustav Mie](https://en.wikipedia.org/wiki/Gustav_Mie))
+// Related to the haze particles in atmosphere
+
+// The amount of haze particles following the Mie scattering theory
+skyMaterial.mieDirectionalG = 0.8;
+
+skyMaterial.mieCoefficient = 0.005; // The mieCoefficient in interval [0, 0.1], affects the property skyMaterial.mieDirectionalG
+</code></pre><p><img src="/img/extensions/materials/skyMie.png" alt="skyMie"></p>
+<h2><a name="keeping-the-horizon-relative-to-the-camera-elevation" class="anchor" href="#keeping-the-horizon-relative-to-the-camera-elevation"></a>Keeping the horizon relative to the camera elevation</h2><p>In some cases, you would like to keep the horizon&#39;s &quot;position&quot; relative to the camera&#39;s position (typically a game where you can flight very high).
+To do that, the material exposes a vector (<code>.cameraOffset</code>) that you can customize.</p>
+<p>Typically:</p>
+<pre><code>// Set the horizon elevation relative to the camera position
+skyMaterial.cameraOffset.y = scene.activeCamera.globalPosition.y;
+</code></pre><p><strong>Note</strong>: this will not modify the sun position as it considered enought far, even when camera is really high.</p>
+<h2><a name="using-the-sky-material-to-create-a-reflection-texture" class="anchor" href="#using-the-sky-material-to-create-a-reflection-texture"></a>Using the sky material to create a reflection texture</h2><p>As a common technique, it would be useful to use the sky material result to reflect the environment. For example, using a PBR material.</p>
+<p>The technique consits on creating a reflection probe (which is a cube texture) and render the sky mesh with the sky material assigned to it. As an example, a playground is available here: <a href="https://www.babylonjs-playground.com/#4R1H1U">https://www.babylonjs-playground.com/#4R1H1U</a> - <i class="fa fa-eye" onclick="createIframe('4R1H1U#', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

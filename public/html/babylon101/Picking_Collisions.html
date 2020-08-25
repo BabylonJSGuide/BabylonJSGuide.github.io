@@ -1,0 +1,87 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Picking Collisions - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Picking Collisions</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-can-i-do-this">How can I do this ?</a></li>
+<li><a href="#advanced-picking-features">Advanced Picking Features</a></li>
+<li><a href="#next-step">Next step</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#features">Features</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="picking-collisions" class="anchor" href="#picking-collisions"></a>Picking Collisions</h1><p>In picking an object with your mouse the main difficulty is to click on a 3D object whereas your screen is a flat 2D display.</p>
+<p>Let’s see how we can get your mouse position transposed in your 3D scene by this gun shooting example:</p>
+<p><img src="/img/how_to/Collisions%20PickResult/11.png" alt="Picking"></p>
+<p><em>Final result</em></p>
+<h2><a name="how-can-i-do-this" class="anchor" href="#how-can-i-do-this"></a>How can I do this ?</h2><p>Babylon engine lets you do this very easily by giving you useful functions.</p>
+<p>First of all, after creation of a plane representing the wall, and a plane with our impact’s picture, we have to detect a click on the UI (User Interface). Once the event is raised, use the function “pick” to get some powerful information about the relation between your click and your scene.</p>
+<pre><code class="lang-javascript">//When click event is raised
+window.addEventListener(&quot;click&quot;, function () {
+   // We try to pick an object
+   var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+});
+</code></pre>
+<p>The pickResult object is mainly composed of 4 pieces of information:</p>
+<ol>
+<li><code>hit</code> <em>(bool)</em>: True if your click hits an object in the scene.</li>
+<li><code>distance</code> <em>(float)</em>: the distance between the active camera and your hit (infinite if no mesh was hit)</li>
+<li><code>pickedMesh</code> <em>(BABYLON.Mesh)</em>: if you hit an object, this is the selected mesh. If not, it’s null.</li>
+<li><code>pickedPoint</code> <em>(BABYLON.Vector3)</em>: the point you have clicked, transformed in 3D coordinates, depending on the object you’ve clicked. Null if no hit.</li>
+</ol>
+<p>Now we have all the data we need to build our scene. We just have to position our gun’s impact picture (a plane made earlier... called impact) when the user clicks on the wall plane:</p>
+<pre><code class="lang-javascript">// if the click hits the wall object, we change the impact picture position
+if (pickResult.hit) {
+   impact.position.x = pickResult.pickedPoint.x;
+   impact.position.y = pickResult.pickedPoint.y;
+}
+</code></pre>
+<p>Fast, and easy, isn’t it?</p>
+<p>Feel free to play with this scene... <a href="https://www.babylonjs-playground.com/#NU4F6Y">at our online playground</a> - <i class="fa fa-eye" onclick="createIframe('NU4F6Y#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="advanced-picking-features" class="anchor" href="#advanced-picking-features"></a>Advanced Picking Features</h2><p>Please note that the pickResult object can provide you with additional information, detailed below:</p>
+<ul>
+<li><code>faceId</code>: this is the position of the picked face&#39;s indices in the indices array. These can be accessed like so:</li>
+</ul>
+<pre><code class="lang-javascript">var indices = pickResult.pickedMesh.getIndices();
+var index0 = indices[pickResult.faceId * 3];
+var index1 = indices[pickResult.faceId * 3 + 1];
+var index2 = indices[pickResult.faceId * 3 + 2];
+</code></pre>
+<ul>
+<li><p><code>submeshId</code>: the ID of the picked submesh inside the picked mesh</p>
+</li>
+<li><p><code>bu</code> and <code>bv</code> properties: these are the barycentric coordinates of the picked point in the face. The picked face is a polygon composed of 3 vertices, and the picked point is the barycenter of those three vertices with the following weights:</p>
+<ul>
+<li><code>1 - bu - bv</code> for the vertex n. 0</li>
+<li><code>bu</code> for the vertex n. 1</li>
+<li><code>bv</code> for the vertex n. 2</li>
+</ul>
+</li>
+<li><p><code>getTextureCoordinates()</code>: computes the texture coordinates of the picked point; these will be returned as a <code>Vector2</code> in texture space, which means its coordinates will be between 0 and 1.</p>
+</li>
+</ul>
+<p>Possible uses include:</p>
+<ul>
+<li>Drawing on a texture using a DynamicTexture,</li>
+<li>Modifying a face that was hit (delete, move vertices, change color...),</li>
+<li>Changing a submesh material,</li>
+<li>etc.</li>
+</ul>
+<h2><a name="next-step" class="anchor" href="#next-step"></a>Next step</h2><p>This collision method is convenient in a lot of situations. Once you understand mouse pick events, you can begin using that functionality to advance your application’s development. Now it is time to learn how to find where a thin line collides or intersects with a mesh using <a href="/babylon101/Raycasts">raycasts</a>.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="features" class="anchor" href="#features"></a>Features</h2><ul>
+<li><a href="/features/Cameras">Cameras Overview</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

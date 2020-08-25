@@ -1,0 +1,331 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Sprites - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Sprites</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#sprite-manager">Sprite Manager</a></li>
+<li><a href="#picking">Picking</a></li>
+<li><a href="#sprite-packed-manager">Sprite Packed Manager</a><ul>
+<li><a href="#packed-format">Packed Format</a></li>
+</ul>
+</li>
+<li><a href="#create-a-sprite-instant">Create A Sprite Instant</a></li>
+<li><a href="#sprite-animation">Sprite Animation</a></li>
+<li><a href="#snippet-server">Snippet server</a></li>
+<li><a href="#packed-spritesheet-playground-examples">Packed SpriteSheet Playground Examples</a></li>
+<li><a href="#sprite-map">Sprite Map</a></li>
+<li><a href="#sprite-map-tiles">Sprite Map Tiles</a><ul>
+<li><a href="#saving-tile-maps">Saving Tile Maps</a></li>
+</ul>
+</li>
+<li><a href="#spritemap-animations">SpriteMap Animations</a></li>
+<li><a href="#spritemap-playground-examples">SpriteMap Playground Examples</a></li>
+<li><a href="#next-step">Next Step</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="sprites" class="anchor" href="#sprites"></a>Sprites</h1><p>In this tutorial, we are going to learn how to manipulate Sprites. Sprites are 2D image/animation, and we will use them to display an image with alpha channel. Sprites always face the camera.</p>
+<p>Nowadays, sprites are often used to display animated characters, and for particles, and to simulate 3D complex objects like trees.  Think of these as simplified &quot;Entities&quot; that are being all rendered in a single draw call per manager.  </p>
+<p>Any grid like implementations (in a 2d or 2.5d game level for instance) that require thousands of sprites to be animated and rendered require a special system called a <a href="#sprite-map">Sprite Map </a> which we will cover later.
+ <em>This is available from BJS version 4.1</em></p>
+<p>Individual sprites are collected together in a single image file called a spritesheet or texture atlas.</p>
+<ul>
+<li>A uniform spritesheet is one where all the sprites are exactly the same size and arranged in order in the file. When you read the term spritesheet in the documentation you can usually assume that it is referring to a uniform spritesheet. A uniform spritesheet is overseen by a <a href="#sprite-manager">Sprite Manager</a>.</li>
+<li>A packed spritesheet is one where the sprites can be of different sizes and often packed in such a way as to minimize the overall size of the file. Usually the full term of <em>packed spritesheet</em> will be used for such a spritesheet. A packed spritesheet is overseen by a <a href="#sprite-packed-manager">Sprite Packed Manager</a>. <em>This is available from BJS version 4.1</em></li>
+</ul>
+<p>For sprites the use of one of these managers is mandatory, even for one sprite. They optimize GPU resources by grouping in one place multiple instances of a sprite.</p>
+<p><img src="/img/how_to/Sprites/08.png" alt="Elements"></p>
+<p><em>Final result</em></p>
+<h2><a name="sprite-manager" class="anchor" href="#sprite-manager"></a>Sprite Manager</h2><p>For sprites of the same size you use</p>
+<pre><code class="lang-javascript">// Create a sprite manager
+var spriteManagerTrees = new BABYLON.SpriteManager(&quot;treesManager&quot;, &quot;Assets/Palm-arecaceae.png&quot;, 2000, 800, scene);
+</code></pre>
+<p>When creating a sprite manager, you have to decide a few parameters:</p>
+<ul>
+<li>Name: a name for this manager.</li>
+<li>The 2D image URL (most of the time, you will want use an image format which contain alpha channel, like .PNG).</li>
+<li>The capacity of this manager : the maximum number of instances in this manager (in our example, we could create 2000 instances of trees).</li>
+<li>The cell size, corresponding to the size of your image, like we’ll see below. Please note that cellSize could be a number or an object made of a width and height properties (Later on you will be able to also specify <code>spriteManager.cellWidth</code> and <code>spriteManager.cellHeight</code>)</li>
+<li>The actual scene, to which we will add this manager.</li>
+</ul>
+<p>To give another example, look at this snippet:</p>
+<pre><code class="lang-javascript">var spriteManagerPlayer = new BABYLON.SpriteManager(&quot;playerManager&quot;,&quot;Assets/Player.png&quot;, 2, {width: 64, height: 64}, scene);
+</code></pre>
+<p>This time, we only want 2 instances, and we said that our sprite’s size is 64x64. Here is what our image looks like:</p>
+<p><img src="/img/how_to/Sprites/08-1.png" alt="Elements"></p>
+<p>Each image of a sprite must be contained in a 64 pixel square, no more no less.</p>
+<h2><a name="picking" class="anchor" href="#picking"></a>Picking</h2><p>Sprites can be picked to interact with like in this example: <a href="https://www.babylonjs-playground.com/#9RI8CG#0">https://www.babylonjs-playground.com/#9RI8CG#0</a> - <i class="fa fa-eye" onclick="createIframe('9RI8CG#0', this)"></i><div class="iframeContainer"></div></p>
+<p>To do so, you need to:</p>
+<ul>
+<li>Turn on picking on the sprites you want: <code>sprite.isPickable = true;</code></li>
+<li>Enable SpriteManager to support picking: <code>spriteManager.isPickable = true;</code></li>
+</ul>
+<p>To do picking you can use the <code>scene.pickSprite</code>:</p>
+<pre><code>var pickResult = scene.pickSprite(this.pointerX, this.pointerY);
+if (pickResult.hit) {
+    pickResult.pickedSprite.angle += 0.5;
+}
+</code></pre><p>You can also use <code>multiPickSprite</code> to get all the sprites under the mouse:</p>
+<pre><code>var pickResult = scene.multiPickSprite(this.pointerX, this.pointerY);
+for (var i = 0; i &lt; pickResult.length; i++) {
+        pickResult[i].pickedSprite.angle += Math.PI / 4;
+}
+</code></pre><p>By default picking will use the bounding rectangle of a sprite (for performance reason). You can set system to use sprite alpha value instead (coming from its texture). Picking will work in this case only if alpha &gt; 0.5.</p>
+<p>Example here: <a href="https://www.babylonjs-playground.com/#9RI8CG#123">https://www.babylonjs-playground.com/#9RI8CG#123</a> - <i class="fa fa-eye" onclick="createIframe('9RI8CG#123', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="sprite-packed-manager" class="anchor" href="#sprite-packed-manager"></a>Sprite Packed Manager</h2><p><em>This is available from BJS version 4.1</em></p>
+<p>For sprites of varying sizes you need an image file and a JSON file containing the positional data of the sprites in the packed spritesheet. The image file and the JSON file should have the same name and be in the same folder, eg pack1.png and pack1.json.</p>
+<p>For example:</p>
+<pre><code class="lang-javascript">var spm = new BABYLON.SpritePackedManager(&quot;spm&quot;, &quot;pack1.png&quot;, 4, scene);
+</code></pre>
+<p>The parameters are:</p>
+<ul>
+<li>Name: a name for this manager.</li>
+<li>The 2D image URL (most of the time, you will want use an image format which contain alpha channel, like .PNG).</li>
+<li>The capacity of this manager : the maximum number of instances in this manager (in our example 4).</li>
+<li>The scene, to which we will add this manager.</li>
+</ul>
+<p>It is also possible to reference an existing JSON object, of the correct format, directly. In this case the JSON object is passed as an additional parameter. For example:</p>
+<p>For example:</p>
+<pre><code class="lang-javascript">var spm = new BABYLON.SpritePackedManager(&quot;spm&quot;, &quot;pack1.png&quot;, 4, scene, JSONObject);
+</code></pre>
+<h3><a name="packed-format" class="anchor" href="#packed-format"></a>Packed Format</h3><p><img src="/img/how_to/Sprites/pack1.png" alt="Packed Spritesheet">;</p>
+<p>The JSON format for the above file is based on that produced using the <em>TexturePacker</em> app with output file framework set to JSON(Hash) and Trim to None and Allow Rotation to Off. For the above packed spritesheet <em>TexturePacker</em> outputs</p>
+<pre><code class="lang-javascript">{   &quot;frames&quot;: {
+
+        &quot;eye.png&quot;: {
+            &quot;frame&quot;: {&quot;x&quot;:0,&quot;y&quot;:148,&quot;w&quot;:400,&quot;h&quot;:400},
+            &quot;rotated&quot;: false,
+            &quot;trimmed&quot;: false,
+            &quot;spriteSourceSize&quot;: {&quot;x&quot;:0,&quot;y&quot;:0,&quot;w&quot;:400,&quot;h&quot;:400},
+            &quot;sourceSize&quot;: {&quot;w&quot;:400,&quot;h&quot;:400}
+        },
+        &quot;redman.png&quot;: {
+            &quot;frame&quot;: {&quot;x&quot;:0,&quot;y&quot;:0,&quot;w&quot;:55,&quot;h&quot;:97},
+            &quot;rotated&quot;: false,
+            &quot;trimmed&quot;: false,
+            &quot;spriteSourceSize&quot;: {&quot;x&quot;:0,&quot;y&quot;:0,&quot;w&quot;:55,&quot;h&quot;:97},
+            &quot;sourceSize&quot;: {&quot;w&quot;:55,&quot;h&quot;:97}
+            },
+        &quot;spot.png&quot;: {
+            &quot;frame&quot;: {&quot;x&quot;:199,&quot;y&quot;:0,&quot;w&quot;:148,&quot;h&quot;:148},
+            &quot;rotated&quot;: false,
+            &quot;trimmed&quot;: false,
+            &quot;spriteSourceSize&quot;: {&quot;x&quot;:0,&quot;y&quot;:0,&quot;w&quot;:148,&quot;h&quot;:148},
+            &quot;sourceSize&quot;: {&quot;w&quot;:148,&quot;h&quot;:148}
+        },
+        &quot;triangle.png&quot;: {
+            &quot;frame&quot;: {&quot;x&quot;:55,&quot;y&quot;:0,&quot;w&quot;:144,&quot;h&quot;:72},
+            &quot;rotated&quot;: false,
+            &quot;trimmed&quot;: false,
+            &quot;spriteSourceSize&quot;: {&quot;x&quot;:0,&quot;y&quot;:0,&quot;w&quot;:144,&quot;h&quot;:72},
+            &quot;sourceSize&quot;: {&quot;w&quot;:144,&quot;h&quot;:72}
+        }
+    },
+    &quot;meta&quot;: {
+        &quot;app&quot;: &quot;https://www.codeandweb.com/texturepacker&quot;,
+        &quot;version&quot;: &quot;1.0&quot;,
+        &quot;image&quot;: &quot;pack1.png&quot;,
+        &quot;format&quot;: &quot;RGBA8888&quot;,
+        &quot;size&quot;: {&quot;w&quot;:400,&quot;h&quot;:548},
+        &quot;scale&quot;: &quot;1&quot;,
+        &quot;smartupdate&quot;: &quot;$TexturePacker:SmartUpdate:c5944b8d86d99a167f95924d4a62d5c3:3ed0ae95f00621580b477fcf2f6edb75:5d0ff2351eb79b7bb8a91bc3358bcff4$&quot;
+    }
+}
+</code></pre>
+<p>SpritePackedManager only uses the frame property for each sprite so the minimal JSON format is:</p>
+<pre><code class="lang-javascript">{   &quot;frames&quot;: {
+        &quot;eye.png&quot;: {
+            &quot;frame&quot;: {&quot;x&quot;:0,&quot;y&quot;:148,&quot;w&quot;:400,&quot;h&quot;:400}
+        },
+        &quot;redman.png&quot;: {
+            &quot;frame&quot;: {&quot;x&quot;:0,&quot;y&quot;:0,&quot;w&quot;:55,&quot;h&quot;:97}
+            },
+        &quot;spot.png&quot;: {
+            &quot;frame&quot;: {&quot;x&quot;:199,&quot;y&quot;:0,&quot;w&quot;:148,&quot;h&quot;:148}
+        },
+        &quot;triangle.png&quot;: {
+            &quot;frame&quot;: {&quot;x&quot;:55,&quot;y&quot;:0,&quot;w&quot;:144,&quot;h&quot;:72}
+        }
+    }
+}
+</code></pre>
+<p>However, it is recomended that you use the full file format cited above the previous image if you plan to use any SpriteMaps in your project.</p>
+<h2><a name="create-a-sprite-instant" class="anchor" href="#create-a-sprite-instant"></a>Create A Sprite Instant</h2><p>For both managers, we can create instances of a sprite linked to a manager. Creating an instance is as simple as:</p>
+<pre><code class="lang-javascript">var sprite = new BABYLON.Sprite(&quot;sprite&quot;, manager);
+</code></pre>
+<p>which uses the first sprite on the sheet.</p>
+<p>Using a uniform spritesheet and SpriteManager you indicate which sprite to use will cellIndex, counting from the top sprite on the left in order right and down.</p>
+<p>For example</p>
+<pre><code class="lang-javascript">var sprite = new BABYLON.Sprite(&quot;sprite&quot;, manager);
+sprite.cellIndex = 2;
+</code></pre>
+<p>Using a packed spritesheet and SpritePackedManager you can either use cellIndex, as above, or the cellRef, the name of sprite. </p>
+<p>For example</p>
+<pre><code class="lang-javascript">var sprite = new BABYLON.Sprite(&quot;sprite&quot;, manager);
+sprite.cellRef = &quot;spot.png&quot;;
+</code></pre>
+<p>You can change its size, orientation or reflection:</p>
+<pre><code class="lang-javascript">sprite.size = 0.3;
+sprite.angle = Math.PI/4;
+sprite.invertU = -1;
+</code></pre>
+<p>Starting with Babylon.js v2.1, you can define the sprite&#39;s width and height:</p>
+<pre><code>sprite.width = 0.3;
+sprite.height = 0.4;
+</code></pre><p>you can manipulate it like any other meshes:</p>
+<pre><code class="lang-javascript">sprite.position.y = -0.3;
+</code></pre>
+<h2><a name="sprite-animation" class="anchor" href="#sprite-animation"></a>Sprite Animation</h2><p>One of the advantages of sprites is animations. The most straight forward way is to use a uniform spritesheet and SpriteManager. You only have to load one large image file which will contain all animation images, one next to another. Just be careful to respect the pixel size that you have specified in the manager.
+For example with this spritesheet of players:</p>
+<p><img src="/img/how_to/Sprites/08-2.png" alt="Elements"></p>
+<p>We can use this to animate our players in more than 40 positions, depending upon the situation (walking, jumping,…). </p>
+<p>If you want to begin the animation, simply call this function:</p>
+<pre><code class="lang-javascript">player.playAnimation(0, 43, true, 100);
+</code></pre>
+<p>The player sprite will be animated from frame 0 to frame 43. The third parameter is indicating if this animation will loop or not, true to loop. The last parameter is the delay between the frames (the smaller it is, the faster the animation).</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#9RI8CG">Playground Example Animation of Uniform Sprites</a> - <i class="fa fa-eye" onclick="createIframe('9RI8CG#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>It is also possible to use playAnimation with sprites from a packed spritesheet. It is worth double checking that the sprites to animate are consecutive and in the correct order in the JSON file.</p>
+<h2><a name="snippet-server" class="anchor" href="#snippet-server"></a>Snippet server</h2><p>tarting with Babylon.js v4.2, you can edit sprite managers using the Inspector. You can then save them on Babylon.js snippet server. When you have a snippet Id, you can easily load the manager using the following code:</p>
+<pre><code>var spriteManagerPlayer = BABYLON.SpriteManager.CreateFromSnippetAsync(&quot;GN24VF&quot;, scene).then(manager =&gt; {
+        scene.debugLayer.show();
+        scene.debugLayer.select(manager);
+ });
+</code></pre><p>Live example: <a href="https://www.babylonjs-playground.com/#G9VPHQ">https://www.babylonjs-playground.com/#G9VPHQ</a> - <i class="fa fa-eye" onclick="createIframe('G9VPHQ#', this)"></i><div class="iframeContainer"></div></p>
+<p>You can also specify &quot;_BLANK&quot; for the snippet Id, in this case the system will create an empty one for you to work on:</p>
+<pre><code>BABYLON.SpriteManager.CreateFromSnippetAsync(&quot;_BLANK&quot;, scene);
+</code></pre><h2><a name="packed-spritesheet-playground-examples" class="anchor" href="#packed-spritesheet-playground-examples"></a>Packed SpriteSheet Playground Examples</h2><ul>
+<li><a href="https://www.babylonjs-playground.com/#K5KTWA">Playground Example Direct JSON Object Full TexturePacker Format</a> - <i class="fa fa-eye" onclick="createIframe('K5KTWA#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#K5KTWA#1">Playground Example Direct JSON Object Minimum Format</a> - <i class="fa fa-eye" onclick="createIframe('K5KTWA#1', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#K5KTWA#2">Playground Example JSON File</a> - <i class="fa fa-eye" onclick="createIframe('K5KTWA#2', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#K5KTWA#4">Playground Example JSON File Multiple Sprites</a> - <i class="fa fa-eye" onclick="createIframe('K5KTWA#4', this)"></i><div class="iframeContainer"></div></li>
+<li><p><a href="https://www.babylonjs-playground.com/#K5KTWA#5">Playground Example JSON File Animated Slide Show</a> - <i class="fa fa-eye" onclick="createIframe('K5KTWA#5', this)"></i><div class="iframeContainer"></div></p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#5GX5DZ">Playground Example Multi Pick Sprites</a> - <i class="fa fa-eye" onclick="createIframe('5GX5DZ#', this)"></i><div class="iframeContainer"></div></p>
+</li>
+</ul>
+<h2><a name="sprite-map" class="anchor" href="#sprite-map"></a>Sprite Map</h2><p><em>This is available from BJS version 4.1</em></p>
+<p>Certain situations are outside of the scope of the standard Sprite Manager.   These are generally when you need to render thousands (dare I say millions?) of animated sprites on screen.  Usually situations like this are reserved for 2d game design, but there are other situations where this would be beneficial.  For now we will focus on specifically the topic of 2d and 2.5d level design.  The only current limitation of this system is that the positions of the sprites are static to a specific grid dictated by the Sprite Maps initializing parameters. </p>
+<p> The SpriteMap is displayed on a standard Plane Mesh and has the ability to be transformed in 3d space.  Each SpriteMap is one draw call and reserves a minimum of 3 texture buffers in memory, more depending on the number of layers in the system.</p>
+<p>It uses the same JSON formats as the Packed Manager.  But does support the options for rotation, extrude and padding.  <em>Soon the trim support will be functional as well</em></p>
+<p>To create a SpriteMap is simple:</p>
+<pre><code class="lang-javascript">var spriteMap = new BABYLON.SpriteMap(name, atlasJSON, spriteTexture, options, scene);
+</code></pre>
+<p>The parameters are:</p>
+<ul>
+<li>Name: a name for this Sprite Map.</li>
+<li>atlasJSON: The atlas JSON that the Sprite Map uses.</li>
+<li>spriteTexture: The atlas Texture that the Sprite Map uses.</li>
+<li>options: The initializing options.</li>
+<li>scene: The scene, to which we will add this map.</li>
+</ul>
+<p>There are several parameters you can pass to the options object, each one will help the Sprite Map reserve the proper data buffers in memory and get the system prepared for display. </p>
+<p>These options are:</p>
+<ul>
+<li>stageSize: A Vector2 of the number of &quot;tiles&quot; in the system.<ul>
+<li>default : Vector2(1,1)</li>
+</ul>
+</li>
+<li>outputSize: A Vector2 of size of the output plane in World Units.<ul>
+<li>default : Vector2(1,1)</li>
+</ul>
+</li>
+<li>outputPosition: A Vector3 of position of the output plane in World Units.<ul>
+<li>default : Vector3.Zero</li>
+</ul>
+</li>
+<li>outputRotation: A Vector3 of rotation of the output plane in World Units.<ul>
+<li>default : Vector3.Zero</li>
+</ul>
+</li>
+<li>layerCount: A Integer of the number of &quot;layers&quot; in the system.<ul>
+<li>default : 1</li>
+</ul>
+</li>
+<li>maxAnimationFrames: The maximum number of frames in any animation on the sheet.<ul>
+<li>default : 0</li>
+</ul>
+</li>
+<li>baseTile: The frame ID of the initial tile to propagate into the system.<ul>
+<li>default : 0</li>
+</ul>
+</li>
+<li>flipU: A Boolean flag to trigger flipping the vertical results of the spite after framing caluations.<ul>
+<li>default : false</li>
+</ul>
+</li>
+<li>colorMultiply: A Vector3 that will multiply the final color value of the map.<ul>
+<li>default : Vector3(1,1,1)</li>
+</ul>
+</li>
+</ul>
+<p>After initialization you can change the rotation and position of the output by referencing the spriteMaps.position | rotation like a standard mesh.  Any other option change (like stageSize, or layerCount etc...) its recommended that you dispose the map and re-initialize with the correct options.</p>
+<h2><a name="sprite-map-tiles" class="anchor" href="#sprite-map-tiles"></a>Sprite Map Tiles</h2><p>Each Sprite map is comprised of a number of tiles of equal size, splitting the output plane into a grid.  </p>
+<p>To change what tile is at a certain location we call this method:</p>
+<pre><code class="lang-javascript">spriteMap.changeTiles(layerID, tileID, frameID)
+</code></pre>
+<p>The parameters are:</p>
+<ul>
+<li>layerID: Integer of the target layer of the system.</li>
+<li>tileID: Vector2| Vector2[] of the target tile of the layer.</li>
+<li>frameID: Integer frame ID of the sprite you want to change to.</li>
+</ul>
+<p>If you are going to make multiple changes at once add all the tileID Vector2&#39;s of like frame ids into an array and pass that to the tileID parameter.  Otherwise the buffers have to be updated for each tile instead of in batches which is not optimal. </p>
+<p>It is recommended that you find a single transparent pixel on your Texture file, or create a &quot;blank tile&quot; in your JSON file, so you can have fully transparent tiles when the cell needs to be blank.  </p>
+<p>This is easy to do in the full example below I just added:</p>
+<pre><code>{
+    &quot;filename&quot;: &quot;blank.png&quot;,
+    &quot;frame&quot;: {&quot;x&quot;:221,&quot;y&quot;:221,&quot;w&quot;:1,&quot;h&quot;:1},
+    &quot;rotated&quot;: false,
+    &quot;trimmed&quot;: false,
+    &quot;spriteSourceSize&quot;: {&quot;x&quot;:0,&quot;y&quot;:0,&quot;w&quot;:32,&quot;h&quot;:32},
+    &quot;sourceSize&quot;: {&quot;w&quot;:32,&quot;h&quot;:32}
+},
+</code></pre><p>to the top of the JSON frames Object which points to a single pixel on the Texture file.  In the shader this is scaled up to the correct Size and displayed then in the entire tile as transparent data.</p>
+<h3><a name="saving-tile-maps" class="anchor" href="#saving-tile-maps"></a>Saving Tile Maps</h3><p>After you have created a SpriteMap that has the correct tile positions, you can export and save this composition for later use.  When loading the &quot;.tilemaps&quot; file back into the system you must be sure that the SpriteMap you are loading it to has the correct layerCount otherwise you will drop webGL errors.</p>
+<p>To save:</p>
+<pre><code class="lang-javascript">spriteMap.saveTileMaps()
+</code></pre>
+<p>To Load:</p>
+<pre><code class="lang-javascript">spriteMap.saveTileMaps(url)
+</code></pre>
+<ul>
+<li>url: String of the location of the .tilemaps file.</li>
+</ul>
+<h2><a name="spritemap-animations" class="anchor" href="#spritemap-animations"></a>SpriteMap Animations</h2><p>Now comes the time where you want to initialize animations for the tiles in the system.  One limitation is that you can have only one animation sequence assigned per frame.  This does not limit you though, as you can make duplicate frame references in your JSON file and then just assign a different animation to the added frame.  You do currently have to &quot;compose&quot; the animations though similar to creating the tilemaps.  This does not have an export option as of yet.</p>
+<p>These animations are unique from the &quot;film strip&quot; style that the other Sprite systems use.  You can assign any frame as the next frame in the sequence and have its own independent timing per animation frame.  The terms of frame and animation frame are not to be confused.  Frame is a reference to the position of the sprite on the atlas, and the animation frame is the specific frame that is being displayed at that moment, dictated by the originating frame (the one that has the animation assigned to it).  All animations are assumed to be looping though they may all have different timings globally and per animation frame.</p>
+<p>To create an animation assign each cell.</p>
+<pre><code class="lang-javascript">spriteMap.addAnimationToTile(frameID, animationFrame, nextFrameID, animationFrameDisplayTiming, globalSpeed)
+</code></pre>
+<ul>
+<li>frameID: Integer ID of the sprite frame to assign the animation to.</li>
+<li>animationFrame: Integer ID of the animation frame to assign data to.</li>
+<li>nextFrameID:  Integer ID of the next sprite frame in the animation.</li>
+<li>animationFrameDisplayTiming: Float between 0-1 of when the animation frame will be displayed.  This will be described more below.</li>
+<li>globalSpeed: Float scalar of the speed of the animation.</li>
+</ul>
+<p>Each Sprite Map has a timing value being passed to the shader that displays it.  In the shader it modulates the time value between 0-1 essentially looping the time at a set rate.  Each tile looks to see if it has animation data assigned and then check if it is on the correct animation frame for that time.  This is determined by checking if the animation frames display timing value is below the modulated time.  This time value is further controlled by scalar that can speed up or slow down the animation across all its animation frames.</p>
+<p>Fortunately you only have to compose the animations once if multiple SpriteMaps use the same data, you can just pass the animation map to the system directly from another and it will propagate all the animations over.</p>
+<pre><code class="lang-javascript">spriteMap1.animationMap = spriteMap0.animationMap
+</code></pre>
+<p>I know this might sound complex but take a look at the examples for a better understanding.</p>
+<h2><a name="spritemap-playground-examples" class="anchor" href="#spritemap-playground-examples"></a>SpriteMap Playground Examples</h2><ul>
+<li><a href="https://playground.babylonjs.com/#ARLADE">Full SpriteMap Example</a> - <i class="fa fa-eye" onclick="createIframe('ARLADE#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="next-step" class="anchor" href="#next-step"></a>Next Step</h2><p>Having learned about sprites, it’s time to move on to use them in a classic effect in 3D : <a href="/babylon101/Particles">particles</a>.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/features/Shapes">Mesh Overview</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

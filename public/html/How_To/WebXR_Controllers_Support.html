@@ -1,0 +1,209 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>WebXR Input and Controller support - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>WebXR Input and Controller support</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#some-terms-and-classes-to-clear-things-up">Some terms and classes to clear things up</a></li>
+<li><a href="#webxrinput">WebXRInput</a><ul>
+<li><a href="#oncontrolleraddedobservable">onControllerAddedObservable</a></li>
+<li><a href="#oncontrollerremovedobservable">onControllerRemovedObservable</a></li>
+</ul>
+</li>
+<li><a href="#webxrinputsource">WebXRInputSource</a><ul>
+<li><a href="#public-members">Public members</a></li>
+<li><a href="#input-source-observables">Input source observables</a><ul>
+<li><a href="#onmotioncontrollerinitobservable">onMotionControllerInitObservable</a></li>
+<li><a href="#onmeshloadedobservable">onMeshLoadedObservable</a></li>
+<li><a href="#ondisposeobservable">onDisposeObservable</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#motion-controllers">Motion controllers</a><ul>
+<li><a href="#controller-components">Controller components</a><ul>
+<li><a href="#get-the-components-available">Get the components available</a></li>
+<li><a href="#get-components">Get components</a></li>
+<li><a href="#the-main-component">The main component</a></li>
+<li><a href="#events-and-changes-of-a-controller-component">Events and changes of a controller component</a></li>
+</ul>
+</li>
+<li><a href="#how-to-get-a-model">How to get a model</a><ul>
+<li><a href="#the-input-profile-online-repository">The input-profile online repository</a></li>
+<li><a href="#babylon-local-controller-definitions">Babylon local controller definitions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><p>One of the major differences between WebVR and WebXR was the support for different types of controllers. While WebVR supported the non-standard extended gamepad API and a few selected controllers, WebXR already supports a lot of different types of inputs, including touch screens, motion controllers and hands.</p>
+<h2><a name="some-terms-and-classes-to-clear-things-up" class="anchor" href="#some-terms-and-classes-to-clear-things-up"></a>Some terms and classes to clear things up</h2><p>An XR controller comprises a lot of components that we at babylon sometimes name differently. It is also important to know the terms themselves to be able to use what you actually need. I would recommend reading the <a href="https://www.w3.org/TR/webxr/#input">XR Input section</a> of the WebXR proposal draft.</p>
+<p>An XR Session controls the input source of the current session. Every new input source connected to this session will be registered in the <strong>inputSources</strong> array of the native XR Session and will also trigger the <code>inputsourceschange</code> event with the new input source.</p>
+<p>An Input source has one of three target Ray modes - <code>tracked-pointer</code> for gamepad-like controllers, <code>screen</code> for touch-screen oriented inputs, and <code>gaze</code> for gaze-based inputs (input sources like google cardboard that has no proper way for user input).</p>
+<p>The <a href="/api/classes/babylon.webxrinput">WebXRInput</a> class is responsible of coordinating the addition and removal of input sources. It creates <strong>WebXR Input Sources</strong> classes and disposes them automatically for you.</p>
+<p>Babylon&#39;s <a href="/api/classes/babylon.webxrinputsource">WebXR Input Source</a> class is the container for all user-input related objects. It is created automatically for you by the WebXR Input class for every controller.it is in charge of attaching the motion controller, which, in turn, is in charge of attaching the components and load the model.</p>
+<p>An input source has two important reference spaces - one it the <strong><code>targetRay</code></strong> which represents the pointer&#39;s position and direction. Think - the edge of your finger.and the <strong><code>gripSpace</code></strong> which is the base of a handheld device connected to this input source. Think - the base of your hand. The <code>gripSpace</code> is optional and is only available when a motion controller is connected. And, althou sometimes the same, the grip and target ray space can have different transformation altogether.</p>
+<p>A controller has an attached <strong>motion controller</strong> if the input source is a gamepad-like device (the oculus touch or the windows motion controllers are a good example for that). In turn, each controller has different <strong>components</strong> (buttons, triggers, thumbpads, touchpads) which have their state updated on each frame.</p>
+<p>Note that input sources like of type <code>screen</code> are constantly created and removed when touch starts and end. This is called a transient input in the documentation.</p>
+<h2><a name="webxrinput" class="anchor" href="#webxrinput"></a>WebXRInput</h2><p>The WebXR Input, initialized usually by the WebXR Experience Helper has little to no public members and is, in general, a standalone class that you won&#39;t interact with. However, it does have two observables that can be helpful for your experience:</p>
+<h3><a name="oncontrolleraddedobservable" class="anchor" href="#oncontrolleraddedobservable"></a>onControllerAddedObservable</h3><p>This observable will be triggered when a new input source was detected and its corresponding WebXRInputSource class was created.</p>
+<h3><a name="oncontrollerremovedobservable" class="anchor" href="#oncontrollerremovedobservable"></a>onControllerRemovedObservable</h3><p>Will be triggered when a controller left the experience, right before it is disposed.</p>
+<h2><a name="webxrinputsource" class="anchor" href="#webxrinputsource"></a>WebXRInputSource</h2><p>The input source, created by the WebXR input, is your central container for a single input source (or controller). It has a few important members that will allow you to controller your input source.</p>
+<h3><a name="public-members" class="anchor" href="#public-members"></a>Public members</h3><p>As mentioned before the Input source has two reference spaces - <code>grip</code> and <code>target</code> , which we call <code>pointer</code> . Both of those spaces are represented by a mesh, positioned in the orientation and position that is provided by the XRFrame (and the XR session). Which means that if you want to query the current transformation of the user&#39;s hand or the direction the user is pointing at.</p>
+<p>To do that you can use the <code>getWorldPointerRayToRef</code> function:</p>
+<pre><code class="lang-javascript">const resultRay = new BABYLON.Ray();
+
+// get the pointer direction
+xrInputSource.getWorldPointerRayToRef(resultRay);
+// get the grip direction, if available. If not, the pointer:
+xrInputSource.getWorldPointerRayToRef(resultRay, true);
+</code></pre>
+<p>Usually, you would need to pointer direction ray.</p>
+<h3><a name="input-source-observables" class="anchor" href="#input-source-observables"></a>Input source observables</h3><h4><a name="onmotioncontrollerinitobservable" class="anchor" href="#onmotioncontrollerinitobservable"></a>onMotionControllerInitObservable</h4><p>This will be triggered when a motion controller, if available was initialized and its profile loaded.</p>
+<h4><a name="onmeshloadedobservable" class="anchor" href="#onmeshloadedobservable"></a>onMeshLoadedObservable</h4><p>This is a helper observable and is the same as <code>xrController.motionController.onModelLoadedObservable</code> . But since the motion controller is created async, using the motionController observable will only be available after <code>onMotionControllerInitObservable</code> was triggered:</p>
+<pre><code class="lang-javascript">// async, async, async
+xrInput.onControllerAddedObservable.add((inputSource) =&gt; {
+    inputSource.onMotionControllerInitObservable.add((motionController) =&gt; {
+        motionController.onModelLoadedObservable.add((model) =&gt; {
+
+        });
+    });
+});
+
+// a little cleaner
+xrInput.onControllerAddedObservable.add((inputSource) =&gt; {
+    inputSource.onModelLoadedObservable.add((model) =&gt; {});
+});
+</code></pre>
+<h4><a name="ondisposeobservable" class="anchor" href="#ondisposeobservable"></a>onDisposeObservable</h4><p>Will be triggered right at the end of the <code>dispose()</code> function of the input source.</p>
+<h2><a name="motion-controllers" class="anchor" href="#motion-controllers"></a>Motion controllers</h2><p>In most cases when starting a VR session, the user will have handheld devices, called here motion controllers. A motion controller will be automatically loaded, if available. A motion controller has a profile, containing its different components and their positions in the buttons and axes array, but babylon takes care of this for you so you don&#39;t have to know this to interact with the motion controller. You can see the different profiles in the <a href="https://github.com/immersive-web/webxr-input-profiles">WebXR Input Profiles repository</a></p>
+<h3><a name="controller-components" class="anchor" href="#controller-components"></a>Controller components</h3><p>Each motion controller has different components, that are described in its profile. Each component has one of the types:</p>
+<ul>
+<li>Button</li>
+<li>Trigger</li>
+<li>Squeeze</li>
+<li>Thumbstick</li>
+<li>Touchpad</li>
+</ul>
+<p>It also has a <strong>unique</strong> component id, which correlates to the actual component. For example, the <strong>A button</strong> on the oculus touch has the <strong>type</strong> <code>button</code> , and the <strong>id</strong> <code>a-button</code> .</p>
+<h4><a name="get-the-components-available" class="anchor" href="#get-the-components-available"></a>Get the components available</h4><p>To get a list of the components available, use the <code>getComponentIds</code> function. This will return an array of strings containing the IDs of the different components in this motion controller:</p>
+<pre><code class="lang-javascript">const ids = motionController.getComponentIds();
+// ids = [&quot;a-button&quot;, &quot;b-button&quot;, &quot;xr-standard-trigger&quot;, .....]
+</code></pre>
+<p>You can also get all of the available components using the <code>components</code> public member of the Motion Controller class. It is a map of all <code>WebXRControllerComponent</code> elements in this motion controller.</p>
+<h4><a name="get-components" class="anchor" href="#get-components"></a>Get components</h4><p>To get a component you need to either know its ID or type. When more than one of that type exists, the id would be better.
+The IDs can be found in the profile.</p>
+<p>To get a component according to its ID:</p>
+<pre><code class="lang-javascript">const triggerComponent = motionController.getComponent(&quot;xr-standard-trigger&quot;);
+if (triggerComponent) {
+    // found, do something with it.
+}
+</code></pre>
+<p>To get a component of a specific type:</p>
+<pre><code class="lang-javascript">const squeezeComponent = motionController.getComponentOfType(&quot;squeeze&quot;);
+
+// get the first registered button component
+const buttonComponent = motionController.getComponentOfType(&quot;button&quot;);
+</code></pre>
+<p>to get all components of a specific type:</p>
+<pre><code class="lang-javascript">// get all button components
+const buttonComponents = motionController.getAllComponentsOfType(&quot;button&quot;);
+if (buttonComponents.length) {
+    // some were found
+}
+</code></pre>
+<h4><a name="the-main-component" class="anchor" href="#the-main-component"></a>The main component</h4><p>Each controller has a main component, defined by the vendor. In most cases it is the trigger component type that is the main component. To get the main component (as defined in the profile):</p>
+<pre><code class="lang-javascript">const mainComponent = motionController.getMainComponent();
+// mainComponent always exists!
+</code></pre>
+<h4><a name="events-and-changes-of-a-controller-component" class="anchor" href="#events-and-changes-of-a-controller-component"></a>Events and changes of a controller component</h4><p>A component is updated on each frame with values provided by the gamepad object of the session&#39;s input source. Each button has 2 states - <code>touched</code> and <code>pressed</code> , and a value from 0 to 1 (0 being not pressed at all, 1 being fully pressed). Some components can only have the values 0 and 1 (like the button component).</p>
+<p>Some types of components also have axes values (like a thumbstick or touchpad). The axes have values from -1 to 1.
+1 in the X-axis means right, and 1 in the Y-Axis means down (towards the user).</p>
+<p>To know what the components supports:</p>
+<pre><code class="lang-javascript">if (component.isButton()) {
+    // we have a value
+}
+if (component.isAxes()) {
+    // we have axes data
+}
+</code></pre>
+<p>To get the component values at the current frame:</p>
+<pre><code class="lang-javascript">let value = component.value;
+if (value &gt; 0.8) {
+    // do something nice with this value
+}
+if (component.pressed) {
+    // the component is pressed, meaning value === 1
+}
+
+if (component.touched) {
+    // fingers are on the component, might be half-pressed or moved
+}
+</code></pre>
+<p>To access the axes data:</p>
+<pre><code class="lang-javascript">let axes = component.axes;
+if (axes.x &gt; 0.8) {
+    // do something nice with the x-axis value
+}
+</code></pre>
+<p>The component can also return the changes compared to the last frame. Changes are only populated when they exist, otherwise the changes map will be empty:</p>
+<pre><code class="lang-javascript">// maybe nothing happened between this and last frame
+if (!component.hasChanges) {
+    return;
+}
+let changes = component.changes;
+if (changes.pressed) {
+    // pressed state changed
+    const isPressedNow = changes.pressed.current;
+    const wasPressedInLastFrame = changes.pressed.previous;
+}
+if (changes.value) {
+    // value changed! let&#39;s get the delta
+    const delta - changes.value.current - changes.value.previous;
+}
+</code></pre>
+<p>The components have two observables that can be used to fetch changes (and avoid checking value changes on each frame):</p>
+<pre><code class="lang-javascript">component.onButtonStateChangedObservable.add((component) =&gt; {
+    // something changed, check the changes object
+});
+
+component.onAxisValueChangedObservable.add((values) =&gt; {
+    console.log(values.x, values.y);
+})
+</code></pre>
+<h3><a name="how-to-get-a-model" class="anchor" href="#how-to-get-a-model"></a>How to get a model</h3><h4><a name="the-input-profile-online-repository" class="anchor" href="#the-input-profile-online-repository"></a>The input-profile online repository</h4><p>As part of the (successful!) attempt at forcing standards to WebXR, the guys at the <a href="https://github.com/immersive-web/webxr-input-profiles">WebXR Input Profiles</a> github repository created an online repository that holds models and definition of visual reference definitions for most (if not all) motion controllers available today.</p>
+<p>Babylon.js natively supports this repository and currently uses it as the default model delivery method for XR controllers.</p>
+<p>There is little to no action required on your end - this is automated when not changing the configuration.</p>
+<h4><a name="babylon-local-controller-definitions" class="anchor" href="#babylon-local-controller-definitions"></a>Babylon local controller definitions</h4><p>Before the input-profile repository was published, Babylon had support for different types of controllers - oculus touch (1 and 2), vive, windows motion controllers and more. Since we still wanted to offer local support for those devices, we have decided to not only relay on the online profile repository, but to also deliver babylon-based controller classes for those that are already developed.</p>
+<p>Babylon offers local definitions for the following:</p>
+<ul>
+<li>WIndows Motion Controllers</li>
+<li>Oculus touch 1 and 2</li>
+<li>Vive</li>
+<li>Generic-Button controller</li>
+</ul>
+<p>TO use them, import them to your project, while not forgetting to prioritize them or disable the online repository:</p>
+<pre><code class="lang-javascript">// import the ones you want to use
+import {
+    WebXRMicrosoftMixedRealityController
+} from &#39;@babylonjs/core/XR/motionController/webXRMicrosoftMixedRealityController&#39;;
+
+// prioritize the local classes (but use online if controller not found)
+WebXRMotionControllerManager.PrioritizeOnlineRepository = false;
+// or disable the online repository
+WebXRMotionControllerManager.UseOnlineRepository = false;
+
+// now, if loading a microsoft motion controller it will use the local class
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

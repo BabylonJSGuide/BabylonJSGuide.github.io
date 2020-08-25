@@ -1,0 +1,79 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Blend Modes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Blend Modes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#available-blend-modes">Available Blend Modes</a></li>
+<li><a href="#how-to-use-blend-modes">How to Use Blend Modes</a></li>
+<li><a href="#examples">Examples</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction-to-blend-modes" class="anchor" href="#introduction-to-blend-modes"></a>Introduction to Blend Modes</h1><p>A <em>blend mode</em> determines how, when rendering a mesh, new on-screen pixels will be mixed with existing pixels.</p>
+<p>This may sound trivial as most of the time new pixels simply replace existing ones, which is not really what we may call <em>blending</em> at all. However, in the case of alpha-blended meshes, new pixels do not simply overwrite existing ones: they are <em>combined</em> according to how transparent the mesh is. This is an example of the most simple blending operation available (and also the default one): <code>BABYLON.Engine.ALPHA_COMBINE</code>.</p>
+<p>Other blend modes exist, and allow you to achieve advanced visual effects.</p>
+<h1><a name="available-blend-modes" class="anchor" href="#available-blend-modes"></a>Available Blend Modes</h1><p>All the available blend modes are listed below:</p>
+<table>
+<thead>
+<tr>
+<th>Blend Mode</th>
+<th>Effect</th>
+<th>Additional Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BABYLON.Engine.ALPHA_COMBINE</code></td>
+<td>This is the default blend mode for alpha-blended meshes. Blending is modulated by the alpha value of the pixel being drawn.</td>
+<td>This is the default blend mode.</td>
+</tr>
+<tr>
+<td><code>BABYLON.Engine.ALPHA_ADD</code></td>
+<td>This blend mode will effectively <em>add</em> the new pixel and existing pixel values, giving off a ghost-like effect and brightening what&#39;s behind the mesh.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>BABYLON.Engine.ALPHA_SUBTRACT</code></td>
+<td>The new pixel value is subtracted from the existing one, giving off an &quot;inverted color&quot; effect.</td>
+<td>Blending is <strong>not</strong> modulated by alpha value.</td>
+</tr>
+<tr>
+<td><code>BABYLON.Engine.ALPHA_MULTIPLY</code></td>
+<td>The new and existing pixel values are multiplied, thus what&#39;s behind the rendered mesh is darkened. This is more or less the opposite of the ALPHA_ADD effect.</td>
+<td>Blending is <strong>not</strong> modulated by alpha value.</td>
+</tr>
+<tr>
+<td><code>BABYLON.Engine.ALPHA_MAXIMIZED</code></td>
+<td>This blend mode is similar to ALPHA_ADD, but gives off a less vibrant and saturated effect.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>BABYLON.Engine.ALPHA_ONEONE</code></td>
+<td>This blend mode is very similar to ALPHA_ADD, except that it is not modulated by alpha value. Used internally for various visual effects.</td>
+<td>Blending is <strong>not</strong> modulated by alpha value.</td>
+</tr>
+</tbody>
+</table>
+<p>Please note that the blending operations are in fact simple mathematical operations done seperately on R, G and B components of the pixel values, each one comprised between 0 and 1. As such, having a green mesh (R=0, G=1, B=0) set with ALPHA_SUBTRACT drawn over a yellow one (R=1, G=1, B=0) will give off a red value (R=1, G=0, B=0).</p>
+<h1><a name="how-to-use-blend-modes" class="anchor" href="#how-to-use-blend-modes"></a>How to Use Blend Modes</h1><p>Using blend modes is done by manipulating the <code>alphaMode</code> property of materials, setting it to one of the constants listed above.</p>
+<p><strong>This property will only be used when the rendered mesh is alpha-blended.</strong> This is very important, because since the <code>alphaMode</code> property will have absolutely no effect on an opaque mesh, you will need to make sure your mesh is <em>alpha-blended</em> to use it.</p>
+<p>You can force an opaque mesh to be alpha-blended by making it very slightly transparent, like so:</p>
+<pre><code class="lang-javascript">mesh.visibility = 0.9999;
+</code></pre>
+<p>Or you can assign an opacity texture to its material (even if the opacity texture have no alpha channel):</p>
+<pre><code class="lang-javascript">material.opacityTexture = material.diffuseTexture;
+</code></pre>
+<h1><a name="examples" class="anchor" href="#examples"></a>Examples</h1><p>Here is a screenshot showing the previously mentioned blend modes:</p>
+<p><img src="/img/how_to/blend-modes/blend-modes.jpg" alt="Available Blend Modes"></p>
+<p>This playground scene showcases the available blend modes in action: <a href="https://www.babylonjs-playground.com/#1MSIXB#4">https://www.babylonjs-playground.com/#1MSIXB#4</a> - <i class="fa fa-eye" onclick="createIframe('1MSIXB#4', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

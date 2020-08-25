@@ -1,0 +1,145 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Adding a Roof - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Adding a Roof</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#design-whole-roof">Design Whole Roof</a></li>
+<li><a href="#plan-of-roof">Plan of Roof</a></li>
+<li><a href="#design-roof-in-sections">Design Roof In Sections</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#level-1">Level 1</a></li>
+<li><a href="#level-2">Level 2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="adding-a-roof-to-a-house-built-from-plans" class="anchor" href="#adding-a-roof-to-a-house-built-from-plans"></a>Adding a Roof to a House Built from Plans</h1><p>For any house there is a range of different types of roof that can be added and so there is no automatic way to use the footprint of a house to build a roof directly. However with a little bit of manual design there are methods that can complete the build. Here we present two ways to design and create a hip roof. The example used is based on the <a href="/samples/House">design</a> and <a href="/samples/House_Use">coding</a> of this <a href="https://www.babylonjs-playground.com/#4GBWI5#265">house</a> - <i class="fa fa-eye" onclick="createIframe('4GBWI5#265', this)"></i><div class="iframeContainer"></div>.</p>
+<p><strong>Please note that some functions used in this project uses Earcut, so, in non playground projects, you will have to add a reference to their <a href="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js">cdn</a> or download their <a href="https://github.com/mapbox/earcut#install">npm package</a></strong></p>
+<h2><a name="design-whole-roof" class="anchor" href="#design-whole-roof"></a>Design Whole Roof</h2><p>In this case the <strong>rise</strong>, or roof height, is the same for all sections of the roof.</p>
+<p>The <strong>footprint</strong> for the house defines the inner walls of the house, from which the data for the outer walls is calculated. A roof overhangs the the outer walls. The footprint of the roof, or <strong>roofprint</strong>, defines the corners of this overhang. In <em>Fig 1</em> the black area shows the thickness, or <strong>ply</strong> of the house walls and the red the <strong>overhang</strong> of the roofprint.</p>
+<p><img src="/img/samples/roof1.jpg" alt="overhang">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 1</p>
+<p>Since in creating the house the <em>ply</em>, house <em>height</em> and the footprint <em>corners</em> have already been created they are used to create the roofprint, as in</p>
+<pre><code class="lang-javascript">var overhang = 0.2;
+var overlap = ply + overhang;
+var wholeRoofprint = roofprint(corners, overlap, height);
+</code></pre>
+<p>The function <strong>roofprint</strong> returns a list of Vector3 representing the corners of the roof floor in counter clockwise order.</p>
+<p>Using the roofprint the floor of the roof (or top ceiling) can be added as a mesh.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1Z71FW#41">Playground Example Roof Floor</a> - <i class="fa fa-eye" onclick="createIframe('1Z71FW#41', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="plan-of-roof" class="anchor" href="#plan-of-roof"></a>Plan of Roof</h2><p>Though it is possibly more accurate to use the roofprint as a guide to a plan for the roof it is probably easier (in terms of coordinates) to use the original footprint. All you need to do is draw, in a plan diagram, the planes of the roof. An <strong>apex</strong> is a highest point on the roof where planes meet. The plan diagram in <em>Fig 2</em> shows the floorprint corners numbered C0, C1, C2 etc and the apexes numbered in sequence using A0, A1 etc. <em>Fig 2</em> is drawn to scale based on the original base data. </p>
+<p><img src="/img/samples/roof2.jpg" alt="roof plan">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 2</p>
+<pre><code class="lang-javascript">var baseData = [-3, -2,  -1, -4,  1, -4,  3, -2,  5, -2,  5, 1,  2, 1,  2, 3,  -3, 3];
+</code></pre>
+<p>The red dash lines showing the axes.</p>
+<p>From the diagram the roof apex data can be read off and the coordinate pairs placed in the array in sequence order. First pair is from A0, the second from A1 etc.</p>
+<pre><code class="lang-javascript">var roofApexData = [0, -2,  0, -0.5,  0, 2,  4.5, -0.5];
+</code></pre>
+<p>This data the needs to be turned into an array, <strong>apexes</strong> for example, of Vector2 which will be used as the second parameter of the <strong>roof</strong> function.</p>
+<pre><code class="lang-javascript">var apexes = [];
+
+for(var i = 0; i &lt; roofApexData.length / 2; i++) {
+    apexes.push(new BABYLON.Vector2(roofApexData[2 * i], roofApexData[2 * i + 1]))
+}
+</code></pre>
+<p>Each roof plane can be described using the corner and apex labels. The planes should be draw so that they are described with either 3 or 4 labels. Each plane is set as an array using the labels in a counter clockwise order with corner labels coming first. Remember that the corner labels are already in counter clockwise order. An array of planes is then formed containing all the plane data arrays.</p>
+<pre><code class="lang-javascript">var planes = [
+    [&quot;C0&quot;, &quot;C1&quot;, &quot;A0&quot;],
+    [&quot;C1&quot;, &quot;C2&quot;, &quot;A0&quot;],
+    [&quot;C2&quot;, &quot;C3&quot;, &quot;A0&quot;],
+    [&quot;C3&quot;, &quot;A1&quot;, &quot;A0&quot;],
+    [&quot;C3&quot;, &quot;C4&quot;, &quot;A3&quot;, &quot;A1&quot;],
+    [&quot;C4&quot;, &quot;C5&quot;, &quot;A3&quot;],
+    [&quot;C5&quot;, &quot;C6&quot;, &quot;A1&quot;, &quot;A3&quot;],
+    [&quot;C6&quot;, &quot;C7&quot;, &quot;A2&quot;, &quot;A1&quot;],
+    [&quot;C7&quot;, &quot;C8&quot;, &quot;A2&quot;],
+    [&quot;C8&quot;, &quot;C0&quot;, &quot;A0&quot;, &quot;A2&quot;]
+]
+</code></pre>
+<p>The roof function can then be applied to produce the sections or planes of the roof. </p>
+<p>This takes the parameters as shown</p>
+<pre><code class="lang-javascript">roof(roofprint, apexes, planes, rise, height, uvbase)
+</code></pre>
+<p>The <strong>rise</strong> is the distance from the roof floor to an apex, the height is the height of the house.</p>
+<p>The roof function creates uv values for each plane based on the size of the plane. So a plane that is twice as big as another will have double the uv values. For this to work the parameter <em>uvbase</em> has to larger than the maximum width and height of all the planes. As a rule of thumb use a value about the width (horizontal) of the largest plane.</p>
+<p>The roof function creates the mesh of the roof.</p>
+<p>In the example the roof mesh is built using</p>
+<pre><code class="lang-javascript">var roofSection = roof(wholeRoofprint, apexes, planes, 2, height, 5.6);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1Z71FW#42">Playground Example Roof</a> - <i class="fa fa-eye" onclick="createIframe('1Z71FW#42', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="design-roof-in-sections" class="anchor" href="#design-roof-in-sections"></a>Design Roof In Sections</h2><p>When you want different parts of the roof to have different heights then although it is possible to choose suitable apexes and planes it is much more difficult to determine the apex where a low roof meets the plane of a higher roof. For example in <em>Fig 3</em> it is possible to calculate the x coordinate of apex A using 3D vector geometry.</p>
+<p><img src="/img/samples/roof3.jpg" alt="roof planes meet">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 3</p>
+<p>The simplest solution however is to use values that extend the small roof into the large roof.</p>
+<p>Following this method and using the original floor plan the plan for the lower roof section will cover the red area as in <em>Fig 4</em></p>
+<p><img src="/img/samples/roof4.jpg" alt="overlap 1">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 4</p>
+<p>The help prevent Z fighting the plan for the higher roof will be reduced so that parts of it will fall inside the lower roof.</p>
+<p>The plan drawing for the main roof is now as in <em>Fig 5</em> and for the smaller roof as in <em>Fig 6</em></p>
+<p><img src="/img/samples/roof5.jpg" alt="main roof">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 5</p>
+<p><img src="/img/samples/roof6.jpg" alt="smaller roof">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 6</p>
+<p>Specific corners to be used by the <em>roofprint</em> function have to be created for the main and the small roof. The original corners are used to create the whole roofprint in order to construct the roof floor.</p>
+<pre><code class="lang-javascript">var wholeRoofprint = roofprint(corners, overlap, height);
+var mainRoofprint = roofprint(mainCorners, overlap, height);
+var smallRoofprint = roofprint(smallCorners, overlap, height);
+
+var ceiling = roofFloor(wholeRoofprint);
+</code></pre>
+<p>Apex arrays has to be formed for both the main and small roof</p>
+<pre><code class="lang-javascript">var apexes = [];
+
+for(var i = 0; i &lt; roofApexData.length / 2; i++) {
+    apexes.push(new BABYLON.Vector2(roofApexData[2 * i], roofApexData[2 * i + 1]))
+}
+
+var smallApexes = [];
+
+for(var i = 0; i &lt; smallRoofApexData.length / 2; i++) {
+    smallApexes.push(new BABYLON.Vector2(smallRoofApexData[2 * i], smallRoofApexData[2 * i + 1]))
+}
+</code></pre>
+<p>In the same way two plane arrays are needed, on for each roof</p>
+<pre><code class="lang-javascript">var planes = [
+        [&quot;C0&quot;, &quot;C1&quot;, &quot;A0&quot;],
+        [&quot;C1&quot;, &quot;C2&quot;, &quot;A0&quot;],
+        [&quot;C2&quot;, &quot;C3&quot;, &quot;A0&quot;],
+        [&quot;C3&quot;, &quot;C4&quot;, &quot;A1&quot;, &quot;A0&quot;],
+        [&quot;C4&quot;, &quot;C5&quot;, &quot;A1&quot;],
+        [&quot;C5&quot;, &quot;C0&quot;, &quot;A0&quot;, &quot;A1&quot;]
+    ]
+
+    var smallPlanes = [
+        [&quot;C0&quot;, &quot;C1&quot;, &quot;A1&quot;, &quot;A0&quot;],
+        [&quot;C1&quot;, &quot;C2&quot;, &quot;A1&quot;],
+        [&quot;C2&quot;, &quot;C3&quot;, &quot;A0&quot;, &quot;A1&quot;]
+    ]
+</code></pre>
+<p>Then ,finally, both roof sections can be created</p>
+<pre><code class="lang-javascript">var roofSection = roof(mainRoofprint, apexes, planes, 2, height, 5.1);
+var smallRoofSection = roof(smallRoofprint, smallApexes, smallPlanes, 2, height - 1, 5.1);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1Z71FW#43">Playground Example Roof</a> - <i class="fa fa-eye" onclick="createIframe('1Z71FW#43', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/samples/House">Developing the Code for Build From Plans</a><br><a href="/samples/House_Use">The Code for Build From Plans</a></p>
+<h2><a name="level-1" class="anchor" href="#level-1"></a>Level 1</h2><p><a href="/how_to/parametric_shapes#extruded-non-regular-polygon">Extruded Non Regular Polygon</a>  </p>
+<h2><a name="level-2" class="anchor" href="#level-2"></a>Level 2</h2><p><a href="/How_To/PolygonMeshBuilder">Polygon Mesh Builder</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

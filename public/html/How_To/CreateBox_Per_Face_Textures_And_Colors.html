@@ -1,0 +1,272 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Apply Material to Individual Faces - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Apply Material to Individual Faces</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#face-numbers">Face Numbers</a></li>
+<li><a href="#texture-atlas">Texture Atlas</a></li>
+<li><a href="#colors">Colors</a></li>
+<li><a href="#combine-colors-and-textures">Combine Colors and Textures</a><ul>
+<li><a href="#how-to-apply-faceuv-and-facecolors-examples">How To Apply faceUV and faceColors - Examples</a></li>
+</ul>
+</li>
+<li><a href="#box-faceuv">Box - faceUV</a><ul>
+<li><a href="#how-to-orientate-a-sprite-on-a-face-with-faceuv">How To Orientate a Sprite on a Face with faceUV</a></li>
+<li><a href="#how-to-orientate-a-sprite-on-a-face-with-the-texture-atlas-from-version-40">How To Orientate a Sprite on a Face with the Texture Atlas From Version 4.0</a></li>
+<li><a href="#how-to-orientate-a-sprite-on-a-face-with-the-texture-atlas-before-version-40">How To Orientate a Sprite on a Face with the Texture Atlas Before Version 4.0</a></li>
+</ul>
+</li>
+<li><a href="#box-facecolors">Box - faceColors</a></li>
+<li><a href="#box-mix-face-textures-and-colors">Box - Mix Face Textures and Colors</a></li>
+<li><a href="#cylinder">Cylinder</a></li>
+<li><a href="#extruded-polygon">Extruded Polygon</a></li>
+<li><a href="#polyhedra">Polyhedra.</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-map-material-to-individual-mesh-faces" class="anchor" href="#how-to-map-material-to-individual-mesh-faces"></a>How To Map Material to Individual Mesh Faces</h1><p>This method is only available when creating a mesh using the <em>MeshBuilder</em> method.</p>
+<p>The following meshes have identifiable faces: box; cylinder; extruded polygon and polyhedron have identifiable faces and have the <em>faceUV</em> and <em>faceColors</em> parameters in the options using the <em>MeshBuilder</em> method  to create them. This means that each of their faces can have a different texture or color. For colors a particular color is mapped to a particular face. For textures part of the image file is mapped to a particular face. This can be done with any image and it is often useful to use a texture atlas containing a number of images combined into one image file.</p>
+<p>When you are concerned about the orientation of the images on the faces then it can be necessary to have different orientations of the separate images in the image file.</p>
+<p>Using these methods on the above meshes there is no need for submaterials or submeshes.</p>
+<p>As a prerequisite, you may want to learn more about UV mapping on <a href="https://en.wikipedia.org/wiki/UV_mapping">Wikipedia</a>.</p>
+<h2><a name="face-numbers" class="anchor" href="#face-numbers"></a>Face Numbers</h2><p>The playground below shows that face numbering using <code>MeshBuilder.CreateBox</code> is that </p>
+<ul>
+<li>side 0 faces the positive z direction</li>
+<li>side 1 faces the negative z direction</li>
+<li>side 2 faces the positive x direction</li>
+<li>side 3 faces the negative x direction</li>
+<li>side 4 faces the positive y direction</li>
+<li><p>side 5 faces the negative y direction</p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#ICLXQ8#1">Playground Example Face Numbers</a> - <i class="fa fa-eye" onclick="createIframe('ICLXQ8#1', this)"></i><div class="iframeContainer"></div></p>
+</li>
+</ul>
+<h2><a name="texture-atlas" class="anchor" href="#texture-atlas"></a>Texture Atlas</h2><p>A texture atlas also known as a <em>sprite sheet</em> or <em>sprite atlas</em> contains a range of images as in the example below.</p>
+<p><img src="/img/how_to/apply-material-to-faces/spriteAtlas.png" alt="Sprite Altlas"></p>
+<p>In this atlas there are 24 different images in a 4 rows of 6 a way of mapping each sprite onto an individual face is needed. </p>
+<p>This map will just follow the way <a href="/resources/Facets">texture images are mapped onto a mesh usually</a>.</p>
+<p>The U coordinate goes horizontally left to right from 0 to 1.</p>
+<p>The V coordinate goes vertically bottom to top from 0 to 1.</p>
+<p>To map part of the image the bottom left coordinates and top right coordinates are used.</p>
+<p>As there are six sprites in a row and four in a column divide the image into a grid and mark the axes as below </p>
+<p><img src="/img/how_to/Materials/spritesheet1.jpg" alt="Sprite Atlas with Grid"></p>
+<p>Consider the sprite in the grid space marked with <code>a *</code>, this has bottom left coordinates of <code>(2/6, 1/4)</code> and top right coordinates of <code>(3/6, 2/4)</code>. Counting the columns as <code>0, 1, 2, 3, 4, 5</code> and the rows as <code>0, 1, 2, 3</code> it is in column 2 and row 1.</p>
+<p>Bottom left is <code>(2 * 1/6, 1 * 1/4)</code> and top right is <code>((2 + 1) * 1/6, (1 + 1) * 1/4)</code>.</p>
+<p>In general for this texture atlas a sprite in column <code>c</code> and row <code>r</code> will have coordinates bottom left <code>(c * 1/6, r * 1/4)</code> and top right <code>((c + 1) * 1/6, (r + 1) * 1/4)</code>.</p>
+<p>With faces of the mesh numbered from 0 when you want to map face f to the sprite at grid (c, r) take an array faceUV and put</p>
+<pre><code class="lang-javascript">faceUV[f] = (c * 1/6, r * 1/4, (c + 1) * 1/6, (r + 1) * 1/4);
+</code></pre>
+<p>To pass which texture atlas is to be assigned to the mesh a texture material is formed as usual.</p>
+<pre><code class="lang-javascript">var mat = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+var texture = new BABYLON.Texture(&quot;URL of Texture Atlas&quot;, scene);
+mat.diffuseTexture = texture;
+
+mesh.material = mat;
+</code></pre>
+<h2><a name="colors" class="anchor" href="#colors"></a>Colors</h2><p>To apply a color to a face f just use an array faceColors and assign a color.</p>
+<pre><code class="lang-javascript">faceColors[f] = new BABYLON.Color4(r,g,b,a); 
+</code></pre>
+<p>For colors only no material is needed.</p>
+<p>These colors are BJS Color4-class values. The Color4 alpha values become active if we set <code>hasVertexAlpha = true</code> : </p>
+<h2><a name="combine-colors-and-textures" class="anchor" href="#combine-colors-and-textures"></a>Combine Colors and Textures</h2><p>You can even combine the vertex colors with a colored material.</p>
+<pre><code class="lang-javascript">faceUV[f] = (c * 1/6, r * 1/4, (c + 1) * 1/6, (r + 1) * 1/4);
+faceColors[f] = new BABYLON.Color4(r,g,b,a); 
+</code></pre>
+<h1><a name="how-to-apply-faceuv-and-facecolors-examples" class="anchor" href="#how-to-apply-faceuv-and-facecolors-examples"></a>How To Apply faceUV and faceColors - Examples</h1><p>A box is used as an example of how to use the full scope of this feature and at least one example is provided for each of the other meshes that can use <em>faceUV</em> and <em>facecolors</em></p>
+<h2><a name="box-faceuv" class="anchor" href="#box-faceuv"></a>Box - faceUV</h2><p>A box has six faces so only the bottom row, row 0, of the texture atlas above is used on the box in these examples.</p>
+<p>To map sprites 0 to 5 onto faces 0 to 5 it is sufficient for the face number to match the column number and to set the row number to 0.</p>
+<pre><code class="lang-javascript">  var columns =  6;  // 6 columns
+  var rows =  4;  // 4 rows
+
+  var faceUV = new Array(6);
+
+  for (var i = 0; i &lt; 6; i++) {
+    faceUV[i] = new BABYLON.Vector4(i/columns, 0, (i+1)/columns, 1/rows);
+  }
+</code></pre>
+<p>Then this array is passed to the <em>faceUV</em> option to be used in the <em>MeshBuilder.CreateBox()</em> method along with any options for the size of the box and the material formed with the given texture atlas.</p>
+<pre><code class="lang-javascript">
+var options = {
+   width: 10,
+   height: 3,
+   depth: 5,
+   faceUV: faceUV
+};
+
+var box = BABYLON.MeshBuilder.CreateBox(&#39;box&#39;, options, scene);
+
+var mat = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+var texture = new BABYLON.Texture(&quot;URL of Texture Atlas&quot;, scene);
+mat.diffuseTexture = texture;
+box.material = mat;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW">Playground Example Different Sprite on Each Face of Box</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>You do not have to map all the faces. When you just want one face with an image then just map that one face.</p>
+<p>Take the alien sprite on row 0 and column 3 and just map this sprite to face 1.</p>
+<pre><code class="lang-javascript">  var columns =  6;  // 6 columns
+  var rows =  4;  // 4 rows
+
+  var faceUV = new Array(6);
+
+  faceUV[1] = new BABYLON.Vector4(3/columns, 0, (3+1)/columns, 1/rows);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW#1">Playground Example One Sprite One Face</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>As you view this box from different angles you will notice that the whole texture atlas is applied to all the other faces, that is the default value <code>(0, 0, 1, 1)</code> is applied to the other faces. When you want to display just the one sprite on the one face and leave the others blank then you need to set all the other faceUV values to <code>(0, 0, 0, 0)</code>.</p>
+<pre><code class="lang-javascript">  var columns =  6;  // 6 columns
+  var rows =  4;  // 4 rows
+
+  var faceUV = new Array(6);
+
+  //set all values to zero
+  for (var i = 0; i &lt; 6; i++) {
+    faceUV[i] = new BABYLON.Vector4(0, 0, 0, 0);
+  }
+
+  //overwrite wanted face with sprite coordinates
+  faceUV[1] = new BABYLON.Vector4(3/columns, 0, (3+1)/columns, 1/rows);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW#2">Playground Example One Sprite One Face other Faces Blank</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Of course you can do this with one, two, three, four, or five the box faces.</p>
+<p>Want add some all over color to the box then just add in a_diffuseColor_ to your material.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW#3">Playground Example Individual Face with Colored Box</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>You can also use one texture atlas to apply two different images from the same altlas onto two different meshes.  </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW#7">Playground Example Two Meshes Two Images</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Looking closer at the face images around the sides you will see some images are at 90 degrees to others. Unfortunately should you want to have all images around the side to have the same orientation this is not possible by only adjusting UV coordinates. What can be done by swapping coordinates is considered next, followed by a method using an adjustment to the texture atlas to orientate images on the sides.</p>
+<h3><a name="how-to-orientate-a-sprite-on-a-face-with-faceuv" class="anchor" href="#how-to-orientate-a-sprite-on-a-face-with-faceuv"></a>How To Orientate a Sprite on a Face with faceUV</h3><p>Because of how UV coorinates are interpreted it is possible to reflect a sprite horizontally, vertically or both (which is the ame as an 180 degree rotation). Any other rotation has to be dealt with by rotating the sprite within the texture atlas.</p>
+<p>Consider the alien with bottom left and top right coordinates for UV as shown.</p>
+<p><img src="/img/how_to/Materials/alienuv.jpg" alt="alien sprite"></p>
+<p>To set this to face one in its current orientation you would use</p>
+<pre><code class="lang-javascript">faceUV[1] = new BABYLON.Vector4(Ubottom_left, Vbottom_left, Utop_right, Vtop_right);
+</code></pre>
+<p>To reflect in a vertical line swap the horizontal, U, coordinates.</p>
+<pre><code class="lang-javascript">faceUV[1] = new BABYLON.Vector4(Utop_right, Vbottom_left, Ubottom_left, Vtop_right);
+</code></pre>
+<p>To reflect in a horizontal line swap the vertical, V, coordinates.</p>
+<pre><code class="lang-javascript">faceUV[1] = new BABYLON.Vector4(Ubottom_left, Vtop_right, Utop_right, Vbottom_left);
+</code></pre>
+<p>To reflect in both horizontal and vertical lanes swap the U coordinates and also swap the V coordinates.</p>
+<pre><code class="lang-javascript">faceUV = new BABYLON.Vector4(Utop_right, Vtop_right, Ubottom_left, Vbottom_left);
+</code></pre>
+<p>You can use the images on the other faces in the following playground to check the change on orientation of the alien sprite in all the reflections.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW#4">Playground Example Reflecting One Face Sprite</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Since a Vector4 has the properties x, y, z, w, (in that order) setting </p>
+<pre><code class="lang-javascript">faceUV[1] = new BABYLON.Vector4(Ubottom_left, Vbottom_left, Utop_right, Vtop_right);
+</code></pre>
+<p>means</p>
+<pre><code class="lang-javascript">faceUV[1].x = Ubottom_left;
+faceUV[1].y = Vbottom_left;
+faceUV[1].z = Utop_right;
+faceUV[1].w = Vtop_right;
+</code></pre>
+<p>which gives another way to swap coordinates. For example to reflect in a vertical line do</p>
+<pre><code class="lang-javascript">  var temp = faceUV[1].x;
+  faceUV[f].x = faceUV[f].z;
+  faceUV[f].z = temp;
+</code></pre>
+<h3><a name="how-to-orientate-a-sprite-on-a-face-with-the-texture-atlas-from-version-40" class="anchor" href="#how-to-orientate-a-sprite-on-a-face-with-the-texture-atlas-from-version-40"></a>How To Orientate a Sprite on a Face with the Texture Atlas From Version 4.0</h3><p>Three new optional parameters were added to <code>CreateBox</code> in the V4.0 update, these are</p>
+<ul>
+<li>wrap - boolean (default = false), when true all vertical sides (0, 1, 2, 3) will apply image textures in the correct, upright, direction and the two horizontal sides (4, 5) will apply image textures so that when the box is when rotated around the x axis so that these sides are vertical the applied image textures will be applied in their original orientations;</li>
+<li>topBaseAt - integer, 0, 1, 2, 3,  (default = 1), the bottom (base) of the image for the top of the box is next the the side with the number given; </li>
+<li>bottomBaseAt- integer, 0, 1, 2, 3,  (default = 0), the bottom (base) of the image for the bottom of the box is next the the side with the number given.</li>
+</ul>
+<p>In the following playground the two boxes at the top do not use the wrap parameter and the result is backwards compatible with earlier versions of Babylon.js. The lower boxes are with wrap set to true.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICLXQ8#3">Playground Example - Not Wrap and Wrap</a> - <i class="fa fa-eye" onclick="createIframe('ICLXQ8#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The next playground shows the use of non-default values for topBaseAt and bottomBaseAt</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICLXQ8#4">Playground Example - Wrap with Top and Bottom Rotated</a> - <i class="fa fa-eye" onclick="createIframe('ICLXQ8#4', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#ICLXQ8">Playground Example - Cube Face</a> - <i class="fa fa-eye" onclick="createIframe('ICLXQ8#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="how-to-orientate-a-sprite-on-a-face-with-the-texture-atlas-before-version-40" class="anchor" href="#how-to-orientate-a-sprite-on-a-face-with-the-texture-atlas-before-version-40"></a>How To Orientate a Sprite on a Face with the Texture Atlas Before Version 4.0</h3><p>Here consider just the orientation of the sides as viewed in the playground below. </p>
+<p>Take the following texture atlas </p>
+<p><img src="/img/how_to/Materials/letters.jpg" alt="letters"></p>
+<p>and apply it to a cube to give this <a href="https://www.babylonjs-playground.com/#ICZEXW#8">playground</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#8', this)"></i><div class="iframeContainer"></div>.</p>
+<p>Looking at the playground tells you two things</p>
+<ol>
+<li>Which face is number 0, which is number 1 and so on by matching letter to number  </li>
+<li>Going round the sides the orientations vary by 90 degrees.</li>
+</ol>
+<p>As you saw in the previous section it is possible to doubly reflect A so it is the right way up. It is not possible to do this with C and D. To have A, B, C, and D all the same way up the texture atlas itself has to be changed.</p>
+<p>A is rotated 180 degrees and C and D are rotated 90 degrees counter clockwise. Taking this into account change the texture atlas to</p>
+<p><img src="/img/how_to/Materials/rotated_letters.jpg" alt="rotated letters"></p>
+<p>resulting in this <a href="https://www.babylonjs-playground.com/#ICZEXW#9">playground</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#9', this)"></i><div class="iframeContainer"></div>.</p>
+<h2><a name="box-facecolors" class="anchor" href="#box-facecolors"></a>Box - faceColors</h2><p>For this no material is needed.</p>
+<p>Define a 6 element array <em>faceColors</em> (6 box faces) and just set the color of the faces we want with <code>Colors4</code>.  </p>
+<pre><code class="lang-javascript">  var faceColors = new Array(6);
+
+  faceColors[4] = new BABYLON.Color4(1,0,0,1);   // red top
+  faceColors[1] = new BABYLON.Color4(0,1,0,1);   // green front
+</code></pre>
+<p>Then pass this array to the <em>MeshBuilder.CreateBox()</em> method with the new <em>faceColors</em> parameter of options. </p>
+<pre><code class="lang-javascript">  var options = {
+    width: 10,
+    height: 3,
+    depth: 5,
+    faceColors : faceColors
+  };
+
+  var box = BABYLON.MeshBuilder.CreateBox(&#39;box&#39;, options, scene);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW#5">Playground Example Two Colored Faces</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#5', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>These colors are BJS Color4-class values. The Color4 alpha values become active if you set <code>hasVertexAlpha = true</code> for the box. </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW#6">Playground Example Transparent Colors</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="box-mix-face-textures-and-colors" class="anchor" href="#box-mix-face-textures-and-colors"></a>Box - Mix Face Textures and Colors</h2><p>Finally you can also mix per-face colors with per-face textures, and/or mix either with the material&#39;s standard colors.  </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#ICZEXW#10">Playground Example Mixed Textures and Colors</a> - <i class="fa fa-eye" onclick="createIframe('ICZEXW#10', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="cylinder" class="anchor" href="#cylinder"></a>Cylinder</h2><p>A cylinder has three surfaces, the top, the bottom and the tube joining them. For the face options face 0 is the bottom, face 1 is the tube and face 2 the top.</p>
+<p>The following texture image is split into two parts, an approximation to a top and the label. The bottom will be colored just using faceColors and so the bottom face uv coordinates will be 0, 0, 0, 0.</p>
+<p><img src="/img/how_to/apply-material-to-faces/can-texture.jpg" alt="can label and top"></p>
+<p>The label part has width 866 pixels and height 319 pixels.</p>
+<p>So you need to tube surface to have the same height to width ratio.</p>
+<p>When you create a cylinder with default diameter of 1 then the rectangle wrapping around the tube surface will have a width of &pi;.</p>
+<p>Letting h be the height of the cylinder then to not distort the aspect ration of the image wrapped around the cyclinder keep the ratios h/&pi; and 319/866 the same.</p>
+<p>So make h = &pi; * 319/866 = 1.16 to 2 decimal places.</p>
+<p>Also note that because of how a cylinder&#39;s mesh is constructed the horizontal coordinates (U) are swapped in faceUV[1] for the wrapped around image to correct the reflection of the image.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VA2AC#3">Playground Example Cylinder Surfaces</a> - <i class="fa fa-eye" onclick="createIframe('VA2AC#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="extruded-polygon" class="anchor" href="#extruded-polygon"></a>Extruded Polygon</h2><p>An extruded polygon has three surfaces top, bottom and extruded sides, face 0 is the top, face 1 the extruded sides and face 2 the bottom.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#RNCYVM#2">Playground Example of Extruded Polygons for a House</a> - <i class="fa fa-eye" onclick="createIframe('RNCYVM#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="polyhedra" class="anchor" href="#polyhedra"></a>Polyhedra.</h2><p>You can use a texture atlas with all the polyhedra however without very careful consideration of the nature of the texture atlas the results can be a little random looking.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#21QRSK#16">Playground Example Polyhedra with Face Pictures</a> - <i class="fa fa-eye" onclick="createIframe('21QRSK#16', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Having each sprite as a texture rather than a picture makes more sense.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#21QRSK#18">Playground Example Polyhedra with Face Textures</a> - <i class="fa fa-eye" onclick="createIframe('21QRSK#18', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Just colors works well.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#21QRSK#17">Playground Example Polyhedra with Face Colors</a> - <i class="fa fa-eye" onclick="createIframe('21QRSK#17', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

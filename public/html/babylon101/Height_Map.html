@@ -1,0 +1,103 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Height_Map - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Height_Map</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#how-can-i-do-this">How can I do this ?</a><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#explanations-of-a-height-map">Explanations of a height map</a></li>
+<li><a href="#javascript-code">Javascript code</a></li>
+<li><a href="#tips">Tips</a></li>
+</ul>
+</li>
+<li><a href="#next-step">Next step</a></li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>In this tutorial, our goal is to understand height maps, and to learn how to generate realistic grounds.</p>
+<p><img src="/img/how_to/HeightMap/14.png" alt="HeightMap"></p>
+<p><em>Final result</em></p>
+<h2><a name="how-can-i-do-this" class="anchor" href="#how-can-i-do-this"></a>How can I do this ?</h2><h3><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h3><p>Those mountains are very easy to generate with Babylon.js, and with only a single function. But before we do that, we have to create a new material, like we have done many times before:</p>
+<pre><code class="lang-javascript">// Create a material with our land texture.
+var groundMaterial = new BABYLON.StandardMaterial(&quot;ground&quot;, scene);
+groundMaterial.diffuseTexture = new BABYLON.Texture(&quot;Earth__land.jpg&quot;, scene);
+
+// This shows how we would apply this material to a plane. In our later
+// example we&#39;ll replace this with CreateGroundFromHeightMap.
+var groundPlane = BABYLON.Mesh.CreatePlane(&quot;groundPlane&quot;, 200.0, scene);
+
+// When our new mesh is read, apply our material.
+groundPlane.material = groundMaterial;
+</code></pre>
+<p><img src="/img/how_to/HeightMap/14-1.png" alt="HeightMap2"></p>
+<p><em>Our material, a texture, applied to the plane</em></p>
+<h3><a name="explanations-of-a-height-map" class="anchor" href="#explanations-of-a-height-map"></a>Explanations of a height map</h3><p>Understanding height maps is the main objective of this tutorial. A height map is simply a grayscale image like the one we are going to use:</p>
+<p><img src="/img/how_to/HeightMap/worldHeightMap.jpg" alt="HeightMap3"></p>
+<p>This image will now be used to generate our ground, using the different variants of gray of our picture. This image is the elevation data for your ground. Each pixel’s color is interpreted as a distance of displacement or “height” from the “floor” of your mesh. So, the whiter the pixel is, the taller your mountain will be.</p>
+<p>To help you generate those grayscale height maps, you can use software such as “Terragen”, or ”Picogen”.</p>
+<h3><a name="javascript-code" class="anchor" href="#javascript-code"></a>Javascript code</h3><p>  Now let’s see this powerful function named <code>CreateGroundFromHeightMap</code>:</p>
+<pre><code class="lang-javascript">// Create a material with our land texture.
+var groundMaterial = new BABYLON.StandardMaterial(&quot;ground&quot;, scene);
+groundMaterial.diffuseTexture = new BABYLON.Texture(&quot;Earth__land.jpg&quot;, scene);
+
+// Use CreateGroundFromHeightMap to create a height map of 200 units by 200
+// units, with 250 subdivisions in each of the `x` and `z` directions, for a
+// total of 62,500 divisions.
+var ground = BABYLON.Mesh.CreateGroundFromHeightMap(&quot;ground&quot;, &quot;worldHeightMap.jpg&quot;, 200, 200, 250, 0, 10, scene, false, successCallback);
+
+// When our new mesh is read, apply our material.
+ground.material = groundMaterial;
+</code></pre>
+<p>There are many parameters here:</p>
+<ul>
+<li><em>Name</em></li>
+<li><em>Height map picture url</em></li>
+<li><em>Width of mesh</em></li>
+<li><em>Height of mesh</em></li>
+<li><em>Number of subdivisions</em>: increase the complexity of this mesh in order to improve the visual quality of the result</li>
+</ul>
+<p><img src="/img/how_to/HeightMap/14-2.png" alt="HeightMap4"></p>
+<ul>
+<li><em>Minimum height</em> : The lowest level of the mesh</li>
+<li><em>Maximum height</em> : the highest level of the mesh</li>
+<li><em>Scene</em>: the actual scene</li>
+<li><em>Updatable</em>: indicates if this mesh can be updated dynamically in the future (Boolean)</li>
+<li><em>successCallback</em> : will be called after the height map was created and the vertex data is created. It is a function with the mesh as its first variable.</li>
+</ul>
+<p>Now we have a beautiful 3D view of the earth!</p>
+<p><img src="/img/how_to/HeightMap/14-3.png" alt="HeightMap4"></p>
+<p>In my example, I have added a skybox (like we have learned before <a href="/babylon101/environment#skybox">here</a>), and a spotlight to simulate sun activity.</p>
+<p>Here is another example showing what you can achieve with BabylonJS height maps:</p>
+<p><img src="/img/how_to/HeightMap/14-4.png" alt="HeightMap5"></p>
+<h3><a name="tips" class="anchor" href="#tips"></a>Tips</h3><p>When the user is manipulating the camera, it can be awkward if they can see under the ground, or if they zoom-out outside the skybox. So, to avoid that kind of situation, we can constrain the camera movement:</p>
+<pre><code class="lang-javascript">var camerasBorderFunction = function () {
+    //Angle
+    if (camera.beta &lt; 0.1)
+        camera.beta = 0.1;
+    else if (camera.beta &gt; (Math.PI / 2) * 0.9)
+        camera.beta = (Math.PI / 2) * 0.9;
+
+    //Zoom
+    if (camera.radius &gt; 150)
+        camera.radius = 150;
+
+    if (camera.radius &lt; 30)
+        camera.radius = 30;
+};
+
+scene.registerBeforeRender(camerasBorderFunction);
+</code></pre>
+<p>You may be interested in visiting the playground demo that goes with this tutorial:</p>
+<p><a href="https://www.babylonjs-playground.com/#95PXRY">https://www.babylonjs-playground.com/#95PXRY</a> - <i class="fa fa-eye" onclick="createIframe('95PXRY#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="next-step" class="anchor" href="#next-step"></a>Next step</h2><p>Well done! Your scene looks good now, and you can imagine a lot of new landscapes! One more important thing you need to know is <a href="/babylon101/Shadows">how to create shadows</a>. Shadows will give your scene a beautiful rendering effect, so don&#39;t forget about them!</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

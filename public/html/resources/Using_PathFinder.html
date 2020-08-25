@@ -1,0 +1,99 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Using The Path Finder - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Using The Path Finder</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#using-the-path-finder-editor">Using the Path Finder Editor</a><ul>
+<li><a href="#selecting-a-path-finder-configuration">Selecting a path finder configuration</a></li>
+</ul>
+</li>
+<li><a href="#programming-using-path-finder-configurations">Programming using path finder configurations</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="using-path-finder" class="anchor" href="#using-path-finder"></a>Using Path Finder</h1><p>The editor provides a tool to help creating path finders. That will require programming skills.</p>
+<p>For example in this video, a path finder is used to animate randomly a particle system in a given mesh surface:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7HucXzBYC34" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1><a name="using-the-path-finder-editor" class="anchor" href="#using-the-path-finder-editor"></a>Using the Path Finder Editor</h1><p>To access the tool, just click on the toolbar <strong>Tools -&gt; Path Finder...</strong>.</p>
+<p>The tool will show 2 panels:</p>
+<ul>
+<li>List of meshes surfaces where positions are available (on the left)</li>
+<li>Preview of the path finder output (black = wall, white = available)</li>
+</ul>
+<p>To add new available surfaces, just click on the button <strong>Add New</strong> in the list (left). Once you add or remove surfaces, the preview will be updated.</p>
+<p>To edit the path finder configuration, just click on the toolbar <strong>Edit</strong>. Now, the editor&#39;s <strong>Inspector</strong> will show you the available properties:</p>
+<ul>
+<li>Name: The name of the path finder configuration (important and used when programming)</li>
+<li>Size: Can be seen as the quality (number of positions available) of the path finder</li>
+<li>Ray Height: In some cases (like huge/high terrains), the ray height represents the start position on Y axis for rays being launched to check collisions on mesh surfaces. Sometimes you&#39;ll have to set a higher value</li>
+<li>Ray Length: Represents the length of rays being launched to check collisions. Sometimes, you&#39;ll have to set higher value</li>
+<li>Remove...: Remove the current path finder configuration</li>
+<li>Create new...: Create a new path finder configuration</li>
+</ul>
+<h2><a name="selecting-a-path-finder-configuration" class="anchor" href="#selecting-a-path-finder-configuration"></a>Selecting a path finder configuration</h2><p>To select a path finder configuration, just click on the toolbar <strong>Paths -&gt; the configuration to edit</strong>.</p>
+<h1><a name="programming-using-path-finder-configurations" class="anchor" href="#programming-using-path-finder-configurations"></a>Programming using path finder configurations</h1><p>As a developer, you&#39;ll want to use a previously configured path finder. For example, when you add a script to a node, you can use the global instance named <strong>tools</strong> to access all extensions including the path finder extension.</p>
+<p>For example, animating randomly an object:</p>
+<pre><code class="lang-javascript">class Script implements IScript {
+    // Public members
+    public isPlaying: boolean = false; // If the object is being animated
+
+    /**
+     * Constructor
+     */
+    constructor ()
+    { }
+
+    /**
+     * Called once starting the script
+     */
+    public start (): void {
+        // Here we are editing a mesh
+        console.log(mesh);
+    }
+
+    /**
+     * Called on each frame
+     */
+    public update (): void {
+        // Get the path finder instance. Let&#39;s have a configuration named &quot;tutorial&quot;
+        const pathFinderConfiguration = tools.getPathFinder(&#39;tutorial&#39;);
+
+        // Now, get start and end positions calculated by the path finder.
+        // To do that, you&#39;ll have to find the nearest available point for the current node position
+        const start = pathFinderConfiguration.findNearestPoint(mesh.position);
+
+        const randomIndex = (Math.random() * pathFinderConfiguration.availablePoints.length) &gt;&gt; 0;
+        const end = pathFinderConfiguration.availablePoints[randomIndex];
+
+        // Now compute path using the path finder instance
+        const path = pathFinderConfiguration.fromTo(start, end);
+
+        // Now, create an animation. This is used as an helper to create easily a traval animation
+        // Here we create an animation named &quot;AnimationName&quot; set as 60FPS
+        const animation = pathFinderConfiguration.createAnimation(&#39;AnimationName&#39;, path, 60);
+
+        // Animate the node!
+        this.isPlaying = true;
+        scene.stopAnimation(mesh);
+        scene.beginAnimation(mesh, 0, path.length - 1, false, 0.4, () =&gt; {
+            // On animation end, set isPlaying to false
+            this.isPlaying = false;
+        });
+    }
+}
+
+// Function that exports the script
+exportScript(Script);
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

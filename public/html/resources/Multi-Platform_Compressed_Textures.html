@@ -1,0 +1,128 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Multi-Platform Compressed Textures - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Multi-Platform Compressed Textures</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#advantages-of-compressed-textures">Advantages of Compressed Textures</a></li>
+<li><a href="#the-catch">The Catch</a></li>
+<li><a href="#the-solution">The Solution</a><ul>
+<li><a href="#khronos-texture-container-format-ktxhttpswwwkhronosorgopenglessdktoolsktx-files">Khronos Texture Container Format,  <a href="https://www.khronos.org/opengles/sdk/tools/KTX/">.KTX</a> files</a></li>
+</ul>
+</li>
+<li><a href="#generation-using-pvrtextoolhttpscommunityimgteccomdeveloperspowervrtoolspvrtextool">Generation using <a href="https://community.imgtec.com/developers/powervr/tools/pvrtextool/">PVRTexTool</a></a><ul>
+<li><a href="#dos-batch-scripts-for-pvrtextool">DOS batch scripts for PVRTexTool</a><ul>
+<li><a href="#make-ktx-batchbat">make-ktx-batch.bat</a></li>
+<li><a href="#ktx-filesbat">ktx-files.bat</a></li>
+</ul>
+</li>
+<li><a href="#nodejs-script-for-pvrtextool">Node.js script for PVRTexTool</a></li>
+<li><a href="#basis-file-format">Basis file format</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="compressed-textures-for-gpu" class="anchor" href="#compressed-textures-for-gpu"></a>Compressed Textures for GPU</h1><p>There are special formats of textures which are optimized for access by graphics processors.  They differ from formats whose primary mission is to hold / transmit image data for use on a CPU.  Examples of image formats are .JPG &amp; .PNG.  Formats catering to GPUs may not be ones you are likely to have heard of.  The file extensions for some of them are also not well established.</p>
+<h2><a name="advantages-of-compressed-textures" class="anchor" href="#advantages-of-compressed-textures"></a>Advantages of Compressed Textures</h2><p>Unlike image file formats, the data of compressed textures is passed to the graphics hardware in its compressed form.  A .JPG can be very small on disk, but gets expanded by the CPU on its way to the GPU.  Retaining its compressed form is what gives these formats their advantages.  They are:</p>
+<ul>
+<li>They have a smaller RAM footprint.  This is most helpful for mobile devices which share memory between CPU and graphics cores.  Since textures are multi-dimensional, space requirements can escalate very fast for scenes with many large textures.  Higher-end mobile devices have been able to support up to 4k x 4k textures for some time.  These allow for scenes where the camera can approach things, like a highly detailed object without a repeating pattern, and not look blurry when very close.</li>
+<li>More compressed image &quot;blocks&quot; can fit into the cache of the processor at any one time.  Caching / data access patterns are very important for high performance computing (HPC), which graphics is a form of.</li>
+<li>Finally, they could lower battery usage, especially during loading.  Image formats need to be unpacked.  Back when .JPG was being designed, battery computers were mostly just luggables.  The problems being addressed were network speed &amp; disk space.  Who cared then how much CPU was required for re-constituting as long as it was much faster than the network?  Further, mipmaps (ever smaller versions for each power of 2 less in dimensions) need to be generated for image types.  Mipmaps can be built into compressed texture formats.</li>
+</ul>
+<h2><a name="the-catch" class="anchor" href="#the-catch"></a>The Catch</h2><p>There is more than one format for compressed textures.  Due to the low level implementation for them in hardware,  support for a given format cannot be added like a software driver update.  Support is manufactured right into the circuitry.  This is less of a  problem when building an iOS, Android, or DirectX targeted application.  For a BJS scene which should ideally be able to run on any device / browser, this is a big problem.  Having separate HTML pages for different devices is not really an acceptable solution.</p>
+<h2><a name="the-solution" class="anchor" href="#the-solution"></a>The Solution</h2><p>Starting with Babylon.js v3.0, the compressed texture formats supported by a browser / device can be <a href="http://renderingpipeline.com/webgl-extension-viewer/">detected</a>.  This is done when <code>var engine = new BABYLON.Engine(...);</code> is encountered. So now your engine instance knows which compressed formats could be used here.  That does not solve that different devices will report different results though.</p>
+<p>You can also use this <a href="https://www.babylonjs-playground.com/index.html#1SCH7H#5">playground</a> to test which format is supported on your devices.</p>
+<p>There is no getting around the fact that you need to provide multiple versions of each texture in different formats(more on that later).  The only way of doing that involves having different files for each of the variants obviously, but the naming structure must be formalized in order to programmatically substitute for the image format file described in a .babylon file.  The image format file of each texture still needs to be on the server as well, in cases when it needs to be used.</p>
+<h3><a name="khronos-texture-container-format-a-hrefhttpswwwkhronosorgopenglessdktoolsktxktxa-files" class="anchor" href="#khronos-texture-container-format-ktx-files"></a>Khronos Texture Container Format,  <a href="https://www.khronos.org/opengles/sdk/tools/KTX/">.KTX</a> files</h3><p>Now would be a good time to add the aside that due to the fact that this data is not directly used by CPU&#39;s and GPU&#39;s do not actually &quot;read&quot; files, there may or may not be an actual native file format for a given compression format.  Even for those that do have an associated file format, writing load code for each separately would be tedious and require support.</p>
+<p>Enter compressed texture container files, which can handle multiple or even all texture types.  There are also a few container file formats as well (.DDS, .PVR, &amp; .KTX).  Container files can also have all the mipmaps of a texture inside them.  BJS, implements this feature using KTX container files.  KTX is specifically designed for OpenGL, and forces all the arcane code to handle any format OpenGL supports onto the file encoder / generator, even future formats without us doing anything other than adding extension detection, like ASTC.</p>
+<p>Here is a chart of all the current formats possible for WebGL, listed in the order chosen when hardware supports multiple formats  (tie breakers):</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Extension</th>
+<th>Description</th>
+<th>Alpha Capable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASTC</td>
+<td>*-astc.ktx</td>
+<td>Newly approved for WebGL, most powerful, cross-platform.  Implemented in many newer processors, but not exposed by any browsers yet.</td>
+<td>Always</td>
+</tr>
+<tr>
+<td>DXT</td>
+<td>*-dxt.ktx</td>
+<td>Direct X, available primarily on Desktop Operating Systems.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>PVRTC</td>
+<td>*-pvrtc.ktx</td>
+<td>Proprietary.  Power VR chips (includes all Apple iOS processors).  Must be square.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ETC2</td>
+<td>*-etc2.ktx</td>
+<td>ETC1 + alpha capable.  Required by WebGL 2 (or at least OpenGL ES 3, on which WebGL 2 is based).</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ATC</td>
+<td>*-atc.ktx</td>
+<td>Format originating at AMD.  No encoder which supports .KTX found at this time.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ETC1</td>
+<td>*etc1.ktx</td>
+<td>Wide support among older mobile devices.  Need to fall back to images for .PNG files.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>Once your engine instance is established, you need to indicate the compressed formats that you have put on the server from which it can pick from.  This should probably be done very early, as follows:</p>
+<pre><code class="lang-javascript">// order &amp; case do not matter
+var available = [&#39;-astc.ktx&#39;, &#39;-dxt.ktx&#39;, &#39;-pvrtc.ktx&#39;, &#39;-etc2.ktx&#39;, &#39;-etc1.ktx&#39;];
+var formatUsed = engine.setTextureFormatToUse(available);
+</code></pre>
+<h2><a name="generation-using-a-hrefhttpscommunityimgteccomdeveloperspowervrtoolspvrtextoolpvrtextoola" class="anchor" href="#generation-using-pvrtextool"></a>Generation using <a href="https://community.imgtec.com/developers/powervr/tools/pvrtextool/">PVRTexTool</a></h2><p>The are multiple encoder programs for .KTX files (see .KTX link above).  Most also provide for batch processing, since many formats are very CPU intense.  PVRTexTool has been narrowed down for providing additional support.  It has a lot going for it, including both a GUI &amp; command line interface for Windows, OSX, and Linux.  It is also the only encoder which does PVRTC format, which is needed on iOS.</p>
+<p>If you are going to do the encoding on your own in the PVRTexTool GUI tool, there are a few things to keep in mind:</p>
+<ul>
+<li>The texture must be encoded with the Y-axis flipped. (&#39;Vertical Flipped&#39; checkbox at bottom of Encode window)</li>
+<li>PVRTC textures must be square for iOS.  (&#39;Make Square&#39; button in the Toolbox window using Resize tool)</li>
+<li>ASTC support is dropped in from an <a href="https://github.com/ARM-software/astc-encoder/tree/master/Binary">external program</a> from ARM that you put on the path.  (See PVRTexTool <a href="http://cdn.imgtec.com/sdk-documentation/PVRTexTool.User+Manual.pdf">manual</a>, section 1.2.1)</li>
+<li>DXT support is done with &#39;BCx&#39; names.  (Better UI design for WebGL has been <a href="https://community.imgtec.com/forums/topic/could-webgl-be-added-as-an-encoding-groupapi/">requested</a>.)</li>
+<li>Indicating to generate mipmaps should really be done as well. (checkbox to the left of &#39;Vertical Flipped&#39;)</li>
+<li>Always use a Linear-RGB encoding type.</li>
+<li>Not sure a power of 2 size is absolutely required, but scripts below size up to the next power of 2 size.</li>
+</ul>
+<h3><a name="dos-batch-scripts-for-pvrtextool" class="anchor" href="#dos-batch-scripts-for-pvrtextool"></a>DOS batch scripts for PVRTexTool</h3><p>There are 2 batch scripts in the <a href="https://github.com/BabylonJS/Babylon.js/tree/master/Tools/CompressedTextured">BJS repo</a>.  They both require that PVRTexToolCLI.exe, be put on the execution path just as the ASTC drop-in was.  Doing both at the same time, and locating these 2 .BAT files in the same place seems like a good thing to do.</p>
+<h4><a name="make-ktx-batchbat" class="anchor" href="#make-ktx-batchbat"></a>make-ktx-batch.bat</h4><p>This script goes through the current directory, and writes a <code>ktx-batch.bat</code> file there.  When you then call <code>ktx-batch.bat</code>, it will make an ASTC, DXT, PVRTC, ETC2, and ETC1 file for each .JPG and .PNG in the directory. Note that a .PNG extension is an indicator to use an alpha capable sub-type.  ETC1 does not support alpha, so the .PNG will be used as a fall back, if ETC1 ends up being chosen.</p>
+<p>There is a single argument which indicates the quality of the texture. Specify D for developer level, Q for production quality.  Tip: unless you are testing if this fixes hanging issues on mobile devices, you could just delay enabling this till all your textures get finalized.  Also, do not rely on the results you get from using D on a desktop.  DXT does not really have variable quality.</p>
+<h4><a name="ktx-filesbat" class="anchor" href="#ktx-filesbat"></a>ktx-files.bat</h4><p>This script will create the 5 variations of a image file.  It can run for a very long time for Q setting.  The ASTC type will use 100% of all your cores, so your system can be pretty unusable.  Good to kick it off at the end of day.  Also, due to running time, it will skip any files already existing.  To re-do files, delete the existing versions first.</p>
+<p>To recap (in a command shell):</p>
+<pre><code class="lang-dos">cd my-directory-with-images
+make-ktx-batch Q
+ktx-batch
+</code></pre>
+<h3><a name="nodejs-script-for-pvrtextool" class="anchor" href="#nodejs-script-for-pvrtextool"></a>Node.js script for PVRTexTool</h3><p>This is a script that generates PVRTC, ETC1, ETC2, ASTC textures from png and jpg files. It can run on node or as a gulp task. Also it can be configured to generate all texture types or specific ones. More information about how to install and configure the script can be found <a href="https://www.npmjs.com/package/babylonjs-texture-generator">here</a>.</p>
+<h3><a name="basis-file-format" class="anchor" href="#basis-file-format"></a>Basis file format</h3><p>Another way to store compressed image textures is throught the .basis file format</p>
+<p>See: <a href="https://github.com/BinomialLLC/basis_universal">https://github.com/BinomialLLC/basis_universal</a></p>
+<p>Basis Universal is a &quot;supercompressed&quot; GPU texture and texture video compression system that outputs a highly compressed intermediate file format (.basis) that can be quickly transcoded to a wide variety of GPU texture compression formats: PVRTC1 4bpp RGB, BC7 mode 6 RGB, BC1-5, ETC1, and ETC2. We will be adding ASTC RGB or RGBA, BC7 mode 4/5 RGBA, and PVRTC1 4bpp RGBA next. Basis files support non-uniform texture arrays, so cubemaps, volume textures, texture arrays, mipmap levels, video sequences, or arbitrary texture &quot;tiles&quot; can be stored in a single file. The compressor is able to exploit color and pattern correlations across the entire file, so multiple images with mipmaps can be stored very efficiently in a single file.</p>
+<p>Basic example <a href="https://playground.babylonjs.com/#4RN0VF">https://playground.babylonjs.com/#4RN0VF</a> - <i class="fa fa-eye" onclick="createIframe('4RN0VF#', this)"></i><div class="iframeContainer"></div>
+Basis vs png example scene <a href="https://playground.babylonjs.com/#E4VDDW">https://playground.babylonjs.com/#E4VDDW</a> - <i class="fa fa-eye" onclick="createIframe('E4VDDW#', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

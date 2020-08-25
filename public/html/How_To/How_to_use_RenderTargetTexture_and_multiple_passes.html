@@ -1,0 +1,218 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>How to use RenderTargetTexture and run multiple passes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>How to use RenderTargetTexture and run multiple passes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#creating-a-rendertargettexture">Creating a RenderTargetTexture</a></li>
+<li><a href="#using-the-rtt-in-your-scene-as-a-regular-texture">Using the RTT in your scene as a regular texture</a></li>
+<li><a href="#making-multiple-passes-and-composing-them">Making multiple passes and composing them</a></li>
+<li><a href="#performance-and-tips">Performance and tips</a><ul>
+<li><a href="#notes-about-your-shader">Notes about your shader</a></li>
+<li><a href="#debugging-multiple-passes">Debugging multiple passes</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-rendertargettexture-and-run-multiple-passes" class="anchor" href="#how-to-use-rendertargettexture-and-run-multiple-passes"></a>How to use RenderTargetTexture and run multiple passes</h1><p>Sometimes it&#39;s interesting to render a scene multiple times and compose the generated passes for the final image. There are multiple uses for that: you can generate a texture in real time, to make a car rearview mirror for example, or you can perform complex effects with multiple independent renders that are combined together. </p>
+<p>The PostProcess API doesn&#39;t let you render a scene twice. That&#39;s where RenderTargetTexture (RTT) comes into play. Several <a href="http://www.adriancourreges.com/blog/2016/09/09/doom-2016-graphics-study/">games use multiple passes for their graphics</a>.</p>
+<h2><a name="creating-a-rendertargettexture" class="anchor" href="#creating-a-rendertargettexture"></a>Creating a RenderTargetTexture</h2><p>You need to create a RenderTargetTexture and attach it to the scene. It&#39;s pretty straightforward:</p>
+<pre><code>var renderTarget = new BABYLON.RenderTargetTexture(
+    &#39;render to texture&#39;, // name 
+    512, // texture size
+    scene // the scene
+);
+scene.customRenderTargets.push(renderTarget); // add RTT to the scene
+</code></pre><p>You also need to pick which objects will be rendered to that texture. This enables you to select only a few objects for a particular effect, or use simpler meshes for faster rendering.</p>
+<pre><code>let sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter: 2, segments: 32}, scene); // create your mesh
+renderTarget.renderList.push(sphere); // add it to the RTT
+</code></pre><h2><a name="using-the-rtt-in-your-scene-as-a-regular-texture" class="anchor" href="#using-the-rtt-in-your-scene-as-a-regular-texture"></a>Using the RTT in your scene as a regular texture</h2><p>You can use the rendered image as the texture of an object in your main render. Just set it as the texture of a material:</p>
+<pre><code>var mat = new BABYLON.(&quot;RTT mat&quot;, scene);
+mat.diffuseTexture = renderTarget;
+</code></pre><p>In the example we only add half of the spheres to the RTT, showing how you can selectively pick the objects rendered there.</p>
+<p>Playground example: <a href="https://www.babylonjs-playground.com/#69DRZ1">https://www.babylonjs-playground.com/#69DRZ1</a> - <i class="fa fa-eye" onclick="createIframe('69DRZ1#', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="making-multiple-passes-and-composing-them" class="anchor" href="#making-multiple-passes-and-composing-them"></a>Making multiple passes and composing them</h2><p>Another possibility, as mentioned, is making multiple render passes of the main camera and compose them. Let&#39;s do that, adding a simple effect on all meshes and compose it with the original material. One interesting effect to simulate with this technique is water caustics. We can render the scene applying a material that simulates caustics with a wave generator and mix it with the base texture.</p>
+<p>The trick is to change the texture on the RTT to use our caustic material on all meshes instead of their own material:</p>
+<pre><code>renderTarget.onBeforeRender = (e) =&gt; {
+    // Apply the shader on all meshes
+    for (const i in renderTarget.renderList) {
+        renderTarget.renderList[i]._saved = renderTarget.renderList[i].material;
+        renderTarget.renderList[i].material = causticMaterial;
+    }
+};
+renderTarget.onAfterRender = () =&gt; {
+    // Remove the shader on all meshes
+    for (const i in renderTarget.renderList) {
+        renderTarget.renderList[i].material = renderTarget.renderList[i]._saved;
+    }
+};
+</code></pre><p>For the final pass we&#39;ll create a shader to merge the base render (which will be provided in the GLSL as <code>textureSampler</code>) and the caustic texture, which we declare here as <code>causticTexture</code>. </p>
+<pre><code>// create the final pass composer
+var finalPass = new BABYLON.PostProcess(
+    &#39;Final compose shader&#39;, 
+    &#39;final&#39;, // shader name
+    null, // attributes
+    [ &#39;causticTexture&#39; ], // textures
+    1.0,  // options
+    null, // camera
+    BABYLON.Texture.BILINEAR_SAMPLINGMODE, // sampling
+    engine // engine
+);
+finalPass.onApply = (effect) =&gt; {
+    effect.setTexture(&#39;causticTexture&#39;, renderTarget); // pass the renderTarget as our second texture
+};
+</code></pre><p>We now can <a href="/how_to/how_to_use_postprocessrenderpipeline">use a pipeline</a> that performs a base render and uses the <code>finalPass</code> to compose it with the caustics.</p>
+<pre><code>// the render pipeline
+var pipeline = new BABYLON.PostProcessRenderPipeline(engine, &#39;pipeline&#39;);
+var renderPasses = new BABYLON.PostProcessRenderEffect(
+    engine, &#39;renderPasses&#39;, function() { return [imagePass, finalPass]; });
+pipeline.addEffect(renderPasses);
+scene.postProcessRenderPipelineManager.addPipeline(pipeline);
+scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(&#39;pipeline&#39;, camera);
+</code></pre><p>Playground example: <a href="https://www.babylonjs-playground.com/#TG2B18">https://www.babylonjs-playground.com/#TG2B18</a> - <i class="fa fa-eye" onclick="createIframe('TG2B18#', this)"></i><div class="iframeContainer"></div>. On the left you&#39;ll see the base render, on the middle the caustic render, and on the right both combined together.</p>
+<h2><a name="performance-and-tips" class="anchor" href="#performance-and-tips"></a>Performance and tips</h2><p>Remember that you&#39;ll be rendering your scene multiple times, one for each pass. This can significantly slow things down if you are not careful. There are a number of strategies to improve performance:</p>
+<ul>
+<li>reduce the RTT size.</li>
+<li>render as few objects as you can on the RTT.</li>
+<li>use a simple shader on the RTT pass.</li>
+<li>prefer simpler meshes.</li>
+<li>use instances. If you have a large amount of copies of the same object, instances are a good optimization. You only change the material of the base mesh.</li>
+</ul>
+<p>Replacing materials is an expensive operation on Babylon, as it requires a resync from the CPU. If your meshes use materials, such as ShaderMaterial or a PBRMaterial, this might impact significantly on the FPS rate. The example above is simple to follow and understand the concept, but there&#39;s a way to achieve much better performance,by freezing materials before swapping them. Here&#39;s how to do it.</p>
+<p>First, create objects that will be in the RTT with a clone of the RTT shader material.</p>
+<pre><code>// helper function to create clones of the caustic material
+// we need that because we&#39;ll have different transforms on the shaders
+let rttMaterials = [];
+const getRTTMaterial = () =&gt; {
+    let c = rttMaterial.clone();
+    c.freeze(); // freeze because we&#39;ll only update uniforms
+    rttMaterials.push(c);
+    return c;
+};
+
+// some material for the ground.
+var grass0 = new BABYLON.StandardMaterial(&quot;grass0&quot;, scene);
+grass0.diffuseTexture = new BABYLON.Texture(&quot;textures/grass.png&quot;, scene);
+
+// Our built-in &#39;ground&#39; shape.
+var ground = BABYLON.MeshBuilder.CreateGround(&quot;ground&quot;, {width: 6, height: 6}, scene);
+ground.material = grass0;
+// add caustics
+ground.rttMaterial = getRTTMaterial();
+renderTarget.renderList.push(ground);
+</code></pre><p>Swap materials on the RTT before/after callbacks.</p>
+<pre><code> // before we render the target, swap materials.
+renderTarget.onBeforeRender = (e) =&gt; {
+    // Apply the shader on all meshes
+    renderTarget.renderList.forEach((mesh) =&gt; {
+        // skip InstancedMesh, we&#39;ll handle the original mesh
+        if (mesh.getClassName() === &#39;InstancedMesh&#39;) {
+            return;
+        }
+        // the PBR material takes some time to be loaded, it&#39;s possible that in the first few frames mesh.material is null...
+        if (mesh.material &amp;&amp; !mesh.isFrozen &amp;&amp; (&#39;isReady&#39; in mesh) &amp;&amp; mesh.isReady(true)) { 
+            // backup effects
+            const _orig_subMeshEffects = [];
+            mesh.subMeshes.forEach((submesh) =&gt; {
+                _orig_subMeshEffects.push([submesh.effect, submesh.materialDefines]);
+            });
+            mesh.isFrozen = true;
+            mesh.material.freeze(); // freeze material so it won&#39;t be recomputed onAfter
+            // store old material/effects
+            mesh._saved_orig_material = mesh.material;
+            mesh._orig_subMeshEffects = _orig_subMeshEffects;
+        }
+        if (!mesh._orig_subMeshEffects) {
+            return;
+        }
+        // swap the material
+        mesh.material = mesh.rttMaterial;
+        // and swap the effects
+        if (mesh._rtt_subMeshEffects) {
+            for (let s = 0; s &lt; mesh.subMeshes.length; ++s) {
+                mesh.subMeshes[s].setEffect(...mesh._rtt_subMeshEffects[s]);
+            }
+        }
+    });
+};
+renderTarget.onAfterRender = () =&gt; {
+    // Set the original shader on all meshes
+    renderTarget.renderList.forEach((mesh) =&gt; {
+        // skip InstancedMesh, we&#39;ll handle the original mesh
+        if (mesh.getClassName() === &#39;InstancedMesh&#39;) {
+            return;
+        }
+        // nothing to do, early bail
+        if (!mesh._orig_subMeshEffects) {
+            return;
+        }
+        // backup sub effects on the rtt shader
+        if (!mesh._rtt_subMeshEffects) {
+            mesh._rtt_subMeshEffects = [];
+            mesh.subMeshes.forEach((submesh) =&gt; {
+                mesh._rtt_subMeshEffects.push([submesh.effect, submesh.materialDefines]);
+            });
+        }
+        // swap back to original material
+        mesh.material = mesh._saved_orig_material;
+        for (let s = 0; s &lt; mesh.subMeshes.length; ++s) {
+            mesh.subMeshes[s].setEffect(...mesh._orig_subMeshEffects[s]);
+        }
+    });
+};
+</code></pre><p>Apply any uniforms on all material clones:</p>
+<pre><code>engine.runRenderLoop(() =&gt; {
+    // ... 
+    rttMaterials.forEach((c) =&gt; {c.setFloat(&#39;time&#39;, timeDiff)});
+});
+</code></pre><p>The example has the complete code, including animated objects and instances. You could freeze some meshes with <code>scene.freezeActiveMeshes()</code> to improve the performance even further.</p>
+<p>Playground example: <a href="https://www.babylonjs-playground.com/#S1W87B#5">https://www.babylonjs-playground.com/#S1W87B#5</a> - <i class="fa fa-eye" onclick="createIframe('S1W87B#5', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="notes-about-your-shader" class="anchor" href="#notes-about-your-shader"></a>Notes about your shader</h3><p>Note that since you replace the material with a shader from the scratch for mesh instances, you need to handle effects such as animation or the instance transformation,and this will affect your vertex shader (and possibly your fragment shader as well). There are <a href="several includes in Babylon">https://github.com/BabylonJS/Babylon.js/tree/master/src/Shaders/ShadersInclude</a> that help with that. Here&#39;s a sample vertex shader with support for bone animations and instances:</p>
+<pre><code>precision highp float;
+
+attribute vec3 position;
+attribute vec2 uv;
+
+uniform mat4 view;
+uniform mat4 projection;
+uniform mat4 worldViewProjection;
+
+varying vec2 vUV;
+
+#include&lt;bonesDeclaration&gt;
+#include&lt;instancesDeclaration&gt;
+
+void main() {
+    vec3 positionUpdated = position;
+
+    #include&lt;instancesVertex&gt;
+    #include&lt;bonesVertex&gt;
+
+    vec4 worldPos = finalWorld * vec4(positionUpdated, 1.0);
+
+    vUV = uv;
+
+    gl_Position = projection * view * worldPos;
+}
+</code></pre><h3><a name="debugging-multiple-passes" class="anchor" href="#debugging-multiple-passes"></a>Debugging multiple passes</h3><p>Your final composer might become a complicated shader, and each pass might be complicated in itself. You certainly will need to debug shaders along the way. One way to easily debug individual passes is to show only that pass to the screen, commenting the rest of the code.</p>
+<pre><code>varying vec2 vUV;
+uniform sampler2D somePassTexture;
+
+void main() {
+    // comment other code
+    vec4 debugColor = texture2D(someTexture, vUV);
+    gl_FragColor = debugColor;
+}
+</code></pre><p>Testing passes in separate and then adding them one at a time to the composer will make it easier to debug any issues. You can use the technique from the playgrounds above, splitting the screen on columns, each with a different pass, as well.</p>
+<p>Finally you can also check RT textures with the <a href="/features/Playground_debuglayer">Babylon inspector</a>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

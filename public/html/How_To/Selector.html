@@ -1,0 +1,276 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the Selection Panel Helper - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the Selection Panel Helper</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#referencing-a-selection-panel">Referencing a Selection Panel</a></li>
+<li><a href="#creating-a-selection-panel">Creating a Selection Panel</a></li>
+<li><a href="#creating-groups">Creating Groups</a></li>
+<li><a href="#creating-selectors">Creating Selectors</a><ul>
+<li><a href="#selector-called-functions">Selector Called Functions</a><ul>
+<li><a href="#checkbox-selector">Checkbox Selector</a></li>
+<li><a href="#radio-selector">Radio Selector</a></li>
+<li><a href="#slider-selector">Slider Selector</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#customise-the-selection-panel">Customise the Selection Panel</a><ul>
+<li><a href="#colors-and-font">Colors and Font</a></li>
+<li><a href="#groups-and-selectors">Groups and Selectors</a></li>
+</ul>
+</li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="the-selection-panel-helper" class="anchor" href="#the-selection-panel-helper"></a>The Selection Panel Helper</h1><p>A <code>SelectionPanel</code> contains groups of checkboxes, radio buttons and sliders. Though not as versatile as as building your own interface with your own custom arrangement of controls it can be a quick way to construct a method of changing scene parameters for objects within your scene.</p>
+<p><img src="/img/gui/selectPanel1.jpg" alt="selection panel">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fig 1</p>
+<h2><a name="referencing-a-selection-panel" class="anchor" href="#referencing-a-selection-panel"></a>Referencing a Selection Panel</h2><p>As you can see in <strong>Fig 1</strong> a selection panel rectangle contains a vertical organisation of groups numbered from the top starting at 0. Each groups contains a header and a variable number of selectors. Each selector consists of a (or button) and a label. Within any one group all the selectors must be of the same type. You can refer to a selector by its group number and then the position of the selector within the group. So the checkbox labelled <em>High</em> has reference 0, 1, ie. group 0, selector 1.</p>
+<p><strong>NOTE</strong> Adding or removing groups or selectors with change the reference number. The reference number always refers to the current positioning of the group and of the selector.</p>
+<h2><a name="creating-a-selection-panel" class="anchor" href="#creating-a-selection-panel"></a>Creating a Selection Panel</h2><p>As usual with GUI containers you will need to create an advanced dynamic texture to add the selection panel to. You can set the dimensions and position of the selection panel. The format to construct a blank selection panel is</p>
+<pre><code class="lang-javascript">new BABYLON.GUI.SelectionPanel(name);
+</code></pre>
+<p>After construction you can add groups of selectors, each newly added group is placed below any already added groups. For example</p>
+<pre><code class="lang-javascript">var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+  &quot;UI&quot;
+);
+
+var selectBox = new BABYLON.GUI.SelectionPanel(&quot;selectBox&quot;);
+selectBox.width = 0.25;
+selectBox.height = 0.52;
+selectBox.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+
+advancedTexture.addControl(selectBox);
+
+selectBox.addGroup(rotateGroup);
+selectBox.addGroup(transformGroup);
+selectBox.addGroup(colorGroup);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#9M6M2I">Playground Example Selection Panel with Added Groups</a> - <i class="fa fa-eye" onclick="createIframe('9M6M2I#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>In addition if you have already constructed selector groups then you can then pass them in an array when you create the selection panel. The format for this is</p>
+<pre><code class="lang-javascript">new BABYLON.GUI.SelectionPanel(name, [selector groups])
+</code></pre>
+<p>Example</p>
+<pre><code class="lang-javascript">var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+  &quot;UI&quot;
+);
+
+var selectBox = new BABYLON.GUI.SelectionPanel(&quot;selectBox&quot;, [
+  transformGroup,
+  colorGroup,
+  rotateGroup
+]);
+selectBox.width = 0.25;
+selectBox.height = 0.52;
+selectBox.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+
+advancedTexture.addControl(selectBox);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD">Playground Example Selection Panel and Groups on Creation</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#1">Playground Example Combining Both Approaches</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="creating-groups" class="anchor" href="#creating-groups"></a>Creating Groups</h2><p>There are three types of groups, a checkbox group, a radio group and a slider group, which are created using the structure</p>
+<pre><code class="lang-javascript">new BABYLON.GUI.&lt;Type&gt;Group(header)
+</code></pre>
+<p>For example</p>
+<pre><code class="lang-javascript">var transformGroup = new BABYLON.GUI.CheckboxGroup(&quot;Transformation&quot;);
+var colorGroup = new BABYLON.GUI.RadioGroup(&quot;Color&quot;);
+var rotateGroup = new BABYLON.GUI.SliderGroup(&quot;Rotation&quot;);
+</code></pre>
+<h2><a name="creating-selectors" class="anchor" href="#creating-selectors"></a>Creating Selectors</h2><p>Naturally there are three types of selectors and each can only be added to the appropriate group. External functions for each selector refer any changes in the value to properties of scene objects.</p>
+<p>Checkbox and radio selectors are simply added to their group using two parameters, a label name and the external function reference. An optional third parameter can set the initial checked state of the selector to true (default value is false).</p>
+<p>A slider selector is added to its group with a number of parameters, the first two being as before a label name and a reference to the external function. Due to the nature of a slider the following optional parameters can be set</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unit</td>
+<td>a string describing the units used, eg degrees or metres</td>
+<td>&quot;Unit&quot;</td>
+</tr>
+<tr>
+<td>min</td>
+<td>the minimum value for the slider</td>
+<td>0</td>
+</tr>
+<tr>
+<td>max</td>
+<td>the maximum value for the slider</td>
+<td>100</td>
+</tr>
+<tr>
+<td>value</td>
+<td>the start value for the Slider between min and max</td>
+<td>0</td>
+</tr>
+<tr>
+<td>onValueChange</td>
+<td>the function used to format the value displayed</td>
+<td>void</td>
+</tr>
+</tbody>
+</table>
+<p>New selectors are added below those already added.</p>
+<p>Example usage</p>
+<pre><code class="lang-javascript">transformGroup.addCheckbox(&quot;Small&quot;, toSize);
+transformGroup.addCheckbox(&quot;High&quot;, toPlace);
+
+colorGroup.addRadio(&quot;Blue&quot;, setColor, true);
+colorGroup.addRadio(&quot;Red&quot;, setColor);
+
+rotateGroup.addSlider(
+  &quot;Angle Y&quot;,
+  orientateY,
+  &quot;degs&quot;,
+  0,
+  2 * Math.PI,
+  0,
+  displayValue
+);
+rotateGroup.addSlider(
+  &quot;Angle X&quot;,
+  orientateX,
+  &quot;degs&quot;,
+  0,
+  2 * Math.PI,
+  Math.PI,
+  displayValue
+);
+</code></pre>
+<h3><a name="selector-called-functions" class="anchor" href="#selector-called-functions"></a>Selector Called Functions</h3><h4><a name="checkbox-selector" class="anchor" href="#checkbox-selector"></a>Checkbox Selector</h4><p>One function for each selector. Each requires a Boolean parameter with actions depending whether the control is checked or not</p>
+<p>Examples</p>
+<pre><code class="lang-javascript">var toSize = function(isChecked) {
+  if (isChecked) {
+    box.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+  } else {
+    box.scaling = new BABYLON.Vector3(1, 1, 1);
+  }
+};
+
+var toPlace = function(isChecked) {
+  if (isChecked) {
+    box.position.y = 1.5;
+  } else {
+    box.position.y = 0.5;
+  }
+};
+</code></pre>
+<h4><a name="radio-selector" class="anchor" href="#radio-selector"></a>Radio Selector</h4><p>Within a radio group the same function is used for all selectors. The function requires a number parameter which will match the selector position with actions for each selector</p>
+<p>Examples</p>
+<pre><code class="lang-javascript">var setColor = function(but) {
+  switch (but) {
+    case 0:
+      box.material = blueMat;
+      break;
+    case 1:
+      box.material = redMat;
+      break;
+  }
+};
+</code></pre>
+<h4><a name="slider-selector" class="anchor" href="#slider-selector"></a>Slider Selector</h4><p>Each slider selector requires two functions, one to change scene object properties and one to set the display format within the slider label.</p>
+<p>Examples</p>
+<pre><code class="lang-javascript">// Change mesh
+var orientateY = function(angle) {
+  box.rotation.y = angle;
+};
+
+var orientateX = function(angle) {
+  box.rotation.x = angle;
+};
+
+//Format value
+var displayValue = function(value) {
+  return BABYLON.Tools.ToDegrees(value) | 0;
+};
+</code></pre>
+<h2><a name="customise-the-selection-panel" class="anchor" href="#customise-the-selection-panel"></a>Customise the Selection Panel</h2><h3><a name="colors-and-font" class="anchor" href="#colors-and-font"></a>Colors and Font</h3><p>For consistency of appearance you can only change the overall font and color of all headers, all labels and all selector buttons.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#4">Playground Example Selection Panel Font Change</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Without any direct setting, the color of labels follows that of the selection panel.</p>
+<p>It is possible to set the color of all headers, labels, separator bars and selector buttons and the background color of all selector buttons.</p>
+<pre><code class="lang-javascript">selectBox.color = &quot;blue&quot;;
+selectBox.background = &quot;#FFFF99&quot;;
+selectBox.barColor = &quot;#4F7DF2&quot;;
+selectBox.headerColor = &quot;blue&quot;;
+selectBox.buttonColor = &quot;orange&quot;;
+selectBox.buttonBackground = &quot;#684502&quot;;
+selectBox.labelColor = &quot;brown&quot;;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#2">Playground Example Selection Panel Change Colors Except Labels</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#2', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#3">Playground Example Selection Panel Change Colors Including Labels</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Individual headers and labels can have their text changed.</p>
+<pre><code class="lang-javascript">selectBox.setHeaderName(&quot;Move&quot;, 0);
+selectBox.relabel(&quot;Theta&quot;, 2, 0);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#5">Playground Example Selection Panel Change Group Header</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#5', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#6">Playground Example Selection Panel Change Selector Label</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="groups-and-selectors" class="anchor" href="#groups-and-selectors"></a>Groups and Selectors</h3><p>As stated earlier you can add groups at the bottom of the selection panel at any time. You can also remove a group by reference to its position in the list, eg</p>
+<pre><code class="lang-javascript">selectBox.removeGroup(2);
+</code></pre>
+<p><strong>Note</strong> Groups below the removed group will have new positions and so need to be referenced by their new position.</p>
+<p>In the same way a selector of the correct type can be added to the bottom of a group at any time using the <code>add&lt;Type&gt;</code> method.</p>
+<pre><code class="lang-javascript">transformGroup.addCheckbox(&quot;Across&quot;, toLeft);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#7">Playground Example Selector Group Add Selector</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>A selector can be removed from a group at any time using its position in the group, eg</p>
+<pre><code class="lang-javascript">transformGroup.removeSelector(1);
+colorGroup.removeSelector(0);
+rotationGroup.removeSelector(0);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#8">Playground Example Selection Group Remove Selector</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>For a selector within a group that is contained within a selection panel you can add a selector by use of the group position and correct parameters, eg</p>
+<pre><code class="lang-javascript">selectBox.addToGroupSlider(
+  2,
+  &quot;Angle X&quot;,
+  orientateX,
+  &quot;degs&quot;,
+  0,
+  2 * Math.PI,
+  Math.PI,
+  displayValue
+);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#9">Playground Example Selector Panel Add Selector</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#9', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>and remove a selector by using its reference position, ie. group and selector position in the group. For example</p>
+<pre><code class="lang-javascript">selectBox.removeFromGroupSelector(0, 0);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#BXMTCD#10">Playground Example Selection Group Remove Selector</a> - <i class="fa fa-eye" onclick="createIframe('BXMTCD#10', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further reading</h2><p><a href="/how_to/gui">How To Use Babylon GUI</a><br><a href="/how_to/ScrollViewer">How To Use Babylon GUI Scroll Viewer</a><br><a href="/how_to/XmlLoader">How To Use Babylon GUI Xml Loader</a><br><a href="/how_to/gui3d">How To Use Babylon GUI3D</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

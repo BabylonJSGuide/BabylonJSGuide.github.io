@@ -1,0 +1,336 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>A Carriage Following a Track - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>A Carriage Following a Track</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#section-options">Section Options</a><ul>
+<li><a href="#leaning">Leaning</a></li>
+<li><a href="#turning">Turning</a></li>
+<li><a href="#leaning-and-turning">Leaning and Turning</a></li>
+<li><a href="#parameters">Parameters</a></li>
+</ul>
+</li>
+<li><a href="#data-returned-for-track-object">Data Returned for Track Object</a></li>
+<li><a href="#closed-tracks">Closed Tracks</a></li>
+<li><a href="#open-tracks">Open Tracks</a><ul>
+<li><a href="#using-the-built-track">Using the Built Track</a></li>
+</ul>
+</li>
+<li><a href="#from-matrices-to-animation">From Matrices to Animation</a><ul>
+<li><a href="#animation">Animation</a></li>
+</ul>
+</li>
+<li><a href="#showing-axes">Showing Axes</a></li>
+<li><a href="#illustrating-the-path">Illustrating the Path</a><ul>
+<li><a href="#using-a-ribbon-to-create-a-simple-velodrome">Using a Ribbon to Create a Simple Velodrome</a></li>
+<li><a href="#using-tubes-and-instances-to-create-a-roller-coaster">Using Tubes and Instances to Create a Roller Coaster</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#more-advanced-level-3">More Advanced - Level 3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="building-a-track-for-a-carriage-to-follow" class="anchor" href="#building-a-track-for-a-carriage-to-follow"></a>Building a track for a Carriage to Follow</h1><p><img src="/img/snippets/roller.png" alt="lean and turn"></p>
+<p>In the first image the carriage leans and turns as it follows the track. In the second image the carriage leans and it is the people inside that turn to look around. The &#39;createTrack&#39; function can be used to simulate either of these two events.</p>
+<p>A carriage can be a mesh (with children if wanted), camera or even a point light. A track is a sequence of points in 3D space and for each point rotational data that determines the orientation of the mesh following it, and where necessary any children of the mesh. This rotational data is built by specifying parameters along sections of the track. The default starting position for a carriage is, as you would expect, is with its local x, y and z axis in the directions of the world axes.</p>
+<p>A <strong>track</strong> is created using</p>
+<pre><code class="lang-javascript">var track = createTrack(points, sections);
+</code></pre>
+<p>where points is an array of Vector3s and sections is an array of sections. A section is constructed by giving its starting point (an index of the points array) and an options object (which may be empty), as in</p>
+<pre><code class="lang-javascript">var section0 = new sectionData(0, options0);
+var section1 = new sectionData(100, {});
+var section2 = new sectionData(120, options2);
+var section3 = new sectionData(220, {lean: 0, leanTwists: 0, leanWaves: 0, leanWaveAngle: 0});
+var section4 = new sectionData(240, {turn: 0, turnTwists: 0, turnWaves: 0, turnWaveAngle: 0});
+</code></pre>
+<p>Sections added to the sections array must be in increasing index order. The rotations in any one section are built from the options given in that section and some options from the following section. The following playground allows you to play with these options and others.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#HSMDF2#6">Playground Example - A Short Track</a> - <i class="fa fa-eye" onclick="createIframe('HSMDF2#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="section-options" class="anchor" href="#section-options"></a>Section Options</h2><p>There are two types of rotation &#39;a lean&#39; and a &#39;turn&#39; and both may be applied to any section of track. Some illustrative examples are used better understand these. The lean at each point is shown in red and the turn in green, defaults for both are 0. Twists (defaults 0) force complete rotations, waves, with a wave angle, force a rotation to the maximum set by the wave angle followed by a rotation in the reverse direction.</p>
+<p>In these examples the track is simply a straight line formed from 100 points and two sections, section0 includes all points from 0 to 99. The second section is an empty section of track but is needed as a device to specify the lean and turn at the track end. </p>
+<h3><a name="leaning" class="anchor" href="#leaning"></a>Leaning</h3><p>The initial lean comes from section0 and the final lean from section 1.</p>
+<p>A lean is the rotation of the carriage about the track direction.</p>
+<p><img src="/img/snippets/track1.jpg" alt="lean zero track">&lt;------initial lean is 0, final lean is zero</p>
+<p><img src="/img/snippets/track2.jpg" alt="lean at end track">&lt;------initial lean is 0, final lean is &pi; / 2</p>
+<p><img src="/img/snippets/track3.jpg" alt="lean at start track">&lt;------initial lean is &pi; / 2, final lean is 0</p>
+<p>The value of leanTwists (positive integer, default 0) gives the number of complete rotations about the track over that section of track.</p>
+<p><img src="/img/snippets/track4.jpg" alt="lean twists track">&lt;------initial lean is 0, final lean is 0, leanTwists is 2</p>
+<p>The value of waveTwists (positive integer, default 0) gives the number of leans to one side of the track followed by a lean to the other side depending on the lean wave angle over that section of track.</p>
+<p><img src="/img/snippets/track5.jpg" alt="lean waves track">&lt;------initial lean is 0, final lean is 0, leanWaves is 2, leanWaveAngle is &pi; / 2</p>
+<p>When both the values of leanWaves and leanWaveAngle or non zero they will override any value given to leanTwists.</p>
+<h3><a name="turning" class="anchor" href="#turning"></a>Turning</h3><p>The initial turn comes from section0 and the final turn from section 1.</p>
+<p>A turn is the rotation of the carriage about its local Y axis. (It can alternatively be the rotation of the children of the carriage mesh)</p>
+<p><img src="/img/snippets/track6.jpg" alt="turn zero track">&lt;------initial turn is 0, final turn is zero</p>
+<p><img src="/img/snippets/track7.jpg" alt="turn at end track">&lt;------initial turn is 0, final turn is &pi; / 2</p>
+<p><img src="/img/snippets/track8.jpg" alt="turn at start track">
+initial turn is &pi; / 2, final turn is 0</p>
+<p>The value of turnTwists (positive integer, default 0) gives the number of complete rotations about the track over that section of track.</p>
+<p><img src="/img/snippets/track9.jpg" alt="turn twists track">&lt;------initial turn is 0, final turn is 0, turnTwists is 2</p>
+<p>The value of waveTwists (positive integer, default 0) gives the number of turns to one side of the track followed by a turn to the other side depending on the turn wave angle over that section of track.</p>
+<p><img src="/img/snippets/track10.jpg" alt="turn waves track">&lt;------initial turn is 0, final turn is 0, turnWaves is 2, turnWaveAngle is &pi; / 2</p>
+<p>When both the values of turnWaves and turnWaveAngle or non zero they will override any value given to turnTwists.</p>
+<h3><a name="leaning-and-turning" class="anchor" href="#leaning-and-turning"></a>Leaning and Turning</h3><p>It is possible to use both the lean and turn parameters</p>
+<p><img src="/img/snippets/track11.jpg" alt="lean and turn track">&lt;------both lean and turn are used</p>
+<h3><a name="parameters" class="anchor" href="#parameters"></a>Parameters</h3><p>The options parameters in a section are</p>
+<ul>
+<li>lean: angle of lean about direction of travel at start of section;</li>
+<li>leanTwists: number of twists against direction of travel over the section;</li>
+<li>leanWaves: number of waves against direction of travel over the section;</li>
+<li>leanWaveAngle: additional angle of lean applied during a wave;</li>
+<li>turn: angle of turn about local carriage y axis at start of section;</li>
+<li>turnTwists: number of twists about local carriage y axis over the section;</li>
+<li>turnWaves: number of waves about local carriage y axis over the section;</li>
+<li>turnWaveAngle: additional angle of turn applied during a wave.</li>
+</ul>
+<h2><a name="data-returned-for-track-object" class="anchor" href="#data-returned-for-track-object"></a>Data Returned for Track Object</h2><p>Using </p>
+<pre><code class="lang-javascript">var track = createTrack(points, sections);
+</code></pre>
+<p>gives you a set of arrays of matrices, where each element with index <strong>i</strong> is the data for the points array at <strong>i</strong>.</p>
+<ul>
+<li>track.directions: each element is the direction of travel;</li>
+<li>track.rotations: each element is a combination of the lean and turn rotations;</li>
+<li>track.carriageRotations: each element is the lean rotation;</li>
+<li>track.passengerRotations: each element is the turn rotation.</li>
+</ul>
+<h2><a name="closed-tracks" class="anchor" href="#closed-tracks"></a>Closed Tracks</h2><p>As an example of a closed path take a circle formed from 500 points</p>
+<pre><code class="lang-javascript">var points = [];
+var n = 400; // number of points
+var r = 20; //radius
+for (var i = 0; i &lt; n ; i++) {
+    points.push( new BABYLON.Vector3(
+        r * Math.cos(i * 2 * Math.PI / n),
+        0,
+        r * Math.sin(i * 2 * Math.PI / n)
+    ));
+}
+</code></pre>
+<p>When drawing a line to represent the path of the track it is necessary to push points[0] to the end to draw a closed path. However once the line is drawn this must be removed using pop before creating a track.</p>
+<pre><code class="lang-javascript">points.push(points[0]); // push to close path
+var lines = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: points}, scene); //draw path of track
+points.pop(); // remove before track creation
+</code></pre>
+<p>Also before creating the track the sections needed must be determined. In this case split into four equal sections. Section0 from 0 to 124, section1 from 125 to 249, section2 from 250 to 374 and section 3 from 375 to 0.</p>
+<pre><code class="lang-javascript">var section0 = new sectionData(0, options0); 
+var section1 = new sectionData(125, options1);
+var section2 = new sectionData(250, options2);
+var section3 = new sectionData(375, options3);
+
+var sections = [section0, section1, section2, section3];
+
+var track = createTrack(points, sections);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#HSMDF2#7">Playground Example - Closed Track</a> - <i class="fa fa-eye" onclick="createIframe('HSMDF2#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="open-tracks" class="anchor" href="#open-tracks"></a>Open Tracks</h2><p>As an example of a open path take three quarters of a circle formed from 375 points</p>
+<pre><code class="lang-javascript">var points = [];
+var n = 375; // number of points
+var r = 20; //radius
+for (var i = 0; i &lt; n ; i++) {
+    points.push( new BABYLON.Vector3(
+        r * Math.cos(i * 3 * Math.PI / (2 * n)),
+        0,
+        r * Math.sin(i * 3 * Math.PI / (2 * n))
+    ));
+}
+</code></pre>
+<p>Drawing a line to represent the path of the track may be done directly.</p>
+<pre><code class="lang-javascript">var lines = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: points}, scene); //draw path of track
+</code></pre>
+<p>Before creating the track the sections needed must be determined. In this case split into three equal sections. Section0 from 0 to 124, section1 from 125 to 249 and section2 from 250 to 374. A fourth dummy section, section3,  is needed to provide the data on the final lean and turn at the end of the track. The starting index for the dummy section, at the end, should always be the number of points in the open path, in this case 375.</p>
+<pre><code class="lang-javascript">var section0 = new sectionData(0, options0); 
+var section1 = new sectionData(125, options1);
+var section2 = new sectionData(250, options2);
+var section3 = new sectionData(375, options3); //Dummy section
+
+var sections = [section0, section1, section2, section3];
+
+var track = createTrack(points, sections);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#HSMDF2#8">Playground Example - Open Track</a> - <i class="fa fa-eye" onclick="createIframe('HSMDF2#8', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="using-the-built-track" class="anchor" href="#using-the-built-track"></a>Using the Built Track</h1><p>Data from the track can be used to produce quaternions to rotate a mesh or to produce lines showing the direction of rotations or even rails parallel to the track path. Initially just animation around he track is considered.</p>
+<h2><a name="from-matrices-to-animation" class="anchor" href="#from-matrices-to-animation"></a>From Matrices to Animation</h2><p>In these examples <code>scene.registerAfterRender</code> is used to create the animation. One aspect that governs the speed of the animation is the distance between the points, so always take this into consideration when designing you path for the track. Of course, depending on how your path is built, you can vary the number of points per length of section. Note that for curved paths it it unlikely a constant speed is obtainable as the distance between points will vary. Often this is not noticeable. You can also produce variations in speed when you construct the quaternions to rotate the carriage and or passengers.</p>
+<p>Take a carriage and its contents, forged together by</p>
+<pre><code class="lang-javascript">contents.parent = carriage
+</code></pre>
+<p>At any point, index <strong>i</strong> on the track position is from</p>
+<pre><code class="lang-javascript">carriage.position = points[i];
+</code></pre>
+<p>Firstly take the contents as freight, i.e. it moves with the carriage. At any point, index <strong>i</strong> rotation of both is given by</p>
+<pre><code class="lang-javascript">carriage.rotationQuaternion = BABYLON.Quaternion.FromRotationMatrix(track.rotations[i]);
+</code></pre>
+<p>When you take the contents as a passenger, i.e. somebody who can turn to look around the carriage and passenger rotation are separated</p>
+<pre><code class="lang-javascript">carriage.rotationQuaternion = BABYLON.Quaternion.FromRotationMatrix(track.carriageRotations[i]);
+contents.rotationQuaternion = BABYLON.Quaternion.FromRotationMatrix(track.passengerRotations[i]);
+</code></pre>
+<p>These can be built from a simple loop. </p>
+<p>Now throw a speed variable into the loop. When the speed is 1 or more, an integer <strong>s</strong> say, then jump from  <strong>i</strong> to <strong>i + s</strong>. When <strong>s</strong> is not an integer round it to the nearest integer. When <strong>s</strong> is less than 1 you need to interpolate between points. When <strong>s</strong> is 0.25, for example you need 3 extra points between <strong>i</strong> and <strong>i + 1</strong>, that is including the point at <strong>i</strong> 4 points, which is found from 1 / s.</p>
+<p>Just considering the x coordinates </p>
+<p><img src="/img/snippets/drag.jpg" alt="drag"></p>
+<p>between index <strong>i</strong> and <strong>i + 1</strong> the distance to be covered each frame is deltaX =  (x<sub>i + 1</sub> - x<sub>i</sub>) / 4 .</p>
+<p>The multiplier for deltaX moving along the interpolated points is 0, 1, 2, 3, 0, 1, 2, 3, 0 etc., which is an increasing integer sequence modulo 4.</p>
+<p>More generally calling this multiplier the <strong>drag</strong> on the speed, then <strong>drag</strong> = Math.round( 1 / speed), to ensure an integer and the multiplier for deltaX is an increasing sequence modulo <strong>drag</strong>.</p>
+<p>Use</p>
+<pre><code class="lang-javascript">var deltaI = 0;
+
+deltaI = (deltaI + 1) % drag
+</code></pre>
+<p>to obtain the multiplier sequence.</p>
+<p>Taking into account speed and whether the contents are freight or passenger you can generate a sequence of positions and rotations from</p>
+<pre><code class="lang-javascript">var nbPoints = points.length;
+var i=0;
+var deltaI = 0;
+var pace = Math.round(speed);
+var drag = Math.round(1 / speed);
+
+var carriagePositions = [];
+var carriageRotations = [];
+var contentsRotations = []
+
+var carPosition = BABYLON.Vector3.Zero();
+
+while (i &lt; nbPoints) {
+    if (speed &gt;= 1) {            
+        carriagePositions.push(points[i]);
+        if (isFreight) {
+            carriageRotations.push(BABYLON.Quaternion.FromRotationMatrix(track.rotations[i]));
+        }
+        else {
+            carriageRotations.push(BABYLON.Quaternion.FromRotationMatrix(track.carriageRotations[i]));
+            contentsRotations.push(BABYLON.Quaternion.FromRotationMatrix(track.passengerRotations[i]));
+        }                                    
+        i += pace;
+    }
+    else {
+        tempPosition.x = points[i].x + deltaI * (points[(i + 1) % nbPoints].x - points[i]. x) / drag;
+        tempPosition.y = points[i].y + deltaI * (points[(i + 1) % nbPoints].y - points[i]. y) / drag;
+        tempPosition.z = points[i].z + deltaI * (points[(i + 1) % nbPoints].z - points[i]. z) / drag;
+
+        carriagePositions.push(tempPosition.clone());
+
+        if(isFreight) {
+            carriageRotations.push(BABYLON.Quaternion.FromRotationMatrix(track.rotations[i]));
+        }
+        else {
+            carriageRotations.push(BABYLON.Quaternion.FromRotationMatrix(track.carriageRotations[i]));
+            contentsRotations.push(BABYLON.Quaternion.FromRotationMatrix(track.passengerRotations[i]));
+        }
+        i = (Math.floor(i + (deltaI + 1) / drag))
+        deltaI = (deltaI + 1) % drag; 
+    }
+}
+</code></pre>
+<h3><a name="animation" class="anchor" href="#animation"></a>Animation</h3><p>The animation uses the above in</p>
+<pre><code class="lang-javascript">i = 0;
+var nbSteps = carriagePositions.length;
+var animate = true;
+scene.registerAfterRender(function() {             
+    carrriage.position = carriagePositions[i];
+    carrriage.rotationQuaternion = carriageRotations[i];
+    if(!isFreight) {
+            contents.rotationQuaternion = passengerRotations[i];
+    }
+
+    i += 1;
+    i %= nbSteps;     
+});
+</code></pre>
+<h2><a name="showing-axes" class="anchor" href="#showing-axes"></a>Showing Axes</h2><p>The data returned by &#39;createTrack&#39; can be used to produce the lines showing the intended directions of the local axes 0f the carriage at any of the points (as seen in the images and playgrounds above). These are the required tangents, normals and binormals of the path for the carriage to follow. Initially these are tangent = (1, 0, 0), normal = (0, 1, 0) and binormal = (0, 0, 1). </p>
+<p>The following function will produce arrays or tangents, normals and binormals</p>
+<pre><code class="lang-javascript">var tangents = [];
+var normals = [];
+var binormals = [];
+var buildVectors = function() {
+    normals = [];
+    binormals = [];
+    for(var i = 0; i &lt; nbPoints; i++) {
+        tangents.push(BABYLON.Vector3.TransformNormal(BABYLON.Axis.X, track.railDirections[i]));           
+        if (isFreight) {
+                normals.push(BABYLON.Vector3.TransformNormal(BABYLON.Axis.Y, track.rotations[i]));
+                binormals.push(BABYLON.Vector3.TransformNormalToRef(BABYLON.Axis.Z, track.rotations[i]);
+            }
+            else {
+                normals.push(BABYLON.Vector3.TransformNormal(BABYLON.Axis.Y, track.carriageRotations[i]);
+                binormals.push(BABYLON.Vector3.TransformNormal(BABYLON.Axis.Z, track.carriageRotations[i]);
+            }
+        }
+    }
+</code></pre>
+<p>The following function will produce a lineSystem drawing vectors from a series of points and so will draw tangents, normals and binormals.</p>
+<pre><code class="lang-javascript">function drawVectors(vectors, positions, size, color) {
+    color = color || BABYLON.Color3.White();
+    size = size || 1;
+
+    var lines = [];
+    for (var i = 0; i &lt; vectors.length - 1; i++) {
+        var v1 = positions[i];
+        var v2 = v1.add(vectors[i].scale(size));
+        lines.push([v1, v2]);
+    }
+    var vectorLines = BABYLON.MeshBuilder.CreateLineSystem(&quot;vectorLines&quot;, {lines: lines}, sc);
+    vectorLines.color = color;
+    return vectorLines;
+}
+</code></pre>
+<h2><a name="illustrating-the-path" class="anchor" href="#illustrating-the-path"></a>Illustrating the Path</h2><h3><a name="using-a-ribbon-to-create-a-simple-velodrome" class="anchor" href="#using-a-ribbon-to-create-a-simple-velodrome"></a>Using a Ribbon to Create a Simple Velodrome</h3><p>In this next playground a simple velodrome track is built from a ribbon. </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#HSMDF2#9">Playground Example - Velodrome</a> - <i class="fa fa-eye" onclick="createIframe('HSMDF2#9', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The normals and binormals of the track are used to create two paths for the ribbon, with a given offset and height. So that the velodrome track sits beneath the wheels a radial vector (from the origin to a point on the track) is used to extend the track outwards.</p>
+<p>To produce a smooth velodrome track not all points are necessary. In this example only one in five are used.</p>
+<pre><code class="lang-javascript">for (var i = 0; i &lt; points.length; i+=5) {
+    radials[i] = points[i].clone().normalize();
+    upperPoints.push(points[i].add(binormals[i].scale(offset)).add(normals[i].scale(height)).add(radials[i].scale(extend)));
+    lowerPoints.push(points[i].subtract(binormals[i].scale(offset)).subtract(normals[i].scale(height)).add(radials[i].scale(extend)));
+}
+
+upperPoints.push(upperPoints[0]);  //close path
+lowerPoints.push(lowerPoints[0]); //close path
+
+var ribbon = BABYLON.MeshBuilder.CreateRibbon(&quot;ribbon&quot;, {pathArray: [upperPoints, lowerPoints], sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene);
+</code></pre>
+<p>Also note that since cylinders are created with their faces horizontal, the wheels are rotated by &pi; / 2 radians and this transformation is baked into the vertices. This ensures that the wheels maintain their intended orientation as the track rotation data is applied.</p>
+<h3><a name="using-tubes-and-instances-to-create-a-roller-coaster" class="anchor" href="#using-tubes-and-instances-to-create-a-roller-coaster"></a>Using Tubes and Instances to Create a Roller Coaster</h3><p>For this roller coaster only the lean angle is used for the carriage and the passenger rotation used to turn the passenger to look out at the start of the run. 
+In this playground paths created either side of the track are used to build tubes and the same track carriage rotational data used to place sleepers underneath the rails.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#SQFG0Q#5">Playground Example - Overview of Roller Coaster</a> - <i class="fa fa-eye" onclick="createIframe('SQFG0Q#5', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#SQFG0Q#6">Playground Example - Passenger View from Roller Coaster</a> - <i class="fa fa-eye" onclick="createIframe('SQFG0Q#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<pre><code class="lang-javascript">for (var i = 0; i &lt; points.length; i+=5) {
+    BABYLON.Vector3.TransformNormalToRef(BABYLON.Axis.Y, track.carriageRotations[i], normal);
+    BABYLON.Vector3.TransformNormalToRef(BABYLON.Axis.Z, track.carriageRotations[i], binormal);
+    plusPoints.push(points[i].add(binormal.scale(offset)).add(normal.scale(height)));
+    negPoints.push(points[i].subtract(binormal.scale(offset)).add(normal.scale(height)));
+
+    var nsleeper = sleeper.createInstance(&quot;&quot;)
+
+    nsleeper.position.x = points[i].x;
+    nsleeper.position.y = points[i].y;
+    nsleeper.position.z = points[i].z;
+
+    nsleeper.rotationQuaternion = BABYLON.Quaternion.FromRotationMatrix(track.carriageRotations[i]);
+    nsleeper.position.subtractInPlace(normal.scale(0.5));
+}
+
+plusPoints.push(plusPoints[0]);
+negPoints.push(negPoints[0]);
+
+var plusTube = BABYLON.MeshBuilder.CreateTube(&quot;tube&quot;, {path: plusPoints, radius: 0.1, tessellation: 4}, scene);
+var negTube = BABYLON.MeshBuilder.CreateTube(&quot;tube&quot;, {path: negPoints, radius: 0.1, tessellation: 4}, scene);
+</code></pre>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="more-advanced-level-3" class="anchor" href="#more-advanced-level-3"></a>More Advanced - Level 3</h2><p><a href="/snippets/Track_Code">Designing  Create Track</a><br><a href="/How_To/How_to_use_Curve3">How To Draw Curves and Create Track Points</a> </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

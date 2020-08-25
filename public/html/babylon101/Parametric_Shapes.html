@@ -1,0 +1,154 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Parametric Shapes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Parametric Shapes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#lines">Lines</a><ul>
+<li><a href="#updatable-option">Updatable Option</a></li>
+<li><a href="#instance-option">Instance Option</a></li>
+<li><a href="#next-step">Next Step</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="parametric-shapes-101" class="anchor" href="#parametric-shapes-101"></a>Parametric Shapes 101</h1><p>These shapes or meshes are determined by parameters or mathematical data. They include lines, a system of lines, ribbons, tubes, extrusions, lathed shapes and irregular polygons. In the 101 course you will only meet lines and you will just use the <em>MeshBuilder</em> method rather than the older legacy <em>Mesh</em> method. How to create all the parametric shapes using either method and the advantages and disadvantages of both can be found by doing <a href="#further_reading">Further Reading</a>. </p>
+<h2><a name="lines" class="anchor" href="#lines"></a>Lines</h2><p>Lines are a series of line segments in 3D where the end of one line segment is the start of the next segment. Lines are described by a series of points in 3D space.</p>
+<p>These three points (0, 0, 0), (0, 1, 1), (0, 1, 0) will form two line segments.</p>
+<p>These points are given by position vectors which in Babylon.js are constructed as Vector3 objects and are placed in order in an array to be passed to the <em>CreateLines</em> method.</p>
+<pre><code class="lang-javascript">var myPoints = [];
+
+var point1 = new BABYLON.Vector3(0, 0, 0);
+myPoints.push(point1);
+var point2 = new BABYLON.Vector3(0, 1, 1);
+myPoints.push(point2);
+var point3 = new BABYLON.Vector3(0, 1, 0);
+myPoints.push(point3);
+
+//or the possible alternative
+
+var myPoints = [
+    new BABYLON.Vector3(0, 0, 0),
+    new BABYLON.Vector3(0, 1, 1),
+    new BABYLON.Vector3(0, 1, 0)
+];
+
+</code></pre>
+<p>The array of points MUST be passed to the <em>CreateLines</em> function as the <em>points</em> option</p>
+<pre><code class="lang-javascript">//creates lines
+var lines = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: myPoints}, scene);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#165IV6#60">Playground Example of Lines</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#60', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#165IV6#61">Playground Example of a Spiral from Lines</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#61', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>You can use dashed lines with <em>CreateDashedLines</em> and adding the number of dashes <em>dashNb</em> as an option.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#165IV6#62">Playground Example of a Spiral from Dashed Lines</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#62', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>For <em>CreateLines</em> the options are</p>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>points</td>
+<td><em>(Vector3[])</em>  array of Vector3, the path of the line <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of a line mesh to be updated</td>
+<td>null</td>
+</tr>
+<tr>
+<td>colors</td>
+<td><em>(Color4[])</em> array of Color4, each point color</td>
+<td>null</td>
+</tr>
+<tr>
+<td>useVertexAlpha</td>
+<td><em>(boolean)</em> false if the alpha blending is not required (faster)</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>For <em>CreateDashedLines</em> the options are</p>
+<table>
+<thead>
+<tr>
+<th>options</th>
+<th>value</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>points</td>
+<td><em>(Vector3[])</em>  array of Vector3, the path of the line <strong>REQUIRED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>dashSize</td>
+<td><em>(number)</em>  size of the dashes</td>
+<td>3</td>
+</tr>
+<tr>
+<td>gapSize</td>
+<td><em>(number)</em>  size of the gaps</td>
+<td>1</td>
+</tr>
+<tr>
+<td>dashNb</td>
+<td><em>(number)</em>  intended number of dashes</td>
+<td>200</td>
+</tr>
+<tr>
+<td>updatable</td>
+<td><em>(boolean)</em> true if the mesh is updatable</td>
+<td>false</td>
+</tr>
+<tr>
+<td>instance</td>
+<td><em>(LineMesh)</em> an instance of a line mesh to be updated</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="updatable-option" class="anchor" href="#updatable-option"></a>Updatable Option</h3><p>Lines and Dashed Lines have an updatable option. When this is <em>true</em> it is possible to alter the data associated with each vertex of the Lines and so alter the path of the Lines. For more information see <a href="/How_To/Updating_Vertices.html">Updating Vertices</a>.</p>
+<h3><a name="instance-option" class="anchor" href="#instance-option"></a>Instance Option</h3><p>Lines also have an instance option which means there is an alternative way to update the path of the lines just by passing a new set of points. For this to work the original lines creation must have the updatable option as <em>true</em> and the lines created are passed as the value of the option instance. The number of points in the array MUST stay the same. </p>
+<p>Example :</p>
+<pre><code class="lang-javascript">//creates lines
+var lines = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: myArray, updatable: true}, scene);
+
+// updates the existing instance of lines : no need for the parameter scene here
+lines = BABYLON.MeshBuilder.CreateLines(&quot;lines&quot;, {points: myNewArray, instance: lines});
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#165IV6#63">Playground Example of a Spiral from Lines</a> - <i class="fa fa-eye" onclick="createIframe('165IV6#63', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Most but not all parametric shapes have the <em>instance</em> option and so can have their mesh updated in this way.</p>
+<h1><a name="next-step" class="anchor" href="#next-step"></a>Next Step</h1><p>In the previous section, about set shapes, you saw that when created they sit on top of each other at the origin. That is often the case with parametric shapes as well. So its time to move on to position meshes where needed and also find out about rotation and scaling. Ready? Sure you are! <a href="/babylon101/Position">Position, Rotation and Scaling</a></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/How_To/Parametric_Shapes">How to Create Parametric Shapes with MeshBuilder</a><br><a href="/How_To/Legacy_Param">How to Create Parametric Shapes Legacy Method</a><br><a href="/features/Shapes#ways-of-creating-a-predefined-mesh">Advantages and Disadvantages</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Using the Graph Editor - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Using the Graph Editor</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#understanding-the-tool">Understanding the tool</a></li>
+<li><a href="#adding-nodes-by-the-example">Adding nodes by the example</a></li>
+<li><a href="#using-variables">Using variables</a></li>
+<li><a href="#advanced-behavior-example">Advanced behavior example</a></li>
+<li><a href="#list-of-all-available-nodes">List of all available nodes</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p>Introduced in the Editor v2.0.0 as a POC, the <code>Graph Editor</code> is now live starting from the Editor v3.2.0.
+As all other tools available in the Editor, the <code>Graph Editor</code> is available over the main toolbar in <code>Tools -&gt; Graph Editor</code>:
+<img src="/img/extensions/Editor/GraphEditor/opening.png" alt="OpeningGraphEditor"></p>
+<h1><a name="understanding-the-tool" class="anchor" href="#understanding-the-tool"></a>Understanding the tool</h1><p>As for the <a href="https://doc.babylonjs.com/how_to/node_material#using-the-node-material-editor">Node Material Editor</a>, the <code>Graph Editor</code> is used to create custom behaviors for elements in the scene without having to know how to code.
+The <code>Graph Editor</code> tends to evoluate and provide features such as the <a href="https://docs.unrealengine.com/en-US/Engine/Blueprints/index.html">Unreal Engine Blueprints</a></p>
+<p>The way to attach graphs to elements of the scene is the same as the <a href="https://doc.babylonjs.com/resources/custom_scripts"><code>Code Editor</code></a>:</p>
+<ul>
+<li>Select an element in the scene</li>
+<li>Click <code>Add New Graph</code></li>
+<li>Give it a name</li>
+<li>Add, edit and remove nodes from the graph</li>
+</ul>
+<p>All graphs are standalone and can be attached to multiple elements in the scene by clicking <code>Add</code> in the list on the left side of the tool.</p>
+<h1><a name="adding-nodes-by-the-example" class="anchor" href="#adding-nodes-by-the-example"></a>Adding nodes by the example</h1><p>Once a graph has been created and attached to an element of the scene, the goal is to add nodes and connect them to finally create a real algorithm.</p>
+<p>Let&#39;s have a sphere and try the following example: on the user clicks on the sphere, we want to translate the sphere from x=0,y=0,z=0 to x=2,y=3,z=4.</p>
+<p>First, let&#39;s add a node. By default, a graph is empty showing an empty canvas:
+<img src="/img/extensions/Editor/GraphEditor/empty.png" alt="EmptyGraphEditor"></p>
+<p>To add a new node, just right click on the canvas and a popup will appear to select a node to add. By default, the <code>search</code> input is focused and you can research a node by name. Let&#39;s search <code>&quot;PointerDown&quot;</code> and press <code>Enter</code> or double click the item in the list to add in the graph:
+<img src="/img/extensions/Editor/GraphEditor/search_pointerdown.png" alt="GraphEditorSearchPointerDown"></p>
+<p>The node is now in the graph and shows one output: a rectangle. All inputs/ouputs are identified by their form:</p>
+<ul>
+<li>Rectangle: means <code>executable</code>, can send/receive an event. These are called <code>&quot;triggerable nodes&quot;</code>.</li>
+<li>Circle: defines an input or output value. These are just receiving or outputing values.</li>
+</ul>
+<p>From now, our <code>PointerDown</code> node is in the graph and is ready to trigger some nodes. It exists a large list of available nodes and here a particular one will be useful: the <code>Transform</code> node. This node will allow to modify the transforms (position, rotation and scale) the current node. Let&#39;s right click the graph and search for <code>&quot;Transform&quot;</code> and add the node:
+<img src="/img/extensions/Editor/GraphEditor/added_transform.png" alt="GraphAddedTransform"></p>
+<p>As we can see, the <code>Transform</code> node is <code>triggerable</code> as the first input is a rectangle. All other inputs/outputs are values as their forms are circle. All rectangles/circles on the left side are inputs and all rectangles/circles on the right side are outputs.</p>
+<p>To connect nodes, let&#39;s drag&#39;n&#39;drop the <code>PointerDown</code> node output to the first input of the <code>Transform</code> node:
+<img src="/img/extensions/Editor/GraphEditor/transform_connected.png" alt="GraphTransformConnected"></p>
+<p>Once connected, the top color of the <code>Transform</code> node changed and became green. That means the execution time change:</p>
+<ul>
+<li>Grey color means &quot;always executing&quot;</li>
+<li>Green color means &quot;executed on triggered&quot;</li>
+</ul>
+<p>In our case, the <code>Transform</code> node will be executed ONLY and ONLY when the user clicks on the sphere.</p>
+<p>Back to the example, we want the sphere to have a new position x=2,y=3,y=4. That means the input &quot;position&quot; must receive a value to change the transform of the sphere. Let&#39;s add a new type of node called <code>&quot;Type Nodes&quot;</code>.
+Type nodes are just nodes that define a type (number, string, vector, color, etc.). In our case, the position is a Vector 3D, so let&#39;s add a new Vector3 node:
+<img src="/img/extensions/Editor/GraphEditor/vector3.png" alt="GraphVector3"></p>
+<p>Once added, the output <code>&quot;value&quot;</code> (which is the vector reference itself) can be connected to the input <code>&quot;position&quot;</code> of the <code>Transform</code> node:
+<img src="/img/extensions/Editor/GraphEditor/vector3_connected.png" alt="GraphVector3Connected"></p>
+<p>Almost all nodes have options and can be customized. This is the case of the <code>Vector3</code> node, the values x, y, and z can be modified. So the output of the node can be customized. Let&#39;s click the <code>Vector3</code> node and go to the Editor&#39;s Edition Tools:
+<img src="/img/extensions/Editor/GraphEditor/customize_vector3.png" alt="GraphCustomizeVector3"></p>
+<p>The edition tool shows all the customizable properties. Here, the values x, y and z can be customized.</p>
+<p>Finally, let&#39;s test our graph! To live test a graph, just click the button <code>Start/Stop</code> in the Graph Editor an then click the sphere.
+The connection between the <code>PointerDown</code> and <code>Transform</code> nodes will be animated to show an activity: the <code>PointerDown</code> node triggered the output on the sphere has been clicked and the <code>Transform</code> node has be triggered to change the position of the sphere. That&#39;s all!</p>
+<h1><a name="using-variables" class="anchor" href="#using-variables"></a>Using variables</h1><p>Each graph can have a list of variables. All variables are scoped and available ONLY and ONLY in the graph&#39;s context.
+These are used to store values that support read/write. Variable can be read and written using the <code>Variable</code> and are identified by a name, like when writing code.</p>
+<p>Variables support the following types:</p>
+<ul>
+<li>String</li>
+<li>Boolean</li>
+<li>Number</li>
+<li>Vector 2D</li>
+<li>Vector 3D</li>
+<li>Vector 4D</li>
+</ul>
+<p>To add a variable, just click on the graph and the Editor&#39;s Edition Tools will be updated to display a list of available variables (empty by default):
+<img src="/img/extensions/Editor/GraphEditor/empty_variables.png" alt="GraphEmptyVariables"></p>
+<p>Let&#39;s modify the example and replace the <code>Vector3</code> node by a <code>Variable</code> node.
+To add a variable, just click <code>Add New</code> in the variables list, then give it a name and a type. Here, <code>Vector 3D</code>:
+<img src="/img/extensions/Editor/GraphEditor/add_variable.png" alt="GraphAddVariable"></p>
+<p>Once added, the variable appears in the variables list and can be modified by clicking on the button <code>Edit</code>. Let&#39;s set the variables values to x=2,y=3,z=4:
+<img src="/img/extensions/Editor/GraphEditor/modify_variable.png" alt="GraphModifyVariable"></p>
+<p>The variable is now available to use and is configured. Just add the variable to the graph: right click the canvas and add a new node of type <code>Variable</code>.
+Once added, a combo box is available on the node and can be customized to select the wanted variable: just select your variable:
+<img src="/img/extensions/Editor/GraphEditor/add_variable_node.png" alt="GraphAddVariableNode"></p>
+<p>From now, what we have to do is to remove the constant Vector 3D previously added and replace by our variable:
+<img src="/img/extensions/Editor/GraphEditor/variable_final.png" alt="GraphVariableFinal"></p>
+<h1><a name="advanced-behavior-example" class="anchor" href="#advanced-behavior-example"></a>Advanced behavior example</h1><p>Let&#39;s take this graph as example to illustrate a more advanced behavior. The goal is to rotate the sphere on the Y axis on the pointer is over the sphere.
+Then, once the pointer is out, restore the rotation on the Y axis to 0:
+<img src="/img/extensions/Editor/GraphEditor/advanced_graph.png" alt="GraphAdvancedGraph"></p>
+<p>Teaching logic can&#39;t be done here. So, let&#39;s experiment with all other available nodes and create awesome graphs for awesome behaviors in your scene.</p>
+<h1><a name="list-of-all-available-nodes" class="anchor" href="#list-of-all-available-nodes"></a>List of all available nodes</h1><ul>
+<li><strong>Types</strong><ul>
+<li><strong><code>Number</code></strong>: represents a number and outputs its value</li>
+<li><strong><code>String</code></strong>: represents a string and outputs its value</li>
+<li><strong><code>Vector2</code></strong>: represents a Vector 2D and outputs the vector itself, x, and y</li>
+<li><strong><code>Vector3</code></strong>: represents a Vector 2D and outputs the vector itself, x, y and z</li>
+<li><strong><code>Vector4</code></strong>: represents a Vector 2D and outputs the vector itself, x, y, z, and w</li>
+<li><strong><code>Color3</code></strong>: represents a Color 3 (rgb) and outputs the color itself, red, green, and blue</li>
+<li><strong><code>Color4</code></strong>: represents a Color 4 (rgba) and outputs the color itself, red, green, blue and alpha</li>
+</ul>
+</li>
+<li><strong>Properties</strong>: used to manipulate properties of scene elements and variables<ul>
+<li><strong><code>Get Property</code></strong>: outputs the property value of the given scene element (see node&#39;s properties)</li>
+<li><strong><code>Set Property</code></strong>: sets the given value to the given property of the given scene element (see node&#39;s properties)</li>
+<li><strong><code>Variable</code></strong>: adds a variable node available in the graph to output its value and modify its value (see node&#39;s properties)</li>
+</ul>
+</li>
+<li><strong>Functions</strong><ul>
+<li><strong><code>Move With Collisions</code></strong>: preforms a translation of the node using the given displacement vector by taking care of the collisions in the scene</li>
+<li><strong><code>Look At</code></strong>: computes the rotation needed for the element to look at the given target point. (yawCor, pitchCor and rollCor are optional)</li>
+<li><strong><code>Rotate</code></strong>: rotates the current element in the given axis at the given amount</li>
+<li><strong><code>Translate</code></strong>: translates the current element in the given axis at the given amount</li>
+<li><strong><code>Set Direction</code></strong>: computes the rotation needed for the element to look at the given direction (<code>localAxis</code>). For example Vector3(0, 0, 1) will look forward</li>
+</ul>
+</li>
+<li><strong>Utils</strong><ul>
+<li><strong><code>Bypass Type</code></strong>: takes an input and transforms its type to an &quot;any&quot; type. Allows to connect the output to any other input in the graph by bypassing the type checking. Use with care</li>
+<li><strong><code>Time</code></strong>: outputs the current time in terms of milliseconds or seconds</li>
+<li><strong><code>Log</code></strong>: logs the given message in the console. Useful to help debugging</li>
+<li><strong><code>Set Timeout</code></strong>: creates a new timer and triggers the first output once the specified time has been elapsed. outputs the id of the timeout</li>
+<li><strong><code>Clear Timeout</code></strong>: clears an existing timeout by taking the timeout id as parameter</li>
+<li><strong><code>Vector 2D(3D)(4D) to XY(Z)(W)</code></strong>: takes a vector 2D, 3D or 4D (according to the node) and splits its values to output numbers x, y, z and w</li>
+<li><strong><code>Color 3(4) to RGB(A)</code></strong>: takes a color 3 or 4 (accordiong to the node) and splits its values to output numbers r, g, b and a</li>
+<li><strong><code>Vector Merger</code></strong>: takes numbers as input and ouputs a new vector 2D, 3D or 4D. Vectors 3D and 4D must have their inputs filled</li>
+<li><strong><code>Send Script Message</code></strong>: used while using Code Editor in the same project, sends a message to the given target element in the scene by calling the given method name (see node&#39;s properties)</li>
+</ul>
+</li>
+<li><strong>Math</strong>:<ul>
+<li><strong><code>Scale</code></strong>: scales the input number of vector using the given scale number (see node&#39;s properties)</li>
+<li><strong><code>Operation</code></strong>: performs the given operation (see node&#39;s properties) on the given inputs (numbers) and outputs its result. Supported:<ul>
+<li>multiply</li>
+<li>add</li>
+<li>subtract</li>
+<li>divide</li>
+</ul>
+</li>
+<li><strong><code>Vector Operation</code></strong>: performs the given operation (see node&#39;s properties) on the given inputs (vectors) and ouputs its result. Supported:<ul>
+<li>multiply</li>
+<li>add</li>
+<li>subtract</li>
+<li>divide</li>
+</ul>
+</li>
+<li><strong><code>Fract</code></strong>: computes the fractional part of the given input (vector)</li>
+<li><strong><code>Negate</code></strong>: negates the given input (number of vector) and ouputs its result</li>
+<li><strong><code>Condition</code></strong>: checks the given inputs and triggers the appropriate output by checking their values (equal, different, etc.)</li>
+<li><strong><code>Cosinus</code></strong>: outputs the value of the cosinus of the given input</li>
+<li><strong><code>Sinus</code></strong>: outputs the value of the sinus of the given input</li>
+<li><strong><code>Tangent</code></strong>: outputs the value of the tangent of the given input</li>
+<li><strong><code>Abs</code></strong>: ouputs the absolute value of the given input</li>
+</ul>
+</li>
+<li><strong>Node</strong>: defines all the available methods/properties for scene nodes<ul>
+<li><strong><code>Transform</code></strong>: ouputs all the transform values of the node (position, rotation and scale) and takes them as input too</li>
+<li><strong><code>Set Parent</code></strong>: sets the given parent to the current scene element. Input is of type &quot;mesh&quot; and can be retrieved using the <code>Get Node By Name</code> node</li>
+<li><strong><code>Get Mesh Direction</code></strong>: outputs the current direction of the mesh according to its current rotation in the given axis to rotate. Axis (0, 0, 1) will take Z as forward axis</li>
+<li><strong><code>Set Mesh Direction</code></strong>: sets the new direction of the mesh using the given local axis. Axis (0, 0, 1) will take Z as forward axis</li>
+</ul>
+</li>
+<li><strong>Events</strong>: defines all possible events to listen<ul>
+<li><strong><code>Pointer Down</code></strong>: triggers the output on the scene element is being touched/clicked</li>
+<li><strong><code>Pointer Move</code></strong>: triggers the output on the mouse moves on the scene element</li>
+<li><strong><code>Pointer Up</code></strong>: triggers the output on the scene element has been clicked</li>
+<li><strong><code>Pointer Over</code></strong>: triggers the output on the mouse is over the scene element</li>
+<li><strong><code>Pointer Out</code></strong>: triggers the output on the mouse is out of the scene element. Will be triggered only and only if the mouse was previously over the scene element</li>
+<li><strong><code>Keyboard Down</code></strong>: triggers the output on the given key (see node&#39;s properties) is down</li>
+<li><strong><code>Keyboard Up</code></strong>: triggers the output on the given key (see node&#39;s properties) is up</li>
+</ul>
+</li>
+<li><strong>Animation</strong>:<ul>
+<li><strong><code>Play Animations</code></strong>: plays the animations of the given target using the given properties (see node&#39;s properties)</li>
+<li><strong><code>Stop Animations</code></strong>: stops the animations of the given target (see node&#39;s properties)</li>
+<li><strong><code>Interpolate Value</code></strong>: animates the given property of the given target at the given parameters (see node&#39;s properties)</li>
+</ul>
+</li>
+<li><strong>Sound</strong>:<ul>
+<li><strong>`Play Sound&#39;</strong>: plays the given sound available in the scene (see node&#39;s properties)</li>
+<li><strong><code>Pause Sound</code></strong>: pauses the given sound available in the scene (see node&#39;s properties)</li>
+<li><strong><code>Stop Sound</code></strong>: stops the given sound available in the scene (see node&#39;s properties)</li>
+</ul>
+</li>
+<li><strong>Scene</strong>:<ul>
+<li><strong><code>Get Node By Name</code></strong>: gets a node identified by the given name (see node&#39;s properties) and outputs its reference (type &quot;node&quot;)</li>
+<li><strong><code>Get Mesh By Name</code></strong>: gets a mesh identified by the given name (see node&#39;s properties) and outputs its reference (type &quot;mesh&quot;)</li>
+</ul>
+</li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

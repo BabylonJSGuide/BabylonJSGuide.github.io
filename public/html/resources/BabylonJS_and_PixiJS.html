@@ -1,0 +1,87 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>How to combine Babylon.js and Pixi.js - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>How to combine Babylon.js and Pixi.js</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#setup-pixijs-rendering">Setup Pixi.js rendering</a></li>
+<li><a href="#add-pixijs-sprites-to-stage">Add Pixi.js Sprites to Stage</a></li>
+<li><a href="#rendering-sequence">Rendering Sequence</a></li>
+<li><a href="#webgl1-problems">WebGL1 Problems</a></li>
+<li><a href="#pixijs-versions">Pixi.js Versions</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="combine-babylonjs-and-pixijs" class="anchor" href="#combine-babylonjs-and-pixijs"></a>Combine Babylon.js and Pixi.js</h1><p>Pixi.js is a fast, lightweight, open source 2D library with full support for webGL with a very fast rendering speed. It is great to use as a UI in combination with Babylon.js, making a perfect duo for your web game world.</p>
+<h2><a name="setup-pixijs-rendering" class="anchor" href="#setup-pixijs-rendering"></a>Setup Pixi.js rendering</h2><pre><code class="lang-javascript">var pixiRenderer = new PIXI.WebGLRenderer({
+    context: engine._gl,
+    view: engine.getRenderingCanvas(),
+    clearBeforeRender: false,
+    autoStart: false
+});
+</code></pre>
+<h2><a name="add-pixijs-sprites-to-stage" class="anchor" href="#add-pixijs-sprites-to-stage"></a>Add Pixi.js Sprites to Stage</h2><pre><code class="lang-javascript">var stage = new PIXI.Container();
+var sprite = PIXI.Sprite.from(&#39;https://i.imgur.com/1yLS2b8.jpg&#39;);
+sprite.anchor.set(0.5);
+sprite.position.set(canvas.width/2, canvas.height/2);
+stage.addChild(sprite);
+
+</code></pre>
+<p>The <em>clearBeforeRender</em> and <em>autoStart</em> are two very important properties that must be used and set to <em>false</em>.</p>
+<h2><a name="rendering-sequence" class="anchor" href="#rendering-sequence"></a>Rendering Sequence</h2><p>The render sequence of Babylon.js and Pixi.js is also very important, Babylon.js must be rendered first.</p>
+<pre><code>engine.runRenderLoop(function() {   
+    scene.render();        
+    engine.wipeCaches(true);
+
+    pixiRenderer.reset();
+    pixiRenderer.render(stage);
+});
+</code></pre><p><a href="https://jsfiddle.net/y5q7Lb1v/40/">Working JSFiddle Example Pixi.js in Front</a></p>
+<p>It is possible to place a Pixi.js stage behind a Babylon.js scene provided you use</p>
+<pre><code>scene.autoClear = false;
+</code></pre><p>to make the background of the scene transparent. In this case render Pixi.js before Babylon.js.</p>
+<pre><code>engine.runRenderLoop(function() {   
+  pixiRenderer.reset();
+  pixiRenderer.render(stage);
+
+  scene.autoClear = false;
+  scene.render();        
+  engine.wipeCaches(true);
+
+});
+</code></pre><p>It is also possible to combine these and have Pixi.js stages behind and in front of a Babylon.js scene.</p>
+<pre><code>engine.runRenderLoop(function() {   
+  pixiRenderer.reset();
+  pixiRenderer.render(stage);
+
+  scene.autoClear = false;
+  scene.render();        
+  engine.wipeCaches(true);
+
+  pixiRenderer.reset();
+  pixiRenderer.render(stage1);
+
+});
+</code></pre><p><a href="https://jsfiddle.net/y5q7Lb1v/42/">JSFiddle Example Multiple Pixi.js Stages</a></p>
+<h2><a name="webgl1-problems" class="anchor" href="#webgl1-problems"></a>WebGL1 Problems</h2><p>When your browser is running webGL1 then you need to reset the Pixi.js context first for each rendering as below.</p>
+<pre><code>engine.runRenderLoop(function() { 
+    if(engine.webGLVersion === 1) {
+        pixiRenderer.reset();
+    }
+    scene.render();        
+    engine.wipeCaches(true);
+
+    pixiRenderer.reset();
+    pixiRenderer.render(stage);
+});
+</code></pre><h2><a name="pixijs-versions" class="anchor" href="#pixijs-versions"></a>Pixi.js Versions</h2><p>Always use the <a href="https://github.com/pixijs/pixi.js/releases">latest released version of Pixi.js</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

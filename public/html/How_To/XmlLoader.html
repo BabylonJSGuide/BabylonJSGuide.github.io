@@ -1,0 +1,135 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the Xml Loader - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the Xml Loader</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#creating-the-xml-loader">Creating the Xml Loader</a></li>
+<li><a href="#xml-layouts">XML Layouts</a></li>
+<li><a href="#dynamic-attributes">Dynamic Attributes</a></li>
+<li><a href="#linking-control-to-mesh">Linking Control to Mesh</a></li>
+<li><a href="#dynamic-array-and-object-source">Dynamic Array and Object source</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div></div><div id="staticContent"><p>When you want to create GUI layouts in an easy and structured way you may want to take a look at the Xml Loader.</p>
+<h2><a name="creating-the-xml-loader" class="anchor" href="#creating-the-xml-loader"></a>Creating the Xml Loader</h2><p>The xml Loader is able to load Babylon GUI layouts directly from xml. You create it with</p>
+<pre><code class="lang-javascript">var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(&quot;UI&quot;);
+var xmlLoader = new BABYLON.GUI.XmlLoader();
+</code></pre>
+<p>The XmlLoader might be used as part of a javascript class or function. In order for the class to correctly map observables and dynamic attributes with the class methods and attributes, it is necessary to provide the class object in the constructor. This would be how the XmlLoader would be initialized inside a class.</p>
+<pre><code class="lang-javascript">var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(&quot;UI&quot;);
+var xmlLoader = new BABYLON.GUI.XmlLoader(this);
+</code></pre>
+<p>You can then proceed to load a layout using the <strong>loadLayout</strong> method.</p>
+<pre><code class="lang-javascript">xmlLoader.loadLayout(&quot;layouts/testgui.xml&quot;, advancedTexture);
+</code></pre>
+<p>This is what is needed to initialize and load a layout. There may be cases when you may need to load a layout without attaching it to the advancedTexture. In this case, it suffices to set the second paramenter null like the following.</p>
+<pre><code class="lang-javascript">xmlLoader.loadLayout(&quot;layouts/testgui.xml&quot;, null);
+</code></pre>
+<p>The third parameter in the loadLayout function, is a callback which is called once the layout has been parsed. Inside the callback, it is possible to retrieve elements and add events to them. This would be an example of how it would be used.</p>
+<pre><code class="lang-javascript">xmlLoader.loadLayout(&quot;layouts/testgui.xml&quot;, advancedTexture, function() {
+    xmlLoader.getNodeById(&quot;helloButton&quot;).onPointerClickObservable.add(clickEvent);
+});
+</code></pre>
+<p>After the layout has been loaded there is a couple of methods available to you.</p>
+<pre><code class="lang-javascript">xmlLoader.getNodeById(&quot;helloButton&quot;); // Gets a node by ID. Similar to how DOM elements are retrieved.
+xmlLoader.getNodes(); // Gets all parsed nodes.
+xmlLoader.isLoaded(); // Returns true or false depending whether the layout has finished loading.
+</code></pre>
+<p>If you need to detach a container from the scene</p>
+<pre><code class="lang-javascript">var node = xmlLoader.getNodeById(&quot;firstContainer&quot;); 
+advancedTexture.removeControl(node);
+</code></pre>
+<p>Then attach it again</p>
+<pre><code class="lang-javascript">var node = xmlLoader.getNodeById(&quot;firstContainer&quot;); 
+advancedTexture.addControl(node);
+</code></pre>
+<h2><a name="xml-layouts" class="anchor" href="#xml-layouts"></a>XML Layouts</h2><p>The structure for an XML layout is very straightforward. This is what a simple XML layout would look like</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;root&gt;
+    &lt;Rectangle id=&quot;firstContainer&quot; verticalAlignment=&quot;Control.HORIZONTAL_ALIGNMENT_TOP&quot; background=&quot;yellow&quot; width=&quot;.8&quot; height=&quot;.4&quot; color=&quot;Orange&quot;&gt;
+        &lt;Button id=&quot;imageButton&quot; name=&quot;imageButton&quot; width=&quot;0.2&quot; background=&quot;red&quot; height=&quot;0.3&quot;&gt;
+                &lt;Image id=&quot;image&quot; source=&quot;assets/icon.png&quot; width=&quot;1&quot; height=&quot;1&quot; name=&quot;image&quot; stretch=&quot;Image.STRETCH_FILL&quot; horizontalAlignment=&quot;Control.HORIZONTAL_ALIGNMENT_LEFT&quot; /&gt;
+        &lt;/Button&gt;
+    &lt;/Rectangle&gt;
+&lt;/root&gt;
+</code></pre>
+<p>The Controls names in the layouts follow rigorously the names in the BABYLON.GUI library. The same stands for the attributes as well. The only usecase when this differs, is in the Grid element. This is what a Grid element looks like in the layout.</p>
+<pre><code class="lang-xml">&lt;Grid id=&quot;grid&quot; name=&quot;grid&quot; top=&quot;50px&quot; background=&quot;black&quot; height=&quot;200px&quot; width=&quot;200px&quot;&gt;
+        &lt;Row height=&quot;0.5&quot; &gt;
+            &lt;Column width=&quot;0.2&quot;&gt;
+            &lt;/Column&gt;
+            &lt;Column width=&quot;0.5&quot;&gt;
+                &lt;Rectangle id=&quot;1rect&quot; thickness=&quot;0&quot; name=&quot;1rect&quot; background=&quot;green&quot;&gt;&lt;/Rectangle&gt;
+            &lt;/Column&gt;
+        &lt;/Row&gt;
+        &lt;Row height=&quot;0.5&quot;&gt;
+            &lt;Column&gt;
+            &lt;/Column&gt;
+            &lt;Column&gt;
+                &lt;Rectangle id=&quot;2rect&quot; thickness=&quot;0&quot; name=&quot;2rect&quot; background=&quot;red&quot; &gt;&lt;/Rectangle&gt;
+            &lt;/Column&gt;
+        &lt;/Row&gt;
+&lt;/Grid&gt;
+</code></pre>
+<p>In the Grid&#39;s case, the rows and the columns are not controls in the babylon GUI. It is important to add the maximum number of columns in the first row as all the subsequent rows will have the same number of columns. This is because the xml loader creates the column definitions of the Grid from the first row. However, after the first row, it is possible to add less columns to the subsequent rows. The width and height attributes for Rows and the Columns of the first row are mandatory, for the columns of the subsequent rows the value will not be taken into consideration by the loader. The isPixel attribute is mandatory if the width and height is in Pixels.</p>
+<h2><a name="dynamic-attributes" class="anchor" href="#dynamic-attributes"></a>Dynamic Attributes</h2><p>It is possible to add dynamic attributes to your XML layouts. These attributes can either be class attributes or global variables. The following is how to set a value in your xml layout referencing a class attributes or a global variable.</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;root&gt;
+    &lt;Rectangle name=&quot;firstContainer&quot; id=&quot;firstContainer&quot; verticalAlignment=&quot;Control.HORIZONTAL_ALIGNMENT_TOP&quot; background=&quot;blue&quot; id=&quot;popupContainer&quot; width=&quot;.8&quot; height=&quot;.4&quot; color=&quot;Orange&quot; &gt;
+        &lt;InputText id=&quot;inputText1&quot; width=&quot;{{textWidth}}&quot; maxWidth=&quot;0.3&quot;  height=&quot;40px&quot; color=&quot;white&quot;/&gt;
+        &lt;Button id=&quot;helloButton&quot; width=&quot;0.2&quot; verticalAlignment=&quot;Control.VERTICAL_ALIGNMENT_BOTTOM&quot; height=&quot;0.2&quot; name=&quot;helloButton&quot; background=&quot;green&quot; onPointerUpObservable=&quot;storeUsernameEvent&quot; &gt;
+            &lt;TextBlock  text=&quot;Store Input&quot; color = &quot;white&quot; /&gt;
+        &lt;/Button&gt;
+    &lt;/Rectangle&gt;
+&lt;/root&gt;
+</code></pre>
+<p>By wrapping the attributes value with double curly brackets <code>{{}}</code>, it is given the value of the class attribute or global variable with that name.</p>
+<h2><a name="linking-control-to-mesh" class="anchor" href="#linking-control-to-mesh"></a>Linking Control to Mesh</h2><p>It is possible to link a control to a mesh directly from Xml. This can be very easily done by setting the attribute <code>linkWithMesh=&quot;meshName&quot;</code> to the Control you want to add. Even though the curly brackets are not needed, this is also a dynamic attribute. If the xml loader has been initiated with a class / function context it will use that context to retrieve the mesh, otherwise it will look for it globally.</p>
+<h2><a name="dynamic-array-and-object-source" class="anchor" href="#dynamic-array-and-object-source"></a>Dynamic Array and Object source</h2><p>It is also possible to connect a structure like an Array or Object directly to XML. This would be handy in a case when we may need to fill a StackPanel from an array of values or object of key value pairs. However, this can be used whenever we need to repeat a specific xml block by filling in values from An Array or an Object. The only not implemented usecase would be the Grid.</p>
+<p>Let&#39;s suppose we have the following object in your javascript :</p>
+<pre><code class="lang-javascript">var objTexts = {
+        first: {
+            name: &quot;john&quot;,
+            surname: &quot;smith&quot;
+        },
+        second: {
+            name: &quot;ben&quot;,
+            surname: &quot;Stiller&quot;
+        }
+};
+</code></pre>
+<p>Let&#39;s also suppose the following list retains the users of your application and you may want to show them listed in the GUI. This would be possible JS side but this would mean copying the control over and over again. XmlLoader makes it much more easier and cleaner directly from XML. This would be how you iterate the aforementioned structure :</p>
+<pre><code class="lang-xml">&lt;StackPanel background=&quot;#ffffff&quot; width=&quot;300px&quot; top=&quot;100px&quot; left=&quot;200px&quot; id=&quot;panel&quot; dataSource=&quot;text in {objTexts}&quot;&gt;
+       &lt;Container  width=&quot;1&quot; height=&quot;40px&quot; &gt;
+           &lt;TextBlock id=&quot;myImage&quot; height=&quot;1&quot; text=&quot;{{text.name}}&quot; color=&quot;red&quot; resizeToFit=&quot;true&quot; fontSize=&quot;24&quot;/&gt;
+           &lt;TextBlock left=&quot;50px&quot; height=&quot;1&quot; text=&quot;{{text.surname}}&quot; color=&quot;black&quot; resizeToFit=&quot;true&quot; fontSize=&quot;24&quot;/&gt;
+       &lt;/Container&gt;
+&lt;/StackPanel&gt;
+</code></pre>
+<p>Or</p>
+<pre><code class="lang-javascript">xmlLoader.getNodeById(&quot;myName&quot;).text = &quot;john&quot;;
+xmlLoader.getNodeById(&quot;mySurname&quot;).text = &quot;smith&quot;;
+</code></pre>
+<pre><code class="lang-xml">&lt;StackPanel background=&quot;#ffffff&quot; width=&quot;300px&quot; top=&quot;100px&quot; left=&quot;200px&quot; id=&quot;panel&quot; dataSource=&quot;text in {objTexts}&quot;&gt;
+       &lt;Container  width=&quot;1&quot; height=&quot;40px&quot; &gt;
+           &lt;TextBlock id=&quot;myName&quot;  height=&quot;1&quot; text=&quot;{{text.name}}&quot; color=&quot;red&quot; resizeToFit=&quot;true&quot; fontSize=&quot;24&quot;/&gt;
+           &lt;TextBlock id=&quot;mySurname&quot; left=&quot;50px&quot; height=&quot;1&quot; text=&quot;{{text.surname}}&quot; color=&quot;black&quot; resizeToFit=&quot;true&quot; fontSize=&quot;24&quot;/&gt;
+       &lt;/Container&gt;
+&lt;/StackPanel&gt;
+</code></pre>
+<p>The source is associated to the StackPanel by using the dataSource attribute. The dataSource attribute should always have 3 values in it, the variable name, the keyword <code>in</code> and structure name. For an object structure the name must be wrapped in curly brackets <code>{}</code> like the example above. For an array structure the name can be wrapped up in normal brackets but it is not mandatory. When the dataSource is an array it can be written as <code>dataSource=&quot;text in [objTexts]</code> or simply <code>dataSource=&quot;text in objTexts&quot;</code></p>
+<p>The variable part of the dataSource attribute is how you access the source values. Notice in the above example the section <code>text=&quot;{{text.surname}}&quot;</code> is how you set a value from the source to your XML.</p>
+<h2><a name="further-reading" class="anchor" href="#further-reading"></a>Further reading</h2><p><a href="/how_to/selector">How To Use the Selection Panel Helper</a><br><a href="/how_to/gui">How To Use Babylon GUI</a><br><a href="/how_to/ScrollViewer">How To Use Babylon GUI Scroll Viewer</a><br><a href="/how_to/gui3d">How To Use Babylon GUI3D</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

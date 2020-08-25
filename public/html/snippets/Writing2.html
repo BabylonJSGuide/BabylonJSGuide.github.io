@@ -1,0 +1,74 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Fireworks with Shader Code - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item active" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/snippets"><h1>snippets</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Fireworks with Shader Code</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#first-stage-design">First Stage Design</a></li>
+<li><a href="#second-stage-design">Second Stage Design</a></li>
+<li><a href="#third-stage-design">Third Stage Design</a></li>
+<li><a href="#shader-material-code">Shader Material Code</a><ul>
+<li><a href="#vertex-shader-main-function">Vertex Shader Main Function</a></li>
+<li><a href="#fragment-shader-main-function">Fragment Shader Main Function</a></li>
+<li><a href="#sphere">Sphere</a></li>
+<li><a href="#animation-loop">Animation Loop</a></li>
+</ul>
+</li>
+<li><a href="#fireworks">Fireworks</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="fireworks-with-shaders" class="anchor" href="#fireworks-with-shaders"></a>Fireworks with Shaders</h1><p>As with any code it is important to have a firm idea of what you want to achieve, what is possible to code and 
+a design. </p>
+<h2><a name="requirements" class="anchor" href="#requirements"></a>Requirements</h2><p>The requirements are for a collection of coloured facets to burts out from a central position so that each fragment lies on the surface of an expanding sphere. 
+All fragments should be equally spaced on the sphere and should change colour during the expansion, fading over time.</p>
+<h2><a name="first-stage-design" class="anchor" href="#first-stage-design"></a>First Stage Design</h2><p>A sphere created in BabylonJS is made up of facets where vertices of adjoining facets share normals to ensure a smooth surface. 
+Converting the sphere to a flat shaded mesh will give each facet its own set of normals which will be the mathematical normals for the plane of the facet. 
+To make a facet travel outwards from the centre over time its position at any time will be <em>start position + normal * function of time</em></p>
+<p>The sphere is flat shaded and the normals for the three vertices of each facet will be the same. The original position of each vertex and its normal 
+are accessible to the shader as attributes passing time as a uniform will be enough. </p>
+<p>To obtain an initially fast expansion the slowing down a logarithmic function of time will be used.</p>
+<h2><a name="second-stage-design" class="anchor" href="#second-stage-design"></a>Second Stage Design</h2><p>The colour and transparency of all the facets will be the same at the same time and so a change to each component of the colour of a vertex 
+can be applied as a function of time.</p>
+<h2><a name="third-stage-design" class="anchor" href="#third-stage-design"></a>Third Stage Design</h2><p>After the first coding of the shaders adjustments were made to the functions of time, manually, to obtaim a satisfactory appearance to the burst of facets.</p>
+<h2><a name="shader-material-code" class="anchor" href="#shader-material-code"></a>Shader Material Code</h2><h3><a name="vertex-shader-main-function" class="anchor" href="#vertex-shader-main-function"></a>Vertex Shader Main Function</h3><pre><code>void main(void) {
+    vec3 p = position;
+    vec3 j = vec3(0., -1.0, 0.);
+    p = p + normal * log2(1. + time) * 25.0;
+    gl_Position = worldViewProjection * vec4(p, 1.0);
+}
+</code></pre><h3><a name="fragment-shader-main-function" class="anchor" href="#fragment-shader-main-function"></a>Fragment Shader Main Function</h3><pre><code>void main(void) {
+    gl_FragColor = vec4(1. - log2(1. + time)/100., 1. * log2(1. + time), 0., 1. - log2(1. + time/2.)/log2(1. + 3.95));
+}
+</code></pre><h3><a name="sphere" class="anchor" href="#sphere"></a>Sphere</h3><pre><code class="lang-javascript">var sphere = BABYLON.MeshBuilder.CreateSphere(&quot;sphere&quot;, {diameter:10}, scene);
+sphere.convertToFlatShadedMesh();    
+
+sphere.material = shaderMaterial;
+</code></pre>
+<h3><a name="animation-loop" class="anchor" href="#animation-loop"></a>Animation Loop</h3><pre><code class="lang-javascript">var t = 0.;
+var time = 0.;
+scene.registerBeforeRender(function() {
+    if(time&lt;8) {
+        sphere.material.setFloat(&quot;time&quot;, time);
+        time +=0.1;
+    }   
+    else {
+        sphere.dispose();
+    }
+});
+</code></pre>
+<h2><a name="fireworks" class="anchor" href="#fireworks"></a>Fireworks</h2><p><a href="http://babylonjsguide.github.io/examples/fireworkcode.html">Guide Example - Shader Material</a>  </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#1OH09K#4">Playground Example - Shader Material</a> - <i class="fa fa-eye" onclick="createIframe('1OH09K#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

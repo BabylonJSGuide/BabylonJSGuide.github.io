@@ -1,0 +1,134 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Render a Scene to a PNG - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Render a Scene to a PNG</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#createscreenshot">CreateScreenshot</a><ul>
+<li><a href="#examples-of-results">Examples of Results</a></li>
+</ul>
+</li>
+<li><a href="#createscreenshotusingrendertarget">CreateScreenshotUsingRenderTarget</a><ul>
+<li><a href="#examples-of-results">Examples of Results</a></li>
+<li><a href="#alternative-camera">Alternative Camera</a></li>
+</ul>
+</li>
+<li><a href="#pixel-density">Pixel Density</a></li>
+<li><a href="#gif-creation">Gif Creation</a></li>
+<li><a href="#callback-function">Callback Function</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-render-a-scene-to-a-png" class="anchor" href="#how-to-render-a-scene-to-a-png"></a>How To Render a Scene to a PNG</h1><p>First you may ask why is it better than &quot;ctrl + prt scr&quot; screenshot or the Snippet app?</p>
+<ol>
+<li>With a standard ctrl + print screen keypress, you can&#39;t create screenshots with higher resolutions than your screen resolution. With BabylonJS screenshot feature, you can. There is no problem with creating a 1920x1080 screenshot on a 800x600 screen (provided the graphics card is powerful enough to compute it). However as you will see in the examples later there is no increase in pixel density.</li>
+<li>The screenshot is of the rendered canvas only without further manipulation.</li>
+<li>A sequence of screenshots can be taken that can be turned into an animated gif.</li>
+</ol>
+<p>There are two methods available to do this using <code>BABYLON.Tools</code> which are <code>CreateScreenshot</code> and the more versatile <code>CreateScreenshotUsingRenderTarget</code>.</p>
+<p>You also need to consider how you will trigger the screenshot. This can be done for example with a timer such as &#39;window.setTimeout&#39; or by using the <a href="//doc.babylonjs.com/how_to/how_to_use_actions">Babylon.js action manager</a> for a keyDown or onPointerDown trigger.</p>
+<p>A major difference between <code>CreateScreenshot</code> and <code>CreateScreenshotUsingRenderTarget</code> is when you try to use them directly after creating a mesh or meshes. This is because they work differently.</p>
+<p>For example</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {}, scene);
+BABYLON.Tools.CreateScreenshot(engine, camera, 400);
+</code></pre>
+<p>will produce an image of the box but</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {}, scene);
+BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, 400);
+</code></pre>
+<p>will only produce the scene background. This is because this method is activated before the box is actually rendered on the screen. If you want to use <code>CreateScreenshotUsingRenderTarget</code> in this way then you need to ensure the scene is rendered first as in this example.</p>
+<pre><code class="lang-javascript">var box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {}, scene);
+scene.render();
+BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, 400);
+</code></pre>
+<p>However even this will not work if the scene is very complex and has not been rendered in time. It is best to use timing or an action.</p>
+<h2><a name="createscreenshot" class="anchor" href="#createscreenshot"></a>CreateScreenshot</h2><p>It&#39;s done by simply calling this method: <code>BABYLON.Tools.CreateScreenshot(engine, camera, size)</code>.
+You need to provide your BabylonJS engine, the camera you want to use for the rendering, and a size.</p>
+<p>Please note that the engine must be created with <code>preserveDrawingBuffer</code> option:</p>
+<pre><code>var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+</code></pre><p>The size parameter is very versatile, it can be a simple number or an object.</p>
+<h3><a name="examples-of-results" class="anchor" href="#examples-of-results"></a>Examples of Results</h3><p>Starting with a view of the part of the screen showing the canvas there then follows a sequence of images taken using <code>CreateScreenshot</code></p>
+<p><img src="/img/how_to/scene/shss.png" alt="Actual Screen"><br>View of Part of Screen Showing Canvas Used</p>
+<p><img src="/img/how_to/scene/sh200x200.png" alt="size = 200"><br><code>BABYLON.Tools.CreateScreenshot(engine, camera, 200)</code></p>
+<p><img src="/img/how_to/scene/sh800x800.png" alt="size = 800"><br><code>BABYLON.Tools.CreateScreenshot(engine, camera, 800)</code></p>
+<p><img src="/img/how_to/scene/sh1600x1600.png" alt="size = 1600"><br><code>BABYLON.Tools.CreateScreenshot(engine, camera, 1600)</code></p>
+<p><img src="/img/how_to/scene/sh800x400.png" alt="size = {width:800, height:400}"><br><code>BABYLON.Tools.CreateScreenshot(engine, camera, {width:800, height:400})</code> canvas placed in the middle of image of given size </p>
+<p>Precision can be used as a multiplier of the screen resolution.</p>
+<p><img src="/img/how_to/scene/sh400p05.png" alt="size = {precision: 0.5}"><br><code>BABYLON.Tools.CreateScreenshot(engine, camera, {precision: 0.5})</code></p>
+<p><img src="/img/how_to/scene/sh400p20.png" alt="size = {precision: 2}"><br><code>BABYLON.Tools.CreateScreenshot(engine, camera, {precision: 2})</code></p>
+<h2><a name="createscreenshotusingrendertarget" class="anchor" href="#createscreenshotusingrendertarget"></a>CreateScreenshotUsingRenderTarget</h2><p>As for the other method it&#39;s done by simply calling this method: <code>BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, size)</code>.
+You need to provide your BabylonJS engine, the camera you want to use for the rendering, and a size.</p>
+<p>Again the size parameter is very versatile and can be a simple number or an object. However you will see differences in the results using the same parameters as before.</p>
+<blockquote>
+<p><strong><em>HINT:</em></strong> When using a camera other than the active camera, only objects located in the viewport of the active camera are visible. As a workaround, all meshes that should be visible can be explicitly set to <code>alwaysSelectAsActiveMesh = true</code>. In case of performance issues, the meshes can be set to <code>alwaysSelectAsActiveMesh = true</code> shortly before taking the screenshot and then to <code>alwaysSelectAsActiveMesh = false</code> again.</p>
+</blockquote>
+<h3><a name="examples-of-results" class="anchor" href="#examples-of-results"></a>Examples of Results</h3><p>Starting with a view of the part of the screen showing the canvas there then follows a sequence of images taken using <code>CreateScreenshotUsingRenderTarget</code></p>
+<p><img src="/img/how_to/scene/shss.png" alt="Actual Screen"><br>View of Part of Screen Showing Canvas Used</p>
+<p><img src="/img/how_to/scene/rt200x200.png" alt="size = 200"><br><code>BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, 200)</code></p>
+<p><img src="/img/how_to/scene/rt800x800.png" alt="size = 800"><br><code>BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, 800)</code></p>
+<p><img src="/img/how_to/scene/rt1600x1600.png" alt="size = 1600"><br><code>BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, 1600)</code></p>
+<p><img src="/img/how_to/scene/rt800x400.png" alt="size = {width:800, height:400}"><br><code>BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, {width:800, height:400})</code> canvas imaged sized as given.</p>
+<p>Precision can be used as a multiplier of the screen resolution.</p>
+<p><img src="/img/how_to/scene/rt400p05.png" alt="size = {precision: 0.5}"><br><code>BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, {precision: 0.5})</code></p>
+<p><img src="/img/how_to/scene/rt400p20.png" alt="size = {precision: 2}"><br><code>BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, {precision: 2})</code></p>
+<h3><a name="alternative-camera" class="anchor" href="#alternative-camera"></a>Alternative Camera</h3><p>The <code>CreateScreenshotUsingRenderTarget</code> has an extra facility, the camera used does not have to be the active camera.</p>
+<p>While the active camera is showing the scene as in the above examples you can use this</p>
+<pre><code class="lang-javascript">var camera2 = new BABYLON.FreeCamera(&quot;camera2&quot;, new BABYLON.Vector3(0, 200, 0), scene);
+camera2.setTarget(BABYLON.Vector3.Zero());
+
+BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera2, 400)
+</code></pre>
+<p>to produce</p>
+<p><img src="/img/how_to/scene/fc.png" alt="secondcamera"> </p>
+<h2><a name="pixel-density" class="anchor" href="#pixel-density"></a>Pixel Density</h2><p>The following image of the canvas on screen and the resulting screenshot using &#39;precision: 8&#39; show that although the image is 8 times larger the pixel density stays the same.</p>
+<p><img src="/img/how_to/scene/sbss.png" alt="Screen Canvas"></p>
+<p><img src="/img/how_to/scene/sbp80.png" alt="Enlarged Image"></p>
+<h2><a name="gif-creation" class="anchor" href="#gif-creation"></a>Gif Creation</h2><p>In order to create an animated Gif, you will usually need a set of static images to stick together.</p>
+<p>Either of the following set of codes produces a series of images that you can turn into an animated gif:</p>
+<pre><code class="lang-javascript">var imgNm = 0;
+scene.registerAfterRender(function(){
+    box.rotation.y += 2 * Math.PI / 90;
+    if(imgNm++ &lt; 90) {
+        BABYLON.Tools.CreateScreenshot(engine, camera, 200);
+    }
+})
+</code></pre>
+<pre><code class="lang-javascript">var imgNm = 0;
+scene.registerAfterRender(function(){
+    box.rotation.y += 2 * Math.PI / 90;
+    if(imgNm++ &lt; 90) {
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, 200);
+    }
+})
+</code></pre>
+<p>Here is the result after stitching in your favorite external tool:</p>
+<p><img src="/img/how_to/scene/ssanim.gif" alt="Gif"></p>
+<h2><a name="callback-function" class="anchor" href="#callback-function"></a>Callback Function</h2><p>There is a further parameter that can be added to both methods of obtaining screenshots. This is a callback function added after the size parameter. The methods become <code>BABYLON.Tools.CreateScreenshot(engine, camera, size, onSuccessCallback)</code>  and  <code>BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, size, onSuccessCallback)</code>.</p>
+<p>This callback is a function that takes the image data provided by the method and instead of opening or saving the image allows you to manipulate it instead.</p>
+<p>For example when you have rendered this scene</p>
+<p><img src="/img/how_to/scene/bx1.png" alt="Box and sky"></p>
+<p>by triggering either of these</p>
+<pre><code class="lang-javascript">BABYLON.Tools.CreateScreenshot(engine, camera, 200, function(data) {
+    var mat = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+    mat.diffuseTexture = new BABYLON.Texture(data, scene);
+    box.material = mat;
+})
+
+BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, 200, function(data) {
+    var mat = new BABYLON.StandardMaterial(&quot;mat&quot;, scene);
+    mat.diffuseTexture = new BABYLON.Texture(data, scene);
+    box.material = mat;
+})
+</code></pre>
+<p>you obtain</p>
+<p><img src="/img/how_to/scene/bx2.png" alt="Box with sky texture and sky"></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

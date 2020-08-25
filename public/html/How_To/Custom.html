@@ -1,0 +1,346 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Custom Meshes - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Custom Meshes</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#positions-and-indices">Positions and Indices</a></li>
+<li><a href="#normals">Normals</a><ul>
+<li><a href="#calculating">Calculating</a></li>
+<li><a href="#direction">Direction</a></li>
+<li><a href="#lighting">Lighting</a></li>
+<li><a href="#visibility">Visibility</a></li>
+</ul>
+</li>
+<li><a href="#color">Color</a><ul>
+<li><a href="#notes-on-the-playground">Notes on the Playground</a></li>
+</ul>
+</li>
+<li><a href="#texture">Texture</a><ul>
+<li><a href="#calculating-uvs">Calculating UVs</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-create-a-mesh-from-scratch" class="anchor" href="#how-to-create-a-mesh-from-scratch"></a>How to Create a Mesh from Scratch</h1><p>Each and every shape in BabylonJS is built from a mesh of triangles or facets as shown below:</p>
+<p><img src="/img/features/scene/custom1.jpg" alt="Custom Mesh"></p>
+<p>Every facet is made up of three vertices each of which is assigned data that not only affects the position of the facet but also 
+its colour, texture and how it is lit. The complex process of applying a shader to turn this data into a viewable mesh 
+is all carried out by BabylonJS.</p>
+<h2><a name="positions-and-indices" class="anchor" href="#positions-and-indices"></a>Positions and Indices</h2><p>Creating a mesh with two facets, one with vertices at <code>(-5, 2, -3), (-7, -2, -3), (-3, -2, -3)</code> and the other with vertices at <code>(5, 2, 3), (7, -2, 3), (3, -2, 3)</code>, requires each vertex to have a unique index. Indices should start at <code>0</code> and increase consecutively.</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>position</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>(-5, 2, -3)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>(-7, -2, -3)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>(-3, -2, -3)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>(5, 2, 3)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(7, -2, 3)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>(3, -2, 3)</td>
+</tr>
+</tbody>
+</table>
+<p>Note that order does not matter when assigning indices.</p>
+<p>The positions data is stored in an array of numbers. The vertex with index 0 is placed with <code>x</code> coordinate in <code>array[0]</code>, <code>y</code> at <code>array[1]</code> and <code>z</code> at <code>array[2]</code>. 
+In general, the vertex with index <code>i</code> has <code>x</code> coordinate at <code>array[3i]</code>, <code>y</code> at <code>array[3i + 1]</code> and <code>z</code> at <code>array[3i +2]</code>.</p>
+<p>Indices forming a facet are placed together in triples, as in the above example with <code>(0, 1, 2)</code> and <code>(3, 4, 5)</code>.
+The indices data is also stored in an array of numbers with each triple being kept together.</p>
+<p>In the above example the positions array is <code>[-5, 2, -3, -7, -2, -3, -3, -2, -3, 5, 2, 3, 7, -2, 3, 3, -2, 3]</code> and 
+the indices array is <code>[0, 1, 2, 3, 4, 5]</code>.</p>
+<pre><code class="lang-javascript">var customMesh = new BABYLON.Mesh(&quot;custom&quot;, scene);
+
+var positions = [-5, 2, -3, -7, -2, -3, -3, -2, -3, 5, 2, 3, 7, -2, 3, 3, -2, 3];
+var indices = [0, 1, 2, 3, 4, 5];
+
+var vertexData = new BABYLON.VertexData();
+
+vertexData.positions = positions;
+vertexData.indices = indices;    
+
+vertexData.applyToMesh(customMesh);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VKBJN#2">Playground Example Showing Custom Mesh with Positions and Indices</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#2', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="normals" class="anchor" href="#normals"></a>Normals</h2><p>Usually a normal to a plane is a vector that is at right angles to a plane and for this example this is true. 
+BabylonJS will calculate normals for a facet and for free standing facets not sharing any vertices with another facet 
+the normals will be mathematical normals. For more on how normals affect lighting see <a href="/resources/Normals.html">Normals</a>.</p>
+<h3><a name="calculating" class="anchor" href="#calculating"></a>Calculating</h3><p>Normals are calculated on the vertexData object using the <code>ComputeNormal</code> method which takes arrays for positions, indices and normals as parameters.</p>
+<p>Additions to code:</p>
+<pre><code class="lang-javascript">var customMesh = new BABYLON.Mesh(&quot;custom&quot;, scene);
+
+var positions = [-5, 2, -3, -7, -2, -3, -3, -2, -3, 5, 2, 3, 7, -2, 3, 3, -2, 3];
+var indices = [0, 1, 2, 3, 4, 5];    
+
+//Empty array to contain calculated values or normals added
+var normals = [];
+
+//Calculations of normals added
+BABYLON.VertexData.ComputeNormals(positions, indices, normals);
+
+var vertexData = new BABYLON.VertexData();
+
+vertexData.positions = positions;
+vertexData.indices = indices;
+vertexData.normals = normals; //Assignment of normal to vertexData added
+
+vertexData.applyToMesh(customMesh);
+</code></pre>
+<p><em>Note:</em> To make your custom mesh updatable you need add a second parameter with value <code>true</code> when applying the mesh to the vertex data.</p>
+<pre><code class="lang-javascript">vertexData.applyToMesh(customMesh, true);
+</code></pre>
+<p>give the array <code>normals = [ 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1]</code>.</p>
+<p>Normals are stored in an array of numbers such that index <code>i</code> refers to the vector <code>(normals[3i], normals[3i + 1], normals[3i + 2])</code>
+and so:</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>normal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>(0, 0, -1)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>(0, 0, -1)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>(0, 0, -1)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>(0, 0, 1)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(0, 0, 1)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>(0, 0, 1)</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="direction" class="anchor" href="#direction"></a>Direction</h3><p>Clearly the normals for each facet are pointing in opposite directions. They all point away from the origin. </p>
+<p><img src="/img/how_to/Mesh/normals1.jpg" alt="Normal Direction"></p>
+<p>Looking from the origin towards facet 3, 4, 5 then the order in the indices array 3, 4, 5 around the facet is clockwise.</p>
+<p>Looking from the origin towards facet 0, 1, 2 then the order in the indices array 0, 1, 2 around the facet is also clockwise.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VKBJN#6">Playground Example Showing Custom Mesh with Normals</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#6', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Reversing the order of one or both sets of facet indices in the playground will show how the normals change direction.</p>
+<h3><a name="lighting" class="anchor" href="#lighting"></a>Lighting</h3><p>The closest facet to the camera in now coloured white and the farthest from the camera is black. 
+This is because the addition of the normals affects the use of light on the facet.</p>
+<p>The light in the scene is travelling in the direction of the positive z axis. </p>
+<pre><code class="lang-javascript">var light = new BABYLON.DirectionalLight(&quot;direct&quot;, new BABYLON.Vector3(0, 0, 1), scene);
+</code></pre>
+<p>White light travelling in the opposite direction to that of the normal is reflected back and the facet is seen as white, while white light travelling in the same direction as the normal is absorbed and the facet is seen as black.</p>
+<h3><a name="visibility" class="anchor" href="#visibility"></a>Visibility</h3><p>Removing the wireframe effect then:</p>
+<ol>
+<li>Camera looking in positive z direction</li>
+</ol>
+<p><img src="/img/how_to/Mesh/normals3.jpg" alt="Positive Z Direction"></p>
+<p>Black facet cannot be seen.</p>
+<ol start="2">
+<li>Camera looking in negative z direction</li>
+</ol>
+<p><img src="/img/how_to/Mesh/normals4.jpg" alt="Negative Z Direction"></p>
+<p>White facet not seen.</p>
+<p>Why is this? There are two faces to each facet; the face that the normal is pointing away from is the front face, the other is the backface. 
+By default BabylonJS does not render the back face.</p>
+<p>Due to this, many meshes that draw solids will not have a visible back face for its facet.</p>
+<p>To draw the back face of a mesh turn <code>backFaceCulling</code> to <code>false</code> for the material being applied to the mesh.</p>
+<pre><code class="lang-javascript">mat.backFaceCulling = false;
+</code></pre>
+<p><img src="/img/how_to/Mesh/normals5.jpg" alt="Both Facets"></p>
+<p>Comment line 41 out in the following to see back face culling happening.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VKBJN#7">Playground Example Both Facets</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#7', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="color" class="anchor" href="#color"></a>Color</h2><p>The simplest way to assign a color to the custom mesh is by applying a standard material to the mesh and let BabylonJS do all the work. However 
+color can be set for a facet within the vertex data. For information on how the arrangement of facets used in constructing a mesh can affect how colors are displayed see <a href="/resources/Facets.html">Applying Materials to Facets</a>.</p>
+<p>Colors for each vertex are placed in an array as groups of four in the order red, green, blue and alpha for transparency. For the facet 0, 1, 2 to be colored red and the facet 3, 4, 5 to be colored green, each vertex 
+on each facet is given the same color.</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>(1, 0, 0, 1)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>(1, 0, 0, 1)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>(1, 0, 0, 1)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>(0, 1, 0, 1)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(0, 1, 0, 1)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>(0, 1, 0, 1)</td>
+</tr>
+</tbody>
+</table>
+<p>and the array is <code>[1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]</code>.</p>
+<p>Adding to the code:</p>
+<pre><code class="lang-javascript">var customMesh = new BABYLON.Mesh(&quot;custom&quot;, scene);
+
+var positions = [-5, 2, -3, -7, -2, -3, -3, -2, -3, 5, 2, 3, 7, -2, 3, 3, -2, 3];
+var indices = [0, 1, 2, 3, 4, 5];
+var colors = [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0,  0, 1, 0, 1]; //color array added
+
+var normals = [];
+
+var vertexData = new BABYLON.VertexData();
+BABYLON.VertexData.ComputeNormals(positions, indices, normals);
+
+vertexData.positions = positions;
+vertexData.indices = indices;
+vertexData.colors = colors; //Assignment of colors to vertexData
+vertexData.normals = normals; //Assignment of normal to vertexData added
+
+vertexData.applyToMesh(customMesh);
+</code></pre>
+<p>In the playground below see what happens when you make the vertices on the red facet different colors.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VKBJN#8">Playground Example Setting Vertex Colors</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#8', this)"></i><div class="iframeContainer"></div> </li>
+</ul>
+<h3><a name="notes-on-the-playground" class="anchor" href="#notes-on-the-playground"></a>Notes on the Playground</h3><p>Since a material is no longer being used, <code>backFaceCulling</code> cannot be set and so the camera will have to be rotated for the far facet to be seen. The far facet will remain black despite whatever color is applied as all light is still being absorbed by this facet.</p>
+<p>When the scene starts the camera is very nearly full face on to the facet and pointing in the direction the light is travelling. With the camera in this position most of the white light is reflected back into the camera as a highlight and the facet is seen as almost white.</p>
+<p>As the camera is rotated around the facet will change from appearing as white to red as the highlight effect dissipates.</p>
+<p>For a more controlled lighting effects use a <a href="/babylon101/Materials.html">material</a> as well as, or instead of, setting vertex colors.</p>
+<p>Adding a light with direction the reverse of the current one will light both sides.</p>
+<ul>
+<li><p><a href="https://www.babylonjs-playground.com/#VKBJN#104">Playground Example Both Sides Lit</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#104', this)"></i><div class="iframeContainer"></div> </p>
+</li>
+<li><p><a href="https://www.babylonjs-playground.com/#VKBJN#105">Playground Example Both Sides Colour Variation</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#105', this)"></i><div class="iframeContainer"></div> </p>
+</li>
+</ul>
+<h2><a name="texture" class="anchor" href="#texture"></a>Texture</h2><p>The simplest method is to just use <a href="/babylon101/Materials.html">materials</a> and let BabylonJS apply the given image as a texture. 
+However should you wish to have more control on how a texture is applied to a facet then you need to create and set the uv array.</p>
+<p>Think of any image to be applied as a texture as having a pair of axes set at the bottom and left-hand side of the image; the u axis and the v axis respectively. 
+(u, v as x and y are used for position axes). The origin being the left-hand bottom corner of the image, the top being at v = 1 and the right hand edge at u = 1 as 
+in the diagram below.</p>
+<p><img src="/img/how_to/Mesh/uv1.jpg" alt="Image with uv axes"></p>
+<p>For simplication the following only uses the facet 0, 1, 2.</p>
+<p>Each vertex of the facet is assigned a uv coordinate pair from the image. </p>
+<p><img src="/img/how_to/Mesh/uv2.jpg" alt="Image with uv triangle"></p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>(0, 1)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>(0, 0)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>(1, 0)</td>
+</tr>
+</tbody>
+</table>
+<p>forming the uv array <code>[0, 1, 0, 0, 1, 0];</code>.</p>
+<p>Using the following code:</p>
+<pre><code class="lang-javascript">var customMesh = new BABYLON.Mesh(&quot;custom&quot;, scene);
+
+var positions = [-5, 2, -3, -7, -2, -3, -3, -2, -3];
+var indices = [0, 1, 2];
+var uvs = [0, 1, 0, 0, 1, 0];
+
+var normals = [];
+BABYLON.VertexData.ComputeNormals(positions, indices, normals);
+
+var vertexData = new BABYLON.VertexData();
+
+vertexData.positions = positions;
+vertexData.indices = indices;
+vertexData.normals = normals;
+vertexData.uvs = uvs;
+
+vertexData.applyToMesh(customMesh);
+</code></pre>
+<p>results in:</p>
+<p><img src="/img/how_to/Mesh/uv3.jpg" alt="Result on Facet"></p>
+<p>Note that the image is skewed since the shape of the triangular facet and that on the image do not match.</p>
+<p>Adding in these lines at the appropiate points:</p>
+<pre><code class="lang-javascript">var colors = [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1];
+
+var vertexData.colors = colors;
+</code></pre>
+<p>gives:</p>
+<p><img src="/img/how_to/Mesh/uv4.jpg" alt="Result on Facet with red color added"></p>
+<p>In the playground below clicking on next will cycle you through a variety of values for the uv coordinates.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#VKBJN#14">Playground Example Varying UV Values</a> - <i class="fa fa-eye" onclick="createIframe('VKBJN#14', this)"></i><div class="iframeContainer"></div> </li>
+</ul>
+<p><em>Notes about Playground above</em>: The camera has been disabled for the above playground. The uv values are shown and the relative index are shown on the texture image. 
+One day this playground might improve. You will get some idea of how to achieve reflections and rotations of textures on a facet. However for a mesh the <a href="/resources/Facets.html">arrangement of facets</a> must be considered when trying to achieve a particular texture mapping on the mesh.</p>
+<h3><a name="calculating-uvs" class="anchor" href="#calculating-uvs"></a>Calculating UVs</h3><p>Calculating the uvs for a custom mesh obviously depends on the shape of the mesh and which parts of the texture you want projected onto the mesh at which position. Here is an example with a relatively simple mesh which is basically a flat surface with a couple of protudences.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#I092BE">Playground Example UV Calculation</a> - <i class="fa fa-eye" onclick="createIframe('I092BE#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The above playground takes the bottom left corner as matching the bottom left corner of the texture image and from the x, z position of each vertex calculates the uv value as the fractional distance of <code>(x, z)</code> from the bottom left corner.</p>
+<p>In general, if the bottom left corner is at <code>(a, b)</code> and the bounding width and height of the mesh are w and h respectively then for each <code>(x, z)</code>:</p>
+<p><code>u = (x - a) / w and v = (z - b) / h</code></p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/How_To/Updating_Vertices.html">How To Update Vertices</a><br><a href="/resources/Normals.html">Normals in BJS</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

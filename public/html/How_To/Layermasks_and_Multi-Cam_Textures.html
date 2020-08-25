@@ -1,0 +1,123 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Layermasks and Multi-Camera Textures - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Layermasks and Multi-Camera Textures</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#different-meshes-for-multiple-cameras-using-layermasks">Different meshes for multiple cameras using Layermasks</a></li>
+<li><a href="#lights">Lights</a></li>
+<li><a href="#gun-sight-example">Gun Sight Example</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-layermasks-and-multi-camera-textures" class="anchor" href="#how-to-use-layermasks-and-multi-camera-textures"></a>How To Use Layermasks and Multi-Camera Textures</h1><h2><a name="different-meshes-for-multiple-cameras-using-layermasks" class="anchor" href="#different-meshes-for-multiple-cameras-using-layermasks"></a>Different meshes for multiple cameras using Layermasks</h2><p>A <code>layerMask</code> is a number assigned to each mesh and camera. It is used at the bit level to indicate whether lights and cameras should shine-upon or show the mesh. The default value, 0x0FFFFFFF, will cause the mesh to be illuminated and shown by any stock light and camera.</p>
+<p>The feature is used primarily when multiple cameras are active at the same time. If you wish to have a mesh that is always visible on the screen and pickable, e.g. a button, you might add a second camera and light to the scene to exclusively show and light it.</p>
+<p>You&#39;ll need the 2nd camera to ONLY see the button. The button should also only be visible once.</p>
+<p>Notice that the default <code>layerMask</code> starts with the first 4 bits being 0, or off. If the 2nd camera and button were to both have a <code>layerMask</code> with one of the 4 values below, then the 2nd camera would only see the button:</p>
+<ul>
+<li>0x10000000</li>
+<li>0x20000000</li>
+<li>0x40000000</li>
+<li>0x80000000</li>
+</ul>
+<p>It should also be noted that a mesh with a <code>layerMask</code> of 0, can never be seen by anyone. This might be good for hiding things.</p>
+<p>To setup for multi-cameras:</p>
+<pre><code class="lang-javascript">if (scene.activeCameras.length === 0){
+    scene.activeCameras.push(scene.activeCamera);
+}
+var secondCamera = new Babylon.Camera(...);
+secondCamera.layerMask = 0x10000000;
+scene.activeCameras.push(secondCamera);
+
+var Button = new BABYLON.Mesh(...);
+Button.layerMask = 0x10000000;
+</code></pre>
+<h2><a name="lights" class="anchor" href="#lights"></a>Lights</h2><p>Unless the material of the meshes for the 2nd camera is purely emissive, this still leaves any light for the button illuminating all the other meshes, and other lights in the scene illuminating the button. To keep scene lights from illuminating the button, loop through the existing lights, and set the excludeWithLayerMask value:</p>
+<pre><code class="lang-javascript">for (var i = scene.lights.length - 1; i &gt;= 0; i--) {
+  scene.lights[i].excludeWithLayerMask = 0x10000000;
+}
+</code></pre>
+<p>Then make the &quot;button&quot; light:</p>
+<pre><code class="lang-javascript">var light = new BABYLON.Light(...);
+light.includeOnlyWithLayerMask = 0x10000000;
+</code></pre>
+<p>Finally, if there may be more lights generated later, you can register a call-back whenever a light is added:</p>
+<pre><code class="lang-javascript">scene.onNewLightAdded = onNewLight;
+</code></pre>
+<p>This could be:</p>
+<pre><code class="lang-javascript">onNewLight = function(newLight, positionInArray, scene) {
+  newLight.excludeWithLayerMask = 0x10000000;
+};
+</code></pre>
+<h2><a name="gun-sight-example" class="anchor" href="#gun-sight-example"></a>Gun Sight Example</h2><p>Here is a simple example of using a 2nd orthographic camera which shows a gun sight. To keep it simple, emissive material was used to avoid lighting it. Just copy and paste it into any scene, then call it. The <code>layerMask</code> chosen also allows Babylon&#39;s Dialog extension to inter-operate. Perhaps these could be combined to do a heads-up tank sight with range finder.</p>
+<p>A commercial quality implementation would probably not use <code>CreateBox()</code>, since it creates depth faces that cannot be seen straight-on anyway. It should also take into account a window size change, unless it is a tablet app.</p>
+<pre><code class="lang-javascript">function addGunSight(scene) {
+  if (scene.activeCameras.length === 0) {
+    scene.activeCameras.push(scene.activeCamera);
+  }
+  var secondCamera = new BABYLON.FreeCamera(
+    &quot;GunSightCamera&quot;,
+    new BABYLON.Vector3(0, 0, -50),
+    scene
+  );
+  secondCamera.mode = BABYLON.Camera.ORTHOGRAPHIC_CAMERA;
+  secondCamera.layerMask = 0x20000000;
+  scene.activeCameras.push(secondCamera);
+
+  meshes = [];
+  var h = 250;
+  var w = 250;
+
+  var y = BABYLON.Mesh.CreateBox(&quot;y&quot;, h * 0.2, scene);
+  y.scaling = new BABYLON.Vector3(0.05, 1, 1);
+  y.position = new BABYLON.Vector3(0, 0, 0);
+  meshes.push(y);
+
+  var x = BABYLON.Mesh.CreateBox(&quot;x&quot;, h * 0.2, scene);
+  x.scaling = new BABYLON.Vector3(1, 0.05, 1);
+  x.position = new BABYLON.Vector3(0, 0, 0);
+  meshes.push(x);
+
+  var lineTop = BABYLON.Mesh.CreateBox(&quot;lineTop&quot;, w * 0.8, scene);
+  lineTop.scaling = new BABYLON.Vector3(1, 0.005, 1);
+  lineTop.position = new BABYLON.Vector3(0, h * 0.5, 0);
+  meshes.push(lineTop);
+
+  var lineBottom = BABYLON.Mesh.CreateBox(&quot;lineBottom&quot;, w * 0.8, scene);
+  lineBottom.scaling = new BABYLON.Vector3(1, 0.005, 1);
+  lineBottom.position = new BABYLON.Vector3(0, h * -0.5, 0);
+  meshes.push(lineBottom);
+
+  var lineLeft = BABYLON.Mesh.CreateBox(&quot;lineLeft&quot;, h, scene);
+  lineLeft.scaling = new BABYLON.Vector3(0.01, 1, 1);
+  lineLeft.position = new BABYLON.Vector3(w * -0.4, 0, 0);
+  meshes.push(lineLeft);
+
+  var lineRight = BABYLON.Mesh.CreateBox(&quot;lineRight&quot;, h, scene);
+  lineRight.scaling = new BABYLON.Vector3(0.01, 1, 1);
+  lineRight.position = new BABYLON.Vector3(w * 0.4, 0, 0);
+  meshes.push(lineRight);
+
+  var gunSight = BABYLON.Mesh.MergeMeshes(meshes);
+  gunSight.name = &quot;gunSight&quot;;
+  gunSight.layerMask = 0x20000000;
+  gunSight.freezeWorldMatrix();
+
+  var mat = new BABYLON.StandardMaterial(&quot;emissive mat&quot;, scene);
+  mat.checkReadyOnlyOnce = true;
+  mat.emissiveColor = new BABYLON.Color3(0, 1, 0);
+
+  gunSight.material = mat;
+}
+</code></pre>
+<p>See it in action: <a href="https://www.babylonjs-playground.com/pg/2GXKNW/revision/22">https://www.babylonjs-playground.com/pg/2GXKNW/revision/22</a> - <i class="fa fa-eye" onclick="createIframe('2GXKNW#22', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

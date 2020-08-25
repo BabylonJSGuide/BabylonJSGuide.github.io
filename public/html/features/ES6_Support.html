@@ -1,0 +1,409 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>ES6 - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>ES6</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#available-packages">Available packages</a></li>
+<li><a href="#basic-example">Basic Example</a></li>
+<li><a href="#basic-usage">Basic usage</a><ul>
+<li><a href="#application-creation-summary">Application Creation Summary</a></li>
+<li><a href="#using-webpack">Using Webpack</a></li>
+<li><a href="#installing-babylonjs">Installing Babylon.js</a></li>
+<li><a href="#installing-other-babylon-modules">Installing other Babylon modules</a></li>
+<li><a href="#creating-our-first-js-app">Creating our first js APP</a></li>
+</ul>
+</li>
+<li><a href="#typescript">Typescript</a></li>
+<li><a href="#tree-shaking">Tree Shaking</a></li>
+<li><a href="#side-effects">Side Effects</a><ul>
+<li><a href="#faq">FAQ</a></li>
+</ul>
+</li>
+<li><a href="#almighty-inspector">Almighty Inspector</a></li>
+<li><a href="#earcutoimocanon">Earcut/Oimo/Canon</a></li>
+<li><a href="#ammo">Ammo</a></li>
+<li><a href="#loaders">Loaders</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>The NPM package manager is one of the best way to define and organize your project&#39;s dependencies. Parallel to traditional javascript development (including a script in a &#39;script&#39; HTML Tag), using npm packages allows you to use tools like Webpack or Browserify to pack your project and (continuously) deliver it.</p>
+<p>We now officially support our npm es6 packages and will continue updating the npm&#39;s repository with new versions as they being developed.</p>
+<p>Please note that by using es6 packages, you will need to rely on extra tooling to bundle and test your library but on the bright side you will be able to tree shake your application and reduce its final size.</p>
+<p>All the babylon es6 packages are available within the npm scope @babylonjs.</p>
+<h2><a name="available-packages" class="anchor" href="#available-packages"></a>Available packages</h2><p>We offer babylon.js&#39; core and its modules as npm packages. The following are available:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/@babylonjs/core">@babylonjs/core</a> - Babylon&#39;s core.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/materials">@babylonjs/materials</a> - a collection of Babylon-supported advanced materials.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/loaders">@babylonjs/loaders</a> -  All of Babylon&#39;s official loaders (OBJ, STL, glTF)</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/post-processes">@babylonjs/post-processes</a> - Babylon&#39;s post processes.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/procedural-textures">@babylonjs/procedural-textures</a> - Officially supported procedural textures</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/serializers">@babylonjs/serializers</a> - Scene / mesh serializers.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/gui">@babylonjs/gui</a> - BabylonJS GUI module.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/inspector">@babylonjs/inspector</a> - The stand-alone BabylonJS Viewer.</li>
+</ul>
+<h2><a name="basic-example" class="anchor" href="#basic-example"></a>Basic Example</h2><p>A boilerplate project with a few examples on how to use the es6 modules can be found here - <a href="https://github.com/RaananW/babylonjs-webpack-es6">Babylon.js, webpack and es6 modules</a> on GitHub. It is a project skeleton, based on TypeScript, webpack and our es6 modules. The different scenes (Asset loading, physics, simple scene) to show the different aspects of module-loading and Babylon.js</p>
+<h2><a name="basic-usage" class="anchor" href="#basic-usage"></a>Basic usage</h2><p>As the ES6 version is composed of many separated files the usual way to consume such packages is through Webpack or other bundlers. The following examples will be done with Webpack but you could rely on any of the tools you are familiar with.</p>
+<h3><a name="application-creation-summary" class="anchor" href="#application-creation-summary"></a>Application Creation Summary</h3><ol>
+<li>Create new folder <strong>MyAwesomeApp</strong></li>
+<li>Open <strong>GitBash</strong> (or similar) for <strong>MyAwesomeApp</strong></li>
+<li>npm init</li>
+<li>npm install webpack webpack-cli webpack-dev-server --save-dev</li>
+<li>npm install --save-dev @babylonjs/core</li>
+<li>Create <strong>index.html</strong> file in <strong>MyAwesomeApp</strong> as described in <code>First App Section</code> below</li>
+<li>Create Folder <strong>src</strong> in <strong>MyAwesomeApp</strong></li>
+<li>Create <strong>index.js</strong> file in <strong>src</strong> as described in <code>First App Section</code> below</li>
+<li>npx webpack-dev-server <em>to check result in</em>  <code>http://localhost:8080/</code></li>
+<li>npx webpack _to create dist folder</li>
+</ol>
+<p>Read all the following sections for full description.</p>
+<h3><a name="using-webpack" class="anchor" href="#using-webpack"></a>Using Webpack</h3><p>First create a new folder where you will develop your app: <code>mkdir MyAwesomeApp</code> .</p>
+<p>Then navigate to the folder <code>cd MyAwesomeApp</code> and initializes npm with the command <code>npm init</code> . Simply fill out the requested question or leave default if you prefer.</p>
+<p>You can the install webpack like this: <code>`npm install webpack webpack-cli webpack-dev-server --save-dev`</code>. This will also install a local dev server pretty handy to develop locally.</p>
+<p>Following the default webpack convention, you do not even need a configuration file.</p>
+<h3><a name="installing-babylonjs" class="anchor" href="#installing-babylonjs"></a>Installing Babylon.js</h3><p>To install the latest babylon es6 version use:</p>
+<pre><code class="lang-bash">npm install --save-dev @babylonjs/core
+</code></pre>
+<p>This will install babylonjs&#39; javascript files and will also include a TypeScript declaration file.</p>
+<p>To include all Babylon in a javascript or typescript file, use:</p>
+<pre><code class="lang-javascript">import * as BABYLON from &#39;@babylonjs/core/Legacy/legacy&#39;;
+</code></pre>
+<p>This will work exactly like the none es6 version and the entire library will be included as a dependency.</p>
+<p>You can also load specific classes to help with your code:</p>
+<pre><code class="lang-javascript">import {
+    Engine,
+    Scene
+} from &#39;@babylonjs/core&#39;;
+</code></pre>
+<p><strong>NOTE:</strong> Some of the modules working through side effects you might need to <code>`import &quot;@babylonjs/core/Meshes/meshBuilder&quot;` ` ` for side effects only in order to rely on any of the Mesh creation static methods like ` ` `Mesh.CreateBox`</code> for instance. This was the best way to deliver our ES6 version without breaking backward compatibility of the bundled version.</p>
+<h3><a name="installing-other-babylon-modules" class="anchor" href="#installing-other-babylon-modules"></a>Installing other Babylon modules</h3><p>After including <code>`@babylonjs/core`</code> you can add Babylon&#39;s extra modules using npm as follows:</p>
+<pre><code class="lang-bash">npm install --save-dev @babylonjs/materials [other packages]
+</code></pre>
+<p>Same as the babylonjs, this will install the javascript files and a declaration file.</p>
+<p>To import the dependencies, you simply need to import the library (without giving it a namespace):</p>
+<pre><code class="lang-javascript">import {
+    GridMaterial
+} from &#39;@babylonjs/materials&#39;;
+
+let skyMaterial = new GridMaterial(.....)
+</code></pre>
+<h3><a name="creating-our-first-js-app" class="anchor" href="#creating-our-first-js-app"></a>Creating our first js APP</h3><p>Now we have all the dependencies created, create an index.html file in the <code>MyAwesomeApp</code> folder and fill it with the following code:</p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+
+&lt;head&gt;
+    &lt;title&gt;Local Development&lt;/title&gt;
+
+    &lt;script src=&quot;https://code.jquery.com/pep/0.4.2/pep.min.js&quot;&gt;&lt;/script&gt;
+
+    &lt;style&gt;
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            font-size: 0;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;canvas id=&quot;renderCanvas&quot; touch-action=&quot;none&quot;&gt;&lt;/canvas&gt;
+
+    &lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p>This will only have a fullscreen canvas as well as a reference to our application file (by default webpack output during development is &quot;main.js&quot;);</p>
+<p>Once done you can create a <code>src</code> folder containing an index.js file with the following content:</p>
+<pre><code class="lang-javascript">import {
+    Engine
+} from &quot;@babylonjs/core/Engines/engine&quot;;
+import {
+    Scene
+} from &quot;@babylonjs/core/scene&quot;;
+import {
+    Vector3
+} from &quot;@babylonjs/core/Maths/math&quot;;
+import {
+    FreeCamera
+} from &quot;@babylonjs/core/Cameras/freeCamera&quot;;
+import {
+    HemisphericLight
+} from &quot;@babylonjs/core/Lights/hemisphericLight&quot;;
+import {
+    Mesh
+} from &quot;@babylonjs/core/Meshes/mesh&quot;;
+
+import {
+    GridMaterial
+} from &quot;@babylonjs/materials/grid&quot;;
+
+// Required side effects to populate the Create methods on the mesh class. Without this, the bundle would be smaller but the createXXX methods from mesh would not be accessible.
+import &quot;@babylonjs/core/Meshes/meshBuilder&quot;;
+
+// Get the canvas element from the DOM.
+const canvas = document.getElementById(&quot;renderCanvas&quot;);
+
+// Associate a Babylon Engine to it.
+const engine = new Engine(canvas);
+
+// Create our first scene.
+var scene = new Scene(engine);
+
+// This creates and positions a free camera (non-mesh)
+var camera = new FreeCamera(&quot;camera1&quot;, new Vector3(0, 5, -10), scene);
+
+// This targets the camera to scene origin
+camera.setTarget(Vector3.Zero());
+
+// This attaches the camera to the canvas
+camera.attachControl(canvas, true);
+
+// This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+var light = new HemisphericLight(&quot;light1&quot;, new Vector3(0, 1, 0), scene);
+
+// Default intensity is 1. Let&#39;s dim the light a small amount
+light.intensity = 0.7;
+
+// Create a grid material
+var material = new GridMaterial(&quot;grid&quot;, scene);
+
+// Our built-in &#39;sphere&#39; shape. Params: name, subdivs, size, scene
+var sphere = Mesh.CreateSphere(&quot;sphere1&quot;, 16, 2, scene);
+
+// Move the sphere upward 1/2 its height
+sphere.position.y = 2;
+
+// Affect a material
+sphere.material = material;
+
+// Our built-in &#39;ground&#39; shape. Params: name, width, depth, subdivs, scene
+var ground = Mesh.CreateGround(&quot;ground1&quot;, 6, 6, 2, scene);
+
+// Affect a material
+ground.material = material;
+
+// Render every frame
+engine.runRenderLoop(() =&gt; {
+    scene.render();
+});
+</code></pre>
+<p>Finally you can run the local dev environment through the command <code>npx webpack-dev-server</code> .</p>
+<p>Open the browser and navigate to the url <code>http://localhost:8080/</code> . You should see a sphere and a plane using the Grid Material.</p>
+<p>To create the distribution folder <code>dist</code> use the command <code>npx webpack</code></p>
+<h2><a name="typescript" class="anchor" href="#typescript"></a>Typescript</h2><p>Switching the project to typescript is pretty straight forward. First in the previous example <code>MyAwesomeApp</code> folder we need to install typescript and one of the module allowing the use of typescript in webpack: <code>npm install typescript ts-loader --save-dev</code></p>
+<p>Once done we can replace our previous index.js by its typescript equivalent index.ts:</p>
+<pre><code class="lang-javascript">import {
+    Engine
+} from &quot;@babylonjs/core/Engines/engine&quot;;
+import {
+    Scene
+} from &quot;@babylonjs/core/scene&quot;;
+import {
+    Vector3
+} from &quot;@babylonjs/core/Maths/math&quot;;
+import {
+    FreeCamera
+} from &quot;@babylonjs/core/Cameras/freeCamera&quot;;
+import {
+    HemisphericLight
+} from &quot;@babylonjs/core/Lights/hemisphericLight&quot;;
+import {
+    Mesh
+} from &quot;@babylonjs/core/Meshes/mesh&quot;;
+
+import {
+    GridMaterial
+} from &quot;@babylonjs/materials/grid&quot;;
+
+// Required side effects to populate the Create methods on the mesh class. Without this, the bundle would be smaller but the createXXX methods from mesh would not be accessible.
+import &quot;@babylonjs/core/Meshes/meshBuilder&quot;;
+
+// Get the canvas element from the DOM.
+const canvas = document.getElementById(&quot;renderCanvas&quot;) as HTMLCanvasElement;
+
+// Associate a Babylon Engine to it.
+const engine = new Engine(canvas);
+
+// Create our first scene.
+var scene = new Scene(engine);
+
+// This creates and positions a free camera (non-mesh)
+var camera = new FreeCamera(&quot;camera1&quot;, new Vector3(0, 5, -10), scene);
+
+// This targets the camera to scene origin
+camera.setTarget(Vector3.Zero());
+
+// This attaches the camera to the canvas
+camera.attachControl(canvas, true);
+
+// This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+var light = new HemisphericLight(&quot;light1&quot;, new Vector3(0, 1, 0), scene);
+
+// Default intensity is 1. Let&#39;s dim the light a small amount
+light.intensity = 0.7;
+
+// Create a grid material
+var material = new GridMaterial(&quot;grid&quot;, scene);
+
+// Our built-in &#39;sphere&#39; shape. Params: name, subdivs, size, scene
+var sphere = Mesh.CreateSphere(&quot;sphere1&quot;, 16, 2, scene);
+
+// Move the sphere upward 1/2 its height
+sphere.position.y = 2;
+
+// Affect a material
+sphere.material = material;
+
+// Our built-in &#39;ground&#39; shape. Params: name, width, depth, subdivs, scene
+var ground = Mesh.CreateGround(&quot;ground1&quot;, 6, 6, 2, scene);
+
+// Affect a material
+ground.material = material;
+
+// Render every frame
+engine.runRenderLoop(() =&gt; {
+    scene.render();
+});
+</code></pre>
+<p>The only change being the addition of <code>as HTMLCanvasElement</code> on the canvas element.</p>
+<p>With that done we need to configure Webpack to allow the use of Typescript. Add a <code>webpack.config.js</code> at the root of your project containing the following:</p>
+<pre><code class="lang-javascript">module.exports = {
+    resolve: {
+        extensions: [&#39;.ts&#39;, &#39;.js&#39;]
+    },
+    module: {
+        rules: [{
+            test: /\.tsx?$/,
+            loader: &#39;ts-loader&#39;
+        }]
+    }
+}
+</code></pre>
+<p>We also need to configure typescript in the application folder. The simplest is to add a tsconfig.json file at the root of the project containing:</p>
+<pre><code class="lang-javascript">{
+    &quot;compilerOptions&quot;: {
+        &quot;module&quot;: &quot;esNext&quot;,
+        &quot;target&quot;: &quot;es5&quot;,
+        &quot;moduleResolution&quot;: &quot;node&quot;,
+    }
+}
+</code></pre>
+<p>This will ensure our babylonjs module can be loaded and used in your application.</p>
+<p>It is time to run again with the command <code>npx webpack-dev-server</code> and open your browser on <code>http://localhost:8080/</code> . You should see a sphere and a plane using the Grid Material exactly like in javascript. You are now fully ready to use the Babylon.js ES6 packages in Typescript.</p>
+<h2><a name="tree-shaking" class="anchor" href="#tree-shaking"></a>Tree Shaking</h2><p>From the beginning you could wonder why using these ES6 packages vs the default bundled ones. Beside being more &quot;modern&quot; which is not a valuable enough argument to make the switch, you can now fully benefit from <a href="https://webpack.js.org/guides/tree-shaking/">tree shaking</a>.</p>
+<p>This means the previous example is now requiring about 700Kb vs 2.3Mb before.</p>
+<p><strong>Please note we are continuing to improve our min package size by decoupling a bit more our packages so if you spot any unnecessary dependency, please, do not hesitate to create an issue on <a href="https://github.com/BabylonJS/Babylon.js">GitHub</a>.</strong></p>
+<p><strong>As you will see in the next paragraph, you also need to target individual files to fully benefit from tree shaking in your app.</strong></p>
+<h2><a name="side-effects" class="anchor" href="#side-effects"></a>Side Effects</h2><p>Due to our attachment to backward compatibility, we had to make a hard choice between the APIs and the side effects. Actually whilst not working with modules it is easy to not worry about side effects and we relied on this pattern a lot to create a friendlier API surface. For instance, you can directly from the Mesh class create basic shapes like cubes, spheres and so on. Despite being convenient, this means that the full MeshBuilder constructs are then a dependency of Mesh. But what if you are not using any of them ? Why should they be part of the final package ?</p>
+<p>Easy call, we could move those functions elsewhere and we did exactly this by creating smaller builder modules dedicated to construct only one type of shapes. But now quid of back compat ? Yup, it is lost so to ensure you could use the same code in both UMD bundle and ES6, when the builder files are being parsed, they are swapping the Mesh builder methods. This implies a <strong>side effect</strong> A module executing code whilst being parsed. This is the tradeoff we had to make, valuing back compatibility and API consistency vs side effect free code.</p>
+<p>As a result, it is impossible for Webpack and the other bundlers to determine if imports are safe to be removed when not used so if you import directly from index, all the imports will be followed and included in your packages.</p>
+<p>The treatment even if a bit annoying is simple: you need to import manually only from the modules you need. This will force you to target your imports on the dedicated modules (vs index ones) if you want to fully benefit from tree shaking. The folder structure should be natural enough and in case you are finding some modules in not intuitive locations, do not hesitate to file an issue on <a href="https://github.com/BabylonJS/Babylon.js">GitHub</a> and we will be more than happy to document it here.</p>
+<h3><a name="faq" class="anchor" href="#faq"></a>FAQ</h3><p><em>How do I efficiently use the Mesh. Create... methods ?</em></p>
+<p>The simplest is to load only the builder corresponding to your construction method. If you wish to use the <code>CreateBox</code> method, you can simply <code>import &quot;@babylonjs/core/Meshes/Builders/boxBuilder&quot;;</code> to ensure that the dependant modules have been loaded.<strong>Except if you are relying on all the MeshBuilder methods, we would recommend to not use it directly but favor the smaller builders</strong>.</p>
+<p><em>Why using the default material is not working ?</em>
+By default, any mesh in a scene are using the scene defaultMaterial. With tree shaking you might not need this material so we do not force it as a dependency in the code. That said, would you need to use it, you can simply <code>`import &quot;@babylonjs/core/Materials/standardMaterial&quot;;`</code> to ensure that the default material would be operationnal.</p>
+<p><em>How does deserialization work ?</em></p>
+<p>When you deserialize a Babylon.js object like a Material or Light, it is impossible for the framework to know before hand what kind of entity is enclosed in your file. For instance, are you relying on Standard vs PBRMaterial. We again rely on side effect here and the deserialization will only be able to load the kind of entity you have imported in your app. This means if you know you will need to deserialize a PBRMaterial, you can <code>import &quot;@babylonjs/core/Materials/PBR/pbrMaterial&quot;;</code> before hand.</p>
+<p><em>How do I know if I am importing a folder or a file ?</em></p>
+<p>By convention and to simplify the discovery, all folders starts with an upper case character where the files starts with a lower case one.</p>
+<p><em>How to find what module contains the entity I am trying to import?</em></p>
+<p>This is actually a pretty good question. It should be intuitive enough and if not, do not hesistate to ping us so we can add it to the documentation.</p>
+<p><em>The intellisense does not propose the method I normally use in the bundled version and an undefined error is raised at runtime?</em></p>
+<p>This will be the case for all the methods defined by module augmentation. This means that as long as you are not importing the parent modules, the methods will not even be discoverable. This is the case for all our scene components. For enabling physics on the scene you need <code>import &quot;@babylonjs\core\Physics\physicsEngineComponent&quot;</code> to populate the <code>scene.enablePhysics</code> function. Please find below the list of those components for their augmented methods:</p>
+<ul>
+<li>scene.&quot;animationRelatedMethods like beginAnimation and so on... &quot; are available in the <code>Animations/animatable</code> module.</li>
+<li>scene.&quot;audioRelatedMethods&quot; are available in the <code>Audio/audioSceneComponent</code> and <code>Audio/audioEngine</code> module.</li>
+<li>Octree functions can be found in the <code>Culling/Octrees/octreeSceneComponent</code> module.</li>
+<li>Ray and Picking functions can be found in the <code>Culling/ray</code> module.</li>
+<li>Debug Layer functions can be found in the <code>Debug/debugLayer</code> module.</li>
+<li>Occlusion Queries can be found in the <code>Engines/Extensions/engine.occlusionQuery</code> module.</li>
+<li>Transform Feedback can be found in the <code>Engines/Extensions/engine.transformFeedback</code> module.</li>
+<li>Gamepad support can be found in the <code>Gamepad/gamepadSceneComponent</code> module.</li>
+<li>Scene Helpers like createDefaultCamera, createDefaultXXX can be found in the <code>Helpers/sceneHelpers</code> module.</li>
+<li>Mesh Simplification functions can be found in the <code>Meshes/meshSimplicationSceneComponent</code> .</li>
+<li>DDS Loader support can be installed from the <code>Materials/Textures/Loaders/ddsTextureLoader</code> and you will also need <code>core/Misc/dds</code> module.</li>
+<li>Env Loader support can be installed from the <code>Materials/Textures/Loaders/envTextureLoader</code> .</li>
+<li>KTX Loader support can be installed from the <code>Materials/Textures/Loaders/ktxTextureLoader</code> .</li>
+<li>TGA Loader support can be installed from the <code>Materials/Textures/Loaders/tgaTextureLoader</code> .</li>
+<li>Particle support can be found in the <code>Particles/particleSystemComponent</code> .</li>
+<li>Physics Engine support can be found in the <code>Physics/physicsEngineComponent</code> .</li>
+<li>.babylon file support can be found in the <code>Loading/Plugins/babylonFileLoader</code> .</li>
+<li>shadowGenerator support can be found in the <code>Lights/Shadows/shadowGeneratorSceneComponent</code> .</li>
+<li>depthRendering support can be found in the <code>Rendering/depthRendererSceneComponent</code> .</li>
+<li>screenshot support can be found in the <code>Misc/screenshotTools</code> .</li>
+<li>boundingBox support can be found in the <code>Rendering/boundingBoxRenderer</code> .</li>
+</ul>
+<p><em>Why do I have an error in the console inviting me to import some other modules?</em></p>
+<p>This might happen on some modules where we are heavily relying on side effects and where we can automatically detect the none presence of the dependency.</p>
+<h2><a name="almighty-inspector" class="anchor" href="#almighty-inspector"></a>Almighty Inspector</h2><p>Due to the modules name changing and other es6 modules differences, the UMD and CDN inspector version is not compatible with ES6. Nevertheless, you can install the ES6 version of the inspector and import it for side effect only in your code. Then the debug layer would work as usual.</p>
+<p>First install the inspector package:</p>
+<pre><code class="lang-bash">npm install --save-dev @babylonjs/inspector
+</code></pre>
+<p>And then in your code:</p>
+<pre><code class="lang-javascript">import &quot;@babylonjs/core/Debug/debugLayer&quot;; // Augments the scene with the debug methods
+import &quot;@babylonjs/inspector&quot;; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
+...
+scene.debugLayer.show();
+</code></pre>
+<h2><a name="earcutoimocanon" class="anchor" href="#earcutoimocanon"></a>Earcut/Oimo/Canon</h2><p>As we do not want to force by default our user to include any dependencies, we have extended the way users could rely on external dependencies for ES6.</p>
+<p>For each of the external dependencies Babylon.js is relying upon, if you are planing on relying on them, you can either provide them as global var in you bundler. For instance if you are willing to use the <code>PolygonMeshBuilder</code> class in your app you can add earcut in webpack like this:</p>
+<pre><code class="lang-javascript">module.exports = {
+    context: __dirname,
+    ...
+    plugins: [
+        new webpack.ProvidePlugin({
+            &#39;earcut&#39;: &#39;earcut&#39;
+        })
+    ]
+}
+</code></pre>
+<p>Or if you do not want to use a global var for earcut, you could simply pass the dependency to the PolygonMeshBuilder class like this:</p>
+<pre><code class="lang-javascript">import * as MyEarcut from &quot;earcut&quot;;
+...
+new PolygonMeshBuilder(&quot;polytri&quot;, corners, scene, MyEarcut);
+</code></pre>
+<p>It would be the same for physics plugin where you can either provide the underlying engine as a var or inject it in the constructor of the Babylon.js respective plugin.</p>
+<h2><a name="ammo" class="anchor" href="#ammo"></a>Ammo</h2><p>Exactly like in the previous paragraph, you can inject your ammo dependency into Babylon.js. Either you can keep as a global script reference thus not including the dependency in your bundle or you could follow the following steps to include ammo as part of your bundled application.</p>
+<p>First, install ammo.js from its github build folder (in order to benefit from an up to date version):</p>
+<pre><code class="lang-javascript">npm install kripken / ammo.js
+</code></pre>
+<p>Then in Webpack, you need to disable the fs dependency to generate a successful package (obviously if you are targeting web builds):</p>
+<pre><code class="lang-javascript">module.exports = {
+    context: __dirname,
+    ...
+    node: {
+        fs: &#39;empty&#39;
+    }
+}
+</code></pre>
+<p>Finally, in your code, you can setup the AmmoJSPlugin this way:</p>
+<pre><code class="lang-javascript">import * as Ammo from &quot;ammo.js&quot;;
+...
+var ammoPlugin = new AmmoJSPlugin(true, Ammo);
+</code></pre>
+<h2><a name="loaders" class="anchor" href="#loaders"></a>Loaders</h2><p>In Babylon.js the loaders you can install from <code>@babylonjs/loaders</code> are actually plugins of the main <code>SceneLoader</code> module. In order to use for instance the obj loader in your app, you simply need to import it for side effects only: <code>import &quot;@babylonjs/loaders/OBJ&quot;;</code> . It would be exactly the same for gltf: <code>import &quot;@babylonjs/loaders/glTF&quot;;</code> .</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/babylon101/how_to_get">How To Get Babylon.js</a><br><a href="/features/NPM_Support">NPM Support</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>First Scene - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>First Scene</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#first-scene-and-model">First Scene and Model</a></li>
+<li><a href="#say-hello-to-your-first-world">Say Hello to Your First World</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="getting-started" class="anchor" href="#getting-started"></a>Getting Started</h1><h2><a name="first-scene-and-model" class="anchor" href="#first-scene-and-model"></a>First Scene and Model</h2><p>Whether you are creating a whole world or just placing one model into a web page you need a <a href="">scene</a> to contain the world or model, a <a href="">camera</a> to view it, a <a href="">light</a> to illuminate it and, of course, at least one viewable object as a model. All models, whether just a box or a complex character, are made from a <a href="">mesh</a> of triangles or facets.</p>
+<p><img src="/img/campus/wireframe.png" alt="wireframe"><br>Wireframe View Showing Mesh Triangles</p>
+<p>A large number of meshes can be created directly within Babylon.js using code, or, as you will shortly see, imported as models from meshes created with other software. Let us start simply with a box.</p>
+<h2><a name="say-hello-to-your-first-world" class="anchor" href="#say-hello-to-your-first-world"></a>Say Hello to Your First World</h2><p>All projects using the Babylon.js Engine need a scene with a camera and a light added. Then we can create our box.</p>
+<pre><code class="lang-javascript">const scene = new BABYLON.Scene(engine);
+
+const camera = new BABYLON.ArcRotateCamera(&quot;camera&quot;, -Math.PI / 2, Math.PI / 2.5, 3, new BABYLON.Vector3(0, 0, 0), scene);
+camera.attachControl(canvas, true);
+
+const light = new BABYLON.HemisphericLight(&quot;light&quot;, new BABYLON.Vector3(0, 1, 0), scene);
+
+const box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {}, scene);
+</code></pre>
+<p>Like most meshes created with MeshBuilder the box is created positioned with its center at the origin and needs three parameters. These are a name, <em>a string</em>,  options, <em>a JavaScript object</em>, and a scene. By leaving the options as an empty object <em>{}</em> with no properties the box defaults to one of unit size for its width, height and depth. </p>
+<p>To be usable in a playground we need to place these within a function called <strong>createScene</strong> which has to return a scene. The playground app takes care of the rest.</p>
+<pre><code class="lang-javascript">const createScene =  () =&gt; {
+    const scene = new BABYLON.Scene(engine);
+
+    const camera = new BABYLON.ArcRotateCamera(&quot;camera&quot;, -Math.PI / 2, Math.PI / 2.5, 3, new BABYLON.Vector3(0, 0, 0));
+    camera.attachControl(canvas, true);
+
+    const light = new BABYLON.HemisphericLight(&quot;light&quot;, new BABYLON.Vector3(0, 1, 0));
+
+    const box = BABYLON.MeshBuilder.CreateBox(&quot;box&quot;, {});
+
+    return scene;
+}
+</code></pre>
+<p>Since at this point there is only one scene you may notice that this parameter can be dropped from the camera, light and box as the default is for them to be placed in the current scene.</p>
+<p><a href="https://www.babylonjs-playground.com/#KBS9I5">https://www.babylonjs-playground.com/#KBS9I5</a> - <i class="fa fa-eye" onclick="createIframe('KBS9I5#', this)"></i><div class="iframeContainer"></div></p>
+<p><img src="/img/campus/house0.png" alt="box"></p>
+<p>Having created our box we can save, or export, the scene from within the playground by selecting the <em>Inspector</em><br><img src="/img/campus/pgpartmenu.png" alt="inspector">    </p>
+<p>followed by <em>Tools</em> and choose which type to export, the <em>.babylon</em> format or the <em>GLB</em> format.<br><img src="/img/campus/export.png" alt="Tools"></p>
+<p>Now we have a file we can use it to demonstrate how to view it in a web page.</p>
+<p><a href="/babylon101/welcome">Prev</a> Introduction<br><a href="/babylon101/first_viewer">Next</a> Viewing a Model on a Web Page</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

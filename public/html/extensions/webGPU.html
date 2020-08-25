@@ -1,0 +1,59 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Web GPU - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Web GPU</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#why">Why ?</a></li>
+<li><a href="#where-are-we">Where are we ?</a></li>
+<li><a href="#how">How ?</a></li>
+<li><a href="#what-could-go-wrong">What could go wrong ?</a></li>
+<li><a href="#what-would-the-migration-look-like-for-my-app">What would the migration look like for my app ?</a></li>
+<li><a href="#will-webgl-still-be-supported">Will WebGL still be supported ?</a></li>
+<li><a href="#i-want-to-test-it">I want to test it</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="web-gpu" class="anchor" href="#web-gpu"></a>Web GPU</h1><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>As you might be aware, the next gen Web 3D is starting to rise.</p>
+<p>Following the specification from the <a href="https://github.com/gpuweb/gpuweb">W3C group</a>, we have started our journey to support this new tech. Our plan is to deliver a support with WebGL feature parity and  the new WebGPU specifics in 4.1.</p>
+<p><img src="/img/extensions/WebGPU.png" alt="Inspector"></p>
+<h2><a name="why" class="anchor" href="#why"></a>Why ?</h2><p>The promise behind WebGPU is an awesomely faster API providing lower level control to the graphic resources from Javascript. We hope to bring those extra performances to you in order to create even bigger Web 3D experiences through an API you are already familiar with: Babylon.js.</p>
+<p>Also this is brigging new cool toys to the table like Compute Shaders and more to come.</p>
+<h2><a name="where-are-we" class="anchor" href="#where-are-we"></a>Where are we ?</h2><p>We currently only support a really small subsets of what Babylon.js can do:</p>
+<ul>
+<li>Static Meshes and instances (no bones or morph)</li>
+<li>Materials can not change their defines after creation</li>
+<li>No custom effects or post processes</li>
+<li>No render targets</li>
+<li>No Dynamic/Raw/Compressed textures</li>
+<li>Loaders for model respecting the following limitations</li>
+</ul>
+<p>This is not much you would say, but it means we have layered all the ground foundation to move forward :-)</p>
+<p>You can also follow our progress on out <a href="https://github.com/BabylonJS/Babylon.js/issues/6443">Github dedicated issue</a>.</p>
+<h2><a name="how" class="anchor" href="#how"></a>How ?</h2><p>The current implementation status is fully available on <a href="https://github.com/BabylonJS/Babylon.js/tree/WebGPU">Github</a>.</p>
+<p>We will put a big effort all along our next release to implement the support and every contribution is more than welcome; So feel free to create some PR if you are interested in contributing to a fresh engine implementation based on cutting edge tech.</p>
+<h2><a name="what-could-go-wrong" class="anchor" href="#what-could-go-wrong"></a>What could go wrong ?</h2><p>As this is really early in the development, we are subject to a lot of potential changes as well as spec uncertainties. We will deal with them one at a time but we may be subject to change the release schedule at any time.</p>
+<p>We have the full support from the amazing teams implementing the browsers support so it will be easier to directly chat with them when needed.</p>
+<h2><a name="what-would-the-migration-look-like-for-my-app" class="anchor" href="#what-would-the-migration-look-like-for-my-app"></a>What would the migration look like for my app ?</h2><p>As back compat is one of our pillar, the only difference we wish to have is the engine initialization which needs to be asynchronous:</p>
+<pre><code class="lang-javascript">const engine = new BABYLON.WebGPUEngine(canvas);
+await engine.initAsync();
+</code></pre>
+<h2><a name="will-webgl-still-be-supported" class="anchor" href="#will-webgl-still-be-supported"></a>Will WebGL still be supported ?</h2><p>FOR SURE :-) There is no change of plans and we will deliver both supports side by side.</p>
+<h2><a name="i-want-to-test-it" class="anchor" href="#i-want-to-test-it"></a>I want to test it</h2><p>You can only at the moment test on MacOS Chrome Canary with the enable-unsafe-webgpu flags on. Once there will be other solutions, we won&#39;t hesitate to update this page.</p>
+<p>You can follow the status from the dedicated <a href="https://www.chromestatus.com/feature/6213121689518080">Chrome Status Platform Page</a>.</p>
+<p>Here is a link to a simple PBR sphere <a href="https://www.babylonjs.com/demos/WebGPU/oneSphereWebGPU.html">Sphere</a>.</p>
+<p>And one to the famous <a href="https://www.babylonjs.com/demos/WebGPU/oneHelmetWebGPU.html">Damaged Helmet Demo</a>.</p>
+<p>And a performance comparison of a <a href="https://www.babylonjs.com/demos/WebGPU/forestWebGL.html">WebGL Forest</a> and a a <a href="https://www.babylonjs.com/demos/WebGPU/forestWebGPU.html">WebGPU Forest</a>. Press space once loaded to slowly display to 10 000 none instanced meshes from the scene :-)</p>
+<p>All the demos code is available on <a href="https://github.com/BabylonJS/Website/tree/master/build/Demos/WebGPU">Github</a> so that you could compare both the webgl and webgpu versions and notice there are currently no differences beside the initialization. We will try to keep it this way :-)</p>
+<p>As we are laying our plan to release, we disabled temporarily our Playground Experiment soon to be replaced by our Production one !!!</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

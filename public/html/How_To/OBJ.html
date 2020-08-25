@@ -1,0 +1,103 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the OBJ File Loader Plugin - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the OBJ File Loader Plugin</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#load">Load</a><ul>
+<li><a href="#good-things-to-know">Good things to know</a></li>
+<li><a href="#supported">Supported</a></li>
+<li><a href="#not-supported-currently">Not supported currently</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="obj-file-import" class="anchor" href="#obj-file-import"></a>OBJ File Import</h1><p>To use it, you just have to reference the loader file:</p>
+<pre><code>&lt;script src=&quot;babylon.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;babylon.objFileLoader.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>You can find it <a href="https://github.com/BabylonJS/Babylon.js/tree/master/dist/preview release/loaders">here</a></p>
+<p>If you are using ES6 imports via NPM, you need to reference with side-effects:</p>
+<pre><code>import &#39;babylonjs-loaders&#39;
+</code></pre><p>You can read more about <a href="/features/npm_support">NPM support</a></p>
+<h3><a name="load" class="anchor" href="#load"></a>Load</h3><p>See <a href="/how_to/Load_From_Any_File_Type">how to load from any file type</a>
+Babylon.js will know how to load the obj file and its mtl file automatically: </p>
+<h2><a name="good-things-to-know" class="anchor" href="#good-things-to-know"></a>Good things to know</h2><ul>
+<li>Your model doesn&#39;t have to be triangulated, as this loader will do it automatically.</li>
+<li>A Babylon.Mesh will be created for each object/group</li>
+<li>The obj model should be exported with -Z axis forward, and Y axis upward to be compatible with Babylon.js</li>
+</ul>
+<p><img src="/img/how_to/import-obj/axys.jpg" alt="Axis"></p>
+<ul>
+<li>By default, due to optimization in the code for loading time, UVs problems can appear, like this :</li>
+</ul>
+<p><img src="/img/how_to/import-obj/uv-issue.jpg" alt="Batman UVs problem"></p>
+<p>If you meet this problem, set the variable:</p>
+<pre><code>BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
+</code></pre><p>Then, you&#39;ll have a better texture, but with a longer loading.</p>
+<p><img src="/img/how_to/import-obj/uv-fixed.jpg" alt="Batman UVs ok"></p>
+<p>Depending on the modeling program you export your OBJ files from, textures may appear distorted or inverted. As a workaround, you can modify your imported model&#39;s UV coordinate scale via setting the variable:</p>
+<pre><code>BABYLON.OBJFileLoader.UV_SCALE = new BABYLON.Vector2(xValue, yValue)
+</code></pre><p>Although not part of Wavefront OBJ file format, some OBJ files include vertex colors. If you are loading such a file and want vertices with colors, set the variable:</p>
+<pre><code>BABYLON.OBJFileLoader.IMPORT_VERTEX_COLORS = true;
+</code></pre><p>If you have an OBJ file without normals or wish to have them calculated for you, set the variable:</p>
+<pre><code>BABYLON.OBJFileLoader.COMPUTE_NORMALS = true;
+</code></pre><p>To have your imported model inverted on the y-axis, set the variable:</p>
+<pre><code>BABYLON.OBJFileLoader.INVERT_Y = true;
+</code></pre><p>To invert your imported textures on the y-axis, set the variable:</p>
+<pre><code>BABYLON.OBJFileLoader.INVERT_TEXTURE_Y = true;
+</code></pre><p>By default if a MTL file cannot be loaded (missing/error) it will silently fail.  The model will still be loaded, but if you want to enforce a stricter loading of materials you can use onSuccess() and onError() callbacks accordingly.  Set the variable:</p>
+<pre><code>BABYLON.OBJFileLoader.MATERIAL_LOADING_FAILS_SILENTLY = false;
+</code></pre><p>If a MTL is defined in your OBJ and you wish to have it ignored, set the variable:</p>
+<pre><code>BABYLON.OBJFileLoader.SKIP_MATERIALS = true;
+</code></pre><h2><a name="supported" class="anchor" href="#supported"></a>Supported</h2><ul>
+<li>Object/group</li>
+<li>Geometric vertex<ul>
+<li>colors</li>
+</ul>
+</li>
+<li>Faces<ul>
+<li>triangles</li>
+<li>quads</li>
+<li>polygons</li>
+</ul>
+</li>
+<li>Colors<ul>
+<li>diffuseColor</li>
+<li>ambientColor</li>
+<li>specularColor</li>
+<li>specularPower</li>
+<li>alpha</li>
+</ul>
+</li>
+<li>Textures<ul>
+<li>ambientTexture</li>
+<li>diffuseTexture</li>
+<li>specularTexture</li>
+<li>bumpTexture</li>
+<li>opacityTexture</li>
+</ul>
+</li>
+<li>Multimaterial<ul>
+<li>For each material defined in the same mesh, it creates a new BABYLON.Mesh.</li>
+<li>The name of the created BABYLON.Mesh follows this syntax: meshName_mmX </li>
+<li>X is the nth BABYLON.Mesh created with this method</li>
+</ul>
+</li>
+</ul>
+<h2><a name="not-supported-currently" class="anchor" href="#not-supported-currently"></a>Not supported currently</h2><ul>
+<li>Smoothing groups (s parameter in OBJ file)</li>
+<li>Illumination (illum parameter in MTL file)</li>
+<li>The differents options for loading textures in MTL file.</li>
+<li>A good description about MTL files and their options can be found here: <a href="http://paulbourke.net/dataformats/mtl/">http://paulbourke.net/dataformats/mtl/</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

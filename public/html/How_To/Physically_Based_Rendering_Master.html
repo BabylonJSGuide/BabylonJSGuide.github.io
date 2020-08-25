@@ -1,0 +1,566 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Master Physically Based Rendering (PBR) - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Master Physically Based Rendering (PBR)</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#how-to-install">How to install</a></li>
+<li><a href="#why">Why</a></li>
+<li><a href="#from-metallicroughness-to-pbrmaterial">From MetallicRoughness To PBRMaterial</a></li>
+<li><a href="#from-specularglossiness-to-pbrmaterial">From SpecularGlossiness To PBRMaterial</a></li>
+<li><a href="#opacity">Opacity</a></li>
+<li><a href="#refraction-back-compat">Refraction (Back Compat)</a></li>
+<li><a href="#sub-surface">Sub Surface</a><ul>
+<li><a href="#refraction">Refraction</a></li>
+<li><a href="#translucency">Translucency</a></li>
+<li><a href="#scattering">Scattering</a><ul>
+<li><a href="#diffusion-profiles">Diffusion profiles</a></li>
+</ul>
+</li>
+<li><a href="#mask">Mask</a></li>
+</ul>
+</li>
+<li><a href="#clear-coat">Clear Coat</a></li>
+<li><a href="#anisotropy">Anisotropy</a></li>
+<li><a href="#sheen">Sheen</a></li>
+<li><a href="#normal-map-parallax">Normal Map / Parallax</a></li>
+<li><a href="#lightmaps">LightMaps</a></li>
+<li><a href="#image-processing">Image Processing</a></li>
+<li><a href="#light-setup">Light Setup</a><ul>
+<li><a href="#inverse-square-falloff">Inverse Square Falloff</a></li>
+<li><a href="#intensitymode">IntensityMode</a></li>
+<li><a href="#light-radius">Light Radius</a></li>
+</ul>
+</li>
+<li><a href="#shadows-as-the-standard-material">Shadows (as the standard material)</a></li>
+<li><a href="#notes">Notes</a><ul>
+<li><a href="#specular-aliasing">Specular Aliasing</a></li>
+<li><a href="#environment-irradiance">Environment Irradiance</a></li>
+<li><a href="#spherical-harmonics">Spherical Harmonics</a></li>
+<li><a href="#irradiance-map">Irradiance Map</a></li>
+<li><a href="#energy-conservation">Energy Conservation</a></li>
+<li><a href="#image-based-lighting-babylon-vs-raytracers">Image Based Lighting: Babylon VS RayTracers</a></li>
+<li><a href="#how-to-debug">How to Debug</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-master-the-pbr-materials" class="anchor" href="#how-to-master-the-pbr-materials"></a>How To Master the PBR Materials</h1><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>After following the <a href="/How_To/Physically_Based_Rendering">PBR Introduction</a>, it is a good time to learn more about the <strong>PBRMaterial</strong>.</p>
+<p><img src="/img/extensions/materials/PBRMaster.png" alt="Title"></p>
+<p><a href="http://www.babylonjs.com/demos/pbrrough/"><strong>Demo Scene - PBR Materials</strong></a></p>
+<p>This will be the only picture of the documentation. As a <strong>real sample</strong> would be better than a picture, please, do not hesitate to click on the eye aside of each playground links to see the live examples embedded in the page.</p>
+<p>The entire documentation should help you deal with most of the PBR Material setup.</p>
+<h2><a name="how-to-install" class="anchor" href="#how-to-install"></a>How to install</h2><p>As the PBR material is embedded in the BabylonJS library, please, follow the <a href="/babylon101/first">basic tutorial</a> in order to create your first page using the framework.</p>
+<h2><a name="why" class="anchor" href="#why"></a>Why</h2><p>After looking at the <a href="/How_to/Physically_Based_Rendering">PBR Introduction</a> you may want to gain more control or use more features in your material setup like:</p>
+<ul>
+<li>Refraction</li>
+<li>Standard Light Falloff</li>
+<li>LightMaps</li>
+<li>Dedicated image processing</li>
+</ul>
+<p>As the two main PBR Materials e.g. <em>SpecularGlossiness</em> and <em>MetallicRoughness</em>, are intended to be simple, their number of properties is pretty small to stay user friendly. From time to time, you might still be missing a feature or willing to go a bit deeper.</p>
+<p>The <strong>PBRMaterial</strong> is here to address this concern and can work in either a Specular/Glossiness or Metallic/Roughness workflow. This document will only address <em>the differences</em> between the PBRMaterial and its the simpler versions.</p>
+<h2><a name="from-metallicroughness-to-pbrmaterial" class="anchor" href="#from-metallicroughness-to-pbrmaterial"></a>From MetallicRoughness To PBRMaterial</h2><p>To start with the MetallicRoughness, you can take a look at the <a href="/How_To/physically_based_rendering#pbrmetallicroughnessmaterial">documentation</a>.</p>
+<p>In order to setup the PBRMaterial in Metallic/Roughness mode, at least one of the following properties has to be set (else it by default works in Specular/Glossiness):</p>
+<ul>
+<li>metallic</li>
+<li>roughness</li>
+<li>metallicTexture</li>
+</ul>
+<p>To switch from the PBRMetallicRoughnessMaterial to the bigger PBRMaterial, a few of the properties need to be renamed (rename has not been done in the richer material in order to keep backward compatibility with prior versions):</p>
+<table>
+<thead>
+<tr>
+<th>PBRMetallicRoughnessMaterial</th>
+<th>PBRMaterial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>baseColor</td>
+<td>albedoColor</td>
+</tr>
+<tr>
+<td>baseTexture</td>
+<td>albedoTexture</td>
+</tr>
+<tr>
+<td>metallicRoughnessTexture</td>
+<td>metallicTexture</td>
+</tr>
+<tr>
+<td>environmentTexture</td>
+<td>reflectionTexture</td>
+</tr>
+<tr>
+<td>normalTexture</td>
+<td>bumpTexture</td>
+</tr>
+<tr>
+<td>occlusionTexture</td>
+<td>ambientTexture</td>
+</tr>
+<tr>
+<td>occlusionTextureStrength</td>
+<td>ambientTextureStrength</td>
+</tr>
+</tbody>
+</table>
+<p>As the channels used for metallic or roughness can be customized, in order to be setup as the simple material, you will need to add the following flags:</p>
+<pre><code class="lang-javascript">pbr.useRoughnessFromMetallicTextureAlpha = false;
+pbr.useRoughnessFromMetallicTextureGreen = true;
+pbr.useMetallnessFromMetallicTextureBlue = true;
+</code></pre>
+<p>You can see a <a href="https://www.babylonjs-playground.com/#2FDQT5#14">live version here</a> - <i class="fa fa-eye" onclick="createIframe('2FDQT5#14', this)"></i><div class="iframeContainer"></div></p>
+<p>Once the conversion done, let&#39;s see the custom options available on this version:</p>
+<ul>
+<li><strong>useRoughnessFromMetallicTextureAlpha</strong>: the metallic texture contains the roughness information in its alpha channel.</li>
+<li><strong>useRoughnessFromMetallicTextureGreen</strong>: the metallic texture contains the roughness information in its green channel (useRoughnessFromMetallicTextureAlpha needs to be false).</li>
+<li><strong>useMetallnessFromMetallicTextureBlue</strong>: the metallic texture contains the metallic information in its blue channel (it is considered in the red channel by default).</li>
+<li><strong>useAmbientOcclusionFromMetallicTextureRed</strong>: the metallic texture contains the ambient occlusion information in its red channel.</li>
+<li><strong>useAmbientInGrayScale</strong>: the ambient occlusion is forced to read only from the red channel of the ambient texture or from the red channel of the metallic texture.</li>
+</ul>
+<h2><a name="from-specularglossiness-to-pbrmaterial" class="anchor" href="#from-specularglossiness-to-pbrmaterial"></a>From SpecularGlossiness To PBRMaterial</h2><p>To begin with the SpecularGlossiness you can start with this <a href="/How_To/physically_based_rendering#pbrspecularglossinessmaterial">documentation</a>.</p>
+<p>The exact opposite of the previous chapter has to be followed in order to setup the PBRMaterial in Specular/Glossiness mode. The following properties need to be null or undefined:</p>
+<ul>
+<li>metallic</li>
+<li>roughness</li>
+<li>metallicTexture</li>
+</ul>
+<p>To switch from the PBRSpecularGlossinessMaterial to the richer PBRMaterial, a few of the properties need to also be renamed:</p>
+<table>
+<thead>
+<tr>
+<th>PBRSpecularGlossinessMaterial</th>
+<th>PBRMaterial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diffuseColor</td>
+<td>albedoColor</td>
+</tr>
+<tr>
+<td>diffuseTexture</td>
+<td>albedoTexture</td>
+</tr>
+<tr>
+<td>specularGlossinessTexture</td>
+<td>reflectivityTexture</td>
+</tr>
+<tr>
+<td>specularColor</td>
+<td>reflectivityColor</td>
+</tr>
+<tr>
+<td>glossiness</td>
+<td>microSurface</td>
+</tr>
+<tr>
+<td>normalTexture</td>
+<td>bumpTexture</td>
+</tr>
+<tr>
+<td>occlusionTexture</td>
+<td>ambientTexture</td>
+</tr>
+<tr>
+<td>occlusionTextureStrength</td>
+<td>ambientTextureStrength</td>
+</tr>
+</tbody>
+</table>
+<p>Also, as the channel used for glossiness can be customized, in order to be setup as the simple material, you will need to add the following flag:</p>
+<pre><code class="lang-javascript">pbr.useMicroSurfaceFromReflectivityMapAlpha = false;
+</code></pre>
+<p>You can see a <a href="https://www.babylonjs-playground.com/#Z1VL3V#8">live version here</a> - <i class="fa fa-eye" onclick="createIframe('Z1VL3V#8', this)"></i><div class="iframeContainer"></div></p>
+<p>Once the conversion done, let&#39;s see the custom options available on this version:</p>
+<ul>
+<li><strong>microSurfaceTexture</strong>: Enables the ability to store the glossiness on the red channel of a separate texture.</li>
+<li><strong>useAlphaFromAlbedoTexture</strong>: the opacity information is contained in the alpha channel of the albedo texture.</li>
+<li><strong>useMicroSurfaceFromReflectivityMapAlpha</strong>: the reflectivity texture contains the microSurface or glossiness information in its alpha channel.</li>
+<li><strong>useAmbientInGrayScale</strong>: the ambient occlusion is forced to read only from the red channel of the ambient texture or from the red channel of the metallic texture.</li>
+</ul>
+<h2><a name="opacity" class="anchor" href="#opacity"></a>Opacity</h2><p>Another interesting addition to the reflection is the ability to keep the most luminous part of the reflection over transparent surface... Yeah, it does not make much sense... Actually, if you look through a window at night from a lit room, you can see the reflection of lights or TV on the glass. This is the same for reflection in the PBR Material. A special property <code>pbr.useRadianceOverAlpha = true;</code> has been added to allow you to control this effect. Not only reflection (AKA radiance) but specular highlights can be seen on top of transparency.</p>
+<p><a href="https://www.babylonjs-playground.com/#19JGPR#13">Demo</a> - <i class="fa fa-eye" onclick="createIframe('19JGPR#13', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">glass.reflectionTexture = hdrTexture;
+glass.alpha = 0.5;
+</code></pre>
+<p>This behaviour can be turned off through the properties:</p>
+<pre><code class="lang-javascript">    useRadianceOverAlpha = false;
+    useSpecularOverAlpha = false;
+</code></pre>
+<h2><a name="refraction-back-compat" class="anchor" href="#refraction-back-compat"></a>Refraction (Back Compat)</h2><p>Refraction is a little bit like reflection (Please purists, do not kill me now, I only said a little) because it is heavily relying on the environment to change the way the material looks. Basically, if reflection could be compared to seeing the sun and cloud on the surface of a lake, refraction would be seeing weird shaped fish under the surface (through the water).  </p>
+<p>A great tutorial on the refraction is available <a href="/How_To/reflect#refraction">Here</a></p>
+<p>As refraction is equivalent to how you can <strong>see through different materials boundaries</strong>, the effect can be controlled via the transparency in BJS. A special property helps you to do it, simply put <code>pbr.linkRefractionWithTransparency=true;</code> in your code and then the alpha will control how refractive the material is. Putting it to false leaves the alpha controlling the default transparency.</p>
+<p><a href="https://www.babylonjs-playground.com/#19JGPR#12">Demo</a> - <i class="fa fa-eye" onclick="createIframe('19JGPR#12', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var glass = new BABYLON.PBRMaterial(&quot;glass&quot;, scene);
+glass.reflectionTexture = hdrTexture;
+glass.refractionTexture = hdrTexture;
+glass.linkRefractionWithTransparency = true;
+glass.indexOfRefraction = 0.52;
+glass.alpha = 0; // Fully refractive material
+</code></pre>
+<p>You can still notice some reflection on your material due to the energy conservation. Please note that you should since 4.0 rely on the next section settings to define every thing impacting what happens under the material surface. But no worries we will keep the current setup in place for backward compatibility.</p>
+<h2><a name="sub-surface" class="anchor" href="#sub-surface"></a>Sub Surface</h2><p>The sub surface section of the material defines everything happening below the surface. It currently supports Refraction and Translucency.</p>
+<h3><a name="refraction" class="anchor" href="#refraction"></a>Refraction</h3><p>I will not redefine the refraction component here as it has been addressed in the previous section but only highlights the main differences <a href="/How_To/reflect#refraction">Here</a></p>
+<p>Enabling the refraction would be done through a flag on the sub surface section:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#17">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#17', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+sphere.material = pbr;
+
+pbr.metallic = 0;
+pbr.roughness = 0;
+
+pbr.subSurface.isRefractionEnabled = true;
+pbr.subSurface.refractionIntensity = 0.8;
+</code></pre>
+<p>As before you can control the index of refraction:
+<a href="https://www.babylonjs-playground.com/#FEEK7G#24">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#24', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+sphere.material = pbr;
+
+pbr.metallic = 0;
+pbr.roughness = 0;
+
+pbr.subSurface.isRefractionEnabled = true;
+pbr.subSurface.indexOfRefraction = 1.5;
+</code></pre>
+<p>Please note that here the index of refraction represents the value you can find in the nomenclature and not its inverse like in the legacy setup.</p>
+<p>You can control the tint of the material (representing its color below the surface) by configuring two properties:</p>
+<ul>
+<li><code>tintColor</code>: defines the color of the tint.</li>
+<li><code>tintColorAtDistance</code>: defines at what distance under the surface the color should be the defined one (simulating absorption through beer lambert law).</li>
+</ul>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#25">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#25', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+sphere.material = pbr;
+
+pbr.metallic = 0;
+pbr.roughness = 0;
+
+pbr.subSurface.isRefractionEnabled = true;
+pbr.subSurface.indexOfRefraction = 1.5;
+pbr.subSurface.tintColor = BABYLON.Color3.Teal();
+</code></pre>
+<p>By default the thickness of the material is understood to be the <code>maxThickness</code> value of the subSurface. You could easily change the thickness by relying on a thickness map:</p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+sphere.material = pbr;
+
+pbr.metallic = 0;
+pbr.roughness = 0;
+
+pbr.subSurface.isRefractionEnabled = true;
+pbr.subSurface.indexOfRefraction = 1.5;
+pbr.subSurface.tintColor = BABYLON.Color3.Teal();
+
+pbr.subSurface.thicknessTexture = texture;
+pbr.subSurface.minimumThickness = 1;
+pbr.subSurface.maximumThickness = 10;
+</code></pre>
+<p>The actual thickness per pixel would be then = minimumThickness + thicknessTexture.r * maximumThickness. This helps clamping the actual value between a min and max defined by a texture.</p>
+<h3><a name="translucency" class="anchor" href="#translucency"></a>Translucency</h3><p>The refraction is good to represent the light passing through on low density medium such as beer or wine. But what if your material was more dense like milk where the light would be diffused throughout the material ?</p>
+<p><img src="/img/extensions/PBRSubSurface.png" alt="SubSurface"></p>
+<p>In this case, you can rely on the translucency properties of the material.</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#37">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#37', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+sphere.material = pbr;
+
+pbr.metallic = 0;
+pbr.roughness = 0;
+
+pbr.subSurface.isTranslucencyEnabled = true;
+pbr.subSurface.translucencyIntensity = 0.8;
+</code></pre>
+<p>Sharing some setup with the refraction (it actually makes sense as we are speaking about the same material), you can rely upon the tint color to define the color of the material below the surface:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#27">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#27', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+sphere.material = pbr;
+
+pbr.metallic = 0;
+pbr.roughness = 0;
+
+pbr.subSurface.isTranslucencyEnabled = true;
+pbr.subSurface.tintColor = BABYLON.Color3.Teal();
+</code></pre>
+<p>The setup will be identical relying on the both previously defined values:</p>
+<ul>
+<li><code>tintColor</code>: defines the color of the tint.</li>
+<li><code>tintColorAtDistance</code>: defines at what distance under the surface the color should be the defined one (simulating absorption through beer lambert law).</li>
+</ul>
+<p>It also fully respect the previously defined thickness configuration: The actual thickness per pixel would be then = minimumThickness + thicknessTexture.r * maximumThickness.</p>
+<h3><a name="scattering" class="anchor" href="#scattering"></a>Scattering</h3><p>To further add a layer of detail over what really happens beneath the surface of the material, you can add scattering. It simulates all small bounces of the light that takes place inside the material, causing light to go out at a different location than where it entered.</p>
+<p>It can be really useful on materials like skin, foliage, wax, dense colored liquids, icecubes, gemstones, etc...</p>
+<p>You can use this in addition of translucency to accurately represent the spread of the light inside the material.</p>
+<p><img src="/img/extensions/PBRSubSurfaceScattering.jpg" alt="SubSurfaceScattering"></p>
+<p><a href="https://www.babylonjs-playground.com/#GTQKYK#1">Demo</a> - <i class="fa fa-eye" onclick="createIframe('GTQKYK#1', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+sphere.material = pbr;
+
+scene.enablePrePassRenderer().subSurfaceConfiguration.metersPerUnit = 0.01;
+
+pbr.metallic = 0;
+pbr.roughness = 0.2;
+
+pbr.subSurface.isScatteringEnabled = true;
+</code></pre>
+<p>For this effect to be physically accurate, you have to indicate the ratio between scene units and the real world distance in meters, by filling the property <code>metersPerUnit</code> of the scene pre-pass renderer. It is  by default set to 1 meter = 1 unit.</p>
+<h4><a name="diffusion-profiles" class="anchor" href="#diffusion-profiles"></a>Diffusion profiles</h4><p>Pushing realism even further, material volume albedo affects how far light travels inside the material. Thus you can register your material profile as the average volumic albedo that it is made of.</p>
+<p>Let&#39;s say you want a skin tone diffusion profile, you can add this to your subsurface configuration by doing :</p>
+<p><a href="https://www.babylonjs-playground.com/#W7DYG2#2">Demo</a> - <i class="fa fa-eye" onclick="createIframe('W7DYG2#2', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">    pbr.subSurface.scatteringDiffusionProfile = new BABYLON.Color3(0.750, 0.25, 0.20);
+</code></pre>
+<p>You can have up to 5 different colors registered as diffusion profiles.</p>
+<p><em>Warning ! Performance and compatibility notice</em></p>
+<p>This effect is using a lot of WebGL 2 structures under the hood, therefore it is only compatible with WebGL 2. 
+Furthermore, please note that the use of subsurface scattering triggers a post-process, and it adds a lot of additionnal work for the GPU.<br>In other terms, use it wisely, and mind smaller GPUs that won&#39;t necessarily have the ressources to run this effect.</p>
+<h3><a name="mask" class="anchor" href="#mask"></a>Mask</h3><p>Would you wish to define the intensity of the different effects (Refraction or Translucency), you can use the left over channels of the thickness map. Actually, as we are trying to limit the overall number of textures used in the materials we decided to pack the mask information in the g channel for the transluency intensity factor and the alpha channel for the refraction intensity (b has been reserved for the next release).</p>
+<p>As this might be counter intuitive considering the black and white texture generated by external tools, we put this feature under an opt-in flag to prevent any surprises:</p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+sphere.material = pbr;
+
+pbr.metallic = 0;
+pbr.roughness = 0;
+
+pbr.subSurface.isRefractionEnabled = true;
+pbr.subSurface.indexOfRefraction = 1.5;
+
+pbr.subSurface.isTranslucencyEnabled = true;
+pbr.subSurface.translucencyIntensity = 0.8;
+
+pbr.subSurface.tintColor = BABYLON.Color3.Teal();
+
+pbr.subSurface.thicknessTexture = texture;
+pbr.subSurface.minimumThickness = 1;
+pbr.subSurface.maximumThickness = 10;
+
+pbr.subSurface.useMaskFromThicknessTexture = true;
+</code></pre>
+<h2><a name="clear-coat" class="anchor" href="#clear-coat"></a>Clear Coat</h2><p>Clear coat is a way to simulate the coating you can find in automotive car paint for instance. It usually is a transparent layer of paint that can be used to cover the colored coat.</p>
+<p><img src="/img/extensions/PBRClearCoat.png" alt="SubSurface"></p>
+<p>The clear coat is the uppersurface of the material.</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#36">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#36', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+pbr.metallic = 0.0;
+pbr.roughness = 1.0;
+
+pbr.clearCoat.isEnabled = true;
+pbr.clearCoat.intensity = 0.5;
+</code></pre>
+<p>As the clear coat is the final interaction layer with the external medium it applies on top of the bump map, which can be amazing to simulate coating above small geometries represented by the bump map:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#28">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#28', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+// Ensures irradiance is computed per fragment to make the
+// Bump visible
+pbr.forceIrradianceInFragment = true;
+pbr.bumpTexture = new BABYLON.Texture(&quot;textures/floor_bump.png&quot;, scene);
+pbr.metallic = 0.0;
+pbr.roughness = 1.0;
+
+pbr.clearCoat.isEnabled = true;
+</code></pre>
+<p>This goes without saying that sometimes even the coating as some imperfection who can have a different shape than the bump map:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#30">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#30', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+// Ensures irradiance is computed per fragment to make the
+// Bump visible
+pbr.forceIrradianceInFragment = true;
+pbr.bumpTexture = new BABYLON.Texture(&quot;textures/floor_bump.png&quot;, scene);
+pbr.metallic = 0.0;
+pbr.roughness = 1.0;
+
+pbr.clearCoat.isEnabled = true;
+var coatBump = new BABYLON.Texture(&quot;textures/waterbump.png&quot;, scene);
+pbr.clearCoat.bumpTexture = coatBump;
+</code></pre>
+<p>This is all great but what about a different color (all coatings are not transparent, think about the coating around candies). You can control the tint of the clear coat through four properties:</p>
+<ul>
+<li><code>isTintEnabled</code>: enables or disables the tint.</li>
+<li><code>tintColor</code>: defines the main color of the tint.</li>
+<li><code>tintColorAtDistance</code>: defines at what distance under the surface the color should be the defined one.</li>
+<li><code>tintThickness</code>: defines the thicness of the coating.</li>
+</ul>
+<p>It is intuitive enough to understand the thicker the coat is, the darker the color of the surface under the coating would appear. We are following carefully <a href="https://en.wikipedia.org/wiki/Beer%E2%80%93Lambert_law">Beer Lambert&#39;s law</a> in order to deduce the final color based off the chosen color, the &quot;at distance&quot; and the thickness.</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#7">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#7', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">pbr.clearCoat.isTintEnabled = true;
+pbr.clearCoat.tintColor = BABYLON.Color3.Teal();
+pbr.clearCoat.tintColorAtDistance = 1;
+pbr.clearCoat.tintThickness = 1.5;
+</code></pre>
+<p>By default the clear coat is fully glossy. Yet, you can define a special roughness value for the coating simulating for instance a used coating:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#31">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#31', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">pbr.clearCoat.roughness = 0.15;
+</code></pre>
+<p>Finally, you can play with the Index of Refraction of the coating to change the fresnel effect applied to the environment. The default configuration represents a polyurethane layer:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#50">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#50', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">pbr.clearCoat.isTintEnabled = true;
+pbr.clearCoat.indexOfRefraction = 2;
+</code></pre>
+<p>All of the configuration here can also for convenience be stored in textures:</p>
+<ul>
+<li><code>texture</code>: defines the clear coat basic data. r is an intensity factor, and g is a roughness factor.</li>
+<li><code>bumpTexture</code>: defines the clear coat specific bump texture.</li>
+<li><code>tintColorAtDistance</code>: defines at what distance under the surface the color should be the defined one.</li>
+<li><code>tintTexture</code>:  defines the clear tint values in a texture. rgb is tint and a is a thickness factor.</li>
+</ul>
+<h2><a name="anisotropy" class="anchor" href="#anisotropy"></a>Anisotropy</h2><p>By default the PBR material is isotropic. This means the shape of the reflection is identical in every direction. Nevertheless, in real life some materials shows really elongated highlights. For instance, looking an old vinyl disc (yes, I am that old), you can see the specular lighting being spread from the center to the border:</p>
+<p><img src="/img/extensions/PBRAnisotropy.png" alt="Anisotropy"></p>
+<p>In the PBR material, you can enable anisotropy with the following code:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#10">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#10', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+pbr.metallic = 1.0;
+pbr.roughness = 0.0;
+
+pbr.anisotropy.isEnabled = true;
+pbr.anisotropy.intensity = 0.5;
+</code></pre>
+<p>Please note that the anisotropic effect follows the tangent space of the material and thus, it requires it to be well defined. As you can notice in the previous demo, I used a highly tesselated sphere to make the effect look right. The best effect would be achieved by defining the tangents of your meshes.</p>
+<p>The anisotropic direction is by default along the tangent direction. You can modify it by using the following parameter:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#32">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#32', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+pbr.metallic = 1.0;
+pbr.roughness = 0.0;
+
+pbr.anisotropy.isEnabled = true;
+pbr.anisotropy.direction.x = 0.5;
+pbr.anisotropy.direction.y = 1;
+</code></pre>
+<p>As usual, you can control all of those parameters by using a dedicated texture. rg is direction (stored like bump map) b is an intensity factor.</p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+pbr.metallic = 1.0;
+pbr.roughness = 0.0;
+
+pbr.anisotropy.isEnabled = true;
+pbr.anisotropy.texture = texture;
+</code></pre>
+<h2><a name="sheen" class="anchor" href="#sheen"></a>Sheen</h2><p>Some materials have a totally different shapes for the specular lobe. By default in the PBR, material the specular lobe would for instance not be adapted to define the wide specular lobe we can see on fabric materials like satin. This is the main reason we introduced sheen in the material so that you can since 4.0 represents fabric materials relying on the PBR.</p>
+<p>In the PBR material, you can enable sheen with the following code:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#33">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#33', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+pbr.metallic = 1.0;
+pbr.roughness = 0.0;
+
+pbr.sheen.isEnabled = true;
+pbr.sheen.intensity = 0.5;
+</code></pre>
+<p>Please note that the sheen effect will only be usefull on rough dielectric materials (metallic = 0). Actually, if the roughness is small, the shape of the specular lobe is so thin that you would not see any differences with the none sheen specular lobe.</p>
+<p>To help with multi color material like special kind of satin, you can control the tint of the sheen with the following code:</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#35">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#35', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+pbr.metallic = 0.0;
+pbr.roughness = 0.5;    
+
+pbr.sheen.isEnabled = true;
+pbr.sheen.color = BABYLON.Color3.Red();
+</code></pre>
+<p>As usual, you can control all of those parameters by using a dedicated texture. rgb is tint and a is an intensity factor.</p>
+<pre><code class="lang-javascript">var pbr = new BABYLON.PBRMaterial(&quot;pbr&quot;, scene);
+pbr.metallic = 0.0;
+pbr.roughness = 0.5;
+
+pbr.sheen.isEnabled = true;
+pbr.sheen.texture = texture;
+</code></pre>
+<h2><a name="normal-map-parallax" class="anchor" href="#normal-map-parallax"></a>Normal Map / Parallax</h2><p>Normal mapping and Parallax are supported in the exact same way than the standard material. Please, refer to the following links for more information:</p>
+<ul>
+<li><a href="/How_To/more_materials">Normal Map</a></li>
+<li><a href="/How_To/Using_parallax_mapping">Parallax</a></li>
+</ul>
+<h2><a name="lightmaps" class="anchor" href="#lightmaps"></a>LightMaps</h2><p>LightMaps are available in the same way they are in the standardMaterial by affecting a texture to the <code>lightmapTexture</code> property. This can also be used as a shadowMap instead by switching the dedicated control flag <code>useLightmapAsShadowmap</code> to true.</p>
+<h2><a name="image-processing" class="anchor" href="#image-processing"></a>Image Processing</h2><p>The Processing Configuration can be applied directly on the material as explained in the <a href="/How_To/how_to_use_postprocesses#imageprocessing">image processing documentation</a>.</p>
+<h2><a name="light-setup" class="anchor" href="#light-setup"></a>Light Setup</h2><p>Always considering what &quot;Nature does&quot;, we reconsidered the BJS light falloff effect in the PBR Material.</p>
+<p>Three main properties have been added to offer a better simulation of the lights.</p>
+<h3><a name="inverse-square-falloff" class="anchor" href="#inverse-square-falloff"></a>Inverse Square Falloff</h3><p>This is a type of falloff that is pretty close from what light does in real life (It is implemented in the best engines like BJS and <a href="https://docs.unrealengine.com/latest/INT/Resources/ContentExamples/Lighting/4_2/index.html">Unreal</a>, I may oversell it here :-) )</p>
+<p>Compared to the BJS lighting model, instead of playing with an arbitrary range for the lights, the light impact will decrease proportionally to the inverse of the light distance squared.</p>
+<pre><code class="lang-javascript">float lightDistanceFalloff = 1.0 / ((lightDistanceSquared + 0.0001));
+return lightDistanceFalloff;
+</code></pre>
+<p>So, the further you are, the bigger your intensity will need to be to reach a surface.</p>
+<p>To even go further, the intensity you define on the lights follows physics notions:</p>
+<ul>
+<li>Point and Spot lights are defined in luminous intensity (candela, m/sr)</li>
+<li>Directional and Hemispheric lights in illuminance (nit, cd/m2)</li>
+</ul>
+<p>To make it compatible with the standard material, you can easily disable this behaviour and use the Physical Falloff like this:</p>
+<pre><code class="lang-javascript">pbr.usePhysicalLightFalloff = false;
+</code></pre>
+<h3><a name="intensitymode" class="anchor" href="#intensitymode"></a>IntensityMode</h3><p>The lights now have an intensity which enable you to convert the intensity metric from one type to another one. This can help setting up your analytical lights close from real life measure:</p>
+<pre><code class="lang-javascript">// Default automatic mode best fitting with the light type.
+light.intensityMode = BABYLON.Light.INTENSITYMODE_AUTOMATIC;
+// Lumen (lm)
+light.intensityMode = BABYLON.Light.INTENSITYMODE_LUMINOUSPOWER;
+// Candela (lm/sr)
+light.intensityMode = BABYLON.Light.INTENSITYMODE_LUMINOUSINTENSITY;
+// Lux (lm/m^2)
+light.intensityMode = BABYLON.Light.INTENSITYMODE_ILLUMINANCE;
+// Nit (cd/m^2)
+light.intensityMode = BABYLON.Light.INTENSITYMODE_LUMINANCE;
+</code></pre>
+<h3><a name="light-radius" class="anchor" href="#light-radius"></a>Light Radius</h3><p>Light Radius has been added as a property of each light and controls the fact that in real life most of the lights are not a single point.</p>
+<p>Why? Simply because if your material is really glossy, each specular highlights (from the direct lights) will only be seen as a simple dot.</p>
+<p>Try to spot the dot in the middle of the sphere in the <a href="https://www.babylonjs-playground.com/#19JGPR#10">Demo</a> - <i class="fa fa-eye" onclick="createIframe('19JGPR#10', this)"></i><div class="iframeContainer"></div></p>
+<p>Now, increasing the light radius makes this dot wider as you can see on this <a href="https://www.babylonjs-playground.com/#19JGPR#11">Demo</a> - <i class="fa fa-eye" onclick="createIframe('19JGPR#11', this)"></i><div class="iframeContainer"></div></p>
+<p>This uses internally a lot of approximation like Tan(theta) is almost theta for small angles so if you try to put bigger radius than a tenth of the light distance you will not see the desired effect.</p>
+<h2><a name="shadows-as-the-standard-material" class="anchor" href="#shadows-as-the-standard-material"></a>Shadows (as the standard material)</h2><p>Shadows are fully equivalent to the Standard material. All the documentation can be found here: <a href="/babylon101/shadows">Shadows</a>;</p>
+<h2><a name="notes" class="anchor" href="#notes"></a>Notes</h2><p>You can find below a few notes which could be helpful during the creation of your scenes.</p>
+<h3><a name="specular-aliasing" class="anchor" href="#specular-aliasing"></a>Specular Aliasing</h3><p>Glossy materials are subject to Specular Aliasing artifacts. These artifacts are usually visible as bright dots flickering on meshes when animating the model or moving the camera.</p>
+<p>They could be the result of several factors:</p>
+<ul>
+<li>Sharp Edges in the geometry</li>
+<li>Bump Map Texture</li>
+<li>... For more information, you can consult this page about <a href="http://blog.selfshadow.com/2011/07/22/specular-showdown/">anti-aliasing techniques</a></li>
+</ul>
+<p>Babylon version 3.2 includes a simple way to enable Specular anti-aliasing in PBR materials:</p>
+<pre><code class="lang-javascript">pbr.enableSpecularAntiAliasing = true;
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#1XJD4C">Demo</a> - <i class="fa fa-eye" onclick="createIframe('1XJD4C#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="environment-irradiance" class="anchor" href="#environment-irradiance"></a>Environment Irradiance</h3><p>A big part of the lighting in PBR is assured by the environment texture. This provides two kinds of light contributions, <strong>radiance which could be considered alike reflection</strong> and <strong>irradiance which could be thought as the diffuse component of the Image Based Lighting</strong>.</p>
+<p>In case you are creating a model <strong>rough</strong> and <strong>not metallic</strong> (in metallic workflow) or <strong>not specular</strong> (in specular glossiness mode), most of the illumination will be provided by both the analytical lights and the environment texture.</p>
+<p>In Babylon JS in order to <strong>optimize</strong> the computation of the <strong>irradiance</strong>, it is computed in the <strong>vertex shader</strong> and interpolated in the fragment. Unfortunately, this <strong>prevents us to rely on the normal map</strong> to realize the computation and then might <strong>introduce artifacts</strong> by not emphasizing the bumpiness of the surface. It is most of the time acceptable but with <strong>rough none reflective material</strong> it changes a lot the visual result.</p>
+<p>You can see below on the left on rough none reflective model in the default configuration and on the right a model with <code>forceIrradianceInFragment</code> enabled.</p>
+<p><img src="/img/how_to/Environment/pbrForceIrradianceInFragment.jpg" alt="pbrForceIrradianceInFragment"></p>
+<p>In order to force the computation of the irradiance in fragment, one can set to true the according parameter:</p>
+<pre><code class="lang-javascript">pbr.forceIrradianceInFragment = true;
+</code></pre>
+<p>Another point is that the irradiance or diffuse part of the IBL could cover your shadows if the environment lighting is strong. You could if you wish reduce its intensity separately from the reflection by scaling the polynomials used to create it:</p>
+<pre><code class="lang-javascript">scene.onReadyObservable.addOnce(() =&gt; {
+    hdrTexture.sphericalPolynomial.scale(0.1);
+});
+</code></pre>
+<h3><a name="spherical-harmonics" class="anchor" href="#spherical-harmonics"></a>Spherical Harmonics</h3><p>As we noticed in 4.0, our fast approach to compute the environment irradiance, may have not been accurate enough in certain use cases. We now, by default, have a more accurate representation of the diffuse IBL. In case you would prefer to focus on speed, you can easily revert to our previous method by switching the sphericalHarmonics property to false:</p>
+<pre><code class="lang-javascript">pbr.brdf.useSphericalHarmonics = false;
+</code></pre>
+<p>Here is how the difference looks like in live (toggle the Spherical Harmonics switch on and off to see the difference):</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#38">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#38', this)"></i><div class="iframeContainer"></div></p>
+<p>If you want to hear the full story behind it, you can have a read at our blog post : <a href="https://medium.com/@babylonjs/a-tale-of-a-bug-ce7e84467800">A tale of a bug</a>.</p>
+<h3><a name="irradiance-map" class="anchor" href="#irradiance-map"></a>Irradiance Map</h3><p>In some special cases where the environment texture is highly dynamic (like a bright sun having a really high exposure value), the spherical representation of the diffuse IBL might not be enough. Actually, we are for performance reasons limiting the representation to the first 3 bands. A highly dynamic texture can not be represented through 3 bands only. In this case you can rely on a texture instead of a spherical representation.</p>
+<p>In order to rely on a texture, you can set the <code>irradianceTexture</code> field of your <code>environmentTexture</code> as follow:</p>
+<pre><code class="lang-javascript">scene.environmentTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(&quot;specular.dds&quot;, scene);
+scene.environmentTexture.irradianceTexture = new BABYLON.CubeTexture(&quot;irradiance.dds&quot;, scene);
+</code></pre>
+<p>Please, note that both textures should have the same properties: Cube vs 2D, Gamma vs Linear, RGBD or the chosen coordinates mode. Those properties do not need to be set on the main <code>environmentTexture</code> to prevent redundancy.</p>
+<h3><a name="energy-conservation" class="anchor" href="#energy-conservation"></a>Energy Conservation</h3><p>As we knew from the beginning, our PBR lighting model was not energy conservative, thanks to a lot of new white papers on this area, we have been able to introduce a way to embrace energy conservation in real time. This basically means that your rough metallic models will look brighter and closer from what nature does.</p>
+<p>In case you would like to turn this feature off, to for instance get a closer cross engine rendering look, you can turn off the energy conservation flag on the PBR material.</p>
+<pre><code class="lang-javascript">pbr.brdf.useEnergyConservation = false;
+</code></pre>
+<p>Here is how the difference looks like in live (Left sphere is using energy conservation while the right one does not):</p>
+<p><a href="https://www.babylonjs-playground.com/#FEEK7G#39">Demo</a> - <i class="fa fa-eye" onclick="createIframe('FEEK7G#39', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="image-based-lighting-babylon-vs-raytracers" class="anchor" href="#image-based-lighting-babylon-vs-raytracers"></a>Image Based Lighting: Babylon VS RayTracers</h3><p>We spent a lot of time working on the implementation of our IBL environments. We reworked how we generate the DDS prefiltered environments so that we aligned with what perceptual ray tracers and popular game engines like Unity and Unreal are doing with their IBL rendering. We are approximating a perceptual roughness model which drops what is perceived to be 50% rough falls in the middle of middle of the linear ramp for roughness. The GGX algorithm that we use for our lighting calculations has more of a linear roughness scale which loses clarity in reflections quickly (by around 0.3 roughness). We adjusted the falloff to mirror what happens in Arnold ray tracing, which is the renderer we chose as our ground truth for this work:</p>
+<p><img src="/img/how_to/Environment/RayTracer.png" alt="RayTracer"></p>
+<p>We were able to largely match the perceptual falloff from the Arnold ray tracer, while using a prefiltered MIP chain in the DDS ignoring the last two MIP levels. We have some deviation from the high roughness in the ray traced ground truth, but since fully rough materials don&#39;t really exist in the real world, there is no way to know if Arnold is right in these areas.</p>
+<h3><a name="how-to-debug" class="anchor" href="#how-to-debug"></a>How to Debug</h3><p>In order to simplify troubleshooting within the PBR material, a special spection has been added to the inspector:</p>
+<p><img src="/img/how_to/materials/PBRDebug.png" alt="Inspector"></p>
+<p>You can choose from the exhaustive list of information what you would like to see. You can also use the split position to choose from which horizontal position the debug mode starts on the screen. This can help looking side by side at the different renders. The output factor can be helpfull if you are looking at values pretty small as it would help seeing different colors on screen.</p>
+<p><a href="https://www.babylonjs-playground.com/#2FDQT5#104">Demo</a> - <i class="fa fa-eye" onclick="createIframe('2FDQT5#104', this)"></i><div class="iframeContainer"></div></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

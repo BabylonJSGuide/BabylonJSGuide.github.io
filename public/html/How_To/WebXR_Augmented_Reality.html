@@ -1,0 +1,335 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>WebXR Augmented Reality Features - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>WebXR Augmented Reality Features</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#getting-started-with-augmented-reality">Getting started with Augmented reality</a><ul>
+<li><a href="#webxr-and-ar">WebXR and AR</a></li>
+<li><a href="#supported-devices">Supported devices</a></li>
+<li><a href="#simple-scene-in-immersive-ar">Simple scene in immersive AR</a></li>
+</ul>
+</li>
+<li><a href="#features">Features</a><ul>
+<li><a href="#hit-test">Hit test</a></li>
+<li><a href="#anchors">Anchors</a></li>
+<li><a href="#plane-detection">Plane detection</a></li>
+<li><a href="#background-remover">Background remover</a></li>
+</ul>
+</li>
+<li><a href="#demos">Demos</a></li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="a-bit-about-augmented-reality" class="anchor" href="#a-bit-about-augmented-reality"></a>A bit about augmented reality</h2><p>The idea behind augmented reality is simple - show the real world, but add information on top of it. As opposed to virtual reality where you are fully immersed in a different scene and have no actual contact to the real world, augmented reality lets you interact with it.</p>
+<h2><a name="getting-started-with-augmented-reality" class="anchor" href="#getting-started-with-augmented-reality"></a>Getting started with Augmented reality</h2><h3><a name="webxr-and-ar" class="anchor" href="#webxr-and-ar"></a>WebXR and AR</h3><p>Augmented reality using Babylon.js will be heavily using WebXR, so I will recommend you to first start with the <a href="./Introduction_To_WebXR">getting started with WebXR</a> guide. Most of the information that is valid for immersive VR sessions is also valid for immersive AR sessions. The few main differences between the two will be explained here.</p>
+<h3><a name="supported-devices" class="anchor" href="#supported-devices"></a>Supported devices</h3><p>Immersive AR sessions are (currently) supported on two types of devices - mobile phones and firefox reality on the Hololens.</p>
+<p>Mobile phones using android support immersive AR sessions on chrome (stable/canary). Note that you will need to install <a href="https://play.google.com/store/apps/details?id=com.google.ar.core">AR Core</a>, otherwise it will be a very short experience.</p>
+<p>Hololens 2 supports WebXR and immersive AR sessions when using <a href="https://www.microsoft.com/en-ca/p/firefox-reality/9npq78m7nb0r">Firefox Reality for hololens</a>.</p>
+<p>To check your scene on a desktop you can use the WebXR emulator, which supports a set of features of AR and lets you enter an immersive AR session when choosing the mobile mode.</p>
+<h3><a name="simple-scene-in-immersive-ar" class="anchor" href="#simple-scene-in-immersive-ar"></a>Simple scene in immersive AR</h3><p>The simplest immersive AR sample is a port of an immersive VR scene:</p>
+<pre><code class="lang-javascript">var createScene = async function () {
+  var scene = new BABYLON.Scene(engine);
+  var camera = new BABYLON.FreeCamera(
+    &quot;camera1&quot;,
+    new BABYLON.Vector3(0, 5, -10),
+    scene
+  );
+  camera.setTarget(BABYLON.Vector3.Zero());
+  camera.attachControl(canvas, true);
+  var light = new BABYLON.HemisphericLight(
+    &quot;light1&quot;,
+    new BABYLON.Vector3(0, 1, 0),
+    scene
+  );
+  light.intensity = 0.7;
+  var sphere = BABYLON.Mesh.CreateSphere(&quot;sphere1&quot;, 16, 2, scene);
+  sphere.position.y = 2;
+  sphere.position.z = 5;
+
+  const xr = await scene.createDefaultXRExperienceAsync({
+    // ask for an ar-session
+    uiOptions: {
+      sessionMode: &quot;immersive-ar&quot;,
+    },
+  });
+
+  return scene;
+};
+</code></pre>
+<p>Playground for a <a href="https://www.babylonjs-playground.com/pg/F41V6N/revision/32">simple immersive AR scene</a> - <i class="fa fa-eye" onclick="createIframe('F41V6N#32', this)"></i><div class="iframeContainer"></div></p>
+<p>Notice that no environment was created. As opposed to immersive VR sessions, AR doesn&#39;t require a skybox or ground. If you want to define ground and remove it when entering AR (for example if you develop an experience for both desktop and AR) you can use the background remover feature, defined later in this page.</p>
+<h2><a name="features" class="anchor" href="#features"></a>Features</h2><p>Some features require the Incubation flag in the latest chrome canary. Visit chrome://flags/ and enable WebXR incubation.</p>
+<p>You will then need to ask WebXR to enable this feature. this can be done using the optionalFeature parameter in the default experience helper:</p>
+<pre><code class="lang-javascript">const xr = await scene.createDefaultXRExperienceAsync({
+  uiOptions: {
+    sessionMode: &quot;immersive-ar&quot;,
+  },
+  optionalFeatures: true,
+});
+</code></pre>
+<p>This will enable all optional features that we support. You can also add individual features by using an array insteaf of a boolean:</p>
+<pre><code class="lang-javascript">const xr = await scene.createDefaultXRExperienceAsync({
+  uiOptions: {
+    sessionMode: &quot;immersive-ar&quot;,
+  },
+  optionalFeatures: [&quot;hit-test&quot;, &quot;anchors&quot;],
+});
+</code></pre>
+<h3><a name="hit-test" class="anchor" href="#hit-test"></a>Hit test</h3><p>Hit-test is used for sending a ray into the real world and receiving information about intersection in space. You can read about it in the <a href="https://immersive-web.github.io/hit-test/">hit test w3c draft</a>. Think about a ray that is broadcasted from your phone&#39;s screen towards to object you are looking for. If the device&#39;s AR capabilities allows it, it will let you know the position and orientation of the point relative to you.</p>
+<p>To enable hit-testing, add this after initializing XR</p>
+<pre><code class="lang-javascript">// featuresManager from the base webxr experience helper
+const hitTest = featuresManager.enableFeature(BABYLON.WebXRHitTest, &quot;latest&quot;);
+</code></pre>
+<p>In typescript you can also get the type set correctly:</p>
+<pre><code class="lang-javascript">// featuresManager from the base webxr experience helper
+const hitTest = featuresManager.enableFeature(BABYLON.WebXRHitTest, &#39;latest&#39;) as BABYLON.WebXRHitTest;
+</code></pre>
+<p>This will enable the default behavior of hit-testing which is sending a single hit-test ray from the center of the display forward on each frame.</p>
+<p>The options that you can pass are descriped in this interface:</p>
+<pre><code class="lang-javascript">export interface IWebXRHitTestOptions {
+  /**
+   * Do not create a permanent hit test. Will usually be used when only
+   * transient inputs are needed.
+   */
+  disablePermanentHitTest?: boolean;
+  /**
+   * Enable transient (for example touch-based) hit test inspections
+   */
+  enableTransientHitTest?: boolean;
+  /**
+   * Offset ray for the permanent hit test
+   */
+  offsetRay?: Vector3;
+  /**
+   * Offset ray for the transient hit test
+   */
+  transientOffsetRay?: Vector3;
+  /**
+   * Instead of using viewer space for hit tests, use the reference space defined in the session manager
+   */
+  useReferenceSpace?: boolean;
+}
+</code></pre>
+<p><code>disablePermanentHitTest</code> will disable the constant hit-testing, while <code>enableTransientHitTest</code> will enable hit-tests when touching the screen. The offsets define the offset from which the ray will be sent (relative to the center of the device&#39;s view).</p>
+<p>After enabling the feature, you can register to get updates using the <code>onHitTestResultObservable</code>:</p>
+<pre><code class="lang-javascript">// a dot to show in the found position
+const dot = BABYLON.SphereBuilder.CreateSphere(
+  &quot;dot&quot;,
+  {
+    diameter: 0.05,
+  },
+  scene
+);
+dot.isVisible = false;
+hitTest.onHitTestResultObservable.add((results) =&gt; {
+  if (results.length) {
+    dot.isVisible = true;
+    results[0].transformationMatrix.decompose(
+      dot.scaling,
+      dot.rotationQuaternion,
+      dot.position
+    );
+  } else {
+    dot.isVisible = false;
+  }
+});
+</code></pre>
+<p>This will show the dot only if hit-test worked, and will hide it if it didn&#39;t. The dot will be projected to the real world using the information provided by the system.</p>
+<p>A simple example for <a href="https://playground.babylonjs.com/pg/XWBES1">WebXR hit-test using Babylon.js</a> - <i class="fa fa-eye" onclick="createIframe('XWBES1#', this)"></i><div class="iframeContainer"></div>. Open this with your AR device (probably your android smartphone) and point the device at a textured plane (like your floor or door). The marker will be shown at the right location if/when the system scanned the plane correctly. </p>
+<h3><a name="anchors" class="anchor" href="#anchors"></a>Anchors</h3><p>Anchors are tracked points in space that the system will constantly update as you continue scanning your environment. The points&#39; transformation will be constantly updated by the underlying system. You can read more about anchors at the <a href="https://immersive-web.github.io/anchors/">WebXR anchors module</a> w3c proposal.</p>
+<p>Enable the anchors system using:</p>
+<pre><code class="lang-javascript">// featuresManager from the base webxr experience helper
+const anchorSystem = featuresManager.enableFeature(BABYLON.WebXRAnchorSystem, &#39;latest&#39;);
+</code></pre>
+<p>or for typescript:</p>
+<pre><code class="lang-javascript">// featuresManager from the base webxr experience helper
+const anchorSystem = featuresManager.enableFeature(BABYLON.WebXRAnchorSystem, &#39;latest&#39;) as BABYLON.WebXRAnchorSystem;
+</code></pre>
+<p>Some options can be passed to the anchor system:</p>
+<pre><code class="lang-javascript">export interface IWebXRAnchorSystemOptions {
+    /**
+     * a node that will be used to convert local to world coordinates
+     */
+    worldParentNode?: TransformNode;
+
+    /**
+     * If set to true a reference of the created anchors will be kept until the next session starts
+     * If not defined, anchors will be removed from the array when the feature is detached or the session ended.
+     */
+    doNotRemoveAnchorsOnSessionEnded?: boolean;
+}
+</code></pre>
+<p>Anchors are removed when exiting the XR session (note that the anchors are removed, and not meshed that are attached to them), which is the recommended behavior, as anchors cannot be referenced between sessions.</p>
+<p>If you want to prevent that from happening, use the <code>doNotRemoveAnchorsOnSessionEnded</code> when initializing the anchor system:</p>
+<pre><code class="lang-javascript">const anchorSystem = featuresManager.enableFeature(BABYLON.WebXRAnchorSystem, &#39;latest&#39;, { doNotRemoveAnchorsOnSessionEnded: true });
+</code></pre>
+<p>The anchor system fits perfectly to the hit-test feature if you want to add an anchor at a hit test position. To do that use the <code>addAnchorPointUsingHitTestResultAsync</code> function:</p>
+<pre><code class="lang-javascript">const arTestResult = getMeTheResultINeed();
+const anchorPromise = anchorSystem.addAnchorPointUsingHitTestResultAsync(lastHitTest);
+</code></pre>
+<p>To add an anchor in any position and rotation in the scene, use the <code>addAnchorAtPositionAndRotationAsync</code> function:</p>
+<pre><code class="lang-javascript">const { position, rotationQuaternion } = anyRandomMesh;
+const anchorPromise = anchorSystem.addAnchorAtPositionAndRotationAsync(position, rotationQuaternion);
+</code></pre>
+<p>Note that <code>anchorPromie</code> will return a <em>native XRAnchor</em> when fulfilled. This will provide you with what the browser returns. To work with anchors <strong>in the babylon way</strong>, we use the observables defined in the anchor module:</p>
+<pre><code class="lang-javascript">anchorSystem.onAnchorAddedObservable.add((anchor) =&gt; {
+    // ... do what you want with the anchor after it was added
+})
+
+anchorSystem.onAnchorRemovedObservable.add((anchor) =&gt; {
+    // ... do what you want with the anchor after it was removed
+})
+
+anchorSystem.onAnchorUpdatedObservable.add((anchor) =&gt; {
+    // ... do what you want with the anchor after it was updated
+})
+</code></pre>
+<p>The anchor is of type <code>IWebXRAnchor</code>:</p>
+<pre><code class="lang-javascript">export interface IWebXRAnchor {
+    /**
+     * A babylon-assigned ID for this anchor
+     */
+    id: number;
+    /**
+     * Transformation matrix to apply to an object attached to this anchor
+     */
+    transformationMatrix: Matrix;
+    /**
+     * The native anchor object
+     */
+    xrAnchor: XRAnchor;
+
+    /**
+     * if defined, this object will be constantly updated by the anchor&#39;s position and rotation
+     */
+    attachedNode?: TransformNode;
+}
+</code></pre>
+<p>To attach an anchor to a node (for example a mesh that you want to always be in this location in the scene) use the <code>attachedNode</code> variable. This will also update the mesh&#39;s transformation when the anchor is updated:</p>
+<pre><code class="lang-javascript">const mesh = //...
+
+anchorSystem.onAnchorAddedObservable.add((anchor) =&gt; {
+    anchor.attachedNode = mesh;
+})
+</code></pre>
+<p>The mesh will now be tracked by the system and will be located at the requested point. </p>
+<p>You might ask yourself why use the anchor system with hit-test results, as hit-test results are returned by the system with a position defined by the device. Setting the mesh at the hit-test&#39;s location will work jsut fine. The difference is that the system might update the information it has about this position - maybe it found out the plane is at a different transformation, maybe it updated its position in space. Using the anchor system will keep the transformation updated even when the system updated its knowledge of the space.</p>
+<h3><a name="plane-detection" class="anchor" href="#plane-detection"></a>Plane detection</h3><p>Your device is (usually) capable of detecting plane geometries in the real world. To read more about plane detection go to the <a href="https://github.com/immersive-web/real-world-geometry/blob/master/plane-detection-explainer.md">Plane detection explainer</a>. </p>
+<p>Babylon has an experimental plane detection module that works with the underlying system. To enable it:</p>
+<pre><code class="lang-javascript">// featuresManager from the base webxr experience helper
+const planeDetector = featuresManager.enableFeature(BABYLON.WebXRPlaneDetector, &quot;latest&quot;);
+</code></pre>
+<p>Just like any module you can configure it using the options object, which is of this type:</p>
+<pre><code class="lang-javascript">export interface IWebXRPlaneDetectorOptions {
+    /**
+     * The node to use to transform the local results to world coordinates
+     */
+    worldParentNode?: TransformNode;
+
+    /**
+     * If set to true a reference of the created planes will be kept until the next session starts
+     * If not defined, planes will be removed from the array when the feature is detached or the session ended.
+     */
+    doNotRemovePlanesOnSessionEnded?: boolean;
+}
+</code></pre>
+<p>Similar to the anchor system, planes do not stay between sessions. If you want to keep the native XRPlane objects, set the <code>doNotRemovePlanesOnSessionEnded</code> to true, and babylon will not delete them.</p>
+<p>the plane detector works automatically and offers three observables for you to use:</p>
+<pre><code class="lang-javascript">planeDetector.onPlaneAddedObservable.add((plane) =&gt; {
+    // ... do what you want with the plane after it was added
+})
+
+planeDetector.onPlaneRemovedObservable.add((plane) =&gt; {
+    // ... do what you want with the plane after it was removed
+})
+
+planeDetector.onPlaneUpdatedObservable.add((plane) =&gt; {
+    // ... do what you want with the plane after it was updated
+})
+</code></pre>
+<p>The plane object is of type IWebXRPlane:</p>
+<pre><code class="lang-javascript">export interface IWebXRPlane {
+    /**
+     * a babylon-assigned ID for this polygon
+     */
+    id: number;
+    /**
+     * an array of vector3 points in babylon space. right/left hand system is taken into account.
+     */
+    polygonDefinition: Array&lt;Vector3&gt;;
+    /**
+     * A transformation matrix to apply on the mesh that will be built using the polygonDefinition
+     * Local vs. World are decided if worldParentNode was provided or not in the options when constructing the module
+     */
+    transformationMatrix: Matrix;
+    /**
+     * the native xr-plane object
+     */
+    xrPlane: XRPlane;
+}
+</code></pre>
+<p>To create a Babylon polygon from the plane information do the following:</p>
+<pre><code class="lang-javascript">const plane = // a reference to an added plane
+// add the starting point, so the polygon will close
+plane.polygonDefinition.push(plane.polygonDefinition[0]);
+// create a polygon mesh builder for the polygons returned from the system
+var polygon_triangulation = new BABYLON.PolygonMeshBuilder(&quot;name&quot;, plane.polygonDefinition.map((p) =&gt; new BABYLON.Vector2(p.x, p.z)), scene);
+// build the plane with specific thickness
+var polygon = polygon_triangulation.build(false, 0.01);
+
+</code></pre>
+<p>A simple usecase for planes is showing them in your scene using polygons. An example for that can be found at the <a href="https://playground.babylonjs.com/pg/98TM63">WebXR Plane Detection demo</a> - <i class="fa fa-eye" onclick="createIframe('98TM63#', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="background-remover" class="anchor" href="#background-remover"></a>Background remover</h3><p>When in AR you want to avoid environment meshes like a skybox and a ground (unless it was your goal to keep them). If you are creating a scene that should work on both regular devices and in AR, you will want the ability to disable certain meshes when entering AR, and re-enabling them when leaving AR. This module does exactly that. It receives a list of meshes, and disables/enables them when needed.</p>
+<p>When using the babylon environment helper, the module can do the work for you automatically. In that case, the skybox and ground will be automatically removed if you enabled the feature. </p>
+<p>To enable it use:</p>
+<pre><code class="lang-javascript">const xrBackgroundRemover = featuresManager.enableFeature(BABYLON.WebXRBackgroundRemover);
+</code></pre>
+<p>To customize the way the module works, use the following configuration object:</p>
+<pre><code class="lang-javascript">export interface IWebXRBackgroundRemoverOptions {
+    /**
+     * Further background meshes to disable when entering AR
+     */
+    backgroundMeshes?: AbstractMesh[];
+    /**
+     * flags to configure the removal of the environment helper.
+     * If not set, the entire background will be removed. If set, flags should be set as well.
+     */
+    environmentHelperRemovalFlags?: {
+        /**
+         * Should the skybox be removed (default false)
+         */
+        skyBox?: boolean;
+        /**
+         * Should the ground be removed (default false)
+         */
+        ground?: boolean;
+    };
+    /**
+     * don&#39;t disable the environment helper
+     */
+    ignoreEnvironmentHelper?: boolean;
+}
+</code></pre>
+<p>For example if you want the module to remove only the skybox and not the ground, when using the environment helper, enable the feature this way:</p>
+<pre><code class="lang-javascript">const xrBackgroundRemover = featuresManager.enableFeature(BABYLON.WebXRBackgroundRemover, &#39;latest&#39;, {
+  environmentHelperRemovalFlags: {
+    skyBox: true,
+    ground: false
+  }
+});
+</code></pre>
+<h2><a name="demos" class="anchor" href="#demos"></a>Demos</h2><ul>
+<li><a href="https://playground.babylonjs.com/#GG06BQ#3">XR measurement tape</a> - <i class="fa fa-eye" onclick="createIframe('GG06BQ#3', this)"></i><div class="iframeContainer"></div> using hit-test and anchors</li>
+<li><a href="https://playground.babylonjs.com/#KDWCZY">Place a mesh in space</a> - <i class="fa fa-eye" onclick="createIframe('KDWCZY#', this)"></i><div class="iframeContainer"></div> using hit-test and anchors (including shadows on planes detected)</li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

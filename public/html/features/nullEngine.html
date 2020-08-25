@@ -1,0 +1,80 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Server Side - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Server Side</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#general">General</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</div></div><div id="staticContent"><p>Starting with Babylon.js v3.1, we introduced the NullEngine which is a version of the main Babylon.js engine but with no need for a webgl capable device.</p>
+<p>The NullEngine will not produce any rendering and thus can be used in a node / server side environment.</p>
+<p>It can be used to:</p>
+<ul>
+<li>Run tests</li>
+<li>Run a server side version of your application / game</li>
+<li>Use specific Babylon.js services (like gltf loaders for instance)</li>
+</ul>
+<h2><a name="general" class="anchor" href="#general"></a>General</h2><p>To use a headless version of Babylon.js, just run:</p>
+<pre><code>var engine = new BABYLON.NullEngine();
+var scene = new BABYLON.Scene(engine);
+</code></pre><p>If you want to use it in a node.js environment, you may need to add some additional resources (like support for xhr):</p>
+<pre><code>var BABYLON = require(&quot;../../dist/preview release/babylon.max&quot;);
+var LOADERS = require(&quot;../../dist/preview release/loaders/babylonjs.loaders&quot;);
+global.XMLHttpRequest = require(&#39;xhr2&#39;).XMLHttpRequest;
+
+var engine = new BABYLON.NullEngine();
+var scene = new BABYLON.Scene(engine);
+
+var light = new BABYLON.PointLight(&quot;Omni&quot;, new BABYLON.Vector3(20, 20, 100), scene);
+
+var camera = new BABYLON.ArcRotateCamera(&quot;Camera&quot;, 0, 0.8, 100, BABYLON.Vector3.Zero(), scene);
+
+BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;https://playground.babylonjs.com/scenes/&quot;, &quot;skull.babylon&quot;, scene, function (newMeshes) {
+    camera.target = newMeshes[0];
+
+    console.log(&quot;Meshes loaded from babylon file: &quot; + newMeshes.length);
+    for (var index = 0; index &lt; newMeshes.length; index++) {
+        console.log(newMeshes[index].toString());
+    }
+
+    BABYLON.SceneLoader.ImportMesh(&quot;&quot;, &quot;https://www.babylonjs.com/Assets/DamagedHelmet/glTF/&quot;, &quot;DamagedHelmet.gltf&quot;, scene, function (meshes) {
+        console.log(&quot;Meshes loaded from gltf file: &quot; + meshes.length);
+        for (var index = 0; index &lt; meshes.length; index++) {
+            console.log(meshes[index].toString());
+        }
+    });
+
+    console.log(&quot;render started&quot;)
+    engine.runRenderLoop(function() {
+        scene.render();
+    })
+});
+
+</code></pre><h2><a name="configuration" class="anchor" href="#configuration"></a>Configuration</h2><p>You can specifiy some options to the NullEngine constructor:</p>
+<pre><code>var engine = new BABYLON.NullEngine({
+    renderWidth: 512,
+    renderHeight: 256,
+    textureSize: 512
+});
+</code></pre><p>With <code>renderWidth</code> and <code>renderHeight</code> you can define the size of the virtual canvas used to simulate the render surface.
+With <code>textureSize</code>, you can define the size of all textures (which will be all black) used by the NullEngine.</p>
+<h2><a name="troubleshooting" class="anchor" href="#troubleshooting"></a>Troubleshooting</h2><p>While the goal of the NullEngine is to completely replace the Engine class, some features cannot be used server side:</p>
+<ul>
+<li>camera.attachControl cannot be used as it requires a HTML eLement</li>
+<li>DynamicTexture cannot be used as they rely on HTML canvas</li>
+</ul>
+<p>Furthermore as we already mentioned earlier, you need to provide an implementation of the XmlHttpRequest class.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

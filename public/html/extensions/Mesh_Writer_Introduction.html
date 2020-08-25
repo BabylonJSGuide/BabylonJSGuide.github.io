@@ -1,0 +1,84 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Mesh Writer Introduction - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Mesh Writer Introduction</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#basic-usage">Basic-Usage</a></li>
+<li><a href="#getting-the-code">Getting the code</a></li>
+<li><a href="#superconstructor-babylonmeshwriter">Superconstructor - BABYLON.MeshWriter()</a></li>
+<li><a href="#constructor-new-writer">Constructor - new Writer()</a></li>
+<li><a href="#instance">Instance</a></li>
+<li><a href="#usage-hints">Usage Hints</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="mesh-writer" class="anchor" href="#mesh-writer"></a>Mesh Writer</h1><p>Generate letters in BABYLON meshes.</p>
+<h3><a name="basic-usage" class="anchor" href="#basic-usage"></a>Basic-Usage</h3><pre><code>Writer = BABYLON.MeshWriter(scene, {scale:scale});
+text1  = new Writer( 
+                &quot;ABC&quot;,
+                {
+                    &quot;anchor&quot;: &quot;center&quot;,
+                    &quot;letter-height&quot;: 50,
+                    &quot;color&quot;: &quot;#1C3870&quot;,
+                    &quot;position&quot;: {
+                        &quot;z&quot;: 20
+                    }
+                }
+            );
+</code></pre><p>&#9679; See playground example:  <a href="https://www.babylonjs-playground.com/#PL752W#1">https://www.babylonjs-playground.com/#PL752W#1</a> - <i class="fa fa-eye" onclick="createIframe('PL752W#1', this)"></i><div class="iframeContainer"></div></p>
+<h3><a name="getting-the-code" class="anchor" href="#getting-the-code"></a>Getting the code</h3><p>Copy <a href="https://github.com/BabylonJS/Extensions/blob/master/MeshWriter/meshwriter.min.js">https://github.com/BabylonJS/Extensions/blob/master/MeshWriter/meshwriter.min.js</a> or <a href="https://github.com/BabylonJS/Extensions/blob/master/MeshWriter/meshwriter.js">https://github.com/BabylonJS/Extensions/blob/master/MeshWriter/meshwriter.js</a> and build it into your load sequence.</p>
+<h3><a name="superconstructor-babylonmeshwriter" class="anchor" href="#superconstructor-babylonmeshwriter"></a>Superconstructor - BABYLON.MeshWriter()</h3><p>After MeshWriter is loaded, BABYLON.MeshWriter is defined.  It is called with one or two parameters.</p>
+<ul>
+<li><strong>scene</strong> &nbsp; required</li>
+<li><p><strong>preferences</strong> &nbsp; optional &nbsp; The preferences object may specify up to three values</p>
+<pre><code>    FIELD                 DEFAULT
+  default-font           Helvetica
+  scale                      1
+  letter-origin         &quot;letter-center&quot;
+</code></pre></li>
+</ul>
+<p>The call to BABYLON.MeshWriter returns a constructor.  Call it &quot;<strong>Writer</strong>&quot;.</p>
+<h3><a name="constructor-new-writer" class="anchor" href="#constructor-new-writer"></a>Constructor - new Writer()</h3><p>new Writer() is called with a string and an (optional) options parameter.&nbsp; The options object conforms to normal BabylonJS structures and terminology.</p>
+<pre><code>      FIELD                 DEFAULT
+    font-family             default-font
+    anchor                  left
+    letter-height           100
+    letter-thickness        1
+    color                   #808080              # hits emissive only
+    alpha                   1
+    position
+        x                   0
+        y                   0
+        z                   0
+    colors                                       # if you need to control more than just emissive
+        diffuse             #F0F0F0
+        specular            #000000
+        ambient             #F0F0F0
+        emissive            color                # from option field &#39;color&#39; above
+</code></pre><p><strong>new Writer()</strong> builds a mesh with material that is inserted into the scene.&nbsp; This is a multi-step process with interim meshes and holes per letter.&nbsp;  These meshes are sucked into an SPS and then disposed.&nbsp; At the end, one mesh, one material and one SPS have been added to the scene.</p>
+<p><strong>new Writer()</strong> also returns a <strong>writer</strong> instance with useful methods.&nbsp; See below.</p>
+<h3><a name="instance" class="anchor" href="#instance"></a>Instance</h3><p>Each <strong>writer</strong> instance has methods to allow one to retrieve the BabylonJS objects or to get/set attributes of the SPS.</p>
+<pre><code>   getSPS
+   getMesh
+   getMaterial
+   color                   # sets or gets color but no change to material
+   alpha                   # sets or gets alpha but no change to material
+   setColor                # set emissive color and change color value
+   setAlpha                # change value and material
+   overrideOpac            # change material but not value
+   resetOpac               # sets material to current value
+   dispose                 
+</code></pre><h3><a name="usage-hints" class="anchor" href="#usage-hints"></a>Usage Hints</h3><p>If you wish to do extensive things with position, rotation or animation, retrieve the meshes and materials from the instance using the methods shown above.&nbsp; The output from <strong>new Writer()</strong> is an SPS with one particle for each character.</p>
+<p>Colors:&nbsp; With most lighting, it is enough just to use the &quot;color&quot; field to specify the letter coloring.&nbsp; However, programmers may specify all four color types by putting a &quot;colors&quot; object in the options object.</p>
+<p>Unless you have a specific need, do not specify a font.&nbsp; The default font, Helvetica, has the most extensive characters and the fewest faces; it will be the most efficient if you have a lot of text.&nbsp; Jura was added because the author likes it for numbers.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>How materials work - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>How materials work</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#cache-and-compilation">Cache and compilation</a><ul>
+<li><a href="#improving-user-experience">Improving User Experience</a></li>
+</ul>
+</li>
+<li><a href="#precompilation">Precompilation</a></li>
+<li><a href="#non-blocking-textures">Non blocking textures</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-materials-work" class="anchor" href="#how-materials-work"></a>How Materials Work</h1><p>Materials are an encapsulation on top of shaders. They provide a simple way to configure and share shaders. </p>
+<h2><a name="cache-and-compilation" class="anchor" href="#cache-and-compilation"></a>Cache and compilation</h2><p>The first time a material is created, an internal object named effect will be created. The effect is the host for the vertex and pixel (fragment) shaders.
+These shaders have to be compiled by the GPU from plain text to GPU machine code.</p>
+<p>The compilation step is a process that will be done synchronously on the main thread and thus could cause a bit of lag in the rendering.</p>
+<p>As the process is a bit expensive, once compiled an effect will remain in memory until you dispose the engine. </p>
+<p>Everytime you will change a property of a material (like adding a texture or enabling an option), a new effect will be compiled unless an equivalent can be found in the cache.</p>
+<h1><a name="improving-user-experience" class="anchor" href="#improving-user-experience"></a>Improving User Experience</h1><h2><a name="precompilation" class="anchor" href="#precompilation"></a>Precompilation</h2><p>By default, materials are compiled only when required. But you may want to precompile everything before running your rendering in order to get the smoother experience possible.</p>
+<p>To do so, you can just prepare your material with: </p>
+<pre><code>material.forceCompilation(mesh, function() {
+    // Do something when material is compiled
+});
+</code></pre><p>For instance you could go through all your meshes and force compilation of all materials in order to get everything ready before the first frame.</p>
+<h2><a name="non-blocking-textures" class="anchor" href="#non-blocking-textures"></a>Non blocking textures</h2><p>You also have the opportunity to flag textures as non blocking. By default, a material will not be able to render a mesh until its effect is compiled and all textures are loaded.</p>
+<p>You can decide to still render your mesh even if textures are not loaded (The missing textures will be replaced by a 1x1 black texture). To do so, just call:</p>
+<pre><code>texture.isBlocking = false;
+</code></pre></div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

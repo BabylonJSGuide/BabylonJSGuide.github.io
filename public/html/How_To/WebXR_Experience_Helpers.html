@@ -1,0 +1,188 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>The WebXR Experience Helpers - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>The WebXR Experience Helpers</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#the-basic-experience-helper">The basic Experience Helper</a><ul>
+<li><a href="#basic-usage">Basic usage</a></li>
+<li><a href="#entering-xr">Entering XR</a></li>
+<li><a href="#exiting-xr">Exiting XR</a></li>
+<li><a href="#observables">Observables</a><ul>
+<li><a href="#the-state-observable">The state observable</a></li>
+<li><a href="#pose-initialized-observable">Pose initialized observable</a></li>
+</ul>
+</li>
+<li><a href="#other-features">Other features</a></li>
+</ul>
+</li>
+<li><a href="#the-webxr-default-experience-helper">The WebXR Default Experience Helper</a><ul>
+<li><a href="#basic-usage-of-default-experience-helper">Basic usage of default experience helper</a></li>
+<li><a href="#configuration-options">Configuration options</a></li>
+<li><a href="#pointer-selection-and-teleportation">Pointer selection and teleportation</a></li>
+<li><a href="#configuring-the-gui">Configuring the GUI</a></li>
+<li><a href="#available-observables">Available Observables</a></li>
+<li><a href="#further-features">Further features</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>In order to simplify development for WebXR we offer a WebXR helper that will initialize WebXR automatically for you and provide an environment with which you can develop your AR and VR experiences. Fully configurable, the WebXR experience helper is very flexible and easy to use.</p>
+<p>We offer a basic set of functionalities with the WebXR experience helper, and offer a full XR experience, including UI, teleportation and more, with the Default WebXR experience helper.</p>
+<p>We recommend using the <a href="#the-webxr-default-experience-helper">Default Experience Helper</a> for ease of use, and the <a href="#the-basic-experience-helper">Basic Experience Helper</a> when looking for more control over decisions.</p>
+<p><em>Note that you don&#39;t have to use the experience helper. Everything can be done outside of those helper on your own.</em></p>
+<h2><a name="the-basic-experience-helper" class="anchor" href="#the-basic-experience-helper"></a>The basic Experience Helper</h2><h3><a name="basic-usage" class="anchor" href="#basic-usage"></a>Basic usage</h3><p>The basic experience helper will:</p>
+<ul>
+<li>Initialize the XR scene</li>
+<li>Create an XR Camera</li>
+<li>Initialize the features manager</li>
+</ul>
+<p>It also offers help functions to enter and exit the XR session.</p>
+<p>The experience helper is promise-based, which technically means its help-functions are mostly asynchronous.</p>
+<p>To use the WebXR Experience Helper, first Create one using the static factory:</p>
+<pre><code class="lang-javascript">const xrHelper = await WebXRExperienceHelper.CreateAsync(scene);
+</code></pre>
+<p>If the browser does not support XR an exception will be thrown and will you will need to catch it:</p>
+<pre><code class="lang-javascript">try {
+    const xrHelper = await WebXRExperienceHelper.CreateAsync(scene);
+} catch (e) {
+    // no XR support
+}
+
+// or:
+WebXRExperienceHelper.CreateAsync(scene).then((xrHelper) =&gt; {
+    // great success
+}, (error) =&gt; {
+    // no xr...
+})
+</code></pre>
+<h3><a name="entering-xr" class="anchor" href="#entering-xr"></a>Entering XR</h3><p>After initializing the XR helper, it is possible to enter an XR session, for example in immersive VR mode:</p>
+<pre><code class="lang-javascript">const sessionManager = await xrHelper.enterXRAsync(&quot;immersive-vr&quot;, &quot;local-floor&quot; /*, optionalRenderTarget */ );
+</code></pre>
+<p>To read more about session modes ( <code>immersive-vr</code> in this example), and reference type modes ( <code>local-floor</code> ), please read the <a href="https://immersive-web.github.io/webxr/">WebXR specs</a>. The most common scenario is VR in local floor mode, which is the one we are showing here.</p>
+<p>If there is an error while creating the experience helper, the console will show it.</p>
+<h3><a name="exiting-xr" class="anchor" href="#exiting-xr"></a>Exiting XR</h3><p>To exit, simply call the exitXRAsync function:</p>
+<pre><code class="lang-javascript">await xrHelper.exitXRAsync();
+</code></pre>
+<h3><a name="observables" class="anchor" href="#observables"></a>Observables</h3><h4><a name="the-state-observable" class="anchor" href="#the-state-observable"></a>The state observable</h4><p>In this example, the session manager will be initialized if the XR session is ready to use. Alternatively, you can ignore the <code>await</code> and use the <strong>state observable</strong> of the xr helper:</p>
+<pre><code class="lang-javascript">xrHelper.onStateChangedObservable.add((state) =&gt; {
+    switch (state) {
+        case WebXRState.IN_XR:
+            // XR is initialized and already submitted one frame
+        case WebXRState.ENTERING_XR:
+            // xr is being initialized, enter XR request was made
+        case WebXRState.EXITING_XR:
+            // xr exit request was made. not yet done.
+        case WebXRState.NOT_IN_XR:
+            // self explanatory - either our or not yet in XR
+    }
+})
+</code></pre>
+<h4><a name="pose-initialized-observable" class="anchor" href="#pose-initialized-observable"></a>Pose initialized observable</h4><p>The <code>onInitialXRPoseSetObservable</code> will trigger all observers when the pose of the camera was set and before the first frame was rendered.</p>
+<p>It can be used to define, for example, a height offset (if the ground is not at 0, or if the user starts in a different level):</p>
+<pre><code class="lang-javascript">xrBasicHelper.onInitialXRPoseSetObservable.add((xrCamera) =&gt; {
+    // floor is at y === 2
+    xrCamera.y = 2;
+});
+</code></pre>
+<h3><a name="other-features" class="anchor" href="#other-features"></a>Other features</h3><p>The basic XR experience helper offers direct access to the following:</p>
+<ul>
+<li>An initialized <a href="./WebXR_Session_Manager">Session Manager</a></li>
+<li>A configured <a href="./WebXR_Camera">XR Camera</a> that will have the non-VR camera&#39;s position when entering XR</li>
+<li>Initialized <a href="./WebXR_Features_Manager">Features Manager</a></li>
+</ul>
+<h2><a name="the-webxr-default-experience-helper" class="anchor" href="#the-webxr-default-experience-helper"></a>The WebXR Default Experience Helper</h2><h3><a name="basic-usage-of-default-experience-helper" class="anchor" href="#basic-usage-of-default-experience-helper"></a>Basic usage of default experience helper</h3><p>The default xr experience will:</p>
+<ul>
+<li>Create a <a href="#the-basic-experience-helper">basic experience helper</a> and initialize it</li>
+<li>Create an HTML UI button to enter XR</li>
+<li>Init the input source class which will initialize controllers</li>
+<li>Enable the pointer selection and teleportation features</li>
+</ul>
+<p>The simplest way to use the default experience helper is calling the help function of <code>scene</code> :</p>
+<pre><code class="lang-javascript">var xrHelper = await scene.createDefaultXRExperienceAsync( /* optional configuration options */ );
+</code></pre>
+<p>This is equivalent to:</p>
+<pre><code class="lang-javascript">var xrHelper = await WebXRDefaultExperienceHelper.CreateAsync(scene, /* optional configuration options */ )
+</code></pre>
+<p>After calling this and assuming the browser supports XR, you will see the Enter-XR GUI on the bottom right of the screen unless the browser <strong>does not support XR</strong>. The GUI will not be displayed. To check if the default experience helper initialized correctly, make sure the <code>baseExperience</code> variable was created:</p>
+<pre><code class="lang-javascript">var xrHelper = await scene.createDefaultXRExperienceAsync( /* optional configuration options */ );
+if (!xrHelper.baseExperience) {
+    // no xr support
+} else {
+    // all good, ready to go
+}
+</code></pre>
+<h3><a name="configuration-options" class="anchor" href="#configuration-options"></a>Configuration options</h3><p>The default xr experience helper takes an options map for configuration. Everything, including the options itself is optional:</p>
+<pre><code class="lang-javascript">class WebXRDefaultExperienceOptions {
+    /**
+     * Floor meshes that will be used for teleporting
+     */
+    public floorMeshes ? : Array &lt; AbstractMesh &gt; ;
+
+    /**
+     * Enable or disable default UI to enter XR
+     */
+    public disableDefaultUI ? : boolean;
+
+    /**
+     * optional configuration for the output canvas
+     */
+    public outputCanvasOptions ? : WebXRManagedOutputCanvasOptions;
+
+    /**
+     * optional UI options. This can be used among other to change session mode and reference space type
+     */
+    public uiOptions ? : WebXREnterExitUIOptions;
+
+    /**
+     * Disable the controller mesh-loading. Can be used if you want to load your own meshes
+     */
+    public inputOptions ? : IWebXRInputOptions;
+
+    /**
+     * Should teleportation not initialize. defaults to false.
+     */
+    public disableTeleportation ? : boolean;
+}
+</code></pre>
+<p>Check the code documentation for further details.</p>
+<h3><a name="pointer-selection-and-teleportation" class="anchor" href="#pointer-selection-and-teleportation"></a>Pointer selection and teleportation</h3><p>The default experience initializes both pointer selection (laser pointer and interaction with the meshes in the scene) and teleportation features automatically. If floor meshes are provided in the options, the teleportation will include it when created. If not you can add meshes later or disable it.</p>
+<p>To read more about both features, check the <a href="./WebXR_Features_Manager">Features Manager</a></p>
+<p>To enable / disable the teleport and pointer selection:</p>
+<pre><code class="lang-javascript">// assuming xrHelper initialized correctly!
+
+// disable:
+xrHelper.teleportation.detach();
+xrHelper.pointerSelection.detach();
+
+// (re)enable:
+xrHelper.teleportation.attach();
+xrHelper.pointerSelection.attach();
+</code></pre>
+<h3><a name="configuring-the-gui" class="anchor" href="#configuring-the-gui"></a>Configuring the GUI</h3><p>The GUI is the right way to enter and exit the XR experience. Otherwise you can directly use the <code>baseExperience</code> Basic experience helper to enter and exit XR as mentioned <a href="#the-basic-experience-helper">above</a>. It defaults to a VR immersive session in local-floor reference mode.</p>
+<p>If you want to change the session mode or reference mode (for example to enter an AR session instead of VR):</p>
+<pre><code class="lang-javascript">var xrHelper = await scene.createDefaultXRExperienceAsync({
+    uiOptions: {
+        sessionMode: &#39;ar-immersive&#39;
+    }
+});
+</code></pre>
+<p>Read more about the GUI in the <a href="">advanced WebXR tutorial</a></p>
+<h3><a name="available-observables" class="anchor" href="#available-observables"></a>Available Observables</h3><p>Apart from those you can find in the <code>baseExperience</code> (The Basic XR experience helper) the default experience helper does not offer any observables.</p>
+<h3><a name="further-features" class="anchor" href="#further-features"></a>Further features</h3><p>The default experience helper offers direct access to the following:</p>
+<ul>
+<li><code>input</code> - initialized <a href="">WebXRInputSource</a></li>
+<li><code>enterExitUI</code> - initialized <a href="">GUI</a></li>
+<li><code>renderTarget</code> - The default WebXR render target</li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

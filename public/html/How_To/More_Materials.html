@@ -1,0 +1,114 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Apply Bumps, Opacity, Tiling and Detail Maps - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Apply Bumps, Opacity, Tiling and Detail Maps</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#bump-map">Bump Map</a><ul>
+<li><a href="#creating-a-bump-map-example">Creating a Bump Map Example</a></li>
+<li><a href="#inverting-bumps-and-dents">Inverting Bumps and Dents</a></li>
+</ul>
+</li>
+<li><a href="#opacity">Opacity</a><ul>
+<li><a href="#applying-opacity">Applying Opacity</a></li>
+</ul>
+</li>
+<li><a href="#tiling">Tiling</a></li>
+<li><a href="#offsetting">Offsetting</a></li>
+<li><a href="#details-maps">Details maps</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-apply-bumps-opacity-tiling-and-detail-maps" class="anchor" href="#how-to-apply-bumps-opacity-tiling-and-detail-maps"></a>How To Apply Bumps, Opacity, Tiling and Detail Maps</h1><p>A range of effects can be achieved with textures using a few extra lines of code.</p>
+<h2><a name="bump-map" class="anchor" href="#bump-map"></a>Bump Map</h2><p>Bump mapping is a technique to simulate bump and dents on a rendered surface. These are made by creating a <strong>normal map</strong> from an image. 
+The means to do this can be found on the web, a search for &#39;normal map generator&#39; will bring up free and paid for methods of doing this. </p>
+<p><img src="/img/how_to/Materials/bump.png" alt="Image Bump Map"></p>
+<p>Normal Map from Image &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Original Image</p>
+<p>A bump map can be used with a color; with its original image or another image as below.</p>
+<p><img src="/img/how_to/Materials/bump_spheres.png" alt="Bump Example"></p>
+<h3><a name="creating-a-bump-map-example" class="anchor" href="#creating-a-bump-map-example"></a>Creating a Bump Map Example</h3><p>Just add a <em>bumpTexture</em> to any existing textures.</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+myMaterial.bumpTexture = new BABYLON.Texture(&quot;PATH TO NORMAL MAP&quot;, scene);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#23">Playground Example of Bump Maps</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#23', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="inverting-bumps-and-dents" class="anchor" href="#inverting-bumps-and-dents"></a>Inverting Bumps and Dents</h3><p>Use <em>invertNormalMapX</em> and/or <em>invertNormalMapY</em> on the material.</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+myMaterial.bumpTexture = new BABYLON.Texture(&quot;PATH TO NORMAL MAP&quot;, scene);
+myMaterial.invertNormalMapX = true;
+myMaterial.invertNormalMapY = true
+</code></pre>
+<h2><a name="opacity" class="anchor" href="#opacity"></a>Opacity</h2><p>The opacity of a material can be graded using an image with varying tranparency. The following PNG image with 
+a transparency gradient can be applied to a material using <em>opacityTexture</em></p>
+<p><img src="/img/how_to/Materials/degrade_map.png" alt="Opacity Map"></p>
+<p>with the same gradient applied to the material as in the image below.</p>
+<p><img src="/img/how_to/Materials/degraded_plane.png" alt="Opacity Material"></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#24">Playground Example of Opacity</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#24', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h3><a name="applying-opacity" class="anchor" href="#applying-opacity"></a>Applying Opacity</h3><p>Add an <em>opacityTexture</em> to any existing texture.</p>
+<pre><code class="lang-javascript">var myMaterial = new BABYLON.StandardMaterial(&quot;myMaterial&quot;, scene);
+myMaterial.opacityTexture = new BABYLON.Texture(&quot;PATH TO NORMAL MAP&quot;, scene);
+</code></pre>
+<h2><a name="tiling" class="anchor" href="#tiling"></a>Tiling</h2><p>When a material is applied to a mesh the image used for a texture is positioned according to coordinates. 
+Rather than x, y which are already in use for the 3D axes the letters u and v are used for the coordinates.</p>
+<p><img src="/img/how_to/Materials/crate.png" alt="uv axes"></p>
+<p>To tile an image you use the <em>uScale</em> and/or <em>vScale</em> properties, of the texture, to set the number of tiles in each direction.</p>
+<pre><code class="lang-javascript">myMaterial.diffuseTexture.uScale = 5.0;
+myMaterial.diffuseTexture.vScale = 5.0;
+</code></pre>
+<h2><a name="offsetting" class="anchor" href="#offsetting"></a>Offsetting</h2><p>To offset your texture on your mesh, you  use the <em>uOffset</em> and <em>vOffset</em> properties, of the texture, to set the offset in each direction.</p>
+<pre><code class="lang-javascript">myMaterial.diffuseTexture.uOffset = 1.5;
+myMaterial.diffuseTexture.vOffset = 0.5;
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#20OAV9#25">Playground Example of Tiling and Offset</a> - <i class="fa fa-eye" onclick="createIframe('20OAV9#25', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="details-maps" class="anchor" href="#details-maps"></a>Details maps</h2><p>A detail map (also called secondary map) is generally used to add extra details to the regular main texture when viewed up close.</p>
+<p>See for eg this marble texture without detail map:
+<img src="/img/how_to/Materials/detailmap_without.jpg" alt="Without detail map"></p>
+<p>You can see fairly big areas with uniform colors because the texture is zoomed in.</p>
+<p>You can use a detail map to improve on this:
+<img src="/img/how_to/Materials/detailmap_with.jpg" alt="With detail map"></p>
+<p>The detail map used in the picture above only contains an albedo (diffuse) channel which is tiled ten times over the main texture.</p>
+<p>You can also add a normal channel in the detail map:
+<img src="/img/how_to/Materials/detailmap_bump_without.jpg" alt="Bump - Without detail map">
+<img src="/img/how_to/Materials/detailmap_bump_with.jpg" alt="Bump - With detail map"></p>
+<p>The first picture is the main + bump textures without detail map, the second picture is the main + bump textures + detail map with albedo and normal channels.</p>
+<p>The detail map can contains albedo (diffuse), normal and roughness (for PBR materials only) channels, dispatched this way (following <strong>Unity</strong> convention):</p>
+<ul>
+<li>Red channel: greyscale albedo</li>
+<li>Green channel: green component of the normal map</li>
+<li>Blue channel: roughness</li>
+<li>Alpha channel: red component of the normal map</li>
+</ul>
+<p>A picture can help to better visualize the channels:
+<img src="/img/how_to/Materials/detailmap_channels.jpg" alt="Channels of the detail map"></p>
+<p>Note that a mid-gray value (0.5 on a 0..1 scale) for the channels will disable the effect: setting 0.5 in the Green and Alpha channels will disable the detail bump map, for eg.</p>
+<p>You can take advantage of this to make the detail map effects fade when the texture gets minimized on screen: you simply need to create mip maps that fade to the 0.5 value after a given level.</p>
+<p>For eg, you can decide that the fading effect begins at mip level 3, and is fully achieved at level 5, meaning that from level 3 to 5 the R/G/B/A values are interpolated from their initial values to the 0.5 value, then at level 5 and onward all values are set to 0.5, disabling the detail map effects completely. If you use the mip map levels this way, don&#39;t forget to activate trilinear interpolation!</p>
+<p>You can enable detail mapping this way:</p>
+<pre><code class="lang-javascript">myMaterial.detailMap.texture = new BABYLON.Texture(&quot;textures/detailmap.png&quot;, scene);
+myMaterial.detailMap.isEnabled = true;
+</code></pre>
+<p>You can control the strength of the albedo/normal/roughness detail effects this way:</p>
+<pre><code class="lang-javascript">myMaterial.detailMap.diffuseBlendLevel = 0.1; // between 0 and 1
+myMaterial.detailMap.bumpLevel = 1; // between 0 and 1
+myMaterial.detailMap.roughnessBlendLevel = 0.25; // between 0 and 1
+</code></pre>
+<p>You can use this PG to experiment with detail maps: </p>
+<ul>
+<li><a href="https://playground.babylonjs.com/#5NS7A2#4">Detail map playground Example</a> - <i class="fa fa-eye" onclick="createIframe('5NS7A2#4', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p><img src="/img/how_to/Materials/detailmap_pg.jpg" alt="Detail map PG"></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use Path3D - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use Path3D</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#path3d-methods">Path3D Methods</a><ul>
+<li><a href="#get-curve-points">Get Curve Points</a></li>
+<li><a href="#get-distances">Get Distances</a></li>
+<li><a href="#interpolation">Interpolation</a></li>
+<li><a href="#copying-part-of-the-path">Copying (part of) the path</a></li>
+<li><a href="#update">Update</a></li>
+<li><a href="#getting-the-closest-position-to-a-point">Getting the closest position to a point</a></li>
+</ul>
+</li>
+<li><a href="#set-the-normal">Set The Normal</a></li>
+<li><a href="#normalization-and-tangent-alignment">Normalization and tangent alignment</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+<li><a href="#basic-level-1">Basic - Level 1</a></li>
+</ul>
+</li>
+<li><a href="#more-advanced-level-3">More Advanced - Level 3</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-path3d" class="anchor" href="#how-to-use-path3d"></a>How To Use Path3D</h1><p>A <code>Path3D</code> is a mathematical object created from a sequence of position vectors of points on a curve. Once obtained a Path3D can be used to determine the triplet of vectors tangent, normal and binormal of the curve for each of those points. Each triplet can then be used as a local system coordinate. You could set, for example, the camera direction to the normal as it follows the curve.</p>
+<p>A <code>Path3D</code> object is simple to construct as follows</p>
+<pre><code class="lang-javascript">var points = [v1, v2, ..., vn];          // array of Vector3
+var path3d = new BABYLON.Path3D(points);
+</code></pre>
+<p>You can then get the array of tangents, normals and binormals as follows</p>
+<pre><code class="lang-javascript">var tangents = path3D.getTangents();
+var normals = path3D.getNormals();
+var binormals = path3D.getBinormals();
+</code></pre>
+<p>each element of the arrays is a <code>Vector3</code> .</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#2DLXYB#0">Playground Example - tangents, normals and binormals</a> - <i class="fa fa-eye" onclick="createIframe('2DLXYB#0', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Please zoom in and rotate : tangents in red, normals in blue, binormal in green.  </p>
+<p>Notice, in the next example, how the the triplets slightly rotate when the curve goes more into depth.  </p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#2DLXYB#1">Playground Example - tangents, normals and binormals</a> - <i class="fa fa-eye" onclick="createIframe('2DLXYB#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Whilst at any point on the curve there is only one tangent there can be an infinite number of normals and hence binormals. If the default one does not suit you it is possible to <a href="#set_the_normal">set the normal direction</a></p>
+<h2><a name="path3d-methods" class="anchor" href="#path3d-methods"></a>Path3D Methods</h2><p>As well as <code>getTangents</code>, <code>getNormals</code> and <code>getBinormals</code> there are some other methods of <code>Path3D</code>.</p>
+<h3><a name="get-curve-points" class="anchor" href="#get-curve-points"></a>Get Curve Points</h3><p>The <code>getCurve</code> method returns a copy of the initial <code>Vector3</code> array given to create the <code>Path3D</code> object. </p>
+<pre><code class="lang-javascript">var curvePoints = path3d.getCurve();
+</code></pre>
+<h3><a name="get-distances" class="anchor" href="#get-distances"></a>Get Distances</h3><p>The <code>getDistances</code> method returns an array of distances from one curve point to the next in order of points and with 0 being the first distance.</p>
+<p>For the array of points [(1, 0, 0), (5, 0, 0), (5, 1, 0)] the array of distances is [0, 4, 5]. </p>
+<pre><code class="lang-javascript">var distances = path3d.getDistances();
+</code></pre>
+<h3><a name="interpolation" class="anchor" href="#interpolation"></a>Interpolation</h3><p>You can get info about any virtual point (from 0.0 to 1.0) along the path by functions that interpolate between the path points. Those are the following:</p>
+<p><code>getPointAt</code>, <code>getTangentAt</code>, <code>getNormalAt</code>, <code>getBinormalAt</code>, <code>getDistanceAt</code>, <code>getPreviousPointIndexAt</code>, <code>getSubPositionAt</code></p>
+<h3><a name="copying-part-of-the-path" class="anchor" href="#copying-part-of-the-path"></a>Copying (part of) the path</h3><p>The <code>slice</code> method returns a new Path3D that is subpath (slice) of the original path. It takes a <em>start</em> and <em>end</em> position from 0.0 to 1.0, or negative values, which wrap back around from 1.0</p>
+<h3><a name="update" class="anchor" href="#update"></a>Update</h3><p>In order to avoid memory re-allocation (when in the render loop for example) since the given <em>points</em> array is internally copied, you can update an existing <code>Path3D</code> object with its <code>update()</code> method.</p>
+<pre><code class="lang-javascript">var points1 = [v1, v2, ..., vn];          // array of Vector3
+var path3d = new BABYLON.Path3D(points1);
+var points2 = [u1, u2, ..., un];          // another array of Vector3
+path3D.update(points2);
+</code></pre>
+<p>Tangents, normals and bi-normals are thus recomputed for this new path.</p>
+<h3><a name="getting-the-closest-position-to-a-point" class="anchor" href="#getting-the-closest-position-to-a-point"></a>Getting the closest position to a point</h3><p>The <code>getClosestPositionTo</code> function returns the position, from 0.0 to 1.0, of the closest virtual point along the path to an arbitrary Vector3.</p>
+<h2><a name="set-the-normal" class="anchor" href="#set-the-normal"></a>Set The Normal</h2><p>For any vector there are an infinite number of vectors at right angles to it. </p>
+<p><img src="/img/how_to/Mesh/tangentnormals.jpg" alt="Multiple Normals"></p>
+<p>In creating a <code>Path3D</code> object Babylon.js assigns a default direction for the normal. If you want to set the direction of the normal yourself, you need to pass a vector for a second parameter to <code>Path3D</code> on creation or on update.</p>
+<pre><code class="lang-javascript">var initialVector = new BABYLON.Vector3(0, 1, 0);
+var otherVector = new BABYLON.Vector3(0, 0, 1);
+var points = [v1, v2, ..., vn];          // array of Vector3
+var path3d = new BABYLON.Path3D(points, initialVector);
+// do stuff ...
+path3d.update(points, otherVector);
+</code></pre>
+<p>The normal will be the projection of your parameter vector onto the plane orthogonal to the tangent at the point position. </p>
+<p>As can been in the diagram below, when the parameter is a vertical vector (black), this is projected onto the plane orthoganal to the tangent vector (red) to form the normal (green).</p>
+<p><img src="/img/how_to/Mesh/planenormal.jpg" alt="Curve Normal"></p>
+<p>The playground example shows what happens as the vector setting the normal direction is rotated.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#8ICWNU">Playground Animation - Path3D with Rotating Normals</a> - <i class="fa fa-eye" onclick="createIframe('8ICWNU#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="normalization-and-tangent-alignment" class="anchor" href="#normalization-and-tangent-alignment"></a>Normalization and tangent alignment</h2><p>Apart from the first normal, there are two more parameters:</p>
+<p><code>raw</code>, boolean, <strong>false</strong> by default. If true the tangents, normals and binormals aren&#39;t normalized. Useful to depict path acceleration or speed.</p>
+<p><code>alignTangentsWithPath</code>, boolean, <strong>false</strong> by default. If true the tangents will be aligned with the path.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h1><a name="basic-level-1" class="anchor" href="#basic-level-1"></a>Basic - Level 1</h1><p><a href="/How_To/parametric_shapes">How To Create Parametric Shapes</a></p>
+<h2><a name="more-advanced-level-3" class="anchor" href="#more-advanced-level-3"></a>More Advanced - Level 3</h2><p><a href="/How_To/How_to_use_Curve3">How To Draw Curves</a> </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

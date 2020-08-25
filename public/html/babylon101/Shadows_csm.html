@@ -1,0 +1,228 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Shadows with Cascaded Shadow Maps - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Shadows with Cascaded Shadow Maps</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#technical-overview">Technical overview</a><ul>
+<li><a href="#subdividing-the-frustum">Subdividing the frustum</a></li>
+<li><a href="#computing-the-shadow-level">Computing the shadow level</a></li>
+<li><a href="#blend-between-cascades">Blend between cascades</a></li>
+<li><a href="#filtering">Filtering</a></li>
+</ul>
+</li>
+<li><a href="#the-cascadedshadowgenerator-class">The <code>CascadedShadowGenerator</code> class</a><ul>
+<li><a href="#creation">Creation</a></li>
+<li><a href="#properties">Properties</a><ul>
+<li><a href="#numcascades-default-4">numCascades (default: 4)</a></li>
+<li><a href="#lambda-default-05">lambda (default: 0.5)</a></li>
+<li><a href="#cascadeblendpercentage-default-01">cascadeBlendPercentage (default: 0.1)</a></li>
+<li><a href="#stabilizecascades-default-false">stabilizeCascades (default: false)</a></li>
+<li><a href="#shadowmaxz">shadowMaxZ</a></li>
+<li><a href="#depthclamp-default-true">depthClamp (default: true)</a></li>
+<li><a href="#debug-default-false">debug (default: false)</a></li>
+<li><a href="#freezeshadowcastersboundinginfo-default-false-and-shadowcastersboundinginfo">freezeShadowCastersBoundingInfo (default: false) and shadowCastersBoundingInfo</a></li>
+<li><a href="#autocalcdepthbounds-default-false">utoCalcDepthBounds (default: false)</a></li>
+<li><a href="#filtering">Filtering</a></li>
+<li><a href="#penumbradarkness-default-1">penumbraDarkness (default: 1)</a></li>
+</ul>
+</li>
+<li><a href="#culling">Culling</a></li>
+</ul>
+</li>
+<li><a href="#using-the-cascadedshadowgenerator-class">Using the <code>CascadedShadowGenerator</code> class</a><ul>
+<li><a href="#camera-far-plane">Camera far plane</a></li>
+<li><a href="#changing-the-camera-near-far-planes">Changing the camera near / far planes</a></li>
+<li><a href="#optimizing-for-speed">Optimizing for speed</a></li>
+<li><a href="#optimizing-for-quality">Optimizing for quality</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p>Cascaded Shadow Maps (CSM) can greatly enhance the shadows in your scene, but it is only available for <strong>directional lights</strong>. It is generally used for large outdoor scenes, to simulate the sun.</p>
+<p>This page will explain everything you need to know in order to setup this shadow rendering technique and get the best out of your shadows!</p>
+<p>This is a shadow map technique, so a lot of what is said in <a href="/babylon101/shadows">Shadows</a> does apply, so don&#39;t hesitate to read this page first.</p>
+<p>Note that CSM requires WebGL 2+.</p>
+<p>Here&#39;s a Playground demonstrating the CSM technique and the existing <code>ShadowGenerator</code>: <a href="https://www.babylonjs-playground.com/#IIZ9UU#40">https://www.babylonjs-playground.com/#IIZ9UU#40</a> - <i class="fa fa-eye" onclick="createIframe('IIZ9UU#40', this)"></i><div class="iframeContainer"></div></p>
+<h1><a name="technical-overview" class="anchor" href="#technical-overview"></a>Technical overview</h1><p>A quick survey of the technique will help to understand the different properties of the <code>CascadedShadowGenerator</code> class. You can also have a look at the <a href="#references">references</a> provided at the end of this page for further details.</p>
+<h2><a name="subdividing-the-frustum" class="anchor" href="#subdividing-the-frustum"></a>Subdividing the frustum</h2><p>CSM works by subdividing the view frustum (frustum of the camera, meaning what the camera can see) into several subfrusta, each of them being called a cascade (hence the name of the technique):</p>
+<p><strong>Figure 1. View frustum partitionning (picture from [<a href="#references">1</a>])</strong>
+<img src="/img/babylon101/csm/view-frustums-partitioned-arbitrarily.png" alt="View frustum partitionning"></p>
+<p>The subdivision of the camera frustum is done either linearly (each subfrustum has the same length) or logarithmically (the length of the first subfrustum is a lot smaller than the length of the last one). It can also be a combination of the linear and logarithmic splitting, a <code>lambda</code> parameter being used to combine both (a <code>0</code> value means the splitting is fully linear, <code>1</code> means it is fully logarithmic, and a value in-between implies a mix of both).</p>
+<h2><a name="computing-the-shadow-level" class="anchor" href="#computing-the-shadow-level"></a>Computing the shadow level</h2><p>For each subfrustum, a shadow map is generated, in much the same way the standard shadow generator does.</p>
+<p>When rendering a mesh, the right shadow map is determined for a given pixel and is sampled to get the shadow level.</p>
+<p><strong>Figure 2. Cascade rendering (picture from [<a href="#references">1</a>])</strong>
+<img src="/img/babylon101/csm/interval-based-cascade-selection.jpg" alt="Cascade rendering"></p>
+<p>In figure 2, pixels pertaining to different cascades are drawn with different colors, so that they are clearly visible.</p>
+<h2><a name="blend-between-cascades" class="anchor" href="#blend-between-cascades"></a>Blend between cascades</h2><p>Sometimes, there can be visible seams between cascades:</p>
+<p><strong>Figure 3. Cascade seams (picture from [<a href="#references">1</a>])</strong>
+<img src="/img/babylon101/csm/cascade-seams.jpg" alt="Cascade seams"></p>
+<p>A blend parameter can be used to smooth the transition (see picture on the right in figure 3).</p>
+<h2><a name="filtering" class="anchor" href="#filtering"></a>Filtering</h2><p>As for the standard shadow generator, filtering methods can be used to improve / make soft shadows. For CSM, only the PCF (Percentage Closer Filtering) and PCSS (Contact hardening shadows) methods are currently supported (as well as no filtering at all!).</p>
+<h1><a name="the-codecascadedshadowgeneratorcode-class" class="anchor" href="#the-cascadedshadowgenerator-class"></a>The <code>CascadedShadowGenerator</code> class</h1><h2><a name="creation" class="anchor" href="#creation"></a>Creation</h2><p>You create a <code>CascadedShadowGenerator</code> instance in exactly the same way as a standard <code>ShadowGenerator</code>:</p>
+<pre><code class="lang-javascript">var csmShadowGenerator = new BABYLON.CascadedShadowGenerator(1024, light);
+</code></pre>
+<p>The first parameter is the shadow map size and the second one the (directional) light to use the generator for.</p>
+<p>To add shadow casters, do as for <code>ShadowGenerator</code>:</p>
+<pre><code class="lang-javascript">csmShadowGenerator.getShadowMap().renderList.push(torus);
+</code></pre>
+<p>or:</p>
+<ul>
+<li><code>csmShadowGenerator.addShadowCaster(mesh, includeDescendants)</code>: Helper function to add a mesh and its descendants to the list of shadow casters</li>
+<li><code>csmShadowGenerator.removeShadowCaster(mesh, includeDescendants)</code>: Helper function to remove a mesh and its descendants from the list of shadow casters</li>
+</ul>
+<p>And for the mesh(es) that should receive (display) shadows:</p>
+<pre><code class="lang-javascript">mesh.receiveShadows = true;
+</code></pre>
+<p>In fact, the class has been designed to be interface-compatible with <code>ShadowGenerator</code>, except of course for the parameters specific to CSM and for the fact that only PCF and PCSS are supported as filtering methods. So, you should be able to simply replace:</p>
+<pre><code class="lang-javascript">new BABYLON.ShadowGenerator(...)
+</code></pre>
+<p>with:</p>
+<pre><code class="lang-javascript">new BABYLON.CascadedShadowGenerator(...)
+</code></pre>
+<p>in your code and have CSM just working out of the box!</p>
+<p><strong>Important</strong>: contrary to the standard <code>ShadowGenerator</code>, <code>light.shadowMinZ</code> and <code>light.shadowMaxZ</code> are NOT used, so don&#39;t bother to update them!</p>
+<h2><a name="properties" class="anchor" href="#properties"></a>Properties</h2><h3><a name="numcascades-default-4" class="anchor" href="#numcascades-default-4"></a>numCascades (default: 4)</h3><p>By default, the generator uses 4 cascades, but you can change this at any time through the <code>numCascades</code> property (allowed values between 2 and 4):</p>
+<pre><code class="lang-javascript">csmShadowGenerator.numCascades = 3;
+</code></pre>
+<p><strong>Figure 4. num cascades is 2 on the left, 4 on the right</strong>
+<img src="/img/babylon101/csm/numcascades-parameter.jpg" alt="numCascades"></p>
+<h3><a name="lambda-default-05" class="anchor" href="#lambda-default-05"></a>lambda (default: 0.5)</h3><p>The <code>lambda</code> parameter (described in the technical overview) can be set with:</p>
+<pre><code class="lang-javascript">csmShadowGenerator.lambda = 0.5;
+</code></pre>
+<p><strong>Figure 5. lambda=0.5 on the left, lambda=0.7 on the right</strong>
+<img src="/img/babylon101/csm/lambda-parameter.jpg" alt="lambda"></p>
+<p>The right value (between 0 and 1) depends on your scene and how the camera is to be used: near the ground or high in the sky. You should experiment with different values and see what works best for you.</p>
+<h3><a name="cascadeblendpercentage-default-01" class="anchor" href="#cascadeblendpercentage-default-01"></a>cascadeBlendPercentage (default: 0.1)</h3><p>The cascade blend factor can be set with:</p>
+<pre><code class="lang-javascript">csmShadowGenerator.cascadeBlendPercentage = 0.05;
+</code></pre>
+<p><strong>Figure 6. Cascade blend (picture from [<a href="#references">1</a>])</strong>
+<img src="/img/babylon101/csm/cascade-seams.jpg" alt="cascadeBlendPercentage"></p>
+<p>It&#39;s a percentage value between 0 and 1. Try to use small values, else you may get rendering artifacts.</p>
+<h3><a name="stabilizecascades-default-false" class="anchor" href="#stabilizecascades-default-false"></a>stabilizeCascades (default: false)</h3><p>When rotating the camera, you may see the edges of the shadows &quot;swimm&quot; / &quot;shimmer&quot;. You may fix the problem with the <code>stabilizeCascades</code> property:</p>
+<pre><code class="lang-javascript">csmShadowGenerator.stabilizeCascades = true;
+</code></pre>
+<p>Note however that you will loose some precision in the shadow rendering, so use it only if you need it.</p>
+<p><strong>Figure 7. Precision lost when stabilization enabled (left: enabled, right: disabled)</strong>
+<img src="/img/babylon101/csm/stabilize-parameter.jpg" alt="stabilizeCascades"></p>
+<h3><a name="shadowmaxz" class="anchor" href="#shadowmaxz"></a>shadowMaxZ</h3><p>It&#39;s the limit beyond which shadows are not displayed. It defaults to <code>camera.maxZ</code> when constructing the generator.</p>
+<p><strong>Figure 8. shadowMaxZ equal to camera.maxZ on the left, is smaller on the right</strong>
+<img src="/img/babylon101/csm/shadowmaxz-parameter.jpg" alt="shadowMaxZ"></p>
+<h3><a name="depthclamp-default-true" class="anchor" href="#depthclamp-default-true"></a>depthClamp (default: true)</h3><p>When enabled, it improves the shadow quality because the near z plane of the different cascade light frusta don&#39;t need to be adjusted to account for the shadow casters far away.</p>
+<p>Note that this property is incompatible with PCSS filtering, so it won&#39;t be used in that case.</p>
+<h3><a name="debug-default-false" class="anchor" href="#debug-default-false"></a>debug (default: false)</h3><p>When enabled, the cascades are materialized by different colors on the screen:</p>
+<p><strong>Figure 9. Cascade rendering (picture from [<a href="#references">1</a>])</strong>
+<img src="/img/babylon101/csm/interval-based-cascade-selection.jpg" alt="Cascade rendering"></p>
+<h3><a name="freezeshadowcastersboundinginfo-default-false-and-shadowcastersboundinginfo" class="anchor" href="#freezeshadowcastersboundinginfo-default-false-and-shadowcastersboundinginfo"></a>freezeShadowCastersBoundingInfo (default: false) and shadowCastersBoundingInfo</h3><p>Enables or disables the shadow casters and receivers bounding info computation. If your shadow casters and receivers don&#39;t move, you can disable this feature. If it is enabled, the bounding box computation is done every frame and the <code>shadowCastersBoundingInfo</code> property is updated with the data. The bouding info is used to set the min and max z values of the cascade light frusta.</p>
+<p>You can provide your own bounding info by setting the <code>shadowCastersBoundingInfo</code> property (don&#39;t forget to disable the automatic computation first with <code>csmShadowGenerator.freezeShadowCastersBoundingInfo = true</code> !)</p>
+<h3><a name="autocalcdepthbounds-default-false" class="anchor" href="#autocalcdepthbounds-default-false"></a>autoCalcDepthBounds (default: false)</h3><p><em>Note: it corresponds to the implementation of the first pass of the Sample Distribution Shadow Maps technique, see <a href="#references">3</a> for details.</em></p>
+<p>You can greatly improve the shadow rendering (depending on your scene) by setting <code>autoCalcDepthBounds</code> to <code>true</code>, at the expense of more GPU work.</p>
+<pre><code class="lang-javascript">csmShadowGenerator.autoCalcDepthBounds = true;
+</code></pre>
+<p><strong>Figure 10. Same settings for both sides, except for <code>autoCalcDepthBounds = true</code> on the right</strong>
+<img src="/img/babylon101/csm/sdsm-first-pass.jpg" alt="autoCalcDepthBounds"></p>
+<p>When enabled, a depth rendering pass is first performed (with an internally created depth renderer or with the one you provide by calling <code>setDepthRenderer</code>). Then, a min/max reducing is applied on the depth map to compute the minimal and maximal depth values of the map and those values are used as inputs for the <code>setMinMaxDistance()</code> function.</p>
+<p>You can instruct the generator to compute those values less often than each frame with the <code>autoCalcDepthBoundsRefreshRate</code> property:</p>
+<pre><code class="lang-javascript">csmShadowGenerator.autoCalcDepthBoundsRefreshRate = 2;
+</code></pre>
+<p>will perform the computation every two frames. It can produce some visual artifacts, however, as the values used for the frustum splitting are now lagging one frame behind the real values, so make testing to see what works best for you.</p>
+<p>Note that if you provided your own depth renderer through a call to <code>setDepthRenderer</code>, you are responsible for setting the refresh rate on the renderer yourself!</p>
+<p>When using <code>autoCalcDepthBounds = true</code>, you should increase the value of the <code>lambda</code> parameter, and even set it to 1 for best results (experimenting is still the best option, though).</p>
+<p>There&#39;s no point to use <code>stabilizeCascades = true</code> when <code>autoCalcDepthBounds = true</code> because the cascade splits are recomputed every frame. So, set this property to <code>false</code> for additional resolution in the shadow maps.</p>
+<p>You should call <code>setDepthRenderer</code> if you already have a depth renderer enabled in your scene, to avoid doing multiple depth rendering each frame. If you provide your own depth renderer, make sure it stores <strong>linear depth</strong>!</p>
+<p>Note that you can also call <code>setMinMaxDistance()</code> yourself (values between 0 and 1 for min and max), if you know the minimal and maximal z values by some custom means.</p>
+<h3><a name="filtering" class="anchor" href="#filtering"></a>Filtering</h3><p>The filtering capabilities are the same than for the standard <code>ShadowGenerator</code> (except that only PCF and PCSS are supported), so we won&#39;t delve into the details here, just refer to <a href="/babylon101/shadows">this page</a>.</p>
+<h3><a name="penumbradarkness-default-1" class="anchor" href="#penumbradarkness-default-1"></a>penumbraDarkness (default: 1)</h3><p>When using the PCSS filtering method, you can change the &#39;darkness&#39; of the soft shadows by updating this property:</p>
+<pre><code class="lang-javascript">csmShadowGenerator.penumbraDarkness = 0.7;
+</code></pre>
+<p><strong>Figure 11. Value of 0.7 on the left, 0.17 on the right</strong>
+<img src="/img/babylon101/csm/penumbra-darkness.jpg" alt="penumbraDarkness"></p>
+<h2><a name="culling" class="anchor" href="#culling"></a>Culling</h2><p>There&#39;s currently no culling applied on the shadow caster list before rendering the meshes into each of the cascade shadow maps.</p>
+<p>However, you can implement your own culling strategy by using this code as a basis:</p>
+<pre><code class="lang-typescript">let rtt = csmShadowGenerator.getShadowMap();
+
+rtt.getCustomRenderList = (layer, renderList, renderListLength) =&gt; {
+    let meshList = [];
+    // here do the culling for the cascade with index &#39;layer&#39; by using the
+    // getCascadeViewMatrix(layer), getCSMTransformMatrix(layer), getCascadeMinExtents(layer), etc
+    // from csmShadowGenerator
+    // note: the renderList entry parameter is the list of all shadow casters defined for the CSM generator,
+    // that is csmShadowGenerator.getShadowMap().renderList. If you need to traverse renderList, use
+    // renderListLength for the length, not renderList.length, as the array may hold dummy elements!
+    return meshList;
+};
+</code></pre>
+<p><code>getCustomRenderList</code> is called by <code>RenderTargetTexture</code> each time it must render a mesh list into a cascade. If you return a regular array of meshes, this array will be used for the rendering into the cascade <code>layer</code>. If you return <code>null</code>, the <code>RenderTargetTexture</code> will proceed with the regular mesh list (that is, the <code>RenderTargetTexture.renderList</code> property, in CSM case it is the list of shadow casters).</p>
+<h1><a name="using-the-codecascadedshadowgeneratorcode-class" class="anchor" href="#using-the-cascadedshadowgenerator-class"></a>Using the <code>CascadedShadowGenerator</code> class</h1><h2><a name="camera-far-plane" class="anchor" href="#camera-far-plane"></a>Camera far plane</h2><p>Perhaps the most important parameter to set is the camera <code>maxZ</code> property! Indeed, the CSM technique works by splitting the camera range (<code>camera.maxZ - camera.minZ</code>) into cascades, so if the value is not set properly you will get bad shadows.</p>
+<p>In the Playground samples, the camera <code>maxZ</code> value is generally not explicitly set and so ends up with a value of <code>10000</code>, which is too large for most of the cases. See:</p>
+<p><strong>Figure 12. Standard shadows and CSM shadows on PG example</strong>
+<img src="/img/babylon101/csm/bad-camera-maxz.jpg" alt="CSM and bad camera range"></p>
+<p>It&#39;s the very first sample linked in the <a href="/babylon101/shadows">Shadow</a> page (left part of the picture) where <code>ShadowGenerator</code> has simply been changed to <code>CascadedShadowGenerator</code> (right part of the picture). As you can see, the shadows on the right are very bad because the <code>camera.maxZ</code> value is not set and so is equal to <code>10000</code>.</p>
+<p>Now, if we set <code>camera.maxZ</code> to <code>200</code>:</p>
+<p><strong>Figure 13. Same sample with CSM and good camera.maxZ</strong>
+<img src="/img/babylon101/csm/good-camera-maxz.jpg" alt="CSM and good camera range"></p>
+<p>Much better!</p>
+<p>Here&#39;s the updated PG: <a href="https://www.babylonjs-playground.com/#IIZ9UU#36">https://www.babylonjs-playground.com/#IIZ9UU#36</a> - <i class="fa fa-eye" onclick="createIframe('IIZ9UU#36', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="changing-the-camera-near-far-planes" class="anchor" href="#changing-the-camera-near-far-planes"></a>Changing the camera near / far planes</h2><p>The generator must recalculate the frustum splits when a number of parameters change: <code>lambda</code>, <code>shadowMaxZ</code>,  <code>min</code>/<code>max</code> distance properties. It is done automatically by the generator.</p>
+<p>However, the splits must also be recomputed if the camera near and/or far planes are changed manually! If you do change the <code>camera.minZ</code> and/or <code>camera.maxZ</code> values after the generator is created, you must call <code>CascadedShadowGenerator.splitFrustum()</code> to trigger a recalculation.</p>
+<p>Here&#39;s what happens if you change <code>camera.maxZ</code> after the generator is created without calling <code>splitFrustum()</code>:</p>
+<p><strong>Figure 14. Failing calling <code>splitFrustum</code></strong>
+<img src="/img/babylon101/csm/splitfrustum_nok.jpg" alt="Fail calling splitFrustum"></p>
+<p>PG: <a href="https://www.babylonjs-playground.com/#IIZ9UU#41">https://www.babylonjs-playground.com/#IIZ9UU#41</a> - <i class="fa fa-eye" onclick="createIframe('IIZ9UU#41', this)"></i><div class="iframeContainer"></div></p>
+<p><strong>Figure 15. <code>splitFrustum</code> called</strong>
+<img src="/img/babylon101/csm/splitfrustum_ok.jpg" alt="splitFrustum called"></p>
+<p>PG: <a href="https://www.babylonjs-playground.com/#IIZ9UU#37">https://www.babylonjs-playground.com/#IIZ9UU#37</a> - <i class="fa fa-eye" onclick="createIframe('IIZ9UU#37', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="optimizing-for-speed" class="anchor" href="#optimizing-for-speed"></a>Optimizing for speed</h2><p>If you don&#39;t use <code>shadowMaxZ</code> (general case, as you normally want your shadows to cover all the camera view area), set it equal to <code>camera.maxZ</code>: in that case, some code is removed from the fragment shader, speeding things up a little.</p>
+<p>Use smaller values for <code>cascadeBlendPercentage</code>. If you can afford it, use a <code>0</code> value for this property (best performances as some code is entirely removed from the fragment shader). Else, use the smallest possible value, as the larger value the more additional computation / texture lookups is performed in the shader, as the system must compute the shadow value for the next cascade before blending it with the value for the current cascade.</p>
+<p>If using <code>autoCalcDepthBounds = true</code>, you can lower the frequency with which the min/max computation is performed by raising the value of <code>autoCalcDepthBoundsRefreshRate</code>, but be aware of the rendering artifacts that may show up because of this.</p>
+<p>If your shadow casters and receivers don&#39;t move, set <code>freezeShadowCastersBoundingInfo = true</code>. Even if some of them do move, as long as the whole bounding box does not change, it is safe to set <code>freezeShadowCastersBoundingInfo</code> to <code>true</code>.</p>
+<p>Set <code>depthClamp = false</code>. There is a (very) small GPU penality to enable this property because of a few additional instructions in the depth rendering shaders.</p>
+<h2><a name="optimizing-for-quality" class="anchor" href="#optimizing-for-quality"></a>Optimizing for quality</h2><p>Best shadow quality is generally achieved by:</p>
+<ul>
+<li>tightening as much as possible the <code>camera.maxZ - camera.minZ</code> range</li>
+<li>setting the <code>camera.minZ</code> value as high as possible</li>
+<li>using the maximum number of cascades (4)</li>
+<li>using the highest possible map size</li>
+<li>setting <code>autoCalcDepthBounds = true</code> with <code>lambda = 1</code></li>
+<li>setting <code>depthClamp = true</code></li>
+<li>setting <code>stabilizeCascades = false</code> will improve shadow resolution but you may experience some &quot;swimming&quot; at the shadow edges when rotation the camera. It&#39;s up to you to decide which is better for you, stabilized or improved shadows. As explained above, however, always use <code>stabilizeCascades = false</code> if <code>autoCalcDepthBounds = true</code> because stabilization is not possible in that case, anyway.</li>
+<li>setting <code>filteringQuality</code> to high</li>
+</ul>
+<p><strong>Figure 16. Comparing quality</strong>
+<img src="/img/babylon101/csm/high-quality.jpg" alt="High quality"></p>
+<p>On the left:</p>
+<ul>
+<li>cascades stabilized</li>
+<li><code>autoCalcDepthBounds = false</code></li>
+<li>lambda = 0.7</li>
+<li>shadow map sizes 1024x1024</li>
+<li><code>depthClamp = false</code></li>
+<li>filtering is PCF medium</li>
+</ul>
+<p>On the right:</p>
+<ul>
+<li>cascades not stabilized</li>
+<li><code>autoCalcDepthBounds = true</code></li>
+<li>lambda = 1</li>
+<li>shadow map sizes 2048x2048</li>
+<li><code>depthClamp = true</code></li>
+<li>filtering is PCF high</li>
+</ul>
+<p>For comparison sake, here is the same part rendered with the standard <code>ShadowGenerator</code> (far right, map size is 2048x2048):</p>
+<p><strong>Figure 17. Comparing with standard <code>ShadowGenerator</code></strong>
+<img src="/img/babylon101/csm/comparison-with-standard.jpg" alt="Comparison"></p>
+<h1><a name="references" class="anchor" href="#references"></a>References</h1><p>[1] Microsoft <a href="https://docs.microsoft.com/en-us/windows/win32/dxtecharts/cascaded-shadow-maps">Cascaded Shadow Maps</a> DirectX Sample</p>
+<p>[2] <a href="https://mynameismjp.wordpress.com/2013/09/10/shadow-maps/">A sampling of Shadow Techniques</a> by MJP</p>
+<p>[3] <a href="https://software.intel.com/en-us/articles/sample-distribution-shadow-maps">Sample Distribution Shadow Maps</a> by Andrew Lauritzen (Intel), Kohei, Komono, Aaron Lefohn (Intel)</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create Animated Particles - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create Animated Particles</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#further-reading">Further Reading</a><ul>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#intermediate-l2">Intermediate - L2</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="creating-animated-particles" class="anchor" href="#creating-animated-particles"></a>Creating Animated Particles</h1><p>Starting from Babylon.js v3.1 the particle system will allow animated particles using a sprite animation map as its texture.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#CLN02N#3">Playground Example - Animated Particle</a> - <i class="fa fa-eye" onclick="createIframe('CLN02N#3', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>To enable animated particles you pass a fifth Boolean parameter in the <code>ParticleSystem</code> constructor with the value <code>true</code> (The fourth for the <code>GPUParticleSystem</code>). The default value for this parameter is false. </p>
+<p>You can also call <code>particleSystem.isAnimationSheetEnabled = true</code> at any time.</p>
+<p>You then need to assign a sprite animation map as the <code>particleTexture</code> with the parameters as shown below and set some further properties of the <code>particleSystem</code> (please note that the texture as to be loaded with invertY set to false if you want to read texture data from top to bottom).</p>
+<pre><code class="lang-javascript">var particleSystem = new BABYLON.ParticleSystem(&quot;particles&quot;, 2000, scene, null, true);
+particleSystem.particleTexture = new BABYLON.Texture(&quot;textures/player.png&quot;, scene, true, false, BABYLON.Texture.TRILINEAR_SAMPLINGMODE);
+
+particleSystem.spriteCellHeight = 64;
+particleSystem.spriteCellWidth = 64;
+particleSystem.startSpriteCellID = 0;
+particleSystem.endSpriteCellID = 44;
+particleSystem.spriteCellChangeSpeed = 4; // default is one
+</code></pre>
+<p>The <code>spriteCellHeight</code> and <code>spriteCellWidth</code> are are the cell width and height for each sprite in the animation sheet. </p>
+<p><img src="/img/how_to/sprites/08-1.png" alt="Cell Dimensions"></p>
+<p>The <code>startSpriteCellID</code> and <code>endSpriteCellID</code> are set based on the cell positions of the sprites on the animation sheet, the top most, left most sprite is in cell 0 and you count from left to right from the top row downwards.</p>
+<p><img src="/img/how_to/sprites/08-2.png" alt="sheet"></p>
+<p>Starting with Babylon.js v3.3, you can also set <code>particleSystem.spriteRandomStartCell = true</code> to randomly pick the start cell id of each particles between <code>startSpriteCellID</code> and <code>endSpriteCellID</code>.</p>
+<p>Setting the value of <code>spriteCellChangeSpeed</code> to 1 allows the <code>particleSystem</code> to match the animation to life time of a particle. The particle will be emitted with the sprite at <code>startSpriteCellID</code> and will die displaying the sprite at <code>endSpriteCellID</code>.</p>
+<p>Giving <code>spriteCellChangeSpeed</code> a value above 1 will control the speed of the animation for a particle. The <strong>larger</strong> the number the <strong>faster</strong> the animation. Although the particle will be emitted with the sprite at <code>startSpriteCellID</code> the sprite on display when the particle dies will depend on the value of the speed and the life time of the particle and may vary.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/features/Particles">Particles Overview</a>  </p>
+<p><a href="/babylon101/particles">Particles 101</a></p>
+<p><a href="/how_to/Sub_Emitters">How to Use Sub Emitters</a></p>
+<p><a href="/How_To/Solid_Particles">Solid Particle System</a></p>
+<h2><a name="intermediate-l2" class="anchor" href="#intermediate-l2"></a>Intermediate - L2</h2><p><a href="/how_to/Customise">How to Customize the Particle System</a> 
+<a href="/how_to/Animate">Create animated particles</a> </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

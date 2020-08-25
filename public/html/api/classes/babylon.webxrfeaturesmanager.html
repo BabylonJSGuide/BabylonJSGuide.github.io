@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html style="height:100%;" class="default">
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg">
+	<title>WebXRFeaturesManager - Babylon.js Documentation</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="/css/libs/slideout.css">
+	<link rel="stylesheet" href="/css/libs/highlight/github.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<nav id="menu"></nav>
+<nav class="nav-main" style="position:inherit;">
+	<!-- Hamburger menu : displayed only in small screens-->
+	<i class="fa fa-bars" id="mobilemenu"></i>
+	<div class="banner">
+		<div class="menu">
+			<div class="do-not-hover" id="home">
+				<a href="/">HOME</a>
+			</div>
+			<div class="item" id="whatsnew">
+				<a href="/whats-new">What's new</a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/babylon101">Babylon 101 </a>
+			</div>
+			<div class="item" id="feature">
+				<a href="/examples">Examples </a>
+			</div>
+			<div class="item" id="How_To">
+				<a href="/How_To">How To...</a>
+			</div>
+			<div class="item active" id="feature">
+				<a href="/features">Features</a>
+			</div>
+			<div class="item" id="resources">
+				<a href="/resources">Resources</a>
+			</div>
+			<div class="item" id="extensions">
+				<a href="/extensions">Extensions</a>
+			</div>
+			<div class="item" id="snippets">
+				<a href="/snippets">Snippets </a>
+			</div>
+			<div class="item" id="classes">
+				<a href="/api">API</a>
+			</div>
+			<div class="item" id="playground">
+				<a href="/playground">Playground</a>
+			</div>
+		</div>
+		<div class="more">
+			<div class="searchbar">
+				<form method="get" action="/search">
+					<input type="text" name="bjsq" placeholder="Search...">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+	<header>
+		<div class="background-babylon tsd-page-title">
+			<div class="container">
+				<ul class="tsd-breadcrumb">
+					<li>
+						<a href="../globals.html">BABYLON</a>
+					</li>
+					<li>
+						<a href="babylon.webxrfeaturesmanager.html">WebXRFeaturesManager</a>
+					</li>
+				</ul>
+				<h1>WebXRFeaturesManager</h1>
+			</div>
+		</div>
+		</header>        <div class="container container-main">
+		<div class="row">
+			<div class="col-8 col-content">
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The WebXR features manager is responsible of enabling or disabling features required for the current XR session.
+							It is mainly used in AR sessions.</p>
+						</div>
+						<p>A feature can have a version that is defined by Babylon (and does not correspond with the webxr version).</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-hierarchy">
+					<h3>Hierarchy</h3>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">WebXRFeaturesManager</span>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel">
+					<h3>Implements</h3>
+					<ul class="tsd-hierarchy">
+						<li><a href="../interfaces/babylon.idisposable.html" class="tsd-signature-type">IDisposable</a></li>
+					</ul>
+				</section>
+				<section class="tsd-panel-group tsd-index-group">
+					<h2>Index</h2>
+					<section class="tsd-panel tsd-index-panel">
+						<div class="tsd-index-content">
+							<section class="tsd-index-section ">
+								<h3>Constructors</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								</ul>
+							</section>
+							<section class="tsd-index-section ">
+								<h3>Methods</h3>
+								<ul class="tsd-index-list">
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#attachfeature" class="tsd-kind-icon">attach<wbr>Feature</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#detachfeature" class="tsd-kind-icon">detach<wbr>Feature</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#disablefeature" class="tsd-kind-icon">disable<wbr>Feature</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#dispose" class="tsd-kind-icon">dispose</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#enablefeature" class="tsd-kind-icon">enable<wbr>Feature</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#extendxrsessioninitobject" class="tsd-kind-icon">extendXRSession<wbr>Init<wbr>Object</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#getenabledfeature" class="tsd-kind-icon">get<wbr>Enabled<wbr>Feature</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class"><a href="babylon.webxrfeaturesmanager.html#getenabledfeatures" class="tsd-kind-icon">get<wbr>Enabled<wbr>Features</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrfeaturesmanager.html#addwebxrfeature" class="tsd-kind-icon">Add<wbr>WebXRFeature</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrfeaturesmanager.html#constructfeature" class="tsd-kind-icon">Construct<wbr>Feature</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrfeaturesmanager.html#getavailablefeatures" class="tsd-kind-icon">Get<wbr>Available<wbr>Features</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrfeaturesmanager.html#getavailableversions" class="tsd-kind-icon">Get<wbr>Available<wbr>Versions</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrfeaturesmanager.html#getlatestversionoffeature" class="tsd-kind-icon">Get<wbr>Latest<wbr>Version<wbr>OfFeature</a></li>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="babylon.webxrfeaturesmanager.html#getstableversionoffeature" class="tsd-kind-icon">Get<wbr>Stable<wbr>Version<wbr>OfFeature</a></li>
+								</ul>
+							</section>
+						</div>
+					</section>
+				</section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Constructors</h2>
+					<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+						<a name="constructor" class="tsd-anchor"></a>
+						<h3>constructor</h3>
+						<a href="/playground/?code=constructor" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">new <wbr>WebXRFeatures<wbr>Manager<span class="tsd-signature-symbol">(</span>_xrSessionManager<span class="tsd-signature-symbol">: </span><a href="babylon.webxrsessionmanager.html" class="tsd-signature-type">WebXRSessionManager</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="babylon.webxrfeaturesmanager.html" class="tsd-signature-type">WebXRFeaturesManager</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>constructs a new features manages.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>_xrSessionManager: <a href="babylon.webxrsessionmanager.html" class="tsd-signature-type">WebXRSessionManager</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>an instance of WebXRSessionManager</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="babylon.webxrfeaturesmanager.html" class="tsd-signature-type">WebXRFeaturesManager</a></h4>
+							</li>
+						</ul>
+				</section></section>
+				<section class="tsd-panel-group tsd-member-group ">
+					<h2>Methods</h2>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="attachfeature" class="tsd-anchor"></a>
+						<h3>attach<wbr>Feature</h3>
+						<a href="/playground/?code=attachFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">attach<wbr>Feature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Attach a feature to the current session. Mainly used when session started to start the feature effect.
+										Can be used during a session to start a feature</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of feature to attach</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="detachfeature" class="tsd-anchor"></a>
+						<h3>detach<wbr>Feature</h3>
+						<a href="/playground/?code=detachFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">detach<wbr>Feature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Can be used inside a session or when the session ends to detach a specific feature</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of the feature to detach</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="disablefeature" class="tsd-anchor"></a>
+						<h3>disable<wbr>Feature</h3>
+						<a href="/playground/?code=disableFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">disable<wbr>Feature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Used to disable an already-enabled feature
+										The feature will be disposed and will be recreated once enabled.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the feature to disable</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								<p>true if disable was successful</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="dispose" class="tsd-anchor"></a>
+						<h3>dispose</h3>
+						<a href="/playground/?code=dispose" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+									<p>Implementation of <a href="../interfaces/babylon.idisposable.html">IDisposable</a>.<a href="../interfaces/babylon.idisposable.html#dispose">dispose</a></p>
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>dispose this features manager</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="enablefeature" class="tsd-anchor"></a>
+						<h3>enable<wbr>Feature</h3>
+						<a href="/playground/?code=enableFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">enable<wbr>Feature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span>, version<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, moduleOptions<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, attachIfPossible<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, required<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.iwebxrfeature.html" class="tsd-signature-type">IWebXRFeature</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Enable a feature using its name and a version. This will enable it in the scene, and will be responsible to attach it when the session starts.
+										If used twice, the old version will be disposed and a new one will be constructed. This way you can re-enable with different configuration.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of the feature to load or the class of the feature</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> version: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>optional version to load. if not provided the latest version will be enabled</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> moduleOptions: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>options provided to the module. Ses the module documentation / constructor</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> attachIfPossible: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>if set to true (default) the feature will be automatically attached, if it is currently possible</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> required: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>is this feature required to the app. If set to true the session init will fail if the feature is not available.</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../interfaces/babylon.iwebxrfeature.html" class="tsd-signature-type">IWebXRFeature</a></h4>
+								<p>a new constructed feature or throws an error if feature not found.</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="extendxrsessioninitobject" class="tsd-anchor"></a>
+						<h3>extendXRSession<wbr>Init<wbr>Object</h3>
+						<a href="/playground/?code=extendXRSessionInitObject" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">extendXRSession<wbr>Init<wbr>Object<span class="tsd-signature-symbol">(</span>xrSessionInit<span class="tsd-signature-symbol">: </span><a href="" class="tsd-signature-type">XRSessionInit</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="" class="tsd-signature-type">XRSessionInit</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>This function will exten the session creation configuration object with enabled features.
+											If, for example, the anchors feature is enabled, it will be automatically added to the optional or required features list,
+										according to the defined &quot;required&quot; variable, provided during enableFeature call</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>xrSessionInit: <a href="" class="tsd-signature-type">XRSessionInit</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the xr Session init object to extend</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type">XRSessionInit</a></h4>
+								<p>an extended XRSessionInit object</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="getenabledfeature" class="tsd-anchor"></a>
+						<h3>get<wbr>Enabled<wbr>Feature</h3>
+						<a href="/playground/?code=getEnabledFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">get<wbr>Enabled<wbr>Feature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.iwebxrfeature.html" class="tsd-signature-type">IWebXRFeature</a></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>get the implementation of an enabled feature.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of the feature to load</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <a href="../interfaces/babylon.iwebxrfeature.html" class="tsd-signature-type">IWebXRFeature</a></h4>
+								<p>the feature class, if found</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a name="getenabledfeatures" class="tsd-anchor"></a>
+						<h3>get<wbr>Enabled<wbr>Features</h3>
+						<a href="/playground/?code=getEnabledFeatures" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-kind-icon">get<wbr>Enabled<wbr>Features<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Get the list of enabled features</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+								<p>an array of enabled features</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="addwebxrfeature" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Add<wbr>WebXRFeature</h3>
+						<a href="/playground/?code=AddWebXRFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Add<wbr>WebXRFeature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, constructorFunction<span class="tsd-signature-symbol">: </span><a href="../globals.html#webxrfeatureconstructor" class="tsd-signature-type">WebXRFeatureConstructor</a>, version<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, stable<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Used to register a module. After calling this function a developer can use this feature in the scene.
+										Mainly used internally.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of the feature to register</p>
+										</div>
+									</li>
+									<li>
+										<h5>constructorFunction: <a href="../globals.html#webxrfeatureconstructor" class="tsd-signature-type">WebXRFeatureConstructor</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the function used to construct the module</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> version: <span class="tsd-signature-type">number</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the (babylon) version of the module</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> stable: <span class="tsd-signature-type">boolean</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>is that a stable version of this module</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="constructfeature" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Construct<wbr>Feature</h3>
+						<a href="/playground/?code=ConstructFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Construct<wbr>Feature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, version<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, xrSessionManager<span class="tsd-signature-symbol">: </span><a href="babylon.webxrsessionmanager.html" class="tsd-signature-type">WebXRSessionManager</a>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Returns a constructor of a specific feature.</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of the feature to construct</p>
+										</div>
+									</li>
+									<li>
+										<h5>version: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the version of the feature to load</p>
+										</div>
+									</li>
+									<li>
+										<h5>xrSessionManager: <a href="babylon.webxrsessionmanager.html" class="tsd-signature-type">WebXRSessionManager</a></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the xrSessionManager. Used to construct the module</p>
+										</div>
+									</li>
+									<li>
+										<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">any</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>optional options provided to the module.</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
+								<p>a function that, when called, will return a new instance of this feature</p>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-siganture">
+										<ul class="tsd-signatures tsd-kind-type-literal">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/babylon.iwebxrfeature.html" class="tsd-signature-type">IWebXRFeature</a></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-returns-title">Returns <a href="../interfaces/babylon.iwebxrfeature.html" class="tsd-signature-type">IWebXRFeature</a></h4>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="getavailablefeatures" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Get<wbr>Available<wbr>Features</h3>
+						<a href="/playground/?code=GetAvailableFeatures" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Get<wbr>Available<wbr>Features<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Can be used to return the list of features currently registered</p>
+									</div>
+								</div>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+								<p>an Array of available features</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="getavailableversions" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Get<wbr>Available<wbr>Versions</h3>
+						<a href="/playground/?code=GetAvailableVersions" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Get<wbr>Available<wbr>Versions<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Gets the versions available for a specific feature</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of the feature</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+								<p>an array with the available versions</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="getlatestversionoffeature" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Get<wbr>Latest<wbr>Version<wbr>OfFeature</h3>
+						<a href="/playground/?code=GetLatestVersionOfFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Get<wbr>Latest<wbr>Version<wbr>OfFeature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Return the latest unstable version of this feature</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of the feature to search</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+								<p>the version number. if not found will return -1</p>
+							</li>
+						</ul>
+						</section>            <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<a name="getstableversionoffeature" class="tsd-anchor"></a>
+						<h3><span class="tsd-flag ts-flagStatic">Static</span> Get<wbr>Stable<wbr>Version<wbr>OfFeature</h3>
+						<a href="/playground/?code=GetStableVersionOfFeature" style="float:right; margin-top:-35px" target="_blank">Find examples in
+						Playground</a>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<li class="tsd-signature tsd-kind-icon">Get<wbr>Stable<wbr>Version<wbr>OfFeature<span class="tsd-signature-symbol">(</span>featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						</ul>
+						<ul class="tsd-descriptions">
+							<li class="tsd-description">
+								<aside class="tsd-sources">
+								</aside>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Return the latest stable version of this feature</p>
+									</div>
+								</div>
+								<h4 class="tsd-parameters-title">Parameters</h4>
+								<ul class="tsd-parameters">
+									<li>
+										<h5>featureName: <span class="tsd-signature-type">string</span></h5>
+										<div class="tsd-comment tsd-typography">
+											<p>the name of the feature to search</p>
+										</div>
+									</li>
+								</ul>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+								<p>the version number. if not found will return -1</p>
+							</li>
+						</ul>
+				</section></section>
+			</div>
+			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+				<nav class="tsd-navigation primary">
+					<ul>
+						<li class="current tsd-kind-namespace">
+							<a href="../globals.html">BABYLON</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.debug.html">BABYLON.<wbr>Debug</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.html">BABYLON.GLTF2</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.html">BABYLON.GLTF2.<wbr>Loader</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gltf2.loader.extensions.html">BABYLON.GLTF2.<wbr>Loader.<wbr>Extensions</a>
+						</li>
+						<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+							<a href="../modules/babylon.gui.html">BABYLON.GUI</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="tsd-navigation secondary menu-sticky">
+					<ul class="before-current">
+					</ul>
+					<ul class="current">
+						<li class="current tsd-kind-class tsd-parent-kind-namespace">
+							<a href="babylon.webxrfeaturesmanager.html" class="tsd-kind-icon">WebXRFeatures<wbr>Manager</a>
+							<ul>
+								<li class=" tsd-kind-constructor tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#constructor" class="tsd-kind-icon">constructor</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#attachfeature" class="tsd-kind-icon">attach<wbr>Feature</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#detachfeature" class="tsd-kind-icon">detach<wbr>Feature</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#disablefeature" class="tsd-kind-icon">disable<wbr>Feature</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#dispose" class="tsd-kind-icon">dispose</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#enablefeature" class="tsd-kind-icon">enable<wbr>Feature</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#extendxrsessioninitobject" class="tsd-kind-icon">extendXRSession<wbr>Init<wbr>Object</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#getenabledfeature" class="tsd-kind-icon">get<wbr>Enabled<wbr>Feature</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class">
+									<a href="babylon.webxrfeaturesmanager.html#getenabledfeatures" class="tsd-kind-icon">get<wbr>Enabled<wbr>Features</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrfeaturesmanager.html#addwebxrfeature" class="tsd-kind-icon">Add<wbr>WebXRFeature</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrfeaturesmanager.html#constructfeature" class="tsd-kind-icon">Construct<wbr>Feature</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrfeaturesmanager.html#getavailablefeatures" class="tsd-kind-icon">Get<wbr>Available<wbr>Features</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrfeaturesmanager.html#getavailableversions" class="tsd-kind-icon">Get<wbr>Available<wbr>Versions</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrfeaturesmanager.html#getlatestversionoffeature" class="tsd-kind-icon">Get<wbr>Latest<wbr>Version<wbr>OfFeature</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+									<a href="babylon.webxrfeaturesmanager.html#getstableversionoffeature" class="tsd-kind-icon">Get<wbr>Stable<wbr>Version<wbr>OfFeature</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="after-current">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<footer class="with-border-bottom">
+		<div class="container">
+			<h2>Legend</h2>
+			<div class="tsd-legend-group">
+				<ul class="tsd-legend">
+					<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+					<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+					<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+					<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+					<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+					<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+					<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+					<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+					<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+					<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+					<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+					<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+					<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				</ul>
+				<ul class="tsd-legend">
+					<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+					<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<div class="container tsd-generator">
+		<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	</div>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<footer class="footer" style="font-family:Roboto; border-top:0px">
+	<div class="footer-item">
+		<a href="https://www.babylonjs.com" target="_blank">
+		<i class="fa fa-home"></i> Babylonjs.com</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://forum.babylonjs.com" target="_blank">
+		<i class="fa fa-html5"></i> Forum</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Babylon.js" target="_blank">
+		<i class="fa fa-github"></i> Github</a>
+	</div>
+	<div class="footer-item">
+		<a href="https://github.com/BabylonJS/Documentation" target="_blank">
+		<i class="fa fa-code-fork"></i> Contribute </a>
+	</div>
+	<div class="footer-item">
+		<a href="https://www.netlify.com" target="_blank">
+		<i class="fa fa-heart"></i> Deployed by netlify </a>
+	</div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script>
+<script src="/js/index.js"></script>
+<script>(function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+            i[r].l = 1 * new Date();
+            a = s.createElement(o);
+            m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-66146410-1', 'auto');
+        ga('send', 'pageview');</script>
+<!-- HIGHLIGHT JS-->
+<script src="/js/static.js"></script>
+<script>$('code').each(function() {
+            $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+        });
+        hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use the WebVR experience helper - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use the WebVR experience helper</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#webvr-vs-webxr">WebVR vs WebXR</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#setup">Setup</a><ul>
+<li><a href="#options">Options</a></li>
+</ul>
+</li>
+<li><a href="#detect-if-fallback-orientation-camera-is-supported">Detect if fallback orientation camera is supported</a></li>
+<li><a href="#teleportation-and-rotation">Teleportation and Rotation</a></li>
+<li><a href="#teleportation-events">Teleportation events</a></li>
+<li><a href="#enabling-disabling-teleportation">Enabling / disabling teleportation</a></li>
+<li><a href="#accessing-cameras">Accessing cameras</a></li>
+<li><a href="#accessing-controllers">Accessing controllers</a></li>
+<li><a href="#accessing-vr-device-position-and-rotation">Accessing vr device position and rotation</a></li>
+<li><a href="#gaze-and-interaction">Gaze and interaction</a></li>
+<li><a href="#grab">Grab</a></li>
+<li><a href="#multiview">Multiview</a></li>
+<li><a href="#examples">Examples</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-the-webvr-experience-helper" class="anchor" href="#how-to-use-the-webvr-experience-helper"></a>How to use the WebVR experience helper</h1><h2><a name="webvr-vs-webxr" class="anchor" href="#webvr-vs-webxr"></a>WebVR vs WebXR</h2><p>While the WebVR experience helper will continue to be supported, it is strongly recommended that projects instead use the <a href="https://doc.babylonjs.com/how_to/webxr_experience_helpers">WebXR experience helper</a>. For more information, check out our <a href="https://doc.babylonjs.com/how_to/introduction_to_webxr">introduction to WebXR</a>.</p>
+<h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>The WebVR Experience Helper provides a quick way to add WebVR support to a Babylon scene.</p>
+<p>Features include:</p>
+<ol>
+<li>WebVR camera and non-WebVR camera initialization</li>
+<li>Enter WebVR button</li>
+<li>Teleportation and rotation in the world</li>
+<li>Gaze tracking with mesh selection from HMD and controllers</li>
+</ol>
+<h2><a name="setup" class="anchor" href="#setup"></a>Setup</h2><p>A VRExperienceHelper can be created directly from the scene.</p>
+<pre><code class="lang-javascript">var scene = new BABYLON.Scene(engine);
+var vrHelper = scene.createDefaultVRExperience();
+</code></pre>
+<p>This will initialize a WebVR camera and a non-WebVR camera in the scene. It will also create an enterVR button at the bottom right of the screen which will start rendering to the HMD on click.</p>
+<h3><a name="options" class="anchor" href="#options"></a>Options</h3><ul>
+<li>createDeviceOrientationCamera(default: true): If the non-WebVR camera should be created. To use an existing camera, create it and then initialize the helper with this set to false in the constructor.</li>
+<li>createFallbackVRDeviceOrientationFreeCamera(default: true): When no HMD is connected, this flag specifies if the VR camera should fallback to a VRDeviceOrientationFreeCamera which will render each eye on the screen. This can be set to false to only enable entering VR if an HMD is connected.</li>
+</ul>
+<h2><a name="detect-if-fallback-orientation-camera-is-supported" class="anchor" href="#detect-if-fallback-orientation-camera-is-supported"></a>Detect if fallback orientation camera is supported</h2><p>If a webVR capable device is not detected Babylon will fallback to using a vrDeviceOrientationCamera however device orientation will only be available if the device has an orientation sensor available. In the latest version of Safari, the orientation sensor is disabled by default and it does not prompt users to enable it in settings so currently this must be done by the app. See <a href="https://www.applemust.com/how-and-why-to-use-motion-orientation-settings-in-ios/">https://www.applemust.com/how-and-why-to-use-motion-orientation-settings-in-ios/</a></p>
+<pre><code class="lang-javascript">vrHelper.onAfterEnteringVRObservable.add(() =&gt; {
+  if (scene.activeCamera === vrHelper.vrDeviceOrientationCamera) {
+    BABYLON.FreeCameraDeviceOrientationInput.WaitForOrientationChangeAsync(1000)
+      .then(() =&gt; {
+        // Successfully received sensor input
+      })
+      .catch(() =&gt; {
+        alert(
+          &quot;Device orientation camera is being used but no sensor is found, prompt user to enable in safari settings&quot;
+        );
+      });
+  }
+});
+</code></pre>
+<p>See <a href="https://playground.babylonjs.com/#TAFSN0#230">https://playground.babylonjs.com/#TAFSN0#230</a> - <i class="fa fa-eye" onclick="createIframe('TAFSN0#230', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="teleportation-and-rotation" class="anchor" href="#teleportation-and-rotation"></a>Teleportation and Rotation</h2><p>To enable teleportation in the scene, create a mesh that the user should be able to teleport to and then enable teleportation with that mesh&#39;s name.</p>
+<pre><code class="lang-javascript">var ground = BABYLON.Mesh.CreateGround(&quot;ground&quot;, 6, 6, 2, scene);
+vrHelper.enableTeleportation({ floorMeshName: &quot;ground&quot; });
+</code></pre>
+<p>To teleport, hold up on the joystick to display where the user will be teleported to and then release to teleport.
+To rotate, move the joystick to the left or to the right.</p>
+<p>When WebVR controllers are connected, the teleportation will be based on where the controller is pointing.</p>
+<p>When WebVR controllers are not connected, the user will teleport to where the user is looking and teleportation can be triggered with an Xbox controller.</p>
+<h2><a name="teleportation-events" class="anchor" href="#teleportation-events"></a>Teleportation events</h2><p>Teleportation has two observables you can subscribe to:</p>
+<p>onBeforeCameraTeleport: Observable raised when teleportation is requested, receiving target Vector3 position as parameter:</p>
+<pre><code class="lang-javascript">vrHelper.onBeforeCameraTeleport.add(targetPosition =&gt; {
+  //Raised before camera is teleported
+});
+</code></pre>
+<p>onAfterCameraTeleport: Observable raised when teleportation animation finishes, receiving target Vector3 position as parameter:</p>
+<pre><code class="lang-javascript">vrHelper.onAfterCameraTeleport.add(targetPosition =&gt; {
+  //Raised after teleportation animation finishes
+});
+</code></pre>
+<p>To enable teleportation in the scene, create a mesh that the user should be able to teleport to and then enable teleportation with that mesh&#39;s name.</p>
+<pre><code class="lang-javascript">var ground = BABYLON.Mesh.CreateGround(&quot;ground&quot;, 6, 6, 2, scene);
+vrHelper.enableTeleportation({ floorMeshName: &quot;ground&quot; });
+</code></pre>
+<h2><a name="enabling-disabling-teleportation" class="anchor" href="#enabling-disabling-teleportation"></a>Enabling / disabling teleportation</h2><p>Teleportation can be enabled or disabled on demand by using the property teleportationEnabled:</p>
+<pre><code class="lang-javascript">// Enable teleportation
+vrHelper.teleportationEnabled = true;
+
+//Disable teleportation (teleportation mesh will not be displayed)
+vrHelper.teleportationEnabled = false;
+</code></pre>
+<p>To customize the teleportation target mesh the following property can be set to the mesh you&#39;d like to use:</p>
+<pre><code class="lang-javascript">vrHelper.teleportationTarget = BABYLON.Mesh.CreateSphere(
+  &quot;sphere1&quot;,
+  4,
+  0.1,
+  scene
+);
+</code></pre>
+<h2><a name="accessing-cameras" class="anchor" href="#accessing-cameras"></a>Accessing cameras</h2><p>The VR and non-VR camera can be accessed from the helper to handle any application specific logic.</p>
+<pre><code class="lang-javascript">// Initial camera before the user enters VR
+vrHelper.deviceOrientationCamera;
+// WebVR camera used after the user enters VR
+vrHelper.webVRCamera;
+// One of the 2 cameras above depending on which one is in use
+vrHelper.currentVRCamera;
+</code></pre>
+<h2><a name="accessing-controllers" class="anchor" href="#accessing-controllers"></a>Accessing controllers</h2><p>The controllers can be accessed from the helper to handle any application specific logic.</p>
+<pre><code class="lang-javascript">vrHelper.onControllerMeshLoaded.add(webVRController =&gt; {
+  var controllerMesh = webVRController.mesh;
+  webVRController.onTriggerStateChangedObservable.add(() =&gt; {
+    // Trigger pressed event
+  });
+});
+</code></pre>
+<p>Please note that the microsoft controllers are using the GLB file format and require the <a href="https://doc.babylonjs.com/how_to/gltf#gltf-file-import">GLTF Loader</a>.</p>
+<h2><a name="accessing-vr-device-position-and-rotation" class="anchor" href="#accessing-vr-device-position-and-rotation"></a>Accessing vr device position and rotation</h2><p>Position and rotation in Babylon space can be accessed through the webVRCamera&#39;s devicePosition and deviceRotationQuaternion</p>
+<pre><code class="lang-javascript">// Left and right hand position/rotation
+if (vrHelper.webVRCamera.leftController) {
+  leftHand.position = vrHelper.webVRCamera.leftController.devicePosition.clone();
+  leftHand.rotationQuaternion = vrHelper.webVRCamera.leftController.deviceRotationQuaternion.clone();
+}
+if (vrHelper.webVRCamera.rightController) {
+  rightHand.position = vrHelper.webVRCamera.rightController.devicePosition.clone();
+  rightHand.rotationQuaternion = vrHelper.webVRCamera.rightController.deviceRotationQuaternion.clone();
+}
+
+// Head position/rotation
+head.position = vrHelper.webVRCamera.devicePosition.clone();
+head.rotationQuaternion = vrHelper.webVRCamera.deviceRotationQuaternion.clone();
+</code></pre>
+<p>See <a href="https://www.babylonjs-playground.com/#VIGXA3#7">Example</a> - <i class="fa fa-eye" onclick="createIframe('VIGXA3#7', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="gaze-and-interaction" class="anchor" href="#gaze-and-interaction"></a>Gaze and interaction</h2><p>Gaze and interactions can be enabled through the enableInteractions method. See <a href="https://playground.babylonjs.com/#JA1ND3#40">example</a> - <i class="fa fa-eye" onclick="createIframe('JA1ND3#40', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">vrHelper.enableInteractions();
+</code></pre>
+<p>This will start casting a ray from either the user&#39;s camera or controllers. Where this ray intersects a mesh in the scene, a small gaze mesh will be placed to indicate to the user what is currently selected.</p>
+<p>Please note the gaze controllers will simulate pointer events so <code>scene.onPointerObservable</code> will be raised when gaze is enabled.</p>
+<p>To filter which meshes the gaze can intersect with, the raySelectionPredicate can be used:</p>
+<pre><code class="lang-javascript">vrHelper.raySelectionPredicate = mesh =&gt; {
+  if (mesh.name.indexOf(&quot;Flags&quot;) !== -1) {
+    return true;
+  }
+  return false;
+};
+</code></pre>
+<p>This will cause the user&#39;s gaze to pass through any mesh which results in the raySelectionPredicate returning false.</p>
+<p>As the user moves between meshes with their gaze, the onNewMeshSelected event will occur.
+Note: This only works after interactions have been enabled.</p>
+<pre><code class="lang-javascript">vrHelper.onNewMeshSelected.add(mesh =&gt; {
+  // Mesh has been selected
+});
+</code></pre>
+<p>This will return the single closest mesh that was selected.</p>
+<p>Prior to onNewMeshSelected an event called onNewMeshPicked is raised when a mesh is selected based on meshSelectionPredicate successful evaluation. This observable notifies a PickingInfo object to subscribers.</p>
+<pre><code class="lang-javascript">vrHelper.onNewMeshPicked.add(pickingInfo =&gt; {
+  //Callback receiving ray cast picking info
+});
+</code></pre>
+<p>As the user unselects a mesh with their gaze or controller, the onSelectedMeshUnselected event will occur.</p>
+<pre><code class="lang-javascript">vrHelper.onSelectedMeshUnselected.add(mesh =&gt; {
+  // Mesh has been unselected
+});
+</code></pre>
+<p>You can add your own filtering logic with meshSelectionPredicate.
+Note: This will be applied after the raySelectionPredicate.</p>
+<pre><code class="lang-javascript">vrHelper.meshSelectionPredicate = mesh =&gt; {
+  if (mesh.name.indexOf(&quot;Flags01&quot;) !== -1) {
+    return true;
+  }
+  return false;
+};
+</code></pre>
+<p>The logic order for raySelectionPredicate, meshSelectionPredicate, onNewMeshPicked, onNewMeshSelected are as followed:</p>
+<ol>
+<li>Ray is casted from the controller</li>
+<li>When the ray hits an object the raySelectionPredicate will be called and if true the ray will collide there and be stopped otherwise the ray will pass through the object</li>
+<li>Teleportation target location is updated to where the ray collided if the collision is also a floor mesh</li>
+<li>If the collision object was not collided with on the last frame meshSelectionPredicate is checked, if it returns true the onNewMeshPicked event is fired and then onNewMeshSelected is fired</li>
+</ol>
+<p>The gaze tracker can be customized by setting the gazeTrackerMesh. <a href="https://www.babylonjs-playground.com/#ZHYP5K">Example</a> - <i class="fa fa-eye" onclick="createIframe('ZHYP5K#', this)"></i><div class="iframeContainer"></div></p>
+<pre><code class="lang-javascript">vrHelper.gazeTrackerMesh = BABYLON.Mesh.CreateSphere(&quot;sphere1&quot;, 4, 0.1, scene);
+</code></pre>
+<p>On specific devices like iOS (where fullscreen is not supported), you may want to set <code>vrHelper.enableGazeEvenWhenNoPointerLock = true</code> to let the gaze controller run even when not under fullscreen and pointer lock.</p>
+<h2><a name="grab" class="anchor" href="#grab"></a>Grab</h2><p>By combining By combining WebVR controller method and add/removeChild method, you can grab objects by pressing trigger button.</p>
+<pre><code class="lang-javascript">webVRController.onTriggerStateChangedObservable.add(stateObject =&gt; {
+  if (webVRController.hand == &quot;left&quot;) {
+    if (selectedMesh != null) {
+      //grab
+      if (stateObject.value &gt; 0.01) {
+        webVRController.mesh.addChild(selectedMesh);
+        //ungrab
+      } else {
+        webVRController.mesh.removeChild(selectedMesh);
+      }
+    }
+  }
+});
+</code></pre>
+<p>Selected mesh is detected by onNewMeshSelected method.</p>
+<pre><code class="lang-javascript">VRHelper.onNewMeshSelected.add(function(mesh) {
+  selectedMesh = mesh;
+});
+
+VRHelper.onSelectedMeshUnselected.add(function() {
+  selectedMesh = null;
+});
+</code></pre>
+<p>See the example.</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#B4C2AH">Playground Example of a grab objects by WebVRController</a> - <i class="fa fa-eye" onclick="createIframe('B4C2AH#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h2><a name="multiview" class="anchor" href="#multiview"></a>Multiview</h2><p>To improve rendering performance by up to 2x, try using <a href="/How_To/Multiview">Multiview</a> which will render both eyes in a single render pass</p>
+<h2><a name="examples" class="anchor" href="#examples"></a>Examples</h2><p>Scenes:</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#JA1ND3#6">Sponza</a> - <i class="fa fa-eye" onclick="createIframe('JA1ND3#6', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#JA1ND3#15">Mansion</a> - <i class="fa fa-eye" onclick="createIframe('JA1ND3#15', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://www.babylonjs-playground.com/#JA1ND3#18">HillValley</a> - <i class="fa fa-eye" onclick="createIframe('JA1ND3#18', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>Games:</p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#32DWVS#4">Minecraft JMJ</a> - <i class="fa fa-eye" onclick="createIframe('32DWVS#4', this)"></i><div class="iframeContainer"></div></li>
+<li><a href="https://playground.babylonjs.com/#FAXLY2">Fruit Ninja</a> - <i class="fa fa-eye" onclick="createIframe('FAXLY2#', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Maya - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Maya</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#installer">Installer</a><ul>
+<li><a href="#installing-the-installer-so-meta">Installing the installer (so meta...)</a></li>
+<li><a href="#using-the-installer">Using the installer</a></li>
+</ul>
+</li>
+<li><a href="#manual-install">Manual Install</a><ul>
+<li><a href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#visual-studio">Visual Studio</a></li>
+<li><a href="#net-framework">.NET Framework</a></li>
+<li><a href="#other-dependencies">Other Dependencies</a><ul>
+<li><a href="#features">Features</a></li>
+</ul>
+</li>
+<li><a href="#exported-features">Exported features</a></li>
+<li><a href="#the-exporter-window">The exporter window</a><ul>
+<li><a href="#what-you-should-know">What you should know</a></li>
+</ul>
+</li>
+<li><a href="#camera">Camera</a></li>
+<li><a href="#light">Light</a></li>
+<li><a href="#locator">Locator</a></li>
+<li><a href="#group-node">Group node</a></li>
+<li><a href="#textures-and-intermediate-nodes">Textures and intermediate nodes</a></li>
+<li><a href="#textures-image-format">Textures image format</a></li>
+<li><a href="#physical-materials">Physical materials</a></li>
+<li><a href="#uv-sets">UV sets</a></li>
+<li><a href="#double-sided-material">Double sided material</a></li>
+<li><a href="#babylon-material-attributes">Babylon material attributes</a></li>
+<li><a href="#custom-attributes">Custom attributes</a></li>
+<li><a href="#exporter-through-mel-script">Exporter through MEL script</a><ul>
+<li><a href="#using-the-exporter">Using the exporter</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-install-the-maya-plug-in" class="anchor" href="#how-to-install-the-maya-plug-in"></a>How To Install the Maya plug-in</h1><h2><a name="installer" class="anchor" href="#installer"></a>Installer</h2><h3><a name="installing-the-installer-so-meta" class="anchor" href="#installing-the-installer-so-meta"></a>Installing the installer (so meta...)</h3><p>We have recently introduced a new tool to simplify the installation of the plugin for both Max and Maya.</p>
+<p>First, you can download the latest version of the installer from our <a href="https://github.com/BabylonJS/Exporters/releases">Github Releases</a>. Once on the releases page, you can find all our packages in the assets section of each releases:</p>
+<p><img src="/img/exporters/installer/GithubPreRelease.png" alt="releases"></p>
+<p>From there, you can download the Installer.zip file. Chrome is currently warning of potential threat as the installer.exe has currently not been downloaded enough to pass the Chromium checks. In this case, you might see a message like this:</p>
+<p><img src="/img/exporters/installer/ChromeDLWarning.png" alt="chrome warning"></p>
+<p>You can nervertheless continue to download by pressing the little arrow and chosing to &quot;Keep&quot; the file:</p>
+<p><img src="/img/exporters/installer/ChromeDLWarningKeep.png" alt="chrome warning keep"></p>
+<p>Once downloaded, you can extract the content of the zip in your favorite location.</p>
+<h3><a name="using-the-installer" class="anchor" href="#using-the-installer"></a>Using the installer</h3><p>Launch the executable file contained in the previous zip. On the first launch Windows like Chrome previously will emit a Smart Screen warning as the application has currently not being launched enough to be trusted.</p>
+<p><img src="/img/exporters/installer/SmartScreen.png" alt="smart screen warning"></p>
+<p>As before, you can chose to continue by pressing more info and then Run anyway:</p>
+<p><img src="/img/exporters/installer/SmartScreenKeep.png" alt="smart screen warning keep"></p>
+<p>No worries, you are almost there. A second warning is raised by Windows as the installer needs to write files in the program files and therefore run in elevated mode. You can access the User Account Control and finally start using the application.</p>
+<p>From this point, it gets simpler:</p>
+<p><img src="/img/exporters/installer/Installer.png" alt="smart screen warning keep"></p>
+<p>Once launched the application should auto detect all the installation folders from your Autodesk applications. In case it fails to do so, you could still manually location the targetted software.</p>
+<p>You can now easily install or update any of your 3d authoring tools to the latest prerelease available on Github.</p>
+<p>Would you want to upgrade to the latest available pre-release of the exporter plugins, you can easily launch back the installer and follow the same exact procedure to update the installed plugins to their latest versions.</p>
+<p>Please not that both the software you are trying to install the plugin for should be closed during the installation.</p>
+<h2><a name="manual-install" class="anchor" href="#manual-install"></a>Manual Install</h2><p>The plug-in is designed for Maya 2017 or later. This guide is about the Windows version (a MacOS version is coming soon). To download it, go to the <a href="https://github.com/BabylonJS/Exporters/releases">Github project Releases</a>.</p>
+<p><img src="/img/exporters/installer/GithubPreRelease.png" alt="releases"></p>
+<p>In the assets section of the release you can find one zip file per supported tool (like Maya_2019.zip) containing the plugin files.</p>
+<p>Click on the zip file, to start Downloading.</p>
+<p>By default, Windows blocks all .dll files coming from the web, so we have to unblock them first. Select the zip file, and with a right click select <em>Properties</em>, select <em>Unblock</em>, and then _OK_.</p>
+<p><img src="/img/exporters/Maya/3_dll_unlocking.jpg" alt="dll unblocking"></p>
+<p>Then, extract the content of the zip file on your computer.</p>
+<p>Finally:</p>
+<ul>
+<li>move all .dll files into a directory defined in Maya plug-in path (for example <code>C:/Program Files/Autodesk/Maya2018/bin/plug-ins</code>). More information on how to install a plug-in in Maya <a href="https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2016/ENU/Maya/files/GUID-FA51BD26-86F3-4F41-9486-2C3CF52B9E17-htm.html">here</a>.</li>
+<li>and move all template files to their respective folders AETemplates and NETemplates. Those files are used for the UI. While not mandatory they are always welcomed!</li>
+</ul>
+<p>You should find the <em>Maya2Babylon.nll.dll</em> in the plug-in Manager (<em>Windows &gt; Settings/Preferences &gt; Plug-in Manager</em>).</p>
+<p><img src="/img/exporters/Maya/4_maya_plug_in_manager.jpg" alt="dll unblocking"></p>
+<p>Check <em>Loaded</em> and <em>Auto load</em>, and a new tab should appear: </p>
+<p><img src="/img/exporters/Maya/5_plugin_visible.jpg" alt="plug-in visible"></p>
+<p>Congratulations! You did it!</p>
+<h1><a name="dependencies" class="anchor" href="#dependencies"></a>Dependencies</h1><h2><a name="visual-studio" class="anchor" href="#visual-studio"></a>Visual Studio</h2><p>Visual Studio is required to build the Maya2Babylon project from source.</p>
+<h2><a name="net-framework" class="anchor" href="#net-framework"></a>.NET Framework</h2><p>The <a href="https://docs.microsoft.com/en-us/dotnet/framework/install/guide-for-developers">.NET Framework Redistributable</a> needs to be installed in order to run the Maya2Babylon plugin properly.</p>
+<ul>
+<li><p>Maya2Babylon 2017-2018</p>
+<ul>
+<li>Requires atleast .NET Framework 4.6.1</li>
+</ul>
+</li>
+<li><p>Maya2Babylon 2019</p>
+<ul>
+<li>Requires atleast .NET Framework 4.6.1</li>
+</ul>
+</li>
+<li><p>Maya2Babylon 2020</p>
+<ul>
+<li>Requires atleast .NET Framework 4.6.1</li>
+</ul>
+</li>
+</ul>
+<h2><a name="other-dependencies" class="anchor" href="#other-dependencies"></a>Other Dependencies</h2><ul>
+<li>For Maya 2020<ul>
+<li>Maya2Babylon 2020 requires Maya 2020.1 or newer.</li>
+</ul>
+</li>
+</ul>
+<h1><a name="features" class="anchor" href="#features"></a>Features</h1><h2><a name="exported-features" class="anchor" href="#exported-features"></a>Exported features</h2><ul>
+<li><p><em>Meshes</em></p>
+<ul>
+<li>Visibility</li>
+<li>Position / rotation / scaling</li>
+<li>Geometry (position, normal, tangent, texture coordinates (2 channels))</li>
+<li>Skin</li>
+<li>Instances</li>
+<li>Morph targets (blend shapes)</li>
+<li>Animations: Position, scaling, rotation, bones, morph weights</li>
+<li>Custom attributes</li>
+</ul>
+</li>
+<li><p><em>Materials</em></p>
+<ul>
+<li>Standard materials (Lambert, Phong, PhongE and Blinn)<ul>
+<li>Color</li>
+<li>Transparency</li>
+<li>Ambient color</li>
+<li>Bump mapping</li>
+<li>Specular color and power</li>
+<li>Reflected color</li>
+</ul>
+</li>
+<li>PBR materials (Stingray PBS, AiStandardSurface)<ul>
+<li>Base color &amp; opacity</li>
+<li>Normal</li>
+<li>Metallic</li>
+<li>Roughness</li>
+<li>Emissive</li>
+</ul>
+</li>
+<li>Multi-materials</li>
+<li>Double sided materials</li>
+<li>Unlit</li>
+<li>Backface culling</li>
+<li>Max Simultaneous Lights</li>
+<li>Opacity/Transparency mode</li>
+<li>Custom attributes</li>
+</ul>
+</li>
+<li><p><em>Textures</em></p>
+<ul>
+<li>UV offset / scaling / angle</li>
+<li>Level</li>
+<li>Coordinates mode (spherical, planar, explicit)</li>
+<li>Wrapping (clamp, mirror, wrap)</li>
+</ul>
+</li>
+<li><p><em>Cameras</em></p>
+<ul>
+<li>Fov</li>
+<li>MinZ</li>
+<li>MaxZ</li>
+<li>Position</li>
+<li>Target / Rotation</li>
+<li>Animations: Position, Target / Rotation</li>
+<li>Custom attributes</li>
+</ul>
+</li>
+<li><p><em>Lights</em></p>
+<ul>
+<li>Point / spot / directional / ambient</li>
+<li>Inclusion / exclusion lists</li>
+<li>Position / direction</li>
+<li>Intensity</li>
+<li>Diffuse</li>
+<li>Specular</li>
+<li>Animations: Position, direction</li>
+<li>Custom attributes</li>
+</ul>
+</li>
+</ul>
+<h2><a name="the-exporter-window" class="anchor" href="#the-exporter-window"></a>The exporter window</h2><p>When your scene is ready to be exported, click on the <strong>Babylon</strong> tab on the top menu, and click on <strong>Babylon File Exporter</strong> to display the exporter window. </p>
+<p><img src="/img/exporters/Maya/6_export_window.jpg" alt="export window"></p>
+<p>This window is composed of 3 panels:</p>
+<ul>
+<li>A top panel with a file path and a button. With this panel, you choose where your Babylon file will be exported by clicking on the right button</li>
+<li>Several options and two buttons Export and Export &amp; Run</li>
+<li>A log panel</li>
+</ul>
+<p>The <em>Export</em> button should be used to create the Babylon file representing your scene. The <em>Export &amp; Run</em> button will also create the Babylon file, but will also launch your default browser and run the newly made Babylon file. This button is very useful if you just want to test the render of your scene in Babylon.js.</p>
+<p>As babylon.js script is retrieved directly from the official website directly, you should have internet access in order to correctly use Export &amp; Run.</p>
+<p>The log panel indicates in real time which mesh has been exported, which material, and if there are any problems with these objects.</p>
+<p>Option <em>Optimize vertices</em>: The Babylon exporter will try to optimize the number of vertices to export instead of exporting everything naively (if a vertex is part of two faces, this vertex won’t be exported twice with this option checked).</p>
+<p>The <em>Scale factor</em> can be used to rescale the whole world. If you set a scale factor equal to 100, the resulting scene will be 100 times smaller (1%). By default the scale factor is equal to 1, meaning no rescale.</p>
+<p>The <em>Texture quality</em> sets the convertion quality of bitmap to JPEG. At 100 (the maximum value), it gives the highest image quality but no file size reduction. On the contrary at 0 (the minimum value), it gives the lowest image quality but the greatest file size reduction. By default the <em>Texture quality</em> is set to 100.</p>
+<p>The <em>Use Draco comression</em> option is only available for gltf and glb output format. More detail <a href="/resources/Maya_to_glTF#draco-compression">here</a>.</p>
+<p>In the <em>MorphTarget options</em> section, the <em>Export normal</em> and <em>Export tangent</em> checkboxes allow you to customize the morph target export.</p>
+<h1><a name="what-you-should-know" class="anchor" href="#what-you-should-know"></a>What you should know</h1><h2><a name="camera" class="anchor" href="#camera"></a>Camera</h2><p>If you want to test your scene right away by using the button Export &amp; Run, your scene should have a camera created. Otherwise, the log panel will display the warning “No camera defined” and a default one would be created at runtime but won&#39;t be exported in .babylon file.</p>
+<p>If you have more than one camera, the first one will be set as activeCamera in Babylon.</p>
+<h2><a name="light" class="anchor" href="#light"></a>Light</h2><p>If you don’t have any lights in your scene, the exporter will add an ambient light by default. The log panel will display the warning “No light defined – A default ambient light was added for your convenience”. </p>
+<h2><a name="locator" class="anchor" href="#locator"></a>Locator</h2><p>If you want to have a point in space used only for its transform attributes you can use a Locator. For example, a target camera naturally comes with a locator to indicate the position to look at. They can also be used as parent node when updating the scene at runtime with the Babylon engine.</p>
+<h2><a name="group-node" class="anchor" href="#group-node"></a>Group node</h2><p>A group node is exported as a dummy, a mesh without vertices, just like a locator. However, only group nodes used as parent for other nodes are exported. If you have an empty group node, you should probably switch to a locator instead or it will be ignored.</p>
+<h2><a name="textures-and-intermediate-nodes" class="anchor" href="#textures-and-intermediate-nodes"></a>Textures and intermediate nodes</h2><p>Maya provides a large range of tools to manipulate connexions between textures and materials (like the Reverse node). For the most part, only a fileTexture is expected as input to a material.</p>
+<p>Currently the following intermediate nodes are supported by the exporter:</p>
+<ul>
+<li>Projection node which is only considered for the reflected color texture of a standard material. You can choose the projection type between <em>Spherical</em> or <em>Planar</em>. If no projection node is provided, the default projection type is <em>Spherical</em> for the reflected color texture.</li>
+<li>Bump2d node which is automatically created when assigning a file to a bump attribute.</li>
+</ul>
+<h2><a name="textures-image-format" class="anchor" href="#textures-image-format"></a>Textures image format</h2><p>Babylon engine fully supports the following image formats: jpg, bmp, png, gif, tga. You are adviced to use those formats for your textures when exporting to Babylon.</p>
+<p>Note that the exporter also supports textures with tif and dds formats. But, those textures will be automatically converted to png by the exporter to ensure compatibility with the Babylon engine.</p>
+<h2><a name="physical-materials" class="anchor" href="#physical-materials"></a>Physical materials</h2><p>The handling of physical materials is mimic from glTF format. <a href="/resources/Maya_to_glTF#pbr-materials">Detailed explanations here</a></p>
+<p>As well as the default supported GLTF parameters, in Babylon format, we support the coating parameters of Arnold Standard Surface. You can see below the supported parameters:</p>
+<p><img src="/img/exporters/Maya/Coating.png" alt="texture"></p>
+<p>Please note that if a map is used for the weight or the roughness parameter, they will be combined in the same way the ORM texture is created in the Detailed explanations. In Maya, metalness and roughness maps are black and white images (R=G=B). The 2 maps must have same sizes to be merged successfully.</p>
+<p>In Babylon format, weight is stored in red channel, roughness in green.</p>
+<h2><a name="uv-sets" class="anchor" href="#uv-sets"></a>UV sets</h2><p>Babylon engine supports only 2 UV sets. In Maya the first UV set, created by default (map1), is used as UV1 in Babylon. The second UV set (map2) is used as UV2. Other UV sets are ignored and UV2 is used instead.</p>
+<p><img src="/img/exporters/Maya/7_uv_set_editor.jpg" alt="export window"></p>
+<p>Moreover, Babylon engine supports only 1 UV set per texture. If a single texture is linked to UV1 and any other UV set, the log panel will display the warning “Texture is linked to UV1 and UV2. Only one UV set per texture is supported.” and the texture will be linked to UV1 or UV2 but not both.</p>
+<p>Now that you know all about the exporter features, it’s time to use it! </p>
+<h2><a name="double-sided-material" class="anchor" href="#double-sided-material"></a>Double sided material</h2><p>To create a double sided material there are different methods, but the only one exported is using two materials and a condition.</p>
+<p><img src="/img/exporters/Maya/8_hyperShade_double_sided.jpg" alt="double sided hypershade"></p>
+<p>When exporting, the geometry of all meshes using a double sided material is duplicated:</p>
+<ul>
+<li>the number of vertices and faces is doubled</li>
+<li>faces, normals and tangents are inverted for the duplicated geometry</li>
+</ul>
+<p>This mean that the exporter is automatically creating a back side. If you already have a back side, you should directly apply a material to it.</p>
+<h2><a name="babylon-material-attributes" class="anchor" href="#babylon-material-attributes"></a>Babylon material attributes</h2><p>Native materials are enhanced to have extra attributes in a dedicated node. A Babylon attribute node is created after the first export using the material.</p>
+<p>Here is an example for 3 different materials:</p>
+<p><img src="/img/exporters/Maya/BabylonMaterialAttributes_LargeView.jpg" alt="Maya babylon material attributes nodes"></p>
+<p><img src="/img/exporters/Maya/BabylonMaterialAttributes_AllNodes.jpg" alt="Maya babylon material attributes details"></p>
+<p>Most Babylon attributes are common to all materials:</p>
+<ul>
+<li><strong>Unlit</strong>: A material can be exported as Unlit, meaning independent of lighting. This implies that light-relative attributes or textures are not exported: ambient, specular, emissive, bump mapping and reflection texture.</li>
+<li><strong>Backface Culling</strong>: When true, the back faces are not rendered. When false, back faces are rendered using same material as front faces.</li>
+<li><strong>Max Simultaneous Lights</strong>: Number of Simultaneous lights allowed on the material.</li>
+<li><strong>Opacity/Transparency Mode</strong>: You can select how transparency is handled for this material among 3 choices:<ul>
+<li><em>Opaque</em>: The alpha color and texture are ignored during export process.</li>
+<li><em>Cutoff</em>: The alpha cutoff value is 0.5. Alpha values under this threshold are fully transparent. Alpha values above this threshold are fully opaque.</li>
+<li><em>Blend</em>: This how Maya handles transparency when rendering. This is the default mode for any material with an alpha color or texture.</li>
+</ul>
+</li>
+</ul>
+<h2><a name="custom-attributes" class="anchor" href="#custom-attributes"></a>Custom attributes</h2><p>You can add custom attributes to Meshes, Materials, Lights and Cameras with the attributes window (<em>Modify &gt; Add Attribute...</em>) and it adds them in the extra attributes of those objects.</p>
+<p><img src="/img/exporters/Maya/9_attribute_window.png" alt="native attributes window"></p>
+<p>In babylon, the custom attributes are added as metadata.</p>
+<p><img src="/img/exporters/Maya/CustomAttributes_Metadata.png" alt="custom attributes as metadata"></p>
+<p>Following types have particularities you should know:</p>
+<ul>
+<li><em>bool</em> : is equal to 0 or 1.</li>
+<li><em>enum</em> : corresponds to the index of your Maya enum. </li>
+</ul>
+<h2><a name="exporter-through-mel-script" class="anchor" href="#exporter-through-mel-script"></a>Exporter through MEL script</h2><p>You can use the exporter through MEL script. To do so you need to generate the exporter parameters with the command &#39;GenerateExportersParameter&#39; and specify a path and the export type.</p>
+<p><img src="/img/exporters/Maya/11_generate_export_parameter.jpg" alt="generate export parameter"></p>
+<p>Then you need to specify the other parameters and export with the command &#39;ScriptToBabylon&#39;.</p>
+<p><img src="/img/exporters/Maya/12_script_to_babylon.jpg" alt="export MEL"></p>
+<p>You can find an exemple script in the <a href="https://github.com/BabylonJS/Exporters/tree/master/Maya/MELScripts">Maya\MELScripts</a> folder of the exporter.</p>
+<h1><a name="using-the-exporter" class="anchor" href="#using-the-exporter"></a>Using the exporter</h1><p>Export your own scene from Maya to babylon format and load it into the <a href="http://sandbox.babylonjs.com/">Babylon Sandbox</a>. Or load them via scripts using the <a href="/how_to/how_to_use_assetsmanager">babylon loader</a>.</p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

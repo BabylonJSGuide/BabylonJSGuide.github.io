@@ -1,0 +1,74 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Importing Models - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item active" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/babylon101"><h1>babylon101</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Importing Models</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#importing-a-scene-or-model">Importing a Scene or Model</a></li>
+<li><a href="#moving-on">Moving On</a></li>
+<li><a href="#warning">Warning</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="getting-started-working-with-models" class="anchor" href="#getting-started-working-with-models"></a>Getting Started - Working with Models</h1><p>The playgrounds on this page contain, for example, houses which are be positioned and rotated. Once we have introduced you to the basics of importing and putting your project on a web page we will give you details on how to do this with Babylon.js code.</p>
+<h2><a name="importing-a-scene-or-model" class="anchor" href="#importing-a-scene-or-model"></a>Importing a Scene or Model</h2><p>When you put a model into a scene you are, in fact, loading it into a browser. As you will already know when you load anything into a website it is asynchronous. Before you can do anything with your models you need to know they have loaded. You can do this using the <em>ImportMeshAsync</em> method of the <em>SceneLoader</em>, which has the form</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMeshAsync(model name), folder path, file name, scene);
+</code></pre>
+<p>The scene parameter is optional and will default to the current scene. The first parameter can be of three types depending whether you want to load all the models, just one model or a list of models.</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMeshAsync(&quot;&quot;, &quot;/relative path/&quot;, &quot;myFile&quot;); //empty string all meshes
+BABYLON.SceneLoader.ImportMeshAsync(&quot;model1&quot;, &quot;/relative path/&quot;, &quot;myFile&quot;); //Name of model for one model
+BABYLON.SceneLoader.ImportMeshAsync([&quot;model1&quot;, &quot;model2&quot;], &quot;/relative path/&quot;, &quot;myFile&quot;); //Array of model names
+</code></pre>
+<p>All of the above will only load the models and you will not be able to manipulate them in any way. You have set up a Promise object but not given any way to act after the Promise is fulfilled and it provides a result. Examples of this are in the following two playground which <strong>only</strong> import the named models. </p>
+<p><a href="https://www.babylonjs-playground.com/#YNEAUL#1">https://www.babylonjs-playground.com/#YNEAUL#1</a> - <i class="fa fa-eye" onclick="createIframe('YNEAUL#1', this)"></i><div class="iframeContainer"></div></p>
+<p><a href="https://www.babylonjs-playground.com/#YNEAUL#2">https://www.babylonjs-playground.com/#YNEAUL#2</a> - <i class="fa fa-eye" onclick="createIframe('YNEAUL#2', this)"></i><div class="iframeContainer"></div></p>
+<p>To then act on the result we follow the Promise with the <em>then</em> method to call a function with the <em>result</em> of the <em>Promise</em>. The <em>result</em> is an object containing, among others, the property <em>meshes</em> which contains all the loaded models. We can use this array, or their names, to manipulate each mesh.</p>
+<pre><code class="lang-javascript">BABYLON.SceneLoader.ImportMeshAsync(&quot;&quot;, &quot;/relative path/&quot;, &quot;myFile&quot;).then((result) =&gt; {
+    result.meshes[1].position.x = 20;
+    const myMesh_1 = scene.getMeshByName(&quot;myMesh_1&quot;)
+    myMesh1.rotation.y = Math.PI / 2;
+})
+</code></pre>
+<p>This playground imports all the models and their positions are changed.</p>
+<p><a href="https://www.babylonjs-playground.com/#YNEAUL#3">https://www.babylonjs-playground.com/#YNEAUL#3</a> - <i class="fa fa-eye" onclick="createIframe('YNEAUL#3', this)"></i><div class="iframeContainer"></div></p>
+<h2><a name="moving-on" class="anchor" href="#moving-on"></a>Moving On</h2><p>Having a working scene in the playground is one thing but you will want your game or app to work on your own website. No we will give you an HTML template to do just this.</p>
+<p><a href="/babylon101/first_viewer">Prev</a>  Viewing a Model on a Web Page<br><a href="/babylon101/first_app">Next</a> A Template for a Web Game or Application</p>
+<h2><a name="warning" class="anchor" href="#warning"></a>Warning</h2><p>An obvious statement - different file types export models differently. </p>
+<p>A less obvious statement - different file types may be changed when importing into Babylon.js. </p>
+<p>You need to be aware of how the type you are using affects the outcome. It is not appropriate at this stage to go into detail but the following examples indicate why this is important.</p>
+<ol>
+<li>Some software saves all meshes with a rotationQuaternion set and you cannot then use the <em>rotation</em> method unless you first add</li>
+</ol>
+<pre><code class="lang-javascript">myMesh.rotationQuaternion = null; //Any version of Babylon.js
+</code></pre>
+<pre><code class="lang-javascript">myMesh.rotation = BABYLON.Vector3(); //babylon.js versions &gt; 4.00
+</code></pre>
+<p><a href="https://www.babylonjs-playground.com/#YNEAUL#3">https://www.babylonjs-playground.com/#YNEAUL#3</a> - <i class="fa fa-eye" onclick="createIframe('YNEAUL#3', this)"></i><div class="iframeContainer"></div></p>
+<ol start="2">
+<li>The following two types were exported from exactly the same scene and imported into Babylon.js.</li>
+</ol>
+<p><strong>.babylon</strong>
+A model is stored as one mesh, i.e. each house body and roof forms one house.</p>
+<pre><code>detached_house
+ground
+semi_house
+</code></pre><p><strong>.glb</strong>
+A _root_ node is added to hold all the models and model parts are stored as sub-meshes.</p>
+<pre><code>_root_ 
+    detached_house
+        detached_house primitive0
+        detached_house primitive1
+    ground
+    semi_house
+        semi_house primitive0
+        semi_house primitive1    
+</code></pre></div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

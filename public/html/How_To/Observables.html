@@ -1,0 +1,238 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Handle Events with Observables - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Handle Events with Observables</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#observable-methods-and-properties">Observable Methods and Properties</a></li>
+<li><a href="#add-an-observer">Add An Observer</a></li>
+<li><a href="#scene-observables">Scene Observables</a></li>
+<li><a href="#observable-based-countdown-function">Observable-based countdown function</a><ul>
+<li><a href="#settimerandstart">setTimerAndStart</a></li>
+<li><a href="#advanced-timer">Advanced Timer</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-observables" class="anchor" href="#how-to-use-observables"></a>How To Use Observables</h1><p>For many of you creating Babylon.js projects only <a href="/how_to/Gui">GUI</a>, and <a href="#scene-observables">scene</a> Observables will be needed, particularly <a href="/how_to/interactions">scene.onPointerObservable</a>.</p>
+<h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>Babylon.js provides a lot of events (like scene.beforeRender) and before v2.4 there was not a unified way to handle them.
+Starting with v2.4, we introduced (without breaking backward compatibility of course) a new pattern: the Observables.</p>
+<p>There are two parts: the <a href="//doc.babylonjs.com/api/classes/babylon.observable">Observable</a> and the <a href="//doc.babylonjs.com/api/classes/babylon.observer">Observer</a>. The Observable is a property of an object which represents a given event (like beforeRender for instance).
+Users that want to have their own piece of code running in response to such event will register an Observer to the appropriate Observable. Then it&#39;s the duty of the Observable to execute the Observers, when appropriate.</p>
+<p>The implementer uses an Observable to create a property which will trigger all the registered observers. The Generic type T is used to communicate a given data type from the Observable to the Observer.</p>
+<p>While it is possible to create your own Observable (a simple example of which is below) for most users it will be a case of adding their own Observers to the Observables that Babylon.js provides. For those who want to delve deeper there is more detail in the <a href="//doc.babylonjs.com/api/classes/babylon.observable">API</a></p>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#6IGFM2">Playground Example - Simple Custom Observable Example</a> - <i class="fa fa-eye" onclick="createIframe('6IGFM2#', this)"></i><div class="iframeContainer"></div>
+An Observable - onXChange- is added to the master sphere. The two minion spheres and the actions they have to undertake form the two Observers which react when a change in the x position of the master is observed.</li>
+</ul>
+<h2><a name="observable-methods-and-properties" class="anchor" href="#observable-methods-and-properties"></a>Observable Methods and Properties</h2><p>The following are available:</p>
+<ul>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#add">add</a>(): to add an Observer</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#addonce">addOnce</a>(): to add an Observer which will be executed once and then removed</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#remove">remove</a>(): to remove a previously registered Observer</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#removecallback">removeCallback</a>(): same as above but giving the callback instead of the Observer instance</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#notifyobservers">notifyObservers</a>(): used to notify all the registered Observers</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#notifyobserverswithpromise">notifyObserversWithPromise</a>(): calling this will execute each callback, expecting it to be a promise or return a value. If at any point in the chain one function fails, the promise will fail and the execution will not continue.</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#hasobservers">hasObservers</a>: a property that returns true if at least one Observer is registered</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#hasspecificmask">hasSpecificMask</a>(mask): a function that returns true if at least one Observer is registered with this mask</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#clear">clear</a>() to remove all Observers</li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.observable#clone">clone</a>() to simply clone the object but not the registered Observers.</li>
+</ul>
+<p>Many Babylon.js objects have a range of available Observables. Here is an <a href="//doc.babylonjs.com/search/?bjsq=observable">unordered list</a> from the search facility of the Documentation with links to the API.</p>
+<h2><a name="add-an-observer" class="anchor" href="#add-an-observer"></a>Add An Observer</h2><p>An Observer is formed from an object set to watch the Observable and the objects reaction to the observation.</p>
+<p>In the following example the sphere and its scale change create an Observer through the Observable.<a href="//doc.babylonjs.com/api/classes/babylon.observable#add">add</a>() method.</p>
+<p>Set the Observable that notifies its Observers before the scene starts the rendering each frame.</p>
+<pre><code class="lang-javascript">var alpha = 0;
+scene.onBeforeRenderObservable.add(function () {
+  sphere.scaling.y = Math.cos(alpha);
+
+  alpha += 0.01;
+});
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UP2O8#0">Playground Example Add Observer</a> - <i class="fa fa-eye" onclick="createIframe('UP2O8#0', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>To remove an Observer, you need to store it during it&#39;s creation to refer to it with remove. The following example remove the Observer before it is notified of even the first frame rendering.</p>
+<pre><code class="lang-javascript">var alpha = 0;
+var observer = scene.onBeforeRenderObservable.add(function () {
+  sphere.scaling.y = Math.cos(alpha);
+
+  alpha += 0.01;
+});
+
+scene.onBeforeRenderObservable.remove(observer);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#UP2O8#1">Playground Example Add and Remove Observer</a> - <i class="fa fa-eye" onclick="createIframe('UP2O8#1', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<p>The following example removes the Observer during the rendering cycle. Since it is not possible to remove an Observer that does not exist there is a need to check whether the Observable still has the Observer.</p>
+<pre><code class="lang-javascript">var alpha = 0;
+var observer = scene.onBeforeRenderObservable.add(function () {
+  sphere.scaling.y = Math.cos(alpha);
+
+  alpha += 0.01;
+
+  if (scene.onBeforeRenderObservable.hasObservers &amp;&amp; alpha &gt; 3) {
+    scene.onBeforeRenderObservable.remove(observer);
+  }
+});
+</code></pre>
+<h2><a name="scene-observables" class="anchor" href="#scene-observables"></a>Scene Observables</h2><p>The BabylonJS Scene Object has over 20 observables that &#39;fire&#39; under various conditions. Most of them are checked EACH frame/render, and in a deterministic/predictable order or sequence. Below is a list of Scene observables checked during each renderLoop... in the order they are checked:</p>
+<ul>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforeanimationsobservable">onBeforeAnimationsObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onafteranimationsobservable">onAfterAnimationsObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforephysicsobservable">onBeforePhysicsObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onafterphysicsobservable">onAfterPhysicsObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforerenderobservable">onBeforeRenderObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforerendertargetsrenderobservable">onBeforeRenderTargetsRenderObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onafterrendertargetsrenderobservable">onAfterRenderTargetsRenderObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforecamerarenderobservable">onBeforeCameraRenderObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforeactivemeshesevaluationobservable">onBeforeActiveMeshesEvaluationObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onafteractivemeshesevaluationobservable">onAfterActiveMeshesEvaluationObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforeparticlesrenderingobservable">onBeforeParticlesRenderingObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onafterparticlesrenderingobservable">onAfterParticlesRenderingObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforerendertargetsrenderobservable">onBeforeRenderTargetsRenderObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onafterrendertargetsrenderobservable">onAfterRenderTargetsRenderObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforedrawphaseobservable">onBeforeDrawPhaseObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onafterdrawphaseobservable">onAfterDrawPhaseObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onaftercamerarenderobservable">onAfterCameraRenderObservable</a></li>
+<li><a href="//doc.babylonjs.com/api/classes/babylon.scene#onafterrenderobservable">onAfterRenderObservable</a></li>
+</ul>
+<p>The Scene Object also has observers: onReady, onDataLoaded, onDispose, but they do not happen within a rendering/frame.</p>
+<p>Also, <a href="//doc.babylonjs.com/api/classes/babylon.scene#onbeforestepobservable">onBeforeStepObservable</a> and <a href="//doc.babylonjs.com/api/classes/babylon.scene#onafterstepobservable">onAfterStepObservable</a> are available when using <a href="//doc.babylonjs.com/babylon101/animations#deterministic-lockstep">deterministic lock step</a></p>
+<p>However possibly the most useful Observable is the one that checks what is happening to the screen pointer whether with mouse or with finger or controller. <a href="//doc.babylonjs.com/api/classes/babylon.scene#onpointerobservable">scene.onPointerObservable</a> . For more details on that have a look into the <a href="/how_to/interactions">Interactions HowTo</a></p>
+<h2><a name="observable-based-countdown-function" class="anchor" href="#observable-based-countdown-function"></a>Observable-based countdown function</h2><p>Starting Babylon 4.2 a new way of setting a delay call for a function was added. This method is calculating the time delay using observables. Think about a setTimeout function, but inside the babylon context. The best way to explain is to show an example:</p>
+<pre><code class="lang-javascript">// classic set timeout:
+setTimeout(() =&gt; {
+  // code running here is not guaranteed to be called inside the render loop
+  // Actually, it is most likely that it will be called OUTSIDE the render loop
+}, 3000);
+
+// the new and simple way
+BABYLON.setTimerAndStart({
+  timeout: 3000,
+  contextObservable: scene.onBeforeRenderObservable,
+  onEnded: () =&gt; {
+    // code running here is guaranteed to run inside the beforeRender loop
+  },
+});
+</code></pre>
+<h3><a name="settimerandstart" class="anchor" href="#settimerandstart"></a>setTimerAndStart</h3><p>As you can see in the example, the babylon countdown timer is taking an observable as context. This observable is the most important part of this code - the observable is the context in which the rest of the time functions will be called and is in charge of calculating the delta time until finished. To explain it simply, these are the steps for the function we implemented before:</p>
+<ol>
+<li>set time = 0, add an observer to scene.onBeforeRenderObservable</li>
+<li>wait for the observer to be called.</li>
+<li>in the observer - check if time-passed-since-start &gt; timeout</li>
+<li>If not, go to 2</li>
+<li>If yes, call onEnded, remove the observer</li>
+<li>We are done</li>
+</ol>
+<p>A full example of the function&#39;s API:</p>
+<pre><code class="lang-javascript">BABYLON.setTimerAndStart({
+  timeout: 3000,
+  contextObservable: scene.onBeforeRenderObservable,
+  breakCondition: () =&gt; {
+    // this will check if we need to break before the timeout has reached
+    return scene.isDisposed();
+  },
+  onEnded: (data) =&gt; {
+    // this will run when the timeout has passed
+  },
+  onTick: (data) =&gt; {
+    // this will run
+  },
+  onAborted: (data) =&gt; {
+    // this function will run when the break condition has met (premature ending)
+  },
+});
+</code></pre>
+<p>As you can understand, any observable can be used here, but some don&#39;t really make any sense. If, for example, we use pointer down observable, it might take a long time until the next call of the observer, making it impractical. But if you need to process pointer down input for the next 2 minutes, you can use it this way:</p>
+<pre><code class="lang-javascript">let gameIsOn = true;
+BABYLON.setTimerAndStart({
+    timeout: 2 * 60 * 1000,
+    contextObservable: scene.onPointerObservable,
+    observableParameters: { mask: BABYLON.PointerEventTypes.POINTERDOWN },
+    breakCondition: () =&gt; {
+        // break if the game ended prior to this timeout
+        return !gameIsOn;
+    },
+    onEnded: () { console.log(&#39;time is over&#39;); },
+    onTick: (data) =&gt; {
+        // data.payload is the pointerInfo object from the onPointerObservable
+        doSomethingWithTheData(data);
+    }
+});
+</code></pre>
+<p>A more practical example can be used to make the user touch something for 3 seconds (while indicating that the 3 seconds is counting):</p>
+<pre><code class="lang-javascript">const guiButton = // created a GUI button
+const guiButtonMaterial = ... // get the material
+let pressed = false;
+scene.onPointerDown = () =&gt; {
+    pressed = true;
+    BABYLON.setTimerAndStart({
+        timeout: 2 * 60 * 1000,
+        contextObservable: scene.onBeforeRenderObservable,
+        breakCondition: () =&gt; {
+            // break if no longer pressed
+            return !pressed;
+        },
+        onEnded: () {
+            console.log(&#39;Button pressed!&#39;);
+            // back to a black button
+            guiButtonMaterial.diffuseColor.set(0,0,0);
+         },
+        onTick: (data) =&gt; {
+            // turn it slowly green on each call to the registered observer
+            guiButtonMaterial.diffuseColor.set(0,data.completeRate,0);
+        },
+        onAborted: () =&gt; {
+            // Aborted, back to a black button
+            guiButtonMaterial.diffuseColor.set(0,0,0);
+        }
+    });
+}
+
+scene.onPointerUp = () =&gt; {
+    pressed = false;
+}
+</code></pre>
+<h3><a name="advanced-timer" class="anchor" href="#advanced-timer"></a>Advanced Timer</h3><p>Apart from this quick function, you can use the AdvancedTimer class, which brings a bit more flexibility but is a lot more verbose. The object itself is reusable, so it can eventually saved a few unneeded calls and object creations. The last example using the AdvancedTimer will look like this:</p>
+<pre><code class="lang-javascript">const guiButton = // created a GUI button
+const guiButtonMaterial = ... // get the material
+const advancedTimer : BABYLON.AdvancedTimer&lt;Scene&gt; = new BABYLON.AdvancedTimer({
+    timeout: 3000,
+    contextObservable: scene.onBeforeRenderObservable
+});
+advancedTimer.onEachCountObservable.add(() =&gt; {
+    // turn it slowly green on each call to the registered observer
+    guiButtonMaterial.diffuseColor.set(0,data.completeRate,0);
+});
+advancedTimer.onTimerAbortedObservable.add(() =&gt; {
+    // Aborted, back to a black button
+    guiButtonMaterial.diffuseColor.set(0,0,0);
+});
+advancedTimer.onTimerEndedObservable.add(() =&gt; {
+    // back to a black button
+    guiButtonMaterial.diffuseColor.set(0,0,0);
+    console.log(&#39;Button pressed!&#39;);
+});
+
+scene.onPointerDown = () =&gt; {
+    advancedTimer.start();
+}
+
+scene.onPointerUp = () =&gt; {
+    advancedTimer.stop();
+}
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

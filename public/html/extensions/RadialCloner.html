@@ -1,0 +1,160 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Radial Cloner - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item active" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/extensions"><h1>extensions</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Radial Cloner</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#example">Example</a></li>
+<li><a href="#parameters">Parameters</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="radialcloner" class="anchor" href="#radialcloner"></a>RadialCloner</h1><p><img src="/img/extensions/clonerSystem/radialCloner.jpg" alt="idpic1" title="RadialCloner&#39;s from left to right: aligned, unaligned, aligned clones"></p>
+<p>The RadialCloner distributes given meshes in a radial manner. If more than one meshes are provided, then the clones will be placed alternatively. Several parameters controls the position, angle, type and orientation of the clones. The RadialCloner returns an object with one important property: <strong>root</strong>. It is an invisible mesh, it&#39;s the anchor, center and parent of all generated clones. Transforming this <strong>root</strong> (position/scale/rotation) affects all underlying clones (childs) at once. Most of the input parameters are also available as properties and they are very suitable for animation (tweening). The given input meshes will be made inactive during construction, so after construction there will be only one of two possible mesh types: BABYLON <strong>clones</strong> or <strong>instances</strong>.<br><em>Note:</em> Input meshes can be BABYLON meshes but other Cloners as well!</p>
+<h3><a name="example" class="anchor" href="#example"></a>Example</h3><p>Example of a RadialCloner with a count of 24 clones (12 cubes cube1/cube2) distributed aligned with a radius of 6 units in the plane XZ:</p>
+<p><code>var rc = new BABYLONX.RadialCloner([cube1, cube2], demo.scene, {count:24,radius:6});</code></p>
+<p>Transforming of all clones can be done as you would do with a single mesh:</p>
+<p><code>rc.root.scaling.y = 2;</code>
+<code>rc.root.rotation.x = Math.PI / 4;</code></p>
+<p>Animation can be done via properties:</p>
+<p><code>BABYLON.Animation.CreateAndStartAnimation(&#39;radanimation&#39;, rc, &#39;startangle&#39;, 30, 120, 0, 90);</code></p>
+<h3><a name="parameters" class="anchor" href="#parameters"></a>Parameters</h3><p><code>BABYLONX.RadialCloner( meshes, scene[, {optional parameters}])</code> </p>
+<table>
+<thead>
+<tr>
+<th>Mandatory Parameter</th>
+<th>Description </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>meshes</td>
+<td>array of meshes/cloners to be cloned, meshes will be made inactive after construction</td>
+</tr>
+<tr>
+<td>scene</td>
+<td>BABYLON scene</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Optional Parameter</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>count</td>
+<td>the nuber of clones</td>
+<td>3</td>
+</tr>
+<tr>
+<td>radius</td>
+<td>radius in world units</td>
+<td>3</td>
+</tr>
+<tr>
+<td>align</td>
+<td>flag if clones are aligned against the middle position of the cloner</td>
+<td>true</td>
+</tr>
+<tr>
+<td>startangle</td>
+<td>angle in degrees</td>
+<td>0</td>
+</tr>
+<tr>
+<td>endangle</td>
+<td>angle in degrees</td>
+<td>360</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>angle in degrees</td>
+<td>0</td>
+</tr>
+<tr>
+<td>useInstances</td>
+<td>flag if clones should be technical &quot;clones&quot; or &quot;instances&quot;</td>
+<td>true</td>
+</tr>
+<tr>
+<td>plane</td>
+<td>object {x,y,z} describing the cloners orientation</td>
+<td>{ x: 1, y: 0, z: 1 }</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Properties</th>
+<th>Description </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>count</td>
+<td>@see Optional Parameter</td>
+</tr>
+<tr>
+<td>radius</td>
+<td>@see Optional Parameter</td>
+</tr>
+<tr>
+<td>align</td>
+<td>@see Optional Parameter</td>
+</tr>
+<tr>
+<td>startangle</td>
+<td>@see Optional Parameter</td>
+</tr>
+<tr>
+<td>endangle</td>
+<td>@see Optional Parameter</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>@see Optional Parameter</td>
+</tr>
+<tr>
+<td>root</td>
+<td>READONLY, getting an invisibe mesh representing the anchor of the cloner (root node)</td>
+</tr>
+<tr>
+<td>effectors</td>
+<td>READONLY, gets a list of Effectors assigned to this Cloner</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Methods</th>
+<th>Description </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>addEffector(effector, sensitivity)</td>
+<td>adds an effector to this Cloner and sets the sensitivity (1=full sensitivity, 0=no sensitivity ==ignore effector)</td>
+</tr>
+<tr>
+<td>setEnabled(flag)</td>
+<td>set the cloner&#39;s root node to the state of the flag (true=enabled) </td>
+</tr>
+</tbody>
+</table>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

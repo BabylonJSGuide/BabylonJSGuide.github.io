@@ -1,0 +1,166 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Animation of Objects - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Animation of Objects</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#ways-of-animating">Ways of Animating</a><ul>
+<li><a href="#animated-gif">Animated Gif</a></li>
+<li><a href="#stop-motion-animation">Stop Motion Animation</a></li>
+</ul>
+</li>
+<li><a href="#the-babylonjs-difference">The BabylonJS Difference</a></li>
+<li><a href="#terminology">Terminology</a></li>
+<li><a href="#designing-a-clip">Designing a Clip</a><ul>
+<li><a href="#a-very-simple-example">A very simple example</a></li>
+<li><a href="#functions-and-parameters-for-animating">Functions and Parameters for Animating</a></li>
+</ul>
+</li>
+<li><a href="#animation">Animation</a></li>
+<li><a href="#begindirectanimation">beginDirectAnimation</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#basic-l1">Basic - L1</a></li>
+<li><a href="#mid-level-l2">Mid Level - L2</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="animation" class="anchor" href="#animation"></a>Animation</h1><p>One way to animate things in BabylonJS is to change their properties within a scene.registerBeforeRender or scene.registerAfterRender loop. You will find many of the playground examples within the documentation using this method. However BabylonJS also provides animating methods based on a timed frame system. Given the right data BabylonJS calculates and draws a specific frame of the animation at a specific time independently of the scene rendering rate.</p>
+<h2><a name="ways-of-animating" class="anchor" href="#ways-of-animating"></a>Ways of Animating</h2><p>To help understand how BabylonJS goes about animating, consider a couple of different ways that animating is done, their similarities and differences. The designer of both has to consider, the action wanted, timing, the number of frames needed to produce the required fluidity and key points within the sequence.</p>
+<p>The BabylonJS method is much closer to stop motion.</p>
+<h3><a name="animated-gif" class="anchor" href="#animated-gif"></a>Animated Gif</h3><p>Using an animated gif file a sequence of images, <em>frames</em> are combined to give the impression of movement.</p>
+<p><img src="/img/features/animation/horse_frames.jpg" alt="Horse - Frames"></p>
+<p><img src="/img/features/animation/Horse_gif_slow.gif" alt="Horse Animation"> from <a href="https://commons.wikimedia.org/wiki/File:Horse_gif_slow.gif">Wikimedia Commons</a></p>
+<p>Each individual image is one <em>frame</em> of the animation.</p>
+<p>Software used to create an animated gif often gives the opportunity to set a time for each frame to be displayed - 0.2 seconds in the 
+example below.</p>
+<p><img src="/img/features/animation/horse_rate.jpg" alt="Horse - Rate"></p>
+<h3><a name="stop-motion-animation" class="anchor" href="#stop-motion-animation"></a>Stop Motion Animation</h3><p>This way takes a physical object which is photographed, changed slightly and then re-photographed. This is done repeatedly to form a series of images, each of which 
+becomes one <em>frame</em>. </p>
+<p><img src="/img/features/animation/stop_motion.jpg" alt="Lego Stop Motion"> from <a href="https://www.nyfa.edu/student-resources/wp-content/uploads/2015/02/5860045_orig.jpg">NYFA</a></p>
+<p>During the design the creator will need to consider how long a sequence will take and how smooth it needs to be. The smoother the movement the more frames are required. 
+This together with the timing of the sequence will give the frames per second. Also knowing the object&#39;s start position and end position and how many frames are required 
+for this will give the object&#39;s movement per frame.</p>
+<h2><a name="the-babylonjs-difference" class="anchor" href="#the-babylonjs-difference"></a>The BabylonJS Difference</h2><p>For the animated gif the whole of each frame has to be drawn by the creator. In BabylonJS each frame is drawn from data provided by the creator.</p>
+<p>In an animated gif the animation ties in: object being animated; the changes made each frame and the rapid display of the frames one after the other. 
+In the above you think of the animation as the horse running.</p>
+<p>In BabylonJS an <em>animation</em> is a specific javascript object not the overall finished piece. In the same way that a material is created which 
+can then be applied to any mesh you create an <em>animation</em> which can be applied to any mesh, camera or light.</p>
+<p>An <em>animation</em> in BabylonJS basically describes one change that will take place to one property.</p>
+<p>Instead of giving the time for each frame to be displayed, in BabylonJS the number of frames per second in an animation is given. This should not be confused 
+with the rendering speed of a scene, also measured in frames per second. The animation frames per second is specified in an <em>animation</em>.</p>
+<p>The extent of the changes and when they take place are set in an array of key frames and values.</p>
+<h2><a name="terminology" class="anchor" href="#terminology"></a>Terminology</h2><p>The following terms will have the given meaning within the How_To about animating.</p>
+<ul>
+<li><p><em>Performer</em> an item that can be animated, could be a mesh, a light or camera for example.</p>
+</li>
+<li><p><em>Frame</em> - an animation frame not a rendered frame of the scene. </p>
+</li>
+<li><p><em>Animation</em> - similar to a play or film script but applies to just one property of a performer. It consists of </p>
+<ul>
+<li>the property to be changed, for example, position, intensity or rotation   </li>
+<li>the rate of change of the property in frames per second,  </li>
+<li>the type of the property being changed, for example vector, floating point number or matrix,  </li>
+<li>looping conditions,</li>
+<li>key values of the property at key frames.</li>
+</ul>
+</li>
+<li><p><em>Scripted Performer</em> - The performer plus all the animations to be undertaken by the performer.</p>
+</li>
+<li><p><em>Performance</em> - The scripted performer and the actions done by the performer following the script. In BabylonJS this is the <em>animatable</em> object.  </p>
+</li>
+<li><p><em>Clip</em> - The viewable result of a performance. In practice there are two types of <em>clip</em> a
+<em>game clip</em> and a <em>movie clip</em>. In a <em>movie clip</em> the user has no control over the camera and the <em>clip</em> is viewed according to the <em>animation</em> of the camera 
+as set by the creator of the <em>clip</em>. In a <em>game clip</em> the user is able to move the camera as determined by the type of camera used in the scene. Unless 
+it is likely to cause any confusion just the term <em>clip</em> will be used throught the guide when writing about animating.</p>
+</li>
+<li><p><em>Cartoon</em> - A series of <em>clips</em> played at timed intervals.</p>
+</li>
+</ul>
+<h2><a name="designing-a-clip" class="anchor" href="#designing-a-clip"></a>Designing a Clip</h2><p>The first step is to decide what you want to see in a <em>clip</em>, that is what is the <em>performance</em> to be. This gives the performer and its animation.</p>
+<h3><a name="a-very-simple-example" class="anchor" href="#a-very-simple-example"></a>A very simple example</h3><p>In this <em>game clip</em> a box, the <em>performer</em> is to slide between two places once every second. The box will be able to be viewed from any angle. </p>
+<p>The first stage design is to sketch what is needed at key time points, a little like an animated gif design.</p>
+<p><img src="/img/features/animation/ani1.jpg" alt="key frames"></p>
+<p>After one second the box should be in its new position and one second later in its start position. This sequence is then continually repeated.</p>
+<p>In BabylonJS then <em>animation</em> is changing the position of the box along the x axis and its x position is a floating point number and </p>
+<p>the <em>animation</em> should loop. In code the animation which slides an item in the x direction becomes</p>
+<pre><code class="lang-javascript">var frameRate = 10;
+
+var xSlide = new BABYLON.Animation(&quot;xSlide&quot;, &quot;position.x&quot;, frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+</code></pre>
+<p>The key frames are at 0, 1 and 2 seconds. To find the frame number after t seconds multiply the time by the frame rate, i.e. t x frameRate. 
+In this case the key frames are numbers, 0, 1 x frameRate and 2 x frame Rate.</p>
+<p>Starting the box at x = 2 and sliding it to x = -2, gives the x positional values of the box after 0, 1 and 2 seconds as 2, -2 and 2 respectively.</p>
+<p>The key frames are set into an array of Javascript objects with properties for frame (number) and value and added to the animation, as in</p>
+<pre><code class="lang-javascript">var keyFrames = []; 
+
+keyFrames.push({
+    frame: 0,
+    value: 2
+});
+
+keyFrames.push({
+    frame: frameRate,
+    value: -2
+});
+
+keyFrames.push({
+    frame: 2 * frameRate,
+    value: 2
+});
+
+xSlide.setKeys(keyFrames);
+</code></pre>
+<p>The animation is now fully made and can be applied to the box resulting in a <em>performance</em> (animatable) by .</p>
+<pre><code class="lang-javascript">scene.beginDirectAnimation(box, [xSlide], 0, 2 * frameRate, true);
+</code></pre>
+<ul>
+<li><a href="https://www.babylonjs-playground.com/#9WUJN#11">Playground Example for Above</a> - <i class="fa fa-eye" onclick="createIframe('9WUJN#11', this)"></i><div class="iframeContainer"></div></li>
+</ul>
+<h1><a name="functions-and-parameters-for-animating" class="anchor" href="#functions-and-parameters-for-animating"></a>Functions and Parameters for Animating</h1><h2><a name="animation" class="anchor" href="#animation"></a>Animation</h2><p>new BABYLON.Animation(name, property, frames per second, property type, loop mode)</p>
+<ul>
+<li><p><em>name</em> - <em>string</em>, name of animation</p>
+</li>
+<li><p><em>property</em> - <em>string</em>, a property of the object that the animation will be applied to. For example a Vector3 property such as position or a floating 
+number propert such as position.x</p>
+</li>
+<li><p><em>frames per second</em> - <em>number</em>, the  number of animation frames per second (independent of the scene rendering frames per second)</p>
+</li>
+<li><p><em>property type</em> - <em>number</em>, the property type of the <em>property</em> parameter. This can be set using the following constants</p>
+<p>  BABYLON.Animation.ANIMATIONTYPE_COLOR3<br>  BABYLON.Animation.ANIMATIONTYPE_FLOAT<br>  BABYLON.Animation.ANIMATIONTYPE_MATRIX<br>  BABYLON.Animation.ANIMATIONTYPE_QUATERNION<br>  BABYLON.Animation.ANIMATIONTYPE_VECTOR2<br>  BABYLON.Animation.ANIMATIONTYPE_VECTOR3  </p>
+</li>
+<li><p><em>loop mode</em> - <em>number optional</em>, This can be set using the following Parameters</p>
+<p>  BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE - Restart the animation from initial value<br>  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT - Pause the animation at the final value<br>  BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE - Repeat the animation incrementing using key value gradients. In this way, for example, a <em>clip</em> showing 
+  a character&#39;s legs in a walking motion can be looped to show the character progressing across the scene.</p>
+</li>
+</ul>
+<h2><a name="begindirectanimation" class="anchor" href="#begindirectanimation"></a>beginDirectAnimation</h2><p>scene.beginDirectAnimation(target, animations, start frame, end frame, loop, speedRatio, onAnimationEnd);   </p>
+<ul>
+<li><p><em>target</em> - <em>BabylonJS Object</em>, the BabylonJS object to be animated</p>
+</li>
+<li><p><em>animations</em> - <em>array</em>, of all the animations to apply to the target</p>
+</li>
+<li><p><em>start frame</em> - <em>number</em>, the frame at which to start the animation</p>
+</li>
+<li><p><em>end frame</em> - <em>number</em>, the frame at which to end the animation</p>
+</li>
+<li><p><em>loop</em> - <em>boolean</em>, true when <em>loop mode</em> of the animation is to be activated, false to run animation just once</p>
+</li>
+<li><p><em>speedRatio</em> - <em>number</em>, the speed ratio to apply to all animations</p>
+</li>
+<li><p><em>onAnimationEnd</em> - <em>function</em>, the callback to call when an animation ends (will be called once per node)</p>
+</li>
+</ul>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="basic-l1" class="anchor" href="#basic-l1"></a>Basic - L1</h2><p><a href="/babylon101/Animations">Animation 101</a><br><a href="/How_To/Group">Grouping Animations</a><br><a href="/How_To/Combine.html">Combining Animations</a></p>
+<h2><a name="mid-level-l2" class="anchor" href="#mid-level-l2"></a>Mid Level - L2</h2><p><a href="/How_To/Sequence.html">A Sequence of Animations</a>  </p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

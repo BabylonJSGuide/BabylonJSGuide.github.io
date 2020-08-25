@@ -1,0 +1,113 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Using The Particles Creator - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item active" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/resources"><h1>resources</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Using The Particles Creator</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#demo">Demo</a></li>
+<li><a href="#creating-a-new-set">Creating a new set</a></li>
+<li><a href="#using-the-timeline">Using the timeline</a></li>
+<li><a href="#editing-a-system">Editing a system</a></li>
+<li><a href="#adding-a-new-system-to-the-set">Adding a new system to the set</a></li>
+<li><a href="#removing-a-system-from-the-set">Removing a system from the set</a></li>
+<li><a href="#previewing-the-set">Previewing the set</a></li>
+<li><a href="#exporting-a-set">Exporting a set</a></li>
+<li><a href="#importing-from-a-set">Importing from a set</a></li>
+<li><a href="#loading-from-a-preset">Loading from a preset</a></li>
+<li><a href="#adding-a-set-to-the-current-scene">Adding a set to the current scene</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h1><p>Introduced in the version 3.1.0, a new tool is available to edit custom particle system sets.
+More informations about particle systems set here: <a href="https://doc.babylonjs.com/how_to/particlehelper#particlesystemset">https://doc.babylonjs.com/how_to/particlehelper#particlesystemset</a>.</p>
+<p>A set of particle systems is done to handle a collection of systems that can be played all together according to their properties (start time, end time etc.).
+The Editor provides a tool named <strong>Particle System Creator</strong> that allows to create sets and add / edit / remove systems from these sets.</p>
+<p>The workflow tends to:</p>
+<ul>
+<li>create a set</li>
+<li>add / edit / remove systems in set</li>
+<li>preview</li>
+<li>modify</li>
+<li>preview</li>
+<li>modify</li>
+<li>preview</li>
+<li>etc. until the set fits the wanted result</li>
+</ul>
+<h1><a name="demo" class="anchor" href="#demo"></a>Demo</h1><p>Here is a live demo using the Particle System Creator tool:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FyCGTVNchQU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h1><a name="creating-a-new-set" class="anchor" href="#creating-a-new-set"></a>Creating a new set</h1><p>To add a new set you&#39;ll edit using the <strong>Particle System Creator</strong> tool, you first have to add a new set in the assets library.
+In the assets panel, a tab named <strong>Particles</strong> shows you all the available particle system sets in the current project.</p>
+<p>To add a new set, just click the button <strong>Add</strong> and give it a name. Once confirmed, a new set is available.</p>
+<p>Example, a set named <strong>maki</strong>:
+<img src="/img/extensions/Editor/CreatingParticleSystemSet/AddingNewSet.png" alt="AddingNewSet"></p>
+<p>To load the <strong>Particle System Creator</strong>, just double-click on the asset and the tool will open and load the selected particle system set.
+<img src="/img/extensions/Editor/CreatingParticleSystemSet/OpeningSet.png" alt="OpeningSet"></p>
+<h1><a name="using-the-timeline" class="anchor" href="#using-the-timeline"></a>Using the timeline</h1><p>The tool is set of two panels:</p>
+<ul>
+<li>The timeline</li>
+<li>The realtime preview</li>
+</ul>
+<p>The timeline is used to visualize easily when systems will be started (in milliseconds) once the set has been started.
+For each system in the timeline, you can drag&#39;n&#39;drop horizontally to change the delay (in milliseconds) until the system starts once the set has been started.</p>
+<p>The overall timeline can also be drag&#39;n&#39;dropped to translate its content by drag&#39;n&#39;dropping the timeline&#39;s background.
+Using the mouse scroll, you can zoom/unzoom the time scale of the timeline.</p>
+<p>Example drag&#39;n&#39;dropping the <strong>New Particle System</strong> system to 2 seconds (2000 ms):
+<img src="/img/extensions/Editor/CreatingParticleSystemSet/UsingTimeline.png" alt="UsingTimeline"></p>
+<h1><a name="editing-a-system" class="anchor" href="#editing-a-system"></a>Editing a system</h1><p>Still using the timeline, when you click a system, the Editor&#39;s Inspector will be updated to show the selected particle system&#39;s properties.
+When you modify a property, the result is applied in the realtime preview panel of the tool.</p>
+<p>The set is saved automatically.</p>
+<h1><a name="adding-a-new-system-to-the-set" class="anchor" href="#adding-a-new-system-to-the-set"></a>Adding a new system to the set</h1><p>By default, a new set is composed of a default system. Fortunately, you can add new systems to the set.
+To add a new system, just click the tool&#39;s toolbar <strong>Add System...</strong>. A dialog will appear to ask the new system&#39;s name. Once confirmed, the timeline is updated and a new row is created with the new system.</p>
+<p>You can now edit the new system.</p>
+<p>Example by adding a new system named <strong>awesome system</strong>:
+<img src="/img/extensions/Editor/CreatingParticleSystemSet/AddNewSystem.png" alt="AddNewSystem"></p>
+<h1><a name="removing-a-system-from-the-set" class="anchor" href="#removing-a-system-from-the-set"></a>Removing a system from the set</h1><p>Hopefully, you can also remove a system from the set. Just right-click on the system in the timeline and select <strong>Remove</strong> in the context menu.</p>
+<p><strong>Note: Undo/Redo is not yet supported in the tool, be careful before removing any system.</strong></p>
+<p><img src="/img/extensions/Editor/CreatingParticleSystemSet/RemovingSystem.png" alt="RemovingSystem"></p>
+<h1><a name="previewing-the-set" class="anchor" href="#previewing-the-set"></a>Previewing the set</h1><p>Once you are happy with the current configuration of the set, you can preview the result by clicking on the tool&#39;s toolbar <strong>Reset</strong>.
+This will stop all the active systems and restart the set.</p>
+<p>Once started, the timeline&#39;s cursor (reading head) will show the current progress in time of the set. Each time a system is started, the system in timeline will be animated to visually notify that it started.</p>
+<h1><a name="exporting-a-set" class="anchor" href="#exporting-a-set"></a>Exporting a set</h1><p>The current set being edited can be exported. It is typically useful to re-use later in other projects or to populate a collection of particle system sets.</p>
+<p>To export a set and sanve on the local file system, just click the tool&#39;s toolbar <strong>Export As...</strong>.</p>
+<p><img src="/img/extensions/Editor/CreatingParticleSystemSet/ExportAsToolbar.png" alt="ExportAsToolbar"></p>
+<p>A dialog will appear to ask if the exported set should embed the textures content:</p>
+<ul>
+<li>If yes, the set will consist of a <code>.json</code> file containing te set&#39;s configuration and the textures data embedded as base64</li>
+<li>If no, the set will consist of a <code>.json</code> file containing the set&#39;s configuration and a <code>textures</code> folder containing the textures.</li>
+</ul>
+<p>Embedding textures means that the <code>.json</code> file will grow faster than separating to multiple files while separating to multiple files allows incremental loading that can be useful in some cases.</p>
+<p><img src="/img/extensions/Editor/CreatingParticleSystemSet/ExportAs.png" alt="ExportAs"></p>
+<h1><a name="importing-from-a-set" class="anchor" href="#importing-from-a-set"></a>Importing from a set</h1><p>In case of you have already exported a set, it is possible to import systems from a saved set to the current set being modified in the <strong>Particle System Creator</strong> tool.
+To import a set, just click the tool&#39;s toolbar <strong>Import From...</strong>. A dialog will appear to select the set&#39;s <code>.json</code> file to import.</p>
+<p><img src="/img/extensions/Editor/CreatingParticleSystemSet/ImportFromToolbar.png" alt="ImportFromToolbar"></p>
+<p>Once confirmed, all the systems and textures will be imported to the current set.</p>
+<h1><a name="loading-from-a-preset" class="anchor" href="#loading-from-a-preset"></a>Loading from a preset</h1><p>BabylonJS provides a list of already built sets: <a href="https://doc.babylonjs.com/how_to/particlehelper#available-effects">https://doc.babylonjs.com/how_to/particlehelper#available-effects</a>.
+It&#39;s useful to start from these presets as they are also good examples to understand how to build a cool particle system set.</p>
+<p><strong>Note: an internet connection is required to load the following presets.</strong></p>
+<p>The <strong>Particle System Creator</strong> allows to download these presets using the tool&#39;s toolbar <strong>Presets</strong>. Once clicked, let&#39;s choose the wanted preset.
+A dialog will appear to ask if you want to override the current set:</p>
+<ul>
+<li>Clicking &quot;Yes&quot; means that the current set will be cleared to add only the preset.</li>
+<li>Clicking &quot;No&quot; will just close the dialog and will not apply the preset.</li>
+</ul>
+<p><img src="/img/extensions/Editor/CreatingParticleSystemSet/PresetOverride.png" alt="PresetOverride"></p>
+<p>Example with the explosion preset: <a href="https://www.babylonjs-playground.com/#X37LS1#3">https://www.babylonjs-playground.com/#X37LS1#3</a> - <i class="fa fa-eye" onclick="createIframe('X37LS1#3', this)"></i><div class="iframeContainer"></div></p>
+<p><img src="/img/extensions/Editor/CreatingParticleSystemSet/ExplosionPreset.png" alt="ExplosionPreset"></p>
+<h1><a name="adding-a-set-to-the-current-scene" class="anchor" href="#adding-a-set-to-the-current-scene"></a>Adding a set to the current scene</h1><p>Once the set is finalized, you can instantiate the set in the scene.
+To instantiate a set in the scene, just drag&#39;n&#39;drop the asset from the assets panel to the scene preview. The set will be created with:</p>
+<ul>
+<li>An empty mesh containing all the particle systems. The mesh will have the set&#39;s name.</li>
+<li>All particle systems as children of the empty mesh.</li>
+</ul>
+<p><strong>Note: editing a set using the tool will not edit the systems already instanced in the scene.</strong></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

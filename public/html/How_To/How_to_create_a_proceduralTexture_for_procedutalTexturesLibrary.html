@@ -1,0 +1,234 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Create a Procedural Texture for the Procedural Textures Library - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Create a Procedural Texture for the Procedural Textures Library</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#setting-up-environment">Setting up environment</a></li>
+<li><a href="#update-the-shaders">Update the shaders</a></li>
+<li><a href="#write-the-procedural-texture">Write the procedural texture</a></li>
+<li><a href="#update-the-test-page">Update the test page</a></li>
+<li><a href="#optional-enable-a-graphical-interface">(Optional) enable a graphical interface.</a></li>
+<li><a href="#launch-the-test-server">Launch the test server</a></li>
+</ul>
+</div></div><div id="staticContent"><p>This tutorial will guide you through the process of creating a procedural texture for the <a href="https://github.com/BabylonJS/Babylon.js/tree/master/proceduralTexturesLibrary">procedural textures library</a></p>
+<h2><a name="setting-up-environment" class="anchor" href="#setting-up-environment"></a>Setting up environment</h2><p>First of all, you need to create a folder for your shader in the /proceduralTexturesLibrary/src folder. Let&#39;s call it <strong>cloudBis</strong>.</p>
+<p>Then you need to create your files:</p>
+<ul>
+<li>babylon.<strong>cloudBis</strong>ProceduralTexture.ts (just copy/paste from babylon.woodProceduralTexture.ts )</li>
+<li><strong>cloudBis</strong>ProceduralTexture.fragment.fx (just copy/paste from woodProceduralTexture.fragment.fx )</li>
+</ul>
+<p>To integrate your new procedural texture to the build process, you have to edit the config.json file in the tools/gulp folder and add an entry in the &quot;proceduralTextureLibrary/libraries&quot; section of the file:</p>
+<pre><code class="lang-javascript">  &quot;libraries&quot;: [
+    ...
+      {
+        &quot;output&quot;: &quot;babylon.brickProceduralTexture.min.js&quot;,
+        &quot;entry&quot;: &quot;./legacy/legacy-brick.ts&quot;,
+        &quot;preventLoadLibrary&quot;: true
+      }
+    ...
+  ]
+</code></pre>
+<p>To build all the procedural textures and generate the <em>dist</em> folder, just run from the tools/gulp folder:</p>
+<pre><code class="lang-bash">gulp proceduralTextureLibrary
+</code></pre>
+<h2><a name="update-the-shaders" class="anchor" href="#update-the-shaders"></a>Update the shaders</h2><p>Open the <strong>cloudBisProceduralTexture.fragment.fx</strong> file.
+The shader is composed of 3 parts:</p>
+<ul>
+<li>The variables and uniforms definition</li>
+</ul>
+<pre><code>precision highp float;
+
+varying vec2 vUV;
+
+uniform vec4 skyColor;
+uniform vec4 cloudColor;
+
+</code></pre><ul>
+<li>All the functions you need (here <strong>rand</strong>, <strong>noise</strong> and <strong>fbm</strong>)</li>
+</ul>
+<pre><code>float rand(vec2 n) {
+    return fract(cos(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+}
+
+float noise(vec2 n) {
+    const vec2 d = vec2(0.0, 1.0);
+    vec2 b = floor(n), f = smoothstep(vec2(0.0), vec2(1.0), fract(n));
+    return mix(mix(rand(b), rand(b + d.yx), f.x), mix(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
+}
+
+float fbm(vec2 n) {
+    float total = 0.0, amplitude = 1.0;
+    for (int i = 0; i &lt; 4; i++) {
+        total += noise(n) * amplitude;
+        n += n;
+        amplitude *= 0.5;
+    }
+    return total;
+}
+</code></pre><ul>
+<li>The <strong>main</strong> function which is the one called to get the pixel color</li>
+</ul>
+<pre><code class="lang-c">void main() {
+    vec2 p = vUV * 12.0;
+    vec4 c = mix(skyColor, cloudColor, fbm(p));
+    gl_FragColor = c;
+}
+</code></pre>
+<h2><a name="write-the-procedural-texture" class="anchor" href="#write-the-procedural-texture"></a>Write the procedural texture</h2><p>The procedural texture is a .ts file. It contains a class which has to inherit from the <strong>ProceduralTexture</strong> class.</p>
+<p>To be sure that you have intelliSense and that the compilation phase works well you have to add a reference at the top of your <strong>babylon.cloudBisProceduralTexture.ts</strong> file :</p>
+<pre><code class="lang-javascript">/// &lt;reference path=&quot;../../../dist/preview release/babylon.d.ts&quot;/&gt;
+</code></pre>
+<p>The main part of the magic for a procedural texture is happening in the shader file. The TypeScript file is mainly here to give its caller the ability to set values for uniforms and pass it to the shader itself.
+By convention we create a function named <strong>updateShaderUniforms()</strong> which will be called from the construtor and in every setters for each property.</p>
+<p>Here is an example for the CloudBisProceduralTexture.</p>
+<p>As you can see the <strong>setXXX</strong> function is used to send a specific value to the shader.</p>
+<p>The shader is called by its name in the constructor using the <strong>super</strong> function.</p>
+<pre><code class="lang-javascript">module BABYLON {
+    export class CloudBisProceduralTexture extends ProceduralTexture {
+        private _skyColor = new Color4(0.15, 0.68, 1.0, 1.0);
+        private _cloudColor = new Color4(1, 1, 1, 1.0);
+
+        constructor(name: string, size: number, scene: Scene, fallbackTexture?: Texture, generateMipMaps?: boolean) {
+            super(name, size, &quot;cloudProceduralTexture&quot;, scene, fallbackTexture, generateMipMaps);
+            this.updateShaderUniforms();
+            this.refreshRate = 0;
+        }
+
+        public updateShaderUniforms() {
+            this.setColor4(&quot;skyColor&quot;, this._skyColor);
+            this.setColor4(&quot;cloudColor&quot;, this._cloudColor);
+        }
+
+        public get skyColor(): Color4 {
+            return this._skyColor;
+        }
+
+        public set skyColor(value: Color4) {
+            this._skyColor = value;
+            this.updateShaderUniforms();
+        }
+
+        public get cloudColor(): Color4 {
+            return this._cloudColor;
+        }
+
+        public set cloudColor(value: Color4) {
+            this._cloudColor = value;
+            this.updateShaderUniforms();
+        }
+    }
+}
+</code></pre>
+<h2><a name="update-the-test-page" class="anchor" href="#update-the-test-page"></a>Update the test page</h2><p>To test your material, open the /proceduralTextureLibrary/index.html page. References are added automatically.</p>
+<p>Then add the procedural texture line 192:</p>
+<pre><code class="lang-javascript">var cloudBis = new BABYLON.CloudBisProceduralTexture(&quot;cloudPTBis&quot;, 256, scene);
+</code></pre>
+<p>Finally update the UI control:</p>
+<pre><code class="lang-javascript">gui
+  .add(options, &quot;texture&quot;, [
+    &quot;default&quot;,
+    &quot;fire&quot;,
+    &quot;wood&quot;,
+    &quot;cloud&quot;,
+    &quot;grass&quot;,
+    &quot;road&quot;,
+    &quot;brick&quot;,
+    &quot;marble&quot;,
+    &quot;starfield&quot;,
+    &quot;cloudBis&quot;
+  ])
+  .onFinishChange(function() {
+    resetPTOptions();
+    switch (options.texture) {
+      case &quot;fire&quot;:
+        currentTexture = firePT;
+        addPToptions(firePT, [&quot;time&quot;, &quot;alphaThreshold&quot;, &quot;speed&quot;]);
+        break;
+      case &quot;wood&quot;:
+        currentTexture = woodPT;
+        addPToptions(woodPT, [&quot;ampScale&quot;, &quot;woodColor&quot;]);
+        break;
+      case &quot;cloud&quot;:
+        currentTexture = cloudPT;
+        addPToptions(cloudPT, [&quot;skyColor&quot;, &quot;cloudColor&quot;]);
+        break;
+      case &quot;grass&quot;:
+        currentTexture = grassPT;
+        addPToptions(grassPT, [&quot;groundColor&quot;]);
+        break;
+      case &quot;road&quot;:
+        currentTexture = roadPT;
+        addPToptions(roadPT, [&quot;roadColor&quot;]);
+        break;
+      case &quot;brick&quot;:
+        currentTexture = brickPT;
+        addPToptions(brickPT, [
+          &quot;numberOfBricksHeight&quot;,
+          &quot;numberOfBricksWidth&quot;,
+          &quot;brickColor&quot;,
+          &quot;jointColor&quot;
+        ]);
+        break;
+      case &quot;marble&quot;:
+        currentTexture = marblePT;
+        addPToptions(marblePT, [
+          &quot;numberOfTilesHeight&quot;,
+          &quot;numberOfTilesWidth&quot;,
+          &quot;amplitude&quot;,
+          &quot;jointColor&quot;
+        ]);
+        break;
+      case &quot;starfield&quot;:
+        currentTexture = starfieldPT;
+        addPToptions(starfieldPT, [
+          &quot;saturation&quot;,
+          &quot;distfading&quot;,
+          &quot;darkmatter&quot;,
+          &quot;alpha&quot;,
+          &quot;time&quot;,
+          &quot;beta&quot;,
+          &quot;zoom&quot;,
+          &quot;formuparam&quot;,
+          &quot;stepsize&quot;,
+          &quot;tile&quot;,
+          &quot;brightness&quot;
+        ]);
+        break;
+      case &quot;cloudBis&quot;:
+        currentTexture = cloudBis;
+        break;
+      case &quot;none&quot;:
+      default:
+        currentTexture = diffuseTexture;
+        break;
+    }
+
+    std.diffuseTexture = currentTexture;
+    window.enableTexture(options.texture);
+  });
+</code></pre>
+<h2><a name="optional-enable-a-graphical-interface" class="anchor" href="#optional-enable-a-graphical-interface"></a>(Optional) enable a graphical interface.</h2><p>If your procedural texture contains properties that allows the dev to customize it, you can enable an interface to change them live in the sample.</p>
+<p>To do that, you only have to add a call to the <strong>addPToptions</strong> helper function in your <strong>case</strong></p>
+<p>Your code will look like this :</p>
+<pre><code class="lang-javascript">case &quot;cloudBis&quot;:
+currentTexture = cloudBis;
+addPToptions(cloudBis, [&#39;skyColor&#39;, &#39;cloudColor&#39;]);
+break;
+</code></pre>
+<p>The first parameter is the texture object and the second one is an array containing the list of properties you want to make editable in the sample.</p>
+<h2><a name="launch-the-test-server" class="anchor" href="#launch-the-test-server"></a>Launch the test server</h2><p>To Launch the server, you can start from the tools/gulp folder:</p>
+<pre><code class="lang-bash">gulp webserver
+</code></pre>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>NPM - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item" id="How_To"><a href="/How_To">How To...</a></div><div class="item active" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/features"><h1>features</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>NPM</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#available-packages">Available packages</a></li>
+<li><a href="#basic-usage">Basic usage</a><ul>
+<li><a href="#installing-babylonjs">Installing Babylon.js</a></li>
+<li><a href="#installing-other-babylon-modules">Installing other Babylon modules</a></li>
+<li><a href="#using-require">using require()</a></li>
+</ul>
+</li>
+<li><a href="#typescript-support">TypeScript support</a><ul>
+<li><a href="#example-using-webpack">Example using webpack</a></li>
+</ul>
+</li>
+<li><a href="#es6">ES6</a></li>
+<li><a href="#external-libraries">External libraries</a><ul>
+<li><a href="#pre-320-beta1">Pre 3.2.0-beta.1</a></li>
+<li><a href="#current-version">Current version</a></li>
+<li><a href="#using-the-optional-dependencies-with-amd">using the optional dependencies with AMD</a></li>
+<li><a href="#using-webpack">Using Webpack</a></li>
+</ul>
+</li>
+<li><a href="#questions-and-troubleshooting">Questions and Troubleshooting</a><ul>
+<li><a href="#error-ts2307-cannot-find-module-babylonjs-or-other-modules">error TS2307: Cannot find module &#39;babylonjs&#39; (or other modules)</a></li>
+<li><a href="#even-though-i-use-only-a-few-classes-from-the-babylon-namespace-the-entire-babylon-module-is-included">Even though I use only a few classes from the BABYLON namespace, the entire Babylon module is included</a></li>
+<li><a href="#naming-is-different-than-what-the-documentation-states">Naming is different than what the documentation states</a></li>
+</ul>
+</li>
+<li><a href="#example-of-a-webpack-project-using-babylon-modules">Example of a webpack project using Babylon modules</a><ul>
+<li><a href="#setting-up-the-project">Setting up the project</a></li>
+<li><a href="#adding-babylon-support">Adding babylon support</a></li>
+<li><a href="#writing-some-code">Writing some code</a></li>
+<li><a href="#bundling-the-project">Bundling the project</a></li>
+<li><a href="#checking-your-project">Checking your project</a></li>
+<li><a href="#adding-the-gui">Adding the GUI</a></li>
+<li><a href="#eliminating-the-dependencies-warnings">Eliminating the dependencies warnings</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div></div><div id="staticContent"><h2><a name="introduction" class="anchor" href="#introduction"></a>Introduction</h2><p>The NPM package manager is one of the best way to define and organize your project&#39;s dependencies. Parallel to traditional javascript development (including a script in a &#39;script&#39; HTML Tag), using npm packages allows you to use tools like Webpack or Browserify to pack your project and (continuously) deliver it.</p>
+<p>We now officially support our npm packages and will continue updating the npm&#39;s repository with new versions as they being developed. The first supported version is 3.1.0-alpha3.4</p>
+<p>All examples in this tutorial will use commonjs / es6 imports. However, since we are using <a href="https://github.com/umdjs/umd">UMD</a>, the same files being used in our npm packages can also be used with AMD-imports and can also be simply included in an HTML script tag.</p>
+<h2><a name="available-packages" class="anchor" href="#available-packages"></a>Available packages</h2><p>We offer babaylon.js&#39; core and its modules as npm packages. The following are available:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/babylonjs">babylonjs</a> - Babylon&#39;s core.</li>
+<li><a href="https://www.npmjs.com/package/babylonjs-materials">babylonjs-materials</a> - a collection of Babylon-supported advanced materials.</li>
+<li><a href="https://www.npmjs.com/package/babylonjs-loaders">babylonjs-loaders</a> -  All of Babylon&#39;s official loaders (OBJ, STL, glTF)</li>
+<li><a href="https://www.npmjs.com/package/babylonjs-post-process">babylonjs-post-process</a> - Babylon&#39;s post processes.</li>
+<li><a href="https://www.npmjs.com/package/babylonjs-procedural-textures">babylonjs-procedural-textures</a> - Officially supported procedural textures</li>
+<li><a href="https://www.npmjs.com/package/babylonjs-serializers">babylonjs-serializers</a> - Scene / mesh serializers.</li>
+<li><a href="https://www.npmjs.com/package/babylonjs-gui">babylonjs-gui</a> - BabylonJS GUI module.</li>
+<li><a href="https://www.npmjs.com/package/babylonjs-viewer">babylonjs-viewer</a> - The stand-alone BabylonJS Viewer.</li>
+</ul>
+<h2><a name="basic-usage" class="anchor" href="#basic-usage"></a>Basic usage</h2><p>Babylon&#39;s core and modules take care of setting the dependencies between themselves, so the developer simply needs to import or require them to get everything working.</p>
+<h3><a name="installing-babylonjs" class="anchor" href="#installing-babylonjs"></a>Installing Babylon.js</h3><p>To install the latest babylon version use:</p>
+<pre><code class="lang-bash">npm install --save babylonjs
+</code></pre>
+<p>This will install babylonjs&#39; javascript files and will also include a TypeScript declaration file.</p>
+<p>To include Babylon in a javascript or typescript file, use:</p>
+<pre><code class="lang-javascript">import * as BABYLON from &#39;babylonjs&#39;;
+</code></pre>
+<p>You can also load specific classes if you need them:</p>
+<pre><code class="lang-javascript">import { Engine, Scene } from &#39;babylonjs&#39;;
+</code></pre>
+<p><strong>NOTE:</strong> if you can&#39;t make this import method to work, go to the section on typescript and webpack below.</p>
+<h3><a name="installing-other-babylon-modules" class="anchor" href="#installing-other-babylon-modules"></a>Installing other Babylon modules</h3><p>After including babylonjs you can add Babylon&#39;s extra modules using npm as follows:</p>
+<pre><code class="lang-bash">npm install --save babylonjs-materials [other packages]
+</code></pre>
+<p>Same as the babylonjs, this will install (default-minified and non-minified) javascript files and a declaration file.</p>
+<p>To import the dependencies, you will need to import them like for the babylon module:</p>
+<pre><code class="lang-javascript">import * as Materials from &#39;babylonjs-materials&#39;;
+</code></pre>
+<p>And use it like below:</p>
+<pre><code class="lang-javascript">let skyMaterial = new Materials.SkyMaterial(.....)
+</code></pre>
+<h3><a name="using-require" class="anchor" href="#using-require"></a>using require()</h3><p>If you prefer not to use es6-import syntax, you can use require in order to import babylon into your project:</p>
+<pre><code class="lang-javascript">let BABYLON = require(&#39;babylonjs&#39;);
+let GUI = require(&#39;babylonjs-gui&#39;);
+let materials = require(&#39;babylonjs-materials&#39;);
+</code></pre>
+<h2><a name="typescript-support" class="anchor" href="#typescript-support"></a>TypeScript support</h2><p>Being written in TypeScript, Babylon.js will always support TypeScript developers. We provide a declaration file in each package, that either extends the BABYLON namespace or declares a new namespace that can be used during development.</p>
+<p>If not detected by your IDE (mostly in case you are not relying on import/export), the most important thing to get full TypeScript support in your project is to add the imported packages as types of compilerOptions in <a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.html">tsconfig.json</a> as follows:</p>
+<pre><code class="lang-javascript">{
+    &quot;compilerOptions&quot;: {
+        .....,
+        &quot;types&quot;: [
+            &quot;babylonjs&quot;,
+            &quot;babylonjs-gui&quot;,
+            &quot;babylonjs-materials&quot;
+        ],
+        ...
+    },
+    ...
+}
+
+</code></pre>
+<p>This will load BABYLON&#39;s namespace and will allow autocomplete (and of course type safety) correctly.</p>
+<p><strong>NOTE:</strong> to generate a default <code>tsconfig.json</code> file that contains useful information about the different settings, run the following in your terminal:</p>
+<pre><code>tsc --init
+</code></pre><h3><a name="example-using-webpack" class="anchor" href="#example-using-webpack"></a>Example using webpack</h3><p>A very simple webpack configuration to compile a babylon.js TypeScript project can look like this:</p>
+<pre><code class="lang-javascript">module.exports = {
+    entry: {
+        app: &#39;./mygame.ts&#39;
+    },
+    output: {
+        path: path.resolve(__dirname, &#39;dist&#39;),
+        filename: &#39;[name].js&#39;
+    },
+    resolve: {
+        extensions: [&#39;.ts&#39;, &#39;.tsx&#39;, &#39;.js&#39;]
+    },
+    devtool: &#39;source-map&#39;,
+    plugins: [
+
+    ],
+    module: {
+        rules: [{
+            test: /\.tsx?$/,
+            loader: &#39;ts-loader&#39;,
+            exclude: /node_modules/
+        }]
+    }
+}
+</code></pre>
+<p>Simply create a file <code>webpack.config.js</code> at the root of your project and copy-paste the above template in it.
+The file <code>mygame.ts</code> should the entry point of the project.</p>
+<p><strong>NOTE:</strong> Make sure you&#39;ve installed the following packages:</p>
+<pre><code>npm install --save-dev webpack
+npm install --save-dev webpack-cli
+npm install --save-dev typescript
+npm install --save-dev ts-loader
+</code></pre><h2><a name="es6" class="anchor" href="#es6"></a>ES6</h2><p>If you wish to benefit from tree shaking and other nitty gritties, you can now rely on our Babylon.js ES6 packages:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/@babylonjs/core">@babylonjs/core</a> - Babylon&#39;s core.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/materials">@babylonjs/materials</a> - a collection of Babylon-supported advanced materials.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/loaders">@babylonjs/loaders</a> -  All of Babylon&#39;s official loaders (OBJ, STL, glTF)</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/post-processes">@babylonjs/post-processes</a> - Babylon&#39;s post processes.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/procedural-textures">@babylonjs/procedural-textures</a> - Officially supported procedural textures</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/serializers">@babylonjs/serializers</a> - Scene / mesh serializers.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/gui">@babylonjs/gui</a> - BabylonJS GUI module.</li>
+<li><a href="https://www.npmjs.com/package/@babylonjs/inspector">@babylonjs/inspector</a> - The BabylonJS Inspector for es 6.</li>
+</ul>
+<p>Please note that you can not mix ES6 and our legacy packages.</p>
+<pre><code class="lang-javascript">import { Engine } from &#39;@babylonjs/core/Engines/engine&#39;
+
+const canvas = document.getElementById(&quot;canvas&quot;);
+
+const engine = new Engine(canvas, true);
+
+// code continues....
+</code></pre>
+<p>For more information, you can have a look at <a href="https://doc.babylonjs.com/features/ES6_support">the ES6 documentation</a>;</p>
+<h2><a name="external-libraries" class="anchor" href="#external-libraries"></a>External libraries</h2><h3><a name="pre-320-beta1" class="anchor" href="#pre-320-beta1"></a>Pre 3.2.0-beta.1</h3><p>Cannon and Oimo (both physics engines) are being delivered as dependencies when installing babylonjs using npm. There is no need to install them on your own.</p>
+<h3><a name="current-version" class="anchor" href="#current-version"></a>Current version</h3><p>Cannon and Oimo are both optional dependencies. If you want to use any of them, please install them yourself.</p>
+<h3><a name="using-the-optional-dependencies-with-amd" class="anchor" href="#using-the-optional-dependencies-with-amd"></a>using the optional dependencies with AMD</h3><p>If you wish to use oimo for example, install Oimo using npm:</p>
+<pre><code class="lang-shell">npm install oimo
+</code></pre>
+<p>This will allow our UMD definition to find oimo in node_modules and use it. If you use AMD you will need to first declare oimo as a module (as oimo uses anonymous AMD definition):</p>
+<pre><code class="lang-javascript">define(&#39;oimo&#39;, [&#39;path/to/oimo&#39;], function(OIMO) {
+    return OIMO;
+})
+</code></pre>
+<p>Now Babylon will automatically find oimo and will inject it.</p>
+<h3><a name="using-webpack" class="anchor" href="#using-webpack"></a>Using Webpack</h3><p>To use either oimo or cannon, install them using npm. Our UMD definition will find them and inject them automatically.</p>
+<p>If you use commonjs and webpack and don&#39;t install cannon or oimo, you might see a warning saying that those dependencies could not be found. To fix that, use webpack&#39;s <code>externals</code> feature.</p>
+<p>In <code>webpack.config.js</code> add:</p>
+<pre><code class="lang-javascript">    ...,
+    externals: {
+        oimo: &#39;OIMO&#39;, //or true
+        cannon: &#39;CANNON&#39; //or true
+    },
+    ...
+</code></pre>
+<p>This will define both of those dependencies as external dependencies and will not load them anymore.</p>
+<p>You can see an example of that in the Viewer directory of our main repository.</p>
+<h2><a name="questions-and-troubleshooting" class="anchor" href="#questions-and-troubleshooting"></a>Questions and Troubleshooting</h2><h3><a name="error-ts2307-cannot-find-module-39babylonjs39-or-other-modules" class="anchor" href="#error-ts2307-cannot-find-module-babylonjs-or-other-modules"></a>error TS2307: Cannot find module &#39;babylonjs&#39; (or other modules)</h3><ul>
+<li>Make sure you have a version higher than 3.1.0-alpha3.4</li>
+<li>Make sure you added &#39;babylonjs&#39; to &quot;types&quot; in tsconfig.json</li>
+</ul>
+<h3><a name="even-though-i-use-only-a-few-classes-from-the-babylon-namespace-the-entire-babylon-module-is-included" class="anchor" href="#even-though-i-use-only-a-few-classes-from-the-babylon-namespace-the-entire-babylon-module-is-included"></a>Even though I use only a few classes from the BABYLON namespace, the entire Babylon module is included</h3><p>Due to the way BabylonJS is built, Tree-Shaking is currently not quite possible. Babylon&#39;s internal objects have deep connections with one another (for performance reasons). That means, that your built JS file will be at least Babylon.js&#39; minified size.</p>
+<p>You can still use custom builds to build you own minimal version: //doc.babylonjs.com/how_to/how_to_start#custom-builds</p>
+<h3><a name="naming-is-different-than-what-the-documentation-states" class="anchor" href="#naming-is-different-than-what-the-documentation-states"></a>Naming is different than what the documentation states</h3><p>Our documentation always refers to the BABYLON namespace. We therefore always use this namespace when talking about objects/classes, and also use this namespace when talking about the GUI.</p>
+<p>When using es-6 imports or require, you are the one responsible to setting the namespace in accordance to your needs. Pay attention when changing it and when copying code from the Playground.</p>
+<h2><a name="example-of-a-webpack-project-using-babylon-modules" class="anchor" href="#example-of-a-webpack-project-using-babylon-modules"></a>Example of a webpack project using Babylon modules</h2><p>Let&#39;s see an example of how to setup a Babylon project written in Typescript and bundled using Webpack.</p>
+<p>I will be using webpack 4, but the same setup will work with the previous version of webpack.</p>
+<h3><a name="setting-up-the-project" class="anchor" href="#setting-up-the-project"></a>Setting up the project</h3><p>We will be using npm to install dependencies. We first run <code>npm init</code> to generate package.json . You can generate package.json in any other way you wish.</p>
+<p>After package,json was generated, we will install the needed dev dependencies:</p>
+<pre><code class="lang-bash">npm install --save-dev typescript webpack ts-loader webpack-cli
+</code></pre>
+<p>Now we will need to configure webpack to know what to actually do. This is a simple example of the webpack configuration file, <code>webpack.config.js</code>:</p>
+<pre><code class="lang-javascript">const path = require(&quot;path&quot;);
+
+module.exports = {
+    entry: &#39;./index.ts&#39;,
+    output: {
+        filename: &#39;index.js&#39;,
+        path: path.resolve(__dirname, &#39;dist&#39;)
+    },
+    resolve: {
+        extensions: [&quot;.ts&quot;]
+    },
+    module: {
+        rules: [
+            { test: /\.tsx?$/, loader: &quot;ts-loader&quot; }
+        ]
+    },
+    mode: &quot;development&quot;
+};
+</code></pre>
+<p>We will also add <code>tsconfig.json</code>:</p>
+<pre><code class="lang-javascript">{
+    &quot;compilerOptions&quot;: {
+        &quot;target&quot;: &quot;es5&quot;,
+        &quot;module&quot;: &quot;commonjs&quot;,
+        &quot;noResolve&quot;: false,
+        &quot;noImplicitAny&quot;: false,
+        &quot;removeComments&quot;: true,
+        &quot;preserveConstEnums&quot;: true,
+        &quot;sourceMap&quot;: true,
+        &quot;experimentalDecorators&quot;: true,
+        &quot;isolatedModules&quot;: false,
+        &quot;lib&quot;: [
+            &quot;dom&quot;,
+            &quot;es2015.promise&quot;,
+            &quot;es5&quot;
+        ],
+        &quot;declaration&quot;: true,
+        &quot;outDir&quot;: &quot;./&quot;
+    },
+    &quot;files&quot;: [
+        &quot;./index.ts&quot;
+    ]
+}
+</code></pre>
+<p>We will also add an html file with a canvas (index.html):</p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+    &lt;head&gt;
+        &lt;style&gt;
+            html,
+            body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+            }
+
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;canvas id=&quot;renderCanvas&quot;&gt;&lt;/canvas&gt;
+        &lt;script src=&quot;dist/index.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p>After adding a new file called <code>index.ts</code> we are ready to start developing.</p>
+<h3><a name="adding-babylon-support" class="anchor" href="#adding-babylon-support"></a>Adding babylon support</h3><p>We will start a simple project with Babylon core module, the loaders, and the GUI.</p>
+<p>First - let&#39;s install babylon&#39;s dependencies:</p>
+<pre><code class="lang-bash">npm install --save babylonjs babylonjs-loaders babylonjs-gui
+</code></pre>
+<p>This will install the latest stable version of Babylon. To install the latest preview version, use the preview stream:</p>
+<pre><code class="lang-bash">npm install --save babylonjs@preview babylonjs-loaders@preview babylonjs-gui@preview
+</code></pre>
+<h3><a name="writing-some-code" class="anchor" href="#writing-some-code"></a>Writing some code</h3><p>Our index.ts will show a sphere for now. I will be using a code very similar to the playground, but you can structure your code as you wish:</p>
+<pre><code class="lang-javascript">var canvas: any = document.getElementById(&quot;renderCanvas&quot;);
+var engine: Engine = new Engine(canvas, true);
+
+function createScene(): Scene {
+    var scene: Scene = new Scene(engine);
+
+    var camera: ArcRotateCamera = new ArcRotateCamera(&quot;Camera&quot;, Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
+    camera.attachControl(canvas, true);
+
+    var light1: HemisphericLight = new HemisphericLight(&quot;light1&quot;, new Vector3(1, 1, 0), scene);
+
+    var sphere: Mesh = MeshBuilder.CreateSphere(&quot;sphere&quot;, { diameter: 1 }, scene);
+
+    return scene;
+}
+
+var scene: Scene = createScene();
+
+engine.runRenderLoop(() =&gt; {
+    scene.render();
+});
+</code></pre>
+<p>You will notice that the BABYLON namespace is gone. and that you see a lot of errors, if actually using this file. This is because we haven&#39;t yet imported the needed dependencies from babylonjs.</p>
+<p>We will use es6 imports for that. To add the dependencies, we have two options. Defining the BABYLON namespace:</p>
+<pre><code class="lang-javascript">import * as BABYLON from &#39;babylonjs&#39;;
+</code></pre>
+<p>This will actually bring back the BABYLON namespace. My preferred option is only loading the dependencies you need:</p>
+<pre><code class="lang-javascript">import { Engine, Scene, ArcRotateCamera, HemisphericLight, Vector3, MeshBuilder, Mesh } from &quot;babylonjs&quot;;
+</code></pre>
+<p>Adding this line to the beginning of the file will load all needed dependencies to your project and will eliminate all errors.</p>
+<h3><a name="bundling-the-project" class="anchor" href="#bundling-the-project"></a>Bundling the project</h3><p>Compiling index.ts using tsc will work. But it will generate a file that is unusable without babylonjs itself. To get a bundled file we will run webpack. Again, two ways for that:</p>
+<pre><code class="lang-bash">./node_modules/.bin/webpack
+</code></pre>
+<p>Or creating a build task in package.json:</p>
+<pre><code class="lang-javascript">    &quot;scripts&quot;: {
+        &quot;build&quot;: &quot;webpack&quot;
+    },
+</code></pre>
+<p>And running:</p>
+<pre><code class="lang-bash">npm run build
+</code></pre>
+<p>We will now have an index.js in the dist folder that we can use in our index.html</p>
+<p>You will notice there are a few warnings about dependencies. We will deal with that later.</p>
+<h3><a name="checking-your-project" class="anchor" href="#checking-your-project"></a>Checking your project</h3><p>The best way for you during development would be the webpack dev server (<a href="https://github.com/webpack/webpack-dev-server/)">https://github.com/webpack/webpack-dev-server/)</a>, but it is not a part of the scope of this tutorial.</p>
+<p>To check the current project, I use the http-server npm module (installed globally). You can use any web server that will serve the root folder of our project.</p>
+<p>If you open out index.html, we will see a sphere. Hooray!</p>
+<h3><a name="adding-the-gui" class="anchor" href="#adding-the-gui"></a>Adding the GUI</h3><p>For the sake of learning, we will add a new file, <code>gui.ts</code>, even thou it can still be done with a single ts file. Our gui.ts file will look like this:</p>
+<pre><code class="lang-javascript">import { AbstractMesh } from &quot;babylonjs&quot;;
+import { AdvancedDynamicTexture, Rectangle, Control, TextBlock } from &quot;babylonjs-gui&quot;;
+
+let advancedTexture: AdvancedDynamicTexture;
+
+function init(): void {
+    if (!advancedTexture) {
+        advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI(&quot;ui1&quot;);
+    }
+}
+
+export function addLabelToMesh(mesh: AbstractMesh): void {
+    if (!advancedTexture) {
+        init();
+    }
+    let label: Rectangle = new Rectangle(&quot;label for &quot; + mesh.name);
+    label.background = &quot;black&quot;;
+    label.height = &quot;30px&quot;;
+    label.alpha = 0.5;
+    label.width = &quot;100px&quot;;
+    label.cornerRadius = 20;
+    label.thickness = 1;
+    label.linkOffsetY = 30;
+    label.top = &quot;10%&quot;;
+    label.zIndex = 5;
+    label.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+    advancedTexture.addControl(label);
+
+    const text1: TextBlock = new TextBlock();
+    text1.text = mesh.name;
+    text1.color = &quot;white&quot;;
+    label.addControl(text1);
+}
+</code></pre>
+<p>and in our index.js, we will import the function and use it in our createScene function:</p>
+<pre><code class="lang-javascript">import { addLabelToMesh } from &quot;./gui&quot;;
+</code></pre>
+<p>and the createScene function looks like this:</p>
+<pre><code class="lang-javascript">function createScene(): Scene {
+    var scene: Scene = new Scene(engine);
+
+    var camera: ArcRotateCamera = new ArcRotateCamera(&quot;Camera&quot;, Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
+    camera.attachControl(canvas, true);
+
+    var light1: HemisphericLight = new HemisphericLight(&quot;light1&quot;, new Vector3(1, 1, 0), scene);
+
+    var sphere: Mesh = MeshBuilder.CreateSphere(&quot;sphere&quot;, { diameter: 1 }, scene);
+
+    addLabelToMesh(sphere);
+
+    return scene;
+}
+</code></pre>
+<p>If we compile now using webpack, we will have our GUI element in our scene.</p>
+<h3><a name="eliminating-the-dependencies-warnings" class="anchor" href="#eliminating-the-dependencies-warnings"></a>Eliminating the dependencies warnings</h3><p>Babylon is using oimo, cannon and earcut as external, optional dependencies. If you don&#39;t use them, you can define them as externals in webpack configuration, and avoid the warnings:</p>
+<pre><code class="lang-javascript">    externals: {
+        &quot;oimo&quot;: true,
+        &quot;cannon&quot;: true,
+        &quot;earcut&quot;: true
+    },
+</code></pre>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><p><a href="/babylon101/how_to_get">How To Get Babylon.js</a><br><a href="/features/ES6_Support">ESNext Support</a></p>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>

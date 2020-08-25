@@ -1,0 +1,204 @@
+<!DOCTYPE html><html style="height:100%;"><head lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="wcRjktXhF6DAjmhneKS7UatweBIkEF6QfqsNhAYbUgg"><title>Use depth-of-field and other lens effects - Babylon.js Documentation</title><link rel="shortcut icon" href="/img/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://use.typekit.net/cta4xsb.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="/css/libs/slideout.css"><link rel="stylesheet" href="/css/libs/highlight/github.css"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.3/css/perfect-scrollbar.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css"></head><body><nav id="menu"></nav><nav class="nav-main" style="position:inherit;"><!-- Hamburger menu : displayed only in small screens--><i class="fa fa-bars" id="mobilemenu"></i><div class="banner"><div class="menu"><div class="do-not-hover" id="home"><a href="/">HOME</a></div><div class="item" id="whatsnew"><a href="/whats-new">What's new</a></div><div class="item" id="feature"><a href="/babylon101">Babylon 101      </a></div><div class="item" id="feature"><a href="/examples">Examples                        </a></div><div class="item active" id="How_To"><a href="/How_To">How To...</a></div><div class="item" id="feature"><a href="/features">Features</a></div><div class="item" id="resources"><a href="/resources">Resources</a></div><div class="item" id="extensions"><a href="/extensions">Extensions</a></div><div class="item" id="samples"><a href="/snippets">Snippets        </a></div><div class="item" id="classes"><a href="/api">API</a></div><div class="item" id="playground"><a href="/playground">Playground</a></div></div><div class="more"><div class="searchbar"><form method="get" action="/search"><input type="text" name="bjsq" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button></form></div></div></div></nav><div id="wrapper"><div class="statics-banner"><div class="img-holder details"><a href="/"><img src="/img/babylonjs_identity_color_dark.svg"></a><a href="/How_To"><h1>How To</h1></a><div></div></div></div><div class="horizontal-separator"></div><div class="static-content"><h1>Use depth-of-field and other lens effects</h1><br><div class="contentTable"><div class="tocHeader"><span class="tocTitle"><i class="tocIcon fa fa-book"></i>Table of contents</span><span class="tocToggle"><i class="fa fa-chevron-up"></i></span></div><div class="tocContent"><ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#a-word-of-advice">A Word Of Advice</a><ul>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#how-to">How To</a></li>
+</ul>
+</div></div><div id="staticContent"><h1><a name="how-to-use-depth-of-field-and-other-lens-effects" class="anchor" href="#how-to-use-depth-of-field-and-other-lens-effects"></a>How To Use Depth-of-field and other Lens Effects</h1><p><code>BABYLON.LensRenderingPipeline</code> is a predefined chain of postprocesses that helps achieving photograph-like realism.</p>
+<p><img src="/img/how_to/depth-of-field/example01.jpg" alt="DoF example"><br><em>An example of what can be achieved with this postprocess pipeline.</em></p>
+<p>You can see a live example of it here:</p>
+<p><a href="https://www.babylonjs-playground.com/#DX6AV#4">https://www.babylonjs-playground.com/#DX6AV#4</a> - <i class="fa fa-eye" onclick="createIframe('DX6AV#4', this)"></i><div class="iframeContainer"></div></p>
+<p>Three post-processes are used in the pipeline:</p>
+<ul>
+<li>First, a <em>&#39;chromatic aberration&#39;</em> post-process, which shifts very slightly red, green and blue channels on screen. This effect is stronger on the edges. </li>
+<li>Second, a <em>&#39;highlights enhancing&#39;</em> post-process, which keeps only highlights in the scene, to be used in the depth-of-field blur</li>
+<li>Third, a <em>&#39;depth-of-field&#39;</em> post-process, which actually does a bit more than that: <ul>
+<li>blur on the edge of the lens </li>
+<li>lens distortion </li>
+<li>depth-of-field blur based on actual optics equation (the simulated lens has an inverse focal length of 0.1) </li>
+<li>depth-of-field &#39;bokeh&#39; effect (shapes appearing in blurred areas) </li>
+<li>grain effect (noise or custom texture) </li>
+<li>darken out-of-focus objects </li>
+</ul>
+</li>
+</ul>
+<h2><a name="usage" class="anchor" href="#usage"></a>Usage</h2><p>To use it, you must first define a set of parameters that will impact the actual post-processing performed. This is done by defining an object and setting the desired properties:</p>
+<pre><code class="lang-javascript">var parameters = {
+  edge_blur: 1.0,
+  chromatic_aberration: 1.0,
+  distortion: 1.0,
+  // etc.
+};
+</code></pre>
+<p>And then simply create the object with the parameters you&#39;ve defined earlier, like so:</p>
+<pre><code class="lang-javascript">var lensEffect = new BABYLON.LensRenderingPipeline(&#39;lensEffects&#39;, parameters, scene, 1.0, camera);
+</code></pre>
+<p>Note that in the above example, the pipeline is immediately attached to the camera, but this is not mandatory. You can also use it like this:</p>
+<pre><code class="lang-javascript">var lensEffect = new BABYLON.LensRenderingPipeline(&#39;lensEffects&#39;, parameters, scene, 1.0);
+// ...
+scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(&#39;lensEffects&#39;, camera);
+</code></pre>
+<p>Here is a list of properties you may set on your parameters object:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chromatic_aberration</code></td>
+<td>number</td>
+<td>0 means effect is disabled, 1 is for realism. Defines the spread of the RGB channels in the chromatic aberration shader.</td>
+</tr>
+<tr>
+<td><code>edge_blur</code></td>
+<td>number</td>
+<td>0 means effect is disabled, 1 is for realism. Defines the amount of blur that will appear on the corners of the screen.</td>
+</tr>
+<tr>
+<td><code>distortion</code></td>
+<td>number</td>
+<td>0 means effect is disabled, 1 is for realism. Defines the amount of lens-like distortion.</td>
+</tr>
+<tr>
+<td><code>grain_amount</code></td>
+<td>number</td>
+<td>Varies from 0 to 1. Amount of grain to blend on screen.</td>
+</tr>
+<tr>
+<td><code>grain_texture</code></td>
+<td>BABYLON.Texture</td>
+<td>Texture to use for grain effect; if unset, a random B&amp;W noise is used instead.</td>
+</tr>
+<tr>
+<td><code>dof_focus_distance</code></td>
+<td>number</td>
+<td>The distance at which focus is set. Everything out of focus will be blurred. Note that a focus distance above a few hundred units gives you infinity focus.</td>
+</tr>
+<tr>
+<td><code>dof_aperture</code></td>
+<td>number</td>
+<td>Default: 1. How quickly things outside of focus will become blurred. Set high to give a &#39;miniature&#39; effect (a.k.a. <em>tilt shift</em>).</td>
+</tr>
+<tr>
+<td><code>dof_darken</code></td>
+<td>number</td>
+<td>Default: 0. How much should out-of-focus objects be darkened. This effect should be used lightly! Set to 0 to disable.</td>
+</tr>
+<tr>
+<td><code>dof_pentagon</code></td>
+<td>boolean</td>
+<td>Default: true. Makes a pentagon-like &quot;bokeh&quot; effect. &quot;Bokeh&quot; is a term for artifacts appearing when objects are very blurred: bright spots will often produce sharp geometric shapes, depending on the type of the lens.</td>
+</tr>
+<tr>
+<td><code>dof_gain</code></td>
+<td>number</td>
+<td>Default: 1. How much highlights on blurred objects should be enhanced. Set to 0 to disable highlights enhancing.</td>
+</tr>
+<tr>
+<td><code>dof_threshold</code></td>
+<td>number</td>
+<td>Default: 1. How wide should highlights be on blurred objects.</td>
+</tr>
+<tr>
+<td><code>blur_noise</code></td>
+<td>boolean</td>
+<td>Default: true. Adds a very slight noise on the blur effect for out-of-focus objects.</td>
+</tr>
+</tbody>
+</table>
+<p>The BABYLON.LensRenderingPipeline object created should be saved if you want to tweak the effects after its creation. This can be done with the following, self-explanatory methods:</p>
+<table>
+<thead>
+<tr>
+<th>Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setEdgeBlur(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>disableEdgeBlur()</code></td>
+</tr>
+<tr>
+<td><code>setGrainAmount(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>disableGrain()</code></td>
+</tr>
+<tr>
+<td><code>setChromaticAberration(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>disableChromaticAberration()</code></td>
+</tr>
+<tr>
+<td><code>setEdgeDistortion(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>disableEdgeDistortion()</code></td>
+</tr>
+<tr>
+<td><code>setHighlightsGain(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>setHighlightsThreshold(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>setFocusDepth(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>disableDepthOfField()</code></td>
+</tr>
+<tr>
+<td><code>setAperture(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>setDarkenOutOfFocus(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>enablePentagonBokeh()</code></td>
+</tr>
+<tr>
+<td><code>disablePentagonBokeh()</code></td>
+</tr>
+<tr>
+<td><code>setAperture(amount: number)</code></td>
+</tr>
+<tr>
+<td><code>enableNoiseBlur()</code></td>
+</tr>
+<tr>
+<td><code>disableNoiseBlur()</code></td>
+</tr>
+</tbody>
+</table>
+<h2><a name="a-word-of-advice" class="anchor" href="#a-word-of-advice"></a>A Word Of Advice</h2><p>These effects are based on general approximations of real world optics phenomenons. As such, some situations may end up looking a bit off or even completely wrong. Tweaking the parameters (including on-the-fly adjustments) will allow you to mitigate these problems, for example by lowering aperture in situations where you know that blurred objects will not render correctly.</p>
+<p>Keep in mind that the approximation used does not give good results when an object inside focus is rendered on top of a strongly blurred one, or the other way around. Bleeding around one object or the other will probably occur in this case.</p>
+<p>Finally, these effects can be pretty intensive on the GPU. A lower blur effect (i.e. smaller blur radius) will be less demanding, so you can try to lower aperture instead of disabling it altogether. Highlight enhancing is also quite intensive, so be sure that this effect contribute to the quality of your render if you have it active.</p>
+<h1><a name="further-reading" class="anchor" href="#further-reading"></a>Further Reading</h1><h2><a name="how-to" class="anchor" href="#how-to"></a>How To</h2><ul>
+<li><a href="/how_to/using_default_rendering_pipeline">Use the default rendering pipeline</a></li>
+</ul>
+</div></div></div><footer class="footer"><div class="footer-item"><a href="https://www.babylonjs.com" target="_blank"><i class="fa fa-home"></i>    Babylonjs.com</a></div><div class="footer-item"><a href="https://forum.babylonjs.com" target="_blank"><i class="fa fa-html5"></i>    Forum</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Babylon.js" target="_blank"><i class="fa fa-github"></i>    Github</a></div><div class="footer-item"><a href="https://github.com/BabylonJS/Documentation" target="_blank"><i class="fa fa-code-fork"></i>    Contribute </a></div><div class="footer-item"><a href="https://www.netlify.com" target="_blank"><i class="fa fa-heart"></i> Deployed by netlify            </a></div></footer><script src="/js/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.9/slideout.min.js"></script><script src="/js/index.js"></script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            };
+    i[r].l = 1 * new Date();
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-41767310-3', 'auto');
+ga('send', 'pageview');</script><!-- HIGHLIGHT JS--><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/javascript.min.js"></script><script src="/js/static.js"></script><script>$('code').each(function(){
+    $(this).text($(this).text().replace(/&nbsp;/gi, ''));
+});
+hljs.initHighlightingOnLoad();</script></body></html>
