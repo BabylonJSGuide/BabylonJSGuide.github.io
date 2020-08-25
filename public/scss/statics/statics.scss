@@ -1,0 +1,257 @@
+.statics-banner {
+    background-color: #151221;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+    height: 100px;
+
+    .img-holder {
+        grid-row: 1;
+        grid-column: 1;        
+        height: 100%;
+        width: 56%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+
+        &.details {
+            width: 80%;
+        }
+
+        img {
+            height: 100%;
+            margin-left: -25px;
+        }
+
+        a, div {
+          width: 170px;
+        }
+    }
+
+    h1 {
+        align-self: center;
+        grid-row: 1;
+        grid-column: 1;
+        color: #e0684b;
+        font-size: 28px;
+        text-transform: uppercase;
+        font-weight: 100;
+    }
+}
+
+.statics-content {
+  @include outer-container(80%);
+  padding-bottom: 100px;
+
+  .tagList {
+    position: relative;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+
+    .tagWrapper {
+      margin : 5px;
+      margin-top : 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: transparent;
+
+      .tag {
+        cursor:pointer;
+        border: 0px;
+        padding: 5px;
+
+        border-radius: 3px;
+        background-color: darkgray;
+
+        .tagImage {
+          display: block;
+          margin: 0 auto;
+          max-height: 65%;
+          width: 100%;
+          img {
+            width: 100%;
+          }
+        }
+        .tagDescriptionWrapper {
+          color: whitesmoke;
+          background-color: transparent;
+
+          .tagTitle {
+            font-family: "Roboto";
+            font-weight: 300;
+            font-size: 0.8em;
+            margin: 0;
+          }
+
+          // .tagDescription {
+          //   font: $font-regular;
+          //   font-size: 0.75em;
+
+          // }
+        }
+
+      }
+
+      .active {
+        background-color: $blue;
+      }
+    }
+  }
+
+  .fileList {
+    @include outer-container(70%);
+
+    //box-shadow: 12px 15px 22px -10px #EEE;
+
+    counter-reset: files;
+
+    .emptyList {
+      text-align: center;
+      //display: none;
+    }
+
+    // The tag text
+    .fileTitle {
+      padding: 0px 10px;
+      margin: 3px 0;
+      background: rgb(235, 235, 235);
+      width: 100%;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      transition: 0.2s;
+      border-left: 4px solid rgb(80, 80, 80);
+
+      &:hover{
+        background: rgb(220, 220, 220);
+      }
+
+      .fileNumber {
+        color: rgb(80, 80, 80);
+        margin-right: 15px;
+        font-weight: bold;
+
+        &:before{
+          counter-increment: files;
+          content: counter(files);
+        }
+      }
+
+      a {
+        color: $black;
+        text-decoration: none;
+        //display: inline-block;
+        padding: 10px;
+        // border-bottom: 2px dashed $blue;
+        flex: auto;
+
+        .inline-tags {
+          margin: 0;
+          padding: 0;
+          right: 24px;
+          display: inline-block;
+          float: right;
+          clear: right;
+
+          .inline-tag {
+            display: inline-block;
+            position: relative;
+            // background-color: $blue;
+            margin-left: 8px;
+            padding: 0px 4px;
+            color: rgb(150, 150, 150);
+            text-decoration: none;
+            border-radius: 4px;
+
+          }
+        }
+
+        &:hover {
+          //color: rgb(150, 150, 150);
+          //text-decoration: underline;
+          // background-color: $blue;
+
+          .tag {
+            background-color: whitesmoke;
+            color: $blue;
+          }
+        }
+      }
+
+      h3:hover {
+        background-color: $blue;
+        color: $grey;
+        text-decoration: underline;
+      }
+    }
+
+    .\30 1_Play_Pen, .PGsupport, .Editor, .introduction, .environment, .Videos{
+       border-left: 4px solid rgb(138, 171, 53);
+
+       .fileNumber{
+        color: rgb(138, 171, 53);
+       }
+    }
+
+    .scene, .Exporter, .ProceduralTexturesLibrary, .gamelets, .aspect, .shaders{
+      border-left: 4px solid rgb(252, 170, 53);
+
+      .fileNumber{
+        color: rgb(252, 170, 53);
+      }
+    }
+
+    .mesh, .Manual, .PostProcessLibrary, .snippets, .support, .events{
+      border-left: 4px solid rgb(231, 75, 59);
+
+      .fileNumber{
+        color: rgb(231, 75, 59);
+      }
+    }
+
+    .material, .Reference, .Tree_Generators, .Physics{
+      border-left: 4px solid #E74C3C;
+      .fileNumber{
+        color: #E74C3C;
+      }
+    }
+
+    .camera, .ClonerSystem, .Post_Process{
+      border-left: 4px solid rgb(122, 79, 193);
+
+      .fileNumber{
+        color: rgb(122, 79, 193);
+      }
+    }
+
+    .light, .Post_Process{
+      border-left: 4px solid rgb(216, 81, 53);
+      .fileNumber{
+        color: rgb(216, 81, 53);
+      }
+    }
+
+    .audio, .GUI, .CastorGUI{
+      border-left: 4px solid rgb(197, 109, 184);
+      .fileNumber{
+        color: rgb(197, 109, 184);
+      }
+    }
+
+    .animation, .MaterialsLibrary, .contribute{
+      border-left: 4px solid rgb(109, 176, 42);
+      .fileNumber{
+        color: rgb(109, 176, 42);
+      }
+    }
+
+  }
+
+}

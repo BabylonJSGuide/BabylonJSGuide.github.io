@@ -1,0 +1,94 @@
+.img-holder {
+  div, a {
+    width: 170px;
+  }
+}
+
+.static-content{
+  @include outer-container(80%);
+  padding-bottom: 100px;
+
+  p, ul, ol {
+    max-width: 40em;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  iframe {
+    width: 100%;
+  }
+
+  table {
+    width : 60%;    
+    text-align: left;
+    margin-left: 0px;
+            
+    thead {
+       tr {
+          background-color: #F1F1F1;
+                    
+          th {
+            padding: 3px 11px;
+            border: 2px solid #DCDCDC
+          }
+       }
+    }
+
+    tr {
+      height : 35px;
+    }
+    
+    td {      
+        padding: 3px 11px;
+        border: 2px solid #DCDCDC;      
+    }
+
+    tr:nth-child(even) {
+      background-color: #F8F8F8;
+    }
+  }
+  
+  & .beforeWideTable + table {
+    width:100% !important;
+  }
+
+  .contentTable {
+
+    background-color: whitesmoke;
+    padding: 1px 0;
+
+    .tocHeader{
+      padding: 10px;
+
+      .tocTitle{
+        .tocIcon{
+          margin: 0px 10px;
+        }
+      }
+
+      .tocToggle{
+        cursor: pointer;
+
+        i{
+          padding: 10px;
+          margin-top: -10px;
+          float: right;
+        }
+      }
+    }
+
+    .tocContent{
+
+      ul {
+        list-style-type: decimal;
+         li {
+           padding: 5px 0;
+         }
+      }
+    }
+
+
+  }
+}
