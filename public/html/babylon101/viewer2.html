@@ -3,14 +3,14 @@
 </ul>
 </div></div><div id="staticContent"><h1><a name="getting-started-enhancing-your-website" class="anchor" href="#getting-started-enhancing-your-website"></a>Getting Started - Enhancing Your Website</h1><h2><a name="customizing-a-viewer-camera" class="anchor" href="#customizing-a-viewer-camera"></a>Customizing a Viewer Camera.</h2><p>What happens when we put the <strong>Village</strong> as a model in the viewer?</p>
 <p><a href ="/public/html/webpages/page2.html">Example Viewer - Village</a> using the default Viewer.</p>
-<p><img ="/public/html/img/campus/view2.png" alt="View 2">;</p>
+<p><img src="/public/html/img/campus/view2.png" alt="View 2">;</p>
 <p>We see that the ground flickers. Why is that? This is because by default the Viewer already adds a ground and where they overlap they &#39;fight&#39; for supremacy.</p>
 <p>How do we overcome this? We use the <em>extends</em> attribute in the &le;babylon&gt; element and set it to minimal.</p>
 <pre><code class="lang-javascript">&lt;babylon extends = &quot;minimal&quot; model=&quot;path to model file&quot;&gt;&lt;/babylon&gt;
 </code></pre>
 <p>This removes the default ground along with other aspects such as the Babylon.js link and the full screen icon giving</p>
 <p><a href ="/public/html/webpages/page3.html">Example Viewer - Village</a> using the minimal Viewer.</p>
-<p><img ="/public/html/img/campus/view3.png" alt="view3">;</p>
+<p><img src="/public/html/img/campus/view3.png" alt="view3">;</p>
 <p>Removing the default ground has stopped the flickering. However the default Viewer calculates the extent of the model and adjusts the camera accordingly. By using <em>minimal</em> the camera just defaults to close to the center of the model village. </p>
 <p>When you want the camera further away you have to get your hands dirty with some code, which of course you can just copy and paste as needed.</p>
 <p>To move the camera we have to adjust its <em>radius</em> property. This has to be done before the model is loaded. Propeties cannot be changed once the model is loaded in the Viewer. We need to remove the <em>model</em> attribute from the &lt;babylon&gt; element to prevent the model loading before the camera radius can be changed. the %lt;babylon&amp;gt: element must also be given an <em>id</em> which is referenced by the script that will alter the camera properties.</p>
